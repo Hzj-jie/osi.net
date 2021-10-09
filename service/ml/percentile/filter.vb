@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public NotInheritable Class percentile
-    Public NotInheritable Class ascent
+    Partial Public NotInheritable Class ascent
         Public Shared Function filter(Of T)(ByVal v As vector(Of tuple(Of T, Double)),
                                             ByVal percentile As Double) As Func(Of tuple(Of T, Double), Boolean)
             Return ml.percentile.filter(v,
@@ -30,7 +30,7 @@ Partial Public NotInheritable Class percentile
         End Sub
     End Class
 
-    Public NotInheritable Class descent
+    Partial Public NotInheritable Class descent
         Public Shared Function filter(Of T)(ByVal v As vector(Of tuple(Of T, Double)),
                                             ByVal percentile As Double) As Func(Of tuple(Of T, Double), Boolean)
             Return ml.percentile.filter(v,

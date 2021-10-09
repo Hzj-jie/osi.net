@@ -38,7 +38,7 @@ Partial Public NotInheritable Class bstyle
                 raise_error(error_type.user, "Cannot parse data to biguint ", n.trace_back_str())
                 Return False
             End If
-            builders.of_copy_const(code_gen_of(Of value)().with_temp_target(types.biguint, n, o),
+            builders.of_copy_const(code_gen_of(Of value)().with_temp_target(code_types.biguint, n, o),
                                    New data_block(i.as_bytes())).to(o)
             Return True
         End Function

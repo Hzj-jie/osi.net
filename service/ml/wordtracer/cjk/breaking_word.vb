@@ -12,8 +12,7 @@ Partial Public NotInheritable Class wordtracer
             Public Shared Function normal_distribute(ByVal m As onebound(Of Char).model) _
                                        As unordered_map(Of Char, normal_distribution)
                 assert(Not m Is Nothing)
-                Dim r As unordered_map(Of Char, vector(Of Double)) = Nothing
-                r = New unordered_map(Of Char, vector(Of Double))()
+                Dim r As New unordered_map(Of Char, vector(Of Double))()
                 m.flat_map().foreach(Sub(ByVal p As first_const_pair(Of const_pair(Of Char, Char), Double))
                                          r(p.first.first).emplace_back(p.second)
                                      End Sub)
@@ -32,8 +31,7 @@ Partial Public NotInheritable Class wordtracer
             Public Shared Function expo_distribute(ByVal m As onebound(Of Char).model) _
                                        As unordered_map(Of Char, exponential_distribution)
                 assert(Not m Is Nothing)
-                Dim r As unordered_map(Of Char, vector(Of Double)) = Nothing
-                r = New unordered_map(Of Char, vector(Of Double))()
+                Dim r As New unordered_map(Of Char, vector(Of Double))()
                 m.flat_map().foreach(Sub(ByVal p As first_const_pair(Of const_pair(Of Char, Char), Double))
                                          r(p.first.first).emplace_back(p.second)
                                      End Sub)
@@ -98,8 +96,7 @@ Partial Public NotInheritable Class wordtracer
                                        As unordered_map(Of Char, unordered_map(Of Char, Double))
                 assert(Not m Is Nothing)
                 assert(Not f Is Nothing)
-                Dim r As unordered_map(Of Char, vector(Of const_pair(Of Char, Double))) = Nothing
-                r = New unordered_map(Of Char, vector(Of const_pair(Of Char, Double)))()
+                Dim r As New unordered_map(Of Char, vector(Of const_pair(Of Char, Double)))()
                 m.flat_map().foreach(Sub(ByVal p As first_const_pair(Of const_pair(Of Char, Char), Double))
                                          r(p.first.first).emplace_back(const_pair.of(p.first.second, p.second))
                                      End Sub)
@@ -174,10 +171,8 @@ Partial Public NotInheritable Class wordtracer
             Public Shared Function bi_directional_expo_cumulative(ByVal m As onebound(Of Char).model) _
                                        As unordered_map(Of Char, unordered_map(Of Char, Double))
                 assert(Not m Is Nothing)
-                Dim f As unordered_map(Of Char, vector(Of const_pair(Of Char, Double))) = Nothing
-                f.[New]()
-                Dim b As unordered_map(Of Char, vector(Of const_pair(Of Char, Double))) = Nothing
-                b.[New]()
+                Dim f As New unordered_map(Of Char, vector(Of const_pair(Of Char, Double)))()
+                Dim b As New unordered_map(Of Char, vector(Of const_pair(Of Char, Double)))()
                 m.flat_map().foreach(Sub(ByVal p As first_const_pair(Of const_pair(Of Char, Char), Double))
                                          f(p.first.first).emplace_back(const_pair.of(p.first.second, p.second))
                                          b(p.first.second).emplace_back(const_pair.of(p.first.first, p.second))

@@ -1,8 +1,11 @@
 ﻿
-Imports osi.root.template
-Imports osi.root.formation
-Imports osi.root.procedure
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.procedure
+Imports osi.root.template
 Imports osi.service.device
 Imports osi.service.transmitter
 
@@ -38,7 +41,7 @@ Public Class herald_responder(Of CONTINUOUS As _boolean)
                    ByVal pending_request_timeout_ms As Int64,
                    ByVal e As executor,
                    ByVal stopping As Func(Of Boolean))
-        Me.New(assert_not_nothing_return(h).get(), pending_request_timeout_ms, e, stopping)
+        Me.New(assert_which.of(h).is_not_null().get(), pending_request_timeout_ms, e, stopping)
     End Sub
 
     Public Sub New(ByVal h As idevice(Of herald),

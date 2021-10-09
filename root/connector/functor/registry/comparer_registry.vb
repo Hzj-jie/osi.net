@@ -7,8 +7,8 @@ Imports System.Net
 Imports osi.root.constants
 
 ' This class should not be involved by compare. Other classes should be able to register its comparer correctly with
-' global_init_level.foundamental.
-<global_init(global_init_level.foundamental)>
+' global_init_level.functor.
+<global_init(global_init_level.functor)>
 Friend Module _comparer_registry
     Sub New()
         comparer.register(Function(ByVal i As IPAddress, ByVal j As IPAddress) As Int32

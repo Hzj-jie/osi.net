@@ -8,8 +8,9 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.threadpool
 
+<global_init(global_init_level.runtime_checkers)>
 Public Module _async_sync
-    Sub New()
+    Private Sub init()
         assert(npos < 0)
     End Sub
 
@@ -17,8 +18,7 @@ Public Module _async_sync
                                 ByVal end_result As Func(Of Boolean)) As Boolean
         assert(Not waitfor Is Nothing)
         assert(Not end_result Is Nothing)
-        Dim w As AutoResetEvent = Nothing
-        w = New AutoResetEvent(False)
+        Dim w As AutoResetEvent = New AutoResetEvent(False)
         Dim r As Boolean = False
         assert_begin(New event_comb(Function() As Boolean
                                         r = waitfor()
@@ -34,7 +34,7 @@ Public Module _async_sync
         If threadpool.threadpool.in_restricted_threadpool_thread() Then
             While Not w.WaitOne(0)
                 If Not thread_pool().execute() Then
-                    thread_pool().wait(envs.two_timeslice_length_ms)
+                    thread_pool().wait(2 * envs.timeslice_length_ms)
                 End If
             End While
         Else

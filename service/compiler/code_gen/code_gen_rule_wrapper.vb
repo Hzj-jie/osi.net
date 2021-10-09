@@ -75,7 +75,7 @@ Public Class code_gen_rule_wrapper(Of WRITER,
             init_suffixes()
         End Sub
 
-        Public Function build(ByVal root As typed_node, ByVal o As WRITER) As Boolean
+        Public Function build(ByVal root As typed_node, ByVal o As WRITER, ByVal include_fixes As Boolean) As Boolean
             assert(Not root Is Nothing)
             assert(Not o Is Nothing)
             assert(root.type = typed_node.ROOT_TYPE)
@@ -83,7 +83,9 @@ Public Class code_gen_rule_wrapper(Of WRITER,
             If root.leaf() Then
                 Return False
             End If
-            p.export(o)
+            If include_fixes Then
+                p.export(o)
+            End If
             assert(root.child_count() > 0)
             Dim i As UInt32 = 0
             While i < root.child_count()
@@ -92,13 +94,14 @@ Public Class code_gen_rule_wrapper(Of WRITER,
                 End If
                 i += uint32_1
             End While
-            s.export(o)
+            If include_fixes Then
+                s.export(o)
+            End If
             Return True
         End Function
 
         Private Sub init_code_gens()
-            Dim v As vector(Of Action(Of CODE_GENS_IMPL, PARAMETERS)) = Nothing
-            v = +alloc(Of _code_gens)()
+            Dim v As vector(Of Action(Of CODE_GENS_IMPL, PARAMETERS)) = +alloc(Of _code_gens)()
             Dim i As UInt32 = 0
             While i < v.size()
                 v(i)(l, w)
@@ -108,8 +111,7 @@ Public Class code_gen_rule_wrapper(Of WRITER,
 
         Private Sub init_statements(Of T As __do(Of vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)))) _
                                    (ByVal p As STATEMENTS_IMPL)
-            Dim v As vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)) = Nothing
-            v = +alloc(Of T)()
+            Dim v As vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)) = +alloc(Of T)()
             Dim i As UInt32 = 0
             While i < v.size()
                 v(i)(p, w)
@@ -126,11 +128,7 @@ Public Class code_gen_rule_wrapper(Of WRITER,
         End Sub
     End Class
 
-    Public Shared Function build(ByVal root As typed_node, ByVal o As WRITER) As Boolean
-        Return New builder().build(root, o)
-    End Function
-
-    Public Shared Function parse(ByVal input As String, ByVal o As WRITER) As Boolean
+    Private Shared Function parse(ByVal input As String, ByVal o As WRITER, ByVal internal As Boolean) As Boolean
         assert(Not input.null_or_whitespace())
         assert(Not o Is Nothing)
         Dim r As typed_node = Nothing
@@ -138,7 +136,21 @@ Public Class code_gen_rule_wrapper(Of WRITER,
             Return False
         End If
         assert(Not r Is Nothing)
-        Return build(r, o)
+        Dim b As builder = thread_static_implementation_of(Of builder).resolve()
+        If internal Then
+            Return b.build(r, o, False)
+        End If
+        Return b.build(r, o, True)
+    End Function
+
+    Public Shared Function internal_parse(ByVal input As String, ByVal o As WRITER) As Boolean
+        Return parse(input, o, True)
+    End Function
+
+    Public Shared Function parse(ByVal input As String, ByVal o As WRITER) As Boolean
+        Using thread_static_implementation_of(Of builder).scoped_register(New builder())
+            Return parse(input, o, False)
+        End Using
     End Function
 
     Public MustInherit Class parse_wrapper
@@ -160,20 +172,17 @@ Public Class code_gen_rule_wrapper(Of WRITER,
 
         Public Function parse(ByVal input As String, ByVal e As exportable) As Boolean
             assert(Not e Is Nothing)
-            Dim o As WRITER = Nothing
-            o = alloc(Of WRITER)()
-            If Not code_gen_rule_wrapper(Of WRITER,
-                                            PARAMETERS,
-                                            CODE_GENS_IMPL,
-                                            STATEMENTS_IMPL,
-                                            _nlexer_rule,
-                                            _syntaxer_rule,
-                                            _prefixes,
-                                            _suffixes,
-                                            _code_gens).parse(input, o) Then
-                Return False
-            End If
-            Return import(e, o)
+            Dim o As WRITER = alloc(Of WRITER)()
+            Return code_gen_rule_wrapper(Of WRITER,
+                                        PARAMETERS,
+                                        CODE_GENS_IMPL,
+                                        STATEMENTS_IMPL,
+                                        _nlexer_rule,
+                                        _syntaxer_rule,
+                                        _prefixes,
+                                        _suffixes,
+                                        _code_gens).parse(input, o) AndAlso
+                   import(e, o)
         End Function
 
         Protected MustOverride Function import(ByVal e As exportable, ByVal o As WRITER) As Boolean

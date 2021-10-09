@@ -52,6 +52,7 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="argument_setter_test.vb" />
     <Compile Include="argument_test.vb" />
     <Compile Include="filtered_var_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

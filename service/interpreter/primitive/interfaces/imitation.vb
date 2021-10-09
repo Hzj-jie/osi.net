@@ -15,6 +15,8 @@ Namespace primitive
         Sub pop_stack()
         Sub store_state()
         Sub restore_state()
+        Function alloc(ByVal size As UInt64) As heap_ref
+        Sub dealloc(ByVal pos As heap_ref)
         Overloads Sub instruction_ref(ByVal v As Int64)  ' data_ref.offset() returns int64
         Overloads Sub carry_over(ByVal v As Boolean)
         Overloads Sub divided_by_zero(ByVal v As Boolean)
@@ -37,8 +39,7 @@ Namespace primitive
         <Extension()> Public Function access_stack_as_uint32(ByVal this As imitation, ByVal p As data_ref) As UInt32
             assert(Not this Is Nothing)
             Dim o As Boolean = False
-            Dim r As UInt32 = 0
-            r = this.convert_stack_to_uint32(p, o)
+            Dim r As UInt32 = this.convert_stack_to_uint32(p, o)
             this.carry_over(o)
             Return r
         End Function
@@ -46,8 +47,7 @@ Namespace primitive
         <Extension()> Public Function access_stack_as_uint64(ByVal this As imitation, ByVal p As data_ref) As UInt64
             assert(Not this Is Nothing)
             Dim o As Boolean = False
-            Dim r As UInt64 = 0
-            r = this.convert_stack_to_uint64(p, o)
+            Dim r As UInt64 = this.convert_stack_to_uint64(p, o)
             this.carry_over(o)
             Return r
         End Function
@@ -56,13 +56,36 @@ Namespace primitive
             Return this.access_stack_as_uint64(data_ref.rel(0))
         End Function
 
+        <Extension()> Public Function access_stack_as_heap_ref(ByVal this As imitation, ByVal p As data_ref) As heap_ref
+            Return heap_ref.of_address(this.access_stack_as_uint64(p))
+        End Function
+
+        <Extension()> Public Function access_heap(ByVal this As imitation, ByVal p As data_ref) As ref(Of Byte())
+            Return this.access_heap(this.access_stack_as_heap_ref(p))
+        End Function
+
+        <Extension()> Public Function access_heap_as_uint32(ByVal this As imitation, ByVal p As heap_ref) As UInt32
+            assert(Not this Is Nothing)
+            Dim o As Boolean = False
+            Dim r As UInt32 = this.convert_heap_to_uint32(p, o)
+            this.carry_over(o)
+            Return r
+        End Function
+
+        <Extension()> Public Function access_heap_as_uint64(ByVal this As imitation, ByVal p As heap_ref) As UInt64
+            assert(Not this Is Nothing)
+            Dim o As Boolean = False
+            Dim r As UInt64 = this.convert_heap_to_uint64(p, o)
+            this.carry_over(o)
+            Return r
+        End Function
+
         <Extension()> Public Function access_stack_as_uint32(ByVal this As imitation,
                                                              ByVal p1 As data_ref,
                                                              ByVal p2 As data_ref,
                                                              ByVal ParamArray ps() As data_ref) As UInt32()
             assert(Not this Is Nothing)
-            Dim r() As UInt32 = Nothing
-            ReDim r(CInt(array_size(ps)) + 1)
+            Dim r(CInt(array_size(ps)) + 1) As UInt32
             For i As Int32 = 0 To CInt(array_size(ps)) + 1
                 Dim o As Boolean = False
                 If i = 0 Then

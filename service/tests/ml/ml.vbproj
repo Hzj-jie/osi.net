@@ -54,6 +54,7 @@
     <Compile Include="combinatories_test.vb" />
     <Compile Include="exponential_distribution\estimator_confidence_test.vb" />
     <Compile Include="exponential_distribution\estimator_estimate_test.vb" />
+    <Compile Include="mean_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -75,13 +76,16 @@
     <Compile Include="normal_distribution\possibility_test.vb" />
     <Compile Include="onebound\evaluator_test.vb" />
     <Compile Include="onebound\model_test.vb" />
+    <Compile Include="onebound\selector_test.vb" />
     <Compile Include="onebound\trainer_test.vb" />
     <Compile Include="percentile\filter_test.vb" />
+    <Compile Include="percentile\ranking_test.vb" />
     <Compile Include="permutations_test.vb" />
     <Compile Include="wordbreaker\cjk\evaluator_test.vb" />
     <Compile Include="wordbreaker\cjk\model_test.vb" />
     <Compile Include="wordbreaker\cjk\trainer_test.vb" />
     <Compile Include="wordtracer\cjk\breaking_word_test.vb" />
+    <Compile Include="wordtracer\cjk\coupling_ratio_test.vb" />
     <Compile Include="wordtracer\cjk\oneplus_test.vb" />
     <Compile Include="wordtracer\cjk\tracerall_test.vb" />
     <Compile Include="wordtracer\cjk\tracer_test.vb" />

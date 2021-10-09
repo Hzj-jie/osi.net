@@ -64,7 +64,8 @@ Public NotInheritable Class vector(Of T)
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As T)
-            replace(p, copy_no_error(value))
+            assert(p < size())
+            v.set(p, copy_no_error(value))
         End Set
     End Property
 

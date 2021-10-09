@@ -10,23 +10,21 @@ Partial Public NotInheritable Class var
     Private Function bind(ByVal i As String) As Boolean
         If String.IsNullOrEmpty(i) Then
             Return False
-        Else
-            Dim it As map(Of String, vector(Of String)).iterator = Nothing
-            it = raw.begin()
-            While it <> raw.end()
-                If strsame(i, (+it).first, strlen((+it).first), c.case_sensitive) Then
-                    If c.case_sensitive Then
-                        binded(i).push_back((+it).second)
-                    Else
-                        binded(strtolower(i)).push_back((+it).second)
-                    End If
-                    raw.erase(it)
-                    Return True
-                End If
-                it += 1
-            End While
-            Return False
         End If
+        Dim it As map(Of String, vector(Of String)).iterator = raw.begin()
+        While it <> raw.end()
+            If strsame(i, (+it).first, strlen((+it).first), c.case_sensitive) Then
+                If c.case_sensitive Then
+                    binded(i).push_back((+it).second)
+                Else
+                    binded(strtolower(i)).push_back((+it).second)
+                End If
+                raw.erase(it)
+                Return True
+            End If
+            it += 1
+        End While
+        Return False
     End Function
 
     Public Function bind(ByVal ParamArray s() As String) As Boolean

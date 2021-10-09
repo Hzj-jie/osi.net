@@ -6,7 +6,7 @@ Option Strict On
 Imports System.Text
 Imports osi.root.constants
 
-<global_init(global_init_level.foundamental)>
+<global_init(global_init_level.functor)>
 Friend Module _caster_registry
     Sub New()
         caster.register(Function(ByVal i As String) As StringBuilder

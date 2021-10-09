@@ -69,6 +69,10 @@ const char* types[] = {"Decimal",
                      "            Return False\n" \
                      "        End If\n" \
                      "        Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0\n"
+#define FIRST        "        assert(Not i.isemptyarray())\n" \
+                     "        Return i(0)\n"
+#define LAST         "        assert(Not i.isemptyarray())\n" \
+                     "        Return i(i.array_size_i() - 1)\n"
 
 int main(int argc, char* argv[])
 {
@@ -210,6 +214,22 @@ int main(int argc, char* argv[])
                     "    End Function\n\n",
                     types[i],
                     types[i]);
+            fprintf(fo,
+                    "    <Extension()>\n"
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+                    "    Public Function first(ByVal i() As %s) As %s\n"
+                    FIRST
+                    "    End Function\n\n",
+                    types[i],
+                    types[i]);
+            fprintf(fo,
+                    "    <Extension()>\n"
+                    "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+                    "    Public Function last(ByVal i() As %s) As %s\n"
+                    LAST
+                    "    End Function\n\n",
+                    types[i],
+                    types[i]);
         }
         fputs("#End If\n\n", fo);
 
@@ -320,6 +340,18 @@ int main(int argc, char* argv[])
               fo);
         fputs("    <Extension()>\n"
               "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function first(Of T)(ByVal i() As T) As T\n"
+              FIRST
+              "    End Function\n\n",
+              fo);
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function last(Of T)(ByVal i() As T) As T\n"
+              LAST
+              "    End Function\n\n",
+              fo);
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function to_strings(ByVal i() As Object) As String()\n"
               TO_STRINGS_1
               "    End Function\n\n",
@@ -340,6 +372,18 @@ int main(int argc, char* argv[])
               "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
               "    Public Function end_with(ByVal first() As Object, ByVal second() As Object) As Boolean\n"
               END_WITH
+              "    End Function\n\n",
+              fo);
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function first(ByVal i() As Object) As Object\n"
+              FIRST
+              "    End Function\n\n",
+              fo);
+        fputs("    <Extension()>\n"
+              "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
+              "    Public Function last(ByVal i() As Object) As Object\n"
+              LAST
               "    End Function\n\n",
               fo);
 

@@ -29,7 +29,7 @@ Public NotInheritable Class singleton_device_pool(Of T)
     End Sub
 
     Public Sub New(ByVal d As idevice(Of T))
-        Me.New(d, assert_return(Not d Is Nothing, d).GetType().Name())
+        Me.New(d, assert_which.of(d).is_not_null().GetType().Name())
     End Sub
 
     Protected Overrides Function enable_checker() As Boolean

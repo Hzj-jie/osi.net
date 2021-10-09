@@ -128,8 +128,11 @@ Public Module _memory_stream
 
     <Extension()> Public Function dump_to_file(ByVal this As MemoryStream, ByVal o As String) As Boolean
         assert(Not this Is Nothing)
+        assert(Not memory_stream.is_wrapper(this))
         Try
-            File.WriteAllBytes(o, this.ToArray())
+            Using fs As New FileStream(o, FileMode.Create)
+                this.WriteTo(fs)
+            End Using
             Return True
         Catch ex As Exception
             raise_error(error_type.warning, "failed to write to ", o, ", ex ", ex)
@@ -157,7 +160,10 @@ Public Module _memory_stream
     <Extension()> Public Function read_from_file(ByVal this As MemoryStream, ByVal i As String) As Boolean
         assert(Not this Is Nothing)
         Try
-            Return this.write(File.ReadAllBytes(i))
+            Using fs As New FileStream(i, FileMode.Open, FileAccess.Read)
+                fs.CopyTo(this)
+            End Using
+            Return True
         Catch ex As Exception
             raise_error(error_type.warning, "failed to read from ", i, ", ex ", ex)
         End Try
@@ -425,4 +431,136 @@ Public NotInheritable Class memory_stream
         assert([New](i, o))
         Return o
     End Function
+
+    Public Shared Function write_file_wrapped(ByVal i As String, ByRef o As MemoryStream) As Boolean
+        Try
+            o = wrap(New FileStream(i, FileMode.Create, FileAccess.Write))
+            Return True
+        Catch ex As Exception
+            raise_error(error_type.warning, "failed to write to ", o, ", ex ", ex)
+        End Try
+        Return False
+    End Function
+
+    Public Shared Function write_file_wrapped(ByVal i As String) As MemoryStream
+        Dim o As MemoryStream = Nothing
+        assert(write_file_wrapped(i, o))
+        Return o
+    End Function
+
+    ' Wraps a regular Stream into a MemoryStream which will not be backed by memory. This is purely for edge cases and
+    ' should not be used commonly.
+    Public Shared Function wrap(ByVal o As Stream) As MemoryStream
+        Return New forwarder(o)
+    End Function
+
+    Public Shared Function is_wrapper(ByVal i As MemoryStream) As Boolean
+        Return Not i Is Nothing AndAlso i.GetType().Equals(GetType(forwarder))
+    End Function
+
+    Private NotInheritable Class forwarder
+        Inherits MemoryStream
+
+        Private ReadOnly o As Stream
+
+        Public Sub New(ByVal o As Stream)
+            assert(Not o Is Nothing)
+            Me.o = o
+        End Sub
+
+        Public Overrides ReadOnly Property CanRead() As Boolean
+            Get
+                Return o.CanRead()
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property CanSeek() As Boolean
+            Get
+                Return o.CanSeek()
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property CanWrite() As Boolean
+            Get
+                Return o.CanWrite()
+            End Get
+        End Property
+
+        Public Overrides Property Capacity() As Int32
+            Get
+                Return CInt(o.Length())
+            End Get
+            Set(ByVal value As Int32)
+                o.SetLength(value)
+            End Set
+        End Property
+
+        Public Overrides ReadOnly Property Length() As Int64
+            Get
+                Return o.Length()
+            End Get
+        End Property
+
+        Public Overrides Property Position() As Int64
+            Get
+                Return o.Position()
+            End Get
+            Set(ByVal value As Int64)
+                o.Position() = value
+            End Set
+        End Property
+
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            If disposing Then
+                o.Dispose()
+            End If
+        End Sub
+
+        Public Overrides Sub Flush()
+            o.Flush()
+        End Sub
+
+        Public Overrides Function GetBuffer() As Byte()
+            Throw New UnauthorizedAccessException()
+            Return Nothing
+        End Function
+
+        Public Overrides Function Read(ByVal buffer() As Byte, ByVal offset As Int32, ByVal count As Int32) As Int32
+            Return o.Read(buffer, offset, count)
+        End Function
+
+        Public Overrides Function ReadByte() As Int32
+            Return o.ReadByte()
+        End Function
+
+        Public Overrides Function Seek(ByVal offset As Int64, ByVal loc As SeekOrigin) As Int64
+            Return o.Seek(offset, loc)
+        End Function
+
+        Public Overrides Sub SetLength(ByVal value As Int64)
+            o.SetLength(value)
+        End Sub
+
+        Public Overrides Function ToArray() As Byte()
+            assert(o.Length() <= max_int32)
+            Dim m As New MemoryStream(CInt(o.Length()))
+            WriteTo(m)
+            Return m.ToArray()
+        End Function
+
+        Public Overrides Sub Write(ByVal buffer() As Byte, ByVal offset As Int32, ByVal count As Int32)
+            o.Write(buffer, offset, count)
+        End Sub
+
+        Public Overrides Sub WriteByte(ByVal value As Byte)
+            o.WriteByte(value)
+        End Sub
+
+        Public Overrides Sub WriteTo(ByVal stream As Stream)
+            Dim p As Int64 = Position()
+            o.Position() = 0
+            o.CopyTo(stream)
+            o.Position() = p
+        End Sub
+    End Class
 End Class

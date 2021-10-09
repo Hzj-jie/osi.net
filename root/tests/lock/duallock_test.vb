@@ -36,7 +36,7 @@ Public NotInheritable Class duallock_test
         End Sub
 
         Private Shared Sub _sleep()
-            sleep(rnd_int(0, CInt(two_timeslice_length_ms)))
+            sleep(rnd_int(0, CInt(2 * timeslice_length_ms)))
         End Sub
 
         Private Function write() As Boolean

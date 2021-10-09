@@ -9,27 +9,28 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class var
     Private Sub parse_one(ByVal s As String)
-        If Not String.IsNullOrEmpty(s) Then
-            Dim a As String = Nothing
-            Dim b As String = Nothing
-            If c.is_switcher(s, a) Then
-                For j As Int32 = 0 To strlen_i(a) - 1
-                    If raw.find(a(j)) = raw.end() Then
-                        raw.insert(a(j), Nothing)
-                    End If
-                Next
-            ElseIf c.is_full_switcher(s, a) Then
-                If raw.find(a) = raw.end() Then
-                    raw.insert(a, Nothing)
+        If String.IsNullOrEmpty(s) Then
+            Return
+        End If
+        Dim a As String = Nothing
+        Dim b As String = Nothing
+        If c.is_switcher(s, a) Then
+            For j As Int32 = 0 To strlen_i(a) - 1
+                If raw.find(a(j)) = raw.end() Then
+                    raw.insert(a(j), Nothing)
                 End If
-            ElseIf c.is_arg(s, a, b) Then
-                'priority of switcher is higher than normal value
-                If Not raw(a) Is Nothing Then
-                    raw(a).push_back(b)
-                End If
-            Else
-                others.push_back(s)
+            Next
+        ElseIf c.is_full_switcher(s, a) Then
+            If raw.find(a) = raw.end() Then
+                raw.insert(a, Nothing)
             End If
+        ElseIf c.is_arg(s, a, b) Then
+            'priority of switcher is higher than normal value
+            If Not raw(a) Is Nothing Then
+                raw(a).push_back(b)
+            End If
+        Else
+            others.push_back(s)
         End If
     End Sub
 

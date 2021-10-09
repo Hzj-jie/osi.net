@@ -1,8 +1,8 @@
 ﻿
-Public Module _control_c_trace
-    Public ReadOnly control_c_trace As Boolean = False
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-    Sub New()
-        control_c_trace = env_bool(env_keys("control", "c", "trace"))
-    End Sub
+Public Module _control_c_trace
+    Public ReadOnly control_c_trace As Boolean = env_bool(env_keys("control", "c", "trace"))
 End Module

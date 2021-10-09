@@ -7,6 +7,8 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _console_key_info_mapping
+    Public ReadOnly console_key_info_mapping_height As Int32 = array_size_i(console_key_info_mapping)
+    Public ReadOnly console_key_info_mapping_width As Int32 = console_key_info_mapping.GetLength(1)
     Public ReadOnly console_key_min As ConsoleKey
     Public ReadOnly console_key_min_str As String
     Public ReadOnly console_key_max As ConsoleKey
@@ -15,29 +17,22 @@ Public Module _console_key_info_mapping
     Public ReadOnly console_key_max_char_int As Int32
     Public ReadOnly console_key_min_char As Char
     Public ReadOnly console_key_min_char_int As Int32
-    Public ReadOnly console_key_info_mapping_height As Int32
-    Public ReadOnly console_key_info_mapping_width As Int32
 
     Sub New()
-        console_key_info_mapping_height = array_size_i(console_key_info_mapping)
-        console_key_info_mapping_width = console_key_info_mapping.GetLength(1)
-
-        Dim cmin As ConsoleKey = Nothing
+        Dim cmin As ConsoleKey = ConsoleKey.A
         Dim cmins As String = Nothing
-        Dim cmax As ConsoleKey = Nothing
+        Dim cmax As ConsoleKey = ConsoleKey.A
         Dim cmaxs As String = Nothing
-        cmin = ConsoleKey.A
-        cmax = ConsoleKey.A
-        assert(enum_def(Of ConsoleKey).foreach(Sub(x As ConsoleKey, y As String)
-                                                   If x.as_int32() < cmin.as_int32() Then
-                                                       cmin = x
-                                                       cmins = y
-                                                   End If
-                                                   If x.as_int32() > cmax.as_int32() Then
-                                                       cmax = x
-                                                       cmaxs = y
-                                                   End If
-                                               End Sub))
+        enum_def(Of ConsoleKey).foreach(Sub(ByVal x As ConsoleKey, ByVal y As String)
+                                            If x.as_int32() < cmin.as_int32() Then
+                                                cmin = x
+                                                cmins = y
+                                            End If
+                                            If x.as_int32() > cmax.as_int32() Then
+                                                cmax = x
+                                                cmaxs = y
+                                            End If
+                                        End Sub)
         assert(Not String.IsNullOrEmpty(cmins) AndAlso Not String.IsNullOrEmpty(cmaxs))
         console_key_min = cmin
         console_key_min_str = cmins

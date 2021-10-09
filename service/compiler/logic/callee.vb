@@ -74,11 +74,11 @@ Namespace logic
             ' caller should setup the stack.
             ' Note, variables are using reverse order to match the stack, and here the logic "define" without "push"ing
             ' to use variables from the caller side.
-            If Not return_value_of.define(scope, name, type) Then
+            If Not return_value.define(scope, name, type) Then
                 Return False
             End If
             For i As Int32 = 0 To array_size_i(parameters) - 1
-                If Not scope.define(parameters(i).first, parameters(i).second) Then
+                If Not scope.define_stack(parameters(i).first, parameters(i).second) Then
                     Return False
                 End If
             Next

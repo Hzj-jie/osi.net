@@ -22,7 +22,7 @@ Partial Public Class cluster
     Private Shared ReadOnly DATA_OFFSET As UInt32 = CHECKSUM_OFFSET + CHECKSUM_SIZE
     Private Shared ReadOnly STRUCTURE_SIZE As UInt32 = DATA_OFFSET
     Private Shared ReadOnly MIN_CLUSTER_LENGTH As UInt32 =
-        assert_return(DISK_CLUSTER_SIZE > DATA_OFFSET, DISK_CLUSTER_SIZE - DATA_OFFSET)
+        assert_which.of(CUInt(DISK_CLUSTER_SIZE)).greater_than(DATA_OFFSET) - DATA_OFFSET
 
     Private Shared Sub verify_constants()
         assert(Not valid_id(INVALID_ID))

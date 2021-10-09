@@ -9,13 +9,8 @@ Partial Public NotInheritable Class nlexer
     Public NotInheritable Class digit_matcher
         Inherits single_char_matcher
 
-        Private Shared ReadOnly instance As digit_matcher
-        Private Shared ReadOnly reverse As reverse_matcher
-
-        Shared Sub New()
-            instance = New digit_matcher()
-            reverse = New reverse_matcher(instance)
-        End Sub
+        Private Shared ReadOnly instance As New digit_matcher()
+        Private Shared ReadOnly reverse As New reverse_matcher(instance)
 
         Private Sub New()
         End Sub

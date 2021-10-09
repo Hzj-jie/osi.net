@@ -19,11 +19,8 @@ Namespace counter
             Return strcat(short_time(), separator, name, separator, Convert.ToString(count), newline.incode())
         End Function
 
-        Sub New()
-            stopwatch.repeat(write_frequence_milliseconds, AddressOf write)
-        End Sub
-
         Private Sub init()
+            stopwatch.repeat(write_frequence_milliseconds, AddressOf write)
         End Sub
 
         Private Sub write(ByVal cr As counter_record)

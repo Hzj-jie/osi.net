@@ -9,7 +9,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 ' Prefer to use thread_random.
-<global_init(global_init_level.foundamental)>
+<global_init(global_init_level.runtime_checkers)>
 Public Module _rnd
     Private Sub init()
         assert(-max_double >= min_double)

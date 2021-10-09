@@ -9,6 +9,7 @@ Public NotInheritable Class [##FILENAME##](Of T)
 
 ##INCLUDE set.container_operator.vbp
 ##INCLUDE set.compare.vbp
+##INCLUDE set.operators.vbp
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Shadows Function move(ByVal v As [##FILENAME##](Of T)) As [##FILENAME##](Of T)

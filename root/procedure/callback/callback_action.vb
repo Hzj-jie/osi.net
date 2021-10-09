@@ -4,8 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.envs
 
 Partial Public Class callback_action

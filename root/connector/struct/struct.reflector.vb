@@ -16,7 +16,7 @@ Partial Public Class struct(Of T)
             Public ReadOnly setter As Action(Of Object, Object)
 
             Public Sub New(ByVal fs As FieldInfo)
-                MyBase.New(assert_not_nothing_return(fs).FieldType(), assert_not_nothing_return(fs).Name())
+                MyBase.New(assert_which.of(fs).is_not_null().FieldType(), assert_which.of(fs).is_not_null().Name())
                 getter = AddressOf fs.GetValue
                 setter = AddressOf fs.SetValue
                 assert(Not getter Is Nothing)

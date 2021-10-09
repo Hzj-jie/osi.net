@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.lock.slimlock
 
 Public Structure type_lock(Of T As islimlock, TYPE)

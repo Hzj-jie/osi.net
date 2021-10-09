@@ -68,7 +68,7 @@ Public NotInheritable Class control_c
         Return _exit_code
     End Function
 
-    Shared Sub New()
+    Private Shared Sub init()
         AddHandler Console.CancelKeyPress,
                    Sub(ByVal sender As Object, ByVal arg As ConsoleCancelEventArgs)
                        If Not enabled() Then
@@ -89,9 +89,6 @@ Public NotInheritable Class control_c
                        End If
                        _pressed = False
                    End Sub
-    End Sub
-
-    Private Shared Sub init()
     End Sub
 
     Private Sub New()

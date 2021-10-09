@@ -3,13 +3,22 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.interpreter.primitive
 Imports statements = osi.service.compiler.rewriters.statements
 
 Public NotInheritable Class b2style
-    Inherits rewriter_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, rewriter_gens_t)
+    Inherits rewriter_rule_wrapper(Of parameters_t,
+                                      nlexer_rule_t,
+                                      syntaxer_rule_t,
+                                      prefixes_t,
+                                      suffixes_t,
+                                      rewriter_gens_t)
+    Public NotInheritable Class parameters_t
+        Public ReadOnly defines As New [set](Of String)()
+    End Class
 
     Public NotInheritable Class nlexer_rule_t
         Inherits __do(Of Byte())
@@ -28,59 +37,29 @@ Public NotInheritable Class b2style
     End Class
 
     Public NotInheritable Class prefixes_t
-        Inherits __do(Of vector(Of Action(Of statements, rewriter_rule_wrapper)))
+        Inherits __do(Of vector(Of Action(Of statements, parameters_t)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, rewriter_rule_wrapper))
+        Protected Overrides Function at() As vector(Of Action(Of statements, parameters_t))
             Return vector.of(
                        ignore_parameters(AddressOf prefix.register))
         End Function
     End Class
 
     Public NotInheritable Class suffixes_t
-        Inherits __do(Of vector(Of Action(Of statements, rewriter_rule_wrapper)))
+        Inherits __do(Of vector(Of Action(Of statements, parameters_t)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, rewriter_rule_wrapper))
-            Return New vector(Of Action(Of statements, rewriter_rule_wrapper))()
+        Protected Overrides Function at() As vector(Of Action(Of statements, parameters_t))
+            Return New vector(Of Action(Of statements, parameters_t))()
         End Function
     End Class
 
     Public NotInheritable Class rewriter_gens_t
-        Inherits __do(Of vector(Of Action(Of rewriters, rewriter_rule_wrapper)))
+        Inherits __do(Of vector(Of Action(Of rewriters, parameters_t)))
 
-        Protected Overrides Function at() As vector(Of Action(Of rewriters, rewriter_rule_wrapper))
+        ' TODO: Remove unexpected types.
+        Protected Overrides Function at() As vector(Of Action(Of rewriters, parameters_t))
             Return vector.of(
-                       default_registerer("less-or-equal"),
-                       default_registerer("greater-or-equal"),
-                       default_registerer("equal"),
-                       default_registerer("less-than"),
-                       default_registerer("greater-than"),
-                       default_registerer("add"),
-                       default_registerer("minus"),
-                       default_registerer("multiply"),
-                       default_registerer("divide"),
-                       default_registerer("mod"),
-                       default_registerer("power"),
-                       default_registerer("bit-and"),
-                       default_registerer("bit-or"),
-                       default_registerer("and"),
-                       default_registerer("or"),
-                       default_registerer("not"),
-                       default_registerer("left-shift"),
-                       default_registerer("right-shift"),
-                       default_registerer("self-inc"),
-                       default_registerer("self-dec"),
-                       default_registerer("self-add"),
-                       default_registerer("self-minus"),
-                       default_registerer("self-multiply"),
-                       default_registerer("self-divide"),
-                       default_registerer("self-mod"),
-                       default_registerer("self-power"),
-                       default_registerer("self-bit-and"),
-                       default_registerer("self-bit-or"),
-                       default_registerer("self-and"),
-                       default_registerer("self-or"),
-                       default_registerer("self-left-shift"),
-                       default_registerer("self-right-shift"),
+                       default_registerer("root-type"),
  _
                        default_registerer("kw-if"),
                        default_registerer("kw-else"),
@@ -91,22 +70,17 @@ Public NotInheritable Class b2style
                        default_registerer("kw-return"),
                        default_registerer("kw-break"),
                        default_registerer("kw-logic"),
-                       default_registerer("blank"),
                        default_registerer("bool"),
                        default_registerer("integer"),
                        default_registerer("biguint"),
                        default_registerer("ufloat"),
                        default_registerer("string"),
+                       default_registerer("semi-colon"),
                        default_registerer("comma"),
-                       default_registerer("colon"),
-                       default_registerer("question-mark"),
                        default_registerer("start-paragraph"),
                        default_registerer("end-paragraph"),
                        default_registerer("start-bracket"),
                        default_registerer("end-bracket"),
-                       default_registerer("start-square-bracket"),
-                       default_registerer("end-square-bracket"),
-                       default_registerer("semi-colon"),
                        default_registerer("assignment"),
                        ignore_parameters(AddressOf name.register),
  _
@@ -116,7 +90,8 @@ Public NotInheritable Class b2style
                        default_registerer("param-with-comma"),
                        default_registerer("param"),
                        default_registerer("value-definition-with-semi-colon"),
-                       ignore_parameters(AddressOf kw_namespace.register),
+                       ignore_parameters(AddressOf namespace_.register),
+                       ignore_parameters(AddressOf namespace_content.register),
                        default_registerer("paragraph"),
                        default_registerer("sentence"),
                        default_registerer("sentence-with-semi-colon"),
@@ -126,8 +101,9 @@ Public NotInheritable Class b2style
                        default_registerer("value-clause"),
                        ignore_parameters(AddressOf self_value_clause.register),
                        default_registerer("return-clause"),
-                       default_registerer("ignore-return-function-call"),
+                       default_registerer("ignore-result-function-call"),
                        default_registerer("logic"),
+                       default_registerer("logic-with-semi-colon"),
                        default_registerer("condition"),
                        default_registerer("while"),
                        default_registerer("for-loop"),
@@ -144,7 +120,23 @@ Public NotInheritable Class b2style
                        default_registerer("variable-name"),
                        default_registerer("function-call"),
                        default_registerer("value-list"),
-                       default_registerer("value-with-comma")
+                       default_registerer("value-with-comma"),
+ _
+                       default_registerer("kw-include"),
+                       default_registerer("include"),  ' implement include for b2style to cover b2style code.
+                       default_registerer("include-with-string"),
+                       default_registerer("include-with-file"),
+ _
+                       default_registerer("kw-ifndef"),
+                       default_registerer("kw-define"),
+                       default_registerer("kw-endif"),
+                       default_registerer("ifndef_wrapped"),
+                       default_registerer("define"),
+ _
+                       default_registerer("kw-typedef"),
+                       default_registerer("typedef-type"),
+                       default_registerer("typedef"),
+                       default_registerer("typedef-with-semi-colon")
                    )
         End Function
     End Class
@@ -158,7 +150,8 @@ Public NotInheritable Class b2style
     End Function
 
     Public NotInheritable Shadows Class parse_wrapper
-        Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
+        Inherits rewriter_rule_wrapper(Of parameters_t,
+                                          nlexer_rule_t,
                                           syntaxer_rule_t,
                                           prefixes_t,
                                           suffixes_t,
@@ -169,8 +162,7 @@ Public NotInheritable Class b2style
         End Sub
 
         Protected Overrides Function logic_parse(ByVal s As String, ByRef e() As logic.exportable) As Boolean
-            Dim w As logic.writer = Nothing
-            w = New logic.writer()
+            Dim w As New logic.writer()
             Dim v As vector(Of logic.exportable) = Nothing
             If bstyle.parse(s, w) AndAlso w.dump(functions, v.renew()) Then
                 e = +v

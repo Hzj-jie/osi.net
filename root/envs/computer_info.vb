@@ -1,10 +1,10 @@
 ﻿
-Public Module _computer_info
-    Public ReadOnly processor_architecture As String
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-    Sub New()
-        processor_architecture = Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE")
-    End Sub
+Public Module _computer_info
+    Public ReadOnly processor_architecture As String = Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE")
 
     'for mono
     Public Function available_physical_memory() As UInt64

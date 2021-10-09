@@ -1,12 +1,12 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.lock
 
-Public Class type_counter(Of T)
-    Private Shared ReadOnly c As atomic_int
-
-    Shared Sub New()
-        c = New atomic_int()
-    End Sub
+Public NotInheritable Class type_counter(Of T)
+    Private Shared ReadOnly c As New atomic_int()
 
     Public Shared Function count() As UInt32
         Return CUInt(+c)
@@ -15,4 +15,7 @@ Public Class type_counter(Of T)
     Public Shared Function next_id() As UInt32
         Return CUInt(c.increment())
     End Function
+
+    Private Sub New()
+    End Sub
 End Class

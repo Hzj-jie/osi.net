@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
@@ -17,35 +21,35 @@ Public Module _file_system
 
     Public ReadOnly file_system_case_sensitive As Boolean
 
-    Sub New()
-        Dim tf As String = Nothing
-        tf = guid_str()
-        File.WriteAllText(strtoupper(tf), character.null)
-        file_system_case_sensitive = Not File.Exists(strtolower(tf))
-        File.Delete(strtoupper(tf))
-    End Sub
+    Private Function calculate_file_system_case_sensitive() As Boolean
+        Dim tf As String = guid_str()
+        Try
+            File.WriteAllText(strtoupper(tf), character.null)
+            Return Not File.Exists(strtolower(tf))
+        Finally
+            File.Delete(strtoupper(tf))
+        End Try
+    End Function
 
     <Extension()> Public Function full_path(ByVal this As String, ByRef output As String) As Boolean
         If this Is Nothing Then
             'avoid to have an exception
             Return False
-        Else
-            Try
-                output = Path.GetFullPath(this)
-                Return True
-            Catch
-                Return False
-            End Try
         End If
+        Try
+            output = Path.GetFullPath(this)
+            Return True
+        Catch
+            Return False
+        End Try
     End Function
 
     <Extension()> Public Function full_path(ByVal this As String) As String
         Dim o As String = Nothing
         If full_path(this, o) Then
             Return o
-        Else
-            Return Nothing
         End If
+        Return Nothing
     End Function
 
     <Extension()> Public Sub path_compare(ByVal this As String,

@@ -7,13 +7,11 @@ Imports System.Net
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
-Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.template
 Imports osi.root.utt
 Imports osi.service.commander
-Imports osi.service.convertor
 Imports osi.service.device
 Imports tcp = osi.service.tcp
 Imports http = osi.service.http
@@ -79,8 +77,10 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
 
     Public Sub New()
         MyBase.New(If(connection_count > 1,
-                      multi_procedure(repeat(New commander_case(), If(isdebugbuild(), 1, 2) * test_size), connection_count),
-                      repeat(New commander_case(), If(isdebugbuild(), 1, 2) * test_size)))
+                      direct_cast(Of [case])(multi_procedure(repeat(New commander_case(),
+                                                                    If(isdebugbuild(), 1, 2) * test_size),
+                                                             connection_count)),
+                      direct_cast(Of [case])(repeat(New commander_case(), If(isdebugbuild(), 1, 2) * test_size))))
         dispatcher = New dispatcher()
     End Sub
 
@@ -307,7 +307,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                                           End Select
                                           trigger()
                                       Else
-                                          assert_waitfor(sixteen_timeslice_length_ms)
+                                          assert_waitfor(16 * timeslice_length_ms)
                                       End If
                                       Return goto_end()
                                   End Function)

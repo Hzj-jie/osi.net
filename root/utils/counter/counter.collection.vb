@@ -5,18 +5,13 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.lock
 
 Namespace counter
     Public Module _counter_collection
-        Private ReadOnly v As vector(Of counter_record) = Nothing
+        Private ReadOnly v As New vector(Of counter_record)()
         Private l As duallock
-
-        Sub New()
-            v = New vector(Of counter_record)()
-        End Sub
 
         Friend Function counter(ByVal index As Int64) As counter_record
             l.reader_wait()

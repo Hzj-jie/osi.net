@@ -12,11 +12,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public Module _exportable
-        Private ReadOnly debug_dump As Boolean
-
-        Sub New()
-            debug_dump = env_bool(env_keys("logic", "debug", "dump"))
-        End Sub
+        Private ReadOnly debug_dump As Boolean = env_bool(env_keys("logic", "debug", "dump"))
 
         <Extension()> Public Function import(ByVal e As interpreter.primitive.exportable,
                                              ByVal scope As scope,
@@ -25,9 +21,8 @@ Namespace logic
             If scope Is Nothing Then
                 Return False
             End If
-            Dim o As vector(Of String) = Nothing
-            o = New vector(Of String)()
-            For i As Int32 = 0 To array_size_i(es) - 1
+            Dim o As New vector(Of String)()
+            For i As Int32 = 0 To es.Length() - 1
                 If es(i) Is Nothing Then
                     Return False
                 End If
@@ -35,10 +30,9 @@ Namespace logic
                     Return False
                 End If
             Next
-            Dim r As String = Nothing
-            r = o.str(character.newline)
+            Dim r As String = o.str(character.newline)
             If debug_dump Then
-                raise_error(error_type.user, "Debug dump of primitive ", r)
+                raise_error(error_type.user, "Debug dump of primitive ", character.newline, r)
             End If
             Return assert(e.import(r))
         End Function

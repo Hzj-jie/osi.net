@@ -29,7 +29,7 @@ Namespace logic
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not scope Is Nothing)
             Dim t As variable = Nothing
-            If variable.[New](scope, types, target, t) AndAlso
+            If variable.of_stack(scope, types, target, t) AndAlso
                t.is_assignable_from(data.value_bytes_size()) Then
                 o.emplace_back(instruction_builder.str(command.cpc, t, data))
                 Return True

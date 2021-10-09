@@ -10,6 +10,7 @@ Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.lock
 
+<global_init(global_init_level.threading_and_procedure)>
 Partial Public NotInheritable Class queue_runner
     Public Shared ReadOnly thread_count As UInt32 = determine_thread_count()
     Private Shared ReadOnly LENGTH As Int64 = counter.register_average_and_last_average("QUEUE_RUNNER_LENGTH")
@@ -19,7 +20,7 @@ Partial Public NotInheritable Class queue_runner
     Private Shared ReadOnly are As AutoResetEvent = If(busy_wait, Nothing, New AutoResetEvent(False))
     <ThreadStatic()> Private Shared current_thread As Boolean
 
-    Shared Sub New()
+    Private Shared Sub init()
         start()
         application_lifetime.stopping_handle(Sub()
                                                  If Not are Is Nothing Then

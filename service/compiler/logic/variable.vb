@@ -5,9 +5,9 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.service.interpreter.primitive
 
 Namespace logic
+    ' A variable in stack.
     Public NotInheritable Class variable
         Private ReadOnly scope As scope
         Public ReadOnly name As String
@@ -27,36 +27,56 @@ Namespace logic
             Me.size = size
         End Sub
 
-        Public Shared Function [New](ByVal scope As scope,
+        Private Shared Function [of](ByVal scope As scope,
                                      ByVal types As types,
                                      ByVal name As String,
+                                     ByVal type As String,
                                      ByRef o As variable) As Boolean
             assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
-            Dim type As String = Nothing
-            Dim ref As String = Nothing
-            If Not scope.export(name, ref) OrElse Not assert(scope.type(name, type)) Then
-                errors.variable_undefined(name)
-                Return False
-            End If
-
             If types Is Nothing Then
                 o = New variable(scope, name, type, [optional].empty(Of UInt32)())
                 Return True
             End If
             Dim size As UInt32 = 0
-            If Not types.retrieve(type, size) Then
-                errors.type_undefined(type, name)
-                Return False
-            End If
+            ' type should be checked when a variable is defined in the scope.
+            assert(types.retrieve(type, size))
             o = New variable(scope, name, type, [optional].of(size))
             Return True
         End Function
 
+        Public Shared Function of_heap(ByVal scope As scope,
+                                       ByVal types As types,
+                                       ByVal name As String,
+                                       ByRef o As variable) As Boolean
+            assert(Not scope Is Nothing)
+            assert(Not name.null_or_whitespace())
+            Dim type As String = Nothing
+            If Not scope.type(heaps.name_of(name), type) Then
+                errors.variable_undefined(name)
+                Return False
+            End If
+            Return [of](scope, types, name, type, o)
+        End Function
+
+        Public Shared Function of_stack(ByVal scope As scope,
+                                        ByVal types As types,
+                                        ByVal name As String,
+                                        ByRef o As variable) As Boolean
+            assert(Not scope Is Nothing)
+            assert(Not name.null_or_whitespace())
+            Dim v As scope.exported_stack_ref = Nothing
+            If Not scope.export(name, v) Then
+                errors.variable_undefined(name)
+                Return False
+            End If
+            Return [of](scope, types, name, v.type, o)
+        End Function
+
         ' Create a variable without retrieving @size from types. Consumers who use this constructor should not use
         ' is_assignable or similar functions.
-        Public Shared Function [New](ByVal scope As scope, ByVal name As String, ByRef o As variable) As Boolean
-            Return [New](scope, Nothing, name, o)
+        Public Shared Function of_stack(ByVal scope As scope, ByVal name As String, ByRef o As variable) As Boolean
+            Return of_stack(scope, Nothing, name, o)
         End Function
 
         Private Function is_zero_size() As Boolean
@@ -83,7 +103,7 @@ Namespace logic
             Return False
         End Function
 
-        Private Function is_assignable_from(ByVal source As variable) As Boolean
+        Public Function is_assignable_from(ByVal source As variable) As Boolean
             assert(Not source Is Nothing)
             assert(source.size)
             If is_assignable_from_size(+(source.size)) Then
@@ -139,23 +159,6 @@ Namespace logic
             End If
             errors.unassignable_variable_size(Me)
             Return False
-        End Function
-
-        Public Function copy_or_move_from(ByVal i As variable, ByVal ins As command, ByRef o As String) As Boolean
-            assert(Not i Is Nothing)
-            If is_assignable_from(i) Then
-                o = instruction_builder.str(ins, Me, i)
-                Return True
-            End If
-            Return False
-        End Function
-
-        Public Function copy_from(ByVal i As variable, ByRef o As String) As Boolean
-            Return copy_or_move_from(i, command.cp, o)
-        End Function
-
-        Public Function move_from(ByVal i As variable, ByRef o As String) As Boolean
-            Return copy_or_move_from(i, command.mov, o)
         End Function
 
         Public Function ref() As String

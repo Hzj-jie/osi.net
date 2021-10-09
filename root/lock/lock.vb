@@ -39,7 +39,7 @@ Public Structure lock(Of T As {Structure, islimlock})
         assert_T()
         Dim n As Int64 = Now().milliseconds()
         l.wait()
-        If Now().milliseconds() - n > half_timeslice_length_ms Then
+        If lock_tracer.wait_too_long(n) Then
             raise_error(error_type.performance,
                         callstack(),
                         " used ",

@@ -57,7 +57,6 @@
     <Compile Include="alloc_test.vb" />
     <Compile Include="array_behavior_test.vb" />
     <Compile Include="array_test.vb" />
-    <Compile Include="assert_test.vb" />
     <Compile Include="character_test.vb" />
     <Compile Include="comparable_behavior_test.vb" />
     <Compile Include="convert_tostring_behavior_test.vb" />
@@ -118,6 +117,7 @@
     <Compile Include="functor\bytes_serializer_container_test.vb" />
     <Compile Include="functor\bytes_serializer_test.vb" />
     <Compile Include="functor\json_serializer_test.vb" />
+    <Compile Include="functor\string_serializer_test.vb" />
     <Compile Include="gc_behavior_test.vb" />
     <Compile Include="generic_ctor_perf.vb" />
     <Compile Include="generic_perf.vb" />
@@ -163,6 +163,7 @@
     <Compile Include="npos_uint_perf_test.vb" />
     <Compile Include="npos_uint_test.vb" />
     <Compile Include="object_extensions_test.vb" />
+    <Compile Include="optional_parameter_perf_test.vb" />
     <Compile Include="out_generic_behavior_test.vb" />
     <Compile Include="overload_behavior_test.vb" />
     <Compile Include="ref_test.vb" />

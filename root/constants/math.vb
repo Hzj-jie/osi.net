@@ -4,25 +4,22 @@ Option Infer Off
 Option Strict On
 
 Public Module _math
-    Private ReadOnly _doubled_prime_sequence_int32_log2() As UInt32
-    Private ReadOnly _doubled_prime_sequence_int32_ln() As UInt32
-    Private ReadOnly _doubled_prime_sequence_int32_log3() As UInt32
-    Private ReadOnly _doubled_prime_sequence_int32_log4() As UInt32
-
-    Sub New()
-        _doubled_prime_sequence_int32_log2 = derived(Function(ByVal i As UInt32) As UInt32
-                                                         Return CUInt(Math.Log(i, 2))
-                                                     End Function)
-        _doubled_prime_sequence_int32_ln = derived(Function(ByVal i As UInt32) As UInt32
-                                                       Return CUInt(Math.Log(i))
-                                                   End Function)
-        _doubled_prime_sequence_int32_log3 = derived(Function(ByVal i As UInt32) As UInt32
-                                                         Return CUInt(Math.Log(i, 3))
-                                                     End Function)
-        _doubled_prime_sequence_int32_log4 = derived(Function(ByVal i As UInt32) As UInt32
-                                                         Return CUInt(Math.Log(i, 4))
-                                                     End Function)
-    End Sub
+    Private ReadOnly _doubled_prime_sequence_int32_log2() As UInt32 =
+        derived(Function(ByVal i As UInt32) As UInt32
+                    Return CUInt(Math.Log(i, 2))
+                End Function)
+    Private ReadOnly _doubled_prime_sequence_int32_ln() As UInt32 =
+        derived(Function(ByVal i As UInt32) As UInt32
+                    Return CUInt(Math.Log(i))
+                End Function)
+    Private ReadOnly _doubled_prime_sequence_int32_log3() As UInt32 =
+        derived(Function(ByVal i As UInt32) As UInt32
+                    Return CUInt(Math.Log(i, 3))
+                End Function)
+    Private ReadOnly _doubled_prime_sequence_int32_log4() As UInt32 =
+        derived(Function(ByVal i As UInt32) As UInt32
+                    Return CUInt(Math.Log(i, 4))
+                End Function)
 
     Private Function derived(ByVal f As Func(Of UInt32, UInt32)) As UInt32()
         Dim i() As UInt32 = Nothing

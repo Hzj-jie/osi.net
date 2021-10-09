@@ -7,7 +7,6 @@ Option Strict On
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.envs
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 #If USE_CROSS_THREAD_LOCK Then
 'Imports cross_thread_lock_t = osi.root.lock.slimlock.eventlock
@@ -26,7 +25,7 @@ Public Structure duallock
     Private sz As cross_thread_lock_t
 #End If
 
-    <global_init(global_init_level.foundamental)>
+    <global_init(global_init_level.runtime_checkers)>
     Private NotInheritable Class assertions
         Private Shared Sub init()
 #If USE_CROSS_THREAD_LOCK Then

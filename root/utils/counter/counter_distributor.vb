@@ -10,11 +10,11 @@ Imports osi.root.formation
 Imports osi.root.envs
 
 Namespace counter
+    <global_init(global_init_level.log_and_counter_services)>
     Friend Module counter_distributor
-        Private ReadOnly writers As object_unique_set(Of icounter_writer) = Nothing
+        Private ReadOnly writers As object_unique_set(Of icounter_writer) = New object_unique_set(Of icounter_writer)()
 
-        Sub New()
-            writers = New object_unique_set(Of icounter_writer)()
+        Private Sub init()
             assert(insert(file_counter_writer.instance))
             distribute(If(envs.counter_selfhealth, Now().Ticks(), 0),
                        strcat("#start counter_distributor for process ",

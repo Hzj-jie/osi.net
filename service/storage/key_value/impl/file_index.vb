@@ -6,16 +6,14 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.constants.filesystem
-Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.argument
-Imports osi.service.convertor
 Imports osi.service.selector
 Imports constructor = osi.service.device.constructor
 
 <global_init(global_init_level.server_services)>
-Public Class file_index
+Public NotInheritable Class file_index
     Private Const ts_prefix As Byte = 0
     Private Const fn_prefix As Byte = 1
     Private Const buff_size As Int32 = 16 * 1024
@@ -24,10 +22,6 @@ Public Class file_index
     Private ReadOnly index As ikeyvalue
     Private ReadOnly dr As data_dir
     Private ReadOnly ci As capinfo
-
-    Shared Sub New()
-        assert(ts_prefix <> fn_prefix)
-    End Sub
 
     Public Sub New(ByVal index As ikeyvalue, ByVal data_dir As String)
         assert(Not index Is Nothing)
@@ -255,6 +249,7 @@ Public Class file_index
     End Function
 
     Private Shared Sub init()
+        assert(ts_prefix <> fn_prefix)
         assert(constructor.register(AddressOf create_as_file_index))
         assert(constructor.register("file-index", AddressOf create_as_istrkeyvt))
     End Sub

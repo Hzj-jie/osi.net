@@ -29,7 +29,10 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function aggregate(ByVal f As Func(Of T, T, T)) As T
-        Return aggregate(f, alloc(Of T)())
+        assert(Not e.end())
+        Dim r As T = e.current()
+        e.next()
+        Return aggregate(f, r)
     End Function
 
     ' A + A + ... => B
@@ -48,7 +51,7 @@ Partial Public Class stream(Of T)
 
     Public Function collect_to(Of CT)(ByVal c As CT) As CT
         Return collect(Sub(ByVal i As CT, ByVal v As T)
-                           container_operator.insert(i, v)
+                           assert(container_operator.insert(i, v))
                        End Sub,
                        c)
     End Function
@@ -136,8 +139,11 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function with_index() As stream(Of tuple(Of UInt32, T))
-        Return collect_by(collectors.with_index()).
-               stream()
+        Return collect_by(collectors.with_index()).stream()
+    End Function
+
+    Public Function samples(ByVal sample_count As UInt32) As stream(Of T)
+        Return collect_by(collectors.samples(sample_count)).stream()
     End Function
 
     Public Function concat(ByVal e As container_operator(Of T).enumerator) As stream(Of T)

@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.selector
@@ -12,12 +11,11 @@ Partial Public NotInheritable Class dispenser_test
     Private Class accepter
         Inherits dispenser(Of Int32, Int32).accepter
 
-        Public ReadOnly q As qless(Of Int32)
+        Public ReadOnly q As New qless(Of Int32)()
         Private ReadOnly remote As Int32
 
         Public Sub New(ByVal remote As Int32)
             Me.remote = remote
-            Me.q = _new(Me.q)
             AddHandler MyBase.received, AddressOf received
         End Sub
 

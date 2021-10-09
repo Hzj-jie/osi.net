@@ -13,9 +13,8 @@ Public Module _callstack
     Public Function in_shared_constructor_of(ByVal stack_trace As String, ByVal t As Type) As Boolean
         If t Is Nothing Then
             Return False
-        Else
-            Return strcontains(stack_trace, strcat("   at ", strrplc(t.FullName(), "+", "."), "..cctor()"))
         End If
+        Return strcontains(stack_trace, strcat("   at ", t.FullName().Replace("+"c, "."c), "..cctor()"))
     End Function
 
     Public Function in_shared_constructor_of(ByVal t As Type) As Boolean
@@ -28,8 +27,7 @@ Public Module _callstack
 
     Public Function callstack(Optional ByVal remove_blanks As Boolean = False,
                               Optional ByVal separator As Char = character.colon) As String
-        Dim rtn As String = Nothing
-        rtn = Environment.StackTrace()
+        Dim rtn As String = Environment.StackTrace()
         If remove_blanks Then
             rtn = rtn.Replace("   ", empty_string) _
                      .Replace(newline.incode(), separator)

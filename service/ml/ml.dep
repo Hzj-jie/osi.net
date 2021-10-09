@@ -3,5 +3,6 @@
   <Import Project="..\..\root\root.props" Condition="'$(RootProps)'==''" />
   <Import Project="$(ServicePath)\math\math.props" Condition="'$(MathProps)'==''" />
   <Import Project="$(ServicePath)\resource\resource.props" Condition="'$(ResourceProps)'==''" />
+  <Import Project="$(ServicePath)\resources\resources.props" Condition="'$(ResourcesProps)'==''" />
 </Project>
 

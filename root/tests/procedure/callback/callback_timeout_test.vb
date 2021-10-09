@@ -12,21 +12,15 @@ Imports osi.root.utt
 Public NotInheritable Class callback_timeout_test
     Inherits case_wrapper
 
-    Private Shared ReadOnly timeout_ms As Int64
-    Private Shared ReadOnly test_size As Int64
-    Private Shared ReadOnly thread_count As UInt32
-
-    Shared Sub New()
-        test_size = 1024 * If(isdebugbuild(), 1, 8)
-        thread_count = CUInt(8 * If(isdebugbuild(), 1, 4))
-        timeout_ms = 1
-    End Sub
+    Private Shared ReadOnly timeout_ms As Int64 = 1
+    Private Shared ReadOnly test_size As Int64 = 1024
+    Private Shared ReadOnly thread_count As UInt32 = CUInt(2 * Environment.ProcessorCount())
 
     Public Sub New()
         MyBase.New(multithreading(repeat(New callback_timeout_case(), test_size), thread_count))
     End Sub
 
-    Private Class callback_timeout_case
+    Private NotInheritable Class callback_timeout_case
         Inherits [case]
 
         Private ReadOnly counter As atomic_int
@@ -53,14 +47,12 @@ Public NotInheritable Class callback_timeout_test
 
         Public Overrides Function run() As Boolean
             run_times.increment()
-            Dim this As Int32 = 0
-            this = +counter
-            Dim cb As callback_action = Nothing
-            cb = create_callback_action()
+            Dim this As Int32 = +counter
+            Dim cb As callback_action = create_callback_action()
             assert(Not cb Is Nothing)
             Using New boost()
                 Using expectation.timelimited_operation(timeout_ms,
-                                                        (timeout_ms + four_timeslice_length_ms) * thread_count)
+                                                        (timeout_ms + 4 * timeslice_length_ms) * thread_count)
                     assertion.is_false(async_sync(cb, timeout_ms))
                 End Using
             End Using

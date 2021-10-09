@@ -11,7 +11,7 @@ Imports osi.root.connector
 Imports osi.service.math
 
 Namespace primitive
-    Public Class executor_stop_error
+    Public NotInheritable Class executor_stop_error
         Inherits Exception
 
         Public ReadOnly error_types() As executor.error_type
@@ -25,16 +25,10 @@ Namespace primitive
         End Sub
 
         Public Overrides Function ToString() As String
-            Dim r As StringBuilder = Nothing
-            r = New StringBuilder()
-            r.Append("executor_stop_error: ")
-            For i As Int32 = 0 To array_size_i(error_types) - 1
-                If i > 0 Then
-                    r.Append(", ")
-                End If
-                r.Append(error_types(i))
-            Next
-            Return Convert.ToString(r)
+            Return streams.of(error_types).
+                           collect(stream(Of executor.error_type).collectors.to_str(),
+                                   New StringBuilder("executor_stop_error: ")).
+                           ToString()
         End Function
     End Class
 
@@ -49,6 +43,8 @@ Namespace primitive
             invalid_buffer_size
             interrupt_failure
             interrupt_implementation_failure
+            heap_access_out_of_boundary
+            out_of_heap_memory
         End Enum
 
         Structure state
@@ -63,6 +59,7 @@ Namespace primitive
         End Structure
 
         Function access_stack(ByVal p As data_ref) As ref(Of Byte())
+        Function access_heap(ByVal p As heap_ref) As ref(Of Byte())
         Function stack_size() As UInt64
         Function instruction_ref() As UInt64
         Function carry_over() As Boolean
@@ -82,11 +79,9 @@ Namespace primitive
                                                               ByVal p As data_ref,
                                                               ByRef overflow As Boolean) As UInt32
             assert(Not this Is Nothing)
-            Dim d As ref(Of Byte()) = Nothing
-            d = this.access_stack(p)
+            Dim d As ref(Of Byte()) = this.access_stack(p)
             assert(Not d Is Nothing)
-            Dim b As big_uint = Nothing
-            b = New big_uint(+d)
+            Dim b As New big_uint(+d)
             Return b.as_uint32(overflow)
         End Function
 
@@ -94,18 +89,35 @@ Namespace primitive
                                                               ByVal p As data_ref,
                                                               ByRef overflow As Boolean) As UInt64
             assert(Not this Is Nothing)
-            Dim d As ref(Of Byte()) = Nothing
-            d = this.access_stack(p)
+            Dim d As ref(Of Byte()) = this.access_stack(p)
             assert(Not d Is Nothing)
-            Dim b As big_uint = Nothing
-            b = New big_uint(+d)
+            Dim b As New big_uint(+d)
+            Return b.as_uint64(overflow)
+        End Function
+
+        <Extension()> Public Function convert_heap_to_uint32(ByVal this As executor,
+                                                             ByVal p As heap_ref,
+                                                             ByRef overflow As Boolean) As UInt32
+            assert(Not this Is Nothing)
+            Dim d As ref(Of Byte()) = this.access_heap(p)
+            assert(Not d Is Nothing)
+            Dim b As New big_uint(+d)
+            Return b.as_uint32(overflow)
+        End Function
+
+        <Extension()> Public Function convert_heap_to_uint64(ByVal this As executor,
+                                                             ByVal p As heap_ref,
+                                                             ByRef overflow As Boolean) As UInt64
+            assert(Not this Is Nothing)
+            Dim d As ref(Of Byte()) = this.access_heap(p)
+            assert(Not d Is Nothing)
+            Dim b As New big_uint(+d)
             Return b.as_uint64(overflow)
         End Function
 
         <Extension()> Public Function access_stack_as_bool(ByVal this As executor, ByVal p As data_ref) As Boolean
             assert(Not this Is Nothing)
-            Dim d As ref(Of Byte()) = Nothing
-            d = this.access_stack(p)
+            Dim d As ref(Of Byte()) = this.access_stack(p)
             assert(Not d Is Nothing)
             Dim o As Boolean = False
             ' If the data slot is empty, treat it as false.

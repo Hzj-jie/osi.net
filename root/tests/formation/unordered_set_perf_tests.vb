@@ -83,7 +83,7 @@ Public NotInheritable Class unordered_set_more_items_string_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({7934, 27626}, i, j)
+        Return loosen_bound({1495, 2804}, i, j)
     End Function
 End Class
 
@@ -95,6 +95,6 @@ Public NotInheritable Class unordered_set_more_items_string_large_range_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({1518, 37638}, i, j)
+        Return loosen_bound({1390, 2620}, i, j)
     End Function
 End Class

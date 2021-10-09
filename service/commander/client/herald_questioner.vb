@@ -1,9 +1,11 @@
 ﻿
-Imports osi.root.formation
-Imports osi.root.procedure
-Imports osi.root.lock
-Imports osi.root.template
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.procedure
+Imports osi.root.template
 Imports osi.service.device
 Imports osi.service.transmitter
 
@@ -39,7 +41,7 @@ Public Class herald_questioner(Of _ENABLE_AUTO_PING As _boolean)
     End Sub
 
     Public Sub New(ByVal d As idevice(Of herald), ByVal timeout_ms As Int64)
-        Me.New(assert_not_nothing_return(d).get(), timeout_ms)
+        Me.New(assert_which.of(d).is_not_null().get(), timeout_ms)
     End Sub
 
     Protected NotOverridable Overrides Function communicate(ByVal i As command,

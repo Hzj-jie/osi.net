@@ -31,17 +31,6 @@ Namespace onebound
             assertion.equal(m.affinity("b", "c"), 1.0)
         End Sub
 
-        <test>
-        Private Shared Sub case3()
-            Dim m As model = Nothing
-            m = New trainer().
-                        accumulate("a", "b", 2).
-                        accumulate("a", "c").
-                        dump()
-            assertion.equal(m.affinity("a", "b"), 4 / 3)
-            assertion.equal(m.affinity("a", "c"), 2 / 3)
-        End Sub
-
         Private Sub New()
         End Sub
     End Class

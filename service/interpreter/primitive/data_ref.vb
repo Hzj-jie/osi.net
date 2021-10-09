@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Namespace primitive
-    Public Class data_ref
+    Public NotInheritable Class data_ref
         Implements exportable, IComparable(Of data_ref), IComparable
 
         Public Const max_value As Int64 = (max_int64 >> 1)
@@ -17,6 +17,7 @@ Namespace primitive
         Private Const rel_str As String = "rel"
         Private Const abs_str As String = "abs"
         Private Shared ReadOnly ref_types() As String = {rel_str, abs_str}
+
         Private r As Boolean
         Private o As Int64
 
@@ -38,8 +39,7 @@ Namespace primitive
         End Sub
 
         Public Shared Function [New](ByVal i As Int64, ByRef o As data_ref) As Boolean
-            Dim x As data_ref = Nothing
-            x = New data_ref()
+            Dim x As New data_ref()
             If x.[set](i) Then
                 o = x
                 Return True
@@ -104,24 +104,20 @@ Namespace primitive
         End Function
 
         Public Function [set](ByVal i As Int64) As Boolean
-            Dim r As Boolean = False
-            Dim o As Int64 = 0
-            r = ((i And int64_1) <> 0)
-            o = (i >> 1)
+            Dim r As Boolean = ((i And 1) = 1)
+            Dim o As Int64 = (i >> 1)
             If r Then
-                If o >= rel_min_value AndAlso o <= max_value Then
-                    Me.r = r
-                    Me.o = o
-                    Return True
+                If o < rel_min_value OrElse o > max_value Then
+                    Return False
                 End If
             Else
-                If o >= abs_min_value AndAlso o <= max_value Then
-                    Me.r = r
-                    Me.o = o
-                    Return True
+                If o < abs_min_value OrElse o > max_value Then
+                    Return False
                 End If
             End If
-            Return False
+            Me.r = r
+            Me.o = o
+            Return True
         End Function
 
         Public Function relative() As Boolean
@@ -137,10 +133,7 @@ Namespace primitive
         End Function
 
         Public Function export() As Int64
-            If r Then
-                Return (o << 1) + int64_1
-            End If
-            Return (o << 1)
+            Return (o << 1) + If(r, 1, 0)
         End Function
 
         Public Function bytes_size() As UInt32 Implements exportable.bytes_size
@@ -153,7 +146,7 @@ Namespace primitive
         End Function
 
         Public Function export(ByRef s As String) As Boolean Implements exportable.export
-            s = strcat(If(r, rel_str, abs_str), o)
+            s = strcat(If(relative(), rel_str, abs_str), o)
             Return True
         End Function
 
@@ -190,9 +183,10 @@ Namespace primitive
             If Not separate(s(p), ref_type, offset) Then
                 Return False
             End If
-            If strsame(ref_type, rel_str) Then
+
+            If ref_type.Equals(rel_str) Then
                 r = True
-            ElseIf strsame(ref_type, abs_str) Then
+            ElseIf ref_type.Equals(abs_str) Then
                 r = False
             Else
                 Return False
@@ -207,26 +201,15 @@ Namespace primitive
         End Function
 
         Public Function CompareTo(ByVal other As data_ref) As Int32 Implements IComparable(Of data_ref).CompareTo
-            Dim c As Int32 = 0
-            c = object_compare(Me, other)
+            Dim c As Int32 = object_compare(Me, other)
             If c <> object_compare_undetermined Then
                 Return c
             End If
             assert(Not other Is Nothing)
-            Dim x As Int64 = 0
-            Dim y As Int64 = 0
-            x = export()
-            y = other.export()
-            If x > y Then
-                Return 1
-            End If
-            If x < y Then
-                Return -1
-            End If
-            Return 0
+            Return export().CompareTo(other.export())
         End Function
 
-        Public NotOverridable Overrides Function ToString() As String
+        Public Overrides Function ToString() As String
             Dim s As String = Nothing
             assert(export(s))
             Return s

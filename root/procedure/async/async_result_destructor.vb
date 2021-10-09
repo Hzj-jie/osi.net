@@ -20,28 +20,27 @@ Public NotInheritable Class async_result_destructor
     Shared Sub New()
         Dim ready_to_abort As singleentry
         ready_to_abort.mark_in_use()
-        Dim th As Thread = Nothing
-        th = New Thread(Sub()
-                            Dim v As Action = Nothing
-                            While q.pop(v) OrElse are.WaitOne()
-                                If Not v Is Nothing Then
-                                    Dim n As Int64 = 0
-                                    n = Now().milliseconds()
-                                    Try
-                                        ready_to_abort.mark_not_in_use()
-                                        v()
-                                    Catch ex As ThreadAbortException
-                                        If application_lifetime.running() Then
-                                            Thread.ResetAbort()
-                                        End If
-                                    Catch
-                                    Finally
-                                        counter.increase(ASYNC_OPERATION_FORCE_FINISH_TIMEMS,
+        Dim th As Thread = New Thread(Sub()
+                                          Dim v As Action = Nothing
+                                          While q.pop(v) OrElse are.WaitOne()
+                                              If Not v Is Nothing Then
+                                                  Dim n As Int64 = 0
+                                                  n = Now().milliseconds()
+                                                  Try
+                                                      ready_to_abort.mark_not_in_use()
+                                                      v()
+                                                  Catch ex As ThreadAbortException
+                                                      If application_lifetime.running() Then
+                                                          Thread.ResetAbort()
+                                                      End If
+                                                  Catch
+                                                  Finally
+                                                      counter.increase(ASYNC_OPERATION_FORCE_FINISH_TIMEMS,
                                                  Now().milliseconds() - n)
-                                    End Try
-                                End If
-                            End While
-                        End Sub)
+                                                  End Try
+                                              End If
+                                          End While
+                                      End Sub)
         th.IsBackground() = True
         th.Name() = "ASYNC_RESULT_DESTRUCTOR_THREAD"
         th.Start()

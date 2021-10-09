@@ -11,7 +11,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class kw_namespace
+    Public NotInheritable Class namespace_
         Inherits rewriter_wrapper
         Implements rewriter
 
@@ -27,7 +27,7 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Sub register(ByVal b As rewriters)
             assert(Not b Is Nothing)
-            b.register(Of kw_namespace)()
+            b.register(Of namespace_)()
         End Sub
 
         Private Function format(ByVal i As String) As String
@@ -39,7 +39,7 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Public Function bstyle_format(ByVal i As String) As String
-            Return strmid(format(i).Replace(namespace_separator, namespace_replacer), strlen(namespace_replacer))
+            Return format(i).Replace(namespace_separator, namespace_replacer).Substring(namespace_replacer.Length())
         End Function
 
         Public Function build(ByVal n As typed_node,
@@ -47,13 +47,35 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(n.child_count() >= 4)
             Using ws.push(format(n.child(1).word().str()))
-                For i As UInt32 = 2 To n.child_count() - uint32_2
+                For i As UInt32 = 3 To n.child_count() - uint32_2
                     If Not l.of(n.child(i)).build(o) Then
                         Return False
                     End If
                 Next
             End Using
             Return True
+        End Function
+    End Class
+
+    Public NotInheritable Class namespace_content
+        Inherits rewriter_wrapper
+        Implements rewriter
+
+        <inject_constructor>
+        Public Sub New(ByVal i As rewriters)
+            MyBase.New(i)
+        End Sub
+
+        Public Shared Sub register(ByVal b As rewriters)
+            assert(Not b Is Nothing)
+            b.register(Of namespace_content)()
+        End Sub
+
+        Public Function build(ByVal n As typed_node,
+                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+            assert(Not n Is Nothing)
+            assert(n.child_count() = 1)
+            Return l.of(n.child()).build(o)
         End Function
     End Class
 End Class

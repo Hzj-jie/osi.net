@@ -14,7 +14,7 @@ Partial Public Class hasharray(Of T,
                                   _EQUALER As _equaler(Of T))
 
     Private Shared ReadOnly predefined_column_counts As const_array(Of UInt32) =
-        New const_array(Of UInt32)(doubled_prime_sequence_int32())
+         const_array.of(doubled_prime_sequence_int32())
     Private Shared ReadOnly unique As Boolean = +(alloc(Of _UNIQUE)())
 
     Private v As const_array(Of vector(Of hasher_node))

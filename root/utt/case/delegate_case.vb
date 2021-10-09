@@ -1,8 +1,12 @@
 ﻿
-Imports osi.root.connector
-Imports osi.root.delegates
+Option Explicit On
+Option Infer Off
+Option Strict On
 
-Public Class delegate_case
+Imports osi.root.connector
+Imports osi.root.procedure
+
+Public NotInheritable Class delegate_case
     Inherits [case]
 
     Private ReadOnly r As Func(Of Boolean)
@@ -21,6 +25,21 @@ Public Class delegate_case
     End Sub
 
     Public Overrides Function run() As Boolean
+        Return r()
+    End Function
+End Class
+
+Public NotInheritable Class delegate_event_comb_case
+    Inherits event_comb_case
+
+    Private ReadOnly r As Func(Of event_comb)
+
+    Public Sub New(ByVal f As Func(Of event_comb))
+        assert(Not f Is Nothing)
+        r = f
+    End Sub
+
+    Public Overrides Function create() As event_comb
         Return r()
     End Function
 End Class

@@ -34,7 +34,9 @@ Partial Public NotInheritable Class bstyle
                 raise_error(error_type.user, "Cannot parse data to bool ", n.trace_back_str())
                 Return False
             End If
-            builders.of_copy_const(code_gen_of(Of value)().with_temp_target(types.bool, n, o), New data_block(i)).to(o)
+            builders.of_copy_const(code_gen_of(Of value)().
+                     with_temp_target(code_types.bool, n, o), New data_block(i)).
+                     to(o)
             Return True
         End Function
     End Class

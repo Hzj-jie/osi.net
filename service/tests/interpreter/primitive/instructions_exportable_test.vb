@@ -11,7 +11,7 @@ Imports osi.service.interpreter.primitive.instructions
 
 Namespace primitive
     Namespace instructions
-        Public Class push_exportable_test
+        Public NotInheritable Class push_exportable_test
             Inherits exportable_test(Of [push])
 
             Protected Overrides Function create() As [push]
@@ -19,7 +19,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class pop_exportable_test
+        Public NotInheritable Class pop_exportable_test
             Inherits exportable_test(Of [pop])
 
             Protected Overrides Function create() As [pop]
@@ -27,7 +27,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class jump_exportable_test
+        Public NotInheritable Class jump_exportable_test
             Inherits exportable_test(Of [jump])
 
             Protected Overrides Function create() As [jump]
@@ -36,7 +36,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class cpc_exportable_test
+        Public NotInheritable Class cpc_exportable_test
             Inherits exportable_test(Of [cpc])
 
             Protected Overrides Function create() As [cpc]
@@ -46,7 +46,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class mov_exportable_test
+        Public NotInheritable Class mov_exportable_test
             Inherits exportable_test(Of [mov])
 
             Protected Overrides Function create() As [mov]
@@ -56,7 +56,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class cp_exportable_test
+        Public NotInheritable Class cp_exportable_test
             Inherits exportable_test(Of [cp])
 
             Protected Overrides Function create() As [cp]
@@ -66,7 +66,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class add_exportable_test
+        Public NotInheritable Class add_exportable_test
             Inherits exportable_test(Of [add])
 
             Protected Overrides Function create() As [add]
@@ -77,7 +77,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class sub_exportable_test
+        Public NotInheritable Class sub_exportable_test
             Inherits exportable_test(Of [sub])
 
             Protected Overrides Function create() As [sub]
@@ -88,7 +88,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class mul_exportable_test
+        Public NotInheritable Class mul_exportable_test
             Inherits exportable_test(Of [mul])
 
             Protected Overrides Function create() As [mul]
@@ -99,7 +99,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class div_exportable_test
+        Public NotInheritable Class div_exportable_test
             Inherits exportable_test(Of [div])
 
             Protected Overrides Function create() As [div]
@@ -111,7 +111,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class ext_exportable_test
+        Public NotInheritable Class ext_exportable_test
             Inherits exportable_test(Of [ext])
 
             Protected Overrides Function create() As [ext]
@@ -123,7 +123,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class pow_exportable_test
+        Public NotInheritable Class pow_exportable_test
             Inherits exportable_test(Of [pow])
 
             Protected Overrides Function create() As [pow]
@@ -134,7 +134,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class jumpif_exportable_test
+        Public NotInheritable Class jumpif_exportable_test
             Inherits exportable_test(Of [jumpif])
 
             Protected Overrides Function create() As [jumpif]
@@ -144,7 +144,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class cpco_exportable_test
+        Public NotInheritable Class cpco_exportable_test
             Inherits exportable_test(Of [cpco])
 
             Protected Overrides Function create() As [cpco]
@@ -153,7 +153,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class cpdbz_exportable_test
+        Public NotInheritable Class cpdbz_exportable_test
             Inherits exportable_test(Of [cpdbz])
 
             Protected Overrides Function create() As [cpdbz]
@@ -162,7 +162,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class cpin_exportable_test
+        Public NotInheritable Class cpin_exportable_test
             Inherits exportable_test(Of [cpin])
 
             Protected Overrides Function create() As [cpin]
@@ -171,7 +171,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class stop_exportable_test
+        Public NotInheritable Class stop_exportable_test
             Inherits exportable_test(Of [stop])
 
             Protected Overrides Function create() As [stop]
@@ -179,7 +179,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class equal_exportable_test
+        Public NotInheritable Class equal_exportable_test
             Inherits exportable_test(Of [equal])
 
             Protected Overrides Function create() As [equal]
@@ -190,7 +190,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class less_exportable_test
+        Public NotInheritable Class less_exportable_test
             Inherits exportable_test(Of [less])
 
             Protected Overrides Function create() As [less]
@@ -201,7 +201,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class app_exportable_test
+        Public NotInheritable Class app_exportable_test
             Inherits exportable_test(Of [app])
 
             Protected Overrides Function create() As [app]
@@ -211,7 +211,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class sapp_exportable_test
+        Public NotInheritable Class sapp_exportable_test
             Inherits exportable_test(Of [sapp])
 
             Protected Overrides Function create() As [sapp]
@@ -221,7 +221,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class cut_exportable_test
+        Public NotInheritable Class cut_exportable_test
             Inherits exportable_test(Of [cut])
 
             Protected Overrides Function create() As [cut]
@@ -232,7 +232,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class cutl_exportable_test
+        Public NotInheritable Class cutl_exportable_test
             Inherits exportable_test(Of [cutl])
 
             Protected Overrides Function create() As [cutl]
@@ -244,7 +244,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class int_exportable_test
+        Public NotInheritable Class int_exportable_test
             Inherits exportable_test(Of [int])
 
             Protected Overrides Function create() As [int]
@@ -255,7 +255,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class clr_exportable_test
+        Public NotInheritable Class clr_exportable_test
             Inherits exportable_test(Of [clr])
 
             Protected Overrides Function create() As [clr]
@@ -264,7 +264,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class scut_exportable_test
+        Public NotInheritable Class scut_exportable_test
             Inherits exportable_test(Of [scut])
 
             Protected Overrides Function create() As [scut]
@@ -275,7 +275,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class sizeof_exportable_test
+        Public NotInheritable Class sizeof_exportable_test
             Inherits exportable_test(Of [sizeof])
 
             Protected Overrides Function create() As [sizeof]
@@ -285,7 +285,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class empty_exportable_test
+        Public NotInheritable Class empty_exportable_test
             Inherits exportable_test(Of [empty])
 
             Protected Overrides Function create() As [empty]
@@ -295,7 +295,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class and_exportable_test
+        Public NotInheritable Class and_exportable_test
             Inherits exportable_test(Of [and])
 
             Protected Overrides Function create() As [and]
@@ -306,7 +306,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class or_exportable_test
+        Public NotInheritable Class or_exportable_test
             Inherits exportable_test(Of [or])
 
             Protected Overrides Function create() As [or]
@@ -317,7 +317,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class not_exportable_test
+        Public NotInheritable Class not_exportable_test
             Inherits exportable_test(Of [not])
 
             Protected Overrides Function create() As [not]
@@ -327,7 +327,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class stst_exportable_test
+        Public NotInheritable Class stst_exportable_test
             Inherits exportable_test(Of [stst])
 
             Protected Overrides Function create() As [stst]
@@ -335,7 +335,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class rest_exportable_test
+        Public NotInheritable Class rest_exportable_test
             Inherits exportable_test(Of [rest])
 
             Protected Overrides Function create() As [rest]
@@ -343,7 +343,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class fadd_exportable_test
+        Public NotInheritable Class fadd_exportable_test
             Inherits exportable_test(Of [fadd])
 
             Protected Overrides Function create() As [fadd]
@@ -354,7 +354,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class fsub_exportable_test
+        Public NotInheritable Class fsub_exportable_test
             Inherits exportable_test(Of [fsub])
 
             Protected Overrides Function create() As [fsub]
@@ -365,7 +365,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class fmul_exportable_test
+        Public NotInheritable Class fmul_exportable_test
             Inherits exportable_test(Of [fmul])
 
             Protected Overrides Function create() As [fmul]
@@ -376,7 +376,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class fdiv_exportable_test
+        Public NotInheritable Class fdiv_exportable_test
             Inherits exportable_test(Of [fdiv])
 
             Protected Overrides Function create() As [fdiv]
@@ -387,7 +387,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class fext_exportable_test
+        Public NotInheritable Class fext_exportable_test
             Inherits exportable_test(Of [fext])
 
             Protected Overrides Function create() As [fext]
@@ -398,7 +398,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class fpow_exportable_test
+        Public NotInheritable Class fpow_exportable_test
             Inherits exportable_test(Of [fpow])
 
             Protected Overrides Function create() As [fpow]
@@ -409,7 +409,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class fequal_exportable_test
+        Public NotInheritable Class fequal_exportable_test
             Inherits exportable_test(Of [fequal])
 
             Protected Overrides Function create() As [fequal]
@@ -420,7 +420,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class fless_exportable_test
+        Public NotInheritable Class fless_exportable_test
             Inherits exportable_test(Of [fless])
 
             Protected Overrides Function create() As [fless]
@@ -431,7 +431,7 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class lfs_exportable_test
+        Public NotInheritable Class lfs_exportable_test
             Inherits exportable_test(Of [lfs])
 
             Protected Overrides Function create() As [lfs]
@@ -442,12 +442,51 @@ Namespace primitive
             End Function
         End Class
 
-        Public Class rfs_exportable_test
+        Public NotInheritable Class rfs_exportable_test
             Inherits exportable_test(Of [rfs])
 
             Protected Overrides Function create() As [rfs]
                 Return New [rfs]( _
                         data_ref.random(),
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public NotInheritable Class alloc_exportable_test
+            Inherits exportable_test(Of [alloc])
+
+            Protected Overrides Function create() As [alloc]
+                Return New [alloc]( _
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public NotInheritable Class dealloc_exportable_test
+            Inherits exportable_test(Of [dealloc])
+
+            Protected Overrides Function create() As [dealloc]
+                Return New [dealloc]( _
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public NotInheritable Class hcpin_exportable_test
+            Inherits exportable_test(Of [hcpin])
+
+            Protected Overrides Function create() As [hcpin]
+                Return New [hcpin]( _
+                        data_ref.random(),
+                        data_ref.random())
+            End Function
+        End Class
+
+        Public NotInheritable Class hcpout_exportable_test
+            Inherits exportable_test(Of [hcpout])
+
+            Protected Overrides Function create() As [hcpout]
+                Return New [hcpout]( _
                         data_ref.random(),
                         data_ref.random())
             End Function

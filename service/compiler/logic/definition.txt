@@ -106,9 +106,21 @@ copy	string	string
 #  copy target <data_block>
 copy_const	string	data_block
 
+# copy a data from heap to stack
+#  copy_heap_out target source source_index
+copy_heap_out	string	string	string
+
+# copy a data from stack to heap
+#  copy_heap_in target target_index source
+copy_heap_in	string	string	string
+
 # define a variable with type:
 #  define variable uint
 define	string	string
+
+# define a heap memory block with name, type and size
+#  define_heap my_heap_ptr uint my_size
+define_heap	string	string	string
 
 # execute the paragraph until the variable is true:
 #  do_until a-bool-value { }

@@ -94,6 +94,14 @@ Namespace primitive
         [lfs]
         ' (*A big_uint) = left_shift((*B big_uint), (*C big_uint)) 
         [rfs]
+        ' allocate a block of memory with size (*B big_uint) and store its reference into (*A), each one is a data slot 
+        [alloc]
+        ' de-allocate a block of memory identified by its reference (*A) 
+        [dealloc]
+        ' copy (*B) in stack to (**A) in heap 
+        [hcpin]
+        ' copy (**B) in heap to (*A) in stack 
+        [hcpout]
 
         COUNT
     End Enum

@@ -33,14 +33,12 @@ Partial Public Class sharedtransmitter_test
         Private Function run_case() As Boolean
             Const ip_size As Byte = 10
             Const port_size As Byte = 10
-            Dim s As vector(Of sharedtransmitter(Of Byte, Byte, component, Int32, parameter)) = Nothing
-            s = _new(s)
+            Dim s As New vector(Of sharedtransmitter(Of Byte, Byte, component, Int32, parameter))()
             AddHandler c.new_sharedtransmitter_exported,
                        Sub(ByVal new_component As sharedtransmitter(Of Byte, Byte, component, Int32, parameter))
                            s.emplace_back(new_component)
                        End Sub
-            Dim p As ref(Of Int32) = Nothing
-            p = New ref(Of Int32)()
+            Dim p As New ref(Of Int32)()
             If assertion.is_true(component.referred()) Then
                 For i As Byte = 0 To ip_size - uint8_1
                     For j As Byte = 1 To port_size

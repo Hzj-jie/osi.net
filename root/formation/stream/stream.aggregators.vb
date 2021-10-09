@@ -25,6 +25,9 @@ Partial Public Class stream(Of T)
             assert(p <= 1)
             Dim v As vector(Of T) = New vector(Of T)()
             Return Function(ByVal last As T, ByVal current As T) As T
+                       If v.empty() Then
+                           v.emplace_back(last)
+                       End If
                        v.emplace_back(current)
                        Dim index As UInt32 = CUInt(p * v.size())
                        If index = v.size() Then

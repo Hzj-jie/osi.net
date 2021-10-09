@@ -1,0 +1,15 @@
+﻿
+#include <cstdio>
+
+int main() {
+  int x = getchar();
+  putchar(x);
+  x = getchar();
+  putchar(x);
+  x = getchar();
+  putchar(x);
+  x = getchar();
+  if (x == EOF) {
+    b2style::std_out("EOF");
+  }
+}

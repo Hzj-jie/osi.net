@@ -4,8 +4,10 @@ Option Infer Off
 Option Strict On
 
 Imports System.Collections.Generic
+Imports System.IO
 Imports osi.root.connector
-Imports osi.root.formation
+Imports osi.root.constants
+Imports osi.service.resource
 
 Partial Public NotInheritable Class wordtracer
     Partial Public NotInheritable Class cjk
@@ -24,49 +26,48 @@ Partial Public NotInheritable Class wordtracer
                 Next
             End Sub
 
+            Private Shared Sub one_str(ByVal s As String, ByVal t As onebound(Of Char).trainer)
+                If s.null_or_whitespace() Then
+                    Return
+                End If
+                s.strsep(AddressOf _character.not_cjk,
+                             Sub(ByVal l As UInt32, ByVal i As UInt32)
+                                 sentence(s, l, i, t)
+                             End Sub)
+            End Sub
+
             Public Shared Function train(ByVal s As String) As onebound(Of Char).model
                 assert(Not s.null_or_whitespace())
                 Return train({s})
             End Function
 
-            Public Shared Function train(ByVal config As onebound(Of Char).trainer.config,
-                                         ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
-                Dim t As onebound(Of Char).trainer = Nothing
-                t = New onebound(Of Char).trainer(config)
+            Public Shared Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
+                Dim t As New onebound(Of Char).trainer()
                 For Each s As String In ss
-                    If s.null_or_whitespace() Then
-                        Continue For
-                    End If
-                    s.strsep(AddressOf _character.cjk,
-                             Sub(ByVal l As UInt32, ByVal i As UInt32)
-                                 sentence(s, l, i, t)
-                             End Sub)
+                    one_str(s, t)
                 Next
                 Return t.dump()
             End Function
 
-            Public Shared Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of Char).model
-                Return train(New onebound(Of Char).trainer.config(), ss)
-            End Function
-
-            Public Shared Function flat_map(ByVal i As onebound(Of Char).model) As unordered_map(Of String, Double)
-                assert(Not i Is Nothing)
-                Return i.flat_map().
-                         map(Function(ByVal j As first_const_pair(Of const_pair(Of Char, Char), Double)) _
-                                     As first_const_pair(Of String, Double)
-                                 Return first_const_pair.emplace_of(j.first.first + j.first.second, j.second)
-                             End Function).
-                         collect(Of unordered_map(Of String, Double))()
-            End Function
-
-            Public Shared Function flat_map(ByVal i As onebound(Of String).model) As unordered_map(Of String, Double)
-                assert(Not i Is Nothing)
-                Return i.flat_map().
-                         map(Function(ByVal j As first_const_pair(Of const_pair(Of String, String), Double)) _
-                                     As first_const_pair(Of String, Double)
-                                 Return first_const_pair.emplace_of(j.first.first + j.first.second, j.second)
-                             End Function).
-                         collect(Of unordered_map(Of String, Double))()
+            Public Shared Function train(ByVal reader As tar.reader) As onebound(Of Char).model
+                assert(Not reader Is Nothing)
+                Dim t As New onebound(Of Char).trainer()
+                reader.foreach(Sub(ByVal name As String, ByVal p As Double, ByVal r As StreamReader)
+                                   If p < 0.8 Then
+                                       raise_error(error_type.user,
+                                                   "ignroe ",
+                                                   name,
+                                                   ", the encoding possibility is ",
+                                                   p)
+                                       Return
+                                   End If
+                                   Dim line As String = r.ReadLine()
+                                   While Not line Is Nothing
+                                       one_str(line, t)
+                                       line = r.ReadLine()
+                                   End While
+                               End Sub)
+                Return t.dump()
             End Function
 
             Private Sub New()

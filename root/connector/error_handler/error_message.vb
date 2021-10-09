@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Text
 Imports osi.root.constants
 
+<global_init(global_init_level.log_and_counter_services)>
 Public NotInheritable Class error_message
     Public Const error_type_count As Int64 = error_type.last - error_type.first + 1
     Public Const error_type_char As String = "_aceiswuptod_"
@@ -24,7 +25,7 @@ Public NotInheritable Class error_message
                                                                 "_"}
     Public Const seperator As String = character.comma + character.blank
 
-    Shared Sub New()
+    Private Shared Sub init()
         If error_type_char.Length() <> error_type_count Then
             Console.Error().WriteLine("error_type_char length <> error_type count")
             assert_break()
@@ -56,10 +57,7 @@ Public NotInheritable Class error_message
             errmsg.append(seperator, backtrace(additional_jump + 1))
         End If
 
-        'keep one \r\n
-        strrplc(errmsg, newline.incode(), character.newline)
-
-        Return errmsg
+        Return errmsg.Replace(newline.incode(), character.newline)
     End Function
 
     Public Shared Function p(ByVal m() As Object) As String
@@ -68,8 +66,7 @@ Public NotInheritable Class error_message
         If m.Length() = 1 AndAlso TypeOf m(0) Is String Then
             Return Convert.ToString(m(0))
         End If
-        Dim s As StringBuilder = Nothing
-        s = New StringBuilder()
+        Dim s As New StringBuilder()
         process_obj_array(m, s)
         Return Convert.ToString(s)
     End Function

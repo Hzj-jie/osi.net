@@ -17,6 +17,7 @@ Partial Public NotInheritable Class nlexer
             en_char_matcher.register()
             single_char_matcher.register()
             space_matcher.register()
+            newline_matcher.register()
         End Sub
 
         Public Shared Sub register(ByVal s As String, ByVal f As Func(Of matcher))

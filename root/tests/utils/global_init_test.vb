@@ -209,15 +209,14 @@ Public NotInheritable Class global_init_test
         global_init.execute(global_init_level.max - 1)
         assertion.more_or_equal(global_init.init_times(), 2 + 3)
         assertion.equal(global_init_case_1.invoke_times(), 1)
-        'when the first global_init.execute is called, this assembly has not been loaded yet
-        assertion.equal(global_init_case_2.invoke_times(), global_init.init_times() - 1)
+        assertion.equal(global_init_case_2.invoke_times(), global_init.init_times())
         assertion.equal(global_init_case_3_holder.invoke_times(), 1)
         assertion.equal(global_init_case_4.invoke_times(), 2)
         assertion.equal(global_init_case_5.invoke_times(), 1)
         assertion.equal(global_init_case_6.invoke_times(), 1)
         assertion.equal(global_init_case_7_holder.invoke_times(), 0)
         assertion.equal(global_init_case_8_holder.invoke_times(), 1)
-        assertion.equal(global_init_case_9.invoke_times(), global_init.init_times() - 2)
+        assertion.equal(global_init_case_9.invoke_times(), global_init.init_times() - 1)
         type_lock(Of global_init).release()
         Return True
     End Function

@@ -9,14 +9,14 @@ Imports System.ComponentModel
 Imports osi.root.connector
 Imports osi.root.constants
 
-<global_init(global_init_level.foundamental)>
+'DEPRECATED <global_init(global_init_level.foundamental)>
 Public NotInheritable Class queue_runner_synchronize_invoke
     Inherits synchronize_invoke
 
     Public Shared ReadOnly instance As queue_runner_synchronize_invoke = New queue_runner_synchronize_invoke()
 
 #If DEPRECATED Then
-    Shared Sub New()
+    Private Shared Sub init()
         implementation_of(Of ISynchronizeInvoke).register(instance)
     End Sub
 #End If
@@ -32,7 +32,4 @@ Public NotInheritable Class queue_runner_synchronize_invoke
     Protected Overrides Function synchronously() As Boolean
         Return queue_runner.running_in_current_thread()
     End Function
-
-    Private Shared Sub init()
-    End Sub
 End Class

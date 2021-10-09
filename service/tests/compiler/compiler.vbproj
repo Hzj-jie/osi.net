@@ -119,7 +119,13 @@
     <Content Include="b2style\codegen\another_1_to_100.txt" />
     <Content Include="b2style\codegen\biguint.txt" />
     <Content Include="b2style\codegen\calculate_pi_bbp.txt" />
+    <Content Include="b2style\codegen\comments.txt" />
+    <Content Include="b2style\codegen\ifndef.txt" />
+    <Content Include="b2style\codegen\include.txt" />
+    <Content Include="b2style\codegen\include2.txt" />
     <Content Include="b2style\codegen\loaded_method.txt" />
+    <Content Include="b2style\codegen\multiline_string.txt" />
+    <Content Include="b2style\codegen\namespaces.txt" />
     <Content Include="b2style\codegen\negative_int.txt" />
     <Content Include="b2style\codegen\order_of_operators.txt" />
     <Content Include="b2style\codegen\pi_integral_0_1.txt" />
@@ -143,6 +149,7 @@
     <Content Include="logic\codegen\case2.txt" />
     <Content Include="logic\codegen\case3.txt" />
     <Content Include="logic\codegen\case4.txt" />
+    <Content Include="logic\codegen\heap.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />

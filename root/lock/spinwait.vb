@@ -12,11 +12,15 @@ Imports osi.root.envs
 #Const USE_MEASURE_YIELD_WAIT = False
 
 Public Module spinwait
-    Sub New()
-        Dim i As Int32 = loops_per_yield
-        Dim b As Boolean = single_cpu
-        assert(Timeout.Infinite = -1)
-    End Sub
+    <global_init(global_init_level.runtime_checkers)>
+    Private NotInheritable Class assertions
+        Private Shared Sub init()
+            assert(Timeout.Infinite = -1)
+        End Sub
+
+        Private Sub New()
+        End Sub
+    End Class
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function should_yield() As Boolean
@@ -50,7 +54,7 @@ Public Module spinwait
         Else
             sleep(0)
         End If
-        Return (environment_milliseconds() - start_ms) >= eighth_timeslice_length_ms
+        Return (environment_milliseconds() - start_ms) >= 8 * timeslice_length_ms
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -194,7 +198,7 @@ Public Module _sleep_wait
         Try
             Return CLng(timeslice_length_ms * Math.Pow(2, min(this_process.ref.Threads().Count() \ 10, 5) + 2))
         Catch
-            Return sixteen_timeslice_length_ms
+            Return 16 * timeslice_length_ms
         End Try
     End Function
 

@@ -9,15 +9,11 @@ Imports osi.root.constants
 
 <global_init(global_init_level.foundamental)>
 Public Module _priority
-    Public ReadOnly has_priority_defined As Boolean
-    Public ReadOnly priority_class As ProcessPriorityClass
     Private Const priority As String = "priority"
     Private Const process As String = "process"
     Private Const [class] As String = "class"
-    Private ReadOnly set1() As String
-    Private ReadOnly set2() As String
-    Private ReadOnly set3() As String
-    Private ReadOnly set4() As String
+    Private ReadOnly has_priority_defined As Boolean
+    Private ReadOnly priority_class As ProcessPriorityClass
 
     Sub New()
         Dim set1() As String = Nothing

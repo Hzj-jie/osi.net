@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Collections.Generic
 Imports osi.root.constants
 
 Public NotInheritable Class error_event
@@ -36,8 +37,35 @@ Public NotInheritable Class error_event
     Private Shared ReadOnly r5lock As Object = New Object()
     Private Shared ReadOnly r6lock As Object = New Object()
 
+    <global_init(global_init_level.log_and_counter_services + byte_1)>
+    Private NotInheritable Class when_log_and_counter_services
+        Public Shared executed As Boolean = False
+
+        Private Shared Sub init()
+            executed = True
+        End Sub
+    End Class
+
+    <global_init(global_init_level.other)>
+    Private NotInheritable Class replay_logs
+        Private Shared ReadOnly replays As New List(Of Action)()
+
+        Public Shared Sub add(ByVal replay As Action)
+            SyncLock replays
+                replays.Add(replay)
+            End SyncLock
+        End Sub
+
+        Private Shared Sub init()
+            SyncLock replays
+                For Each a As Action In replays
+                    a()
+                Next
+            End SyncLock
+        End Sub
+    End Class
+
     Public Shared Sub a()
-        static_constructor(Of colorful_console_error_writer).execute()
         RaiseEvent a1()
     End Sub
 
@@ -46,23 +74,19 @@ Public NotInheritable Class error_event
                         ByVal err_type_char As Char,
                         ByVal msg() As Object,
                         ByVal additional_jump As Int32)
-        static_constructor(Of colorful_console_error_writer).execute()
-        Dim r1a As Boolean = False
-        Dim r2a As Boolean = False
-        Dim r3a As Boolean = False
-        Dim r4a As Boolean = False
-        Dim r5a As Boolean = False
-        Dim r6a As Boolean = False
-        r1a = event_attached(r1Event)
-        r2a = event_attached(r2Event)
-        r3a = event_attached(r3Event)
-        r4a = event_attached(r4Event)
-        r5a = event_attached(r5Event)
-        r6a = event_attached(r6Event)
-        ' colorful_console_error_writer should have been initialized.
-        If Not (r1a OrElse r2a OrElse r3a OrElse r4a OrElse r5a OrElse r6a) Then
-            assert_break()
+        If Not when_log_and_counter_services.executed Then
+            replay_logs.add(Sub()
+                                r(err_type, err_type_char, array_concat({"replay_logs: "}, msg), additional_jump)
+                            End Sub)
+            Return
         End If
+
+        Dim r1a As Boolean = event_attached(r1Event)
+        Dim r2a As Boolean = event_attached(r2Event)
+        Dim r3a As Boolean = event_attached(r3Event)
+        Dim r4a As Boolean = event_attached(r4Event)
+        Dim r5a As Boolean = event_attached(r5Event)
+        Dim r6a As Boolean = event_attached(r6Event)
 
         err_type_char = Char.ToLower(err_type_char)
 

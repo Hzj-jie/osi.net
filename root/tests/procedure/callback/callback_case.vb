@@ -58,12 +58,12 @@ Friend NotInheritable Class callback_case
                                       assertion.more_or_equal(nowadays.milliseconds() - start_ms, check_pass_ms)
                                       If strict_time_limited Then
                                           expectation.less(nowadays.milliseconds() - start_ms,
-                                                           check_pass_ms + sixteen_timeslice_length_ms)
+                                                           check_pass_ms + 16 * timeslice_length_ms)
                                       End If
                                       assertion.more_or_equal(ticks_to_milliseconds(rtn.check_ticks()), start_ms)
                                       If strict_time_limited Then
                                           expectation.less(ticks_to_milliseconds(rtn.check_ticks()),
-                                                           start_ms + two_timeslice_length_ms)
+                                                           start_ms + 2 * timeslice_length_ms)
                                       End If
                                       assertion.less_or_equal(ticks_to_milliseconds(rtn.begin_ticks()), start_ms)
                                       assertion.more_or_equal(ticks_to_milliseconds(rtn.end_ticks()), start_ms)
@@ -100,7 +100,7 @@ Friend NotInheritable Class callback_case
         Return normalize(busy_wait_ms) +
                normalize(sleep_wait_ms) +
                normalize(check_pass_ms) +
-               sixteen_timeslice_length_ms
+               16 * timeslice_length_ms
     End Function
 
     Public Overrides Function reserved_processors() As Int16

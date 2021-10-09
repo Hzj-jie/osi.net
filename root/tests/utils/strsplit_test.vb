@@ -1,14 +1,18 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
 
-Public Class strsplit_test
+Public NotInheritable Class strsplit_test
     Inherits [case]
 
-    Private Class case_t
+    Private NotInheritable Class case_t
         Public ReadOnly str As String
         Public ReadOnly separators() As String
         Public ReadOnly surround_strs() As pair(Of String, String)
@@ -100,7 +104,7 @@ Public Class strsplit_test
 
     Private Shared Function contains(ByVal s As String, ByVal a() As String) As Boolean
         assert(Not s Is Nothing)
-        For i As Int32 = 0 To array_size(a) - 1
+        For i As Int32 = 0 To array_size_i(a) - 1
             If s.Contains(a(i)) Then
                 Return True
             End If
@@ -110,7 +114,7 @@ Public Class strsplit_test
 
     Private Shared Function contains(ByVal s As String, ByVal a() As pair(Of String, String)) As Boolean
         assert(Not s Is Nothing)
-        For i As Int32 = 0 To array_size(a) - 1
+        For i As Int32 = 0 To array_size_i(a) - 1
             assert(Not a(i) Is Nothing)
             If s.Contains(a(i).first) OrElse
                s.Contains(a(i).second) Then
@@ -122,7 +126,7 @@ Public Class strsplit_test
 
     Private Shared Function rnd_in(ByVal a() As String) As String
         assert(Not isemptyarray(a))
-        Return a(rnd_int(0, array_size(a)))
+        Return a(rnd_int(0, array_size_i(a)))
     End Function
 
     Private Shared Function generate_independed_piece(ByVal separators() As String,
@@ -135,17 +139,16 @@ Public Class strsplit_test
                 Return s
             End If
         End While
-        Return assert_return(Of String)(False, default_str)
+        assert(False)
+        Return Nothing
     End Function
 
     Private Shared Function generate_surrounded_random_piece(ByVal separators() As String,
                                                              ByVal surround_strs() As pair(Of String, String)) As String
         assert(Not isemptyarray(separators) AndAlso
                Not isemptyarray(surround_strs))
-        Dim r As String = Nothing
-        Dim id As Int32 = 0
-        id = rnd_int(0, array_size(surround_strs))
-        r = surround_strs(id).first
+        Dim id As Int32 = rnd_int(0, array_size_i(surround_strs))
+        Dim r As String = surround_strs(id).first
         For i As Int32 = 0 To 10
             r += generate_independed_piece(separators,
                                            surround_strs)
@@ -156,7 +159,7 @@ Public Class strsplit_test
                 Dim t As Int32 = 0
                 t = id
                 While t = id
-                    t = rnd_int(0, array_size(surround_strs))
+                    t = rnd_int(0, array_size_i(surround_strs))
                 End While
                 If rnd_bool() Then
                     r += surround_strs(t).first
@@ -174,34 +177,37 @@ Public Class strsplit_test
         If rnd_bool() Then
             Return generate_independed_piece(separators,
                                              surround_strs)
-        ElseIf rnd_bool() Then
+        End If
+        If rnd_bool() Then
             Return generate_surrounded_random_piece(separators,
                                                     surround_strs)
-        ElseIf rnd_bool() Then
+        End If
+        If rnd_bool() Then
             Return generate_independed_piece(separators,
-                                             surround_strs) +
-                   generate_surrounded_random_piece(separators,
-                                                    surround_strs)
-        ElseIf rnd_bool() Then
-            Return generate_surrounded_random_piece(separators,
-                                                    surround_strs) +
-                   generate_independed_piece(separators,
-                                             surround_strs)
-        ElseIf rnd_bool() Then
-            Return generate_independed_piece(separators,
-                                             surround_strs) +
-                   generate_surrounded_random_piece(separators,
-                                                    surround_strs) +
-                   generate_independed_piece(separators,
-                                             surround_strs)
-        Else
-            Return generate_surrounded_random_piece(separators,
-                                                    surround_strs) +
-                   generate_independed_piece(separators,
                                              surround_strs) +
                    generate_surrounded_random_piece(separators,
                                                     surround_strs)
         End If
+        If rnd_bool() Then
+            Return generate_surrounded_random_piece(separators,
+                                                    surround_strs) +
+                   generate_independed_piece(separators,
+                                             surround_strs)
+        End If
+        If rnd_bool() Then
+            Return generate_independed_piece(separators,
+                                             surround_strs) +
+                   generate_surrounded_random_piece(separators,
+                                                    surround_strs) +
+                   generate_independed_piece(separators,
+                                             surround_strs)
+        End If
+        Return generate_surrounded_random_piece(separators,
+                                                surround_strs) +
+               generate_independed_piece(separators,
+                                         surround_strs) +
+               generate_surrounded_random_piece(separators,
+                                                surround_strs)
     End Function
 
     Private Shared Function generate_random_run_case(ByVal separators() As String,
@@ -239,8 +245,8 @@ Public Class strsplit_test
 
     Private Shared Function run_random_cases_1() As Boolean
         Dim sps() As String = Nothing
-        ReDim sps(strlen(space_chars) - 1)
-        For i As Int32 = 0 To strlen(space_chars) - 1
+        ReDim sps(strlen_i(space_chars) - 1)
+        For i As Int32 = 0 To strlen_i(space_chars) - 1
             sps(i) = Convert.ToString(space_chars(i))
         Next
         Return run_random_cases(sps,
@@ -259,7 +265,7 @@ Public Class strsplit_test
     Private Shared Function run_predefined_cases() As Boolean
         assert(Not predefined_cases Is Nothing AndAlso
                Not predefined_cases.empty())
-        For i As Int32 = 0 To predefined_cases.size() - 1
+        For i As UInt32 = 0 To predefined_cases.size() - uint32_1
             If Not run_case(predefined_cases(i)) Then
                 Return False
             End If

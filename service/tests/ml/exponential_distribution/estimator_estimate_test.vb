@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.utt.attributes
@@ -43,6 +44,44 @@ Namespace exponential_distribution
             Dim n2 As ed = Nothing
             n2 = ed.estimator.estimate(samples)
             assertion.is_true(n.near_match(n2, 0.00036), n, n2)
+        End Sub
+
+        <test>
+        Private Shared Sub case3()
+            Dim samples() As Double = {
+                1, 1, 1, 2, 2, 8, 18, 37, 45, 59, 61, 75, 131, 160, 311, 1555, 10349, 11063, 13718, 14786, 31467, 37532,
+                53834, 85574, 118978, 1077332
+            }
+            Dim n As ed = ed.estimator.estimate(samples)
+            assertion.is_true(n.near_match(0.000017844, 0.000000001), n)
+        End Sub
+
+        <test>
+        Private Shared Sub case4()
+            Dim samples() As Double = {
+                10.9998078181983,
+                1386.97576762193
+            }
+            Dim n As ed = ed.estimator.estimate(samples)
+            assertion.is_true(n.near_match(0.00793078586878145, 0.000000001), n)
+            assertions.of(n.cumulative_distribute(samples.first())).in_range(0.0835402414414449)
+            assertions.of(n.cumulative_distribute(samples.last())).in_range(0.999983295089138)
+        End Sub
+
+        <test>
+        Private Shared Sub case5()
+            Dim samples() As Double = {
+                10.9998078181983,
+                10.9998078181983,
+                10.9998078181983,
+                10.9998078181983,
+                10.9998078181983,
+                1386.97576762193
+            }
+            Dim n As ed = ed.estimator.estimate(samples)
+            assertion.is_true(n.near_match(0.0396539293439072, 0.000000001), n)
+            assertions.of(n.cumulative_distribute(samples.first())).in_range(0.35350227648358)
+            assertions.of(n.cumulative_distribute(samples.last())).in_range(1)
         End Sub
 
         Private Sub New()

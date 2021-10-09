@@ -1,0 +1,13 @@
+﻿
+push
+cpc rel0 i100
+push
+alloc rel0 rel1
+hcpin rel0	rel1
+
+cpc rel1 i0
+hcpout rel1 rel0
+
+dealloc	rel0
+
+stop

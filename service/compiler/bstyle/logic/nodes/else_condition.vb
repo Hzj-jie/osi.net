@@ -27,10 +27,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 2)
-            If Not l.[of](n.child(1)).build(o) Then
-                Return False
-            End If
-            Return True
+            Return l.[of](n.child(1)).build(o)
         End Function
     End Class
 End Class

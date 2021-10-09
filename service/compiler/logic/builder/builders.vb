@@ -9,15 +9,11 @@ Imports osi.root.formation
 
 Namespace logic
     Partial Public NotInheritable Class builders
-        Public Shared ReadOnly debug_dump As Boolean
-
-        Shared Sub New()
-            debug_dump = env_bool(env_keys("compiler", "debug", "dump"))
-        End Sub
+        Public Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("compiler", "debug", "dump"))
 
         Public Shared Function of_define(ByVal ta As type_alias,
                                          ByVal name As String,
-                                         ByVal type As String) As define_builder_26
+                                         ByVal type As String) As define_builder_28
             assert(Not ta Is Nothing)
             Return of_define(name, ta(type))
         End Function
@@ -50,6 +46,6 @@ Namespace logic
         End Function
 
         Private Sub New()
-            End Sub
-        End Class
+        End Sub
+    End Class
 End Namespace

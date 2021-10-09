@@ -91,6 +91,19 @@ Namespace logic
                         "] is not a variable size type.")
         End Sub
 
+        Public Shared Sub type_alias_redefined(ByVal [alias] As String,
+                                               ByVal canonical As String,
+                                               ByVal last_type As String)
+            raise_error(error_type.user,
+                        "Alias ",
+                        [alias],
+                        " of canonical type ",
+                        canonical,
+                        " has been defined already as ",
+                        last_type,
+                        ".")
+        End Sub
+
         Public Shared Sub type_undefined(ByVal type As String, ByVal target As String)
             raise_error(error_type.user, "Type ", type, " referred by target ", target, " is undefined.")
         End Sub

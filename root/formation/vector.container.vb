@@ -26,5 +26,6 @@ Partial Public NotInheritable Class vector(Of T)
                                                      End Sub)
         bytes_serializer(Of vector(Of T)).container(Of T).register()
         json_serializer(Of vector(Of T)).container(Of T).register_as_array()
+        string_serializer(Of vector(Of T)).container(Of T).register()
     End Sub
 End Class

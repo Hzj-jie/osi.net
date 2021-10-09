@@ -26,11 +26,7 @@ Public MustInherit Class code_gen_wrapper(Of WRITER)
 End Class
 
 Public Class code_gens(Of WRITER)
-    Private ReadOnly m As map(Of String, code_gen(Of WRITER))
-
-    Public Sub New()
-        m = New map(Of String, code_gen(Of WRITER))()
-    End Sub
+    Private ReadOnly m As New unordered_map(Of String, code_gen(Of WRITER))()
 
     Public Shared Function code_gen_name(Of T As code_gen(Of WRITER))() As String
         Return GetType(T).Name().Replace("_"c, "-"c)
@@ -59,8 +55,7 @@ Public Class code_gens(Of WRITER)
     End Sub
 
     Public Function code_gen_of(ByVal name As String) As code_gen(Of WRITER)
-        Dim it As map(Of String, code_gen(Of WRITER)).iterator = Nothing
-        it = m.find(name)
+        Dim it As unordered_map(Of String, code_gen(Of WRITER)).iterator = m.find(name)
         assert(it <> m.end(), "Cannot find code_gen of ", name)
         Return (+it).second
     End Function

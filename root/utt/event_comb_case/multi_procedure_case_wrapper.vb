@@ -17,7 +17,7 @@ Public Class multi_procedure_case_wrapper
     End Sub
 
     Public Sub New(ByVal c As event_comb_case, ByVal procedure_count As Int32)
-        Me.New(c, CUInt(assert_return(procedure_count >= 0, procedure_count)))
+        Me.New(c, assert_which.of(procedure_count).can_cast_to_uint32())
     End Sub
 
     Protected Overridable Function procedure_count() As UInt32

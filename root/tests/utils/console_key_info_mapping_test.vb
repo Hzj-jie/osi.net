@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
 
-Public Class console_key_info_mapping_test
+Public NotInheritable Class console_key_info_mapping_test
     Inherits [case]
 
     Private Shared Function verify(ByVal x As ConsoleKey,
@@ -53,8 +53,9 @@ Public Class console_key_info_mapping_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Return assert(enum_def(Of ConsoleKey).foreach(Sub(x As ConsoleKey)
-                                                          assertion.is_true(verify(x))
-                                                      End Sub))
+        enum_def(Of ConsoleKey).foreach(Sub(ByVal x As ConsoleKey)
+                                            assertion.is_true(verify(x))
+                                        End Sub)
+        Return True
     End Function
 End Class

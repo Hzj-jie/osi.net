@@ -10,7 +10,7 @@ Partial Public Class checks(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Return New double_subject(i)
     End Function
 
-    Public Class double_subject
+    Public NotInheritable Class double_subject
         Inherits T_subject(Of Double)
 
         Private Const default_diff As Double = 0.000001

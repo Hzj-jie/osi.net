@@ -3,84 +3,79 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
+Imports System.IO
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt.attributes
 Imports osi.service.ml.onebound(Of Char)
+Imports osi.service.resource
 Imports tracer = osi.service.ml.wordtracer.cjk.tracer
 
 Namespace wordtracer.cjk
     <test>
     Public NotInheritable Class tracer_test
+        Private Shared input As argument(Of String)
+        Private Shared input2 As argument(Of String)
+        Private Shared output As argument(Of String)
+        Private Shared percentage As argument(Of Double)
+
         <test>
         <command_line_specified>
         Private Shared Sub from_training_file()
-            Dim m As model = Nothing
-            m = tracer.train(IO.File.ReadLines("cjk.training.txt"))
-            m.dump("cjk.words.2.bin")
+            tracer.train(File.ReadLines(input Or "cjk.training.txt")).dump(output Or "cjk.words.2.bin")
         End Sub
 
         <test>
         <command_line_specified>
-        Private Shared Sub raw_from_training_file()
-            Dim config As trainer.config = Nothing
-            config = New trainer.config()
-            config.compare = trainer.config.comparison.raw
-            Dim m As model = Nothing
-            m = tracer.train(config, IO.File.ReadLines("cjk.training.txt"))
-            m.dump("cjk.words.2.raw.bin")
+        Private Shared Sub from_tar()
+            tracer.train(tar.reader.unzip(
+                             vector.of(Directory.GetFiles(Environment.CurrentDirectory(),
+                                                          input Or "tar_manual_test.zip_*",
+                                                          SearchOption.AllDirectories)))).
+                   dump(output Or "cjk.words.2.bin")
         End Sub
 
         <test>
         <command_line_specified>
-        Private Shared Sub from_small_training_file()
-            Dim m As model = Nothing
-            m = tracer.train(IO.File.ReadLines("cjk.training.small.txt"))
-            m.dump("cjk.words.2.small.bin")
+        Private Shared Sub char_to_str()
+            model.load(input Or "cjk.words.2.bin").
+                  map(Function(ByVal i As Char) As String
+                          Return i
+                      End Function).
+                  dump(output Or "cjk.words.2.str.bin")
         End Sub
 
         <test>
         <command_line_specified>
         Private Shared Sub dump()
-            model.load("cjk.words.2.bin").
-                  filter(0.1).
-                  flat_map().
-                  foreach(Sub(ByVal x As first_const_pair(Of const_pair(Of Char, Char), Double))
-                              Console.WriteLine(strcat(x.first.first, " ", x.first.second, ", ", x.second))
-                          End Sub)
+            model.load(input Or "cjk.words.2.bin").to_console()
         End Sub
 
         <test>
         <command_line_specified>
-        Private Shared Sub dump_raw()
-            model.load("cjk.words.2.raw.bin").
-                  flat_map().
-                  sort(Function(ByVal i As first_const_pair(Of const_pair(Of Char, Char), Double),
-                                ByVal j As first_const_pair(Of const_pair(Of Char, Char), Double)) As Int32
-                           assert(Not i Is Nothing)
-                           assert(Not j Is Nothing)
-                           If i.first.first <> j.first.first Then
-                               Return i.first.first.CompareTo(j.first.first)
-                           End If
-                           If i.second <> j.second Then
-                               Return i.second.CompareTo(j.second)
-                           End If
-                           Return i.first.second.CompareTo(j.first.second)
-                       End Function).
-                  foreach(Sub(ByVal x As first_const_pair(Of const_pair(Of Char, Char), Double))
-                              Console.WriteLine(strcat(x.first.first, " ", x.first.second, ", ", x.second))
-                          End Sub)
+        Private Shared Sub exponential_distributions()
+            model.load(input Or "cjk.words.2.bin").exponential_distributions_to_consle()
         End Sub
 
         <test>
         <command_line_specified>
-        Private Shared Sub dump_small()
-            model.load("cjk.words.2.small.bin").
-                  filter(0.1).
-                  flat_map().
-                  foreach(Sub(ByVal x As first_const_pair(Of const_pair(Of Char, Char), Double))
-                              Console.WriteLine(strcat(x.first.first, " ", x.first.second, ", ", x.second))
-                          End Sub)
+        Private Shared Sub run_exponential_selector()
+            selector.exponential(model.load(input Or "cjk.words.2.bin"), percentage Or 0.9).
+                     dump(output Or "cjk.words.2.bin.e0.9")
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub reverse()
+            model.load(input Or "cjk.words.2.bin").reverse().dump(output Or "cjk.words.2.bin.reverse")
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub multiply()
+            model.load(input Or "cjk.words.2.bin.e0.9").
+                  multiply(model.load(input2 Or "cjk.words.2.bin.reverse.e0.9").reverse()).
+                  dump(output Or "cjk.words.2.bin.e0.9.bidirectional")
         End Sub
 
         Private Sub New()

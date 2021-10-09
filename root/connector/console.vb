@@ -9,17 +9,16 @@ Imports System.Threading
 Imports osi.root.constants
 
 Public Module _console
-    Public ReadOnly console_output_redirected As Boolean
+    Public ReadOnly console_output_redirected As Boolean = calculate_console_output_redirected()
 
-    Sub New()
+    Private Function calculate_console_output_redirected() As Boolean
         Try
-            Dim x As Int32 = 0
-            x = Console.CursorLeft()
-            console_output_redirected = False
+            Dim x As Int32 = Console.CursorLeft()
+            Return False
         Catch ex As Exception
-            console_output_redirected = True
+            Return True
         End Try
-    End Sub
+    End Function
 
     <SuppressMessage("Microsoft.Reliability", "CA2002:DoNotLockOnObjectsWithWeakIdentity")>
     Public Sub lock_console_output()
@@ -64,10 +63,8 @@ Public Module _console
             lock_console_output()
         End If
 
-        Dim l As Int32 = 0
-        Dim t As Int32 = 0
-        l = Console.CursorLeft()
-        t = Console.CursorTop()
+        Dim l As Int32 = Console.CursorLeft()
+        Dim t As Int32 = Console.CursorTop()
         If err Then
             write_console_error(s)
         Else
@@ -139,25 +136,22 @@ Public Module _console
     End Sub
 
     Public Function closest_console_color(ByVal r As Byte, ByVal g As Byte, ByVal b As Byte) As ConsoleColor
-        Dim min_d As Int32 = 0
-        min_d = max_int32
+        Dim min_d As Int32 = max_int32
         Dim min_c As ConsoleColor = Nothing
-        assert(enum_def(Of ConsoleColor).foreach(Function(ByVal cc As ConsoleColor, ByVal n As String) As Boolean
-                                                     Dim c As Color = Nothing
-                                                     'no dark yellow in knowncolor enumeration
-                                                     c = Color.FromName(
-                                                             If(strsame(n, "DarkYellow", False), "Orange", n))
-                                                     Dim d As Int32 = 0
-                                                     d = (CShort(c.R) - r).power_2() +
-                                                         (CShort(c.G) - g).power_2() +
-                                                         (CShort(c.B) - b).power_2()
-                                                     If d = 0 OrElse
-                                                        d < min_d Then
-                                                         min_c = cc
-                                                         Return d <> 0
-                                                     End If
-                                                     Return True
-                                                 End Function))
+        enum_def(Of ConsoleColor).foreach(Sub(ByVal cc As ConsoleColor, ByVal n As String)
+                                              Dim c As Color = Nothing
+                                              'no dark yellow in knowncolor enumeration
+                                              c = Color.FromName(If(strsame(n, "DarkYellow", False), "Orange", n))
+                                              Dim d As Int32 = (CShort(c.R) - r).power_2() +
+                                                               (CShort(c.G) - g).power_2() +
+                                                               (CShort(c.B) - b).power_2()
+                                              If d = 0 OrElse d < min_d Then
+                                                  min_c = cc
+                                                  If d = 0 Then
+                                                      break_lambda.at_here()
+                                                  End If
+                                              End If
+                                          End Sub)
         Return min_c
     End Function
 End Module

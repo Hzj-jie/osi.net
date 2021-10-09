@@ -12,6 +12,7 @@ Partial Public NotInheritable Class type_info(Of T)
     ' Do not add type, refer to gettype_perf test, since this is a template class, caching GetType(T) result cannot
     ' provide benefit.
     ' Public Shared ReadOnly type As Type
+    Public Shared ReadOnly assembly_qualified_name As String = GetType(T).AssemblyQualifiedName()
     Public Shared ReadOnly fullname As String = GetType(T).FullName()
     Public Shared ReadOnly name As String = GetType(T).Name()
 

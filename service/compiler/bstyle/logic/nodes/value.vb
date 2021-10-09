@@ -4,28 +4,22 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value
-        Inherits logic_gen_wrapper
+        Inherits logic_gen_wrapper_with_parameters
         Implements logic_gen
 
-        Private ReadOnly ta As type_alias
-
-        Public Sub New(ByVal b As logic_gens, ByVal ta As type_alias)
-            MyBase.New(b)
-            Me.ta = ta
-            Me.read_targets = New read_scoped(Of String)()
-            Me.defined_temp_targets = New [set](Of String)()
+        Private Sub New(ByVal b As logic_gens, ByVal l As parameters_t)
+            MyBase.New(b, l)
         End Sub
 
-        Public Shared Sub register(ByVal b As logic_gens, ByVal l As logic_rule_wrapper)
+        Public Shared Sub register(ByVal b As logic_gens, ByVal l As parameters_t)
             assert(Not b Is Nothing)
             assert(Not l Is Nothing)
-            b.register(New value(b, l.type_alias))
+            b.register(New value(b, l))
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build

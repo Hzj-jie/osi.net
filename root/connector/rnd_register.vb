@@ -5,9 +5,12 @@ Option Strict On
 
 Imports osi.root.constants
 
-<global_init(global_init_level.foundamental)>
+<global_init(global_init_level.functor)>
 Friend NotInheritable Class rnd_register_internal_types
-    Shared Sub New()
+    Private Sub New()
+    End Sub
+
+    Private Shared Sub init()
         rnd_register(Of Boolean).register(Function() rnd_bool())
         rnd_register(Of Byte).register(Function() rnd_uint8())
         rnd_register(Of SByte).register(Function() rnd_int8())
@@ -20,12 +23,6 @@ Friend NotInheritable Class rnd_register_internal_types
         rnd_register(Of Double).register(Function() rnd_double())
         rnd_register(Of String).register(Function() rnd_utf8_chars(rnd_int(100, 200)))
         rnd_register(Of Char).register(Function() rnd_char())
-    End Sub
-
-    Private Sub New()
-    End Sub
-
-    Private Shared Sub init()
     End Sub
 End Class
 

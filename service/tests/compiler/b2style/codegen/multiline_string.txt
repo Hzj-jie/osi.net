@@ -1,0 +1,7 @@
+﻿
+void main() {
+  b2style::std_out("a
+    b
+    c
+    d");
+}

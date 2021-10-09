@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class onebound(Of K)
@@ -24,8 +25,12 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Function dump(ByVal o As String) As Boolean
-            Using ms As MemoryStream = New MemoryStream()
-                Return dump(ms) AndAlso ms.dump_to_file(o)
+            Dim ms As MemoryStream = Nothing
+            If Not memory_stream.write_file_wrapped(o, ms) Then
+                Return False
+            End If
+            Using ms
+                Return dump(ms)
             End Using
         End Function
 
@@ -60,6 +65,33 @@ Partial Public NotInheritable Class onebound(Of K)
             Return o
         End Function
 
+        Public Shared Function combo_load(ByRef o As model, ByVal ParamArray files() As String) As Boolean
+            If files.isemptyarray() Then
+                Return False
+            End If
+
+            If Not load(files(0), o) Then
+                Return False
+            End If
+
+            For i As Int32 = 1 To files.array_size_i() - 1
+                Dim m As model = Nothing
+                If Not load(files(i), m) Then
+                    Return False
+                End If
+                If Not o.add(m) Then
+                    Return False
+                End If
+            Next
+            Return True
+        End Function
+
+        Public Shared Function combo_load(ByVal ParamArray files() As String) As model
+            Dim o As model = Nothing
+            assert(combo_load(o, files))
+            Return o
+        End Function
+
         Public Function affinity(ByVal a As K, ByVal b As K) As Double
             If m.find(a) = m.end() OrElse m(a).find(b) = m(a).end() Then
                 Return 0
@@ -67,9 +99,48 @@ Partial Public NotInheritable Class onebound(Of K)
             Return m(a)(b)
         End Function
 
+        Public Function reverse() As model
+            Dim r As New unordered_map(Of K, unordered_map(Of K, Double))()
+            flat_map().foreach(Sub(ByVal v As first_const_pair(Of const_pair(Of K, K), Double))
+                                   r(v.first.second)(v.first.first) = v.second
+                               End Sub)
+            Return New model(r)
+        End Function
+
+        Public Function multiply(ByVal other As model) As model
+            assert(Not other Is Nothing)
+            Dim r As New unordered_map(Of K, unordered_map(Of K, Double))()
+            flat_map().foreach(Sub(ByVal v As first_const_pair(Of const_pair(Of K, K), Double))
+                                   If v.second <= 0 Then
+                                       Return
+                                   End If
+                                   Dim o As Double = other.affinity(v.first.first, v.first.second)
+                                   If o <= 0 Then
+                                       Return
+                                   End If
+                                   r(v.first.first)(v.first.second) = o * v.second
+                               End Sub)
+            Return New model(r)
+        End Function
+
+        Public Function add(ByVal other As model) As Boolean
+            assert(Not other Is Nothing)
+            Try
+                other.m.
+                      stream().
+                      foreach(Sub(ByVal p As first_const_pair(Of K, unordered_map(Of K, Double)))
+                                  If Not m.emplace(p).second Then
+                                      break_lambda.at_here()
+                                  End If
+                              End Sub)
+                Return True
+            Catch ex As break_lambda
+                Return False
+            End Try
+        End Function
+
         Public Overloads Function Equals(ByVal other As model) As Boolean Implements IEquatable(Of model).Equals
-            Dim cmp As Int32 = 0
-            cmp = object_compare(Me, other)
+            Dim cmp As Int32 = object_compare(Me, other)
             If cmp <> object_compare_undetermined Then
                 Return cmp = 0
             End If
@@ -77,7 +148,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Overrides Function Equals(ByVal other As Object) As Boolean
-            Return Equals(cast(Of model)(other, False))
+            Return Equals(cast(Of model)().from(other, False))
         End Function
 
         Public Overrides Function ToString() As String
@@ -136,5 +207,71 @@ Partial Public NotInheritable Class onebound(Of K)
                                                            End Function)).
                                               collect(Of unordered_map(Of R, unordered_map(Of R, Double)))())
         End Function
+
+        Public Function map(ByVal f As Func(Of K, K, Double, Double)) As onebound(Of K).model
+            assert(Not f Is Nothing)
+            Return New onebound(Of K).model(
+                       m.stream().
+                         map(m.mapper(Function(ByVal k As K,
+                                               ByVal v As unordered_map(Of K, Double)) _
+                                              As first_const_pair(Of K,
+                                                                     unordered_map(Of K, Double))
+                                          Return first_const_pair.emplace_of(
+                                                     k,
+                                                     v.stream().
+                                                       map(v.second_mapper(
+                                                               Function(ByVal x As K, ByVal y As Double) As Double
+                                                                   Return f(k, x, y)
+                                                               End Function)).
+                                                       collect(Of unordered_map(Of K, Double))())
+                                      End Function)).
+                                      collect(Of unordered_map(Of K, unordered_map(Of K, Double)))())
+        End Function
+
+        Public Function map_each(Of R)(ByVal f As Func(Of unordered_map(Of K, Double), R)) As unordered_map(Of K, R)
+            assert(Not f Is Nothing)
+            Return m.stream().
+                     map(m.second_mapper(f)).
+                     collect(Of unordered_map(Of K, R))()
+        End Function
+
+        Public Function to_map(Of K2)() As unordered_map(Of K2, Double)
+            Return to_map(AddressOf binary_operator(Of K, K, K2).r.add)
+        End Function
+
+        Public Function to_map(Of K2)(ByVal f As Func(Of K, K, K2)) As unordered_map(Of K2, Double)
+            assert(Not f Is Nothing)
+            Return flat_map().map(Function(ByVal v As first_const_pair(Of const_pair(Of K, K), Double)) As first_const_pair(Of K2, Double)
+                                      Return first_const_pair.emplace_of(f(v.first.first, v.first.second), v.second)
+                                  End Function).
+                              collect(Of unordered_map(Of K2, Double))()
+        End Function
+
+        Public Sub to_console()
+            m.stream().
+              sort(AddressOf first_const_pair.first_compare).
+              foreach(m.on_pair(Sub(ByVal key As K, ByVal value As unordered_map(Of K, Double))
+                                    value.stream().
+                                          sort(Function(ByVal i As first_const_pair(Of K, Double),
+                                                        ByVal j As first_const_pair(Of K, Double)) As Int32
+                                                   If i.second <> j.second Then
+                                                       Return i.second.CompareTo(j.second)
+                                                   End If
+                                                   Return compare(i.first, j.first)
+                                               End Function).
+                                          foreach(Sub(ByVal i As first_const_pair(Of K, Double))
+                                                      Console.WriteLine(strcat(key, " ", i.first, ", ", i.second))
+                                                  End Sub)
+                                End Sub))
+        End Sub
+
+        Public Sub exponential_distributions_to_consle()
+            selector.exponential_distributions(Me).
+                     stream().
+                     sort(first_const_pair(Of K, Double).second_first_comparer).
+                     foreach(Sub(ByVal x As first_const_pair(Of K, Double))
+                                 Console.WriteLine(strcat(x.first, ": ", x.second))
+                             End Sub)
+        End Sub
     End Class
 End Class

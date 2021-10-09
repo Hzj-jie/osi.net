@@ -7,9 +7,10 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.constants.system_perf
 
+<global_init(global_init_level.other)>
 Public Module _system_perf
-    Public ReadOnly perf_run_ms As Int64
-    Public ReadOnly loops_per_ms As Int64
+    Public ReadOnly perf_run_ms As Int64 = calculate_perf_run_ms()
+    Public ReadOnly loops_per_ms As Int64 = ratio \ perf_run_ms
 
     Private Function perf_run_single() As Int64
         Dim startticks As Int64 = 0
@@ -39,12 +40,14 @@ Public Module _system_perf
         Return max(ticks_to_milliseconds(min), 1)
     End Function
 
-    Sub New()
+    Private Function calculate_perf_run_ms() As Int64
         assert(error_writer_ignore_types(Of colorful_console_error_writer).valued(error_type.warning))
         Using New boost()
-            perf_run_ms = perf_run()
+            Return perf_run()
         End Using
-        loops_per_ms = ratio \ perf_run_ms
+    End Function
+
+    Private Sub init()
         If env_bool(env_keys("report", "system", "perf")) Then
             ' system_perf will be initialized before file_error_writer, so ensure it won't be ignored by
             ' colorful_console_error_writer.

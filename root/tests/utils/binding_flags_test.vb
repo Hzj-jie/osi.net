@@ -61,27 +61,25 @@ Public NotInheritable Class binding_flags_test
     <test>
     <repeat(1000)>
     Private Shared Sub random_case()
-        Dim separators() As String = Nothing
-        separators = strsplitter.with_default_separators(character.sheffer, character.comma)
+        Dim separators() As String = strsplitter.with_default_separators(character.sheffer, character.comma)
         Dim random_separator As Func(Of String) = Function() As String
                                                       Return separators(rnd_int(0, array_size_i(separators)))
                                                   End Function
         Dim bf As BindingFlags = Nothing
-        Dim s As StringBuilder = Nothing
-        s = New StringBuilder()
-        assert(enum_def(Of BindingFlags).foreach(Sub(x As BindingFlags, y As String)
-                                                     If rnd_bool() Then
-                                                         bf = bf Or x
-                                                         s.Append(random_separator())
-                                                         If rnd_bool() Then
-                                                             s.Append(random_separator())
-                                                         End If
-                                                         s.Append(y)
-                                                         If rnd_bool() Then
-                                                             s.Append(random_separator())
-                                                         End If
-                                                     End If
-                                                 End Sub))
+        Dim s As StringBuilder = New StringBuilder()
+        enum_def(Of BindingFlags).foreach(Sub(ByVal x As BindingFlags, ByVal y As String)
+                                              If rnd_bool() Then
+                                                  bf = bf Or x
+                                                  s.Append(random_separator())
+                                                  If rnd_bool() Then
+                                                      s.Append(random_separator())
+                                                  End If
+                                                  s.Append(y)
+                                                  If rnd_bool() Then
+                                                      s.Append(random_separator())
+                                                  End If
+                                              End If
+                                          End Sub)
         Dim nbf As BindingFlags = Nothing
         assertion.is_true(nbf.from_str(Convert.ToString(s)))
         assertion.equal(nbf, bf)

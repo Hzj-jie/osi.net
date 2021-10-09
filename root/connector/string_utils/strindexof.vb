@@ -8,13 +8,10 @@ Imports osi.root.constants
 Imports osi.root.delegates
 
 Public Module _strindexof
-    Private ReadOnly strindexof_impl As _do_val_val_ref(Of String, String, UInt32, Int32)
-    Private ReadOnly strlastindexof_impl As _do_val_val_ref(Of String, String, UInt32, Int32)
-
-    Sub New()
-        strindexof_impl = AddressOf _strindexof
-        strlastindexof_impl = AddressOf _strlastindexof
-    End Sub
+    Private ReadOnly strindexof_impl As _do_val_val_ref(Of String, String, UInt32, Int32) =
+        AddressOf _strindexof
+    Private ReadOnly strlastindexof_impl As _do_val_val_ref(Of String, String, UInt32, Int32) =
+        AddressOf _strlastindexof
 
     'will fail when s contains some invalid characters
     Private Function _strindexof(ByVal s As String, ByVal search As String, ByRef start As UInt32) As Int32

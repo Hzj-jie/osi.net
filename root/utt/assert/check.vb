@@ -5,19 +5,20 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.template
 
 Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
     Private Const default_assert_async_wait_time_ms As UInt32 = 10 * second_milli
     Private Shared ReadOnly _is_true As __void(Of Boolean, Object()) =
-        assert_not_nothing_return(alloc(Of IS_TRUE_FUNC)())
+        assert_which.of(alloc(Of IS_TRUE_FUNC)()).is_not_null()
 
     Private Shared Function left_right_msg(Of T)(ByVal cmp As String,
                                                  ByVal i As T,
                                                  ByVal j As T,
                                                  ByVal msg() As Object) As Object()
-        Return New Object() {"left ", i, ", right ", j, ", expected left is ", cmp, " right, ", msg}
+        Return New Object() {"expected left ", i, " is ", cmp, " right ", j, ", ", msg}
     End Function
 
     Public Shared Function is_true(ByVal v As Boolean, ByVal ParamArray msg() As Object) As Boolean
@@ -259,6 +260,59 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Return defer.to(Sub()
                             less(i, j, msg)
                         End Sub)
+    End Function
+
+    Public Shared Function near_match(ByVal v As Double,
+                                      ByVal exp As Double,
+                                      ByVal diff As Double,
+                                      ByVal ParamArray msg() As Object) As Boolean
+        Return less(Math.Abs(v - exp), diff, left_right_msg("near match", v, exp, msg))
+    End Function
+
+    Public Shared Function near_match(ByVal v As Double,
+                                      ByVal exp As Double,
+                                      ByVal ParamArray msg() As Object) As Boolean
+        Return near_match(v, exp, 0.001, msg)
+    End Function
+
+    Public Shared Function death(ByVal d As Action, ByVal check_exception As Action(Of String)) As Boolean
+        assert(Not check_exception Is Nothing)
+        Dim r As Boolean = True
+        expect_assertion_failure(d,
+                                 Sub()
+                                     not_reach()
+                                     r = False
+                                 End Sub,
+                                 Sub(ByVal msg As String)
+                                     check_exception(msg)
+                                     r = False
+                                 End Sub)
+        Return r
+    End Function
+
+    Public Shared Function death(ByVal d As Action) As Boolean
+        Return death(d,
+                     Sub(ByVal msg As String)
+                     End Sub)
+    End Function
+
+    Public Shared Function str_contains(ByVal origin As String,
+                                        ByVal exp As String,
+                                        ByVal ParamArray msg() As Object) As Boolean
+        Return is_not_null(origin, "origin", msg) AndAlso
+               is_not_null(exp, "exp", msg) AndAlso
+               is_true(origin.Contains(exp), left_right_msg("containing", origin, exp, msg))
+    End Function
+
+    Public Shared Function str_contains(ByVal origin As String,
+                                        ByVal exps() As String,
+                                        ByVal ParamArray msg() As Object) As Boolean
+        Return is_not_null(exps, "exps", msg) AndAlso
+               streams.of(exps).
+                       map(Function(ByVal exp As String) As Boolean
+                               Return str_contains(origin, exp, msg)
+                           End Function).
+                       aggregate(bool_stream.aggregators.all_true)
     End Function
 
     Protected Sub New()

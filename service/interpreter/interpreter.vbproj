@@ -95,6 +95,7 @@
     <Compile Include="primitive\console_io.vb" />
     <Compile Include="primitive\data_block.vb" />
     <Compile Include="primitive\data_ref.vb" />
+    <Compile Include="primitive\heap_ref.vb" />
     <Compile Include="primitive\interrupts.implementation.vb" />
     <Compile Include="primitive\interrupts.vb" />
     <Compile Include="primitive\instructions.execute.vb" />

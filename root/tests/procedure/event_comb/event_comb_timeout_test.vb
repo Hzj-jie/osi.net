@@ -9,7 +9,7 @@ Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.utt
 
-Public Class event_comb_timeout_test
+Public NotInheritable Class event_comb_timeout_test
     Inherits case_wrapper
 
     Private Shared ReadOnly timeout_ms As Int64
@@ -67,7 +67,7 @@ Public Class event_comb_timeout_test
         End Function
 
         Private Shared Function acceptable_latency_ms() As Int64
-            Return ((timeout_ms + sixteen_timeslice_length_ms) * thread_count) << 2
+            Return ((timeout_ms + 16 * timeslice_length_ms) * thread_count) << 2
         End Function
 
         Private Function async_sync_test() As Boolean

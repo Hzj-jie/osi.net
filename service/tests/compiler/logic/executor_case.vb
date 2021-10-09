@@ -30,26 +30,24 @@ Namespace logic
 
         Public Overrides Function run() As Boolean
             Dim e As simulator = Nothing
-            Dim ext As interrupts = Nothing
-            ext = interrupts()
+            Dim ext As interrupts = interrupts()
             If ext Is Nothing Then
                 e = New simulator()
             Else
                 e = New simulator(ext)
             End If
-            If assertion.is_true(e.import(es)) Then
-                e.execute()
-                assertion.is_false(e.halt())
-                assertion.is_true(e.errors().empty())
-                Try
-                    check_result(not_null.[New](e))
-                Catch ex As executor_stop_error
-                    assertion.is_true(False, ex)
-                End Try
-                Return True
-            Else
+            If Not assertion.is_true(e.import(es)) Then
                 Return False
             End If
+            e.execute()
+            assertion.is_false(e.halt())
+            assertion.is_true(e.errors().empty())
+            Try
+                check_result(not_null.[New](e))
+            Catch ex As executor_stop_error
+                assertion.is_true(False, ex)
+            End Try
+            Return True
         End Function
     End Class
 End Namespace

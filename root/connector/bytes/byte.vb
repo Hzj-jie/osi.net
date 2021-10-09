@@ -7,13 +7,13 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports osi.root.constants
 
+<global_init(global_init_level.runtime_checkers)>
 Public Module _byte
-    Private ReadOnly empty_bytes() As Byte
+    Private ReadOnly empty_bytes(-1) As Byte
 
-    Sub New()
+    Private Sub init()
         assert(strlen(upper_dbc_hex_digits) = hex_digits_char_count)
         assert(hex_digits_char_count = 16)
-        ReDim empty_bytes(-1)
     End Sub
 
     Private Function to_hex(ByVal i As Byte) As Char

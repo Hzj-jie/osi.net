@@ -1,27 +1,25 @@
 ﻿
-Imports System.Collections
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net.Sockets
-Imports osi.root.delegates
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports List = System.Collections.Generic.List(Of System.Net.Sockets.Socket)
 
-Public Class poll_read_select
+Public NotInheritable Class poll_read_select
     Inherits event_comb_select(Of pair(Of TcpClient, Int64))
 
-    Private Shared ReadOnly instance As poll_read_select
+    Private Shared ReadOnly instance As poll_read_select = New poll_read_select()
     Private last_poll_ms As Int64
 
-    Shared Sub New()
-        instance = New poll_read_select()
-    End Sub
-
     Private Sub New()
-        MyBase.New(half_timeslice_length_ms)
+        MyBase.New(max(timeslice_length_ms \ 2, 1))
     End Sub
 
     Public Shared Shadows Function queue(ByVal i As TcpClient,
@@ -67,10 +65,8 @@ Public Class poll_read_select
                                   sync_select()
                                   last_poll_ms = mc
                               Else
-                                  Dim v As List = Nothing
-                                  Dim m As map(Of Int64, pair(Of pair(Of TcpClient, Int64), Action)) = Nothing
-                                  v = New List()
-                                  m = New map(Of Int64, pair(Of pair(Of TcpClient, Int64), Action))()
+                                  Dim v As New List()
+                                  Dim m As New map(Of Int64, pair(Of pair(Of TcpClient, Int64), Action))()
                                   foreach(Function(p As pair(Of pair(Of TcpClient, Int64), Action)) As Boolean
                                               assert(Not p.first Is Nothing)
                                               assert(Not p.first.first Is Nothing)

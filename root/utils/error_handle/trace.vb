@@ -8,11 +8,7 @@ Imports osi.root.constants
 Imports osi.root.envs
 
 Public Module _trace
-    Private ReadOnly enabled As Boolean
-
-    Sub New()
-        enabled = enable_trace OrElse enable_detail_trace
-    End Sub
+    Private ReadOnly enabled As Boolean = enable_trace OrElse enable_detail_trace
 
     <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Sub trace(ByVal ParamArray msg() As Object)

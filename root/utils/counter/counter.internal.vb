@@ -24,13 +24,10 @@ Namespace counter
             End Sub
         End Class
 
-        Friend ReadOnly internal_counters() As internal_counter
+        Private ReadOnly recent_processor_usage_record As recent_processor_usage_record =
+            recent_processor_usage_record.[New]()
 
-        Sub New()
-            Dim recent_processor_usage_record As recent_processor_usage_record = Nothing
-            recent_processor_usage_record = recent_processor_usage_record.[New]()
-
-            internal_counters = New internal_counter() {
+        Friend ReadOnly internal_counters() As internal_counter = {
                 New internal_counter("COUNTER_INCREASE_LATENCY_TICKS", AddressOf selfhealth.increase_latency),
                 New internal_counter("COUNTER_INCREASE_TIMES", AddressOf selfhealth.increase_times),
                 New internal_counter("COUNTER_WRITE_LATENCY_TICKS", AddressOf selfhealth.write_latency),
@@ -48,6 +45,5 @@ Namespace counter
                                      Function() As Int64
                                          Return CLng(recent_processor_usage(recent_processor_usage_record) * 100)
                                      End Function)}
-        End Sub
     End Module
 End Namespace

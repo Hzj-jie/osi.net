@@ -10,7 +10,7 @@ Imports osi.root.envs
 Namespace constants
     Public Module _constants
         Public Const pop_timeout_ms As Int64 = 1 * second_milli
-        Public ReadOnly pop_interval_ms As Int64 = half_timeslice_length_ms
+        Public ReadOnly pop_interval_ms As Int64 = max(timeslice_length_ms \ 2, 1)
         Public Const console_keyboard_buff_size As Int32 = 1024 * 1024
     End Module
 

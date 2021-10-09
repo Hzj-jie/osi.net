@@ -12,12 +12,9 @@ Imports osi.service.argument
 
 ' For client to directly construct an instance of T from var. i.e. constructor(Of T).resolve(v, r)
 Public NotInheritable Class constructor(Of T)
-    Private Shared ReadOnly lt As unique_strong_map(Of String, Func(Of var, ref(Of T), event_comb))
+    Private Shared ReadOnly lt As unique_strong_map(Of String, Func(Of var, ref(Of T), event_comb)) =
+        New unique_strong_map(Of String, Func(Of var, ref(Of T), event_comb))()
     Private Shared l As Func(Of var, ref(Of T), event_comb)
-
-    Shared Sub New()
-        lt = New unique_strong_map(Of String, Func(Of var, ref(Of T), event_comb))()
-    End Sub
 
     Public Shared Function empty() As Boolean
         Return lt.empty() AndAlso l Is Nothing
@@ -26,27 +23,24 @@ Public NotInheritable Class constructor(Of T)
     Public Shared Function register(ByVal allocator As Func(Of var, ref(Of T), event_comb)) As Boolean
         If allocator Is Nothing Then
             Return False
-        Else
-            Return atomic.set_if_nothing(l, allocator)
         End If
+        Return atomic.set_if_nothing(l, allocator)
     End Function
 
     Public Shared Function [erase]() As Boolean
         If l Is Nothing Then
             Return False
-        Else
-            l = Nothing
-            Return True
         End If
+        l = Nothing
+        Return True
     End Function
 
     Public Shared Function register(ByVal type As String,
                                     ByVal allocator As Func(Of var, ref(Of T), event_comb)) As Boolean
         If String.IsNullOrEmpty(type) OrElse allocator Is Nothing Then
             Return False
-        Else
-            Return lt.set(type, allocator)
         End If
+        Return lt.set(type, allocator)
     End Function
 
     Public Shared Function [erase](ByVal type As String) As Boolean
@@ -72,9 +66,8 @@ Public NotInheritable Class constructor(Of T)
                                       ec = allocator(v, o)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
-                                  Else
-                                      Return False
                                   End If
+                                  Return False
                               End Function,
                               Function() As Boolean
                                   Dim r As T = Nothing

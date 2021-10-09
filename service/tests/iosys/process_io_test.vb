@@ -1,16 +1,19 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports System.Threading
-Imports osi.root.constants
-Imports osi.root.envs
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.resource
 Imports osi.service.iosys
 
-Public Class process_io_test
+Public NotInheritable Class process_io_test
     Inherits [case]
 
     Public Shared ReadOnly process_io_exe_full_path As String
@@ -56,7 +59,7 @@ Public Class process_io_test
                 For i As Int32 = 0 To output_times - 1
                     atomic.eva(last_input, rnd_en_chars(rnd_int(10, 100)))
                     assertion.is_true(io.input_received(last_input))
-                    assertion.is_true(yield_wait(are, 10000))
+                    assertion.is_true(yield_wait(are, 100000))
                 Next
             End If
             assertion.is_true(io.quit())

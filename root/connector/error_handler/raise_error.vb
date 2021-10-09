@@ -7,10 +7,6 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _raise_error
-    Sub New()
-        static_constructor(Of colorful_console_error_writer).execute()
-    End Sub
-
     <MethodImpl(MethodImplOptions.NoInlining)>
     Public Sub raise_error(ByVal errmsg As String,
                            Optional ByVal errtype As error_type = error_type.information,

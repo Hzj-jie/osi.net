@@ -4,11 +4,6 @@ Option Infer Off
 Option Strict On
 
 Public Module _utt_assert_trace
-    Public ReadOnly utt_no_assert As Boolean
-    Public ReadOnly utt_no_debug_mode As Boolean
-
-    Sub New()
-        utt_no_assert = env_bool(env_keys("utt", "no", "assert"))
-        utt_no_debug_mode = env_bool(env_keys("utt", "no", "debug", "mode"))
-    End Sub
+    Public ReadOnly utt_no_assert As Boolean = env_bool(env_keys("utt", "no", "assert"))
+    Public ReadOnly utt_no_debug_mode As Boolean = env_bool(env_keys("utt", "no", "debug", "mode"))
 End Module

@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="tar\fs.vb" />
     <Compile Include="tar\reader.vb" />
+    <Compile Include="tar\selector.vb" />
     <Compile Include="tar\writer.vb" />
   </ItemGroup>
   <ItemGroup>

@@ -10,9 +10,7 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
-#If USE_LOCK_T Then
 Imports osi.root.lock
-#End If
 
 Partial Public Class event_comb
 #If Not USE_LOCK_T Then
@@ -98,10 +96,9 @@ Partial Public Class event_comb
     Private Sub reenterable_locked(ByVal d As Action)
         assert(Not d Is Nothing)
         If lock_trace AndAlso event_comb_trace Then
-            Dim n As Int64 = 0
-            n = Now().milliseconds()
+            Dim n As Int64 = Now().milliseconds()
             _reenterable_locked(d)
-            If Now().milliseconds() - n > half_timeslice_length_ms Then
+            If lock_tracer.wait_too_long(n) Then
                 raise_error(error_type.performance,
                             callstack(), ":", [step],
                             " is using ", Now().milliseconds() - n, "ms to wait for another thread to finish")

@@ -11,19 +11,14 @@ Namespace logic
     ' Defines primitive types, i.e. basic data types a language can handle, such as byte, int, byte array, etc. So the
     ' types instance won't be impacted by the source code or in another word, user input, of a language.
     Public NotInheritable Class types
-        Public Shared ReadOnly empty As types
+        Public Shared ReadOnly empty As New types()
         Public Const variable_type As String = "type*"
         Public Const zero_type As String = "type0"
         Private Const variable_size As UInt32 = max_int32
         Private Const zero_size As UInt32 = uint32_0
-        Private ReadOnly sizes As map(Of String, UInt32)
-
-        Shared Sub New()
-            empty = New types()
-        End Sub
+        Private ReadOnly sizes As New unordered_map(Of String, UInt32)
 
         Public Sub New()
-            sizes = New map(Of String, UInt32)()
             assert_define(variable_type, variable_size)
             assert_define(zero_type, zero_size)
         End Sub

@@ -1,4 +1,6 @@
 ﻿
+#include <bstyle.h>
+
 string b2style__true_str = "True";
 string b2style__false_str = "False";
 

@@ -1,4 +1,6 @@
 ﻿
+#include <bstyle.h>
+
 string _true = "True";
 string _false = "False";
 

@@ -37,14 +37,14 @@ Partial Public NotInheritable Class case2
         End Sub
 
         Protected Sub New(ByVal info As info)
-            Me.New(assert_not_nothing_return(info).name,
-                   assert_not_nothing_return(info).full_name,
-                   assert_not_nothing_return(info).repeat_times,
-                   assert_not_nothing_return(info).thread_count,
-                   assert_not_nothing_return(info).command_line_specified,
-                   assert_not_nothing_return(info).flaky,
-                   assert_not_nothing_return(info).has_reserved_processors,
-                   assert_not_nothing_return(info).reserved_processors)
+            Me.New(assert_which.of(info).is_not_null().name,
+                   assert_which.of(info).is_not_null().full_name,
+                   assert_which.of(info).is_not_null().repeat_times,
+                   assert_which.of(info).is_not_null().thread_count,
+                   assert_which.of(info).is_not_null().command_line_specified,
+                   assert_which.of(info).is_not_null().flaky,
+                   assert_which.of(info).is_not_null().has_reserved_processors,
+                   assert_which.of(info).is_not_null().reserved_processors)
         End Sub
 
         Public Shared Function merge(ByVal i As info, ByVal j As info) As info
@@ -125,7 +125,7 @@ Partial Public NotInheritable Class case2
         End Sub
 
         Protected Sub New(ByVal f As function_info)
-            Me.New(assert_not_nothing_return(f).f, f)
+            Me.New(assert_which.of(f).is_not_null().f, f)
         End Sub
 
         Public Shared Shadows Function from(ByVal method As MethodInfo) As function_info

@@ -31,18 +31,16 @@ Public NotInheritable Class rlp
                                   ByRef o As rlp) As Boolean
         If r Is Nothing OrElse s Is Nothing Then
             Return False
-        Else
-            o = New rlp(r, s)
-            Return True
         End If
+        o = New rlp(r, s)
+        Return True
     End Function
 
     Public Shared Function create(ByVal r As rlexer.rule, ByVal s As syntaxer.rule, ByRef o As rlp) As Boolean
         If r Is Nothing OrElse s Is Nothing Then
             Return False
-        Else
-            Return assert(create(r.export(), s.export(), o))
         End If
+        Return assert(create(r.export(), s.export(), o))
     End Function
 
     Private Shared Function create(ByVal rl As Func(Of rlexer.rule, Boolean),
@@ -50,21 +48,16 @@ Public NotInheritable Class rlp
                                    ByRef o As rlp) As Boolean
         assert(Not rl Is Nothing)
         assert(Not sl Is Nothing)
-        Dim r As rlexer.rule = Nothing
-        r = New rlexer.rule()
-        If rl(r) Then
-            Dim re As rlexer.rule.exporter = Nothing
-            re = r.export()
-            Dim s As syntaxer.rule = Nothing
-            s = New syntaxer.rule(re.str_type_mapping())
-            If sl(s) Then
-                Return assert(create(re, s.export(), o))
-            Else
-                Return False
-            End If
-        Else
+        Dim r As New rlexer.rule()
+        If Not rl(r) Then
             Return False
         End If
+        Dim re As rlexer.rule.exporter = r.export()
+        Dim s As New syntaxer.rule(re.str_type_mapping())
+        If Not sl(s) Then
+            Return False
+        End If
+        Return assert(create(re, s.export(), o))
     End Function
 
     Public Shared Function create_from_file(ByVal rlexer_rule_file As String,

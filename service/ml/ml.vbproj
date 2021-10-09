@@ -61,6 +61,7 @@
     <Compile Include="distribution.vb" />
     <Compile Include="exponential_distribution\estimator.vb" />
     <Compile Include="exponential_distribution\exponential_distribution.vb" />
+    <Compile Include="mean.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -80,10 +81,15 @@
     <Compile Include="normal_distribution\normal_distribution.vb" />
     <Compile Include="onebound\evaluator.vb" />
     <Compile Include="onebound\model.vb" />
+    <Compile Include="onebound\selector.vb" />
     <Compile Include="onebound\trainer.vb" />
     <Compile Include="percentile\filter.vb" />
+    <Compile Include="percentile\ranking.vb" />
     <Compile Include="permutations.vb" />
+    <Compile Include="wordbreaker\cjk\coupling_ratio.vb" />
     <Compile Include="wordbreaker\cjk\evaluator.vb" />
+    <Compile Include="wordbreaker\cjk\golden_words.vb" />
+    <Compile Include="wordbreaker\cjk\onebound_model.vb" />
     <Compile Include="wordbreaker\cjk\trainer.vb" />
     <Compile Include="wordtracer\cjk\breaking_word.vb" />
     <Compile Include="wordtracer\cjk\oneplus.vb" />

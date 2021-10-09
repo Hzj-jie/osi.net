@@ -34,20 +34,18 @@ Namespace logic
                                ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim r As variable = Nothing
-            If Not return_value_of.retrieve(scope, types, name, r) Then
+            If Not logic.return_value.retrieve(scope, types, name, r) Then
                 Return False
             End If
             assert(r.size)
             If return_value Then
                 Dim var As variable = Nothing
-                If Not variable.[New](scope, types, +return_value, var) Then
+                If Not variable.of_stack(scope, types, +return_value, var) Then
                     Return False
                 End If
-                Dim c As String = Nothing
-                If Not r.move_from(var, c) Then
+                If Not move.export(r, var, o) Then
                     Return False
                 End If
-                o.emplace_back(c)
             Else
                 If Not types.is_zero_size(+(r.size)) Then
                     errors.no_return_value_provided(r)

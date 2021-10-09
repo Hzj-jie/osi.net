@@ -11,14 +11,16 @@ Imports osi.root.delegates
 Imports osi.root.formation
 
 Namespace primitive
-    Public Class simulator
+    Public NotInheritable Class simulator
         Implements imitation
 
-        Private ReadOnly _errors As vector(Of executor.error_type)
-        Private ReadOnly _instructions As vector(Of instruction)
-        Private ReadOnly _stack As vector(Of ref(Of Byte()))
-        Private ReadOnly _states As vector(Of executor.state)
+        Private ReadOnly _errors As New vector(Of executor.error_type)()
+        Private ReadOnly _instructions As New vector(Of instruction)()
+        Private ReadOnly _stack As New vector(Of ref(Of Byte()))()
+        Private ReadOnly _states As New vector(Of executor.state)()
+        Private ReadOnly _heap As New free_list(Of ref(Of Byte())())()
         Private ReadOnly _interrupts As interrupts
+
         Private _carry_over As Boolean
         Private _diviced_by_zero As Boolean
         Private _imaginary_number As Boolean
@@ -29,10 +31,6 @@ Namespace primitive
 
         Public Sub New(ByVal interrupts As interrupts)
             assert(Not interrupts Is Nothing)
-            _errors = New vector(Of executor.error_type)()
-            _instructions = New vector(Of instruction)()
-            _stack = New vector(Of ref(Of Byte()))()
-            _states = New vector(Of executor.state)()
             _interrupts = interrupts
         End Sub
 
@@ -85,13 +83,12 @@ Namespace primitive
                 executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
                 assert(False)
                 Return executor.state.empty
-            Else
-                Return _states(CUInt(p))
             End If
+            Return _states(CUInt(p))
         End Function
 
         Public Function states_size() As UInt64 Implements executor.states_size
-            Return CULng(_states.size())
+            Return _states.size()
         End Function
 
         Public Function interrupts() As interrupts Implements imitation.interrupts
@@ -101,19 +98,21 @@ Namespace primitive
         Public Sub instruction_ref(ByVal v As Int64) Implements imitation.instruction_ref
             If v < 0 OrElse v >= _instructions.size() Then
                 executor_stop_error.throw(executor.error_type.instruction_ref_overflow)
-            Else
-                _instruction_ref = CULng(v)
+                assert(False)
+                Return
             End If
+            _instruction_ref = CULng(v)
         End Sub
 
         Public Sub advance_instruction_ref(ByVal v As Int64) Implements imitation.advance_instruction_ref
             If v < 0 AndAlso -v > _instruction_ref Then
                 executor_stop_error.throw(executor.error_type.instruction_ref_overflow)
-            Else
-                _instruction_ref = CULng(CLng(_instruction_ref) + v)
-                If _instruction_ref >= _instructions.size() Then
-                    executor_stop_error.throw(executor.error_type.instruction_ref_overflow)
-                End If
+                assert(False)
+                Return
+            End If
+            _instruction_ref = CULng(CLng(_instruction_ref) + v)
+            If _instruction_ref >= _instructions.size() Then
+                executor_stop_error.throw(executor.error_type.instruction_ref_overflow)
             End If
         End Sub
 
@@ -123,7 +122,7 @@ Namespace primitive
 
         Public Function access_stack(ByVal p As data_ref) As ref(Of Byte()) Implements executor.access_stack
             assert(Not p Is Nothing)
-            ' data_ref has only 62 bits, so using int64 instead of uint64 is safe.
+            ' data_ref has only 63 bits, so using int64 instead of uint64 is safe.
             Dim l As Int64 = 0
             If p.relative() Then
                 l = _stack.size() - p.offset() - 1
@@ -132,10 +131,25 @@ Namespace primitive
             End If
             If l < 0 OrElse l >= _stack.size() Then
                 executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
+                assert(False)
                 Return Nothing
-            Else
-                Return _stack(CUInt(l))
             End If
+            Return _stack(CUInt(l))
+        End Function
+
+        Public Function access_heap(ByVal p As heap_ref) As ref(Of Byte()) Implements imitation.access_heap
+            assert(Not p Is Nothing)
+            If Not _heap.has(p.high) Then
+                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
+                assert(False)
+                Return Nothing
+            End If
+            If _heap(p.high).Length() <= p.low Then
+                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
+                assert(False)
+                Return Nothing
+            End If
+            Return _heap(p.high)(CInt(p.low))
         End Function
 
         Public Sub push_stack() Implements imitation.push_stack
@@ -145,9 +159,35 @@ Namespace primitive
         Public Sub pop_stack() Implements imitation.pop_stack
             If _stack.empty() Then
                 executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
-            Else
-                _stack.pop_back()
+                assert(False)
+                Return
             End If
+            _stack.pop_back()
+        End Sub
+
+        Public Function alloc(ByVal size As UInt64) As heap_ref Implements imitation.alloc
+            If size > max_int32 Then
+                executor_stop_error.throw(executor.error_type.out_of_heap_memory)
+                assert(False)
+                Return Nothing
+            End If
+            Dim v(CInt(size) - 1) As ref(Of Byte())
+            arrays.fill(v, New ref(Of Byte()))
+            Return heap_ref.of_high(_heap.emplace(v))
+        End Function
+
+        Public Sub dealloc(ByVal pos As heap_ref) Implements imitation.dealloc
+            If Not pos.head_of_alloc() Then
+                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
+                assert(False)
+                Return
+            End If
+            If Not _heap.has(pos.high) Then
+                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
+                assert(False)
+                Return
+            End If
+            _heap.erase(pos.high)
         End Sub
 
         Public Sub store_state() Implements imitation.store_state
@@ -157,14 +197,14 @@ Namespace primitive
         Public Sub restore_state() Implements imitation.restore_state
             If _states.empty() Then
                 executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
-            Else
-                Dim r As executor.state = Nothing
-                r = _states.back()
-                _states.pop_back()
-                assert(r.stack_size <= _stack.size())
-                _stack.resize(CUInt(r.stack_size))
-                instruction_ref(r.instruction_ref)
+                assert(False)
+                Return
             End If
+            Dim r As executor.state = _states.back()
+            _states.pop_back()
+            assert(r.stack_size <= _stack.size())
+            _stack.resize(CUInt(r.stack_size))
+            instruction_ref(r.instruction_ref)
         End Sub
 
         Public Sub do_not_advance_instruction_ref() Implements imitation.do_not_advance_instruction_ref
@@ -213,41 +253,35 @@ Namespace primitive
             If _instructions.empty() Then
                 b = Nothing
                 Return True
-            Else
-                Dim ms As MemoryStream = Nothing
-                ms = New MemoryStream()
-                For i As UInt32 = 0 To _instructions.size() - uint32_1
-                    If _instructions(i).export(b) Then
-                        assert(Not isemptyarray(b))
-                        ms.Write(b, 0, array_size_i(b))
-                    Else
-                        Return False
-                    End If
-                Next
-                b = ms.fit_buffer()
-                Return True
             End If
+            Dim ms As New MemoryStream()
+            For i As UInt32 = 0 To _instructions.size() - uint32_1
+                If Not _instructions(i).export(b) Then
+                    Return False
+                End If
+                assert(Not isemptyarray(b))
+                ms.Write(b, 0, b.Length())
+            Next
+            b = ms.fit_buffer()
+            Return True
         End Function
 
         Public Function export(ByRef s As String) As Boolean Implements exportable.export
             If _instructions.empty() Then
                 s = Nothing
                 Return True
-            Else
-                Dim ss As StringBuilder = Nothing
-                ss = New StringBuilder()
-                For i As UInt32 = 0 To _instructions.size() - uint32_1
-                    If _instructions(i).export(s) Then
-                        assert(Not s.null_or_empty())
-                        ss.Append(s)
-                        ss.Append(newline.incode())
-                    Else
-                        Return False
-                    End If
-                Next
-                s = Convert.ToString(ss)
-                Return True
             End If
+            Dim ss As New StringBuilder()
+            For i As UInt32 = 0 To _instructions.size() - uint32_1
+                If Not _instructions(i).export(s) Then
+                    Return False
+                End If
+                assert(Not s.null_or_empty())
+                ss.Append(s)
+                ss.Append(newline.incode())
+            Next
+            s = Convert.ToString(ss)
+            Return True
         End Function
 
         Private Function import(Of T)(ByVal i As T,
@@ -258,20 +292,17 @@ Namespace primitive
             assert(Not size_of Is Nothing)
             If p >= size_of(i) Then
                 Return False
-            Else
-                _instructions.clear()
-                While p < size_of(i)
-                    Dim ins As instruction_wrapper = Nothing
-                    ins = New instruction_wrapper()
-                    If imp(ins, i, p) Then
-                        _instructions.emplace_back(ins)
-                    Else
-                        Return False
-                    End If
-                End While
-                _instructions.emplace_back(New instructions.stop())
-                Return True
             End If
+            _instructions.clear()
+            While p < size_of(i)
+                Dim ins As New instruction_wrapper()
+                If Not imp(ins, i, p) Then
+                    Return False
+                End If
+                _instructions.emplace_back(ins)
+            End While
+            _instructions.emplace_back(New instructions.stop())
+            Return True
         End Function
 
         Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import

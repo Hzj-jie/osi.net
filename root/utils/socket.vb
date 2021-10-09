@@ -11,13 +11,8 @@ Imports osi.root.constants
 Imports osi.root.envs
 
 Public Module _socket
-    Private ReadOnly true_() As Byte
-    Private ReadOnly false_() As Byte
-
-    Sub New()
-        true_ = bool_bytes(True)
-        false_ = bool_bytes(False)
-    End Sub
+    Private ReadOnly true_() As Byte = bool_bytes(True)
+    Private ReadOnly false_() As Byte = bool_bytes(False)
 
     Public Function io_control_code_to_str(ByVal control_code As Int32) As String
         Dim c As IOControlCode = Nothing

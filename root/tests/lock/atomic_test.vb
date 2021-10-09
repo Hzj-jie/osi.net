@@ -1,7 +1,10 @@
 ﻿
-Imports osi.root.utils
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.lock
 Imports osi.root.utt

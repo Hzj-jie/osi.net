@@ -47,7 +47,7 @@ Public NotInheritable Class convertor_test
         Public ReadOnly t2 As test_class2
 
         Public Sub New(ByVal t As test_class2, ByVal s As Int32)
-            MyBase.New(assert_not_nothing_return(t).t, s)
+            MyBase.New(assert_which.of(t).is_not_null().t, s)
             Me.t2 = t
         End Sub
     End Class

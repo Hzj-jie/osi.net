@@ -34,7 +34,7 @@ Public Class multithreading_case_wrapper
     End Sub
 
     Public Sub New(ByVal c As [case], ByVal threadcount As Int32)
-        Me.New(c, CUInt(assert_return(threadcount >= 0, threadcount)))
+        Me.New(c, assert_which.of(threadcount).can_cast_to_uint32())
     End Sub
 
     Public Overrides Function reserved_processors() As Int16
@@ -103,7 +103,7 @@ Public Class multithreading_case_wrapper
         Next
         Dim wait_round As Int32 = 1000
         While _dec(wait_round) > 0
-            start_are.wait(envs.half_timeslice_length_ms)
+            start_are.wait(max(envs.timeslice_length_ms \ 2, 1))
             assert(running_thread <= threadcount())
             If running_thread = threadcount() Then
                 Exit While

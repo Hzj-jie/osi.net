@@ -152,6 +152,20 @@ Public Module _array
 
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As Decimal) As Decimal
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As Decimal) As Decimal
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function array_size(ByVal i() As Int64) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
@@ -285,6 +299,20 @@ Public Module _array
             Return False
         End If
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As Int64) As Int64
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As Int64) As Int64
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
     End Function
 
     <Extension()>
@@ -426,6 +454,20 @@ Public Module _array
 
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As Int32) As Int32
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As Int32) As Int32
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function array_size(ByVal i() As Int16) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
@@ -559,6 +601,20 @@ Public Module _array
             Return False
         End If
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As Int16) As Int16
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As Int16) As Int16
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
     End Function
 
     <Extension()>
@@ -700,6 +756,20 @@ Public Module _array
 
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As SByte) As SByte
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As SByte) As SByte
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function array_size(ByVal i() As UInt64) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
@@ -833,6 +903,20 @@ Public Module _array
             Return False
         End If
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As UInt64) As UInt64
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As UInt64) As UInt64
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
     End Function
 
     <Extension()>
@@ -974,6 +1058,20 @@ Public Module _array
 
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As UInt32) As UInt32
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As UInt32) As UInt32
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function array_size(ByVal i() As UInt16) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
@@ -1107,6 +1205,20 @@ Public Module _array
             Return False
         End If
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As UInt16) As UInt16
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As UInt16) As UInt16
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
     End Function
 
     <Extension()>
@@ -1248,6 +1360,20 @@ Public Module _array
 
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As Byte) As Byte
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As Byte) As Byte
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function array_size(ByVal i() As Single) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
@@ -1381,6 +1507,20 @@ Public Module _array
             Return False
         End If
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As Single) As Single
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As Single) As Single
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
     End Function
 
     <Extension()>
@@ -1522,6 +1662,20 @@ Public Module _array
 
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As Double) As Double
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As Double) As Double
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function array_size(ByVal i() As String) As UInt32
         Return If(i Is Nothing, uint32_0, CUInt(i.Length()))
     End Function
@@ -1655,6 +1809,20 @@ Public Module _array
             Return False
         End If
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As String) As String
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As String) As String
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
     End Function
 
 #End If
@@ -1798,6 +1966,20 @@ Public Module _array
 
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(Of T)(ByVal i() As T) As T
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(Of T)(ByVal i() As T) As T
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function to_strings(ByVal i() As Object) As String()
         If isemptyarray(i) Then
             Return Nothing
@@ -1838,6 +2020,20 @@ Public Module _array
             Return False
         End If
         Return memcmp(first, array_size(first) - array_size(second), second, uint32_0, array_size(second)) = 0
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function first(ByVal i() As Object) As Object
+        assert(Not i.isemptyarray())
+        Return i(0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function last(ByVal i() As Object) As Object
+        assert(Not i.isemptyarray())
+        Return i(i.array_size_i() - 1)
     End Function
 
 End Module

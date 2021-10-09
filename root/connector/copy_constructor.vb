@@ -11,7 +11,7 @@ End Class
 ' Retrieve the copy or move constructor of type T.
 Public NotInheritable Class copy_constructor(Of T)
     Private Shared ReadOnly v As Func(Of Object(), T) =
-        assert_not_nothing_return(type_info(Of T).annotated_constructor(Of copy_constructor)())
+        assert_which.of(type_info(Of T).annotated_constructor(Of copy_constructor)()).is_not_null()
 
     Public Shared Function invoke(ByVal ParamArray args() As Object) As T
         Try
