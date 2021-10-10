@@ -123,6 +123,7 @@
     <Content Include="b2style\codegen\ifndef.txt" />
     <Content Include="b2style\codegen\include.txt" />
     <Content Include="b2style\codegen\include2.txt" />
+    <Content Include="b2style\codegen\legacy_biguint_to_str.txt" />
     <Content Include="b2style\codegen\loaded_method.txt" />
     <Content Include="b2style\codegen\multiline_string.txt" />
     <Content Include="b2style\codegen\namespaces.txt" />

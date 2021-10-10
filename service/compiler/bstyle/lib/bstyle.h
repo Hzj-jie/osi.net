@@ -89,4 +89,11 @@ byte bstyle__to_byte(int x) {
   return y;
 }
 
+void bstyle__load_method(string m) {
+  m = bstyle__str_concat(
+		  "osi.service.interpreter.primitive.loaded_methods, osi.service.interpreter:",
+		  m);
+  logic "interrupt load_method m @@prefixes@temps@string";
+}
+
 #endif  // BSTYLE_LIB_BSTYLE_H

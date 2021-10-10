@@ -1,4 +1,5 @@
 ﻿
+#include <b2style_operators.h>
 #include <stdio.h> // comment can be placed here.
 
 void main( /* LOL */ ) { /* Comments can be added here as well.

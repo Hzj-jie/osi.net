@@ -2,23 +2,20 @@
 #ifndef B2STYLE_LIB_B2STYLE_STDIO_H
 #define B2STYLE_LIB_B2STYLE_STDIO_H
 
-#include <bstyle_types.h>
+#include <bstyle.h>
+#include <b2style_types.h>
 #include <b2style_operators.h>
 
 namespace b2style {
-  typedef string ::string;
-  typedef void ::void;
-  typedef bool ::bool;
-
   string true_str = "True";
   string false_str = "False";
 
   void std_out(string i) {
-    logic "interrupt stdout i @@prefixes@temps@string";
+    logic "interrupt stdout b2style__i @@prefixes@temps@string";
   }
 
   void std_err(string i) {
-    logic "interrupt stderr i @@prefixes@temps@string";
+    logic "interrupt stderr b2style__i @@prefixes@temps@string";
   }
 
   void bool_std_out(bool i) {
@@ -53,25 +50,18 @@ namespace b2style {
     }
     string s;
     while (greater_than(i, 0L)) {
-      int b = to_int(mod(i, 10L));
+      int b = ::bstyle::to_int(mod(i, 10L));
       i = divide(i, 10L);
       b = add(b, 48);
-      s = str_concat(to_str(to_byte(b)), s);
+      s = ::bstyle::str_concat(::bstyle::to_str(::bstyle::to_byte(b)), s);
     }
     return s;
   }
 
-  string loaded_methods(string m) {
-    return str_concat(
-      "osi.service.interpreter.primitive.loaded_methods, osi.service.interpreter:",
-      m);
-  }
-
   string biguint_to_str(biguint i) {
-    string method_name = loaded_methods("big_uint_to_str");
-    logic "interrupt load_method method_name @@prefixes@temps@string";
+    ::bstyle::load_method("big_uint_to_str");
     string result;
-    logic "interrupt execute_loaded_method i result";
+    logic "interrupt execute_loaded_method b2style__i b2style__result";
     return result;
   }
 
@@ -81,9 +71,9 @@ namespace b2style {
       i = minus(2147483647, i);
       i = add(i, 2);
       string s = "-";
-      return str_concat(s, biguint_to_str(to_biguint(i)));
+      return ::bstyle::str_concat(s, biguint_to_str(::bstyle::to_biguint(i)));
     }
-    return biguint_to_str(to_biguint(i));
+    return biguint_to_str(::bstyle::to_biguint(i));
   }
 
   void biguint_std_out(biguint i) {

@@ -57,13 +57,13 @@
   <ItemGroup>
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
-    <Compile Include="b2style\default_includes.vb" />
+    <Compile Include="b2style\rewriter\nodes\includes.vb" />
     <Compile Include="b2style\b2style_rules.vb" />
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
     <Compile Include="bstyle\includes.vb" />
     <Compile Include="bstyle\logic\nodes\defines.vb" />
-    <Compile Include="bstyle\logic\nodes\default_includes.vb" />
+    <Compile Include="bstyle\logic\nodes\includes.vb" />
     <Compile Include="b2style\rewriter\nodes\name.vb" />
     <Compile Include="b2style\rewriter\nodes\namespace_.vb" />
     <Compile Include="b2style\rewriter\nodes\operations.vb" />
@@ -228,6 +228,7 @@
     <Content Include="b2style\lib\b2style.h" />
     <Content Include="b2style\lib\b2style_operators.h" />
     <Content Include="b2style\lib\b2style_stdio.h" />
+    <Content Include="b2style\lib\b2style_types.h" />
     <Content Include="b2style\lib\b2style_ufloat.h" />
     <Content Include="bstyle\lib\bstyle.h" />
     <Content Include="bstyle\lib\bstyle_constants.h" />

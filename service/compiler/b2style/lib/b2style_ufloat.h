@@ -2,30 +2,25 @@
 #ifndef B2STYLE_LIB_B2STYLE_UFLOAT_H
 #define B2STYLE_LIB_B2STYLE_UFLOAT_H
 
-#include <bstyle_types.h>
+#include <bstyle.h>
+#include <b2style_types.h>
 
 namespace b2style {
-  typedef bool ::bool;
-  typedef ufloat ::ufloat;
-  typedef biguint ::biguint;
-  typedef long ::long;
-  typedef int ::int;
-
   bool equal(ufloat i, ufloat j) {
     bool result;
-    logic "float_equal result i j";
+    logic "float_equal b2style__result b2style__i b2style__j";
     return result;
   }
 
   bool not_equal(ufloat i, ufloat j) {
     bool result;
-    logic "float_equal result i j";
+    logic "float_equal b2style__result b2style__i b2style__j";
     return not(result);
   }
 
   bool greater_than(ufloat i, ufloat j) {
     bool result;
-    logic "float_more result i j";
+    logic "float_more b2style__result b2style__i b2style__j";
     return result;
   }
 
@@ -35,7 +30,7 @@ namespace b2style {
 
   bool less_than(ufloat i, ufloat j) {
     bool result;
-    logic "float_less result i j";
+    logic "float_less b2style__result b2style__i b2style__j";
     return result;
   }
 
@@ -44,36 +39,35 @@ namespace b2style {
   }
 
   ufloat add(ufloat i, ufloat j) {
-    logic "float_add i i j";
+    logic "float_add b2style__i b2style__i b2style__j";
     return i;
   }
 
   ufloat minus(ufloat i, ufloat j) {
-    logic "float_subtract i i j";
+    logic "float_subtract b2style__i b2style__i b2style__j";
     return i;
   }
 
   ufloat multiply(ufloat i, ufloat j) {
-    logic "float_multiply i i j";
+    logic "float_multiply b2style__i b2style__i b2style__j";
     return i;
   }
 
   ufloat divide(ufloat i, ufloat j) {
     ufloat result;
-    logic "float_divide result i j";
+    logic "float_divide b2style__result b2style__i b2style__j";
     return result;
   }
 
   ufloat power(ufloat i, ufloat j) {
-    logic "float_power i i j";
+    logic "float_power b2style__i b2style__i b2style__j";
     return i;
   }
 
   string ufloat_to_str(ufloat i) {
-    string method_name = loaded_methods("big_udec_to_str");
-    logic "interrupt load_method method_name @@prefixes@temps@string";
+    ::bstyle::load_method("big_udec_to_str");
     string result;
-    logic "interrupt execute_loaded_method i result";
+    logic "interrupt execute_loaded_method b2style__i b2style__result";
     return result;
   }
 
@@ -82,19 +76,18 @@ namespace b2style {
   }
 
   ufloat ufloat__from(biguint i) {
-    string method_name = loaded_methods("big_uint_to_big_udec");
-    logic "interrupt load_method method_name @@prefixes@temps@string";
+    ::bstyle::load_method("big_uint_to_big_udec");
     ufloat result;
-    logic "interrupt execute_loaded_method i result";
+    logic "interrupt execute_loaded_method b2style__i b2style__result";
     return result;
   }
 
   ufloat ufloat__from(int i) {
-    return ufloat__from(to_biguint(i));
+    return ufloat__from(::bstyle::to_biguint(i));
   }
 
   ufloat ufloat__from(long i) {
-    return ufloat__from(to_biguint(i));
+    return ufloat__from(::bstyle::to_biguint(i));
   }
 
   ufloat ufloat__fraction(biguint n, biguint d) {
@@ -104,27 +97,27 @@ namespace b2style {
   }
 
   ufloat ufloat__fraction(biguint n, int d) {
-    return ufloat__fraction(n, to_biguint(d));
+    return ufloat__fraction(n, ::bstyle::to_biguint(d));
   }
 
   ufloat ufloat__fraction(biguint n, long d) {
-    return ufloat__fraction(n, to_biguint(d));
+    return ufloat__fraction(n, ::bstyle::to_biguint(d));
   }
 
   ufloat ufloat__fraction(int n, biguint d) {
-    return ufloat__fraction(to_biguint(n), d);
+    return ufloat__fraction(::bstyle::to_biguint(n), d);
   }
 
   ufloat ufloat__fraction(long n, biguint d) {
-    return ufloat__fraction(to_biguint(n), d);
+    return ufloat__fraction(::bstyle::to_biguint(n), d);
   }
 
   ufloat ufloat__fraction(int n, int d) {
-    return ufloat__fraction(to_biguint(n), to_biguint(d));
+    return ufloat__fraction(::bstyle::to_biguint(n), ::bstyle::to_biguint(d));
   }
 
   ufloat ufloat__fraction(long n, long d) {
-    return ufloat__fraction(to_biguint(n), to_biguint(d));
+    return ufloat__fraction(::bstyle::to_biguint(n), ::bstyle::to_biguint(d));
   }
 
 }  // namespace b2style

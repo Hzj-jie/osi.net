@@ -27,13 +27,14 @@ Partial Public NotInheritable Class b2style
             assert(b2style_lib.b2style_operators_h.sync_export(Path.Combine(folder, "b2style_operators.h"), True))
             assert(b2style_lib.b2style_stdio_h.sync_export(Path.Combine(folder, "b2style_stdio.h"), True))
             assert(b2style_lib.b2style_ufloat_h.sync_export(Path.Combine(folder, "b2style_ufloat.h"), True))
+            assert(b2style_lib.b2style_types_h.sync_export(Path.Combine(folder, "b2style_types.h"), True))
         End Sub
 
         Public NotInheritable Class parser
             Inherits __do(Of String, typed_node_writer, Boolean)
 
             Public Overrides Function at(ByRef i As String, ByRef j As typed_node_writer) As Boolean
-                Return b2style.internal_parse(i, j)
+                Return code_builder.current().build(i, j)
             End Function
         End Class
 

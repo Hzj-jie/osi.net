@@ -24,8 +24,12 @@ Partial Public NotInheritable Class bstyle
         Public Function with_temp_target(ByVal type As String, ByVal n As typed_node, ByVal o As writer) As String
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Dim value_name As String = Nothing
-            value_name = strcat("raw_value_@", n.word_start(), "-", n.word_end())
+            Dim value_name As String = strcat("raw_value_@",
+                                              code_builder.current().nested_build_level(),
+                                              "@",
+                                              n.word_start(),
+                                              "-",
+                                              n.word_end())
             If defined_temp_targets.find(value_name) = defined_temp_targets.end() Then
                 builders.of_define(value_name, ta(type)).to(o)
                 defined_temp_targets.emplace(value_name)

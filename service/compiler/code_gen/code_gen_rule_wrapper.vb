@@ -59,48 +59,49 @@ Public Class code_gen_rule_wrapper(Of WRITER,
                End Sub
     End Function
 
-    Private NotInheritable Class builder
-        Private ReadOnly w As PARAMETERS
+    Public NotInheritable Class code_builder
         Private ReadOnly l As CODE_GENS_IMPL
-        Private ReadOnly p As STATEMENTS_IMPL
-        Private ReadOnly s As STATEMENTS_IMPL
+        Private nested As UInt32
 
-        Public Sub New()
-            w = alloc(Of PARAMETERS)()
+        Public Sub New(ByVal w As PARAMETERS)
             l = alloc(Of CODE_GENS_IMPL)()
-            p = alloc(Of STATEMENTS_IMPL)()
-            s = alloc(Of STATEMENTS_IMPL)()
-            init_code_gens()
-            init_prefixes()
-            init_suffixes()
+            init_code_gens(w)
         End Sub
 
-        Public Function build(ByVal root As typed_node, ByVal o As WRITER, ByVal include_fixes As Boolean) As Boolean
-            assert(Not root Is Nothing)
-            assert(Not o Is Nothing)
-            assert(root.type = typed_node.ROOT_TYPE)
-            assert(strsame(root.type_name, typed_node.ROOT_TYPE_NAME))
-            If root.leaf() Then
-                Return False
-            End If
-            If include_fixes Then
-                p.export(o)
-            End If
-            assert(root.child_count() > 0)
-            Dim i As UInt32 = 0
-            While i < root.child_count()
-                If Not l.of(root.child(i)).build(o) Then
-                    Return False
-                End If
-                i += uint32_1
-            End While
-            If include_fixes Then
-                s.export(o)
-            End If
-            Return True
+        Public Function nested_build_level() As UInt32
+            Return nested
         End Function
 
-        Private Sub init_code_gens()
+        Public Function build(ByVal input As String, ByVal o As WRITER) As Boolean
+            nested += uint32_1
+            Using defer.to(Sub()
+                               nested -= uint32_1
+                           End Sub)
+                assert(Not input.null_or_whitespace())
+                assert(Not o Is Nothing)
+                Dim root As typed_node = Nothing
+                If Not nlp().parse(input, root:=root) Then
+                    Return False
+                End If
+                assert(Not root Is Nothing)
+                assert(root.type = typed_node.ROOT_TYPE)
+                assert(strsame(root.type_name, typed_node.ROOT_TYPE_NAME))
+                If root.leaf() Then
+                    Return False
+                End If
+                assert(root.child_count() > 0)
+                Dim i As UInt32 = 0
+                While i < root.child_count()
+                    If Not l.of(root.child(i)).build(o) Then
+                        Return False
+                    End If
+                    i += uint32_1
+                End While
+                Return True
+            End Using
+        End Function
+
+        Private Sub init_code_gens(ByVal w As PARAMETERS)
             Dim v As vector(Of Action(Of CODE_GENS_IMPL, PARAMETERS)) = +alloc(Of _code_gens)()
             Dim i As UInt32 = 0
             While i < v.size()
@@ -108,6 +109,36 @@ Public Class code_gen_rule_wrapper(Of WRITER,
                 i += uint32_1
             End While
         End Sub
+
+        Public Shared Function current() As code_builder
+            Return thread_static_implementation_of(Of builder).resolve().cb
+        End Function
+    End Class
+
+    Private NotInheritable Class builder
+        Private ReadOnly w As PARAMETERS
+        Public ReadOnly cb As code_builder
+        Private ReadOnly p As STATEMENTS_IMPL
+        Private ReadOnly s As STATEMENTS_IMPL
+
+        Public Sub New()
+            w = alloc(Of PARAMETERS)()
+            cb = New code_builder(w)
+            p = alloc(Of STATEMENTS_IMPL)()
+            s = alloc(Of STATEMENTS_IMPL)()
+            init_prefixes()
+            init_suffixes()
+        End Sub
+
+        Public Function build(ByVal input As String, ByVal o As WRITER) As Boolean
+            assert(Not o Is Nothing)
+            p.export(o)
+            If Not cb.build(input, o) Then
+                Return False
+            End If
+            s.export(o)
+            Return True
+        End Function
 
         Private Sub init_statements(Of T As __do(Of vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)))) _
                                    (ByVal p As STATEMENTS_IMPL)
@@ -128,28 +159,9 @@ Public Class code_gen_rule_wrapper(Of WRITER,
         End Sub
     End Class
 
-    Private Shared Function parse(ByVal input As String, ByVal o As WRITER, ByVal internal As Boolean) As Boolean
-        assert(Not input.null_or_whitespace())
-        assert(Not o Is Nothing)
-        Dim r As typed_node = Nothing
-        If Not nlp().parse(input, root:=r) Then
-            Return False
-        End If
-        assert(Not r Is Nothing)
-        Dim b As builder = thread_static_implementation_of(Of builder).resolve()
-        If internal Then
-            Return b.build(r, o, False)
-        End If
-        Return b.build(r, o, True)
-    End Function
-
-    Public Shared Function internal_parse(ByVal input As String, ByVal o As WRITER) As Boolean
-        Return parse(input, o, True)
-    End Function
-
     Public Shared Function parse(ByVal input As String, ByVal o As WRITER) As Boolean
         Using thread_static_implementation_of(Of builder).scoped_register(New builder())
-            Return parse(input, o, False)
+            Return thread_static_implementation_of(Of builder).resolve().build(input, o)
         End Using
     End Function
 

@@ -27,7 +27,10 @@ Partial Public NotInheritable Class bstyle
                                              ByVal o As WRITER) As Boolean
             Dim f As String = Path.Combine(p, s)
             If File.Exists(f) Then
-                Return (+parser)(File.ReadAllText(f), o)
+                If (+parser)(File.ReadAllText(f), o) Then
+                    Return True
+                End If
+                raise_error(error_type.user, "Cannot include file ", f)
             End If
             Return False
         End Function
@@ -52,7 +55,6 @@ Partial Public NotInheritable Class bstyle
             If Not (+ignore_default_folder) AndAlso include_file(+default_folder, s, o) Then
                 Return True
             End If
-            raise_error(error_type.user, "Cannot find or include file ", s)
             Return False
         End Function
     End Class

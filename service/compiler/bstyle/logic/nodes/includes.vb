@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
             Inherits __do(Of String, writer, Boolean)
 
             Public Overrides Function at(ByRef i As String, ByRef j As writer) As Boolean
-                Return bstyle.internal_parse(i, j)
+                Return code_builder.current().build(i, j)
             End Function
         End Class
 
