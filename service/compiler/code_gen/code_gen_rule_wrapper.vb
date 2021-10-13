@@ -21,20 +21,6 @@ Public Class code_gen_rule_wrapper(Of WRITER,
                                       _code_gens As __do(Of vector(Of Action(Of CODE_GENS_IMPL, PARAMETERS))))
     Inherits rule_wrapper(Of _nlexer_rule, _syntaxer_rule)
 
-    ' Used by vector.of
-    Protected Shared Function registerer(ByVal i As Action(Of STATEMENTS_IMPL, PARAMETERS)) _
-                                  As Action(Of STATEMENTS_IMPL, PARAMETERS)
-        assert(Not i Is Nothing)
-        Return i
-    End Function
-
-    ' Used by vector.of
-    Protected Shared Function registerer(ByVal i As Action(Of CODE_GENS_IMPL, PARAMETERS)) _
-                                  As Action(Of CODE_GENS_IMPL, PARAMETERS)
-        assert(Not i Is Nothing)
-        Return i
-    End Function
-
     Private Shared Function ignore_parameters(Of T)(ByVal i As Action(Of T)) As Action(Of T, PARAMETERS)
         assert(Not i Is Nothing)
         Return Sub(ByVal x As T, ByVal y As PARAMETERS)

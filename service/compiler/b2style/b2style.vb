@@ -87,7 +87,6 @@ Partial Public NotInheritable Class b2style
                        default_registerer("multi-sentence-paragraph"),
                        default_registerer("param-with-comma"),
                        default_registerer("param"),
-                       default_registerer("value-definition-with-semi-colon"),
                        ignore_parameters(AddressOf namespace_.register),
                        default_registerer("paragraph"),
                        default_registerer("sentence"),
@@ -95,6 +94,8 @@ Partial Public NotInheritable Class b2style
                        default_registerer("sentence-without-semi-colon"),
                        default_registerer("value-definition"),
                        default_registerer("value-declaration"),
+                       default_registerer("value-definition-with-semi-colon"),
+                       default_registerer("value-declaration-with-semi-colon"),
                        default_registerer("value-clause"),
                        ignore_parameters(AddressOf self_value_clause.register),
                        default_registerer("return-clause"),
@@ -132,7 +133,10 @@ Partial Public NotInheritable Class b2style
                        default_registerer("kw-typedef"),
                        default_registerer("typedef-type"),
                        default_registerer("typedef"),
-                       default_registerer("typedef-with-semi-colon")
+                       default_registerer("typedef-with-semi-colon"),
+ _
+                       default_registerer("struct"),
+                       default_registerer("kw-struct")
                    )
         End Function
     End Class

@@ -1,0 +1,19 @@
+﻿
+#include <bstyle.h>
+
+struct S1 {
+  int x;
+};
+
+struct S2 {
+  S1 x;
+  int y;
+};
+
+void main() {
+  S2 s;
+  s.x.x = 100;
+  s.y = 100;
+  bstyle__putchar(s.x.x);
+  bstyle__putchar(s.y);
+}

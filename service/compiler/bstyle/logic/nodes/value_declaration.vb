@@ -26,7 +26,9 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 2)
-            builders.of_define(ta, n.child(1).word().str(), n.child(0).word().str()).to(o)
+            If Not code_gen_of(Of struct).export(n, o) Then
+                builders.of_define(ta, n.child(1).word().str(), n.child(0).word().str()).to(o)
+            End If
             Return True
         End Function
     End Class

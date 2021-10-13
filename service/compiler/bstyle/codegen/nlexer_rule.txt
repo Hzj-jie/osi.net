@@ -42,5 +42,7 @@ semi-colon ;
 
 assignment =
 
-name [\w,_][\w,\d,_]*
+kw-struct struct
+
+name [\w,_][\w,\d,_,.]*
 

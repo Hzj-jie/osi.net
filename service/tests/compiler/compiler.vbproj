@@ -59,6 +59,7 @@
     <Compile Include="b2style\b2style_test_data.vb" />
     <Compile Include="bstyle\bstyle_test.vb" />
     <Compile Include="bstyle\bstyle_test_data.vb" />
+    <Compile Include="bstyle\struct_test.vb" />
     <Compile Include="dotnet\dotnet_test_data.vb" />
     <Compile Include="dotnet\source_executor_test.vb" />
     <Compile Include="logic\caller_test.vb" />
@@ -145,7 +146,9 @@
     <Content Include="bstyle\codegen\case1.txt" />
     <Content Include="bstyle\codegen\case2.txt" />
     <Content Include="bstyle\codegen\global_variable.txt" />
+    <Content Include="bstyle\codegen\nested_struct.txt" />
     <Content Include="bstyle\codegen\overload_function.txt" />
+    <Content Include="bstyle\codegen\single_level_struct.txt" />
     <Content Include="dotnet\codegen\from_source1.cs" />
     <Content Include="logic\codegen\case1.txt" />
     <Content Include="logic\codegen\case2.txt" />

@@ -2,14 +2,12 @@
 IGNORE_TYPES blank, single-line-comment, multi-line-comment
 ROOT_TYPES root-type
 
-root-type [function, value-definition-with-semi-colon, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon]
+root-type [function, value-definition-with-semi-colon, value-declaration-with-semi-colon, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct]
 
 function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
 paramlist [param-with-comma]* param
 param-with-comma param comma
 param name name
-
-value-definition-with-semi-colon value-definition semi-colon
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
@@ -21,6 +19,9 @@ multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
 value-definition name name assignment value
 value-declaration name name
 value-clause name assignment value
+
+value-definition-with-semi-colon value-definition semi-colon
+value-declaration-with-semi-colon value-declaration semi-colon
 
 condition kw-if start-bracket value end-bracket paragraph [else-condition]?
 else-condition kw-else paragraph
@@ -57,3 +58,6 @@ define kw-define name
 typedef-type [name, string]
 typedef kw-typedef typedef-type typedef-type
 typedef-with-semi-colon typedef semi-colon
+
+# TODO: Support value-definition
+struct kw-struct name start-paragraph [value-declaration-with-semi-colon]* end-paragraph semi-colon

@@ -27,7 +27,8 @@ Partial Public NotInheritable Class bstyle
             type_of(ufloat, max_uint32 - 2),
             type_of([string], max_uint32 - 3)
         )
-        Private Shared ReadOnly type_asterisk_s As vector(Of String) = vector.of(Of String)()
+
+        Private Shared ReadOnly instance As New code_types()
 
         Private Shared Function type_of(ByVal name As String, ByVal size As UInt32) As pair(Of String, UInt32)
             Return pair.emplace_of(name, size)
@@ -41,10 +42,9 @@ Partial Public NotInheritable Class bstyle
             Return type_of(name, assert_which.of(size).can_cast_to_uint32())
         End Function
 
-        Public Shared Sub register(ByVal p As statements, ByVal l As parameters_t)
+        Public Shared Sub register(ByVal p As statements)
             assert(Not p Is Nothing)
-            assert(Not l Is Nothing)
-            p.register(New code_types(l.type_alias))
+            p.register(instance)
         End Sub
 
         Public Sub export(ByVal o As writer) Implements statement.export
@@ -56,13 +56,7 @@ Partial Public NotInheritable Class bstyle
             End While
         End Sub
 
-        Private Sub New(ByVal ta As type_alias)
-            assert(Not ta Is Nothing)
-            Dim i As UInt32 = 0
-            While i < type_asterisk_s.size()
-                assert(ta.define(type_asterisk_s(i), "type*"))
-                i += uint32_1
-            End While
+        Private Sub New()
         End Sub
     End Class
 End Class

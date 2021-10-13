@@ -36,7 +36,7 @@ Public NotInheritable Class bstyle
         Inherits __do(Of vector(Of Action(Of statements, parameters_t)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements, parameters_t))
-            Return vector.of(registerer(AddressOf code_types.register))
+            Return vector.of(ignore_parameters(AddressOf code_types.register))
         End Function
     End Class
 
@@ -53,16 +53,16 @@ Public NotInheritable Class bstyle
         Inherits __do(Of vector(Of Action(Of logic_gens, parameters_t)))
 
         Protected Overrides Function at() As vector(Of Action(Of logic_gens, parameters_t))
-            Return vector.of(
+            Return vector.of(Of Action(Of logic_gens, parameters_t))(
                 ignore_parameters(AddressOf root_type.register),
                 ignore_parameters(AddressOf bool.register),
                 ignore_parameters(AddressOf condition.register),
                 ignore_parameters(AddressOf else_condition.register),
                 ignore_parameters(AddressOf for_loop.register),
                 ignore_parameters(AddressOf ufloat.register),
-                registerer(AddressOf [function].register),
+                AddressOf [function].register,
                 ignore_parameters(AddressOf function_call.register),
-                registerer(AddressOf ignore_result_function_call.register),
+                AddressOf ignore_result_function_call.register,
                 ignore_parameters(AddressOf [integer].register),
                 ignore_parameters(AddressOf biguint.register),
                 ignore_parameters(AddressOf logic.register),
@@ -78,10 +78,11 @@ Public NotInheritable Class bstyle
                 ignore_parameters(AddressOf sentence_with_semi_colon.register),
                 ignore_parameters(AddressOf sentence_without_semi_colon.register),
                 ignore_parameters(AddressOf [string].register),
-                registerer(AddressOf value.register),
+                AddressOf value.register,
                 ignore_parameters(AddressOf value_clause.register),
-                registerer(AddressOf value_declaration.register),
-                registerer(AddressOf value_definition.register),
+                AddressOf value_declaration.register,
+                AddressOf value_definition.register,
+                ignore_parameters(AddressOf value_declaration_with_semi_colon.register),
                 ignore_parameters(AddressOf value_definition_with_semi_colon.register),
                 ignore_parameters(AddressOf value_list.register),
                 ignore_parameters(AddressOf value_with_bracket.register),
@@ -92,10 +93,11 @@ Public NotInheritable Class bstyle
                 ignore_parameters(AddressOf include.register),
                 ignore_parameters(AddressOf include_with_string.register),
                 ignore_parameters(AddressOf include_with_file.register),
-                registerer(AddressOf ifndef_wrapped.register),
-                registerer(AddressOf define.register),
-                registerer(AddressOf typedef.register),
-                ignore_parameters(AddressOf typedef_with_semi_colon.register))
+                AddressOf ifndef_wrapped.register,
+                AddressOf define.register,
+                AddressOf typedef.register,
+                ignore_parameters(AddressOf typedef_with_semi_colon.register),
+                AddressOf struct.register)
         End Function
     End Class
 

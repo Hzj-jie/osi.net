@@ -1,0 +1,15 @@
+﻿
+#include <bstyle.h>
+
+struct s {
+  int i;
+  string s;
+};
+
+void main() {
+  s x;
+  x.i = 100;
+  x.s = "abc";
+  bstyle__putchar(x.i);
+  logic "interrupt stdout x.s @@prefixes@temps@string";
+}

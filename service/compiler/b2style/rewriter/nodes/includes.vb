@@ -74,13 +74,14 @@ Partial Public NotInheritable Class b2style
                                                default_includes.default_folder)
         Implements rewriter
 
-        <inject_constructor>
-        Public Sub New(ByVal i As rewriters)
+        Private Shared ReadOnly instance As New include_with_string()
+
+        Private Sub New()
         End Sub
 
         Public Shared Sub register(ByVal b As rewriters)
             assert(Not b Is Nothing)
-            b.register(Of include_with_string)()
+            b.register(instance)
         End Sub
 
         Public Shadows Function build(ByVal n As typed_node,
@@ -100,13 +101,14 @@ Partial Public NotInheritable Class b2style
                                              default_includes.default_folder)
         Implements rewriter
 
-        <inject_constructor>
-        Public Sub New(ByVal i As rewriters)
+        Private Shared ReadOnly instance As New include_with_file()
+
+        Private Sub New()
         End Sub
 
         Public Shared Sub register(ByVal b As rewriters)
             assert(Not b Is Nothing)
-            b.register(Of include_with_file)()
+            b.register(instance)
         End Sub
 
         Public Shadows Function build(ByVal n As typed_node,

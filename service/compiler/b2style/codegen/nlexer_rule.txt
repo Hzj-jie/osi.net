@@ -84,4 +84,6 @@ multi-line-comment /\*[*|\*/]*\*/
 
 kw-typedef typedef
 
-name [\w,_,::][\w,\d,_,::]*
+kw-struct struct
+
+name [\w,_,::][\w,\d,_,::,.]*

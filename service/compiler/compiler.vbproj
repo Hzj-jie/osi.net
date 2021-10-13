@@ -73,6 +73,7 @@
     <Compile Include="bstyle\bstyle.vb" />
     <Compile Include="bstyle\bstyle_rules.vb" />
     <Compile Include="bstyle\logic\nodes\root_type.vb" />
+    <Compile Include="bstyle\logic\nodes\struct.vb" />
     <Compile Include="bstyle\logic\nodes\typedef.vb" />
     <Compile Include="bstyle\logic\nodes\ufloat.vb" />
     <Compile Include="bstyle\logic\nodes\biguint.vb" />
@@ -84,6 +85,7 @@
     <Compile Include="bstyle\logic\nodes\paragraph.vb" />
     <Compile Include="bstyle\logic\nodes\return_clause.vb" />
     <Compile Include="bstyle\logic\nodes\string.vb" />
+    <Compile Include="bstyle\logic\nodes\value_declaration_with_semi_colon.vb" />
     <Compile Include="bstyle\logic\nodes\value_definition_with_semi_colon.vb" />
     <Compile Include="bstyle\logic\prefixes\code_types.vb" />
     <Compile Include="bstyle\logic\suffixes\main.vb" />
