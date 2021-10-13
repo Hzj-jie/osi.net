@@ -58,12 +58,14 @@ Partial Public NotInheritable Class bstyle
                 o.emplace_back(New type_annotation(type, name))
                 Return True
             End If
-            assert(Not sub_type.null_or_empty())
-            For i As UInt32 = 0 To sub_type.size() - uint32_1
+            assert(Not sub_type Is Nothing)
+            Dim i As UInt32 = 0
+            While i < sub_type.size()
                 If Not resolve_type(sub_type(i).type, strcat(name, ".", sub_type(i).name), o) Then
                     Return False
                 End If
-            Next
+                i += uint32_1
+            End While
             Return True
         End Function
 
@@ -89,10 +91,12 @@ Partial Public NotInheritable Class bstyle
             If Not s.find(type, v) Then
                 Return False
             End If
-            assert(Not v.null_or_empty())
-            For i As UInt32 = 0 To v.size() - uint32_1
+            assert(Not v Is Nothing)
+            Dim i As UInt32 = 0
+            While i < v.size()
                 builders.of_define(strcat(n.child(1).word().str(), ".", v(i).name), v(i).type).to(o)
-            Next
+                i += uint32_1
+            End While
             Return True
         End Function
 

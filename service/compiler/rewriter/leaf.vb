@@ -10,7 +10,7 @@ Imports osi.service.automata
 Partial Public NotInheritable Class rewriters
     Inherits code_gens(Of typed_node_writer)
 
-    Public Class [default]
+    Public NotInheritable Class leaf
         Inherits rewriter_wrapper
         Implements rewriter
 
@@ -18,25 +18,17 @@ Partial Public NotInheritable Class rewriters
             MyBase.New(l)
         End Sub
 
-        Protected Overridable Function build(ByVal child As typed_node,
-                                             ByVal index As UInt32,
-                                             ByVal o As typed_node_writer) As Boolean
-            assert(Not child Is Nothing)
-            assert(Not o Is Nothing)
-            Return l.of(child).build(o)
-        End Function
+        Public Shared Sub register(ByVal l As rewriters, ByVal s As String)
+            assert(Not l Is Nothing)
+            assert(Not s.null_or_whitespace())
+            l.register(s, New leaf(l))
+        End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
-            assert(Not n.leaf())
-            Dim i As UInt32 = 0
-            While i < n.child_count()
-                If Not build(n.child(i), i, o) Then
-                    Return False
-                End If
-                i += uint32_1
-            End While
+            assert(n.leaf())
+            o.append(n)
             Return True
         End Function
     End Class

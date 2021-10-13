@@ -4,14 +4,13 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class struct
-        Inherits rewriter_wrapper
+        Inherits [default]
         Implements rewriter
 
         <inject_constructor>
@@ -24,19 +23,25 @@ Partial Public NotInheritable Class b2style
             b.register(Of struct)()
         End Sub
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
-            assert(Not n Is Nothing)
+        Protected Overrides Function build(ByVal child As typed_node,
+                                           ByVal index As UInt32,
+                                           ByVal o As typed_node_writer) As Boolean
+            assert(Not child Is Nothing)
             assert(Not o Is Nothing)
-            assert(n.child_count() >= 2)
-            o.append(n.child(0))
-            If Not l.of(n.child(1)).build(o) Then
-                Return False
+            If child.type_name.Equals("value-declaration-with-semi-colon") Then
+                ' TODO: Support value-definition
+                assert(child.child_count() = 2)
+                assert(child.child(0).child_count() = 2)
+                If Not l.of(child.child(0).child(0)).build(o) Then
+                    Return False
+                End If
+                ' Ignore namespace prefix for variables within the structure.
+                o.append(child.child(0).child(1))
+                If Not l.of(child.child(1)).build(o) Then
+                    Return False
+                End If
             End If
-            For i As UInt32 = 2 To n.child_count() - uint32_1
-                o.append(n.child(i))
-            Next
-            Return True
+            Return MyBase.build(child, index, o)
         End Function
     End Class
 End Class

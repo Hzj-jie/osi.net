@@ -94,10 +94,17 @@ Public Class rewriter_rule_wrapper(Of PARAMETERS,
         Protected MustOverride Function logic_parse(ByVal s As String, ByRef e() As exportable) As Boolean
     End Class
 
-    Protected Shared Function default_registerer(ByVal node_name As String) As Action(Of rewriters, PARAMETERS)
+    Protected Shared Function bypass_registerer(ByVal node_name As String) As Action(Of rewriters, PARAMETERS)
         assert(Not node_name.null_or_whitespace())
         Return ignore_parameters(Sub(ByVal i As rewriters)
-                                     [default].register(i, node_name)
+                                     bypass.register(i, node_name)
+                                 End Sub)
+    End Function
+
+    Protected Shared Function leaf_registerer(ByVal node_name As String) As Action(Of rewriters, PARAMETERS)
+        assert(Not node_name.null_or_whitespace())
+        Return ignore_parameters(Sub(ByVal i As rewriters)
+                                     leaf.register(i, node_name)
                                  End Sub)
     End Function
 

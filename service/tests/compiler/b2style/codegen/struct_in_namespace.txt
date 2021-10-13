@@ -6,10 +6,14 @@ namespace N {
   struct S {
     string x;
   };
+
+  struct T {
+    S s;
+  };
 }  // namespace N
 
 void main() {
-  N::S s;
-  s.x = "100";
-  b2style::std_out(s.x);
+  N::T t;
+  t.s.x = "100";
+  b2style::std_out(t.s.x);
 }
