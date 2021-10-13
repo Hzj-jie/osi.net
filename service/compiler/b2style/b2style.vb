@@ -135,8 +135,7 @@ Partial Public NotInheritable Class b2style
                        default_registerer("typedef"),
                        default_registerer("typedef-with-semi-colon"),
  _
-                       default_registerer("struct"),
-                       default_registerer("kw-struct")
+                       ignore_parameters(AddressOf struct.register)
                    )
         End Function
     End Class

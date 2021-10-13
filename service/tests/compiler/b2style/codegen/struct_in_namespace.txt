@@ -1,0 +1,15 @@
+﻿
+#include <b2style.h>
+
+namespace N {
+  typedef ::string string;
+  struct S {
+    string x;
+  };
+}  // namespace N
+
+void main() {
+  N::S s;
+  s.x = "100";
+  b2style::std_out(s.x);
+}

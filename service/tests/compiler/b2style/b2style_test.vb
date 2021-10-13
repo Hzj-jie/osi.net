@@ -319,6 +319,17 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), "4294967296429496729610")
     End Sub
 
+    <test>
+    Private Shared Sub struct_in_namespace()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.struct_in_namespace.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "100")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
