@@ -39,7 +39,10 @@ Namespace logic
 
         <Extension()> Public Function import(ByVal e As interpreter.primitive.exportable,
                                              ByVal es() As exportable) As Boolean
-            Return import(e, New scope(), es)
+            Dim s As New scope()
+            Using defer.to(AddressOf s.end_scope)
+                Return import(e, s, es)
+            End Using
         End Function
     End Module
 

@@ -52,7 +52,11 @@ Namespace logic
         End Sub
 
         Protected Overrides Sub when_end_scope()
-            assert(heap.empty())
+            ' The root scope needs not to clear the heap, the memory will be released when the root scope is running out
+            ' of the scope, e.g. the process finished.
+            If Not is_root() Then
+                assert(heap.empty())
+            End If
             MyBase.when_end_scope()
         End Sub
 
