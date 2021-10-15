@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
+' TODO: Remove
 Namespace logic
     Public NotInheritable Class macros
         Private Const prefix As Char = "{"c

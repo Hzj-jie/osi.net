@@ -6,17 +6,17 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.service.constructor
 Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class scope
-        Private ReadOnly parent As scope
+        Inherits scope(Of scope)
+
         ' This stack can be a real stack, but using map with offset can provide a better lookup performance.
         Private ReadOnly stack As New unordered_map(Of String, stack_ref)()
         ' Heap allocations need no offset, but only type to check assignability.
         Private ReadOnly heap As New unordered_map(Of String, String)()
-        ' This variable has no functionality, but only ensures the start_scope() won't be executed multiple times.
-        Private child As scope = Nothing
 
         Private NotInheritable Class stack_ref
             'Starts from 1 to allow size()-top.offset=0.
@@ -42,27 +42,19 @@ Namespace logic
             End Sub
         End Class
 
+        <inject_constructor>
+        Public Sub New(ByVal parent As scope)
+            MyBase.New(parent)
+        End Sub
+
         Public Sub New()
             Me.New(Nothing)
         End Sub
 
-        Public Sub New(ByVal parent As scope)
-            Me.parent = parent
-        End Sub
-
-        Public Function start_scope() As scope
-            assert(child Is Nothing)
-            child = New scope(Me)
-            Return child
-        End Function
-
-        Public Function end_scope() As scope
+        Protected Overrides Sub when_end_scope()
             assert(heap.empty())
-            If Not parent Is Nothing Then
-                parent.child = Nothing
-            End If
-            Return parent
-        End Function
+            MyBase.when_end_scope()
+        End Sub
 
         Public Function move_heap() As unordered_map(Of String, String)
             Return unordered_map(Of String, String).move(heap)
@@ -101,10 +93,6 @@ Namespace logic
             End If
             heap.emplace(name, type)
             Return True
-        End Function
-
-        Public Function is_root() As Boolean
-            Return parent Is Nothing
         End Function
 
         Public Function stack_empty() As Boolean
