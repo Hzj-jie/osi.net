@@ -4,22 +4,18 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.interpreter.primitive
 Imports statements = osi.service.compiler.rewriters.statements
 
 Partial Public NotInheritable Class b2style
-    Inherits rewriter_rule_wrapper(Of parameters_t,
-                                      nlexer_rule_t,
+    Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
                                       syntaxer_rule_t,
                                       prefixes_t,
                                       suffixes_t,
                                       rewriter_gens_t)
-    Public NotInheritable Class parameters_t
-        Public ReadOnly defines As New [set](Of String)()
-    End Class
-
     Public NotInheritable Class nlexer_rule_t
         Inherits __do(Of Byte())
 
@@ -37,25 +33,25 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Public NotInheritable Class prefixes_t
-        Inherits __do(Of vector(Of Action(Of statements, parameters_t)))
+        Inherits __do(Of vector(Of Action(Of statements, parameters)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, parameters_t))
-            Return vector.of(Of Action(Of statements, parameters_t))()
+        Protected Overrides Function at() As vector(Of Action(Of statements, parameters))
+            Return vector.of(Of Action(Of statements, parameters))()
         End Function
     End Class
 
     Public NotInheritable Class suffixes_t
-        Inherits __do(Of vector(Of Action(Of statements, parameters_t)))
+        Inherits __do(Of vector(Of Action(Of statements, parameters)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, parameters_t))
-            Return New vector(Of Action(Of statements, parameters_t))()
+        Protected Overrides Function at() As vector(Of Action(Of statements, parameters))
+            Return New vector(Of Action(Of statements, parameters))()
         End Function
     End Class
 
     Public NotInheritable Class rewriter_gens_t
-        Inherits __do(Of vector(Of Action(Of rewriters, parameters_t)))
+        Inherits __do(Of vector(Of Action(Of rewriters, parameters)))
 
-        Protected Overrides Function at() As vector(Of Action(Of rewriters, parameters_t))
+        Protected Overrides Function at() As vector(Of Action(Of rewriters, parameters))
             Return vector.of(
                        bypass_registerer("root-type"),
  _
@@ -150,7 +146,7 @@ Partial Public NotInheritable Class b2style
     End Function
 
     Public NotInheritable Shadows Class parse_wrapper
-        Inherits rewriter_rule_wrapper(Of parameters_t,
+        Inherits rewriter_rule_wrapper(Of parameters,
                                           nlexer_rule_t,
                                           syntaxer_rule_t,
                                           prefixes_t,

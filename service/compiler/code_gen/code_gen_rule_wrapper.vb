@@ -10,6 +10,7 @@ Imports osi.root.template
 Imports osi.service.automata
 Imports osi.service.interpreter.primitive
 
+' TODO: Remove parameters, use thread-static to avoid complex parameter passing.
 Public Class code_gen_rule_wrapper(Of WRITER,
                                       PARAMETERS,
                                       CODE_GENS_IMPL As code_gens(Of WRITER),
