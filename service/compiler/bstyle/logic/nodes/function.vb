@@ -75,11 +75,11 @@ Partial Public NotInheritable Class bstyle
                                         +params,
                                         Function() As Boolean
                                             Using s.push(New ref(ta, +params, n))
-                                                Dim gi As UInt32 = 0
-                                                gi = CUInt(If(has_paramlist, 5, 4))
+                                                Dim gi As UInt32 = CUInt(If(has_paramlist, 5, 4))
                                                 Return l.of(n.child(gi)).build(o)
                                             End Using
-                                        End Function).to(o)
+                                        End Function).
+                              to(o)
                 Return True
             End Using
         End Function

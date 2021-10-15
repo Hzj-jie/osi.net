@@ -16,7 +16,7 @@ Namespace logic
         Private Const type_of_name As String = "type_of"
         Private Const size_of_name As String = "size_of"
         Private Const size_of_type_of_name As String = "size_of_type"
-        Private Shared ReadOnly m As map(Of String, decoder)
+        Private Shared ReadOnly m As unordered_map(Of String, decoder)
 
         Private Delegate Function decoder(ByVal a As anchors,
                                           ByVal s As scope,
@@ -25,7 +25,7 @@ Namespace logic
                                           ByRef o As String) As Boolean
 
         Shared Sub New()
-            m = map.of(
+            m = unordered_map.emplace_of(
                     pair.emplace_of(return_type_of_name, d(AddressOf return_type)),
                     pair.emplace_of(type_of_name, d(AddressOf type)),
                     pair.emplace_of(size_of_name, d(AddressOf size)),
@@ -45,11 +45,9 @@ Namespace logic
                                       ByRef o As String) As Boolean
             assert(Not n.null_or_whitespace())
             o = n
-            Dim begin As Int32 = 0
-            Dim [end] As Int32 = 0
-            begin = o.LastIndexOf(prefix)
+            Dim begin As Int32 = o.LastIndexOf(prefix)
             While begin <> npos
-                [end] = o.IndexOf(suffix, begin)
+                Dim [end] As Int32 = o.IndexOf(suffix, begin)
                 If [end] = npos OrElse [end] = begin + 1 Then
                     errors.unexpected_macro(n)
                     Return False
@@ -75,22 +73,18 @@ Namespace logic
             assert(n.Length() > strlen(prefix) + strlen(suffix))
             n = n.TrimStart(prefix).TrimEnd(suffix)
             assert(Not n.null_or_whitespace())
-            Dim i As Int32 = 0
-            i = n.IndexOf(separator)
+            Dim i As Int32 = n.IndexOf(separator)
             If i = npos Then
                 errors.unexpected_macro(n)
                 Return False
             End If
-            Dim type As String = Nothing
-            Dim origin As String = Nothing
-            type = n.Substring(0, i)
-            origin = n.Substring(i + 1)
+            Dim type As String = n.Substring(0, i)
+            Dim origin As String = n.Substring(i + 1)
             If type.null_or_whitespace() OrElse origin.null_or_whitespace() Then
                 errors.unexpected_macro(n)
                 Return False
             End If
-            Dim it As map(Of String, decoder).iterator = Nothing
-            it = m.find(type)
+            Dim it As unordered_map(Of String, decoder).iterator = m.find(type)
             If it = m.end() Then
                 errors.unknown_macro(type, origin)
                 Return False

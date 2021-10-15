@@ -13,18 +13,6 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class struct
         Implements logic_gen
 
-        Private NotInheritable Class type_annotation
-            Public ReadOnly type As String
-            Public ReadOnly name As String
-
-            Public Sub New(ByVal type As String, ByVal name As String)
-                assert(Not type.null_or_whitespace())
-                assert(Not name.null_or_whitespace())
-                Me.type = type
-                Me.name = name
-            End Sub
-        End Class
-
         Private Shared ReadOnly root_types As unordered_set(Of String) = unordered_set.of(
             types.zero_type,
             types.variable_type,
@@ -34,7 +22,7 @@ Partial Public NotInheritable Class bstyle
             code_types.string,
             code_types.ufloat
         )
-        Private ReadOnly s As New unordered_map(Of String, vector(Of type_annotation))()
+        Private ReadOnly s As New unordered_map(Of String, vector(Of builders.parameter))()
 
         Public Shared Sub register(ByVal b As logic_gens, ByVal p As parameters_t)
             assert(Not b Is Nothing)
@@ -51,17 +39,23 @@ Partial Public NotInheritable Class bstyle
 
         Private Function resolve_type(ByVal type As String,
                                       ByVal name As String,
-                                      ByVal o As vector(Of type_annotation)) As Boolean
+                                      ByVal o As vector(Of builders.parameter)) As Boolean
             type = ta(type)
-            Dim sub_type As vector(Of type_annotation) = Nothing
+            Dim sub_type As vector(Of builders.parameter) = Nothing
             If root_types.find(type) <> root_types.end() OrElse Not s.find(type, sub_type) Then
-                o.emplace_back(New type_annotation(type, name))
+                o.emplace_back(New builders.parameter(type, name))
                 Return True
             End If
             assert(Not sub_type Is Nothing)
             Dim i As UInt32 = 0
             While i < sub_type.size()
-                If Not resolve_type(sub_type(i).type, strcat(name, ".", sub_type(i).name), o) Then
+                Dim full_name As String = strcat(name, ".", sub_type(i).name)
+                If Not resolve_type(sub_type(i).type, full_name, o) Then
+                    raise_error(error_type.user,
+                                "Undefined type ",
+                                sub_type(i).type,
+                                " for variable ",
+                                full_name)
                     Return False
                 End If
                 i += uint32_1
@@ -70,7 +64,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         ' TODO: Support value_definition
-        Private Function resolve_type(ByVal c As typed_node, ByVal o As vector(Of type_annotation)) As Boolean
+        Private Function resolve_type(ByVal c As typed_node, ByVal o As vector(Of builders.parameter)) As Boolean
             assert(Not c Is Nothing)
             assert(Not o Is Nothing)
             assert(c.child_count() = 2)
@@ -87,7 +81,7 @@ Partial Public NotInheritable Class bstyle
             End If
             assert(n.child_count() = 2)
             Dim type As String = n.child(0).word().str()
-            Dim v As vector(Of type_annotation) = Nothing
+            Dim v As vector(Of builders.parameter) = Nothing
             If Not s.find(type, v) Then
                 Return False
             End If
@@ -105,7 +99,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
-            Dim types As New vector(Of type_annotation)()
+            Dim types As New vector(Of builders.parameter)()
             For i As UInt32 = 3 To n.child_count() - CUInt(3)
                 If Not resolve_type(n.child(i), types) Then
                     Return False

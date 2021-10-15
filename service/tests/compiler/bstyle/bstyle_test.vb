@@ -64,6 +64,39 @@ Public NotInheritable Class bstyle_test
         assertion.equal(io.output(), "TrueFalseFalseTrue")
     End Sub
 
+    <test>
+    Private Shared Sub single_level_struct()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(bstyle.with_functions(New interrupts(+io)).
+                                 parse(_bstyle_test_data.single_level_struct.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "dabc")
+    End Sub
+
+    <test>
+    Private Shared Sub nested_struct()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(bstyle.with_functions(New interrupts(+io)).
+                                 parse(_bstyle_test_data.nested_struct.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "dd")
+    End Sub
+
+    '<test>
+    Private Shared Sub function_struct()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(bstyle.with_functions(New interrupts(+io)).
+                                 parse(_bstyle_test_data.function_struct.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "abcdef")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

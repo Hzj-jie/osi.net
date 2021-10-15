@@ -61,10 +61,9 @@ Partial Public NotInheritable Class bstyle
             Return build(n,
                          o,
                          Sub(ByVal callee_name As String, ByVal parameters As vector(Of String))
-                             Dim name As String = Nothing
-                             name = function_name.of_function_call(callee_name, parameters)
-                             Dim value_name As String = Nothing
-                             value_name = code_gen_of(Of value)().with_temp_target(macros.return_type_of(name), n, o)
+                             Dim name As String = function_name.of_function_call(callee_name, parameters)
+                             Dim value_name As String =
+                                     code_gen_of(Of value)().with_temp_target(macros.return_type_of(name), n, o)
                              builders.of_caller(name, value_name, parameters).to(o)
                          End Sub)
         End Function
