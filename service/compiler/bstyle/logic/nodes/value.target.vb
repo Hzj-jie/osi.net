@@ -10,7 +10,7 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value
-        Inherits logic_gen_wrapper_with_parameters
+        Inherits logic_gen_wrapper
         Implements logic_gen
 
         Private ReadOnly read_targets As New read_scoped(Of String)()
@@ -31,7 +31,7 @@ Partial Public NotInheritable Class bstyle
                                               "-",
                                               n.word_end())
             If defined_temp_targets.find(value_name) = defined_temp_targets.end() Then
-                builders.of_define(value_name, ta(type)).to(o)
+                builders.of_define(value_name, scope.current().type_alias()(type)).to(o)
                 defined_temp_targets.emplace(value_name)
             End If
             read_targets.push(value_name)

@@ -15,7 +15,8 @@ Partial Public NotInheritable Class b2style
                                       syntaxer_rule_t,
                                       prefixes_t,
                                       suffixes_t,
-                                      rewriter_gens_t)
+                                      rewriter_gens_t,
+                                      scope)
     Public NotInheritable Class nlexer_rule_t
         Inherits __do(Of Byte())
 
@@ -33,26 +34,26 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Public NotInheritable Class prefixes_t
-        Inherits __do(Of vector(Of Action(Of statements, parameters)))
+        Inherits __do(Of vector(Of Action(Of statements)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, parameters))
-            Return vector.of(Of Action(Of statements, parameters))()
+        Protected Overrides Function at() As vector(Of Action(Of statements))
+            Return vector.of(Of Action(Of statements))()
         End Function
     End Class
 
     Public NotInheritable Class suffixes_t
-        Inherits __do(Of vector(Of Action(Of statements, parameters)))
+        Inherits __do(Of vector(Of Action(Of statements)))
 
-        Protected Overrides Function at() As vector(Of Action(Of statements, parameters))
-            Return New vector(Of Action(Of statements, parameters))()
+        Protected Overrides Function at() As vector(Of Action(Of statements))
+            Return New vector(Of Action(Of statements))()
         End Function
     End Class
 
     Public NotInheritable Class rewriter_gens_t
-        Inherits __do(Of vector(Of Action(Of rewriters, parameters)))
+        Inherits __do(Of vector(Of Action(Of rewriters)))
 
-        Protected Overrides Function at() As vector(Of Action(Of rewriters, parameters))
-            Return vector.of(
+        Protected Overrides Function at() As vector(Of Action(Of rewriters))
+            Return vector.of(Of Action(Of rewriters))(
                        bypass_registerer("root-type"),
  _
                        leaf_registerer("kw-if"),
@@ -76,14 +77,14 @@ Partial Public NotInheritable Class b2style
                        leaf_registerer("start-bracket"),
                        leaf_registerer("end-bracket"),
                        leaf_registerer("assignment"),
-                       ignore_parameters(AddressOf name.register),
+                       AddressOf name.register,
  _
                        bypass_registerer("function"),
                        bypass_registerer("paramlist"),
                        bypass_registerer("multi-sentence-paragraph"),
                        bypass_registerer("param-with-comma"),
                        bypass_registerer("param"),
-                       ignore_parameters(AddressOf namespace_.register),
+                       AddressOf namespace_.register,
                        bypass_registerer("paragraph"),
                        bypass_registerer("sentence"),
                        bypass_registerer("sentence-with-semi-colon"),
@@ -93,7 +94,7 @@ Partial Public NotInheritable Class b2style
                        bypass_registerer("value-definition-with-semi-colon"),
                        bypass_registerer("value-declaration-with-semi-colon"),
                        bypass_registerer("value-clause"),
-                       ignore_parameters(AddressOf self_value_clause.register),
+                       AddressOf self_value_clause.register,
                        bypass_registerer("return-clause"),
                        bypass_registerer("ignore-result-function-call"),
                        bypass_registerer("logic"),
@@ -108,17 +109,17 @@ Partial Public NotInheritable Class b2style
                        bypass_registerer("value-without-bracket"),
                        bypass_registerer("value-with-operation"),
                        bypass_registerer("unary-operation-value"),
-                       ignore_parameters(AddressOf binary_operation_value.register),
-                       ignore_parameters(AddressOf pre_operation_value.register),
-                       ignore_parameters(AddressOf post_operation_value.register),
+                       AddressOf binary_operation_value.register,
+                       AddressOf pre_operation_value.register,
+                       AddressOf post_operation_value.register,
                        bypass_registerer("variable-name"),
                        bypass_registerer("function-call"),
                        bypass_registerer("value-list"),
                        bypass_registerer("value-with-comma"),
  _
                        bypass_registerer("include"),
-                       ignore_parameters(AddressOf include_with_string.register),
-                       ignore_parameters(AddressOf include_with_file.register),
+                       AddressOf include_with_string.register,
+                       AddressOf include_with_file.register,
  _
                        leaf_registerer("kw-ifndef"),
                        leaf_registerer("kw-define"),
@@ -131,7 +132,7 @@ Partial Public NotInheritable Class b2style
                        bypass_registerer("typedef"),
                        bypass_registerer("typedef-with-semi-colon"),
  _
-                       ignore_parameters(AddressOf struct.register),
+                       AddressOf struct.register,
                        leaf_registerer("kw-struct")
                    )
         End Function
@@ -146,12 +147,12 @@ Partial Public NotInheritable Class b2style
     End Function
 
     Public NotInheritable Shadows Class parse_wrapper
-        Inherits rewriter_rule_wrapper(Of parameters,
-                                          nlexer_rule_t,
+        Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
                                           syntaxer_rule_t,
                                           prefixes_t,
                                           suffixes_t,
-                                          rewriter_gens_t).parse_wrapper
+                                          rewriter_gens_t,
+                                          scope).parse_wrapper
 
         Public Sub New(ByVal functions As interrupts)
             MyBase.New(functions)

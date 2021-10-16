@@ -12,26 +12,22 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class function_name
-        Public Shared Function of_function(ByVal ta As type_alias,
-                                           ByVal raw_name As String,
+        Public Shared Function of_function(ByVal raw_name As String,
                                            ByVal parameters As vector(Of builders.parameter)) As String
-            assert(Not ta Is Nothing)
             Return build(raw_name,
                          parameters.map(Function(ByVal i As builders.parameter) As String
                                             assert(Not i Is Nothing)
-                                            Return ta(i.type)
+                                            Return scope.current().type_alias()(i.type)
                                         End Function))
         End Function
 
-        Public Shared Function of_callee(ByVal ta As type_alias,
-                                         ByVal raw_name As String,
+        Public Shared Function of_callee(ByVal raw_name As String,
                                          ByVal return_type As String,
                                          ByVal parameters As vector(Of builders.parameter),
                                          ByVal paragraph As Func(Of Boolean)) As builders.callee_builder_14
-            Return builders.of_callee(ta,
-                                      of_function(ta, raw_name, parameters),
-                                      return_type,
-                                      parameters,
+            Return builders.of_callee(of_function(raw_name, parameters),
+                                      scope.current().type_alias()(return_type),
+                                      parameters.map(AddressOf scope.current().type_alias().canonical_of),
                                       paragraph)
         End Function
 

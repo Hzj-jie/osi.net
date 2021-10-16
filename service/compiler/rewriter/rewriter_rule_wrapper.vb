@@ -29,35 +29,19 @@ End Class
 
 Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
                                       _syntaxer_rule As __do(Of Byte()),
-                                      _prefixes As __do(Of vector(Of Action(Of statements, parameters))),
-                                      _suffixes As __do(Of vector(Of Action(Of statements, parameters))),
-                                      _rewriter_gens As __do(Of vector(Of Action(Of rewriters, parameters))))
-    Inherits rewriter_rule_wrapper(Of parameters,
-                                      _nlexer_rule,
-                                      _syntaxer_rule,
-                                      _prefixes,
-                                      _suffixes,
-                                      _rewriter_gens)
-
-    Protected Sub New()
-    End Sub
-End Class
-
-Public Class rewriter_rule_wrapper(Of PARAMETERS,
-                                      _nlexer_rule As __do(Of Byte()),
-                                      _syntaxer_rule As __do(Of Byte()),
-                                      _prefixes As __do(Of vector(Of Action(Of statements, PARAMETERS))),
-                                      _suffixes As __do(Of vector(Of Action(Of statements, PARAMETERS))),
-                                      _rewriter_gens As __do(Of vector(Of Action(Of rewriters, PARAMETERS))))
+                                      _prefixes As __do(Of vector(Of Action(Of statements))),
+                                      _suffixes As __do(Of vector(Of Action(Of statements))),
+                                      _rewriter_gens As __do(Of vector(Of Action(Of rewriters))),
+                                       SCOPE_T As scope(Of SCOPE_T))
     Inherits code_gen_rule_wrapper(Of typed_node_writer,
-                                      PARAMETERS,
                                       rewriters,
                                       statements,
                                       _nlexer_rule,
                                       _syntaxer_rule,
                                       _prefixes,
                                       _suffixes,
-                                      _rewriter_gens)
+                                      _rewriter_gens,
+                                      SCOPE_T)
 
     Public Overloads Shared Function parse(ByVal input As String, ByRef o As String) As Boolean
         Dim w As New typed_node_writer()
@@ -70,14 +54,14 @@ Public Class rewriter_rule_wrapper(Of PARAMETERS,
 
     Public MustInherit Shadows Class parse_wrapper
         Inherits code_gen_rule_wrapper(Of typed_node_writer,
-                                          PARAMETERS,
                                           rewriters,
                                           statements,
                                           _nlexer_rule,
                                           _syntaxer_rule,
                                           _prefixes,
                                           _suffixes,
-                                          _rewriter_gens).parse_wrapper
+                                          _rewriter_gens,
+                                          SCOPE_T).parse_wrapper
         Public Sub New(ByVal functions As interrupts)
             MyBase.New(functions)
         End Sub
@@ -94,18 +78,18 @@ Public Class rewriter_rule_wrapper(Of PARAMETERS,
         Protected MustOverride Function logic_parse(ByVal s As String, ByRef e() As exportable) As Boolean
     End Class
 
-    Protected Shared Function bypass_registerer(ByVal node_name As String) As Action(Of rewriters, PARAMETERS)
+    Protected Shared Function bypass_registerer(ByVal node_name As String) As Action(Of rewriters)
         assert(Not node_name.null_or_whitespace())
-        Return ignore_parameters(Sub(ByVal i As rewriters)
-                                     bypass.register(i, node_name)
-                                 End Sub)
+        Return Sub(ByVal i As rewriters)
+                   bypass.register(i, node_name)
+               End Sub
     End Function
 
-    Protected Shared Function leaf_registerer(ByVal node_name As String) As Action(Of rewriters, PARAMETERS)
+    Protected Shared Function leaf_registerer(ByVal node_name As String) As Action(Of rewriters)
         assert(Not node_name.null_or_whitespace())
-        Return ignore_parameters(Sub(ByVal i As rewriters)
-                                     leaf.register(i, node_name)
-                                 End Sub)
+        Return Sub(ByVal i As rewriters)
+                   leaf.register(i, node_name)
+               End Sub
     End Function
 
     Protected Sub New()

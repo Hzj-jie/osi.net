@@ -11,13 +11,6 @@ Namespace logic
     Partial Public NotInheritable Class builders
         Public Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("compiler", "debug", "dump"))
 
-        Public Shared Function of_define(ByVal ta As type_alias,
-                                         ByVal name As String,
-                                         ByVal type As String) As define_builder_28
-            assert(Not ta Is Nothing)
-            Return of_define(name, ta(type))
-        End Function
-
         Public NotInheritable Class parameter
             Public ReadOnly type As String
             Public ReadOnly name As String
@@ -30,17 +23,15 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_callee(ByVal ta As type_alias,
-                                         ByVal name As String,
+        Public Shared Function of_callee(ByVal name As String,
                                          ByVal type As String,
                                          ByVal parameters As vector(Of parameter),
                                          ByVal paragraph As Func(Of Boolean)) As callee_builder_14
-            assert(Not ta Is Nothing)
             Return of_callee(name,
-                             ta(type),
+                             type,
                              parameters.map(Function(ByVal i As parameter) As pair(Of String, String)
                                                 assert(Not i Is Nothing)
-                                                Return pair.emplace_of(i.name, ta(i.type))
+                                                Return pair.emplace_of(i.name, i.type)
                                             End Function),
                              paragraph)
         End Function

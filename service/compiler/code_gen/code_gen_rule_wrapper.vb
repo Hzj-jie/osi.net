@@ -10,49 +10,24 @@ Imports osi.root.template
 Imports osi.service.automata
 Imports osi.service.interpreter.primitive
 
-' TODO: Remove parameters, use thread-static to avoid complex parameter passing.
 Public Class code_gen_rule_wrapper(Of WRITER,
-                                      PARAMETERS,
                                       CODE_GENS_IMPL As code_gens(Of WRITER),
                                       STATEMENTS_IMPL As statements(Of WRITER),
                                       _nlexer_rule As __do(Of Byte()),
                                       _syntaxer_rule As __do(Of Byte()),
-                                      _prefixes As __do(Of vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS))),
-                                      _suffixes As __do(Of vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS))),
-                                      _code_gens As __do(Of vector(Of Action(Of CODE_GENS_IMPL, PARAMETERS))))
+                                      _prefixes As __do(Of vector(Of Action(Of STATEMENTS_IMPL))),
+                                      _suffixes As __do(Of vector(Of Action(Of STATEMENTS_IMPL))),
+                                      _code_gens As __do(Of vector(Of Action(Of CODE_GENS_IMPL))),
+                                       SCOPE_T As scope(Of SCOPE_T))
     Inherits rule_wrapper(Of _nlexer_rule, _syntaxer_rule)
-
-    Private Shared Function ignore_parameters(Of T)(ByVal i As Action(Of T)) As Action(Of T, PARAMETERS)
-        assert(Not i Is Nothing)
-        Return Sub(ByVal x As T, ByVal y As PARAMETERS)
-                   i(x)
-               End Sub
-    End Function
-
-    Protected Shared Function ignore_parameters(ByVal i As Action(Of STATEMENTS_IMPL)) _
-                                  As Action(Of STATEMENTS_IMPL, PARAMETERS)
-        Return ignore_parameters(Of STATEMENTS_IMPL)(i)
-    End Function
-
-    Protected Shared Function ignore_parameters(ByVal i As Action(Of CODE_GENS_IMPL)) _
-                                  As Action(Of CODE_GENS_IMPL, PARAMETERS)
-        Return ignore_parameters(Of CODE_GENS_IMPL)(i)
-    End Function
-
-    Protected Shared Function ignore_parameters(ByVal i As Action) As Action(Of PARAMETERS)
-        assert(Not i Is Nothing)
-        Return Sub(ByVal x As PARAMETERS)
-                   i()
-               End Sub
-    End Function
 
     Public NotInheritable Class code_builder
         Private ReadOnly l As CODE_GENS_IMPL
         Private nested As UInt32
 
-        Public Sub New(ByVal w As PARAMETERS)
+        Public Sub New()
             l = alloc(Of CODE_GENS_IMPL)()
-            init_code_gens(w)
+            init_code_gens()
         End Sub
 
         Public Function nested_build_level() As UInt32
@@ -88,11 +63,11 @@ Public Class code_gen_rule_wrapper(Of WRITER,
             End Using
         End Function
 
-        Private Sub init_code_gens(ByVal w As PARAMETERS)
-            Dim v As vector(Of Action(Of CODE_GENS_IMPL, PARAMETERS)) = +alloc(Of _code_gens)()
+        Private Sub init_code_gens()
+            Dim v As vector(Of Action(Of CODE_GENS_IMPL)) = +alloc(Of _code_gens)()
             Dim i As UInt32 = 0
             While i < v.size()
-                v(i)(l, w)
+                v(i)(l)
                 i += uint32_1
             End While
         End Sub
@@ -103,14 +78,12 @@ Public Class code_gen_rule_wrapper(Of WRITER,
     End Class
 
     Private NotInheritable Class builder
-        Private ReadOnly w As PARAMETERS
         Public ReadOnly cb As code_builder
         Private ReadOnly p As STATEMENTS_IMPL
         Private ReadOnly s As STATEMENTS_IMPL
 
         Public Sub New()
-            w = alloc(Of PARAMETERS)()
-            cb = New code_builder(w)
+            cb = New code_builder()
             p = alloc(Of STATEMENTS_IMPL)()
             s = alloc(Of STATEMENTS_IMPL)()
             init_prefixes()
@@ -119,20 +92,21 @@ Public Class code_gen_rule_wrapper(Of WRITER,
 
         Public Function build(ByVal input As String, ByVal o As WRITER) As Boolean
             assert(Not o Is Nothing)
+            Dim scope As SCOPE_T = alloc(Of SCOPE_T)()
             p.export(o)
             If Not cb.build(input, o) Then
                 Return False
             End If
             s.export(o)
+            scope.end_scope()
             Return True
         End Function
 
-        Private Sub init_statements(Of T As __do(Of vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)))) _
-                                   (ByVal p As STATEMENTS_IMPL)
-            Dim v As vector(Of Action(Of STATEMENTS_IMPL, PARAMETERS)) = +alloc(Of T)()
+        Private Sub init_statements(Of T As __do(Of vector(Of Action(Of STATEMENTS_IMPL))))(ByVal p As STATEMENTS_IMPL)
+            Dim v As vector(Of Action(Of STATEMENTS_IMPL)) = +alloc(Of T)()
             Dim i As UInt32 = 0
             While i < v.size()
-                v(i)(p, w)
+                v(i)(p)
                 i += uint32_1
             End While
         End Sub
@@ -173,14 +147,14 @@ Public Class code_gen_rule_wrapper(Of WRITER,
             assert(Not e Is Nothing)
             Dim o As WRITER = alloc(Of WRITER)()
             Return code_gen_rule_wrapper(Of WRITER,
-                                        PARAMETERS,
-                                        CODE_GENS_IMPL,
-                                        STATEMENTS_IMPL,
-                                        _nlexer_rule,
-                                        _syntaxer_rule,
-                                        _prefixes,
-                                        _suffixes,
-                                        _code_gens).parse(input, o) AndAlso
+                                            CODE_GENS_IMPL,
+                                            STATEMENTS_IMPL,
+                                            _nlexer_rule,
+                                            _syntaxer_rule,
+                                            _prefixes,
+                                            _suffixes,
+                                            _code_gens,
+                                            SCOPE_T).parse(input, o) AndAlso
                    import(e, o)
         End Function
 

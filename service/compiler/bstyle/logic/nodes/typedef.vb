@@ -13,17 +13,14 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class typedef
         Implements logic_gen
 
-        Private ReadOnly ta As type_alias
+        Private Shared ReadOnly instance As New typedef()
 
-        Private Sub New(ByVal p As parameters_t)
-            assert(Not p Is Nothing)
-            ta = p.type_alias
-            assert(Not ta Is Nothing)
+        Private Sub New()
         End Sub
 
-        Public Shared Sub register(ByVal b As logic_gens, ByVal p As parameters_t)
+        Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(New typedef(p))
+            b.register(instance)
         End Sub
 
         Private Shared Function get_type(ByVal n As typed_node) As String
@@ -42,7 +39,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
-            Return ta.define(get_type(n.child(2)), get_type(n.child(1)))
+            Return scope.current().type_alias().define(get_type(n.child(2)), get_type(n.child(1)))
         End Function
     End Class
 

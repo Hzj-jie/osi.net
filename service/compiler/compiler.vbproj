@@ -61,6 +61,7 @@
     <Compile Include="b2style\b2style_rules.vb" />
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\struct.vb" />
+    <Compile Include="b2style\scope.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
     <Compile Include="bstyle\includes.vb" />
     <Compile Include="bstyle\logic\nodes\defines.vb" />
@@ -151,7 +152,6 @@
     <Compile Include="logic\importer.new.vb" />
     <Compile Include="logic\importer.vb" />
     <Compile Include="logic\logic_gen\logic_rule_wrapper.vb" />
-    <Compile Include="logic\logic_gen\type_alias.vb" />
     <Compile Include="logic\macros.vb" />
     <Compile Include="logic\pair_result_binary_operator.vb" />
     <Compile Include="logic\pair_result_binary_operators.vb" />

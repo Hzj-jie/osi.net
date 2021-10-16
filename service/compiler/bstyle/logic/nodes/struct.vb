@@ -24,23 +24,20 @@ Partial Public NotInheritable Class bstyle
         )
         Private ReadOnly s As New unordered_map(Of String, vector(Of builders.parameter))()
 
-        Public Shared Sub register(ByVal b As logic_gens, ByVal p As parameters_t)
+        Private Shared ReadOnly instance As New struct()
+
+        Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(New struct(p))
+            b.register(instance)
         End Sub
 
-        Private ReadOnly ta As type_alias
-
-        Private Sub New(ByVal p As parameters_t)
-            assert(Not p Is Nothing)
-            ta = p.type_alias
-            assert(Not ta Is Nothing)
+        Private Sub New()
         End Sub
 
         Private Function resolve_type(ByVal type As String,
                                       ByVal name As String,
                                       ByVal o As vector(Of builders.parameter)) As Boolean
-            type = ta(type)
+            type = scope.current().type_alias()(type)
             Dim sub_type As vector(Of builders.parameter) = Nothing
             If root_types.find(type) <> root_types.end() OrElse Not s.find(type, sub_type) Then
                 o.emplace_back(New builders.parameter(type, name))

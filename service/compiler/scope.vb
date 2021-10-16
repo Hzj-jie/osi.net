@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.service.constructor
 
 Public Class scope(Of T As scope(Of T))
@@ -11,6 +12,7 @@ Public Class scope(Of T As scope(Of T))
     Protected ReadOnly parent As T
     ' This variable has no functionality, but only ensures the start_scope() won't be executed multiple times.
     Private child As T = Nothing
+    Public ReadOnly root As lazier(Of T) = lazier.of(AddressOf get_root)
 
     Protected Sub New(ByVal parent As T)
         Me.parent = parent
@@ -43,7 +45,7 @@ Public Class scope(Of T As scope(Of T))
         Return in_thread
     End Function
 
-    Public Function root() As T
+    Private Function get_root() As T
         Dim s As T = this()
         While Not s.is_root()
             s = s.parent

@@ -47,6 +47,7 @@ Namespace logic
     End Module
 
     Public Interface exportable
+        ' TODO: Remove scope, use thread-static scope
         Function export(ByVal scope As scope, ByVal o As vector(Of String)) As Boolean
     End Interface
 End Namespace
