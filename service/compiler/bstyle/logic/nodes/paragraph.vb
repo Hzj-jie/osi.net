@@ -26,7 +26,9 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Return l.of(n.child()).build(o)
+            Using New scope_wrapper()
+                Return l.of(n.child()).build(o)
+            End Using
         End Function
     End Class
 End Class

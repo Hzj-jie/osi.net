@@ -85,7 +85,7 @@ Partial Public NotInheritable Class b2style
                        bypass_registerer("param-with-comma"),
                        bypass_registerer("param"),
                        AddressOf namespace_.register,
-                       bypass_registerer("paragraph"),
+                       AddressOf paragraph.register,
                        bypass_registerer("sentence"),
                        bypass_registerer("sentence-with-semi-colon"),
                        bypass_registerer("sentence-without-semi-colon"),

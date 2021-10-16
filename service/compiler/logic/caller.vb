@@ -132,7 +132,7 @@ Namespace logic
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is for return value.
-            Using sw As New scope_wrapper(o)
+            Using New scope_wrapper(o)
                 Dim real_name As String = Nothing
                 If Not macros.decode(anchors, types, name, real_name) Then
                     Return False

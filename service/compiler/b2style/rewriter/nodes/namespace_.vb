@@ -17,12 +17,11 @@ Partial Public NotInheritable Class b2style
 
         Private Const namespace_separator As String = "::"
         Private Const namespace_replacer As String = "__"
-        Private ReadOnly ws As write_scoped(Of String)
+        Private ReadOnly ws As New write_scoped(Of String)()
 
         <inject_constructor>
         Public Sub New(ByVal i As rewriters)
             MyBase.New(i)
-            Me.ws = New write_scoped(Of String)()
         End Sub
 
         Public Shared Sub register(ByVal b As rewriters)
@@ -46,7 +45,7 @@ Partial Public NotInheritable Class b2style
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() >= 4)
-            Using ws.push(format(n.child(1).word().str()))
+            Using disposables.of(New scope_wrapper(), ws.push(format(n.child(1).word().str())))
                 For i As UInt32 = 3 To n.child_count() - uint32_2
                     If Not l.of(n.child(i)).build(o) Then
                         Return False

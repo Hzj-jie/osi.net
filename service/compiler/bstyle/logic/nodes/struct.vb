@@ -77,9 +77,8 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(n.child_count() = 2)
-            Dim type As String = n.child(0).word().str()
             Dim v As vector(Of builders.parameter) = Nothing
-            If Not s.find(type, v) Then
+            If Not s.find(n.child(0).word().str(), v) Then
                 Return False
             End If
             assert(Not v Is Nothing)
