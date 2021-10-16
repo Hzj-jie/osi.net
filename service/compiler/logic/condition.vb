@@ -26,24 +26,22 @@ Namespace logic
             Me.false_path = false_path.release_or_null()
         End Sub
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            assert(Not scope Is Nothing)
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim var As variable = Nothing
-            If Not variable.of_stack(scope, v, var) Then
+            If Not variable.of_stack(v, var) Then
                 Return False
             End If
 
             Dim true_o As vector(Of String) = Nothing
             true_o = New vector(Of String)()
-            If Not true_path.export(scope, true_o) Then
+            If Not true_path.export(true_o) Then
                 Return False
             End If
 
             Dim false_o As vector(Of String) = Nothing
             false_o = New vector(Of String)()
-            If Not false_path Is Nothing AndAlso Not false_path.export(scope, false_o) Then
+            If Not false_path Is Nothing AndAlso Not false_path.export(false_o) Then
                 Return False
             End If
             false_o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(true_o.size() + uint32_1)))

@@ -9,74 +9,64 @@ Imports osi.root.formation
 Namespace logic
     ' A variable in stack.
     Public NotInheritable Class variable
-        Private ReadOnly scope As scope
         Public ReadOnly name As String
         Public ReadOnly type As String
         Public ReadOnly size As [optional](Of UInt32)
 
-        Private Sub New(ByVal scope As scope,
-                        ByVal name As String,
+        Private Sub New(ByVal name As String,
                         ByVal type As String,
                         ByVal size As [optional](Of UInt32))
-            assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
-            Me.scope = scope
             Me.name = name
             Me.type = type
             Me.size = size
         End Sub
 
-        Private Shared Function [of](ByVal scope As scope,
-                                     ByVal types As types,
+        Private Shared Function [of](ByVal types As types,
                                      ByVal name As String,
                                      ByVal type As String,
                                      ByRef o As variable) As Boolean
-            assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
             If types Is Nothing Then
-                o = New variable(scope, name, type, [optional].empty(Of UInt32)())
+                o = New variable(name, type, [optional].empty(Of UInt32)())
                 Return True
             End If
             Dim size As UInt32 = 0
             ' type should be checked when a variable is defined in the scope.
             assert(types.retrieve(type, size))
-            o = New variable(scope, name, type, [optional].of(size))
+            o = New variable(name, type, [optional].of(size))
             Return True
         End Function
 
-        Public Shared Function of_heap(ByVal scope As scope,
-                                       ByVal types As types,
+        Public Shared Function of_heap(ByVal types As types,
                                        ByVal name As String,
                                        ByRef o As variable) As Boolean
-            assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
             Dim type As String = Nothing
-            If Not scope.type(heaps.name_of(name), type) Then
+            If Not scope.current().type(heaps.name_of(name), type) Then
                 errors.variable_undefined(name)
                 Return False
             End If
-            Return [of](scope, types, name, type, o)
+            Return [of](types, name, type, o)
         End Function
 
-        Public Shared Function of_stack(ByVal scope As scope,
-                                        ByVal types As types,
+        Public Shared Function of_stack(ByVal types As types,
                                         ByVal name As String,
                                         ByRef o As variable) As Boolean
-            assert(Not scope Is Nothing)
             assert(Not name.null_or_whitespace())
             Dim v As scope.exported_stack_ref = Nothing
-            If Not scope.export(name, v) Then
+            If Not scope.current().export(name, v) Then
                 errors.variable_undefined(name)
                 Return False
             End If
-            Return [of](scope, types, name, v.type, o)
+            Return [of](types, name, v.type, o)
         End Function
 
         ' Create a variable without retrieving @size from types. Consumers who use this constructor should not use
         ' is_assignable or similar functions.
-        Public Shared Function of_stack(ByVal scope As scope, ByVal name As String, ByRef o As variable) As Boolean
-            Return of_stack(scope, Nothing, name, o)
+        Public Shared Function of_stack(ByVal name As String, ByRef o As variable) As Boolean
+            Return of_stack(Nothing, name, o)
         End Function
 
         Private Function is_zero_size() As Boolean
@@ -163,7 +153,7 @@ Namespace logic
 
         Public Function ref() As String
             Dim r As String = Nothing
-            assert(scope.export(name, r))
+            assert(scope.current().export(name, r))
             Return r
         End Function
 

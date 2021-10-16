@@ -36,24 +36,21 @@ Namespace logic
                                       ByVal types As types,
                                       ByVal name As String,
                                       ByVal type As String,
-                                      ByVal scope As scope,
                                       ByVal o As vector(Of String)) As Boolean
-            Return New define(anchors, types, name, type).export(scope, o)
+            Return New define(anchors, types, name, type).export(o)
         End Function
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            assert(Not scope Is Nothing)
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim type As String = Nothing
-            If Not macros.decode(anchors, scope, types, Me.type, type) Then
+            If Not macros.decode(anchors, types, Me.type, type) Then
                 Return False
             End If
             If Not types.retrieve(type, Nothing) Then
                 errors.type_undefined(type, name)
                 Return False
             End If
-            If scope.define_stack(name, type) Then
+            If scope.current().define_stack(name, type) Then
                 o.emplace_back(strcat(command_str(command.push),
                                       character.tab,
                                       comment_builder.str("+++ define ", name, type)))

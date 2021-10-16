@@ -43,15 +43,13 @@ Namespace logic
             End If
         End Function
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            assert(Not scope Is Nothing)
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
-            Using sw As scope_wrapper = New scope_wrapper(scope, o)
+            Using sw As New scope_wrapper(o)
                 Dim i As UInt32 = 0
                 While i < s.size()
                     assert(Not s(i) Is Nothing)
-                    If Not s(i).export(sw.scope(), o) Then
+                    If Not s(i).export(o) Then
                         Return False
                     End If
                     i += uint32_1

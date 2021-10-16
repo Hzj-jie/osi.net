@@ -42,11 +42,10 @@ Namespace logic
             Return e
         End Function
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim start As UInt32 = o.size()
-            If Not e.export(scope, o) Then
+            If Not e.export(o) Then
                 Return False
             End If
             If o.size() > start Then

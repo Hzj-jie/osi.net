@@ -42,30 +42,28 @@ Namespace logic
             Me.operation = operation
         End Sub
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            assert(Not scope Is Nothing)
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
-            Dim array_ptr As String = scope.unique_name()
-            If Not define.export(anchors, types, array_ptr, heaps.ptr_type, scope, o) Then
+            Dim array_ptr As String = scope.current().unique_name()
+            If Not define.export(anchors, types, array_ptr, heaps.ptr_type, o) Then
                 Return False
             End If
-            If Not New add(types, array_ptr, array, array_index).export(scope, o) Then
+            If Not New add(types, array_ptr, array, array_index).export(o) Then
                 Return False
             End If
             Dim stack_var As variable = Nothing
-            If Not variable.of_stack(scope, types, stack, stack_var) Then
+            If Not variable.of_stack(types, stack, stack_var) Then
                 Return False
             End If
             Dim heap_var As variable = Nothing
-            If Not variable.of_heap(scope, types, array, heap_var) Then
+            If Not variable.of_heap(types, array, heap_var) Then
                 Return False
             End If
             If Not type_match(stack_var, heap_var) Then
                 Return False
             End If
             Dim array_ptr_var As variable = Nothing
-            assert(variable.of_stack(scope, types, array_ptr, array_ptr_var))
+            assert(variable.of_stack(types, array_ptr, array_ptr_var))
             Dim operation_str As String = Nothing
             If Not operation(array_ptr_var.ref(), stack_var.ref(), operation_str) Then
                 Return False

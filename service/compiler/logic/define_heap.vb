@@ -35,24 +35,22 @@ Namespace logic
             Me.size = size
         End Sub
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            assert(Not scope Is Nothing)
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim type As String = Nothing
-            If Not macros.decode(anchors, scope, types, Me.type, type) Then
+            If Not macros.decode(anchors, types, Me.type, type) Then
                 Return False
             End If
             Dim size As variable = Nothing
-            If Not variable.of_stack(scope, types, Me.size, size) Then
+            If Not variable.of_stack(types, Me.size, size) Then
                 Return False
             End If
-            If Not define.export(anchors, types, name, heaps.ptr_type, scope, o) Then
+            If Not define.export(anchors, types, name, heaps.ptr_type, o) Then
                 Return False
             End If
             Dim v As variable = Nothing
-            assert(variable.of_stack(scope, types, name, v))
-            If Not scope.define_heap(name, type) Then
+            assert(variable.of_stack(types, name, v))
+            If Not scope.current().define_heap(name, type) Then
                 Return False
             End If
             o.emplace_back(instruction_builder.str(command.alloc, v, size))

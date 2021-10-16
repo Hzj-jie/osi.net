@@ -176,8 +176,8 @@ Namespace logic
 
         Private ReadOnly o As vector(Of String)
 
-        Public Sub New(ByVal scope As scope, ByVal o As vector(Of String))
-            MyBase.New(scope)
+        Public Sub New(ByVal o As vector(Of String))
+            MyBase.New(logic.scope.current())
             assert(Not o Is Nothing)
             Me.o = o
         End Sub
@@ -191,7 +191,7 @@ Namespace logic
                           End Function).
                       foreach(Sub(ByVal name As String)
                                   Dim v As variable = Nothing
-                                  assert(variable.of_stack(new_scope, heaps.original_name_of(name), v))
+                                  assert(variable.of_stack(heaps.original_name_of(name), v))
                                   o.emplace_back(instruction_builder.str(command.dealloc, v))
                               End Sub)
             Dim i As UInt32 = 0

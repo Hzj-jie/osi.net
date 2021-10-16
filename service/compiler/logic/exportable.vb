@@ -15,39 +15,28 @@ Namespace logic
         Private ReadOnly debug_dump As Boolean = env_bool(env_keys("logic", "debug", "dump"))
 
         <Extension()> Public Function import(ByVal e As interpreter.primitive.exportable,
-                                             ByVal scope As scope,
                                              ByVal es() As exportable) As Boolean
-            assert(Not e Is Nothing)
-            If scope Is Nothing Then
-                Return False
-            End If
+            Dim s As New scope()
             Dim o As New vector(Of String)()
-            For i As Int32 = 0 To es.Length() - 1
-                If es(i) Is Nothing Then
-                    Return False
-                End If
-                If Not es(i).export(scope, o) Then
-                    Return False
-                End If
-            Next
+            Using defer.to(AddressOf s.end_scope)
+                For i As Int32 = 0 To es.Length() - 1
+                    If es(i) Is Nothing Then
+                        Return False
+                    End If
+                    If Not es(i).export(o) Then
+                        Return False
+                    End If
+                Next
+            End Using
             Dim r As String = o.str(character.newline)
             If debug_dump Then
                 raise_error(error_type.user, "Debug dump of primitive ", character.newline, r)
             End If
             Return assert(e.import(r))
         End Function
-
-        <Extension()> Public Function import(ByVal e As interpreter.primitive.exportable,
-                                             ByVal es() As exportable) As Boolean
-            Dim s As New scope()
-            Using defer.to(AddressOf s.end_scope)
-                Return import(e, s, es)
-            End Using
-        End Function
     End Module
 
     Public Interface exportable
-        ' TODO: Remove scope, use thread-static scope
-        Function export(ByVal scope As scope, ByVal o As vector(Of String)) As Boolean
+        Function export(ByVal o As vector(Of String)) As Boolean
     End Interface
 End Namespace

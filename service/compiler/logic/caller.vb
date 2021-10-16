@@ -59,17 +59,14 @@ Namespace logic
         End Sub
 
         ' Forward return-value to scope_wrapper.
-        Private Function define_return_value(ByVal anchor As anchor,
-                                             ByVal scope As scope,
-                                             ByVal o As vector(Of String)) As Boolean
-            assert(Not scope Is Nothing)
+        Private Function define_return_value(ByVal anchor As anchor, ByVal o As vector(Of String)) As Boolean
             assert(Not o Is Nothing)
             Dim result_type As String = Nothing
             If Not anchor.return_type_of(result_type) Then
                 errors.anchor_undefined(anchor.name)
                 Return False
             End If
-            If Not return_value.export(anchors, types, name, result_type, scope, o) Then
+            If Not return_value.export(anchors, types, name, result_type, o) Then
                 Return False
             End If
             Return True
@@ -77,9 +74,7 @@ Namespace logic
 
         ' Forward parameters to scope_wrapper.
         Private Function define_parameters(ByVal anchor As anchor,
-                                           ByVal scope As scope,
                                            ByVal o As vector(Of String)) As Boolean
-            assert(Not scope Is Nothing)
             assert(Not o Is Nothing)
             Dim callee_params As const_array(Of String) = Nothing
             If Not anchor.parameter_types_of(callee_params) Then
@@ -97,18 +92,17 @@ Namespace logic
                                      types,
                                      parameter_name_place_holder,
                                      callee_params(CUInt(i)),
-                                     scope,
                                      o) Then
                     Return False
                 End If
 
                 Dim target As variable = Nothing
-                If Not variable.of_stack(scope, types, parameter_name_place_holder, target) Then
+                If Not variable.of_stack(types, parameter_name_place_holder, target) Then
                     Return False
                 End If
 
                 Dim var As variable = Nothing
-                If Not variable.of_stack(scope, types, parameters(i), var) Then
+                If Not variable.of_stack(types, parameters(i), var) Then
                     Return False
                 End If
 
@@ -120,40 +114,36 @@ Namespace logic
         End Function
 
         ' Forward return-value from scope_wrapper.
-        Private Function forward_to_result(ByVal scope As scope,
-                                           ByVal o As vector(Of String)) As Boolean
-            assert(Not scope Is Nothing)
+        Private Function forward_to_result(ByVal o As vector(Of String)) As Boolean
             assert(Not o Is Nothing)
             If Not result Then
                 Return True
             End If
             Dim result_var As variable = Nothing
-            If Not variable.of_stack(scope, types, +result, result_var) Then
+            If Not variable.of_stack(types, +result, result_var) Then
                 errors.variable_undefined(+result)
                 Return False
             End If
             Dim return_value_var As variable = Nothing
-            assert(return_value.retrieve(scope, types, name, return_value_var))
+            assert(return_value.retrieve(types, name, return_value_var))
             Return move.export(result_var, return_value_var, o)
         End Function
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            assert(Not scope Is Nothing)
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is for return value.
-            Using sw As scope_wrapper = New scope_wrapper(scope, o)
+            Using sw As New scope_wrapper(o)
                 Dim real_name As String = Nothing
-                If Not macros.decode(anchors, sw.scope(), types, name, real_name) Then
+                If Not macros.decode(anchors, types, name, real_name) Then
                     Return False
                 End If
                 Dim anchor As anchor = Nothing
                 anchor = anchors.of(real_name)
 
-                If Not define_return_value(anchor, sw.scope(), o) Then
+                If Not define_return_value(anchor, o) Then
                     Return False
                 End If
-                If Not define_parameters(anchor, sw.scope(), o) Then
+                If Not define_parameters(anchor, o) Then
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.stst))
@@ -164,7 +154,7 @@ Namespace logic
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.jump, data_ref.abs(pos)))
-                If Not forward_to_result(sw.scope(), o) Then
+                If Not forward_to_result(o) Then
                     Return False
                 End If
             End Using

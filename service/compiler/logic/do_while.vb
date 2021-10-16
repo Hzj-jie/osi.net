@@ -22,17 +22,16 @@ Namespace logic
             Me.p = p.release()
         End Sub
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim start As UInt32 = 0
             start = o.size()
-            If Not p.export(scope, o) Then
+            If Not p.export(o) Then
                 Return False
             End If
 
             Dim var As variable = Nothing
-            If Not variable.of_stack(scope, v, var) Then
+            If Not variable.of_stack(v, var) Then
                 Return False
             End If
 

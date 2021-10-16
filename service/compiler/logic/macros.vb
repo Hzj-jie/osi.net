@@ -20,7 +20,6 @@ Namespace logic
         Private Shared ReadOnly m As unordered_map(Of String, decoder)
 
         Private Delegate Function decoder(ByVal a As anchors,
-                                          ByVal s As scope,
                                           ByVal t As types,
                                           ByVal n As String,
                                           ByRef o As String) As Boolean
@@ -40,7 +39,6 @@ Namespace logic
         End Function
 
         Public Shared Function decode(ByVal a As anchors,
-                                      ByVal s As scope,
                                       ByVal t As types,
                                       ByVal n As String,
                                       ByRef o As String) As Boolean
@@ -55,7 +53,7 @@ Namespace logic
                 End If
                 [end] += 1
                 Dim replacement As String = Nothing
-                If Not decode_one(a, s, t, o.Substring(begin, [end] - begin), replacement) Then
+                If Not decode_one(a, t, o.Substring(begin, [end] - begin), replacement) Then
                     Return False
                 End If
                 o = strcat(o.Substring(0, begin), replacement, o.Substring([end]))
@@ -65,7 +63,6 @@ Namespace logic
         End Function
 
         Private Shared Function decode_one(ByVal a As anchors,
-                                           ByVal s As scope,
                                            ByVal t As types,
                                            ByVal n As String,
                                            ByRef o As String) As Boolean
@@ -90,16 +87,14 @@ Namespace logic
                 errors.unknown_macro(type, origin)
                 Return False
             End If
-            Return (+it).second(a, s, t, origin, o)
+            Return (+it).second(a, t, origin, o)
         End Function
 
         Private Shared Function return_type(ByVal a As anchors,
-                                            ByVal s As scope,
                                             ByVal t As types,
                                             ByVal n As String,
                                             ByRef o As String) As Boolean
             assert(Not a Is Nothing)
-            assert(Not s Is Nothing)
             assert(Not t Is Nothing)
             assert(Not n.null_or_whitespace())
             If Not a.return_type_of(n, o) Then
@@ -114,15 +109,13 @@ Namespace logic
         End Function
 
         Private Shared Function type(ByVal a As anchors,
-                                     ByVal s As scope,
                                      ByVal t As types,
                                      ByVal n As String,
                                      ByRef o As String) As Boolean
             assert(Not a Is Nothing)
-            assert(Not s Is Nothing)
             assert(Not t Is Nothing)
             assert(Not n.null_or_whitespace())
-            If Not s.type(n, o) Then
+            If Not scope.current().type(n, o) Then
                 errors.variable_undefined(n)
                 Return False
             End If
@@ -134,19 +127,17 @@ Namespace logic
         End Function
 
         Private Shared Function size(ByVal a As anchors,
-                                     ByVal s As scope,
                                      ByVal t As types,
                                      ByVal n As String,
                                      ByRef o As String) As Boolean
             assert(Not a Is Nothing)
-            assert(Not s Is Nothing)
             assert(Not t Is Nothing)
             assert(Not n.null_or_whitespace())
-            If Not s.type(n, o) Then
+            If Not scope.current().type(n, o) Then
                 errors.variable_undefined(n)
                 Return False
             End If
-            Return type_size(a, s, t, copy_no_error(o), o)
+            Return type_size(a, t, copy_no_error(o), o)
         End Function
 
         Public Shared Function size_of(ByVal s As String) As String
@@ -154,12 +145,10 @@ Namespace logic
         End Function
 
         Private Shared Function type_size(ByVal a As anchors,
-                                          ByVal s As scope,
                                           ByVal t As types,
                                           ByVal n As String,
                                           ByRef o As String) As Boolean
             assert(Not a Is Nothing)
-            assert(Not s Is Nothing)
             assert(Not t Is Nothing)
             assert(Not n.null_or_whitespace())
             Dim i As UInt32 = 0

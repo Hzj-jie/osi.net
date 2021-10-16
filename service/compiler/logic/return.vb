@@ -30,17 +30,16 @@ Namespace logic
             Me.return_value = [optional].of_nullable(return_value)
         End Sub
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim r As variable = Nothing
-            If Not logic.return_value.retrieve(scope, types, name, r) Then
+            If Not logic.return_value.retrieve(types, name, r) Then
                 Return False
             End If
             assert(r.size)
             If return_value Then
                 Dim var As variable = Nothing
-                If Not variable.of_stack(scope, types, +return_value, var) Then
+                If Not variable.of_stack(types, +return_value, var) Then
                     Return False
                 End If
                 If Not move.export(r, var, o) Then

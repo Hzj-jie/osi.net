@@ -34,9 +34,7 @@ Namespace logic
             Me.result = result
         End Sub
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            assert(Not scope Is Nothing)
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim function_id As UInt32 = 0
             If Not functions.of(function_name, function_id) Then
@@ -44,19 +42,18 @@ Namespace logic
                 Return False
             End If
 
-            Dim cpc As copy_const = Nothing
-            cpc = New copy_const(types, result, unique_ptr.[New](New data_block(function_id)))
-            If Not cpc.export(scope, o) Then
+            Dim cpc As New copy_const(types, result, unique_ptr.[New](New data_block(function_id)))
+            If Not cpc.export(o) Then
                 Return False
             End If
 
             Dim p As variable = Nothing
-            If Not variable.of_stack(scope, parameter, p) Then
+            If Not variable.of_stack(parameter, p) Then
                 Return False
             End If
 
             Dim r As variable = Nothing
-            assert(variable.of_stack(scope, result, r))  ' Otherwise cpc.export() should not succeed.
+            assert(variable.of_stack(result, r))  ' Otherwise cpc.export() should not succeed.
 
             o.emplace_back(instruction_builder.str(command.int, r, p, r))
             Return True

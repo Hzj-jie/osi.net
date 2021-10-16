@@ -53,15 +53,12 @@ Namespace logic
             Return r
         End Function
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            assert(Not scope Is Nothing)
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
-            Dim pos As UInt32 = 0
-            pos = o.size()
+            Dim pos As UInt32 = o.size()
             o.emplace_back(String.Empty)
             Dim real_name As String = Nothing
-            If Not macros.decode(anchors, scope, types, name, real_name) Then
+            If Not macros.decode(anchors, types, name, real_name) Then
                 Return False
             End If
             If Not anchors.define(real_name, o, type, parameter_types) Then
@@ -70,24 +67,25 @@ Namespace logic
             ' No need to use scope_wrapper, as the pops are after the rest instruction and have no effect.
             ' Meanwhile return-value and parameters are defined within the scope, but are not pushed, so they should not
             ' be popped.
-            scope = scope.start_scope()
-            ' caller should setup the stack.
-            ' Note, variables are using reverse order to match the stack, and here the logic "define" without "push"ing
-            ' to use variables from the caller side.
-            If Not return_value.define(scope, name, type) Then
-                Return False
-            End If
-            For i As Int32 = 0 To array_size_i(parameters) - 1
-                If Not scope.define_stack(parameters(i).first, parameters(i).second) Then
+            scope.current().start_scope()
+            Using defer.to(AddressOf scope.current().end_scope)
+                ' caller should setup the stack.
+                ' Note, variables are using reverse order to match the stack, and here the logic "define" without "push"ing
+                ' to use variables from the caller side.
+                If Not return_value.define(name, type) Then
                     Return False
                 End If
-            Next
-            If Not paragraph Is Nothing AndAlso Not paragraph.export(scope, o) Then
-                Return False
-            End If
-            o.emplace_back(instruction_builder.str(command.rest))
-            o(pos) = instruction_builder.str(command.jump, data_ref.rel(o.size() - pos))
-            scope.end_scope()
+                For i As Int32 = 0 To array_size_i(parameters) - 1
+                    If Not scope.current().define_stack(parameters(i).first, parameters(i).second) Then
+                        Return False
+                    End If
+                Next
+                If Not paragraph Is Nothing AndAlso Not paragraph.export(o) Then
+                    Return False
+                End If
+                o.emplace_back(instruction_builder.str(command.rest))
+                o(pos) = instruction_builder.str(command.jump, data_ref.rel(o.size() - pos))
+            End Using
             Return True
         End Function
     End Class

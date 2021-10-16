@@ -21,8 +21,7 @@ Namespace logic
             Me.size = size
         End Sub
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             Return types.define(type, size)
         End Function
     End Class

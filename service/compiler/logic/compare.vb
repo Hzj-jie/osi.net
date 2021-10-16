@@ -46,19 +46,18 @@ Namespace logic
 
         Protected MustOverride Function compare() As command
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             Dim result_var As variable = Nothing
-            If Not variable.of_stack(scope, types, result, result_var) OrElse
+            If Not variable.of_stack(types, result, result_var) OrElse
                Not result_var.is_assignable_from_bool() Then
                 Return False
             End If
             Dim left_var As variable = Nothing
-            If Not variable.of_stack(scope, types, left, left_var) Then
+            If Not variable.of_stack(types, left, left_var) Then
                 Return False
             End If
             Dim right_var As variable = Nothing
-            If Not variable.of_stack(scope, types, right, right_var) Then
+            If Not variable.of_stack(types, right, right_var) Then
                 Return False
             End If
             o.emplace_back(instruction_builder.str(compare(), result_var, left_var, right_var))

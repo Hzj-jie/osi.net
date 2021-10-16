@@ -22,16 +22,14 @@ Namespace logic
             Me.p = p.release()
         End Sub
 
-        Public Function export(ByVal scope As scope,
-                               ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim var As variable = Nothing
-            If Not variable.of_stack(scope, v, var) Then
+            If Not variable.of_stack(v, var) Then
                 Return False
             End If
-            Dim po As vector(Of String) = Nothing
-            po = New vector(Of String)()
-            If Not p.export(scope, po) Then
+            Dim po As New vector(Of String)()
+            If Not p.export(po) Then
                 Return False
             End If
 
