@@ -113,6 +113,9 @@
     <Compile Include="bstyle\logic\nodes\value_without_bracket.vb" />
     <Compile Include="bstyle\logic\nodes\value_with_bracket.vb" />
     <Compile Include="bstyle\logic\nodes\while.vb" />
+    <Compile Include="bstyle\scope.define.vb" />
+    <Compile Include="bstyle\scope.struct.vb" />
+    <Compile Include="bstyle\scope.type_alias.vb" />
     <Compile Include="bstyle\scope.vb" />
     <Compile Include="logic\heaps.vb" />
     <Compile Include="logic\copy_heap.vb" />

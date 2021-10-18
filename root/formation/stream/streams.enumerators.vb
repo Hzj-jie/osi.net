@@ -229,13 +229,11 @@ Partial Public NotInheritable Class streams
         Private Structure ranger
             Implements container_operator(Of Int32).enumerator
 
-            Private ReadOnly s As Int32
             Private ReadOnly e As Int32
             Private i As Int32
 
             Public Sub New(ByVal start As Int32, ByVal [end] As Int32)
-                assert(start < [end])
-                s = start
+                assert(start <= [end])
                 e = [end]
                 i = start
             End Sub

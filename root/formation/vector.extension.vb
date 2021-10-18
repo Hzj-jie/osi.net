@@ -215,6 +215,7 @@ Public Module vector_extension
         Return str(v, Nothing)
     End Function
 
+    ' TODO: Remove, use stream().map() instead.
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function map(Of T, R)(ByVal v As vector(Of T), ByVal f As Func(Of T, R)) As vector(Of R)
         If v Is Nothing Then
