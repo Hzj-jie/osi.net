@@ -62,6 +62,7 @@
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\paragraph.vb" />
     <Compile Include="b2style\rewriter\nodes\struct.vb" />
+    <Compile Include="b2style\scope.namespace.vb" />
     <Compile Include="b2style\scope.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
     <Compile Include="bstyle\includes.vb" />
@@ -125,8 +126,7 @@
     <Compile Include="logic\copy_heap_in.vb" />
     <Compile Include="logic\copy_heap_out.vb" />
     <Compile Include="logic\define_heap.vb" />
-    <Compile Include="logic\logic_gen\scoped\read_scoped.vb" />
-    <Compile Include="logic\logic_gen\scoped\write_scoped.vb" />
+    <Compile Include="logic\logic_gen\read_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />
     <Compile Include="logic\builder\builders.vb" />
     <Compile Include="logic\builder\writer.vb" />

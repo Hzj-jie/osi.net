@@ -6,8 +6,10 @@ Option Strict On
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class scope
+    Partial Public NotInheritable Class scope
         Inherits scope(Of scope)
+
+        Private cn As String
 
         <inject_constructor>
         Public Sub New(ByVal parent As scope)

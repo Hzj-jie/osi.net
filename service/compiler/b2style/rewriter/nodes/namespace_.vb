@@ -17,7 +17,6 @@ Partial Public NotInheritable Class b2style
 
         Private Const namespace_separator As String = "::"
         Private Const namespace_replacer As String = "__"
-        Private ReadOnly ws As New write_scoped(Of String)()
 
         <inject_constructor>
         Public Sub New(ByVal i As rewriters)
@@ -34,7 +33,7 @@ Partial Public NotInheritable Class b2style
             If i.StartsWith(namespace_separator) Then
                 Return i
             End If
-            Return strcat(ws.current_or(empty_string), namespace_separator, i)
+            Return strcat(scope.current().current_namespace().name(), namespace_separator, i)
         End Function
 
         Public Function bstyle_format(ByVal i As String) As String
@@ -45,7 +44,8 @@ Partial Public NotInheritable Class b2style
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() >= 4)
-            Using disposables.of(New scope_wrapper(), ws.push(format(n.child(1).word().str())))
+            Using New scope_wrapper()
+                scope.current().current_namespace().define(format(n.child(1).word().str()))
                 For i As UInt32 = 3 To n.child_count() - uint32_2
                     If Not l.of(n.child(i)).build(o) Then
                         Return False

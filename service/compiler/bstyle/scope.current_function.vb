@@ -42,10 +42,6 @@ Partial Public NotInheritable Class bstyle
                 Me.s = s
             End Sub
 
-            Public Function is_defined() As Boolean
-                Return Not s.cf Is Nothing
-            End Function
-
             Public Sub define(ByVal raw_name As String,
                               ByVal return_type As String,
                               ByVal params As vector(Of builders.parameter))
