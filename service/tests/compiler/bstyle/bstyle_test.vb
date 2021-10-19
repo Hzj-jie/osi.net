@@ -86,7 +86,7 @@ Public NotInheritable Class bstyle_test
         assertion.equal(io.output(), "dd")
     End Sub
 
-    '<test>
+    <test>
     Private Shared Sub function_struct()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing

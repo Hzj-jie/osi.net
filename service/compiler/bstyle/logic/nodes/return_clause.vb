@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
@@ -43,7 +44,8 @@ Partial Public NotInheritable Class bstyle
                 If Not l.of(n.child(1)).build(o) Then
                     Return False
                 End If
-                Using r As read_scoped(Of String).ref = code_gen_of(Of value)().read_target()
+                Using r As read_scoped(Of vector(Of String)).ref(Of String) =
+                        code_gen_of(Of value)().read_target_only()
                     builders.of_return(scope.current().current_function().name(), +r).to(o)
                 End Using
             Else

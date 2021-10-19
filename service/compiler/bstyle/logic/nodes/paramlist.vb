@@ -30,14 +30,13 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
-            Dim v As vector(Of builders.parameter) = Nothing
-            v = New vector(Of builders.parameter)()
+            Dim v As New vector(Of builders.parameter)()
             Dim i As UInt32 = 0
             While i < n.child_count()
                 If Not l.of(n.child(i)).build(o) Then
                     Return False
                 End If
-                Using c As read_scoped(Of builders.parameter).ref = code_gen_of(Of param)().current_target()
+                Using c As read_scoped(Of vector(Of builders.parameter)).ref = code_gen_of(Of param)().current_target()
                     v.emplace_back(+c)
                 End Using
                 i += uint32_1

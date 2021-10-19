@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
@@ -34,7 +35,8 @@ Partial Public NotInheritable Class bstyle
             If Not while_value(n, o) Then
                 Return False
             End If
-            Using value_target As read_scoped(Of String).ref = code_gen_of(Of value)().read_target()
+            Using value_target As read_scoped(Of vector(Of String)).ref(Of String) =
+                    code_gen_of(Of value)().read_target_only()
                 Return builders.of_while_then(+value_target,
                                               Function() As Boolean
                                                   Return l.of(n.child(4)).build(o) AndAlso while_value(n, o)

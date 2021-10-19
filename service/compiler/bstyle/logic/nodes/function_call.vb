@@ -67,8 +67,11 @@ Partial Public NotInheritable Class bstyle
                              If Not scope.current().functions().return_type_of(name, return_type) Then
                                  Return False
                              End If
+                             ' TODO: Support returning a struct.
                              builders.of_caller(name,
-                                                code_gen_of(Of value)().with_temp_target(return_type, n, o),
+                                                code_gen_of(Of value)().with_internal_typed_temp_target(return_type,
+                                                                                                        n,
+                                                                                                        o),
                                                 parameters).
                                       to(o)
                              Return True

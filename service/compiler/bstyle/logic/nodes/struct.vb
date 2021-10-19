@@ -36,6 +36,9 @@ Partial Public NotInheritable Class bstyle
             If Not scope.current().structs().resolve(n.child(0).word().str(), n.child(1).word().str(), v) Then
                 Return False
             End If
+            If Not scope.current().variables().define(n.child(0).word().str(), n.child(1).word().str()) Then
+                Return False
+            End If
             assert(Not v Is Nothing)
             Return v.stream().
                      map(Function(ByVal m As builders.parameter) As Boolean

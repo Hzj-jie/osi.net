@@ -74,6 +74,8 @@ Partial Public NotInheritable Class bstyle
             Public Function resolve(ByVal type As String,
                                     ByVal name As String,
                                     ByRef o As vector(Of builders.parameter)) As Boolean
+                assert(Not type.null_or_whitespace())
+                type = scope.current().type_alias()(type)
                 If Not s.find(type, o) Then
                     ' raise_error(error_type.user, "Struct type ", type, " has not been defined.")
                     ' Do not log, value_declaration and value_definition always check if a struct is defined before

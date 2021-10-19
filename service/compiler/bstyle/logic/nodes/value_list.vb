@@ -32,14 +32,13 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() > 0)
-            Dim v As vector(Of String) = Nothing
-            v = New vector(Of String)()
+            Dim v As New vector(Of String)()
             Dim i As UInt32 = 0
             While i < n.child_count()
                 If Not l.of(n.child(i)).build(o) Then
                     Return False
                 End If
-                Using r As read_scoped(Of String).ref = code_gen_of(Of value)().read_target()
+                Using r As read_scoped(Of vector(Of String)).ref = code_gen_of(Of value)().read_target()
                     v.emplace_back(+r)
                 End Using
                 i += uint32_1
