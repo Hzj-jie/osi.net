@@ -73,7 +73,8 @@ Partial Public NotInheritable Class bstyle
             Dim s As New StringBuilder(raw_name)
             Dim i As UInt32 = 0
             While i < types.size()
-                s.Append("&").Append(macros.size_of_type_of(types(i)))
+                assert(Not types(i).contains_any(space_chars))
+                s.Append("&").Append(types(i))
                 i += uint32_1
             End While
             Return Convert.ToString(s)
