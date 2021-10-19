@@ -37,10 +37,6 @@ Namespace logic
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
-            Dim type As String = Nothing
-            If Not macros.decode(anchors, types, Me.type, type) Then
-                Return False
-            End If
             Dim size As variable = Nothing
             If Not variable.of_stack(types, Me.size, size) Then
                 Return False

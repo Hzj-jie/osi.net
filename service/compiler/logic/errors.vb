@@ -100,10 +100,6 @@ Namespace logic
             raise_error(error_type.user, "Type ", type, " is undefined.")
         End Sub
 
-        Public Shared Sub anchor_undefined(ByVal name As String, ByVal origin As String)
-            raise_error(error_type.user, "Anchor ", name, " derived from ", origin, " is not defined.")
-        End Sub
-
         Public Shared Sub anchor_undefined(ByVal name As String)
             raise_error(error_type.user, "Anchor ", name, " is not defined.")
         End Sub

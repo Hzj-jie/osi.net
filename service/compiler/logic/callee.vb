@@ -57,11 +57,7 @@ Namespace logic
             assert(Not o Is Nothing)
             Dim pos As UInt32 = o.size()
             o.emplace_back(String.Empty)
-            Dim real_name As String = Nothing
-            If Not macros.decode(anchors, types, name, real_name) Then
-                Return False
-            End If
-            If Not anchors.define(real_name, o, type, parameter_types) Then
+            If Not anchors.define(name, o, type, parameter_types) Then
                 Return False
             End If
             ' No need to use scope_wrapper, as the pops are after the rest instruction and have no effect.

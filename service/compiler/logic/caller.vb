@@ -133,12 +133,7 @@ Namespace logic
             assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is for return value.
             Using New scope_wrapper(o)
-                Dim real_name As String = Nothing
-                If Not macros.decode(anchors, types, name, real_name) Then
-                    Return False
-                End If
-                Dim anchor As anchor = Nothing
-                anchor = anchors.of(real_name)
+                Dim anchor As anchor = anchors.of(name)
 
                 If Not define_return_value(anchor, o) Then
                     Return False
@@ -149,8 +144,8 @@ Namespace logic
                 o.emplace_back(instruction_builder.str(command.stst))
 
                 Dim pos As UInt32 = 0
-                If Not anchors.retrieve(real_name, pos) Then
-                    errors.anchor_undefined(real_name, name)
+                If Not anchors.retrieve(name, pos) Then
+                    errors.anchor_undefined(name)
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.jump, data_ref.abs(pos)))
