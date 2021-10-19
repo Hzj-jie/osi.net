@@ -28,9 +28,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 1 OrElse n.child_count() = 2)
-            Dim c As [function].ref = Nothing
-            c = code_gen_of(Of [function])().target()
-            If c.allow_return_value() Then
+            If scope.current().current_function().allow_return_value() Then
                 If n.child_count() <> 2 Then
                     raise_error(error_type.user, "Expect return value ", n.child().trace_back_str())
                     Return False
@@ -46,10 +44,10 @@ Partial Public NotInheritable Class bstyle
                     Return False
                 End If
                 Using r As read_scoped(Of String).ref = code_gen_of(Of value)().read_target()
-                    builders.of_return(c.name(), +r).to(o)
+                    builders.of_return(scope.current().current_function().name(), +r).to(o)
                 End Using
             Else
-                builders.of_return(c.name()).to(o)
+                builders.of_return(scope.current().current_function().name()).to(o)
             End If
             Return True
         End Function

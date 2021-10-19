@@ -7,19 +7,21 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
+Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class struct
+        Inherits logic_gen_wrapper
         Implements logic_gen
-
-        Private Shared ReadOnly instance As New struct()
 
         Public Shared Sub register(ByVal b As logic_gens)
             assert(Not b Is Nothing)
-            b.register(instance)
+            b.register(Of struct)()
         End Sub
 
-        Private Sub New()
+        <inject_constructor>
+        Public Sub New(ByVal b As logic_gens)
+            MyBase.New(b)
         End Sub
 
         Public Function export(ByVal n As typed_node, ByVal o As writer) As Boolean
@@ -35,11 +37,11 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            v.stream().foreach(Sub(ByVal m As builders.parameter)
-                                   assert(Not m Is Nothing)
-                                   builders.of_define(m.name, m.type).to(o)
-                               End Sub)
-            Return True
+            Return v.stream().
+                     map(Function(ByVal m As builders.parameter) As Boolean
+                             Return code_gen_of(Of value_declaration)().declare_internal_typed_variable(m, o)
+                         End Function).
+                     aggregate(bool_stream.aggregators.all_true)
         End Function
 
         Public Function build(ByVal n As typed_node,

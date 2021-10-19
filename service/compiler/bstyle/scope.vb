@@ -12,6 +12,9 @@ Partial Public NotInheritable Class bstyle
         Private ReadOnly d As defines_t
         Private ReadOnly ta As New type_alias_t()
         Private ReadOnly s As New struct_t()
+        Private ReadOnly v As New variable_t()
+        Private ReadOnly f As function_t
+        Private cf As current_function_t
 
         <inject_constructor>
         Public Sub New(ByVal parent As scope)
@@ -21,6 +24,7 @@ Partial Public NotInheritable Class bstyle
         Public Sub New()
             Me.New(Nothing)
             d = New defines_t()
+            f = New function_t()
         End Sub
     End Class
 

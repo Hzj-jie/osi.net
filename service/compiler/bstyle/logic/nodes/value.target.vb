@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 
@@ -14,7 +13,6 @@ Partial Public NotInheritable Class bstyle
         Implements logic_gen
 
         Private ReadOnly read_targets As New read_scoped(Of String)()
-        Private ReadOnly defined_temp_targets As New unordered_set(Of String)
 
         Public Function read_target() As read_scoped(Of String).ref
             assert(read_targets.size() > 0)
@@ -30,9 +28,13 @@ Partial Public NotInheritable Class bstyle
                                               n.word_start(),
                                               "-",
                                               n.word_end())
-            If defined_temp_targets.find(value_name) = defined_temp_targets.end() Then
-                builders.of_define(value_name, scope.current().type_alias()(type)).to(o)
-                defined_temp_targets.emplace(value_name)
+            type = scope.current().type_alias()(type)
+            Dim existing_type As String = Nothing
+            If scope.current().variables().try_resolve(value_name, existing_type) Then
+                assert(type.Equals(existing_type))
+            Else
+                assert(scope.current().variables().define(type, value_name))
+                builders.of_define(value_name, type).to(o)
             End If
             read_targets.push(value_name)
             Return value_name

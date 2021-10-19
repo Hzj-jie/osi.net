@@ -10,15 +10,15 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
-        Public NotInheritable Class struct_t
+        Private NotInheritable Class struct_t
             Private Shared ReadOnly root_types As unordered_set(Of String) = unordered_set.of(
-            types.zero_type,
-            types.variable_type,
-            code_types.biguint,
-            code_types.bool,
-            code_types.int,
-            code_types.string,
-            code_types.ufloat
+                types.zero_type,
+                types.variable_type,
+                code_types.biguint,
+                code_types.bool,
+                code_types.int,
+                code_types.string,
+                code_types.ufloat
             )
             Private ReadOnly s As New unordered_map(Of String, vector(Of builders.parameter))()
 
@@ -27,6 +27,8 @@ Partial Public NotInheritable Class bstyle
                                           ByVal name As String,
                                           ByVal o As vector(Of builders.parameter)) As Boolean
                 assert(Not o Is Nothing)
+                ' Struct member types are always resolved during the define / build stage, so scope.current() equals to
+                ' the scope where the struct_t instance is being defined.
                 type = scope.current().type_alias()(type)
                 Dim sub_type As vector(Of builders.parameter) = Nothing
                 If root_types.find(type) <> root_types.end() OrElse Not s.find(type, sub_type) Then
@@ -87,8 +89,34 @@ Partial Public NotInheritable Class bstyle
             End Function
         End Class
 
-        Public Function structs() As struct_t
-            Return s
+        Public NotInheritable Class struct_proxy
+            Private ReadOnly s As scope
+
+            Public Sub New(ByVal s As scope)
+                assert(Not s Is Nothing)
+                Me.s = s
+            End Sub
+
+            Public Function define(ByVal type As String, ByVal members As vector(Of builders.parameter)) As Boolean
+                Return s.s.define(type, members)
+            End Function
+
+            Public Function resolve(ByVal type As String,
+                                    ByVal name As String,
+                                    ByRef o As vector(Of builders.parameter)) As Boolean
+                Dim s As scope = Me.s
+                While Not s Is Nothing
+                    If s.s.resolve(type, name, o) Then
+                        Return True
+                    End If
+                    s = s.parent
+                End While
+                Return False
+            End Function
+        End Class
+
+        Public Function structs() As struct_proxy
+            Return New struct_proxy(Me)
         End Function
     End Class
 End Class

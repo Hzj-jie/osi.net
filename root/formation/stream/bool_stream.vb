@@ -3,8 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
-
 Partial Public NotInheritable Class bool_stream
     Public NotInheritable Class aggregators
         Public Shared ReadOnly all_true As Func(Of Boolean, Boolean, Boolean) =

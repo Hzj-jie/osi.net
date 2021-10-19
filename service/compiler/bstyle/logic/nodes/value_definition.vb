@@ -27,8 +27,9 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4)
-            builders.of_define(n.child(1).word().str(),
-                               scope.current().type_alias()(n.child(0).word().str())).to(o)
+            If Not code_gen_of(Of value_declaration).declare_internal_typed_variable(n, o) Then
+                Return False
+            End If
             If Not l.of(n.child(3)).build(o) Then
                 Return False
             End If

@@ -14,6 +14,8 @@ Partial Public NotInheritable Class bstyle
             Private ReadOnly m As New unordered_map(Of String, String)()
 
             Public Function define(ByVal [alias] As String, ByVal canonical As String) As Boolean
+                assert(Not [alias].null_or_whitespace())
+                assert(Not canonical.null_or_whitespace())
                 If m.emplace([alias], canonical).second OrElse m([alias]).Equals(canonical) Then
                     Return True
                 End If
@@ -30,11 +32,13 @@ Partial Public NotInheritable Class bstyle
 
             Default Public ReadOnly Property _D(ByVal [alias] As String) As String
                 Get
+                    assert(Not [alias].null_or_whitespace())
                     Dim c As String = Nothing
                     While m.find([alias], c)
                         [alias] = c
                         c = Nothing
                     End While
+                    assert(Not [alias].null_or_whitespace())
                     Return [alias]
                 End Get
             End Property
@@ -49,7 +53,7 @@ Partial Public NotInheritable Class bstyle
             End Sub
 
             Public Function define(ByVal [alias] As String, ByVal canonical As String) As Boolean
-                Return current().ta.define([alias], canonical)
+                Return s.ta.define([alias], canonical)
             End Function
 
             Default Public ReadOnly Property _D(ByVal [alias] As String) As String
