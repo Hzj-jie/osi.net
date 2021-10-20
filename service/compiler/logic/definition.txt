@@ -18,9 +18,9 @@ append_slice	string	string
 #  cut target source length
 cut	string	string	string
 
-# execute cut_slice command against three variables and store the result in the first variable:
-#  cut_slice target source from length
-cut_slice	string	string	string	string
+# execute cutl command against three variables and store the result in the first variable:
+#  cut_from target source from length
+cut_from	string	string	string	string
 
 # execute clear command against the variable:
 #  clear target

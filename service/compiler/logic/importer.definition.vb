@@ -109,13 +109,13 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_cut_slice_3(
+        Private Function parse_cut_from_3(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not v(p).Equals("cut_slice") Then
+            If Not v(p).Equals("cut_from") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -140,7 +140,7 @@ Namespace logic
             End If
             Dim p4 As String = v(p)
             p += uint32_1
-            o = new_cut_slice(
+            o = new_cut_from(
                 p1,
                 p2,
                 p3,
@@ -1888,7 +1888,7 @@ Namespace logic
             Using code_block
                 Dim pos As UInt32 = 0
                 pos = p
-                If parse_cut_slice_3(v, pos, o) Then
+                If parse_cut_from_3(v, pos, o) Then
                     p = pos
                     Return True
                 End If

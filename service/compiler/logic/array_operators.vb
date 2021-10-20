@@ -58,7 +58,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class cut_slice
+    Public NotInheritable Class cut_from
         Inherits ternary_operator
 
         Public Sub New(ByVal types As types,
