@@ -26,7 +26,7 @@ Namespace logic
         Public Shared Function of_callee(ByVal name As String,
                                          ByVal type As String,
                                          ByVal parameters As vector(Of parameter),
-                                         ByVal paragraph As Func(Of Boolean)) As callee_builder_14
+                                         ByVal paragraph As Func(Of Boolean)) As callee_builder_15
             Return of_callee(name,
                              type,
                              parameters.map(Function(ByVal i As parameter) As pair(Of String, String)

@@ -19,6 +19,10 @@ Namespace logic
             Return New append_slice(types, p1, p2)
         End Function
 
+        Private Function new_cut_slice(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As cut_slice
+            Return New cut_slice(types, p1, p2, p3)
+        End Function
+
         Private Function new_cut(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As cut
             Return New cut(types, p1, p2, p3)
         End Function

@@ -29,6 +29,35 @@ Namespace logic
         End Function
     End Class
 
+    Public NotInheritable Class cut_slice
+        Inherits binary_operator
+
+        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(types, result, left, right)
+        End Sub
+
+        Protected Overrides Function instruction() As command
+            Return command.scut
+        End Function
+
+        Protected Overrides Function left_restrict(ByVal left As variable) As Boolean
+            assert(Not left Is Nothing)
+            ' TODO: Should be Return left.is_variable_size()?
+            Return True
+        End Function
+
+        Protected Overrides Function right_restrict(ByVal right As variable) As Boolean
+            assert(Not right Is Nothing)
+            Return right.is_assignable_to_uint32()
+        End Function
+
+        Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
+            assert(Not result Is Nothing)
+            ' TODO: Should be Return result.is_variable_size()?
+            Return True
+        End Function
+    End Class
+
     Public NotInheritable Class cut
         Inherits binary_operator
 
