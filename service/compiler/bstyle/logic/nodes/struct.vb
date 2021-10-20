@@ -24,6 +24,38 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(b)
         End Sub
 
+        Public Function pack(ByVal source As String, ByVal target As String, ByVal o As writer) As Boolean
+            Dim vs As vector(Of builders.parameter) = Nothing
+            If Not scope.current().structs().resolve(source, vs) Then
+                Return False
+            End If
+            assert(Not vs Is Nothing)
+            vs.stream().foreach(Sub(ByVal p As builders.parameter)
+                                    assert(Not p Is Nothing)
+                                    builders.of_append_slice(p.name, target).to(o)
+                                End Sub)
+            Return True
+        End Function
+
+        Public Function unpack(ByVal source As String, ByVal target As String, ByVal o As writer) As Boolean
+            Dim vs As vector(Of builders.parameter) = Nothing
+            If Not scope.current().structs().resolve(target, vs) Then
+                Return False
+            End If
+            assert(Not vs Is Nothing)
+            Using New scope_wrapper()
+                Dim index As String = strcat(target, "@index")
+                assert(code_gen_of(Of value_declaration).
+                           declare_internal_typed_variable(New builders.parameter(code_types.int, index), o))
+                vs.stream().foreach(Sub(ByVal p As builders.parameter)
+                                        assert(Not p Is Nothing)
+                                        builders.of_cut_slice(source, index, p.name).to(o)
+                                        builders.of_add(index, index, "@@prefixes@constants@int_1").to(o)
+                                    End Sub)
+            End Using
+            Return True
+        End Function
+
         Public Function export(ByVal n As typed_node, ByVal o As writer) As Boolean
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)

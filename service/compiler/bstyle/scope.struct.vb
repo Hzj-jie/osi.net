@@ -115,6 +115,14 @@ Partial Public NotInheritable Class bstyle
                 End While
                 Return False
             End Function
+
+            Public Function resolve(ByVal name As String, ByRef o As vector(Of builders.parameter)) As Boolean
+                Dim type As String = Nothing
+                If Not s.variables().resolve(name, type) Then
+                    Return False
+                End If
+                Return resolve(type, name, o)
+            End Function
         End Class
 
         Public Function structs() As struct_proxy
