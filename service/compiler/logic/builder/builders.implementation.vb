@@ -117,11 +117,11 @@ Namespace logic
             End Sub
         End Class
 
-        Public Shared Function of_cut_from(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String) As cut_from_builder_5
-            Return New cut_from_builder_5(string_1, string_2, string_3, string_4)
+        Public Shared Function of_cut_len(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String) As cut_len_builder_5
+            Return New cut_len_builder_5(string_1, string_2, string_3, string_4)
         End Function
 
-        Public NotInheritable Class cut_from_builder_5
+        Public NotInheritable Class cut_len_builder_5
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -140,7 +140,7 @@ Namespace logic
             End Sub
 
             Public Sub [to](ByVal o As writer)
-                o.append("cut_from")
+                o.append("cut_len")
                 o.append(string_1)
                 o.append(string_2)
                 o.append(string_3)

@@ -27,11 +27,11 @@ Namespace logic
             Return New cut(types, p1, p2, p3)
         End Function
 
-        Private Function new_cut_from(ByVal p1 As String,
+        Private Function new_cut_len(ByVal p1 As String,
                                        ByVal p2 As String,
                                        ByVal p3 As String,
-                                       ByVal p4 As String) As cut_from
-            Return New cut_from(types, p1, p2, p3, p4)
+                                       ByVal p4 As String) As cut_len
+            Return New cut_len(types, p1, p2, p3, p4)
         End Function
 
         Private Function new_clear(ByVal p As String) As clear

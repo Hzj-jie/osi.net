@@ -6,7 +6,7 @@ type bool 1
 
 callee copy-one-byte2 type* ( source type* target type* pos uint len uint ) {
     define char type*
-    cut_from char source pos len
+    cut_len char source pos len
     append target char
     return copy-one-byte2 target
 }
@@ -17,7 +17,7 @@ define target2 type*
 
 callee copy-one-byte1 type0 ( source type* pos uint len uint ) {
     define char type*
-    cut_from char source pos len
+    cut_len char source pos len
     append target1 char
     return copy-one-byte1 *
 }

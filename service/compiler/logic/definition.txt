@@ -23,8 +23,8 @@ cut_slice	string	string	string
 cut	string	string	string
 
 # execute cutl command against three variables and store the result in the first variable:
-#  cut_from target source from length
-cut_from	string	string	string	string
+#  cut_len target source from length
+cut_len	string	string	string	string
 
 # execute clear command against the variable:
 #  clear target

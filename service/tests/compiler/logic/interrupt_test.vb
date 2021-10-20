@@ -36,7 +36,7 @@ Namespace logic
                 New do_while("i-less-then-len", unique_ptr.[New](New paragraph(
                     New define(anchors.empty, types.empty, "char", types.variable_type),
                     New define(anchors.empty, types.empty, "result", types.variable_type),
-                    New cut_from(types.empty, "char", "input", "i", "1"),
+                    New cut_len(types.empty, "char", "input", "i", "1"),
                     New interrupt(types.empty, primitive.interrupts.default, "stdout", "char", "result"),
                     New interrupt(types.empty, primitive.interrupts.default, "stderr", "char", "result"),
                     New add(types.empty, "i", "i", "1"),
