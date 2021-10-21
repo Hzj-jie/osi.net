@@ -1,14 +1,17 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.root.utt
-Imports osi.root.formation
-Imports osi.root.procedure
 Imports osi.service.device
 Imports osi.service.storage
 
-Public Class hash_distributor_test
+Public NotInheritable Class hash_distributor_test
     Inherits istrkeyvt_case
 
     Private Const strkeyvt_count As Int32 = 16

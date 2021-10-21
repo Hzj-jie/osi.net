@@ -550,6 +550,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
     Private Shared Function cases(ByVal keyvt As istrkeyvt,
                                   ByVal d As map(Of String, pair(Of Byte(), Int64))) As event_comb
         Dim round As Int64 = 0
+        Dim failures As Int64 = 0
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If round >= round_count Then
@@ -558,6 +559,12 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                   If round > 0 Then
                                       assert(Not ec Is Nothing)
                                       assertion.is_true(ec.end_result())
+                                      If Not ec.end_result() Then
+                                          failures += 1
+                                          If failures > 20 Then
+                                              Return False
+                                          End If
+                                      End If
                                   End If
                                   round += 1
                                   ec = rnd_case(keyvt, d)
