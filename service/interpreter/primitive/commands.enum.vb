@@ -102,6 +102,10 @@ Namespace primitive
         [hcpin]
         ' copy (**B) in heap to (*A) in stack 
         [hcpout]
+        ' move (*B) in stack to (**A) in heap 
+        [hmovin]
+        ' move (**B) in heap to (*A) in stack 
+        [hmovout]
 
         COUNT
     End Enum

@@ -531,7 +531,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                imi.access_heap(d0).set(p1(imi).get())
+                imi.access_heap(d0).set(copy(+p1(imi)))
             End Sub
         End Class
 
@@ -539,7 +539,25 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                p0(imi).set(imi.access_heap(d1).get())
+                p0(imi).set(copy(+imi.access_heap(d1)))
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [hmovin]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                imi.access_heap(d0).set(+p1(imi))
+                p1(imi).clear()
+            End Sub
+        End Class
+
+        Partial Public NotInheritable Class [hmovout]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                p0(imi).set(+imi.access_heap(d1))
+                imi.access_heap(d1).clear()
             End Sub
         End Class
     End Namespace
