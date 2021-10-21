@@ -1,21 +1,23 @@
 ﻿
+Option Explicit On
+Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.service.interpreter.primitive
 Imports osi.service.resource
 
 Namespace primitive
-    Public Class states_test
+    Public NotInheritable Class states_test
         Inherits chained_case_wrapper
 
         Public Sub New()
             MyBase.New(New throw_exception(), New normal())
         End Sub
 
-        Private Class throw_exception
+        Private NotInheritable Class throw_exception
             Inherits [case]
 
             Public Overrides Function run() As Boolean
@@ -31,7 +33,7 @@ Namespace primitive
             End Function
         End Class
 
-        Private Class normal
+        Private NotInheritable Class normal
             Inherits [case]
 
             Public Overrides Function run() As Boolean
@@ -42,7 +44,7 @@ Namespace primitive
                 assertion.equal(s.stack_size(), uint32_1)
                 assertion.equal(s.states_size(), uint32_0)
                 assertion.array_equal(+s.access_stack(data_ref.abs(0)),
-                                   str_bytes(strcat("hello world", character.newline)))
+                                      str_bytes(strcat("hello world", character.newline)))
                 Return True
             End Function
         End Class
