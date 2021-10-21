@@ -24,6 +24,7 @@ Partial Public NotInheritable Class b2style
         Public Shared Sub register(ByVal b As rewriters)
             assert(Not b Is Nothing)
             b.register(Of self_value_clause)()
+            b.register(Of self_value_clause)("self-value-clause2")
         End Sub
 
         Public Function build(ByVal n As typed_node,

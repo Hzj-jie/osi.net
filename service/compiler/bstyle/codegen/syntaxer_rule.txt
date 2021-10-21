@@ -2,7 +2,7 @@
 IGNORE_TYPES blank, single-line-comment, multi-line-comment
 ROOT_TYPES root-type
 
-root-type [function, value-definition-with-semi-colon, value-declaration-with-semi-colon, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct]
+root-type [function, value-definition-with-semi-colon, value-declaration-with-semi-colon, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, heap-declaration-with-semi-colon]
 
 function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
 paramlist [param-with-comma]* param
@@ -18,10 +18,13 @@ multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
 
 value-definition name name assignment value
 value-declaration name name
+heap-declaration name heap-name
 value-clause name assignment value
+heap-clause heap-name assignment value
 
 value-definition-with-semi-colon value-definition semi-colon
 value-declaration-with-semi-colon value-declaration semi-colon
+heap-declaration-with-semi-colon heap-declaration semi-colon
 
 condition kw-if start-bracket value end-bracket paragraph [else-condition]?
 else-condition kw-else paragraph
@@ -32,9 +35,10 @@ for-loop kw-for start-bracket [value-declaration, value-definition]? semi-colon 
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
-value-without-bracket [function-call, variable-name, integer, biguint, ufloat, bool, string]
+value-without-bracket [function-call, variable-name, heap-name, integer, biguint, ufloat, bool, string]
 
 variable-name name
+heap-name name start-square-bracket value end-square-bracket
 
 ignore-result-function-call function-call
 

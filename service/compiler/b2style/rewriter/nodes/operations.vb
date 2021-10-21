@@ -28,10 +28,9 @@ Partial Public NotInheritable Class b2style
 
         Public Function self_function_name(ByVal n As typed_node) As String
             assert(Not n Is Nothing)
-            Dim type_name As String = Nothing
-            type_name = n.type_name
-            assert(type_name.StartsWith(self_prefix))
-            Return function_name(strmid(type_name, strlen(self_prefix)))
+            assert(n.child_count() = 1)
+            assert(n.child().type_name.StartsWith(self_prefix))
+            Return function_name(strmid(n.child().type_name, strlen(self_prefix)))
         End Function
 
         Private Sub New()
