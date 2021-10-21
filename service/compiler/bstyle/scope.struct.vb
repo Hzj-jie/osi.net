@@ -71,10 +71,15 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End Function
 
+            Public Function defined(ByVal type As String) As Boolean
+                Return s.find(type) <> s.end()
+            End Function
+
             Public Function resolve(ByVal type As String,
                                     ByVal name As String,
                                     ByRef o As vector(Of builders.parameter)) As Boolean
                 assert(Not type.null_or_whitespace())
+                ' name can be null or whitespace to check the availability of a struct definition.
                 type = scope.current().type_alias()(type)
                 If Not s.find(type, o) Then
                     ' raise_error(error_type.user, "Struct type ", type, " has not been defined.")
@@ -101,6 +106,17 @@ Partial Public NotInheritable Class bstyle
 
             Public Function define(ByVal type As String, ByVal members As vector(Of builders.parameter)) As Boolean
                 Return s.s.define(type, members)
+            End Function
+
+            Public Function defined(ByVal type As String) As Boolean
+                Dim s As scope = Me.s
+                While Not s Is Nothing
+                    If s.s.defined(type) Then
+                        Return True
+                    End If
+                    s = s.parent
+                End While
+                Return False
             End Function
 
             Public Function resolve(ByVal type As String,

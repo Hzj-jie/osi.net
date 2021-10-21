@@ -4,10 +4,12 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
+Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class struct
@@ -24,57 +26,86 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(b)
         End Sub
 
-        Public Function pack(ByVal source As String, ByVal target As String, ByVal o As writer) As Boolean
-            Dim vs As vector(Of builders.parameter) = Nothing
-            If Not scope.current().structs().resolve(source, vs) Then
-                Return False
-            End If
-            assert(Not vs Is Nothing)
-            vs.stream().foreach(Sub(ByVal p As builders.parameter)
-                                    assert(Not p Is Nothing)
-                                    builders.of_append_slice(p.name, target).to(o)
-                                End Sub)
-            Return True
-        End Function
-
-        Public Function unpack(ByVal source As String, ByVal target As String, ByVal o As writer) As Boolean
+        Public Shared Function move(ByVal sources As vector(Of String),
+                                    ByVal target As String,
+                                    ByVal o As writer) As Boolean
+            assert(Not sources Is Nothing)
+            assert(Not target.null_or_whitespace())
             Dim vs As vector(Of builders.parameter) = Nothing
             If Not scope.current().structs().resolve(target, vs) Then
                 Return False
             End If
             assert(Not vs Is Nothing)
-            Using New scope_wrapper()
-                Dim index As String = strcat(target, "@index")
-                assert(code_gen_of(Of value_declaration).
-                           declare_internal_typed_variable(New builders.parameter(code_types.int, index), o))
-                vs.stream().foreach(Sub(ByVal p As builders.parameter)
-                                        assert(Not p Is Nothing)
-                                        builders.of_cut_slice(source, index, p.name).to(o)
-                                        builders.of_add(index, index, "@@prefixes@constants@int_1").to(o)
-                                    End Sub)
-            End Using
+            If vs.size() <> sources.size() Then
+                raise_error(error_type.user,
+                            "Sources ",
+                            sources,
+                            " are not consistent with the type of ",
+                            target,
+                            ", ",
+                            vs)
+                Return False
+            End If
+            Dim i As UInt32 = 0
+            While i < vs.size()
+                builders.of_move(vs(i).name, sources(i)).to(o)
+                i += uint32_1
+            End While
             Return True
         End Function
 
-        Public Function export(ByVal n As typed_node, ByVal o As writer) As Boolean
-            assert(Not n Is Nothing)
+        Public Shared Function pack(ByVal sources As vector(Of String),
+                                    ByVal target As String,
+                                    ByVal o As writer) As Boolean
+            assert(Not sources Is Nothing)
+            assert(Not target.null_or_whitespace())
+            If sources.empty() Then
+                Return True
+            End If
+            sources.stream().foreach(Sub(ByVal source As String)
+                                         assert(Not source.null_or_whitespace())
+                                         builders.of_append_slice(target, source).to(o)
+                                     End Sub)
+            Return True
+        End Function
+
+        Public Shared Function unpack(ByVal source As String,
+                                      ByVal targets As vector(Of String),
+                                      ByVal o As writer) As Boolean
+            assert(Not source.null_or_whitespace())
+            assert(Not targets Is Nothing)
+            If targets.empty() Then
+                Return True
+            End If
+            Dim index As String = strcat(targets(0), "@index")
+            Dim p1 As String = strcat(targets(0), "@index+1")
+            assert(value_declaration.declare_internal_typed_variable(code_types.int, index, o))
+            assert(value_declaration.declare_internal_typed_variable(code_types.int, p1, o))
+            builders.of_copy_const(p1, New data_block(1)).to(o)
+            targets.stream().foreach(Sub(ByVal target As String)
+                                         assert(Not target.null_or_whitespace())
+                                         ' TODO: Check if the type of source is the same as targets.
+                                         builders.of_cut_slice(target, source, index).to(o)
+                                         builders.of_add(index, index, p1).to(o)
+                                     End Sub)
+            Return True
+        End Function
+
+        Public Function export(ByVal type As String, ByVal name As String, ByVal o As writer) As Boolean
+            assert(Not type.null_or_whitespace())
+            assert(Not name.null_or_whitespace())
             assert(Not o Is Nothing)
-            If n.child_count() > 2 Then
-                ' TODO: Support value-definition
-                Return False
-            End If
-            assert(n.child_count() = 2)
             Dim v As vector(Of builders.parameter) = Nothing
-            If Not scope.current().structs().resolve(n.child(0).word().str(), n.child(1).word().str(), v) Then
+            If Not scope.current().structs().resolve(type, name, v) Then
                 Return False
             End If
-            If Not scope.current().variables().define(n.child(0).word().str(), n.child(1).word().str()) Then
+            If Not scope.current().variables().define(type, name) Then
                 Return False
             End If
             assert(Not v Is Nothing)
             Return v.stream().
                      map(Function(ByVal m As builders.parameter) As Boolean
-                             Return code_gen_of(Of value_declaration)().declare_internal_typed_variable(m, o)
+                             Return value_declaration.declare_internal_typed_variable(m, o)
                          End Function).
                      aggregate(bool_stream.aggregators.all_true)
         End Function

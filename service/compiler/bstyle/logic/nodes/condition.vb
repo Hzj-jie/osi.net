@@ -32,7 +32,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Using read_target As read_scoped(Of vector(Of String)).ref(Of String) =
-                    code_gen_of(Of value)().read_target_only()
+                    code_gen_of(Of value)().read_target_internal_typed()
                 Dim satisfied_paragraph As Func(Of Boolean) = Nothing
                 satisfied_paragraph = Function() As Boolean
                                           Return l.[of](n.child(4)).build(o)

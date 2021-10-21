@@ -28,17 +28,10 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4)
-            If Not code_gen_of(Of value_declaration).declare_internal_typed_variable(n, o) Then
+            If Not logic_gen_of(Of value_declaration)().build(n.child(0), n.child(1), o) Then
                 Return False
             End If
-            If Not l.of(n.child(3)).build(o) Then
-                Return False
-            End If
-            Using r As read_scoped(Of vector(Of String)).ref(Of String) =
-                    code_gen_of(Of value)().read_target_only()
-                builders.of_move(n.child(1).word().str(), +r).to(o)
-            End Using
-            Return True
+            Return logic_gen_of(Of value_clause)().build(n.child(1), n.child(3), o)
         End Function
     End Class
 End Class

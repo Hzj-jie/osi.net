@@ -36,7 +36,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Using value_target As read_scoped(Of vector(Of String)).ref(Of String) =
-                    code_gen_of(Of value)().read_target_only()
+                    code_gen_of(Of value)().read_target_internal_typed()
                 Return builders.of_while_then(+value_target,
                                               Function() As Boolean
                                                   Return l.of(n.child(4)).build(o) AndAlso while_value(n, o)

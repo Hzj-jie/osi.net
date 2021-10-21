@@ -11,7 +11,7 @@ Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
         Private NotInheritable Class current_function_t
             Private ReadOnly raw_name As String
-            Private ReadOnly return_type As String
+            Public ReadOnly return_type As String
             Private ReadOnly params As vector(Of builders.parameter)
             Public ReadOnly name As lazier(Of String)
 
@@ -25,7 +25,7 @@ Partial Public NotInheritable Class bstyle
                 Me.return_type = scope.current().type_alias()(return_type)
                 Me.params = params
                 Me.name = lazier.of(Function() As String
-                                        Return function_name.of_function(raw_name, params)
+                                        Return logic_name.of_function(raw_name, params)
                                     End Function)
             End Sub
 
@@ -64,6 +64,11 @@ Partial Public NotInheritable Class bstyle
 
             Public Function name() As String
                 Return +current_function().name
+            End Function
+
+            Public Function return_struct() As Boolean
+                assert(allow_return_value())
+                Return s.structs().defined(current_function().return_type)
             End Function
         End Class
 

@@ -15,7 +15,7 @@ Partial Public NotInheritable Class bstyle
 
         Private ReadOnly read_targets As New read_scoped(Of vector(Of String))()
 
-        Public Function read_target_only() As read_scoped(Of vector(Of String)).ref(Of String)
+        Public Function read_target_internal_typed() As read_scoped(Of vector(Of String)).ref(Of String)
             Return read_targets.pop(Function(ByVal x As vector(Of String)) As String
                                         assert(Not x Is Nothing)
                                         assert(x.size() = 1)
@@ -27,11 +27,12 @@ Partial Public NotInheritable Class bstyle
             Return read_targets.pop()
         End Function
 
-        Private Sub with_internal_typed_temp_target(ByVal type As String,
-                                                    ByVal name As String,
-                                                    ByVal o As writer)
+        Private Sub define_internal_typed_temp_target(ByVal type As String,
+                                                      ByVal name As String,
+                                                      ByVal o As writer)
             assert(Not o Is Nothing)
             type = scope.current().type_alias()(type)
+            assert(Not scope.current().structs().defined(type))
             Dim existing_type As String = Nothing
             If scope.current().variables().try_resolve(name, existing_type) Then
                 assert(type.Equals(existing_type))
@@ -41,21 +42,11 @@ Partial Public NotInheritable Class bstyle
             End If
         End Sub
 
-        Private Shared Function value_name(ByVal n As typed_node) As String
-            Return strcat("raw_value_@",
-                          code_builder.current().nested_build_level(),
-                          "@",
-                          n.word_start(),
-                          "-",
-                          n.word_end())
-        End Function
-
         Public Function with_internal_typed_temp_target(ByVal type As String,
                                                         ByVal n As typed_node,
                                                         ByVal o As writer) As String
-            Dim value_name As String = value.value_name(n)
-            assert(Not scope.current().structs().resolve(type, value_name, Nothing))
-            with_internal_typed_temp_target(type, value_name, o)
+            Dim value_name As String = logic_name.temp_variable(n)
+            define_internal_typed_temp_target(type, value_name, o)
             read_targets.push(vector.of(value_name))
             Return value_name
         End Function
@@ -65,19 +56,17 @@ Partial Public NotInheritable Class bstyle
                                          ByVal o As writer) As vector(Of String)
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Dim value_name As String = value.value_name(n)
             Dim params As vector(Of builders.parameter) = Nothing
-            Dim vs As New vector(Of String)()
-            If scope.current().structs().resolve(type, value_name, params) Then
-                params.stream().foreach(Sub(ByVal p As builders.parameter)
-                                            assert(Not p Is Nothing)
-                                            with_internal_typed_temp_target(p.type, p.name, o)
-                                            vs.emplace_back(p.name)
-                                        End Sub)
-            Else
-                with_internal_typed_temp_target(type, value_name, o)
-                vs.emplace_back(value_name)
-            End If
+            assert(scope.current().structs().resolve(type, logic_name.temp_variable(n), params))
+            assert(Not params Is Nothing)
+            Dim vs As vector(Of String) = params.stream().
+                                                 map(Function(ByVal p As builders.parameter) As String
+                                                         assert(Not p Is Nothing)
+                                                         define_internal_typed_temp_target(p.type, p.name, o)
+                                                         Return p.name
+                                                     End Function).
+                                                 collect(Of vector(Of String))()
+
             read_targets.push(vs)
             Return vs
         End Function

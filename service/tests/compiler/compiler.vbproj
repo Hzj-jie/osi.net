@@ -149,6 +149,7 @@
     <Content Include="bstyle\codegen\global_variable.txt" />
     <Content Include="bstyle\codegen\nested_struct.txt" />
     <Content Include="bstyle\codegen\overload_function.txt" />
+    <Content Include="bstyle\codegen\return_struct.txt" />
     <Content Include="bstyle\codegen\single_level_struct.txt" />
     <Content Include="dotnet\codegen\from_source1.cs" />
     <Content Include="logic\codegen\case1.txt" />

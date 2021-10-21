@@ -70,7 +70,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Using read_target As read_scoped(Of vector(Of String)).ref(Of String) =
-                    code_gen_of(Of value)().read_target_only()
+                    code_gen_of(Of value)().read_target_internal_typed()
                 Return builders.of_while_then(+read_target,
                                               Function() As Boolean
                                                   Return l.of(ref.paragraph).build(o) AndAlso

@@ -27,13 +27,22 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 2)
-            Return code_gen_of(Of struct).export(n, o) OrElse
-                   declare_internal_typed_variable(n, o)
+            Return build(n.child(0), n.child(1), o)
         End Function
 
-        Private Function declare_internal_typed_variable(ByVal type As String,
-                                                         ByVal name As String,
-                                                         ByVal o As writer) As Boolean
+        Public Function build(ByVal type As typed_node, ByVal name As typed_node, ByVal o As writer) As Boolean
+            assert(type.leaf())
+            assert(name.leaf())
+            Dim t As String = type.word().str()
+            Dim n As String = name.word().str()
+            Return code_gen_of(Of struct).export(t, n, o) OrElse
+                   declare_internal_typed_variable(t, n, o)
+        End Function
+
+        Public Shared Function declare_internal_typed_variable(ByVal type As String,
+                                                               ByVal name As String,
+                                                               ByVal o As writer) As Boolean
+            assert(Not scope.current().structs().defined(type))
             assert(Not o Is Nothing)
             If Not scope.current().variables().define(type, name) Then
                 Return False
@@ -44,13 +53,8 @@ Partial Public NotInheritable Class bstyle
             Return True
         End Function
 
-        Public Function declare_internal_typed_variable(ByVal n As typed_node, ByVal o As writer) As Boolean
-            assert(Not n Is Nothing)
-            assert(n.child_count() >= 2)
-            Return declare_internal_typed_variable(n.child(0).word().str(), n.child(1).word().str(), o)
-        End Function
-
-        Public Function declare_internal_typed_variable(ByVal p As builders.parameter, ByVal o As writer) As Boolean
+        Public Shared Function declare_internal_typed_variable(ByVal p As builders.parameter,
+                                                               ByVal o As writer) As Boolean
             assert(Not p Is Nothing)
             Return declare_internal_typed_variable(p.type, p.name, o)
         End Function

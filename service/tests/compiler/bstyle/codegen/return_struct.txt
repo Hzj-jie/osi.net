@@ -1,0 +1,19 @@
+﻿
+struct S {
+  String s;
+  String s2;
+};
+
+S f() {
+  S s;
+  s.s = "abc";
+  s.s2 = "def";
+  return s;
+}
+
+type0 main() {
+  S s = f();
+  String temp;
+  logic "interrupt stdout s.s temp";
+  logic "interrupt stdout s.s2 temp";
+}

@@ -48,7 +48,7 @@ Partial Public NotInheritable Class bstyle
             Return build(n,
                          o,
                          Function(ByVal callee_name As String, ByVal parameters As vector(Of String)) As Boolean
-                             Return function_name.of_caller(callee_name, parameters, o)
+                             Return logic_name.of_caller(callee_name, parameters, o)
                          End Function)
         End Function
 
@@ -60,18 +60,27 @@ Partial Public NotInheritable Class bstyle
                          o,
                          Function(ByVal callee_name As String, ByVal parameters As vector(Of String)) As Boolean
                              Dim name As String = Nothing
-                             If Not function_name.of_function_call(callee_name, parameters, name) Then
+                             If Not logic_name.of_function_call(callee_name, parameters, name) Then
                                  Return False
                              End If
                              Dim return_type As String = Nothing
                              If Not scope.current().functions().return_type_of(name, return_type) Then
                                  Return False
                              End If
-                             ' TODO: Support returning a struct.
+                             If scope.current().structs().defined(return_type) Then
+                                 ' TODO: Check the type consistency between function_call and variable receiver.
+                                 Dim return_value As String =
+                                         strcat(logic_name.temp_variable(n), "@", name, "@return_value")
+                                 assert(value_declaration.declare_internal_typed_variable(
+                                            types.variable_type, return_value, o))
+                                 builders.of_caller(name, return_value, parameters).to(o)
+                                 Return struct.unpack(return_value,
+                                                      code_gen_of(Of value)().with_temp_target(return_type, n, o),
+                                                      o)
+                             End If
                              builders.of_caller(name,
-                                                code_gen_of(Of value)().with_internal_typed_temp_target(return_type,
-                                                                                                        n,
-                                                                                                        o),
+                                                code_gen_of(Of value)().with_internal_typed_temp_target(
+                                                    return_type, n, o),
                                                 parameters).
                                       to(o)
                              Return True

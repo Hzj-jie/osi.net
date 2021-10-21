@@ -40,17 +40,36 @@ Partial Public NotInheritable Class bstyle
                     Return False
                 End If
             End If
-            If n.child_count() = 2 Then
-                If Not l.of(n.child(1)).build(o) Then
-                    Return False
-                End If
-                Using r As read_scoped(Of vector(Of String)).ref(Of String) =
-                        code_gen_of(Of value)().read_target_only()
-                    builders.of_return(scope.current().current_function().name(), +r).to(o)
-                End Using
-            Else
+            If n.child_count() = 1 Then
                 builders.of_return(scope.current().current_function().name()).to(o)
+                Return True
             End If
+            If Not l.of(n.child(1)).build(o) Then
+                Return False
+            End If
+            Using r As read_scoped(Of vector(Of String)).ref = code_gen_of(Of value)().read_target()
+                If scope.current().current_function().return_struct() Then
+                    ' TODO: Check if return-type matches value-type.
+                    Dim return_value As String = strcat(logic_name.temp_variable(n),
+                                                        "@",
+                                                        scope.current().current_function().name(),
+                                                        "@return_value")
+                    assert(value_declaration.declare_internal_typed_variable(
+                               types.variable_type, return_value, o))
+                    If Not struct.pack(+r, return_value, o) Then
+                        Return False
+                    End If
+                    builders.of_return(scope.current().current_function().name(), return_value).to(o)
+                Else
+                    If (+r).size() <> 1 Then
+                        raise_error(error_type.user,
+                                    "Unexpected return value, do not expect a struct to be returned by ",
+                                    scope.current().current_function().name())
+                        Return False
+                    End If
+                    builders.of_return(scope.current().current_function().name(), (+r)(0)).to(o)
+                End If
+            End Using
             Return True
         End Function
     End Class

@@ -38,14 +38,14 @@ Partial Public NotInheritable Class bstyle
             Using params As read_scoped(Of vector(Of builders.parameter)).ref =
                     code_gen_of(Of paramlist)().current_target()
                 Using New scope_wrapper()
-                    Return function_name.of_callee(n.child(1).word().str(),
-                                                   n.child(0).word().str(),
-                                                   +params,
-                                                   Function() As Boolean
-                                                       Dim gi As UInt32 = CUInt(If(has_paramlist, 5, 4))
-                                                       Return l.of(n.child(gi)).build(o)
-                                                   End Function,
-                                                   o)
+                    Return logic_name.of_callee(n.child(1).word().str(),
+                                                n.child(0).word().str(),
+                                                +params,
+                                                Function() As Boolean
+                                                    Dim gi As UInt32 = CUInt(If(has_paramlist, 5, 4))
+                                                    Return l.of(n.child(gi)).build(o)
+                                                End Function,
+                                                o)
                 End Using
             End Using
         End Function
