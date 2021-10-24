@@ -1,0 +1,12 @@
+﻿
+#include <b2style.h>
+
+struct S {
+  string s;
+};
+
+void main() {
+  int x = 0;
+  int v[x++];
+  S v2[x++];
+}

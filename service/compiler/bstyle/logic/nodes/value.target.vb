@@ -16,10 +16,13 @@ Partial Public NotInheritable Class bstyle
         Private ReadOnly read_targets As New read_scoped(Of vector(Of String))()
 
         Public Function read_target_internal_typed() As read_scoped(Of vector(Of String)).ref(Of String)
-            Return read_targets.pop(Function(ByVal x As vector(Of String)) As String
+            Return read_targets.pop(Function(ByVal x As vector(Of String), ByRef o As String) As Boolean
                                         assert(Not x Is Nothing)
-                                        assert(x.size() = 1)
-                                        Return x(0)
+                                        If x.size() <> 1 Then
+                                            Return False
+                                        End If
+                                        o = x(0)
+                                        Return True
                                     End Function)
         End Function
 

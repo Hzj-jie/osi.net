@@ -28,20 +28,22 @@ Partial Public NotInheritable Class b2style
                                            ByVal o As typed_node_writer) As Boolean
             assert(Not child Is Nothing)
             assert(Not o Is Nothing)
-            If child.type_name.Equals("value-declaration-with-semi-colon") Then
-                ' TODO: Support value-definition
-                assert(child.child_count() = 2)
-                assert(child.child(0).child_count() = 2)
-                If Not l.of(child.child(0).child(0)).build(o) Then
-                    Return False
-                End If
-                ' Ignore namespace prefix for variables within the structure.
-                o.append(child.child(0).child(1))
-                If Not l.of(child.child(1)).build(o) Then
-                    Return False
-                End If
+            If Not child.type_name.Equals("value-declaration-with-semi-colon") Then
+                Return MyBase.build(child, index, o)
             End If
-            Return MyBase.build(child, index, o)
+
+            ' TODO: Support value-definition
+            assert(child.child_count() = 2)
+            assert(child.child(0).child_count() = 2)
+            If Not l.of(child.child(0).child(0)).build(o) Then
+                Return False
+            End If
+            ' Ignore namespace prefix for variables within the structure.
+            o.append(child.child(0).child(1))
+            If Not l.of(child.child(1)).build(o) Then
+                Return False
+            End If
+            Return True
         End Function
     End Class
 End Class

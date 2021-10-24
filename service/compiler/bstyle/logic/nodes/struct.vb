@@ -79,8 +79,8 @@ Partial Public NotInheritable Class bstyle
             End If
             Dim index As String = strcat(targets(0), "@index")
             Dim p1 As String = strcat(targets(0), "@index+1")
-            assert(value_declaration.declare_internal_typed_variable(code_types.int, index, o))
-            assert(value_declaration.declare_internal_typed_variable(code_types.int, p1, o))
+            assert(value_declaration.declare_internal_typed(code_types.int, index, o))
+            assert(value_declaration.declare_internal_typed(code_types.int, p1, o))
             builders.of_copy_const(p1, New data_block(1)).to(o)
             targets.stream().foreach(Sub(ByVal target As String)
                                          assert(Not target.null_or_whitespace())
@@ -91,23 +91,58 @@ Partial Public NotInheritable Class bstyle
             Return True
         End Function
 
-        Public Function export(ByVal type As String, ByVal name As String, ByVal o As writer) As Boolean
+        Private Function resolve(ByVal type As String,
+                                 ByVal name As String,
+                                 ByRef v As vector(Of builders.parameter)) As Boolean
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
-            assert(Not o Is Nothing)
-            Dim v As vector(Of builders.parameter) = Nothing
             If Not scope.current().structs().resolve(type, name, v) Then
                 Return False
             End If
+            assert(Not v Is Nothing)
             If Not scope.current().variables().define(type, name) Then
+                Return False
+            End If
+            Return True
+        End Function
+
+        Public Function define_in_stack(ByVal type As String, ByVal name As String, ByVal o As writer) As Boolean
+            assert(Not o Is Nothing)
+            Dim v As vector(Of builders.parameter) = Nothing
+            If Not resolve(type, name, v) Then
                 Return False
             End If
             assert(Not v Is Nothing)
             Return v.stream().
                      map(Function(ByVal m As builders.parameter) As Boolean
-                             Return value_declaration.declare_internal_typed_variable(m, o)
+                             assert(Not m Is Nothing)
+                             Return value_declaration.declare_internal_typed(m.type, m.name, o)
                          End Function).
                      aggregate(bool_stream.aggregators.all_true)
+        End Function
+
+        Public Function define_in_heap(ByVal type As String,
+                                       ByVal name As String,
+                                       ByVal length As typed_node,
+                                       ByVal o As writer) As Boolean
+            assert(Not length Is Nothing)
+            assert(Not o Is Nothing)
+            Dim v As vector(Of builders.parameter) = Nothing
+            If Not resolve(type, name, v) Then
+                Return False
+            End If
+            assert(Not v Is Nothing)
+            Return code_gen_of(Of heap_declaration).build(
+                length,
+                o,
+                Function(ByVal len_name As String) As Boolean
+                    Return v.stream().
+                             map(Function(ByVal m As builders.parameter) As Boolean
+                                     assert(Not m Is Nothing)
+                                     Return heap_declaration.declare_internal_typed(m.type, m.name, len_name, o)
+                                 End Function).
+                             aggregate(bool_stream.aggregators.all_true)
+                End Function)
         End Function
 
         Public Function build(ByVal n As typed_node,

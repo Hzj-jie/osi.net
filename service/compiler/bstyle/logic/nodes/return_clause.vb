@@ -54,7 +54,7 @@ Partial Public NotInheritable Class bstyle
                                                         "@",
                                                         scope.current().current_function().name(),
                                                         "@return_value")
-                    assert(value_declaration.declare_internal_typed_variable(
+                    assert(value_declaration.declare_internal_typed(
                                types.variable_type, return_value, o))
                     If Not struct.pack(+r, return_value, o) Then
                         Return False

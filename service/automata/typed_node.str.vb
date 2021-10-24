@@ -45,6 +45,16 @@ Partial Public NotInheritable Class typed_node
         Return Convert.ToString(str(New StringBuilder()))
     End Function
 
+    Public Function input() As String
+        Dim s As New StringBuilder()
+        Dim i As UInt32 = 0
+        While i < word_count()
+            s.Append(word(i)).Append(" ")
+            i += uint32_1
+        End While
+        Return Convert.ToString(s)
+    End Function
+
     Private Function self_debug_str(ByVal s As StringBuilder) As StringBuilder
         assert(Not s Is Nothing)
         s.Append("@").Append(type_name).Append(": ")

@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
@@ -71,7 +72,12 @@ Partial Public NotInheritable Class bstyle
             End If
             Using read_target As read_scoped(Of vector(Of String)).ref(Of String) =
                     code_gen_of(Of value)().read_target_internal_typed()
-                Return builders.of_while_then(+read_target,
+                Dim condition As String = Nothing
+                If Not read_target.retrieve(condition) Then
+                    raise_error(error_type.user, "Condition of for-loop cannot be a struct.")
+                    Return False
+                End If
+                Return builders.of_while_then(condition,
                                               Function() As Boolean
                                                   Return l.of(ref.paragraph).build(o) AndAlso
                                                          (ref.clause Is Nothing OrElse

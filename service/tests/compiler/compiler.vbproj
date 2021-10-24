@@ -147,6 +147,7 @@
     <Content Include="bstyle\codegen\case2.txt" />
     <Content Include="bstyle\codegen\function_struct.txt" />
     <Content Include="bstyle\codegen\global_variable.txt" />
+    <Content Include="b2style\codegen\heap.txt" />
     <Content Include="bstyle\codegen\nested_struct.txt" />
     <Content Include="bstyle\codegen\overload_function.txt" />
     <Content Include="bstyle\codegen\return_struct.txt" />

@@ -123,7 +123,7 @@ Namespace logic
         Private Shared ReadOnly io As New console_io.test_wrapper()
 
         Public Sub New()
-            MyBase.New(heap.as_text(), New interrupts(+io))
+            MyBase.New(_import_executor_cases.heap.as_text(), New interrupts(+io))
         End Sub
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))

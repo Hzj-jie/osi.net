@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
@@ -33,18 +34,23 @@ Partial Public NotInheritable Class bstyle
             End If
             Using read_target As read_scoped(Of vector(Of String)).ref(Of String) =
                     code_gen_of(Of value)().read_target_internal_typed()
+                Dim condition As String = Nothing
+                If Not read_target.retrieve(condition) Then
+                    raise_error(error_type.user, "Condition of if cannot be a struct.")
+                    Return False
+                End If
                 Dim satisfied_paragraph As Func(Of Boolean) = Nothing
                 satisfied_paragraph = Function() As Boolean
                                           Return l.[of](n.child(4)).build(o)
                                       End Function
                 If n.child_count() = 5 Then
-                    Return builders.of_if(+read_target, satisfied_paragraph).to(o)
+                    Return builders.of_if(condition, satisfied_paragraph).to(o)
                 End If
                 Dim unsatisfied_paragraph As Func(Of Boolean) = Nothing
                 unsatisfied_paragraph = Function() As Boolean
                                             Return l.[of](n.child(5)).build(o)
                                         End Function
-                Return builders.of_if(+read_target, satisfied_paragraph, unsatisfied_paragraph).to(o)
+                Return builders.of_if(condition, satisfied_paragraph, unsatisfied_paragraph).to(o)
             End Using
         End Function
     End Class

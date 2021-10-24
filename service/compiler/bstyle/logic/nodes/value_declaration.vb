@@ -31,17 +31,19 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Function build(ByVal type As typed_node, ByVal name As typed_node, ByVal o As writer) As Boolean
+            assert(Not type Is Nothing)
+            assert(Not name Is Nothing)
             assert(type.leaf())
             assert(name.leaf())
             Dim t As String = type.word().str()
             Dim n As String = name.word().str()
-            Return code_gen_of(Of struct).export(t, n, o) OrElse
-                   declare_internal_typed_variable(t, n, o)
+            Return code_gen_of(Of struct).define_in_stack(t, n, o) OrElse
+                   declare_internal_typed(t, n, o)
         End Function
 
-        Public Shared Function declare_internal_typed_variable(ByVal type As String,
-                                                               ByVal name As String,
-                                                               ByVal o As writer) As Boolean
+        Public Shared Function declare_internal_typed(ByVal type As String,
+                                                      ByVal name As String,
+                                                      ByVal o As writer) As Boolean
             assert(Not scope.current().structs().defined(type))
             assert(Not o Is Nothing)
             If Not scope.current().variables().define(type, name) Then
@@ -51,12 +53,6 @@ Partial Public NotInheritable Class bstyle
                                scope.current().type_alias()(type)).
                      to(o)
             Return True
-        End Function
-
-        Public Shared Function declare_internal_typed_variable(ByVal p As builders.parameter,
-                                                               ByVal o As writer) As Boolean
-            assert(Not p Is Nothing)
-            Return declare_internal_typed_variable(p.type, p.name, o)
         End Function
     End Class
 End Class

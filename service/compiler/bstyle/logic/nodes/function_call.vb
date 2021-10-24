@@ -71,7 +71,7 @@ Partial Public NotInheritable Class bstyle
                                  ' TODO: Check the type consistency between function_call and variable receiver.
                                  Dim return_value As String =
                                          strcat(logic_name.temp_variable(n), "@", name, "@return_value")
-                                 assert(value_declaration.declare_internal_typed_variable(
+                                 assert(value_declaration.declare_internal_typed(
                                             types.variable_type, return_value, o))
                                  builders.of_caller(name, return_value, parameters).to(o)
                                  Return struct.unpack(return_value,
