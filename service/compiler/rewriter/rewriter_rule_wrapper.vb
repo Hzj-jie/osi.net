@@ -78,20 +78,6 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
         Protected MustOverride Function logic_parse(ByVal s As String, ByRef e() As exportable) As Boolean
     End Class
 
-    Protected Shared Function bypass_registerer(ByVal node_name As String) As Action(Of rewriters)
-        assert(Not node_name.null_or_whitespace())
-        Return Sub(ByVal i As rewriters)
-                   bypass.register(i, node_name)
-               End Sub
-    End Function
-
-    Protected Shared Function leaf_registerer(ByVal node_name As String) As Action(Of rewriters)
-        assert(Not node_name.null_or_whitespace())
-        Return Sub(ByVal i As rewriters)
-                   leaf.register(i, node_name)
-               End Sub
-    End Function
-
     Protected Sub New()
     End Sub
 End Class

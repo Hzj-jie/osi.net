@@ -26,6 +26,10 @@ Partial Public NotInheritable Class bstyle
             d = New defines_t()
             f = New function_t()
         End Sub
+
+        Public Shared Function wrapper() As scope_wrapper
+            Return New scope_wrapper()
+        End Function
     End Class
 
     Public NotInheritable Class scope_wrapper

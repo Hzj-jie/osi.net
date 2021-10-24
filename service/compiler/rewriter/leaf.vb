@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.service.automata
 
 Partial Public NotInheritable Class rewriters
@@ -14,15 +13,17 @@ Partial Public NotInheritable Class rewriters
         Inherits rewriter_wrapper
         Implements rewriter
 
-        Public Sub New(ByVal l As rewriters)
+        Private Sub New(ByVal l As rewriters)
             MyBase.New(l)
         End Sub
 
-        Public Shared Sub register(ByVal l As rewriters, ByVal s As String)
-            assert(Not l Is Nothing)
-            assert(Not s.null_or_whitespace())
-            l.register(s, New leaf(l))
-        End Sub
+        Public Shared Function registerer(ByVal s As String) As Action(Of rewriters)
+            Return Sub(ByVal l As rewriters)
+                       assert(Not l Is Nothing)
+                       assert(Not s.null_or_whitespace())
+                       l.register(s, New leaf(l))
+                   End Sub
+        End Function
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build

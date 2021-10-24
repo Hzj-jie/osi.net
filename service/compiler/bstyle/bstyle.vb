@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.compiler.logic
+Imports osi.service.compiler.logic_gens
 
 Public NotInheritable Class bstyle
     Inherits logic_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, logic_gens_t, scope)
@@ -47,10 +48,10 @@ Public NotInheritable Class bstyle
 
         Protected Overrides Function at() As vector(Of Action(Of logic_gens))
             Return vector.of(Of Action(Of logic_gens))(
-                AddressOf root_type.register,
+                [default].of_only_child("root-type"),
                 AddressOf bool.register,
                 AddressOf condition.register,
-                AddressOf else_condition.register,
+                [default].of("else-condition", 1),
                 AddressOf for_loop.register,
                 AddressOf ufloat.register,
                 AddressOf [function].register,
@@ -59,37 +60,38 @@ Public NotInheritable Class bstyle
                 AddressOf [integer].register,
                 AddressOf biguint.register,
                 AddressOf logic.register,
-                AddressOf logic_with_semi_colon.register,
-                AddressOf multi_sentence_paragraph.register,
-                AddressOf variable_name.register,
-                AddressOf paragraph.register,
+                [default].of_first_child("logic-with-semi-colon"),
+                [default].of_all_children("multi-sentence-paragraph"),
+                [default].of_only_child_with_wrapper(AddressOf scope.wrapper, "paragraph"),
                 AddressOf param.register,
-                AddressOf param_with_comma.register,
+                [default].of_first_child("param-with-comma"),
                 AddressOf paramlist.register,
                 AddressOf return_clause.register,
-                AddressOf sentence.register,
-                AddressOf sentence_with_semi_colon.register,
-                AddressOf sentence_without_semi_colon.register,
+                [default].of_only_child("sentence"),
+                [default].of_first_child("sentence-with-semi-colon"),
+                [default].of_only_child("sentence-without-semi-colon"),
                 AddressOf [string].register,
                 AddressOf value.register,
                 AddressOf value_clause.register,
                 AddressOf value_declaration.register,
+                AddressOf heap_declaration.register,
                 AddressOf value_definition.register,
-                AddressOf value_declaration_with_semi_colon.register,
-                AddressOf value_definition_with_semi_colon.register,
+                [default].of_first_child("value-declaration-with-semi-colon"),
+                [default].of_first_child("value-definition-with-semi-colon"),
+                [default].of_first_child("heap-declaration-with-semi-colon"),
                 AddressOf value_list.register,
-                AddressOf value_with_bracket.register,
-                AddressOf value_with_comma.register,
-                AddressOf value_without_bracket.register,
+                [default].of("value-with-bracket", 1),
+                [default].of_first_child("value-with-comma"),
+                [default].of_only_child("value-without-bracket"),
                 AddressOf variable_name.register,
                 AddressOf [while].register,
-                AddressOf include.register,
+                [default].of_only_child("include"),
                 AddressOf include_with_string.register,
                 AddressOf include_with_file.register,
                 AddressOf ifndef_wrapped.register,
                 AddressOf define.register,
                 AddressOf typedef.register,
-                AddressOf typedef_with_semi_colon.register,
+                [default].of_first_child("typedef-with-semi-colon"),
                 AddressOf struct.register)
         End Function
     End Class

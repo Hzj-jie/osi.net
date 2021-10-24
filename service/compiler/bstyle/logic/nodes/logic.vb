@@ -33,26 +33,4 @@ Partial Public NotInheritable Class bstyle
             Return True
         End Function
     End Class
-
-    Public NotInheritable Class logic_with_semi_colon
-        Inherits logic_gen_wrapper
-        Implements logic_gen
-
-        <inject_constructor>
-        Public Sub New(ByVal b As logic_gens)
-            MyBase.New(b)
-        End Sub
-
-        Public Shared Sub register(ByVal b As logic_gens)
-            assert(Not b Is Nothing)
-            b.register(Of logic_with_semi_colon)()
-        End Sub
-
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
-            assert(n.child_count() = 2)
-            Return l.of(n.child(0)).build(o)
-        End Function
-    End Class
 End Class

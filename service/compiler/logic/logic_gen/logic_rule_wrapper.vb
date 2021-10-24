@@ -25,7 +25,7 @@ Public MustInherit Class logic_gen_wrapper
     End Function
 End Class
 
-Public NotInheritable Class logic_gens
+Partial Public NotInheritable Class logic_gens
     Inherits code_gens(Of writer)
 End Class
 

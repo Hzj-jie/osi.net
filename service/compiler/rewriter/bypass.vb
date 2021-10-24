@@ -11,14 +11,16 @@ Partial Public NotInheritable Class rewriters
     Public NotInheritable Class bypass
         Inherits [default]
 
-        Public Sub New(ByVal l As rewriters)
+        Private Sub New(ByVal l As rewriters)
             MyBase.New(l)
         End Sub
 
-        Public Shared Sub register(ByVal l As rewriters, ByVal s As String)
-            assert(Not l Is Nothing)
-            assert(Not s.null_or_whitespace())
-            l.register(s, New bypass(l))
-        End Sub
+        Public Shared Function registerer(ByVal s As String) As Action(Of rewriters)
+            Return Sub(ByVal l As rewriters)
+                       assert(Not l Is Nothing)
+                       assert(Not s.null_or_whitespace())
+                       l.register(s, New bypass(l))
+                   End Sub
+        End Function
     End Class
 End Class
