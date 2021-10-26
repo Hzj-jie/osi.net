@@ -36,7 +36,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Using read_target As read_scoped(Of vector(Of String)).ref(Of String) =
-                    l.typed_code_gen(Of value)().read_target_internal_typed()
+                    l.typed_code_gen(Of value)().read_target_single_data_slot()
                 Dim indexstr As String = Nothing
                 If Not read_target.retrieve(indexstr) Then
                     raise_error(error_type.user, "Index or length of a heap declaration cannot be a struct.")

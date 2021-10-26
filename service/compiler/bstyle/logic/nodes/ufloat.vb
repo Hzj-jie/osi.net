@@ -35,7 +35,8 @@ Partial Public NotInheritable Class bstyle
                 raise_error(error_type.user, "Cannot parse data to bigufloat ", n.trace_back_str())
                 Return False
             End If
-            builders.of_copy_const(l.typed_code_gen(Of value)().with_internal_typed_temp_target(code_types.ufloat, n, o),
+            builders.of_copy_const(l.typed_code_gen(Of value)().
+                                     with_single_data_slot_temp_target(code_types.ufloat, n, o),
                                    New data_block(i.as_bytes())).to(o)
             Return True
         End Function

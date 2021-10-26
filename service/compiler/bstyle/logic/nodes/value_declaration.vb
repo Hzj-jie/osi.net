@@ -38,10 +38,10 @@ Partial Public NotInheritable Class bstyle
             Dim t As String = type.word().str()
             Dim n As String = name.word().str()
             Return l.typed_code_gen(Of struct).define_in_stack(t, n, o) OrElse
-                   declare_internal_typed(t, n, o)
+                   declare_single_data_slot(t, n, o)
         End Function
 
-        Public Shared Function declare_internal_typed(ByVal type As String,
+        Public Shared Function declare_single_data_slot(ByVal type As String,
                                                       ByVal name As String,
                                                       ByVal o As writer) As Boolean
             If scope.current().structs().defined(type) Then

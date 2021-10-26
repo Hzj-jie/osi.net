@@ -4,8 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
@@ -54,14 +52,14 @@ Partial Public NotInheritable Class bstyle
             Return build(length,
                          o,
                          Function(ByVal len_name As String) As Boolean
-                             Return declare_internal_typed(t, n, len_name, o)
+                             Return declare_single_data_slot(t, n, len_name, o)
                          End Function)
         End Function
 
-        Public Shared Function declare_internal_typed(ByVal type As String,
-                                                      ByVal name As String,
-                                                      ByVal length As String,
-                                                      ByVal o As writer) As Boolean
+        Public Shared Function declare_single_data_slot(ByVal type As String,
+                                                        ByVal name As String,
+                                                        ByVal length As String,
+                                                        ByVal o As writer) As Boolean
             assert(Not scope.current().structs().defined(type))
             assert(Not o Is Nothing)
             If Not scope.current().variables().define(type, name) Then

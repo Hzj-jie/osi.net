@@ -27,12 +27,12 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node,
                               ByVal struct_copy As Action(Of vector(Of String), vector(Of builders.parameter)),
-                              ByVal internal_typed_copy As Action(Of String, String),
+                              ByVal single_data_slot_copy As Action(Of String, String),
                               ByVal o As writer) As Boolean
             assert(Not n Is Nothing)
             assert(n.leaf())
             assert(Not struct_copy Is Nothing)
-            assert(Not internal_typed_copy Is Nothing)
+            assert(Not single_data_slot_copy Is Nothing)
             assert(Not o Is Nothing)
             Dim type As String = Nothing
             If Not scope.current().variables().resolve(n.word().str(), type) Then
@@ -42,8 +42,9 @@ Partial Public NotInheritable Class bstyle
             If scope.current().structs().resolve(type, n.word().str(), ps) Then
                 struct_copy(l.typed_code_gen(Of value)().with_temp_target(type, n, o), ps)
             Else
-                internal_typed_copy(l.typed_code_gen(Of value)().with_internal_typed_temp_target(type, n, o),
-                                    n.word().str())
+                single_data_slot_copy(l.typed_code_gen(Of value)().
+                                        with_single_data_slot_temp_target(type, n, o),
+                                      n.word().str())
             End If
             Return True
         End Function

@@ -27,12 +27,12 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal name As typed_node,
                               ByVal value As typed_node,
                               ByVal struct_move As Func(Of vector(Of String), Boolean),
-                              ByVal internal_typed_move As Func(Of String, Boolean),
+                              ByVal single_data_slot_move As Func(Of String, Boolean),
                               ByVal o As writer) As Boolean
             assert(Not name Is Nothing)
             assert(Not value Is Nothing)
             assert(Not struct_move Is Nothing)
-            assert(Not internal_typed_move Is Nothing)
+            assert(Not single_data_slot_move Is Nothing)
             assert(Not o Is Nothing)
             If Not l.of(value).build(o) Then
                 Return False
@@ -45,8 +45,8 @@ Partial Public NotInheritable Class bstyle
                 End Using
             Else
                 Using r As read_scoped(Of vector(Of String)).ref(Of String) =
-                        l.typed_code_gen(Of value)().read_target_internal_typed()
-                    Return internal_typed_move(+r)
+                        l.typed_code_gen(Of value)().read_target_single_data_slot()
+                    Return single_data_slot_move(+r)
                 End Using
             End If
         End Function

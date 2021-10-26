@@ -35,7 +35,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             builders.of_copy_const(l.typed_code_gen(Of value)().
-                     with_internal_typed_temp_target(code_types.bool, n, o), New data_block(i)).
+                                     with_single_data_slot_temp_target(code_types.bool, n, o), New data_block(i)).
                      to(o)
             Return True
         End Function

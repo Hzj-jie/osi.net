@@ -115,8 +115,8 @@ Partial Public NotInheritable Class bstyle
             End If
             Dim index As String = strcat(targets(0), "@index")
             Dim p1 As String = strcat(targets(0), "@index+1")
-            assert(value_declaration.declare_internal_typed(code_types.int, index, o))
-            assert(value_declaration.declare_internal_typed(code_types.int, p1, o))
+            assert(value_declaration.declare_single_data_slot(code_types.int, index, o))
+            assert(value_declaration.declare_single_data_slot(code_types.int, p1, o))
             builders.of_copy_const(p1, New data_block(1)).to(o)
             targets.stream().foreach(Sub(ByVal target As String)
                                          assert(Not target.null_or_whitespace())
@@ -152,7 +152,7 @@ Partial Public NotInheritable Class bstyle
             Return v.stream().
                      map(Function(ByVal m As builders.parameter) As Boolean
                              assert(Not m Is Nothing)
-                             Return value_declaration.declare_internal_typed(m.type, m.name, o)
+                             Return value_declaration.declare_single_data_slot(m.type, m.name, o)
                          End Function).
                      aggregate(bool_stream.aggregators.all_true)
         End Function
@@ -175,7 +175,7 @@ Partial Public NotInheritable Class bstyle
                     Return v.stream().
                              map(Function(ByVal m As builders.parameter) As Boolean
                                      assert(Not m Is Nothing)
-                                     Return heap_declaration.declare_internal_typed(m.type, m.name, len_name, o)
+                                     Return heap_declaration.declare_single_data_slot(m.type, m.name, len_name, o)
                                  End Function).
                              aggregate(bool_stream.aggregators.all_true)
                 End Function)
