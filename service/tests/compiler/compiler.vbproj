@@ -61,6 +61,7 @@
     <Compile Include="bstyle\bstyle_test_data.vb" />
     <Compile Include="dotnet\dotnet_test_data.vb" />
     <Compile Include="dotnet\source_executor_test.vb" />
+    <Compile Include="executor.ext.vb" />
     <Compile Include="logic\caller_test.vb" />
     <Compile Include="logic\condition_test.vb" />
     <Compile Include="logic\executor_case.vb" />
@@ -119,6 +120,7 @@
     <Content Include="b2style\codegen\another_1_to_100.txt" />
     <Content Include="b2style\codegen\biguint.txt" />
     <Content Include="b2style\codegen\calculate_pi_bbp.txt" />
+    <Content Include="b2style\codegen\call_struct_on_heap.txt" />
     <Content Include="b2style\codegen\comments.txt" />
     <Content Include="b2style\codegen\heap_declaration.txt" />
     <Content Include="b2style\codegen\ifndef.txt" />

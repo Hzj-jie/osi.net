@@ -22,6 +22,7 @@ Namespace logic
 
             Private ReadOnly r As read_scoped(Of T)
             Private ReadOnly f As _do_val_ref(Of T, RT, Boolean)
+            Private ReadOnly current As T
 
             Public Sub New(ByVal r As read_scoped(Of T), ByVal f As _do_val_ref(Of T, RT, Boolean))
                 assert(Not r Is Nothing)
@@ -30,16 +31,23 @@ Namespace logic
                 Me.r = r
                 Me.f = f
                 r.pending_dispose += uint32_1
+                Me.current = r.s.back()
+            End Sub
+
+            Private Sub assert_stack_order()
+                assert(_equal.equal(current, r.s.back()))
             End Sub
 
             Public Sub Dispose() Implements IDisposable.Dispose
                 assert(r.pending_dispose > 0)
                 r.pending_dispose -= uint32_1
+                assert_stack_order()
                 r.s.pop()
             End Sub
 
             Public Function retrieve(ByRef o As RT) As Boolean
-                Return f(r.s.back(), o)
+                assert_stack_order()
+                Return f(current, o)
             End Function
 
             Public Shared Operator +(ByVal this As ref(Of RT)) As RT

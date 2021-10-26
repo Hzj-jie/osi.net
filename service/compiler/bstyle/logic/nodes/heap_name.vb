@@ -35,15 +35,15 @@ Partial Public NotInheritable Class bstyle
             If Not l.of(index).build(o) Then
                 Return False
             End If
+            Dim indexstr As String = Nothing
             Using read_target As read_scoped(Of vector(Of String)).ref(Of String) =
                     l.typed_code_gen(Of value)().read_target_single_data_slot()
-                Dim indexstr As String = Nothing
                 If Not read_target.retrieve(indexstr) Then
                     raise_error(error_type.user, "Index or length of a heap declaration cannot be a struct.")
                     Return False
                 End If
-                Return f(indexstr)
             End Using
+            Return f(indexstr)
         End Function
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build

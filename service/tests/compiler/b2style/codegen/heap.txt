@@ -16,9 +16,9 @@ S new(string s) {
 }
 
 void main() {
-  int x = 0;
-  int v[++x];
-  S v2[++x];
+  int x = 1;
+  int v[x++];
+  S v2[1 + x];
   v[0] = 100;
   v2[0] = new("abc");
   v2[1] = new("def");
