@@ -39,7 +39,7 @@ Partial Public NotInheritable Class bstyle
             If Not l.of(n.child(2)).build(o) Then
                 Return False
             End If
-            Using targets As read_scoped(Of vector(Of String)).ref = code_gen_of(Of value_list)().current_targets()
+            Using targets As read_scoped(Of vector(Of String)).ref = l.typed_code_gen(Of value_list)().current_targets()
                 Return build_caller(callee_name, +targets)
             End Using
         End Function
@@ -75,11 +75,11 @@ Partial Public NotInheritable Class bstyle
                                             types.variable_type, return_value, o))
                                  builders.of_caller(name, return_value, parameters).to(o)
                                  Return struct.unpack(return_value,
-                                                      code_gen_of(Of value)().with_temp_target(return_type, n, o),
+                                                      l.typed_code_gen(Of value)().with_temp_target(return_type, n, o),
                                                       o)
                              End If
                              builders.of_caller(name,
-                                                code_gen_of(Of value)().with_internal_typed_temp_target(
+                                                l.typed_code_gen(Of value)().with_internal_typed_temp_target(
                                                     return_type, n, o),
                                                 parameters).
                                       to(o)

@@ -36,21 +36,7 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal length As typed_node,
                               ByVal o As writer,
                               ByVal f As Func(Of String, Boolean)) As Boolean
-            assert(Not length Is Nothing)
-            assert(Not o Is Nothing)
-            assert(Not f Is Nothing)
-            If Not l.of(length).build(o) Then
-                Return False
-            End If
-            Using read_target As read_scoped(Of vector(Of String)).ref(Of String) =
-                    code_gen_of(Of value)().read_target_internal_typed()
-                Dim lenstr As String = Nothing
-                If Not read_target.retrieve(lenstr) Then
-                    raise_error(error_type.user, "Length of a heap declaration cannot be a struct.")
-                    Return False
-                End If
-                Return f(lenstr)
-            End Using
+            Return l.typed_code_gen(Of heap_name).build(length, o, f)
         End Function
 
         Public Function build(ByVal type As typed_node,
@@ -62,7 +48,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not length Is Nothing)
             Dim t As String = type.word().str()
             Dim n As String = name.word().str()
-            If code_gen_of(Of struct).define_in_heap(t, n, length, o) Then
+            If l.typed_code_gen(Of struct).define_in_heap(t, n, length, o) Then
                 Return True
             End If
             Return build(length,

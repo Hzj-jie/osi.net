@@ -19,10 +19,6 @@ Public MustInherit Class code_gen_wrapper(Of WRITER)
         assert(Not l Is Nothing)
         Me.l = l
     End Sub
-
-    Protected Function code_gen_of(Of T As code_gen(Of WRITER))() As T
-        Return l.code_gen_of(Of T)()
-    End Function
 End Class
 
 Public Class code_gens(Of WRITER)
@@ -69,7 +65,7 @@ Public Class code_gens(Of WRITER)
         Return code_gen_of(n.type_name)
     End Function
 
-    Public Function code_gen_of(Of T As code_gen(Of WRITER))() As T
+    Public Function typed_code_gen(Of T As code_gen(Of WRITER))() As T
         Return direct_cast(Of T)(code_gen_of(code_gen_name(Of T)()))
     End Function
 

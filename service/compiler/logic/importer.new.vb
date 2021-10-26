@@ -117,15 +117,27 @@ Namespace logic
         End Function
 
         Private Function new_copy_heap_out(ByVal p1 As String,
-                                            ByVal p2 As String,
-                                            ByVal p3 As String) As copy_heap_out
+                                           ByVal p2 As String,
+                                           ByVal p3 As String) As copy_heap_out
             Return New copy_heap_out(anchors, types, p1, p2, p3)
         End Function
 
         Private Function new_copy_heap_in(ByVal p1 As String,
-                                           ByVal p2 As String,
-                                           ByVal p3 As String) As copy_heap_in
+                                          ByVal p2 As String,
+                                          ByVal p3 As String) As copy_heap_in
             Return New copy_heap_in(anchors, types, p1, p2, p3)
+        End Function
+
+        Private Function new_move_heap_out(ByVal p1 As String,
+                                           ByVal p2 As String,
+                                           ByVal p3 As String) As move_heap_out
+            Return New move_heap_out(anchors, types, p1, p2, p3)
+        End Function
+
+        Private Function new_move_heap_in(ByVal p1 As String,
+                                          ByVal p2 As String,
+                                          ByVal p3 As String) As move_heap_in
+            Return New move_heap_in(anchors, types, p1, p2, p3)
         End Function
 
         Private Function new_define(ByVal p1 As String, ByVal p2 As String) As define

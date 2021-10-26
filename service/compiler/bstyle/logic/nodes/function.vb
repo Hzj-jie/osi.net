@@ -36,7 +36,7 @@ Partial Public NotInheritable Class bstyle
                 logic_gen_of(Of paramlist)().empty_paramlist()
             End If
             Using params As read_scoped(Of vector(Of builders.parameter)).ref =
-                    code_gen_of(Of paramlist)().current_target()
+                    l.typed_code_gen(Of paramlist)().current_target()
                 Using New scope_wrapper()
                     Return logic_name.of_callee(n.child(1).word().str(),
                                                 n.child(0).word().str(),

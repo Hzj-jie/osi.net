@@ -1,0 +1,16 @@
+﻿
+struct S {
+  String s;
+};
+
+type0 f(S s) {
+  String temp;
+  logic "interrupt stdout s.s temp"; 
+}
+
+type0 main() {
+  S s[1];
+  // TODO: Make s[0].s work.
+  s.s[0] = "abc";
+  f(s[0]);
+}

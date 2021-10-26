@@ -76,6 +76,8 @@ Public NotInheritable Class bstyle
                 AddressOf value_declaration.register,
                 AddressOf heap_declaration.register,
                 AddressOf value_definition.register,
+                AddressOf heap_clause.register,
+                AddressOf heap_name.register,
                 [default].of_first_child("value-declaration-with-semi-colon"),
                 [default].of_first_child("value-definition-with-semi-colon"),
                 [default].of_first_child("heap-declaration-with-semi-colon"),

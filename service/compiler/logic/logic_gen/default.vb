@@ -34,17 +34,21 @@ Partial Public NotInheritable Class logic_gens
         Public Shared Function [of](ByVal s As String,
                                     ByVal ParamArray selected_children() As UInt32) As Action(Of logic_gens)
             assert(Not selected_children.null_or_empty())
-            Return registerer(s, Function(ByVal this As [default],
-                                          ByVal n As typed_node,
-                                          ByVal o As writer) As Boolean
-                                     For i As Int32 = 0 To selected_children.Length() - 1
-                                         assert(n.child_count() > selected_children(i))
-                                         If Not this.l.of(n.child(selected_children(i))).build(o) Then
-                                             Return False
-                                         End If
-                                     Next
-                                     Return True
-                                 End Function)
+            Return registerer(s,
+                              Function(ByVal this As [default],
+                                       ByVal n As typed_node,
+                                       ByVal o As writer) As Boolean
+                                  assert(Not this Is Nothing)
+                                  assert(Not n Is Nothing)
+                                  assert(Not o Is Nothing)
+                                  For i As Int32 = 0 To selected_children.Length() - 1
+                                      assert(n.child_count() > selected_children(i))
+                                      If Not this.l.of(n.child(selected_children(i))).build(o) Then
+                                          Return False
+                                      End If
+                                  Next
+                                  Return True
+                              End Function)
         End Function
 
         Public Shared Function of_first_child(ByVal s As String) As Action(Of logic_gens)
@@ -56,6 +60,9 @@ Partial Public NotInheritable Class logic_gens
                               Function(ByVal this As [default],
                                        ByVal n As typed_node,
                                        ByVal o As writer) As Boolean
+                                  assert(Not this Is Nothing)
+                                  assert(Not n Is Nothing)
+                                  assert(Not o Is Nothing)
                                   Return this.l.of(n.child()).build(o)
                               End Function)
         End Function
@@ -65,6 +72,9 @@ Partial Public NotInheritable Class logic_gens
                               Function(ByVal this As [default],
                                        ByVal n As typed_node,
                                        ByVal o As writer) As Boolean
+                                  assert(Not this Is Nothing)
+                                  assert(Not n Is Nothing)
+                                  assert(Not o Is Nothing)
                                   Dim i As UInt32 = 1
                                   While i < n.child_count() - uint32_1
                                       If Not this.l.of(n.child(i)).build(o) Then
@@ -84,6 +94,9 @@ Partial Public NotInheritable Class logic_gens
                               Function(ByVal this As [default],
                                        ByVal n As typed_node,
                                        ByVal o As writer) As Boolean
+                                  assert(Not this Is Nothing)
+                                  assert(Not n Is Nothing)
+                                  assert(Not o Is Nothing)
                                   Using w()
                                       Return this.l.of(n.child()).build(o)
                                   End Using

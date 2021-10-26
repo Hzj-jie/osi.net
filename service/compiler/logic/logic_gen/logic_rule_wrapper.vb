@@ -21,7 +21,7 @@ Public MustInherit Class logic_gen_wrapper
     End Sub
 
     Protected Function logic_gen_of(Of T As logic_gen)() As T
-        Return code_gen_of(Of T)()
+        Return l.typed_code_gen(Of T)()
     End Function
 End Class
 

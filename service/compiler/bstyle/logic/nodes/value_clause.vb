@@ -24,26 +24,46 @@ Partial Public NotInheritable Class bstyle
             b.register(Of value_clause)()
         End Sub
 
-        Public Function build(ByVal name As typed_node, ByVal value As typed_node, ByVal o As writer) As Boolean
+        Public Function build(ByVal name As typed_node,
+                              ByVal value As typed_node,
+                              ByVal struct_move As Func(Of vector(Of String), Boolean),
+                              ByVal internal_typed_move As Func(Of String, Boolean),
+                              ByVal o As writer) As Boolean
             assert(Not name Is Nothing)
             assert(Not value Is Nothing)
-            assert(name.leaf())
+            assert(Not struct_move Is Nothing)
+            assert(Not internal_typed_move Is Nothing)
+            assert(Not o Is Nothing)
             If Not l.of(value).build(o) Then
                 Return False
             End If
             Dim type As String = Nothing
             assert(scope.current().variables().resolve(name.word().str(), type))
             If scope.current().structs().defined(type) Then
-                Using r As read_scoped(Of vector(Of String)).ref = code_gen_of(Of value)().read_target()
-                    Return struct.move(+r, name.word().str(), o)
+                Using r As read_scoped(Of vector(Of String)).ref = l.typed_code_gen(Of value)().read_target()
+                    Return struct_move(+r)
                 End Using
             Else
                 Using r As read_scoped(Of vector(Of String)).ref(Of String) =
-                        code_gen_of(Of value)().read_target_internal_typed()
-                    builders.of_move(name.word().str(), +r).to(o)
+                        l.typed_code_gen(Of value)().read_target_internal_typed()
+                    Return internal_typed_move(+r)
                 End Using
-                Return True
             End If
+        End Function
+
+        Public Function build(ByVal name As typed_node, ByVal value As typed_node, ByVal o As writer) As Boolean
+            assert(Not name Is Nothing)
+            assert(name.leaf())
+            Return build(name,
+                         value,
+                         Function(ByVal r As vector(Of String)) As Boolean
+                             Return struct.move(r, name.word().str(), o)
+                         End Function,
+                         Function(ByVal r As String) As Boolean
+                             builders.of_move(name.word().str(), r).to(o)
+                             Return True
+                         End Function,
+                         o)
         End Function
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build

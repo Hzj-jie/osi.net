@@ -11,7 +11,7 @@ param name name
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, kw-break, logic, typedef, heap-declaration]? semi-colon
+sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, kw-break, logic, typedef, heap-declaration, heap-clause]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [sentence]* end-paragraph

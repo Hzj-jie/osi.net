@@ -19,10 +19,4 @@ void main() {
   int x = 0;
   int v[++x];
   S v2[++x];
-  v[0] = 100;
-  v2[0] = new("abc");
-  v2[1] = new("def");
-  f(v2[0]);
-  f(v2[1]);
-  b2style::std_out(v[0]);
 }

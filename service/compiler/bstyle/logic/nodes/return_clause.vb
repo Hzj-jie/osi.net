@@ -47,7 +47,7 @@ Partial Public NotInheritable Class bstyle
             If Not l.of(n.child(1)).build(o) Then
                 Return False
             End If
-            Using r As read_scoped(Of vector(Of String)).ref = code_gen_of(Of value)().read_target()
+            Using r As read_scoped(Of vector(Of String)).ref = l.typed_code_gen(Of value)().read_target()
                 If scope.current().current_function().return_struct() Then
                     ' TODO: Check if return-type matches value-type.
                     Dim return_value As String = strcat(logic_name.temp_variable(n),

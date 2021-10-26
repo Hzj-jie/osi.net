@@ -26,11 +26,12 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(b)
         End Sub
 
-        Public Shared Function move(ByVal sources As vector(Of String),
-                                    ByVal target As String,
-                                    ByVal o As writer) As Boolean
+        Private Shared Function move(ByVal sources As vector(Of String),
+                                     ByVal target As String,
+                                     ByVal f As Func(Of vector(Of builders.parameter), Boolean)) As Boolean
             assert(Not sources Is Nothing)
             assert(Not target.null_or_whitespace())
+            assert(Not f Is Nothing)
             Dim vs As vector(Of builders.parameter) = Nothing
             If Not scope.current().structs().resolve(target, vs) Then
                 Return False
@@ -46,12 +47,47 @@ Partial Public NotInheritable Class bstyle
                             vs)
                 Return False
             End If
-            Dim i As UInt32 = 0
-            While i < vs.size()
-                builders.of_move(vs(i).name, sources(i)).to(o)
-                i += uint32_1
-            End While
-            Return True
+            Return f(vs)
+        End Function
+
+        Public Function move_heap(ByVal sources As vector(Of String),
+                                  ByVal target As String,
+                                  ByVal index As typed_node,
+                                  ByVal o As writer) As Boolean
+            Return move(sources,
+                        target,
+                        Function(ByVal vs As vector(Of builders.parameter)) As Boolean
+                            assert(Not vs Is Nothing)
+                            assert(vs.size() = sources.size())
+                            Return l.typed_code_gen(Of heap_clause)().move(
+                                       index,
+                                       Function(ByVal indexstr As String) As Boolean
+                                           Dim i As UInt32 = 0
+                                           While i < vs.size()
+                                               builders.of_move_heap_in(vs(i).name, indexstr, sources(i)).to(o)
+                                               i += uint32_1
+                                           End While
+                                           Return True
+                                       End Function,
+                                       o)
+                        End Function)
+        End Function
+
+        Public Shared Function move(ByVal sources As vector(Of String),
+                                    ByVal target As String,
+                                    ByVal o As writer) As Boolean
+            Return move(sources,
+                        target,
+                        Function(ByVal vs As vector(Of builders.parameter)) As Boolean
+                            assert(Not vs Is Nothing)
+                            assert(vs.size() = sources.size())
+                            Dim i As UInt32 = 0
+                            While i < vs.size()
+                                builders.of_move(vs(i).name, sources(i)).to(o)
+                                i += uint32_1
+                            End While
+                            Return True
+                        End Function)
         End Function
 
         Public Shared Function pack(ByVal sources As vector(Of String),
@@ -132,7 +168,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return code_gen_of(Of heap_declaration).build(
+            Return l.typed_code_gen(Of heap_declaration).build(
                 length,
                 o,
                 Function(ByVal len_name As String) As Boolean

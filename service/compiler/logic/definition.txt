@@ -118,6 +118,14 @@ copy_heap_out	string	string	string
 #  copy_heap_in target target_index source
 copy_heap_in	string	string	string
 
+# move a data from heap to stack
+#  move_heap_out target source source_index
+move_heap_out	string	string	string
+
+# move a data from stack to heap
+#  move_heap_in target target_index source
+move_heap_in	string	string	string
+
 # define a variable with type:
 #  define variable uint
 define	string	string

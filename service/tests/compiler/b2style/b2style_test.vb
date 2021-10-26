@@ -331,6 +331,16 @@ Public NotInheritable Class b2style_test
     End Sub
 
     <test>
+    Private Shared Sub heap_declaration()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.heap_declaration.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+    End Sub
+
+    '<test>
     Private Shared Sub heap()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
@@ -338,6 +348,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.heap.as_text(), e))
         assertion.is_not_null(e)
         e.execute()
+        assertion.equal(io.output(), "abcdef100")
     End Sub
 
     Private Sub New()

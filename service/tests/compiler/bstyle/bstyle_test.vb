@@ -108,6 +108,17 @@ Public NotInheritable Class bstyle_test
         assertion.equal(io.output(), "abcdef")
     End Sub
 
+    '<test>
+    Private Shared Sub call_struct_on_heap()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(bstyle.with_functions(New interrupts(+io)).
+                                 parse(_bstyle_test_data.call_struct_on_heap.as_text(), e))
+        assertion.is_not_null(e)
+        e.execute()
+        assertion.equal(io.output(), "abc")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

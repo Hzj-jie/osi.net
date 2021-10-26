@@ -37,7 +37,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Using value_target As read_scoped(Of vector(Of String)).ref(Of String) =
-                    code_gen_of(Of value)().read_target_internal_typed()
+                    l.typed_code_gen(Of value)().read_target_internal_typed()
                 Dim condition As String = Nothing
                 If Not value_target.retrieve(condition) Then
                     raise_error(error_type.user, "Condition of while cannot be a struct.")

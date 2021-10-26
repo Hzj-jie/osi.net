@@ -37,14 +37,16 @@ Partial Public NotInheritable Class bstyle
             assert(name.leaf())
             Dim t As String = type.word().str()
             Dim n As String = name.word().str()
-            Return code_gen_of(Of struct).define_in_stack(t, n, o) OrElse
+            Return l.typed_code_gen(Of struct).define_in_stack(t, n, o) OrElse
                    declare_internal_typed(t, n, o)
         End Function
 
         Public Shared Function declare_internal_typed(ByVal type As String,
                                                       ByVal name As String,
                                                       ByVal o As writer) As Boolean
-            assert(Not scope.current().structs().defined(type))
+            If scope.current().structs().defined(type) Then
+                Return False
+            End If
             assert(Not o Is Nothing)
             If Not scope.current().variables().define(type, name) Then
                 Return False

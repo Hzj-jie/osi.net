@@ -128,8 +128,7 @@ public static class Program {
     wl("            End If");
     for (int i = 0; i < keys.Count; i++) {
       wl("            Using code_block");
-      wl("                Dim pos As UInt32 = 0");
-      wl("                pos = p");
+      wl("                Dim pos As UInt32 = p");
       wl("                If parse_" + keys[i] + "_" + i.ToString() + "(v, pos, o) Then");
       wl("                    p = pos");
       wl("                    Return True");

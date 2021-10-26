@@ -27,7 +27,7 @@ Partial Public NotInheritable Class b2style
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(n.leaf())
-            o.append(code_gen_of(Of namespace_)().bstyle_format(n.word().str()))
+            o.append(l.typed_code_gen(Of namespace_)().bstyle_format(n.word().str()))
             Return True
         End Function
     End Class

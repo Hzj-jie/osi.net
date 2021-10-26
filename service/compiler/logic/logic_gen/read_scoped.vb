@@ -10,13 +10,8 @@ Imports osi.root.formation
 
 Namespace logic
     Public NotInheritable Class read_scoped(Of T)
-        Private ReadOnly s As stack(Of T)
-        Private pending_dispose As UInt32
-
-        Public Sub New()
-            s = New stack(Of T)()
-            pending_dispose = 0
-        End Sub
+        Private ReadOnly s As New stack(Of T)()
+        Private pending_dispose As UInt32 = 0
 
         Public Sub push(ByVal v As T)
             s.emplace(v)
@@ -38,6 +33,7 @@ Namespace logic
             End Sub
 
             Public Sub Dispose() Implements IDisposable.Dispose
+                assert(r.pending_dispose > 0)
                 r.pending_dispose -= uint32_1
                 r.s.pop()
             End Sub
