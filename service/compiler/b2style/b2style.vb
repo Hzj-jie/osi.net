@@ -100,6 +100,7 @@ Partial Public NotInheritable Class b2style
                        bypass.registerer("value-clause"),
                        bypass.registerer("heap-clause"),
                        bypass.registerer("heap-name"),
+                       AddressOf heap_struct_name.register,
                        AddressOf self_value_clause.register,
                        bypass.registerer("return-clause"),
                        bypass.registerer("ignore-result-function-call"),

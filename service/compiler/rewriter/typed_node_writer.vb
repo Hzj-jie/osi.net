@@ -21,15 +21,7 @@ Partial Public NotInheritable Class rewriters
 
         Public Function append(ByVal n As typed_node) As typed_node_writer
             assert(Not n Is Nothing)
-            Dim s As StringBuilder = Nothing
-            s = New StringBuilder()
-            Dim i As UInt32 = 0
-            While i < n.word_count()
-                s.Append(n.word(i))
-                s.Append(character.blank)
-                i += uint32_1
-            End While
-            v.emplace_back(s)
+            v.emplace_back(n.input())
             Return Me
         End Function
 
@@ -39,6 +31,11 @@ Partial Public NotInheritable Class rewriters
                 v.emplace_back(s)
             End If
             Return Me
+        End Function
+
+        Public Function append(ByVal s As StringBuilder) As typed_node_writer
+            assert(Not s Is Nothing)
+            Return append(Convert.ToString(s))
         End Function
 
         Public Function dump() As String

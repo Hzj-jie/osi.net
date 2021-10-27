@@ -86,4 +86,6 @@ kw-typedef typedef
 
 kw-struct struct
 
+dot .
+
 name [\w,_,::][\w,\d,_,::,.]*

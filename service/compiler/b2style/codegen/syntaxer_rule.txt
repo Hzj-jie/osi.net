@@ -22,7 +22,7 @@ value-declaration name name
 value-definition name name assignment value
 heap-declaration name heap-name
 value-clause name assignment value
-heap-clause heap-name assignment value
+heap-clause [heap-name, heap-struct-name] assignment value
 self-operator [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or, self-left-shift, self-right-shift]
 self-value-clause name self-operator value
 self-value-clause2 heap-name self-operator value
@@ -40,7 +40,7 @@ for-loop kw-for start-bracket [value-declaration, value-definition]? semi-colon 
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
-raw-value [function-call, variable-name, heap-name, integer, biguint, ufloat, bool, string]
+raw-value [function-call, variable-name, heap-name, heap-struct-name, integer, biguint, ufloat, bool, string]
 value-without-bracket [raw-value, value-with-operation]
 value-with-operation [unary-operation-value, binary-operation-value]
 unary-operation-value [pre-operation-value, post-operation-value]
@@ -52,6 +52,7 @@ binary-operation-value raw-value [add, minus, multiply, divide, mod, power, bit-
 
 variable-name name
 heap-name name start-square-bracket value end-square-bracket
+heap-struct-name heap-name dot name
 
 ignore-result-function-call function-call
 

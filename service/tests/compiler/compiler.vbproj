@@ -120,7 +120,6 @@
     <Content Include="b2style\codegen\another_1_to_100.txt" />
     <Content Include="b2style\codegen\biguint.txt" />
     <Content Include="b2style\codegen\calculate_pi_bbp.txt" />
-    <Content Include="b2style\codegen\call_struct_on_heap.txt" />
     <Content Include="b2style\codegen\comments.txt" />
     <Content Include="b2style\codegen\heap_declaration.txt" />
     <Content Include="b2style\codegen\ifndef.txt" />

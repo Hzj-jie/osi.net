@@ -348,18 +348,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.heap.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "abcdef100")
-    End Sub
-
-    <test>
-    Private Shared Sub call_struct_on_heap()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.call_struct_on_heap.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "abcd")
+        assertion.equal(io.output(), "abcdefghi100")
     End Sub
 
     Private Sub New()

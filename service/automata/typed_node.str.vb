@@ -48,9 +48,13 @@ Partial Public NotInheritable Class typed_node
     Public Function input() As String
         Dim s As New StringBuilder()
         Dim i As UInt32 = 0
-        While i < word_count()
-            s.Append(word(i)).Append(" ")
+        While True
+            s.Append(word(i))
             i += uint32_1
+            If i = word_count() Then
+                Exit While
+            End If
+            s.Append(character.blank)
         End While
         Return Convert.ToString(s)
     End Function
