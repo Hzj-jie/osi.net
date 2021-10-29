@@ -15,7 +15,7 @@ Namespace logic
         Private ReadOnly types As types
         Private ReadOnly name As String
         Private ReadOnly type As String
-        Private ReadOnly parameters() As pair(Of String, String)
+        Private ReadOnly parameters() As builders.parameter
         Private ReadOnly paragraph As paragraph
 
         Public Sub New(ByVal anchors As anchors,
@@ -31,10 +31,11 @@ Namespace logic
             Me.types = types
             Me.name = name
             Me.type = type
-            Me.parameters = parameters.release_or_null()
+            Me.parameters = builders.parameter.from_logic_callee_input(parameters.release_or_null())
             Me.paragraph = paragraph.release_or_null()
         End Sub
 
+        ' VisibleForTesting
         Public Sub New(ByVal anchors As anchors,
                        ByVal types As types,
                        ByVal name As String,
@@ -44,20 +45,11 @@ Namespace logic
             Me.New(anchors, types, name, type, unique_ptr.[New](parameters), paragraph)
         End Sub
 
-        Private Function parameter_types() As String()
-            Dim r() As String = Nothing
-            ReDim r(array_size_i(parameters) - 1)
-            For i As Int32 = 0 To array_size_i(parameters) - 1
-                r(i) = parameters(i).second
-            Next
-            Return r
-        End Function
-
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim pos As UInt32 = o.size()
             o.emplace_back(String.Empty)
-            If Not anchors.define(name, o, type, parameter_types) Then
+            If Not anchors.define(name, o, type, parameters) Then
                 Return False
             End If
             ' No need to use scope_wrapper, as the pops are after the rest instruction and have no effect.
@@ -72,7 +64,7 @@ Namespace logic
                     Return False
                 End If
                 For i As Int32 = 0 To array_size_i(parameters) - 1
-                    If Not scope.current().define_stack(parameters(i).first, parameters(i).second) Then
+                    If Not scope.current().define_stack(parameters(i).name, parameters(i).type) Then
                         Return False
                     End If
                 Next

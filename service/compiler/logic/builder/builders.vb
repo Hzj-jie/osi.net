@@ -21,6 +21,18 @@ Namespace logic
                 Me.type = type
                 Me.name = name
             End Sub
+
+            Public Shared Function from_logic_callee_input(ByVal parameters() As pair(Of String, String)) As parameter()
+                If parameters Is Nothing Then
+                    Return Nothing
+                End If
+                Return streams.of(parameters).
+                               map(Function(ByVal p As pair(Of String, String)) As parameter
+                                       assert(Not p Is Nothing)
+                                       Return New parameter(p.second, p.first)
+                                   End Function).
+                               to_array()
+            End Function
         End Class
 
         Public Shared Function of_callee(ByVal name As String,

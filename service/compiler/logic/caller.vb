@@ -21,7 +21,7 @@ Namespace logic
                        ByVal types As types,
                        ByVal name As String,
                        ByVal result As String,
-                       ByVal parameters As unique_ptr(Of String()))
+                       ParamArray ByVal parameters() As String)
             assert(Not anchors Is Nothing)
             assert(Not types Is Nothing)
             assert(Not name.null_or_whitespace())
@@ -30,7 +30,7 @@ Namespace logic
             Me.types = types
             Me.name = name
             Me.result = [optional].of_nullable(result)
-            Me.parameters = parameters.release_or_null()
+            Me.parameters = parameters
             For Each parameter As String In Me.parameters
                 assert(Not parameter.null_or_whitespace())
             Next
@@ -39,30 +39,15 @@ Namespace logic
         Public Sub New(ByVal anchors As anchors,
                        ByVal types As types,
                        ByVal name As String,
-                       ByVal parameters As unique_ptr(Of String()))
+                       ParamArray ByVal parameters() As String)
             Me.New(anchors, types, name, Nothing, parameters)
-        End Sub
-
-        Public Sub New(ByVal anchors As anchors,
-                       ByVal types As types,
-                       ByVal name As String,
-                       ByVal result As String,
-                       ParamArray ByVal parameters() As String)
-            Me.New(anchors, types, name, result, unique_ptr.[New](parameters))
-        End Sub
-
-        Public Sub New(ByVal anchors As anchors,
-                       ByVal types As types,
-                       ByVal name As String,
-                       ParamArray ByVal parameters() As String)
-            Me.New(anchors, types, name, Nothing, unique_ptr.[New](parameters))
         End Sub
 
         ' Forward return-value to scope_wrapper.
         Private Function define_return_value(ByVal anchor As anchor, ByVal o As vector(Of String)) As Boolean
             assert(Not o Is Nothing)
             Dim result_type As String = Nothing
-            If Not anchor.return_type_of(result_type) Then
+            If Not anchor.return_type(result_type) Then
                 errors.anchor_undefined(anchor.name)
                 Return False
             End If
@@ -76,8 +61,8 @@ Namespace logic
         Private Function define_parameters(ByVal anchor As anchor,
                                            ByVal o As vector(Of String)) As Boolean
             assert(Not o Is Nothing)
-            Dim callee_params As const_array(Of String) = Nothing
-            If Not anchor.parameter_types_of(callee_params) Then
+            Dim callee_params As const_array(Of builders.parameter) = Nothing
+            If Not anchor.parameters(callee_params) Then
                 errors.anchor_undefined(anchor.name)
                 Return False
             End If
@@ -86,12 +71,11 @@ Namespace logic
                 Return False
             End If
             For i As Int32 = 0 To array_size_i(parameters) - 1
-                Dim parameter_name_place_holder As String = Nothing
-                parameter_name_place_holder = strcat("@parameter_", i, "_of_", name, "_place_holder")
+                Dim parameter_name_place_holder As String = strcat("@parameter_", i, "_of_", name, "_place_holder")
                 If Not define.export(anchors,
                                      types,
                                      parameter_name_place_holder,
-                                     callee_params(CUInt(i)),
+                                     callee_params(CUInt(i)).type,
                                      o) Then
                     Return False
                 End If

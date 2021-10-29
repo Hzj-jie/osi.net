@@ -22,12 +22,12 @@ Namespace logic
             Return anchors.retrieve(name, pos)
         End Function
 
-        Public Function return_type_of(ByRef o As String) As Boolean
-            Return anchors.return_type_of(name, o)
+        Public Function return_type(ByRef o As String) As Boolean
+            Return anchors.return_type(name, o)
         End Function
 
-        Public Function parameter_types_of(ByRef o As const_array(Of String)) As Boolean
-            Return anchors.parameter_types_of(name, o)
+        Public Function parameters(ByRef o As const_array(Of builders.parameter)) As Boolean
+            Return anchors.parameters(name, o)
         End Function
 
         Public Shared Operator +(ByVal this As anchor) As UInt32
@@ -42,13 +42,10 @@ Namespace logic
         Private NotInheritable Class callee_ref
             Public ReadOnly begin As UInt32
             Public ReadOnly return_type As String
-            Public ReadOnly parameters As const_array(Of String)
+            Public ReadOnly parameters As const_array(Of builders.parameter)
 
-            Public Sub New(ByVal begin As UInt32, ByVal return_type As String, ByVal parameters() As String)
+            Public Sub New(ByVal begin As UInt32, ByVal return_type As String, ByVal parameters() As builders.parameter)
                 assert(Not return_type.null_or_whitespace())
-                For i As Int32 = 0 To array_size_i(parameters) - 1
-                    assert(Not parameters(i).null_or_whitespace())
-                Next
                 Me.begin = begin
                 Me.return_type = return_type
                 Me.parameters = const_array.of(parameters)
@@ -72,7 +69,7 @@ Namespace logic
         Public Function define(ByVal name As String,
                                ByVal o As vector(Of String),
                                ByVal return_type As String,
-                               ByVal parameters() As String) As Boolean
+                               ByVal parameters() As builders.parameter) As Boolean
             assert(object_compare(Me, empty) <> 0)
             assert(Not name.null_or_whitespace())
             assert(Not o Is Nothing)
@@ -106,7 +103,7 @@ Namespace logic
                         pos)
         End Function
 
-        Public Function return_type_of(ByVal name As String, ByRef o As String) As Boolean
+        Public Function return_type(ByVal name As String, ByRef o As String) As Boolean
             Return find(name,
                         Function(ByVal i As callee_ref) As String
                             assert(Not i Is Nothing)
@@ -115,9 +112,9 @@ Namespace logic
                         o)
         End Function
 
-        Public Function parameter_types_of(ByVal name As String, ByRef o As const_array(Of String)) As Boolean
+        Public Function parameters(ByVal name As String, ByRef o As const_array(Of builders.parameter)) As Boolean
             Return find(name,
-                        Function(ByVal i As callee_ref) As const_array(Of String)
+                        Function(ByVal i As callee_ref) As const_array(Of builders.parameter)
                             assert(Not i Is Nothing)
                             Return i.parameters
                         End Function,
