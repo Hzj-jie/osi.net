@@ -1,0 +1,16 @@
+﻿
+callee m type0 ( n type*& i type* ) {
+  append n i
+}
+
+define n type*
+define i type*
+copy_const i sd
+
+caller m ( n i )
+caller m ( n i )
+caller m ( n i )
+caller m ( n i )
+
+define temp_string type*
+interrupt stdout n temp_string

@@ -64,6 +64,7 @@ or	string	string	string
 
 # define a callee / function with name, parameters and body:
 #  callee f int (a uint) { return f a; }
+#  a type suffixed by "&" indicates that it's a "reference".
 callee	string	string	typed_parameters	paragraph
 
 # execute a function with parameters and store its return value:

@@ -136,4 +136,19 @@ Namespace logic
                                   {executor.error_type.heap_access_out_of_boundary})
         End Sub
     End Class
+
+    Public NotInheritable Class import_executor_callee_ref
+        Inherits import_executor_case
+
+        Private Shared ReadOnly io As New console_io.test_wrapper()
+
+        Public Sub New()
+            MyBase.New(_import_executor_cases.callee_ref.as_text(), New interrupts(+io))
+        End Sub
+
+        Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
+            MyBase.check_result(e)
+            assertion.equal(io.output(), New String(Convert.ToChar(100), 4))
+        End Sub
+    End Class
 End Namespace

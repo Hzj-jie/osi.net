@@ -57,9 +57,15 @@ Namespace logic
             Return True
         End Function
 
+        Private Function parameter_place_holder_of(ByVal i As Int32) As String
+            assert(i < parameters.array_size_i())
+            Return strcat("@parameter_", i, "_of_", name, "_place_holder")
+        End Function
+
         ' Forward parameters to scope_wrapper.
         Private Function define_parameters(ByVal anchor As anchor,
                                            ByVal o As vector(Of String)) As Boolean
+            assert(Not anchor Is Nothing)
             assert(Not o Is Nothing)
             Dim callee_params As const_array(Of builders.parameter) = Nothing
             If Not anchor.parameters(callee_params) Then
@@ -71,17 +77,17 @@ Namespace logic
                 Return False
             End If
             For i As Int32 = 0 To array_size_i(parameters) - 1
-                Dim parameter_name_place_holder As String = strcat("@parameter_", i, "_of_", name, "_place_holder")
+                Dim parameter_place_holder As String = parameter_place_holder_of(i)
                 If Not define.export(anchors,
                                      types,
-                                     parameter_name_place_holder,
+                                     parameter_place_holder,
                                      callee_params(CUInt(i)).type,
                                      o) Then
                     Return False
                 End If
 
                 Dim target As variable = Nothing
-                If Not variable.of_stack(types, parameter_name_place_holder, target) Then
+                If Not variable.of_stack(types, parameter_place_holder, target) Then
                     Return False
                 End If
 
@@ -90,16 +96,38 @@ Namespace logic
                     Return False
                 End If
 
-                If Not copy.export(target, var, o) Then
-                    Return False
+                If callee_params(CUInt(i)).ref Then
+                    If Not move.export(target, var, o) Then
+                        Return False
+                    End If
+                Else
+                    If Not copy.export(target, var, o) Then
+                        Return False
+                    End If
                 End If
             Next
             Return True
         End Function
 
         ' Forward return-value from scope_wrapper.
-        Private Function forward_to_result(ByVal o As vector(Of String)) As Boolean
+        Private Function forward_to_result(ByVal anchor As anchor, ByVal o As vector(Of String)) As Boolean
+            assert(Not anchor Is Nothing)
             assert(Not o Is Nothing)
+            Dim callee_params As const_array(Of builders.parameter) = Nothing
+            assert(anchor.parameters(callee_params))
+            assert(array_size(parameters) = callee_params.size())
+            For i As Int32 = 0 To parameters.array_size_i() - 1
+                If Not callee_params(CUInt(i)).ref Then
+                    Continue For
+                End If
+                Dim parameter_place_holder As variable = Nothing
+                assert(variable.of_stack(types, parameter_place_holder_of(i), parameter_place_holder))
+                Dim parameter As variable = Nothing
+                assert(variable.of_stack(types, parameters(i), parameter))
+                If Not move.export(parameter, parameter_place_holder, o) Then
+                    Return False
+                End If
+            Next
             If Not result Then
                 Return True
             End If
@@ -133,7 +161,7 @@ Namespace logic
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.jump, data_ref.abs(pos)))
-                If Not forward_to_result(o) Then
+                If Not forward_to_result(anchor, o) Then
                     Return False
                 End If
             End Using
