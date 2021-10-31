@@ -1,0 +1,117 @@
+﻿jump rel6
+push    ## +++ define  temp type*
+cpc rel0 a07000000
+int rel0 rel1 rel0
+pop
+rest
+jump rel5
+add rel1 rel1 rel0
+cp rel2 rel1
+rest
+rest
+jump rel21
+push    ## +++ define  temp_value_@1@34417-34418 Integer
+cpc rel0 a01000000
+push    ## +++ define  temp_value_@1@34398-34420 Integer
+push    ## +++ define  @return_value_of_b2style__add&Integer&Integer_place_holder Integer
+push    ## +++ define  @parameter_0_of_b2style__add&Integer&Integer_place_holder Integer
+cp rel0 rel4
+push    ## +++ define  @parameter_1_of_b2style__add&Integer&Integer_place_holder Integer
+cp rel0 rel4
+stst
+jump abs7
+cp rel3 rel2
+pop
+pop
+pop
+mov rel2 rel0
+cp rel3 rel2
+rest
+pop
+pop
+rest
+jump rel80
+push    ## +++ define  x Integer
+push    ## +++ define  temp_value_@1@34460-34461 Integer
+cpc rel0 a00000000
+mov rel1 rel0
+push    ## +++ define  temp_value_@1@34487-34507 Integer
+push    ## +++ define  @return_value_of_self_increment&Integer_place_holder Integer
+push    ## +++ define  @parameter_0_of_self_increment&Integer_place_holder Integer
+cp rel0 rel4
+stst
+jump abs12
+cp rel4 rel0
+cp rel2 rel1
+pop
+pop
+push    ## +++ define  @return_value_of_b2style__int_std_out&Integer_place_holder type0
+push    ## +++ define  @parameter_0_of_b2style__int_std_out&Integer_place_holder Integer
+cp rel0 rel2
+stst
+jump abs1
+pop
+pop
+push    ## +++ define  temp_value_@1@34535-34555 Integer
+push    ## +++ define  @return_value_of_self_increment&Integer_place_holder Integer
+push    ## +++ define  @parameter_0_of_self_increment&Integer_place_holder Integer
+cp rel0 rel5
+stst
+jump abs12
+cp rel5 rel0
+cp rel2 rel1
+pop
+pop
+push    ## +++ define  @return_value_of_b2style__int_std_out&Integer_place_holder type0
+push    ## +++ define  @parameter_0_of_b2style__int_std_out&Integer_place_holder Integer
+cp rel0 rel2
+stst
+jump abs1
+pop
+pop
+push    ## +++ define  temp_value_@1@34583-34603 Integer
+push    ## +++ define  @return_value_of_self_increment&Integer_place_holder Integer
+push    ## +++ define  @parameter_0_of_self_increment&Integer_place_holder Integer
+cp rel0 rel6
+stst
+jump abs12
+cp rel6 rel0
+cp rel2 rel1
+pop
+pop
+push    ## +++ define  @return_value_of_b2style__int_std_out&Integer_place_holder type0
+push    ## +++ define  @parameter_0_of_b2style__int_std_out&Integer_place_holder Integer
+cp rel0 rel2
+stst
+jump abs1
+pop
+pop
+push    ## +++ define  temp_value_@1@34631-34651 Integer
+push    ## +++ define  @return_value_of_self_increment&Integer_place_holder Integer
+push    ## +++ define  @parameter_0_of_self_increment&Integer_place_holder Integer
+cp rel0 rel7
+stst
+jump abs12
+cp rel7 rel0
+cp rel2 rel1
+pop
+pop
+push    ## +++ define  @return_value_of_b2style__int_std_out&Integer_place_holder type0
+push    ## +++ define  @parameter_0_of_b2style__int_std_out&Integer_place_holder Integer
+cp rel0 rel2
+stst
+jump abs1
+pop
+pop
+pop
+pop
+pop
+pop
+pop
+pop
+rest
+push    ## +++ define  @return_value_of_main_place_holder type0
+stst
+jump abs33
+pop
+stop

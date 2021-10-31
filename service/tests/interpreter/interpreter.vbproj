@@ -123,6 +123,7 @@
     <Content Include="primitive\cases\sim5.txt" />
     <Content Include="primitive\cases\sim6.txt" />
     <Content Include="primitive\cases\sim7.txt" />
+    <Content Include="primitive\cases\sim8.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="..\..\..\root\root.utt.props" Condition="'$(RootUttProps)'==''" />

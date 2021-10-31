@@ -148,7 +148,26 @@ Namespace logic
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
             MyBase.check_result(e)
-            assertion.equal(io.output(), New String(Convert.ToChar(100), 4))
+            assertion.equal(io.output(), strcat(New String(Convert.ToChar(100), 4), " "))
+        End Sub
+    End Class
+
+    Public NotInheritable Class import_executor_callee_ref2
+        Inherits import_executor_case
+
+        Private Shared ReadOnly io As New console_io.test_wrapper()
+
+        Public Sub New()
+            MyBase.New(_import_executor_cases.callee_ref2.as_text(), New interrupts(+io))
+        End Sub
+
+        Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
+            MyBase.check_result(e)
+            assertion.equal(io.output().Length(), 4)
+            assertion.equal(Convert.ToInt32(io.output()(0)), 1)
+            assertion.equal(Convert.ToInt32(io.output()(1)), 2)
+            assertion.equal(Convert.ToInt32(io.output()(2)), 3)
+            assertion.equal(Convert.ToInt32(io.output()(3)), 4)
         End Sub
     End Class
 End Namespace

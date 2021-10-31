@@ -36,13 +36,10 @@ Namespace primitive
         End Function
 
         Private Shared Function io_case() As Boolean
-            Dim s As simulator = Nothing
-            Dim io As console_io = Nothing
-            io = New console_io()
-            s = New simulator(New interrupts(io))
+            Dim io As New console_io()
+            Dim s As New simulator(New interrupts(io))
             assertion.is_true(s.import(sim4.as_text()))
-            Dim input As String = Nothing
-            input = rnd_en_chars(rnd_int(100, 1000))
+            Dim input As String = rnd_en_chars(rnd_int(100, 1000))
             Using out As TextWriter = New StringWriter(),
                   err As TextWriter = New StringWriter(),
                   [in] As TextReader = New StringReader(input)
@@ -58,9 +55,25 @@ Namespace primitive
             Return True
         End Function
 
+        Private Shared Function case8() As Boolean
+            Dim io As New console_io.test_wrapper()
+            Dim s As New simulator(New interrupts(+io))
+            assertion.is_true(s.import(sim8.as_text()))
+            s.execute()
+            assertion.is_false(s.halt())
+            assertion.is_true(s.errors().empty())
+            assertion.equal(io.output().Length(), 4)
+            assertion.equal(Convert.ToInt32(io.output()(0)), 1)
+            assertion.equal(Convert.ToInt32(io.output()(1)), 2)
+            assertion.equal(Convert.ToInt32(io.output()(2)), 3)
+            assertion.equal(Convert.ToInt32(io.output()(3)), 4)
+            Return True
+        End Function
+
         Public Overrides Function run() As Boolean
             Return output_case() AndAlso
-                   io_case()
+                   io_case() AndAlso
+                   case8()
         End Function
     End Class
 End Namespace
