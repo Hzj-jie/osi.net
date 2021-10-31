@@ -24,6 +24,10 @@ Namespace primitive
             Throw New executor_stop_error(error_types)
         End Sub
 
+        Public Shared Sub [throw](ByVal error_type As executor.error_type)
+            [throw]({error_type})
+        End Sub
+
         Public Shared Sub [throw](ByVal error_type As executor.error_type, ByVal ParamArray log_msg() As Object)
             raise_error(root.constants.error_type.user, log_msg)
             [throw]({error_type})
