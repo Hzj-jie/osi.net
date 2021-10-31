@@ -351,7 +351,7 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), "abcdefghi100")
     End Sub
 
-    '<test>
+    <test>
     Private Shared Sub function_ref()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
@@ -359,7 +359,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.function_ref.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "2")
+        assertion.equal(io.output(), "1234")
     End Sub
 
     Private Sub New()

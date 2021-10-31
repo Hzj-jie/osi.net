@@ -42,7 +42,9 @@ Namespace logic
                 If Not variable.of_stack(types, +return_value, var) Then
                     Return False
                 End If
-                If Not move.export(r, var, o) Then
+                ' TODO: Check if +return_value is a temporary variable or a reference to decide whether move can be
+                ' used.
+                If Not copy.export(r, var, o) Then
                     Return False
                 End If
             Else
