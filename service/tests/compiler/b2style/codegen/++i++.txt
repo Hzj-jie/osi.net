@@ -1,0 +1,20 @@
+﻿
+#include <b2style.h>
+
+void main() {
+  int i = 1;
+  // i += i++ means i = i + (i++), so the i++ does not take effect, i will be overrided anyway.
+  // i = 1 + 1
+  i += i++;
+  b2style::std_out(i);
+  b2style::std_out("_");
+  // i += ++i means i = i + (++i), i = i + (i = 3), i = 3 + 3 = 6
+  i += ++i;
+  b2style::std_out(i);
+  b2style::std_out("_");
+  // ++i++ means (++i)++, so second ++ does not take effect against i itself.
+  // i = i + (++i++)
+  i += ++i++;
+  b2style::std_out(i);
+  b2style::std_out("_");
+}

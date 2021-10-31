@@ -233,32 +233,68 @@ namespace b2style {
     return i;
   }
 
-  biguint self_inc(biguint x) {
+  biguint self_inc_post(biguint& x) {
+    biguint r = x;
+    logic "add b2style__x b2style__x @@prefixes@constants@int_1";
+    return r;
+  }
+
+  long self_inc_post(long& x) {
+    long r = x;
+    logic "add b2style__x b2style__x @@prefixes@constants@int_1";
+    return r;
+  }
+
+  int self_inc_post(int& x) {
+    int r = x;
+    logic "add b2style__x b2style__x @@prefixes@constants@int_1";
+	return r;
+  }
+
+  biguint self_dec_post(biguint& x) {
+    biguint r = x;
+    logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
+    return r;
+  }
+
+  long self_dec_post(long& x) {
+    long r = x;
+    logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
+	return r;
+  }
+
+  int self_dec_post(int& x) {
+    int r = x;
+    logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
+	return r;
+  }
+
+  biguint self_inc_pre(biguint& x) {
     logic "add b2style__x b2style__x @@prefixes@constants@int_1";
     return x;
   }
 
-  long self_inc(long x) {
+  long self_inc_pre(long& x) {
     logic "add b2style__x b2style__x @@prefixes@constants@int_1";
     return ::bstyle::fit_in_long(x);
   }
 
-  int self_inc(int x) {
+  int self_inc_pre(int& x) {
     logic "add b2style__x b2style__x @@prefixes@constants@int_1";
     return ::bstyle::fit_in_int(x);
   }
 
-  biguint self_dec(biguint x) {
+  biguint self_dec_pre(biguint& x) {
     logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
     return x;
   }
 
-  long self_dec(long x) {
+  long self_dec_pre(long& x) {
     logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
     return ::bstyle::fit_in_long(x);
   }
 
-  int self_dec(int x) {
+  int self_dec_pre(int& x) {
     logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
     return ::bstyle::fit_in_int(x);
   }

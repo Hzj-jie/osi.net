@@ -56,17 +56,17 @@ long bstyle__to_long(int i) {
   return i;
 }
 
-long bstyle__fit_in_long(long x) {
+long bstyle__fit_in_long(long& x) {
   logic "cut_len x x @@prefixes@constants@int_0 @@prefixes@constants@size_of_long";
   return x;
 }
 
-int bstyle__fit_in_int(int x) {
+int bstyle__fit_in_int(int& x) {
   logic "cut_len x x @@prefixes@constants@int_0 @@prefixes@constants@size_of_int";
   return x;
 }
 
-byte bstyle__fit_in_byte(byte x) {
+byte bstyle__fit_in_byte(byte& x) {
   logic "cut_len x x @@prefixes@constants@int_0 @@prefixes@constants@size_of_byte";
   return x;
 }

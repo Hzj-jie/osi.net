@@ -373,6 +373,29 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), "100abc")
     End Sub
 
+    <test>
+    Private Shared Sub __i__()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.__i__.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        ' TODO: The result is not consistent with c++.
+        assertion.equal(io.output(), "2_6_8_")
+    End Sub
+
+    '<test>
+    Private Shared Sub for_loop()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.for_loop.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "9900")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

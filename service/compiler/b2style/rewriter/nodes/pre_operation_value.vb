@@ -29,7 +29,7 @@ Partial Public NotInheritable Class b2style
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(n.child_count() = 2)
-            o.append(operations.function_name(n.child(0)))
+            o.append(strcat(operations.function_name(n.child(0)), "_pre"))
             o.append("(")
             If Not l.of(n.child(1)).build(o) Then
                 Return False
