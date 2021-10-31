@@ -83,6 +83,7 @@
     <Compile Include="primitive\data_ref_test.vb" />
     <Compile Include="primitive\executor_stop_error_test.vb" />
     <Compile Include="primitive\loaded_method_test.vb" />
+    <Compile Include="primitive\primitive_main.vb" />
     <Compile Include="primitive\states_test.vb" />
     <Compile Include="primitive\exportable_test.vb" />
     <Compile Include="primitive\interrupts_implementation_tests.vb" />

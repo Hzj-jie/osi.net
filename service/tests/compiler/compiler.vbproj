@@ -55,6 +55,8 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="b2style\b2stylec_main.vb" />
+    <Compile Include="b2style\b2style_main.vb" />
     <Compile Include="b2style\b2style_test.vb" />
     <Compile Include="b2style\b2style_test_data.vb" />
     <Compile Include="bstyle\bstyle_test.vb" />

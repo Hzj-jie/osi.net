@@ -71,6 +71,7 @@
     <Compile Include="big_int\predefined\big_int_io_perf.vb" />
     <Compile Include="big_int\predefined\big_int_predefined_perf_test.vb" />
     <Compile Include="big_int\predefined\big_int_predefined_test.vb" />
+    <Compile Include="big_int_calculator.vb" />
     <Compile Include="big_udec\big_udec_bytes_test.vb" />
     <Compile Include="big_udec\big_udec_extract_test.vb" />
     <Compile Include="big_udec\big_udec_e_test.vb" />
@@ -97,6 +98,7 @@
     <Compile Include="big_uint\big_uint_shift_case.vb" />
     <Compile Include="big_uint\big_uint_str_case.vb" />
     <Compile Include="big_uint\big_uint_test.vb" />
+    <Compile Include="big_uint_calculator.vb" />
     <Compile Include="calculator_test.vb" />
     <Compile Include="div_rem_uint64_uint32_test.vb" />
     <Compile Include="expression_test.vb" />

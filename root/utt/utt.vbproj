@@ -142,6 +142,7 @@
     <Compile Include="selfhealth\isolate_case_wrapper_test.vb" />
     <Compile Include="selfhealth\memory_usage_limited_test.vb" />
     <Compile Include="selfhealth\selfhealth.vb" />
+    <Compile Include="selfhealth\utt_diff.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
