@@ -55,9 +55,10 @@ Partial Public NotInheritable Class bstyle
                          Function(ByVal indexstr As String) As Boolean
                              Return l.typed_code_gen(Of variable_name)().build(
                                         n.child(0),
-                                        Sub(ByVal vs As vector(Of String),
+                                        Sub(ByVal type As String,
                                             ByVal ps As vector(Of builders.parameter))
-                                            assert(Not vs Is Nothing)
+                                            Dim vs As vector(Of String) =
+                                                l.typed_code_gen(Of value)().with_temp_target(type, n, o)
                                             assert(Not ps Is Nothing)
                                             assert(vs.size() = ps.size())
                                             Dim i As UInt32 = 0
@@ -66,8 +67,12 @@ Partial Public NotInheritable Class bstyle
                                                 i += uint32_1
                                             End While
                                         End Sub,
-                                        Sub(ByVal target As String, ByVal source As String)
-                                            builders.of_copy_heap_out(target, source, indexstr).to(o)
+                                        Sub(ByVal type As String, ByVal source As String)
+                                            builders.of_copy_heap_out(l.typed_code_gen(Of value)().
+                                                                        with_single_data_slot_temp_target(type, n, o),
+                                                                      source,
+                                                                      indexstr).
+                                                     to(o)
                                         End Sub,
                                         o)
                          End Function)

@@ -26,13 +26,13 @@ Partial Public NotInheritable Class bstyle
         End Sub
 
         Public Function build(ByVal n As typed_node,
-                              ByVal struct_copy As Action(Of vector(Of String), vector(Of builders.parameter)),
-                              ByVal single_data_slot_copy As Action(Of String, String),
+                              ByVal struct_handle As Action(Of String, vector(Of builders.parameter)),
+                              ByVal single_data_slot_handle As Action(Of String, String),
                               ByVal o As writer) As Boolean
             assert(Not n Is Nothing)
             assert(n.leaf())
-            assert(Not struct_copy Is Nothing)
-            assert(Not single_data_slot_copy Is Nothing)
+            assert(Not struct_handle Is Nothing)
+            assert(Not single_data_slot_handle Is Nothing)
             assert(Not o Is Nothing)
             Dim type As String = Nothing
             If Not scope.current().variables().resolve(n.word().str(), type) Then
@@ -40,11 +40,9 @@ Partial Public NotInheritable Class bstyle
             End If
             Dim ps As vector(Of builders.parameter) = Nothing
             If scope.current().structs().resolve(type, n.word().str(), ps) Then
-                struct_copy(l.typed_code_gen(Of value)().with_temp_target(type, n, o), ps)
+                struct_handle(type, ps)
             Else
-                single_data_slot_copy(l.typed_code_gen(Of value)().
-                                        with_single_data_slot_temp_target(type, n, o),
-                                      n.word().str())
+                single_data_slot_handle(type, n.word().str())
             End If
             Return True
         End Function
@@ -53,18 +51,11 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(n.child_count() = 1)
             Return build(n.child(),
-                         Sub(ByVal vs As vector(Of String), ByVal ps As vector(Of builders.parameter))
-                             assert(Not vs Is Nothing)
-                             assert(Not ps Is Nothing)
-                             assert(vs.size() = ps.size())
-                             Dim i As UInt32 = 0
-                             While i < vs.size()
-                                 builders.of_copy(vs(i), ps(i).name).to(o)
-                                 i += uint32_1
-                             End While
+                         Sub(ByVal type As String, ByVal ps As vector(Of builders.parameter))
+                             l.typed_code_gen(Of value)().with_target(ps)
                          End Sub,
-                         Sub(ByVal target As String, ByVal source As String)
-                             builders.of_copy(target, source).to(o)
+                         Sub(ByVal type As String, ByVal source As String)
+                             l.typed_code_gen(Of value)().with_single_data_slot_target(source)
                          End Sub,
                          o)
         End Function
