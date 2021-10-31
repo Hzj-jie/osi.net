@@ -192,9 +192,11 @@ Partial Public NotInheritable Class nlexer
     End Function
 
     Public Function str_type_mapping() As syntax_collection
-        Return New syntax_collection(map.emplace_index(+rs.map(Function(ByVal i As pair(Of String, rule)) As String
-                                                                   assert(Not i Is Nothing)
-                                                                   Return i.first
-                                                               End Function)))
+        Return New syntax_collection(map.emplace_index(rs.stream().
+                                                          map(Function(ByVal i As pair(Of String, rule)) As String
+                                                                  assert(Not i Is Nothing)
+                                                                  Return i.first
+                                                              End Function).
+                                                          to_array()))
     End Function
 End Class

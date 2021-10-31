@@ -59,6 +59,6 @@ Public NotInheritable Class samples(Of T)
     End Sub
 
     Public Function map(Of R)(ByVal f As Func(Of T, R)) As samples(Of R)
-        Return New samples(Of R)(v.map(f))
+        Return New samples(Of R)(v.stream().map(f).collect(Of vector(Of R))())
     End Function
 End Class

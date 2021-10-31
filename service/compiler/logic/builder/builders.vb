@@ -76,10 +76,12 @@ Namespace logic
                                          ByVal paragraph As Func(Of Boolean)) As callee_builder_15
             Return of_callee(name,
                              type,
-                             parameters.map(Function(ByVal i As parameter) As pair(Of String, String)
+                             parameters.stream().
+                                        map(Function(ByVal i As parameter) As pair(Of String, String)
                                                 assert(Not i Is Nothing)
                                                 Return pair.emplace_of(i.name, i.logic_type())
-                                            End Function),
+                                            End Function).
+                                        collect(Of vector(Of pair(Of String, String)))(),
                              paragraph)
         End Function
 

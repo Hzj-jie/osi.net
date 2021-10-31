@@ -215,23 +215,7 @@ Public Module vector_extension
         Return str(v, Nothing)
     End Function
 
-    ' TODO: Remove, use stream().map() instead.
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    <Extension()> Public Function map(Of T, R)(ByVal v As vector(Of T), ByVal f As Func(Of T, R)) As vector(Of R)
-        If v Is Nothing Then
-            Return Nothing
-        End If
-        assert(Not f Is Nothing)
-        Dim o As vector(Of R) = Nothing
-        o = New vector(Of R)(v.size())
-        Dim j As UInt32 = 0
-        While j < v.size()
-            o.push_back(f(v(j)))
-            j += uint32_1
-        End While
-        Return o
-    End Function
-
     <Extension()> Public Function stream(Of T)(ByVal v As vector(Of T)) As stream(Of T)
         Return New stream(Of T).container(Of vector(Of T))(v)
     End Function

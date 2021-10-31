@@ -64,9 +64,11 @@ Public Module _prime_divisors
         If t Is Nothing Then
             Return Nothing
         End If
-        Return t.map(Function(ByVal x As pair(Of UInt32, Int32)) As UInt32
+        Return t.stream().
+                 map(Function(ByVal x As pair(Of UInt32, Int32)) As UInt32
                          assert(Not x Is Nothing)
                          Return x.first
-                     End Function)
+                     End Function).
+                 collect(Of vector(Of UInt32))()
     End Function
 End Module

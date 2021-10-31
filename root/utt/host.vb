@@ -43,13 +43,16 @@ Partial Friend NotInheritable Class host
                 End Using
             End If
             If case_type_restriction.accepted_case2_type(j) Then
-                Return case2.create(j).map(Function(ByVal i As [case]) As case_info
-                                               Using defer.to(Sub()
-                                                                  raise_error("loaded case ", i.full_name)
-                                                              End Sub)
-                                                   Return New case_info(i.full_name, i)
-                                               End Using
-                                           End Function)
+                Return case2.create(j).
+                             stream().
+                             map(Function(ByVal i As [case]) As case_info
+                                     Using defer.to(Sub()
+                                                        raise_error("loaded case ", i.full_name)
+                                                    End Sub)
+                                         Return New case_info(i.full_name, i)
+                                     End Using
+                                 End Function).
+                             collect(Of vector(Of case_info))()
             End If
             Return New vector(Of case_info)()
         End Function

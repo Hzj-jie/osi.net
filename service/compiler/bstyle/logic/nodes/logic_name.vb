@@ -25,10 +25,12 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function of_function(ByVal raw_name As String,
                                            ByVal parameters As vector(Of builders.parameter)) As String
             Return build(raw_name,
-                         parameters.map(Function(ByVal i As builders.parameter) As String
+                         parameters.stream().
+                                    map(Function(ByVal i As builders.parameter) As String
                                             assert(Not i Is Nothing)
                                             Return scope.current().type_alias()(i.type)
-                                        End Function))
+                                        End Function).
+                                    collect(Of vector(Of String))())
         End Function
 
         Public Shared Function of_callee(ByVal raw_name As String,
@@ -48,7 +50,9 @@ Partial Public NotInheritable Class bstyle
                                       If(scope.current().structs().defined(return_type),
                                          types.variable_type,
                                          scope.current().type_alias()(return_type)),
-                                      parameters.map(AddressOf scope.current().type_alias().canonical_of),
+                                      parameters.stream().
+                                                 map(AddressOf scope.current().type_alias().canonical_of).
+                                                 collect(Of vector(Of builders.parameter))(),
                                       paragraph).to(o)
         End Function
 
