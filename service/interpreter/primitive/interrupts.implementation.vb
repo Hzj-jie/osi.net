@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 
 Namespace primitive
     ' Visible for tests.
@@ -40,7 +41,27 @@ Namespace primitive
         End Function
 
         Public Function putchar(ByVal i() As Byte) As Byte()
-            io.output().Write(Convert.ToChar(bytes_int32(i)))
+            Dim ii As Int32 = 0
+            If Not bytes_int32(i, ii) Then
+                executor_stop_error.throw(executor.error_type.interrupt_failure,
+                                          "Input [",
+                                          i,
+                                          "] cannot be converted to int32.")
+                assert(False)
+                Return Nothing
+            End If
+            Dim o As Char = Nothing
+            Try
+                o = Convert.ToChar(ii)
+            Catch ex As OverflowException
+                executor_stop_error.throw(executor.error_type.interrupt_failure,
+                                          "Input ",
+                                          ii,
+                                          " cannot be converted to character.")
+                assert(False)
+                Return Nothing
+            End Try
+            io.output().Write(Convert.ToChar(ii))
             Return Nothing
         End Function
     End Class
