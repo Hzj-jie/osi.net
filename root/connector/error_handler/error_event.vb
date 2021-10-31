@@ -61,6 +61,7 @@ Public NotInheritable Class error_event
                 For Each a As Action In replays
                     a()
                 Next
+                replays.Clear()
             End SyncLock
         End Sub
     End Class
