@@ -78,7 +78,7 @@ Public NotInheritable Class b2style_test
         assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.self_add.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "101102103")
+        assertion.equal(io.output(), "101101102")
     End Sub
 
     <test>
