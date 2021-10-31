@@ -1,6 +1,10 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.lock
@@ -10,7 +14,6 @@ Imports osi.service.argument
 Imports osi.service.convertor
 Imports osi.service.configuration
 Imports osi.service.device
-Imports osi.service.selector
 Imports osi.service.storage
 Imports osi.service.commander
 Imports configuration = osi.service.storage.configuration
@@ -21,33 +24,32 @@ Public Module _init
     Private ReadOnly executor As executor
 
     Sub New()
-        Dim dispatcher As istrkeyvt_dispatcher = Nothing
-        dispatcher = New istrkeyvt_dispatcher()
+        Dim dispatcher As New istrkeyvt_dispatcher()
         executor = ++dispatcher
-        AddHandler control_c.press, AddressOf dispatcher.ignore
+        AddHandler control_c.press,
+                   Sub(ByRef cancel As Boolean)
+                       dispatcher.ignore()
+                   End Sub
         assert(Not characters.default.preserved_str(env_start_str))
         assert(Not characters.default.preserved_str(env_end_str))
     End Sub
 
     Private Sub load_preserved_disk()
-        Dim s As section = Nothing
-        s = config("preserved_disk")
-        If Not s Is Nothing Then
-            Dim keys As vector(Of String) = Nothing
-            keys = s.keys()
-            If Not keys Is Nothing AndAlso
-               Not keys.empty() Then
-                For i As UInt32 = 0 To keys.size() - uint32_1
-                    Dim v As UInt64 = 0
-                    v = s(keys(i)).to_uint64()
-                    configuration.preserved_disk_capacity(keys(i)) = v
-                Next
-            End If
+        Dim s As sections = config("preserved_disk")
+        If s Is Nothing Then
+            Return
         End If
+        Dim keys As vector(Of String) = s.keys()
+        If keys.null_or_empty() Then
+            Return
+        End If
+        For i As UInt32 = 0 To keys.size() - uint32_1
+            configuration.preserved_disk_capacity(keys(i)) = UInt64.Parse(s(keys(i)))
+        Next
     End Sub
 
     Public Function load_istrkeyvt(ByVal s As section,
-                                   Optional ByVal r As pointer(Of istrkeyvt) = Nothing) As event_comb
+                                   Optional ByVal r As ref(Of istrkeyvt) = Nothing) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   assert(Not s Is Nothing)
@@ -99,7 +101,7 @@ Public Module _init
         End If
     End Sub
 
-    Public Function load_server(ByVal s As section, ByVal o As pointer(Of responder)) As event_comb
+    Public Function load_server(ByVal s As section, ByVal o As ref(Of responder)) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   o.renew()
