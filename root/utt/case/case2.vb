@@ -12,8 +12,7 @@ Partial Public NotInheritable Class case2
     Private Shared Function create(ByVal c As [case], ByVal info As info) As utt.case
         assert(Not c Is Nothing)
         assert(Not info Is Nothing)
-        Dim r As utt.[case] = Nothing
-        r = c
+        Dim r As utt.[case] = c
         If info.repeat_times > 1 Then
             r = repeat(r, CLng(info.repeat_times))
         End If
@@ -29,9 +28,8 @@ Partial Public NotInheritable Class case2
         End If
         If object_compare(r, c) <> 0 Then
             Return New case_wrapper(r, c.full_name, c.assembly_qualified_name, c.name)
-        Else
-            Return c
         End If
+        Return c
     End Function
 
     Private Shared Function create(ByVal t As Type,
@@ -43,8 +41,7 @@ Partial Public NotInheritable Class case2
         assert(Not class_info Is Nothing)
         assert(Not function_info Is Nothing)
 
-        Dim n As info = Nothing
-        n = info.merge(class_info, function_info)
+        Dim n As info = info.merge(class_info, function_info)
         Return create(New [case](t,
                                  function_info.name,
                                  prepare,
@@ -73,33 +70,23 @@ Partial Public NotInheritable Class case2
 
     Public Shared Function create(ByVal t As Type) As vector(Of utt.[case])
         assert(Not t Is Nothing)
+        Dim r As New vector(Of utt.[case])()
         If Not t.has_custom_attribute(Of attributes.test)() OrElse
-            t.IsAbstract() OrElse
-            t.IsGenericType() Then
-            Return Nothing
+           t.IsAbstract() OrElse
+           t.IsGenericType() Then
+            Return r
         End If
 
-        Dim class_info As info = Nothing
-        class_info = info.from(t)
-
-        Dim r As vector(Of utt.[case]) = Nothing
-        r = New vector(Of utt.[case])()
-
-        Dim prepare As Func(Of Object, Boolean) = Nothing
-        Dim finish As Func(Of Object, Boolean) = Nothing
-        prepare = parse_prepare(t)
-        finish = parse_finish(t)
-
-        Dim tests As vector(Of function_info) = Nothing
-        tests = parse_tests(t)
+        Dim class_info As info = info.from(t)
+        Dim prepare As Func(Of Object, Boolean) = parse_prepare(t)
+        Dim finish As Func(Of Object, Boolean) = parse_finish(t)
+        Dim tests As vector(Of function_info) = parse_tests(t)
         Dim i As UInt32 = 0
         While i < tests.size()
             r.emplace_back(create(t, class_info, prepare, finish, tests(i)))
             i += uint32_1
         End While
-
-        Dim randoms As vector(Of random_function_info) = Nothing
-        randoms = parse_randoms(t)
+        Dim randoms As vector(Of random_function_info) = parse_randoms(t)
         If Not randoms.null_or_empty() Then
             r.emplace_back(create(t, class_info, prepare, finish, randoms))
         End If
@@ -132,8 +119,7 @@ Partial Public NotInheritable Class case2
     End Function
 
     Public Shared Function run(ByVal t As Type) As run_result
-        Dim v As vector(Of utt.case) = Nothing
-        v = create(t)
+        Dim v As vector(Of utt.case) = create(t)
         Dim i As UInt32 = 0
         Dim succeeded As UInt32 = 0
         While i < v.size()
