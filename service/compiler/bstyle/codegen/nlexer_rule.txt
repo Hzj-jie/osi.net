@@ -39,6 +39,7 @@ end-bracket )
 start-square-bracket \[
 end-square-bracket \]
 semi-colon ;
+reference &
 
 assignment =
 

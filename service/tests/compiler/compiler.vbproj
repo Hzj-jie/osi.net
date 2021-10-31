@@ -121,6 +121,7 @@
     <Content Include="b2style\codegen\biguint.txt" />
     <Content Include="b2style\codegen\calculate_pi_bbp.txt" />
     <Content Include="b2style\codegen\comments.txt" />
+    <Content Include="b2style\codegen\function_ref.txt" />
     <Content Include="b2style\codegen\heap_declaration.txt" />
     <Content Include="b2style\codegen\ifndef.txt" />
     <Content Include="b2style\codegen\include.txt" />

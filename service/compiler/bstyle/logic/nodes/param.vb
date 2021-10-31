@@ -32,10 +32,18 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
-            assert(n.child_count() = 2)
+            assert(Not o Is Nothing)
+            assert(n.child_count() = 2 OrElse n.child_count() = 3)
             Dim params As vector(Of builders.parameter) = Nothing
-            If Not scope.current().structs().resolve(n.child(0).word().str(), n.child(1).word().str(), params) Then
-                params = vector.of(New builders.parameter(n.child(0).word().str(), n.child(1).word().str()))
+            If Not scope.current().structs().resolve(n.child(0).word().str(), n.last_child().word().str(), params) Then
+                params = vector.of(New builders.parameter(n.child(0).word().str(), n.last_child().word().str()))
+            End If
+            If n.child_count() = 3 Then
+                assert(n.child(1).leaf())
+                assert(n.child(1).type_name.Equals("reference"))
+                params = params.stream().
+                                map(AddressOf builders.parameter.to_ref).
+                                collect(Of vector(Of builders.parameter))()
             End If
             rs.push(params)
             ' No parameter nesting expected, use read_scoped to reduce the cost of maintaining the state only.

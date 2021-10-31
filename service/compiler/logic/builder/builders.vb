@@ -36,9 +36,25 @@ Namespace logic
                 Me.name = name
             End Sub
 
+            Public Function logic_type() As String
+                If ref Then
+                    Return strcat(type, type_ref_suffix)
+                End If
+                Return type
+            End Function
+
             Public Shared Function of_ref(ByVal type As String, ByVal name As String) As parameter
                 assert(Not type.null_or_whitespace())
                 Return New parameter(strcat(type, type_ref_suffix), name)
+            End Function
+
+            Public Shared Function to_ref(ByVal p As parameter) As parameter
+                assert(Not p Is Nothing)
+                Return p.to_ref()
+            End Function
+
+            Public Function to_ref() As parameter
+                Return of_ref(type, name)
             End Function
 
             Public Shared Function from_logic_callee_input(ByVal parameters() As pair(Of String, String)) As parameter()
@@ -62,7 +78,7 @@ Namespace logic
                              type,
                              parameters.map(Function(ByVal i As parameter) As pair(Of String, String)
                                                 assert(Not i Is Nothing)
-                                                Return pair.emplace_of(i.name, i.type)
+                                                Return pair.emplace_of(i.name, i.logic_type())
                                             End Function),
                              paragraph)
         End Function

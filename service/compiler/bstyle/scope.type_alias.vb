@@ -69,7 +69,11 @@ Partial Public NotInheritable Class bstyle
 
             Public Function canonical_of(ByVal p As builders.parameter) As builders.parameter
                 assert(Not p Is Nothing)
-                Return New builders.parameter(Me(p.type), p.name)
+                Dim r As New builders.parameter(Me(p.type), p.name)
+                If p.ref Then
+                    Return r.to_ref()
+                End If
+                Return r
             End Function
 
             Private Sub New()

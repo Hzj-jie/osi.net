@@ -62,6 +62,7 @@
     <Compile Include="b2style\b2style_rules.vb" />
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\paragraph.vb" />
+    <Compile Include="b2style\rewriter\nodes\param.vb" />
     <Compile Include="b2style\rewriter\nodes\struct.vb" />
     <Compile Include="b2style\scope.namespace.vb" />
     <Compile Include="b2style\scope.vb" />

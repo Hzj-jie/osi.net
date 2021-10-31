@@ -7,7 +7,7 @@ root-type [function, value-definition-with-semi-colon, value-declaration-with-se
 function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
 paramlist [param-with-comma]* param
 param-with-comma param comma
-param name name
+param name [reference]? name
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]

@@ -85,7 +85,7 @@ Partial Public NotInheritable Class b2style
                        bypass.registerer("paramlist"),
                        bypass.registerer("multi-sentence-paragraph"),
                        bypass.registerer("param-with-comma"),
-                       bypass.registerer("param"),
+                       AddressOf param.register,
                        AddressOf namespace_.register,
                        AddressOf paragraph.register,
                        bypass.registerer("sentence"),

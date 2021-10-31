@@ -79,6 +79,11 @@ Partial Public NotInheritable Class typed_node
         Return child(0)
     End Function
 
+    Public Function last_child() As typed_node
+        assert(child_count() > 0)
+        Return child(child_count() - uint32_1)
+    End Function
+
     Public Function child_count() As UInt32
         Return subnodes.size()
     End Function

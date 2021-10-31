@@ -36,7 +36,8 @@ Partial Public NotInheritable Class bstyle
                 If Not l.of(n.child(i)).build(o) Then
                     Return False
                 End If
-                Using c As read_scoped(Of vector(Of builders.parameter)).ref = l.typed_code_gen(Of param)().current_target()
+                Using c As read_scoped(Of vector(Of builders.parameter)).ref =
+                        l.typed_code_gen(Of param)().current_target()
                     v.emplace_back(+c)
                 End Using
                 i += uint32_1
