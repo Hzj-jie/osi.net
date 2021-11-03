@@ -62,10 +62,16 @@ Friend Class big_uint_str_case
         Return True
     End Function
 
+    Private Shared Function predefined_case() As Boolean
+        assertion.equal(New big_uint(10).str(), "10")
+        Return True
+    End Function
+
     Public Overrides Function run() As Boolean
         Return fast_rnd_case() AndAlso
                rnd_case() AndAlso
                failure_case() AndAlso
-               predefined_failure_case()
+               predefined_failure_case() AndAlso
+               predefined_case()
     End Function
 End Class
