@@ -42,7 +42,9 @@ Partial Public NotInheritable Class rewriters
             Dim r As String = Nothing
             r = v.str(character.blank)
             If debug_dump Then
-                raise_error(error_type.user, "Debug dump of typed_node_writer ", r)
+                raise_error(error_type.user,
+                            "Debug dump of typed_node_writer ",
+                            r.Replace(";", ";" + newline.incode()).Replace("}", "}" + newline.incode()))
             End If
             Return r
         End Function

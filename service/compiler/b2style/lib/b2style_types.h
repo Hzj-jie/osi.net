@@ -4,6 +4,7 @@
 
 #include <bstyle.h>
 
+// TODO: Search types in parent scopes.
 namespace b2style {
   typedef ::string string;
   typedef ::void void;

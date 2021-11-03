@@ -1,7 +1,9 @@
 ﻿
+#include <bstyle.h>
+
 struct S {
-  String s;
-  String s2;
+  string s;
+  string s2;
 };
 
 S f() {
@@ -11,9 +13,9 @@ S f() {
   return s;
 }
 
-type0 main() {
+void main() {
   S s = f();
-  String temp;
+  string temp;
   logic "interrupt stdout s.s temp";
   logic "interrupt stdout s.s2 temp";
 }

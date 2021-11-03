@@ -359,7 +359,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.function_ref.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "1234")
+        assertion.equal(io.output(), "12345677")
     End Sub
 
     <test>
@@ -381,11 +381,10 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.__i__.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        ' TODO: The result is not consistent with c++.
-        assertion.equal(io.output(), "2_6_8_")
+        assertion.equal(io.output(), "3_8_19_20_21_22")
     End Sub
 
-    '<test>
+    <test>
     Private Shared Sub for_loop()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
@@ -393,7 +392,46 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.for_loop.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "9900")
+        assertion.equal(io.output(), "495099001485019800")
+    End Sub
+
+    <test>
+    Private Shared Sub i__()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.i__.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(Convert.ToInt32(io.output()(0)), 1)
+    End Sub
+
+    <test>
+    Private Shared Sub i__2()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.i__2.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(Convert.ToInt32(io.output()(0)), 1)
+        assertion.equal(Convert.ToInt32(io.output()(1)), 2)
+        assertion.equal(Convert.ToInt32(io.output()(2)), 3)
+        assertion.equal(Convert.ToInt32(io.output()(3)), 4)
+    End Sub
+
+    <test>
+    Private Shared Sub __i()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.__i.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(Convert.ToInt32(io.output()(0)), 1)
+        assertion.equal(Convert.ToInt32(io.output()(1)), 2)
+        assertion.equal(Convert.ToInt32(io.output()(2)), 3)
+        assertion.equal(Convert.ToInt32(io.output()(3)), 4)
     End Sub
 
     Private Sub New()

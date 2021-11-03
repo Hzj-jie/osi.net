@@ -26,7 +26,7 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(b)
         End Sub
 
-        Private Shared Function move(ByVal sources As vector(Of String),
+        Private Shared Function copy(ByVal sources As vector(Of String),
                                      ByVal target As String,
                                      ByVal f As Func(Of vector(Of builders.parameter), Boolean)) As Boolean
             assert(Not sources Is Nothing)
@@ -50,11 +50,11 @@ Partial Public NotInheritable Class bstyle
             Return f(vs)
         End Function
 
-        Public Function move_heap(ByVal sources As vector(Of String),
+        Public Function copy_heap(ByVal sources As vector(Of String),
                                   ByVal target As String,
                                   ByVal index As typed_node,
                                   ByVal o As writer) As Boolean
-            Return move(sources,
+            Return copy(sources,
                         target,
                         Function(ByVal vs As vector(Of builders.parameter)) As Boolean
                             assert(Not vs Is Nothing)
@@ -64,7 +64,7 @@ Partial Public NotInheritable Class bstyle
                                        Function(ByVal indexstr As String) As Boolean
                                            Dim i As UInt32 = 0
                                            While i < vs.size()
-                                               If Not builders.of_move_heap_in(vs(i).name, indexstr, sources(i)).to(o) Then
+                                               If Not builders.of_copy_heap_in(vs(i).name, indexstr, sources(i)).to(o) Then
                                                    Return False
                                                End If
                                                i += uint32_1
@@ -75,17 +75,17 @@ Partial Public NotInheritable Class bstyle
                         End Function)
         End Function
 
-        Public Shared Function move(ByVal sources As vector(Of String),
+        Public Shared Function copy(ByVal sources As vector(Of String),
                                     ByVal target As String,
                                     ByVal o As writer) As Boolean
-            Return move(sources,
+            Return copy(sources,
                         target,
                         Function(ByVal vs As vector(Of builders.parameter)) As Boolean
                             assert(Not vs Is Nothing)
                             assert(vs.size() = sources.size())
                             Dim i As UInt32 = 0
                             While i < vs.size()
-                                If Not builders.of_move(vs(i).name, sources(i)).to(o) Then
+                                If Not builders.of_copy(vs(i).name, sources(i)).to(o) Then
                                     Return False
                                 End If
                                 i += uint32_1
@@ -119,16 +119,14 @@ Partial Public NotInheritable Class bstyle
                 Return True
             End If
             Dim index As String = strcat(targets(0), "@index")
-            Dim p1 As String = strcat(targets(0), "@index+1")
             assert(value_declaration.declare_single_data_slot(code_types.int, index, o))
-            assert(value_declaration.declare_single_data_slot(code_types.int, p1, o))
-            Return builders.of_copy_const(p1, New data_block(1)).to(o) AndAlso
-                   targets.stream().
+            Return targets.stream().
                            map(Function(ByVal target As String) As Boolean
                                    assert(Not target.null_or_whitespace())
                                    ' TODO: Check if the type of source is the same as targets.
+                                   ' TODO: Should include bstyle_constant.h automatically.
                                    Return builders.of_cut_slice(target, source, index).to(o) AndAlso
-                                          builders.of_add(index, index, p1).to(o)
+                                          builders.of_add(index, index, "@@prefixes@constants@int_1").to(o)
                                End Function).
                            aggregate(bool_stream.aggregators.all_true)
         End Function

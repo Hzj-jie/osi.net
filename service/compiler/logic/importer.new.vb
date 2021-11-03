@@ -11,6 +11,10 @@ Namespace logic
         Private Structure place_holder
         End Structure
 
+        Private Function new_start_scope(ByVal p1 As paragraph) As start_scope
+            Return New start_scope(p1)
+        End Function
+
         Private Function new_type(ByVal p1 As String, ByVal p2 As UInt32) As type
             Return New type(types, p1, p2)
         End Function

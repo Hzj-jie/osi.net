@@ -120,6 +120,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="b2style\codegen\++i++.txt" />
+    <Content Include="b2style\codegen\++i.txt" />
     <Content Include="b2style\codegen\another_1_to_100.txt" />
     <Content Include="b2style\codegen\biguint.txt" />
     <Content Include="b2style\codegen\calculate_pi_bbp.txt" />
@@ -127,6 +128,8 @@
     <Content Include="b2style\codegen\for_loop.txt" />
     <Content Include="b2style\codegen\function_ref.txt" />
     <Content Include="b2style\codegen\heap_declaration.txt" />
+    <Content Include="b2style\codegen\i++.txt" />
+    <Content Include="b2style\codegen\i++2.txt" />
     <Content Include="b2style\codegen\ifndef.txt" />
     <Content Include="b2style\codegen\include.txt" />
     <Content Include="b2style\codegen\include2.txt" />
@@ -154,6 +157,7 @@
     <Content Include="bstyle\codegen\call_struct_on_heap.txt" />
     <Content Include="bstyle\codegen\case1.txt" />
     <Content Include="bstyle\codegen\case2.txt" />
+    <Content Include="bstyle\codegen\for_loop.txt" />
     <Content Include="bstyle\codegen\function_struct.txt" />
     <Content Include="bstyle\codegen\global_variable.txt" />
     <Content Include="b2style\codegen\heap.txt" />

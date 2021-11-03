@@ -4,6 +4,9 @@
 #  parameters = ( string * )
 #  paragraph = { statement * }
 
+# No-op, start a new scope during the compilation.
+start_scope	paragraph
+
 # define a type:
 #  type uint 4
 #  type biguint 0

@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.automata
@@ -113,6 +114,17 @@ Public NotInheritable Class bstyle_test
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "abcd")
+    End Sub
+
+    <test>
+    Private Shared Sub for_loop()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(bstyle.with_functions(New interrupts(+io)).
+                                 parse(_bstyle_test_data.for_loop.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), character.newline)
     End Sub
 
     Private Sub New()

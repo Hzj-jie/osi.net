@@ -69,6 +69,19 @@ Partial Public NotInheritable Class typed_node
         Return parent Is Nothing
     End Function
 
+    Public Function child_index(ByVal c As typed_node) As UInt32
+        assert(Not c Is Nothing)
+        assert(object_compare(Me, c.parent) = 0)
+        assert(Not subnodes.empty())
+        For i As UInt32 = 0 To subnodes.size() - uint32_1
+            If object_compare(subnodes(i), c) = 0 Then
+                Return i
+            End If
+        Next
+        assert(False)
+        Return max_uint32
+    End Function
+
     Public Function child(ByVal id As UInt32) As typed_node
         assert(subnodes.available_index(id))
         Return subnodes(id)

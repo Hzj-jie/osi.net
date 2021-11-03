@@ -42,12 +42,12 @@ Partial Public NotInheritable Class bstyle
                        name,
                        n.child(2),
                        Function(ByVal r As vector(Of String)) As Boolean
-                           Return l.typed_code_gen(Of struct).move_heap(r, name.word().str(), index, o)
+                           Return l.typed_code_gen(Of struct).copy_heap(r, name.word().str(), index, o)
                        End Function,
                        Function(ByVal r As String) As Boolean
                            Return move(index,
                                        Function(ByVal indexstr As String) As Boolean
-                                           Return builders.of_move_heap_in(name.word().str(), indexstr, r).to(o)
+                                           Return builders.of_copy_heap_in(name.word().str(), indexstr, r).to(o)
                                        End Function,
                                        o)
                        End Function,

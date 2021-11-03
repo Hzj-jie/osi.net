@@ -26,13 +26,13 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal name As typed_node,
                               ByVal value As typed_node,
-                              ByVal struct_move As Func(Of vector(Of String), Boolean),
-                              ByVal single_data_slot_move As Func(Of String, Boolean),
+                              ByVal struct_copy As Func(Of vector(Of String), Boolean),
+                              ByVal single_data_slot_copy As Func(Of String, Boolean),
                               ByVal o As writer) As Boolean
             assert(Not name Is Nothing)
             assert(Not value Is Nothing)
-            assert(Not struct_move Is Nothing)
-            assert(Not single_data_slot_move Is Nothing)
+            assert(Not struct_copy Is Nothing)
+            assert(Not single_data_slot_copy Is Nothing)
             assert(Not o Is Nothing)
             If Not l.of(value).build(o) Then
                 Return False
@@ -41,12 +41,12 @@ Partial Public NotInheritable Class bstyle
             assert(scope.current().variables().resolve(name.word().str(), type))
             If scope.current().structs().defined(type) Then
                 Using r As read_scoped(Of vector(Of String)).ref = l.typed_code_gen(Of value)().read_target()
-                    Return struct_move(+r)
+                    Return struct_copy(+r)
                 End Using
             Else
                 Using r As read_scoped(Of vector(Of String)).ref(Of String) =
                         l.typed_code_gen(Of value)().read_target_single_data_slot()
-                    Return single_data_slot_move(+r)
+                    Return single_data_slot_copy(+r)
                 End Using
             End If
         End Function
@@ -54,13 +54,14 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal name As typed_node, ByVal value As typed_node, ByVal o As writer) As Boolean
             assert(Not name Is Nothing)
             assert(name.leaf())
+            ' TODO: If the value on the right is a temporary value (rvalue), move can be used to reduce memory copy.
             Return build(name,
                          value,
                          Function(ByVal r As vector(Of String)) As Boolean
-                             Return struct.move(r, name.word().str(), o)
+                             Return struct.copy(r, name.word().str(), o)
                          End Function,
                          Function(ByVal r As String) As Boolean
-                             Return builders.of_move(name.word().str(), r).to(o)
+                             Return builders.of_copy(name.word().str(), r).to(o)
                          End Function,
                          o)
         End Function

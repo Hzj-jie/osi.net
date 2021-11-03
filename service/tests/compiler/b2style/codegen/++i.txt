@@ -1,0 +1,14 @@
+﻿
+#include <b2style.h>
+
+void main() {
+  int i = 0;
+  ++i;
+  bstyle::putchar(i);
+  ++i;
+  bstyle::putchar(i);
+  ++i;
+  bstyle::putchar(i);
+  ++i;
+  bstyle::putchar(i);
+}
