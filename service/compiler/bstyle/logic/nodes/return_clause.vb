@@ -41,8 +41,7 @@ Partial Public NotInheritable Class bstyle
                 End If
             End If
             If n.child_count() = 1 Then
-                builders.of_return(scope.current().current_function().name()).to(o)
-                Return True
+                Return builders.of_return(scope.current().current_function().name()).to(o)
             End If
             If Not l.of(n.child(1)).build(o) Then
                 Return False
@@ -56,21 +55,17 @@ Partial Public NotInheritable Class bstyle
                                                         "@return_value")
                     assert(value_declaration.declare_single_data_slot(
                                types.variable_type, return_value, o))
-                    If Not struct.pack(+r, return_value, o) Then
-                        Return False
-                    End If
-                    builders.of_return(scope.current().current_function().name(), return_value).to(o)
-                Else
-                    If (+r).size() <> 1 Then
-                        raise_error(error_type.user,
+                    Return struct.pack(+r, return_value, o) AndAlso
+                           builders.of_return(scope.current().current_function().name(), return_value).to(o)
+                End If
+                If (+r).size() <> 1 Then
+                    raise_error(error_type.user,
                                     "Unexpected return value, do not expect a struct to be returned by ",
                                     scope.current().current_function().name())
-                        Return False
-                    End If
-                    builders.of_return(scope.current().current_function().name(), (+r)(0)).to(o)
+                    Return False
                 End If
+                Return builders.of_return(scope.current().current_function().name(), (+r)(0)).to(o)
             End Using
-            Return True
         End Function
     End Class
 End Class

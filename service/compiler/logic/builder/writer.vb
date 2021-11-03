@@ -16,38 +16,43 @@ Namespace logic
             v = New vector(Of Object)()
         End Sub
 
-        Public Sub append(ByVal s As UInt32)
+        Public Function append(ByVal s As UInt32) As Boolean
             v.emplace_back(s)
-        End Sub
+            Return True
+        End Function
 
-        Public Sub append(ByVal s As String)
+        Public Function append(ByVal s As String) As Boolean
             ' Allow appending newline characters.
             assert(Not s.null_or_empty())
             v.emplace_back(s)
-        End Sub
+            Return True
+        End Function
 
-        Public Sub append(ByVal s As data_block)
+        Public Function append(ByVal s As data_block) As Boolean
             assert(Not s Is Nothing)
             v.emplace_back(s)
-        End Sub
+            Return True
+        End Function
 
-        Public Sub append(ByVal v As vector(Of String))
+        Public Function append(ByVal v As vector(Of String)) As Boolean
             assert(Not v Is Nothing)
-            If Not v.empty() Then
-                append(v.str(character.blank))
+            If v.empty() Then
+                Return True
             End If
-        End Sub
+            Return append(v.str(character.blank))
+        End Function
 
-        Public Sub append(ByVal v As vector(Of pair(Of String, String)))
+        Public Function append(ByVal v As vector(Of pair(Of String, String))) As Boolean
             assert(Not v Is Nothing)
-            If Not v.empty() Then
-                append(v.str(Function(ByVal x As pair(Of String, String)) As String
-                                 assert(Not x Is Nothing)
-                                 Return strcat(x.first, character.blank, x.second)
-                             End Function,
-                         character.blank))
+            If v.empty() Then
+                Return True
             End If
-        End Sub
+            Return append(v.str(Function(ByVal x As pair(Of String, String)) As String
+                                    assert(Not x Is Nothing)
+                                    Return strcat(x.first, character.blank, x.second)
+                                End Function,
+                                character.blank))
+        End Function
 
         Public Function append(ByVal a As Func(Of Boolean)) As Boolean
             assert(Not a Is Nothing)

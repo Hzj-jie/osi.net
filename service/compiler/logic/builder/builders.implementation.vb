@@ -29,12 +29,13 @@ Namespace logic
                 Me.uint_2 = uint_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("type")
-                o.append(string_1)
-                o.append(uint_2)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("type") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(uint_2) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_append_slice(ByVal string_1 As String, ByVal string_2 As String) As append_slice_builder_2
@@ -53,12 +54,13 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("append_slice")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("append_slice") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_cut_slice(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As cut_slice_builder_3
@@ -80,13 +82,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("cut_slice")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("cut_slice") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_cut(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As cut_builder_4
@@ -108,13 +111,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("cut")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("cut") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_cut_len(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String) As cut_len_builder_5
@@ -139,14 +143,15 @@ Namespace logic
                 Me.string_4 = string_4
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("cut_len")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(string_4)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("cut_len") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(string_4) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_clear(ByVal string_1 As String) As clear_builder_6
@@ -162,11 +167,12 @@ Namespace logic
                 Me.string_1 = string_1
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("clear")
-                o.append(string_1)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("clear") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_add(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As add_builder_7
@@ -188,13 +194,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("add")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("add") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_subtract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As subtract_builder_8
@@ -216,13 +223,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("subtract")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("subtract") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_multiply(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As multiply_builder_9
@@ -244,13 +252,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("multiply")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("multiply") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_divide(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String) As divide_builder_10
@@ -275,14 +284,15 @@ Namespace logic
                 Me.string_4 = string_4
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("divide")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(string_4)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("divide") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(string_4) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_extract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String, ByVal string_4 As String) As extract_builder_11
@@ -307,14 +317,15 @@ Namespace logic
                 Me.string_4 = string_4
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("extract")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(string_4)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("extract") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(string_4) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_power(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As power_builder_12
@@ -336,13 +347,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("power")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("power") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_and(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As and_builder_13
@@ -364,13 +376,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("and")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("and") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_or(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As or_builder_14
@@ -392,13 +405,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("or")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("or") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_callee(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of Boolean)) As callee_builder_15
@@ -424,17 +438,17 @@ Namespace logic
             End Sub
 
             Public Function [to](ByVal o As writer) As Boolean
-                o.append("callee")
-                o.append(string_1)
-                o.append(string_2)
-                o.append("(")
-                o.append(typed_parameters_3)
-                o.append(")")
-                o.append("{")
-                o.append(paragraph_4)
-                o.append("}")
-                o.append(newline.incode())
-                Return True
+                Return _
+                    o.append("callee") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append("(") AndAlso
+                    o.append(typed_parameters_3) AndAlso
+                    o.append(")") AndAlso
+                    o.append("{") AndAlso
+                    o.append(paragraph_4) AndAlso
+                    o.append("}") AndAlso
+                    o.append(newline.incode())
             End Function
         End Class
 
@@ -457,15 +471,16 @@ Namespace logic
                 Me.parameters_3 = parameters_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("caller")
-                o.append(string_1)
-                o.append(string_2)
-                o.append("(")
-                o.append(parameters_3)
-                o.append(")")
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("caller") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append("(") AndAlso
+                    o.append(parameters_3) AndAlso
+                    o.append(")") AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_caller(ByVal string_1 As String, ByVal parameters_2 As vector(Of String)) As caller_builder_17
@@ -484,14 +499,15 @@ Namespace logic
                 Me.parameters_2 = parameters_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("caller")
-                o.append(string_1)
-                o.append("(")
-                o.append(parameters_2)
-                o.append(")")
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("caller") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append("(") AndAlso
+                    o.append(parameters_2) AndAlso
+                    o.append(")") AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_less(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As less_builder_18
@@ -513,13 +529,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("less")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("less") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_more(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As more_builder_19
@@ -541,13 +558,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("more")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("more") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As equal_builder_20
@@ -569,13 +587,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("equal")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("equal") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_less_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As less_or_equal_builder_21
@@ -597,13 +616,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("less_or_equal")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("less_or_equal") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_more_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As more_or_equal_builder_22
@@ -625,13 +645,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("more_or_equal")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("more_or_equal") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean), ByVal paragraph_4 As Func(Of Boolean)) As if_builder_23
@@ -654,17 +675,17 @@ Namespace logic
             End Sub
 
             Public Function [to](ByVal o As writer) As Boolean
-                o.append("if")
-                o.append(string_1)
-                o.append("{")
-                o.append(paragraph_2)
-                o.append("}")
-                o.append("else")
-                o.append("{")
-                o.append(paragraph_4)
-                o.append("}")
-                o.append(newline.incode())
-                Return True
+                Return _
+                    o.append("if") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append("{") AndAlso
+                    o.append(paragraph_2) AndAlso
+                    o.append("}") AndAlso
+                    o.append("else") AndAlso
+                    o.append("{") AndAlso
+                    o.append(paragraph_4) AndAlso
+                    o.append("}") AndAlso
+                    o.append(newline.incode())
             End Function
         End Class
 
@@ -685,13 +706,13 @@ Namespace logic
             End Sub
 
             Public Function [to](ByVal o As writer) As Boolean
-                o.append("if")
-                o.append(string_1)
-                o.append("{")
-                o.append(paragraph_2)
-                o.append("}")
-                o.append(newline.incode())
-                Return True
+                Return _
+                    o.append("if") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append("{") AndAlso
+                    o.append(paragraph_2) AndAlso
+                    o.append("}") AndAlso
+                    o.append(newline.incode())
             End Function
         End Class
 
@@ -711,12 +732,13 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("copy")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("copy") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_copy_const(ByVal string_1 As String, ByVal data_block_2 As data_block) As copy_const_builder_26
@@ -735,12 +757,13 @@ Namespace logic
                 Me.data_block_2 = data_block_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("copy_const")
-                o.append(string_1)
-                o.append(data_block_2)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("copy_const") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(data_block_2) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_copy_heap_out(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As copy_heap_out_builder_27
@@ -762,13 +785,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("copy_heap_out")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("copy_heap_out") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_copy_heap_in(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As copy_heap_in_builder_28
@@ -790,13 +814,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("copy_heap_in")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("copy_heap_in") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_move_heap_out(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As move_heap_out_builder_29
@@ -818,13 +843,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("move_heap_out")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("move_heap_out") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_move_heap_in(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As move_heap_in_builder_30
@@ -846,13 +872,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("move_heap_in")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("move_heap_in") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_define(ByVal string_1 As String, ByVal string_2 As String) As define_builder_31
@@ -871,12 +898,13 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("define")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("define") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_define_heap(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As define_heap_builder_32
@@ -898,13 +926,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("define_heap")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("define_heap") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_do_until(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As do_until_builder_33
@@ -924,13 +953,13 @@ Namespace logic
             End Sub
 
             Public Function [to](ByVal o As writer) As Boolean
-                o.append("do_until")
-                o.append(string_1)
-                o.append("{")
-                o.append(paragraph_2)
-                o.append("}")
-                o.append(newline.incode())
-                Return True
+                Return _
+                    o.append("do_until") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append("{") AndAlso
+                    o.append(paragraph_2) AndAlso
+                    o.append("}") AndAlso
+                    o.append(newline.incode())
             End Function
         End Class
 
@@ -951,13 +980,13 @@ Namespace logic
             End Sub
 
             Public Function [to](ByVal o As writer) As Boolean
-                o.append("do_while")
-                o.append(string_1)
-                o.append("{")
-                o.append(paragraph_2)
-                o.append("}")
-                o.append(newline.incode())
-                Return True
+                Return _
+                    o.append("do_while") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append("{") AndAlso
+                    o.append(paragraph_2) AndAlso
+                    o.append("}") AndAlso
+                    o.append(newline.incode())
             End Function
         End Class
 
@@ -980,13 +1009,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("interrupt")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("interrupt") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_move(ByVal string_1 As String, ByVal string_2 As String) As move_builder_36
@@ -1005,12 +1035,13 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("move")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("move") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_return(ByVal string_1 As String) As return_builder_37
@@ -1026,12 +1057,13 @@ Namespace logic
                 Me.string_1 = string_1
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("return")
-                o.append(string_1)
-                o.append("*")
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("return") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append("*") AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_return(ByVal string_1 As String, ByVal string_2 As String) As return_builder_38
@@ -1050,12 +1082,13 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("return")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("return") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_append(ByVal string_1 As String, ByVal string_2 As String) As append_builder_39
@@ -1074,12 +1107,13 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("append")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("append") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_not(ByVal string_1 As String, ByVal string_2 As String) As not_builder_40
@@ -1098,12 +1132,13 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("not")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("not") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_sizeof(ByVal string_1 As String, ByVal string_2 As String) As sizeof_builder_41
@@ -1122,12 +1157,13 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("sizeof")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("sizeof") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_empty(ByVal string_1 As String, ByVal string_2 As String) As empty_builder_42
@@ -1146,12 +1182,13 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("empty")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("empty") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_while_then(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As while_then_builder_43
@@ -1171,13 +1208,13 @@ Namespace logic
             End Sub
 
             Public Function [to](ByVal o As writer) As Boolean
-                o.append("while_then")
-                o.append(string_1)
-                o.append("{")
-                o.append(paragraph_2)
-                o.append("}")
-                o.append(newline.incode())
-                Return True
+                Return _
+                    o.append("while_then") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append("{") AndAlso
+                    o.append(paragraph_2) AndAlso
+                    o.append("}") AndAlso
+                    o.append(newline.incode())
             End Function
         End Class
 
@@ -1187,10 +1224,11 @@ Namespace logic
 
         Public NotInheritable Class stop_builder_44
 
-            Public Sub [to](ByVal o As writer)
-                o.append("stop")
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("stop") AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_float_add(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_add_builder_45
@@ -1212,13 +1250,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("float_add")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("float_add") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_float_subtract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_subtract_builder_46
@@ -1240,13 +1279,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("float_subtract")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("float_subtract") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_float_multiply(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_multiply_builder_47
@@ -1268,13 +1308,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("float_multiply")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("float_multiply") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_float_divide(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_divide_builder_48
@@ -1296,13 +1337,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("float_divide")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("float_divide") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_float_extract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_extract_builder_49
@@ -1324,13 +1366,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("float_extract")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("float_extract") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_float_power(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_power_builder_50
@@ -1352,13 +1395,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("float_power")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("float_power") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_float_less(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_less_builder_51
@@ -1380,13 +1424,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("float_less")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("float_less") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_float_more(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_more_builder_52
@@ -1408,13 +1453,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("float_more")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("float_more") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_float_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_equal_builder_53
@@ -1436,13 +1482,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("float_equal")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("float_equal") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_float_less_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_less_or_equal_builder_54
@@ -1464,13 +1511,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("float_less_or_equal")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("float_less_or_equal") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_float_more_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_more_or_equal_builder_55
@@ -1492,13 +1540,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("float_more_or_equal")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("float_more_or_equal") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_left_shift(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As left_shift_builder_56
@@ -1520,13 +1569,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("left_shift")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("left_shift") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
 
         Public Shared Function of_right_shift(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As right_shift_builder_57
@@ -1548,13 +1598,14 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Sub [to](ByVal o As writer)
-                o.append("right_shift")
-                o.append(string_1)
-                o.append(string_2)
-                o.append(string_3)
-                o.append(newline.incode())
-            End Sub
+            Public Function [to](ByVal o As writer) As Boolean
+                Return _
+                    o.append("right_shift") AndAlso
+                    o.append(string_1) AndAlso
+                    o.append(string_2) AndAlso
+                    o.append(string_3) AndAlso
+                    o.append(newline.incode())
+            End Function
         End Class
     End Class
 End Namespace

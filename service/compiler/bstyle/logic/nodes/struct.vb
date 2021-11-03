@@ -64,7 +64,9 @@ Partial Public NotInheritable Class bstyle
                                        Function(ByVal indexstr As String) As Boolean
                                            Dim i As UInt32 = 0
                                            While i < vs.size()
-                                               builders.of_move_heap_in(vs(i).name, indexstr, sources(i)).to(o)
+                                               If Not builders.of_move_heap_in(vs(i).name, indexstr, sources(i)).to(o) Then
+                                                   Return False
+                                               End If
                                                i += uint32_1
                                            End While
                                            Return True
@@ -83,7 +85,9 @@ Partial Public NotInheritable Class bstyle
                             assert(vs.size() = sources.size())
                             Dim i As UInt32 = 0
                             While i < vs.size()
-                                builders.of_move(vs(i).name, sources(i)).to(o)
+                                If Not builders.of_move(vs(i).name, sources(i)).to(o) Then
+                                    Return False
+                                End If
                                 i += uint32_1
                             End While
                             Return True
@@ -98,11 +102,12 @@ Partial Public NotInheritable Class bstyle
             If sources.empty() Then
                 Return True
             End If
-            sources.stream().foreach(Sub(ByVal source As String)
-                                         assert(Not source.null_or_whitespace())
-                                         builders.of_append_slice(target, source).to(o)
-                                     End Sub)
-            Return True
+            Return sources.stream().
+                           map(Function(ByVal source As String) As Boolean
+                                   assert(Not source.null_or_whitespace())
+                                   Return builders.of_append_slice(target, source).to(o)
+                               End Function).
+                           aggregate(bool_stream.aggregators.all_true)
         End Function
 
         Public Shared Function unpack(ByVal source As String,
@@ -117,14 +122,15 @@ Partial Public NotInheritable Class bstyle
             Dim p1 As String = strcat(targets(0), "@index+1")
             assert(value_declaration.declare_single_data_slot(code_types.int, index, o))
             assert(value_declaration.declare_single_data_slot(code_types.int, p1, o))
-            builders.of_copy_const(p1, New data_block(1)).to(o)
-            targets.stream().foreach(Sub(ByVal target As String)
-                                         assert(Not target.null_or_whitespace())
-                                         ' TODO: Check if the type of source is the same as targets.
-                                         builders.of_cut_slice(target, source, index).to(o)
-                                         builders.of_add(index, index, p1).to(o)
-                                     End Sub)
-            Return True
+            Return builders.of_copy_const(p1, New data_block(1)).to(o) AndAlso
+                   targets.stream().
+                           map(Function(ByVal target As String) As Boolean
+                                   assert(Not target.null_or_whitespace())
+                                   ' TODO: Check if the type of source is the same as targets.
+                                   Return builders.of_cut_slice(target, source, index).to(o) AndAlso
+                                          builders.of_add(index, index, p1).to(o)
+                               End Function).
+                           aggregate(bool_stream.aggregators.all_true)
         End Function
 
         Private Function resolve(ByVal type As String,

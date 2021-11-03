@@ -31,8 +31,8 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Private Sub define_single_data_slot_temp_target(ByVal type As String,
-                                                      ByVal name As String,
-                                                      ByVal o As writer)
+                                                        ByVal name As String,
+                                                        ByVal o As writer)
             assert(Not o Is Nothing)
             type = scope.current().type_alias()(type)
             assert(Not scope.current().structs().defined(type))
@@ -41,7 +41,7 @@ Partial Public NotInheritable Class bstyle
                 assert(type.Equals(existing_type))
             Else
                 assert(scope.current().variables().define(type, name))
-                builders.of_define(name, type).to(o)
+                assert(builders.of_define(name, type).to(o))
             End If
         End Sub
 

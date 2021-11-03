@@ -46,7 +46,6 @@ public static class Program {
       List<string> parameter_types = new List<string>();
       List<string> passed_parameters = new List<string>();
       List<string> append_parameters = new List<string>();
-      bool has_paragraph = false;
       for (int i = 1; i < ss.Length; i++) {
         string parameter;
         switch(ss[i]) {
@@ -67,7 +66,6 @@ public static class Program {
             break;
           case "paragraph":
             parameter = "Func(Of Boolean)";
-            has_paragraph = true;
             break;
           default:
             parameter = null;
@@ -118,28 +116,14 @@ public static class Program {
         wl("            End Sub");
         wl();
       }
-      if (has_paragraph) {
-        wl("            Public Function [to](ByVal o As writer) As Boolean");
-      } else {
-        wl("            Public Sub [to](ByVal o As writer)");
-      }
-      wl("                o.append(\"" + ss[0] + "\")");
+      wl("            Public Function [to](ByVal o As writer) As Boolean");
+      wl("                Return _");
+      wl("                    o.append(\"" + ss[0] + "\") AndAlso");
       for (int i = 0; i < append_parameters.Count; i++) {
-        if (append_parameters[i] == "Func(Of Boolean)") {
-          wl("                If Not o.append(" + append_parameters[i] + ") Then");
-          wl("                    Return False");
-          wl("                End If");
-        } else {
-          wl("                o.append(" + append_parameters[i] + ")");
-        }
+        wl("                    o.append(" + append_parameters[i] + ") AndAlso");
       }
-      wl("                o.append(newline.incode())");
-      if (has_paragraph) {
-        wl("                Return True");
-        wl("            End Function");
-      } else {
-        wl("            End Sub");
-      }
+      wl("                    o.append(newline.incode())");
+      wl("            End Function");
       wl("        End Class");
     }
     wl("    End Class");

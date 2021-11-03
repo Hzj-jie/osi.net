@@ -42,19 +42,14 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Shared Function declare_single_data_slot(ByVal type As String,
-                                                      ByVal name As String,
-                                                      ByVal o As writer) As Boolean
-            If scope.current().structs().defined(type) Then
-                Return False
-            End If
+                                                        ByVal name As String,
+                                                        ByVal o As writer) As Boolean
             assert(Not o Is Nothing)
-            If Not scope.current().variables().define(type, name) Then
-                Return False
-            End If
-            builders.of_define(name,
-                               scope.current().type_alias()(type)).
-                     to(o)
-            Return True
+            Return Not scope.current().structs().defined(type) AndAlso
+                   scope.current().variables().define(type, name) AndAlso
+                   builders.of_define(name,
+                                      scope.current().type_alias()(type)).
+                            to(o)
         End Function
     End Class
 End Class

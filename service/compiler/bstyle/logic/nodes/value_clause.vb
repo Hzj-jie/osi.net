@@ -60,8 +60,7 @@ Partial Public NotInheritable Class bstyle
                              Return struct.move(r, name.word().str(), o)
                          End Function,
                          Function(ByVal r As String) As Boolean
-                             builders.of_move(name.word().str(), r).to(o)
-                             Return True
+                             Return builders.of_move(name.word().str(), r).to(o)
                          End Function,
                          o)
         End Function

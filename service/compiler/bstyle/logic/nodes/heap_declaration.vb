@@ -62,14 +62,11 @@ Partial Public NotInheritable Class bstyle
                                                         ByVal o As writer) As Boolean
             assert(Not scope.current().structs().defined(type))
             assert(Not o Is Nothing)
-            If Not scope.current().variables().define(type, name) Then
-                Return False
-            End If
-            builders.of_define_heap(name,
-                                    scope.current().type_alias()(type),
-                                    length).
-                     to(o)
-            Return True
+            Return scope.current().variables().define(type, name) AndAlso
+                   builders.of_define_heap(name,
+                                           scope.current().type_alias()(type),
+                                           length).
+                            to(o)
         End Function
     End Class
 End Class

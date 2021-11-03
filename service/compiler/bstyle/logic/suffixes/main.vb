@@ -17,7 +17,7 @@ Partial Public NotInheritable Class bstyle
         End Sub
 
         Public Sub export(ByVal o As writer) Implements statement.export
-            builders.of_caller("main", vector.of(Of String)()).to(o)
+            assert(builders.of_caller("main", vector.of(Of String)()).to(o))
         End Sub
 
         Private Sub New()

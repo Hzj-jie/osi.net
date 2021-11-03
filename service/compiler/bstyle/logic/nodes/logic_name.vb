@@ -77,11 +77,8 @@ Partial Public NotInheritable Class bstyle
                                          ByVal parameters As vector(Of String),
                                          ByVal o As writer) As Boolean
             Dim name As String = Nothing
-            If Not of_function_call(raw_name, parameters, name) Then
-                Return False
-            End If
-            builders.of_caller(name, parameters).to(o)
-            Return True
+            Return of_function_call(raw_name, parameters, name) AndAlso
+                   builders.of_caller(name, parameters).to(o)
         End Function
 
         Private Shared Function build(ByVal raw_name As String, ByVal types As vector(Of String)) As String

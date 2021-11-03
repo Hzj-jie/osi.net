@@ -29,10 +29,9 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.leaf())
-            builders.of_copy_const(l.typed_code_gen(Of value)().
-                                     with_single_data_slot_temp_target(code_types.string, n, o),
-                                   New data_block(n.word().str().Trim(character.quote).c_unescape())).to(o)
-            Return True
+            Return builders.of_copy_const(l.typed_code_gen(Of value)().
+                                            with_single_data_slot_temp_target(code_types.string, n, o),
+                                          New data_block(n.word().str().Trim(character.quote).c_unescape())).to(o)
         End Function
     End Class
 End Class

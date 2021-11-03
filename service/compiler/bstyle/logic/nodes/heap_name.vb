@@ -55,25 +55,29 @@ Partial Public NotInheritable Class bstyle
                          Function(ByVal indexstr As String) As Boolean
                              Return l.typed_code_gen(Of variable_name)().build(
                                         n.child(0),
-                                        Sub(ByVal type As String,
-                                            ByVal ps As vector(Of builders.parameter))
+                                        Function(ByVal type As String,
+                                                 ByVal ps As vector(Of builders.parameter)) As Boolean
                                             Dim vs As vector(Of String) =
                                                 l.typed_code_gen(Of value)().with_temp_target(type, n, o)
                                             assert(Not ps Is Nothing)
                                             assert(vs.size() = ps.size())
                                             Dim i As UInt32 = 0
                                             While i < vs.size()
-                                                builders.of_copy_heap_out(vs(i), ps(i).name, indexstr).to(o)
+                                                If Not builders.of_copy_heap_out(vs(i), ps(i).name, indexstr).to(o) Then
+                                                    Return False
+                                                End If
                                                 i += uint32_1
                                             End While
-                                        End Sub,
-                                        Sub(ByVal type As String, ByVal source As String)
-                                            builders.of_copy_heap_out(l.typed_code_gen(Of value)().
-                                                                        with_single_data_slot_temp_target(type, n, o),
-                                                                      source,
-                                                                      indexstr).
-                                                     to(o)
-                                        End Sub,
+                                            Return True
+                                        End Function,
+                                        Function(ByVal type As String, ByVal source As String) As Boolean
+                                            Return builders.of_copy_heap_out(
+                                                                l.typed_code_gen(Of value)().
+                                                                  with_single_data_slot_temp_target(type, n, o),
+                                                                source,
+                                                                indexstr).
+                                                            to(o)
+                                        End Function,
                                         o)
                          End Function)
         End Function

@@ -26,8 +26,8 @@ Partial Public NotInheritable Class bstyle
         End Sub
 
         Public Function build(ByVal n As typed_node,
-                              ByVal struct_handle As Action(Of String, vector(Of builders.parameter)),
-                              ByVal single_data_slot_handle As Action(Of String, String),
+                              ByVal struct_handle As Func(Of String, vector(Of builders.parameter), Boolean),
+                              ByVal single_data_slot_handle As Func(Of String, String, Boolean),
                               ByVal o As writer) As Boolean
             assert(Not n Is Nothing)
             assert(n.leaf())
@@ -40,23 +40,23 @@ Partial Public NotInheritable Class bstyle
             End If
             Dim ps As vector(Of builders.parameter) = Nothing
             If scope.current().structs().resolve(type, n.word().str(), ps) Then
-                struct_handle(type, ps)
-            Else
-                single_data_slot_handle(type, n.word().str())
+                Return struct_handle(type, ps)
             End If
-            Return True
+            Return single_data_slot_handle(type, n.word().str())
         End Function
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(n.child_count() = 1)
             Return build(n.child(),
-                         Sub(ByVal type As String, ByVal ps As vector(Of builders.parameter))
+                         Function(ByVal type As String, ByVal ps As vector(Of builders.parameter)) As Boolean
                              l.typed_code_gen(Of value)().with_target(ps)
-                         End Sub,
-                         Sub(ByVal type As String, ByVal source As String)
+                             Return True
+                         End Function,
+                         Function(ByVal type As String, ByVal source As String) As Boolean
                              l.typed_code_gen(Of value)().with_single_data_slot_target(source)
-                         End Sub,
+                             Return True
+                         End Function,
                          o)
         End Function
     End Class

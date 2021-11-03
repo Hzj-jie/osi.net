@@ -47,8 +47,7 @@ Partial Public NotInheritable Class bstyle
                        Function(ByVal r As String) As Boolean
                            Return move(index,
                                        Function(ByVal indexstr As String) As Boolean
-                                           builders.of_move_heap_in(name.word().str(), indexstr, r).to(o)
-                                           Return True
+                                           Return builders.of_move_heap_in(name.word().str(), indexstr, r).to(o)
                                        End Function,
                                        o)
                        End Function,
