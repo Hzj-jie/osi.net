@@ -131,13 +131,13 @@ Partial Public NotInheritable Class big_uint
             Return
         End If
 
-        If (array_size(a) Mod byte_count_in_uint32) <> 0 Then
-            ReDim Preserve a(CInt(((array_size(a) + uint32_3) \ byte_count_in_uint32) * byte_count_in_uint32 -
-                             uint32_1))
+        Dim l As UInt32 = a.array_size()
+        If (l Mod byte_count_in_uint32) <> 0 Then
+            l = ((l + uint32_3) \ byte_count_in_uint32) * byte_count_in_uint32
         End If
-        assert((array_size(a) Mod byte_count_in_uint32) = 0)
-        v.resize(array_size(a) \ byte_count_in_uint32)
-        arrays.memcpy(v.data(), a, array_size(a))
+        assert((l Mod byte_count_in_uint32) = 0)
+        v.resize(l \ byte_count_in_uint32)
+        arrays.memcpy(v.data(), a, a.array_size())
         remove_extra_blank()
     End Sub
 

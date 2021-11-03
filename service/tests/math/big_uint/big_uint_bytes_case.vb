@@ -1,9 +1,13 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.service.math
 
-Friend Class big_uint_bytes_case
+Friend NotInheritable Class big_uint_bytes_case
     Inherits [case]
 
     Public Shared Function create_case(Optional ByVal round_scale As Int64 = 1) As [case]
@@ -26,6 +30,9 @@ Friend Class big_uint_bytes_case
         b1 = big_uint.random()
         b2 = New big_uint(b1.as_bytes())
         assertion.equal(b1, b2)
+
+        b1 = New big_uint(New Byte() {35, 0, 0})
+        assertion.equal(b1, New big_uint(35))
         Return True
     End Function
 End Class
