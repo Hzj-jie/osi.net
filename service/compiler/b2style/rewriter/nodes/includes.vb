@@ -11,6 +11,7 @@ Imports osi.root.template
 Imports osi.root.utils
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
+Imports osi.service.constructor
 Imports osi.service.resource
 
 Partial Public NotInheritable Class b2style
@@ -66,11 +67,11 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Public NotInheritable Class include_with_string
-        Inherits include_with_string(Of typed_node_writer,
-                                        default_includes.parser,
-                                        default_includes.folders,
-                                        default_includes.ignore_default_folder,
-                                        default_includes.default_folder)
+        Inherits bstyle.include_with_string(Of typed_node_writer,
+                                               default_includes.parser,
+                                               default_includes.folders,
+                                               default_includes.ignore_default_folder,
+                                               default_includes.default_folder)
         Implements rewriter
 
         Private Shared ReadOnly instance As New include_with_string()
@@ -93,11 +94,11 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Public NotInheritable Class include_with_file
-        Inherits include_with_file(Of typed_node_writer,
-                                      default_includes.parser,
-                                      default_includes.folders,
-                                      default_includes.ignore_default_folder,
-                                      default_includes.default_folder)
+        Inherits bstyle.include_with_file(Of typed_node_writer,
+                                             default_includes.parser,
+                                             default_includes.folders,
+                                             default_includes.ignore_default_folder,
+                                             default_includes.default_folder)
         Implements rewriter
 
         Private Shared ReadOnly instance As New include_with_file()

@@ -67,7 +67,7 @@
     <Compile Include="b2style\scope.namespace.vb" />
     <Compile Include="b2style\scope.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
-    <Compile Include="code_gen\includes.vb" />
+    <Compile Include="bstyle\includes.vb" />
     <Compile Include="bstyle\logic\nodes\defines.vb" />
     <Compile Include="bstyle\logic\nodes\heap_clause.vb" />
     <Compile Include="bstyle\logic\nodes\heap_declaration.vb" />
