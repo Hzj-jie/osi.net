@@ -34,7 +34,7 @@ Public NotInheritable Class b2style_compile_error_test
 
     <test>
     Private Shared Sub three_pluses()
-        ' It's possible to move the longest match to the "i++ >>> + <<<" if the syntaxer_rule does not consider
+        ' TODO: It's possible to move the longest match to the "i++ >>> + <<<" if the syntaxer_rule does not consider
         ' "i++;" but "i++" to be a sentence.
         assertions.of(error_event.capture_log(error_type.user,
             Sub()
