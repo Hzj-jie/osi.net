@@ -25,19 +25,25 @@ Partial Public NotInheritable Class syntaxer
             Public ReadOnly pos As UInt32
             Public ReadOnly nodes As vector(Of typed_node)
 
-            Public Sub New(ByVal pos As UInt32, ByVal nodes As vector(Of typed_node))
+            Private Sub New(ByVal pos As UInt32, ByVal nodes As vector(Of typed_node))
                 assert(Not nodes Is Nothing)
                 Me.pos = pos
                 Me.nodes = nodes
             End Sub
 
-            Public Sub New(ByVal pos As UInt32, ByVal node As typed_node)
-                Me.New(pos, vector.of(node))
-            End Sub
+            Public Shared Function [of](ByVal pos As UInt32,
+                                        ByVal nodes As vector(Of typed_node)) As one_of(Of result, failure)
+                Return one_of(Of result, failure).of_first(New result(pos, nodes))
+            End Function
 
-            Public Sub New(ByVal pos As UInt32)
-                Me.New(pos, New vector(Of typed_node)())
-            End Sub
+            Public Shared Function [of](ByVal pos As UInt32,
+                                        ByVal node As typed_node) As one_of(Of result, failure)
+                Return [of](pos, vector.of(node))
+            End Function
+
+            Public Shared Function [of](ByVal pos As UInt32) As one_of(Of result, failure)
+                Return [of](pos, New vector(Of typed_node)())
+            End Function
 
             Public Function node() As typed_node
                 assert(nodes.size() = uint32_1)
@@ -45,7 +51,24 @@ Partial Public NotInheritable Class syntaxer
             End Function
         End Class
 
-        Public MustOverride Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
+        Public NotInheritable Class failure
+            Public ReadOnly pos As UInt32
+
+            Private Sub New(ByVal pos As UInt32)
+                Me.pos = pos
+            End Sub
+
+            Public Shared Function [of](ByVal pos As UInt32) As one_of(Of result, failure)
+                Return [of](Of result)(pos)
+            End Function
+
+            Public Shared Function [of](Of FIRST)(ByVal pos As UInt32) As one_of(Of FIRST, failure)
+                Return one_of(Of FIRST, failure).of_second(New failure(pos))
+            End Function
+        End Class
+
+        Public MustOverride Function match(ByVal v As vector(Of typed_word),
+                                           ByVal p As UInt32) As one_of(Of result, failure)
 
         Protected Function create_node(ByVal v As vector(Of typed_word),
                                        ByVal type As UInt32,
@@ -54,20 +77,20 @@ Partial Public NotInheritable Class syntaxer
             Return New typed_node(v, type, type_name(type), start, [end])
         End Function
 
-        Protected Function disallow_cycle_dependency(ByVal type As UInt32,
-                                                     ByVal pos As UInt32,
-                                                     ByVal f As Func(Of [optional](Of result))) As [optional](Of result)
+        Protected Function disallow_cycle_dependency(
+                               ByVal type As UInt32,
+                               ByVal pos As UInt32,
+                               ByVal f As Func(Of one_of(Of result, failure))) As one_of(Of result, failure)
             assert(Not f Is Nothing)
             If s Is Nothing Then
                 s = New map(Of UInt32, UInt32)()
             End If
-            Dim previous As [optional](Of UInt32) = Nothing
-            previous = s.find_opt(type)
+            Dim previous As [optional](Of UInt32) = s.find_opt(type)
             If previous Then
                 assert((+previous) <= pos)
                 If (+previous) = pos Then
                     raise_error(error_type.user, "Cycle dependency found at ", type_name(type))
-                    Return [optional].empty(Of result)()
+                    Return failure.of(pos)
                 End If
             End If
             s(type) = pos
@@ -101,29 +124,31 @@ Partial Public NotInheritable Class syntaxer
                                    ByVal start As UInt32,
                                    ByVal [end] As UInt32,
                                    ByVal matcher As Object)
-            If syntaxer.debug_log Then
-                Dim e As String = Nothing
-                If [end] = v.size() Then
-                    e = "[end]"
-                Else
-                    e = Convert.ToString(v([end]))
-                End If
-                raise_error(error_type.information, "Match token ", v(start), " to ", e, " with ", matcher)
+            If Not syntaxer.debug_log Then
+                Return
             End If
+            Dim e As String = Nothing
+            If [end] = v.size() Then
+                e = "[end]"
+            Else
+                e = Convert.ToString(v([end]))
+            End If
+            raise_error(error_type.information, "Match token ", v(start), " to ", e, " with ", matcher)
         End Sub
 
         Protected Sub log_unmatched(ByVal v As vector(Of typed_word),
                                     ByVal start As UInt32,
                                     ByVal matcher As Object)
-            If syntaxer.detailed_debug_log Then
-                Dim start_word As String = Nothing
-                If v.size() <= start Then
-                    start_word = "end-of-typed-word"
-                Else
-                    start_word = Convert.ToString(v(start))
-                End If
-                raise_error(error_type.user, "Failed to match token ", start_word, " when matching with ", matcher)
+            If Not syntaxer.detailed_debug_log Then
+                Return
             End If
+            Dim start_word As String = Nothing
+            If v.size() <= start Then
+                start_word = "end-of-typed-word"
+            Else
+                start_word = Convert.ToString(v(start))
+            End If
+            raise_error(error_type.user, "Failed to match token ", start_word, " when matching with ", matcher)
         End Sub
 
         Protected Sub log_end_of_tokens(ByVal v As vector(Of typed_word),

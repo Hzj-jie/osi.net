@@ -19,15 +19,16 @@ Partial Public NotInheritable Class syntaxer
             Me.m = m
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
+        Public Overrides Function match(ByVal v As vector(Of typed_word),
+                                        ByVal p As UInt32) As one_of(Of result, failure)
             If v Is Nothing OrElse v.size() <= p Then
-                Return [optional].empty(Of result)()
+                Return failure.of(p)
             End If
             assert(Not v(p) Is Nothing)
             If v(p).type <> m Then
-                Return [optional].empty(Of result)()
+                Return failure.of(p)
             End If
-            Return [optional].of(New result(p + uint32_1, create_node(v, v(p).type, p, p + uint32_1)))
+            Return result.of(p + uint32_1, create_node(v, v(p).type, p, p + uint32_1))
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32

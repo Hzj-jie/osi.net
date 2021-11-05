@@ -29,20 +29,24 @@ Partial Public NotInheritable Class syntaxer
             MyBase.New(c, m1, m2, ms)
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
-            Dim nodes As vector(Of typed_node) = Nothing
-            nodes = New vector(Of typed_node)()
-            Dim r As [optional](Of result) = Nothing
-            r = MyBase.match(v, p)
-            While r
-                p = (+r).pos
-                nodes.emplace_back((+r).node())
-                r = MyBase.match(v, p)
+        Public Overrides Function match(ByVal v As vector(Of typed_word),
+                                        ByVal p As UInt32) As one_of(Of result, failure)
+            Dim nodes As New vector(Of typed_node)()
+            Dim max_failure As UInt32 = 0
+            While True
+                Dim r As one_of(Of result, failure) = MyBase.match(v, p)
+                If r.is_first() Then
+                    p = r.first().pos
+                    nodes.emplace_back(r.first().node())
+                Else
+                    max_failure = r.second().pos
+                    Exit While
+                End If
             End While
             If nodes.empty() Then
-                Return [optional].empty(Of result)()
+                Return failure.of(max_failure)
             End If
-            Return [optional].of(New result(p, nodes))
+            Return result.of(p, nodes)
         End Function
 
         Public Overloads Function CompareTo(ByVal other As multi_matching_group) As Int32 _

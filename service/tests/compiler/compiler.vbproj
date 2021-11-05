@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="b2style\b2stylec_main.vb" />
+    <Compile Include="b2style\b2style_compile_error_test.vb" />
     <Compile Include="b2style\b2style_main.vb" />
     <Compile Include="b2style\b2style_test.vb" />
     <Compile Include="b2style\b2style_test_data.vb" />
@@ -125,6 +126,9 @@
     <Content Include="b2style\codegen\biguint.txt" />
     <Content Include="b2style\codegen\calculate_pi_bbp.txt" />
     <Content Include="b2style\codegen\comments.txt" />
+    <Content Include="b2style\codegen\errors\include-needs-wraps.txt" />
+    <Content Include="b2style\codegen\errors\dollar-in-number.txt" />
+    <Content Include="b2style\codegen\errors\three-pluses.txt" />
     <Content Include="b2style\codegen\for_loop.txt" />
     <Content Include="b2style\codegen\function_ref.txt" />
     <Content Include="b2style\codegen\heap_declaration.txt" />

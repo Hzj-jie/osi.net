@@ -1,0 +1,7 @@
+﻿
+#include   <b2style.h>
+
+void main() {
+  int i = 0;
+  i +++;
+}

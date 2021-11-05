@@ -41,22 +41,24 @@ Partial Public NotInheritable Class syntaxer
         Me.mg = New matching_group(collection, arrays.type_erasure(Of matching, syntax)(+collection.get(+root_types)))
     End Sub
 
+    Public Shared Function debug_str(ByVal input As String, ByVal type_name As String) As String
+        Return strcat(input, "(", strlen(input), ")", ":[", type_name, "]")
+    End Function
+
     Private Function debug_str(ByVal v As vector(Of typed_word), ByVal p As UInt32) As String
-        Dim start As UInt32 = 0
-        start = CUInt(max(0, p - 3))
-        Dim [end] As UInt32 = 0
-        [end] = CUInt(min(start + 6, v.size()))
-        Dim r As StringBuilder = Nothing
-        r = New StringBuilder()
-        Dim i As UInt32 = 0
-        i = start
+        Dim start As UInt32 = CUInt(max(0, p - 3))
+        Dim [end] As UInt32 = CUInt(min(start + 7, v.size()))
+        Dim r As New StringBuilder()
+        Dim i As UInt32 = start
         While i < [end]
-            r.Append(v(i).str()).
-              Append(":[").
-              Append(collection.type_name(v(i).type)).
-              Append("]").
-              Append(v(i).len).
+            If i = p Then
+                r.Append(">>> ")
+            End If
+            r.Append(debug_str(v(i).str(), collection.type_name(v(i).type))).
               Append(character.blank)
+            If i = p Then
+                r.Append(" <<<")
+            End If
             i += uint32_1
         End While
         Return Convert.ToString(r)
@@ -67,19 +69,25 @@ Partial Public NotInheritable Class syntaxer
         If v.null_or_empty() Then
             Return [optional].empty(Of typed_node)()
         End If
-        Dim root As typed_node = Nothing
-        root = typed_node.of_root(v)
+        Dim root As typed_node = typed_node.of_root(v)
         Dim p As UInt32 = 0
         While p < v.size()
-            Dim m As [optional](Of matching_group.best_match_result) = Nothing
-            m = mg.best_match(v, p)
-            If Not m Then
-                raise_error(error_type.user, "Cannot match token ", v(p).str(), " @ ", p, " - ", debug_str(v, p))
+            Dim m As one_of(Of matching_group.best_match_result, matching.failure) = mg.best_match(v, p)
+            If m.is_second() Then
+                Dim l As Func(Of UInt32, String()) = Function(ByVal pos As UInt32) As String()
+                                                         Return {
+                                                             v(pos).str(),
+                                                             " @ ",
+                                                             Convert.ToString(pos),
+                                                             " - ",
+                                                             debug_str(v, pos)
+                                                         }
+                                                     End Function
+                raise_error(error_type.user, "Cannot match token ", l(p), ". Longest match ", l(m.second().pos))
                 Return [optional].empty(Of typed_node)()
             End If
-            assert(Not (+m) Is Nothing)
-            Dim r As matching.result = Nothing
-            r = (+m).result
+            assert(Not m.first() Is Nothing)
+            Dim r As matching.result = m.first().result
             assert(Not r Is Nothing)
             If p = r.pos Then
                 Return [optional].empty(Of typed_node)()

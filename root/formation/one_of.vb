@@ -30,6 +30,32 @@ Public Structure one_of(Of T1, T2)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function of_first(Of T22)() As one_of(Of T1, T22)
+        assert(is_first())
+        Return one_of(Of T1, T22).of_first(first())
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function of_second(Of T12)() As one_of(Of T12, T2)
+        assert(is_second())
+        Return one_of(Of T12, T2).of_second(second())
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function map_first(Of T12)(ByVal f As Func(Of T1, T12)) As one_of(Of T12, T2)
+        assert(Not f Is Nothing)
+        assert(is_first())
+        Return one_of(Of T12, T2).of_first(f(first()))
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function map_second(Of T22)(ByVal f As Func(Of T2, T22)) As one_of(Of T1, T22)
+        assert(Not f Is Nothing)
+        assert(is_second())
+        Return one_of(Of T1, T22).of_second(f(second()))
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function is_first() As Boolean
         Return t._1()
     End Function

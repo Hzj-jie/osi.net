@@ -13,14 +13,10 @@ Partial Public NotInheritable Class syntaxer
         Implements IComparable(Of syntax)
 
         Private Const default_type As UInt32 = uint32_0
-        Private Shared ReadOnly default_ignore_types As [set](Of UInt32)
+        Private Shared ReadOnly default_ignore_types As [set](Of UInt32) = Nothing
         Public ReadOnly type As UInt32
         Private ReadOnly ms() As matching
         Private ReadOnly ignore_types As [set](Of UInt32)
-
-        Shared Sub New()
-            default_ignore_types = Nothing
-        End Sub
 
         Public Sub New(ByVal c As syntax_collection,
                        ByVal type As UInt32,
@@ -38,16 +34,14 @@ Partial Public NotInheritable Class syntaxer
                                       ByVal s As String,
                                       ByVal collection As syntax_collection,
                                       Optional ByRef o As syntax = Nothing) As Boolean
-            Dim ms As vector(Of matching) = Nothing
-            ms = New vector(Of matching)()
+            Dim ms As New vector(Of matching)()
             Dim m As matching = Nothing
             Dim pos As UInt32 = 0
             While pos < strlen(s)
-                If matching_creator.create(s, collection, pos, m) Then
-                    ms.emplace_back(m)
-                Else
+                If Not matching_creator.create(s, collection, pos, m) Then
                     Return False
                 End If
+                ms.emplace_back(m)
             End While
             o = New syntax(collection, type, ignore_types, +ms)
             Return collection.set(o)
@@ -156,40 +150,40 @@ Partial Public NotInheritable Class syntaxer
             End If
             While v.size() > p
                 assert(Not v(p) Is Nothing)
-                If ignore_type(v(p)) Then
-                    p += uint32_1
-                Else
+                If Not ignore_type(v(p)) Then
                     Exit While
                 End If
+                p += uint32_1
             End While
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
+        Public Overrides Function match(ByVal v As vector(Of typed_word),
+                                        ByVal p As UInt32) As one_of(Of result, failure)
             If v Is Nothing OrElse v.size() <= p Then
                 log_end_of_tokens(v, p, Me)
-                Return [optional].empty(Of result)()
+                Return failure.of(p)
             End If
 
             Return disallow_cycle_dependency(type,
                                              p,
-                                             Function() As [optional](Of result)
+                                             Function() As one_of(Of result, failure)
                                                  Dim nodes As New vector(Of typed_node)()
                                                  Dim op As UInt32 = p
                                                  For i As Int32 = 0 To array_size_i(ms) - 1
                                                      jump_over_ignore_types(v, p)
-                                                     Dim r As [optional](Of result) = ms(i).match(v, p)
-                                                     If Not r Then
+                                                     Dim r As one_of(Of result, failure) = ms(i).match(v, p)
+                                                     If r.is_second() Then
                                                          log_unmatched(v, p, ms(i))
                                                          Return r
                                                      End If
-                                                     p = (+r).pos
-                                                     nodes.emplace_back((+r).nodes)
+                                                     p = r.first().pos
+                                                     nodes.emplace_back(r.first().nodes)
                                                  Next
                                                  Dim root As typed_node = create_node(v, type, op, p)
                                                  root.attach(nodes)
                                                  jump_over_ignore_types(v, p)
                                                  log_matching(v, op, p, Me)
-                                                 Return [optional].of(New result(p, root))
+                                                 Return result.of(p, root)
                                              End Function)
         End Function
 
@@ -203,8 +197,7 @@ Partial Public NotInheritable Class syntaxer
 
         Public Overloads Function CompareTo(ByVal other As syntax) As Int32 _
                                            Implements IComparable(Of syntax).CompareTo
-            Dim c As Int32 = 0
-            c = object_compare(Me, other)
+            Dim c As Int32 = object_compare(Me, other)
             If c <> object_compare_undetermined Then
                 Return c
             End If

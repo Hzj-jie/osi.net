@@ -70,6 +70,27 @@ Public NotInheritable Class error_event
         RaiseEvent a1()
     End Sub
 
+    Public Shared Function capture_logs(ByVal err_type As error_type, ByVal d As Action) As List(Of String)
+        assert(Not d Is Nothing)
+        Dim r As New List(Of String)()
+        Dim capturer As r3EventHandler = Sub(ByVal et As error_type, ByVal msg As String)
+                                             If err_type = et Then
+                                                 r.Add(msg)
+                                             End If
+                                         End Sub
+        AddHandler r3, capturer
+        Try
+            d()
+        Finally
+            RemoveHandler r3, capturer
+        End Try
+        Return r
+    End Function
+
+    Public Shared Function capture_log(ByVal err_type As error_type, ByVal d As Action) As String
+        Return String.Join(newline.incode(), capture_logs(err_type, d))
+    End Function
+
     <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Shared Sub r(ByVal err_type As error_type,
                         ByVal err_type_char As Char,

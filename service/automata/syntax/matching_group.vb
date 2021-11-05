@@ -38,41 +38,43 @@ Partial Public NotInheritable Class syntaxer
         End Class
 
         Public Function best_match(ByVal v As vector(Of typed_word),
-                                   ByVal p As UInt32) As [optional](Of best_match_result)
-            Dim max As [optional](Of result) = Nothing
-            max = [optional].empty(Of result)()
-            Dim max_id As Int32 = 0
-            max_id = npos
+                                   ByVal p As UInt32) As one_of(Of best_match_result, failure)
+            Dim max As best_match_result = Nothing
+            Dim max_failure As UInt32 = 0
             For i As Int32 = 0 To array_size_i(ms) - 1
                 assert(Not ms(i) Is Nothing)
-                Dim r As [optional](Of result) = Nothing
-                r = ms(i).match(v, p)
-                If (Not r.empty()) AndAlso ((Not max) OrElse (+max).pos < (+r).pos) Then
-                    max = r
-                    max_id = i
+                Dim r As one_of(Of result, failure) = ms(i).match(v, p)
+                If r.is_second() Then
+                    If max_failure < r.second().pos Then
+                        max_failure = r.second().pos
+                    End If
+                Else
+                    If max Is Nothing OrElse max.result.pos < r.first().pos Then
+                        max = New best_match_result(CUInt(i), r.first())
+                    End If
                 End If
             Next
-            If Not max Then
-                assert(max_id = npos)
-                Return [optional].empty(Of best_match_result)()
+            If max Is Nothing Then
+                Return failure.of(Of best_match_result)(max_failure)
             End If
-            assert(max)
-            assert(max_id >= 0 AndAlso max_id < array_size_i(ms))
-            Return [optional].of(New best_match_result(CUInt(max_id), +max))
+            Return one_of(Of best_match_result, failure).of_first(max)
         End Function
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
+        Public Overrides Function match(ByVal v As vector(Of typed_word),
+                                        ByVal p As UInt32) As one_of(Of result, failure)
             If v Is Nothing OrElse v.size() <= p Then
-                Return [optional].empty(Of result)
+                Return failure.of(p)
             End If
-            Dim r As [optional](Of best_match_result) = Nothing
-            r = best_match(v, p)
-            If Not r Then
-                log_unmatched(v, p, Me)
-                Return [optional].empty(Of result)()
+            Dim r As one_of(Of best_match_result, failure) = best_match(v, p)
+            If r.is_second() Then
+                log_unmatched(v, r.second().pos, Me)
+                Return r.of_second(Of result)()
             End If
-            log_matching(v, p, (+r).result.pos, strcat(ms(CInt((+r).id)), "@", (+r).id))
-            Return [optional].of((+r).result)
+            log_matching(v, p, r.first().result.pos, strcat(ms(CInt(r.first().id)), "@", r.first().id))
+            Return r.map_first(Function(ByVal x As best_match_result) As result
+                                   assert(Not x Is Nothing)
+                                   Return x.result
+                               End Function)
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32

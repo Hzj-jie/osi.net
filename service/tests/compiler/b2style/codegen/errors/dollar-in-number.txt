@@ -1,0 +1,4 @@
+﻿
+void main() {
+  float x = 1$1;
+}

@@ -34,7 +34,8 @@ Partial Public NotInheritable Class syntaxer
             Me.New(c, matching_creator.create(c, m1, m2, ms))
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As [optional](Of result)
+        Public Overrides Function match(ByVal v As vector(Of typed_word),
+                                        ByVal p As UInt32) As one_of(Of result, failure)
             Return m.match(v, p)
         End Function
 

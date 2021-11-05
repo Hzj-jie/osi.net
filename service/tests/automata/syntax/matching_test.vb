@@ -53,18 +53,15 @@ Namespace syntaxer
         Protected MustOverride Function create() As matching_case()
 
         Public Overrides Function run() As Boolean
-            Dim ms() As matching_case = Nothing
-            ms = create()
+            Dim ms() As matching_case = create()
             assert(Not isemptyarray(ms))
             For i As Int32 = 0 To array_size_i(ms) - 1
-                Dim m As matching_case = Nothing
-                m = ms(i)
+                Dim m As matching_case = ms(i)
                 assert(Not m Is Nothing)
-                Dim r As [optional](Of matching.result) = Nothing
-                r = m.m.match(m.v, m.start)
-                assertion.equal(r, m.exp)
-                If r Then
-                    assertion.equal((+r).pos, m.end)
+                Dim r As one_of(Of matching.result, matching.failure) = m.m.match(m.v, m.start)
+                assertion.equal(r.is_first(), m.exp)
+                If r.is_first() Then
+                    assertion.equal(r.first().pos, m.end)
                 End If
             Next
             Return True

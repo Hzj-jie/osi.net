@@ -131,7 +131,7 @@ Partial Public NotInheritable Class nlexer
         Dim short_str As String = strmid(i,
                                          If(pos > half_short_str_len, pos - half_short_str_len, uint32_0),
                                          half_short_str_len << 1)
-        Return strcat("No match in ", i, " at pos ", pos, " -> ", short_str, " >> [" + i.char_at(pos), "]")
+        Return strcat("[nlexer] No match in ", i, " at pos ", pos, " -> ", short_str, " >> [" + i.char_at(pos), "]")
     End Function
 
     Public Function match(ByVal ParamArray s() As String) As [optional](Of vector(Of result))
