@@ -10,27 +10,24 @@ Imports osi.root.envs
 Imports osi.root.formation
 
 Partial Public NotInheritable Class syntaxer
-    Public Shared ReadOnly detailed_debug_log As Boolean
-    Public Shared ReadOnly debug_log As Boolean
-    Public Shared ReadOnly dump_rules As Boolean
+    Public Shared ReadOnly detailed_debug_log As Boolean =
+                               env_bool(env_keys("syntaxer", "detailed", "debug")) OrElse
+                               env_bool(env_keys("syntaxer", "detailed", "debugging")) OrElse
+                               env_bool(env_keys("syntaxer", "detailed", "debug", "log"))
+    Public Shared ReadOnly debug_log As Boolean =
+                               env_bool(env_keys("syntaxer", "debug")) OrElse
+                               env_bool(env_keys("syntaxer", "debugging")) OrElse
+                               env_bool(env_keys("syntaxer", "debug", "log")) OrElse
+                               detailed_debug_log
+    Public Shared ReadOnly dump_rules As Boolean =
+                               env_bool(env_keys("syntaxer", "rules", "debug")) OrElse
+                               env_bool(env_keys("syntaxer", "debug", "rules")) OrElse
+                               env_bool(env_keys("syntaxer", "dump", "rules")) OrElse
+                               detailed_debug_log
 
     Private ReadOnly collection As syntax_collection
     Private ReadOnly root_types As vector(Of UInt32)
     Private ReadOnly mg As matching_group
-
-    Shared Sub New()
-        detailed_debug_log = env_bool(env_keys("syntaxer", "detailed", "debug")) OrElse
-                             env_bool(env_keys("syntaxer", "detailed", "debugging")) OrElse
-                             env_bool(env_keys("syntaxer", "detailed", "debug", "log"))
-        debug_log = env_bool(env_keys("syntaxer", "debug")) OrElse
-                    env_bool(env_keys("syntaxer", "debugging")) OrElse
-                    env_bool(env_keys("syntaxer", "debug", "log")) OrElse
-                    detailed_debug_log
-        dump_rules = env_bool(env_keys("syntaxer", "rules", "debug")) OrElse
-                     env_bool(env_keys("syntaxer", "debug", "rules")) OrElse
-                     env_bool(env_keys("syntaxer", "dump", "rules")) OrElse
-                     detailed_debug_log
-    End Sub
 
     Public Sub New(ByVal collection As syntax_collection, ByVal root_types As vector(Of UInt32))
         assert(Not collection Is Nothing)
@@ -102,8 +99,7 @@ Partial Public NotInheritable Class syntaxer
     End Function
 
     Public Function match(ByVal v As vector(Of typed_word), ByRef root As typed_node) As Boolean
-        Dim r As [optional](Of typed_node) = Nothing
-        r = match(v)
+        Dim r As [optional](Of typed_node) = match(v)
         If r Then
             root = (+r)
             Return True
