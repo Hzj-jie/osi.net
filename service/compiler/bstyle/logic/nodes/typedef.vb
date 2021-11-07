@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class typedef
