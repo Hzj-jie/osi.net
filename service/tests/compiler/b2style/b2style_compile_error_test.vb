@@ -47,6 +47,15 @@ Public NotInheritable Class b2style_compile_error_test
                                syntaxer.debug_str("+", "add"))
     End Sub
 
+    <test>
+    Private Shared Sub cycle_typedef()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(b2style.with_functions(New interrupts()).
+                                           parse(_b2style_test_data.errors_cycle_typedef.as_text(), Nothing))
+            End Sub)).contains("CYCLE_TYPEDEF__A", "CYCLE_TYPEDEF__C")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

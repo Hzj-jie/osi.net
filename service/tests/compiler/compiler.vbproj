@@ -126,6 +126,7 @@
     <Content Include="b2style\codegen\biguint.txt" />
     <Content Include="b2style\codegen\calculate_pi_bbp.txt" />
     <Content Include="b2style\codegen\comments.txt" />
+    <Content Include="b2style\codegen\errors\cycle-typedef.txt" />
     <Content Include="b2style\codegen\errors\include-needs-wraps.txt" />
     <Content Include="b2style\codegen\errors\dollar-in-number.txt" />
     <Content Include="b2style\codegen\errors\three-pluses.txt" />

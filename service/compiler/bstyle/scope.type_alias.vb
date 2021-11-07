@@ -16,6 +16,22 @@ Partial Public NotInheritable Class bstyle
             Public Function define(ByVal [alias] As String, ByVal canonical As String) As Boolean
                 assert(Not [alias].null_or_whitespace())
                 assert(Not canonical.null_or_whitespace())
+                If [alias].Equals(canonical) Then
+                    raise_error(error_type.user,
+                                "Alias ",
+                                [alias],
+                                " cannot be defined to itself.")
+                    Return False
+                End If
+                If [alias].Equals(Me(canonical)) Then
+                    raise_error(error_type.user,
+                                "Cycle typedefs detected, alias ",
+                                [alias],
+                                " equals to its canonical ",
+                                canonical)
+                    Return False
+                End If
+                canonical = Me(canonical)
                 If m.emplace([alias], canonical).second OrElse m([alias]).Equals(canonical) Then
                     Return True
                 End If
@@ -33,11 +49,7 @@ Partial Public NotInheritable Class bstyle
             Default Public ReadOnly Property _D(ByVal [alias] As String) As String
                 Get
                     assert(Not [alias].null_or_whitespace())
-                    Dim c As String = Nothing
-                    While m.find([alias], c)
-                        [alias] = c
-                        c = Nothing
-                    End While
+                    [alias] = m.find_or([alias], [alias])
                     assert(Not [alias].null_or_whitespace())
                     Return [alias]
                 End Get
