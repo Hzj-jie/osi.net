@@ -76,7 +76,7 @@ Partial Public NotInheritable Class syntaxer
             If m.is_second() Then
                 Dim l As Func(Of UInt32, String()) = Function(ByVal pos As UInt32) As String()
                                                          Return {
-                                                             v(pos).str(),
+                                                             If(pos < v.size(), v(pos).str(), "{END-OF-INPUT}"),
                                                              " @ ",
                                                              Convert.ToString(pos),
                                                              " - ",

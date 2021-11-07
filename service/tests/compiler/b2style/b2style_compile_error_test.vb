@@ -40,7 +40,11 @@ Public NotInheritable Class b2style_compile_error_test
             Sub()
                 assertion.is_false(b2style.with_functions(New interrupts()).
                                            parse(_b2style_test_data.errors_three_pluses.as_text(), Nothing))
-            End Sub)).contains(syntaxer.debug_str("main", "name"), syntaxer.debug_str("+", "add"))
+            End Sub)).contains(syntaxer.debug_str("void", "name"),
+                               syntaxer.debug_str("main", "name"),
+                               syntaxer.debug_str("i", "name"),
+                               syntaxer.debug_str("++", "self-inc"),
+                               syntaxer.debug_str("+", "add"))
     End Sub
 
     Private Sub New()
