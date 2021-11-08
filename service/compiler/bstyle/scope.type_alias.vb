@@ -56,7 +56,7 @@ Partial Public NotInheritable Class bstyle
             End Property
         End Class
 
-        Public NotInheritable Class type_alias_proxy
+        Public Structure type_alias_proxy
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
@@ -87,10 +87,7 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Return r
             End Function
-
-            Private Sub New()
-            End Sub
-        End Class
+        End Structure
 
         Public Function type_alias() As type_alias_proxy
             Return New type_alias_proxy(Me)

@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
             End Function
         End Class
 
-        Public NotInheritable Class current_function_proxy
+        Public Structure current_function_proxy
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
@@ -74,7 +74,7 @@ Partial Public NotInheritable Class bstyle
                 assert(allow_return_value())
                 Return current_function().return_type
             End Function
-        End Class
+        End Structure
 
         Public Function current_function() As current_function_proxy
             Return New current_function_proxy(Me)

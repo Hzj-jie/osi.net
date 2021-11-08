@@ -97,7 +97,7 @@ Partial Public NotInheritable Class bstyle
             End Function
         End Class
 
-        Public NotInheritable Class struct_proxy
+        Public Structure struct_proxy
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
@@ -140,7 +140,7 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Return resolve(type, name, o)
             End Function
-        End Class
+        End Structure
 
         Public Function structs() As struct_proxy
             Return New struct_proxy(Me)

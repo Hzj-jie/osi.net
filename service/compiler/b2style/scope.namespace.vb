@@ -8,7 +8,7 @@ Imports osi.root.constants
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
-        Public NotInheritable Class current_namespace_proxy
+        Public Structure current_namespace_proxy
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
@@ -32,7 +32,7 @@ Partial Public NotInheritable Class b2style
                 End While
                 Return s.cn
             End Function
-        End Class
+        End Structure
 
         Public Function current_namespace() As current_namespace_proxy
             Return New current_namespace_proxy(Me)

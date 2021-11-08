@@ -37,7 +37,7 @@ Partial Public NotInheritable Class bstyle
             End Function
         End Class
 
-        Public NotInheritable Class variable_proxy
+        Public Structure variable_proxy
             Public ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
@@ -51,12 +51,16 @@ Partial Public NotInheritable Class bstyle
 
             Public Function define(ByVal vs As vector(Of single_data_slot_variable)) As Boolean
                 assert(Not vs Is Nothing)
-                Return vs.stream().
-                          map(Function(ByVal p As single_data_slot_variable) As Boolean
-                                  assert(Not p Is Nothing)
-                                  Return define(p.type, p.name)
-                              End Function).
-                          aggregate(bool_stream.aggregators.all_true, True)  ' If vs is empty, always return true.
+                Dim i As UInt32 = 0
+                While i < vs.size()
+                    assert(Not vs(i) Is Nothing)
+                    If Not define(vs(i).type, vs(i).name) Then
+                        Return False
+                    End If
+                    i += uint32_1
+                End While
+                ' If vs is empty, always return true.
+                Return True
             End Function
 
             Public Function try_resolve(ByVal name As String, ByRef type As String) As Boolean
@@ -77,7 +81,7 @@ Partial Public NotInheritable Class bstyle
                 raise_error(error_type.user, "Variable ", name, " has not been defined.")
                 Return False
             End Function
-        End Class
+        End Structure
 
         Public Function variables() As variable_proxy
             Return New variable_proxy(Me)
