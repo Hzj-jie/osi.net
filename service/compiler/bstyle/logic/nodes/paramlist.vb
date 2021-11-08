@@ -15,12 +15,11 @@ Partial Public NotInheritable Class bstyle
         Inherits logic_gen_wrapper
         Implements logic_gen
 
-        Private ReadOnly rs As read_scoped(Of vector(Of builders.parameter))
+        Private ReadOnly rs As New read_scoped(Of vector(Of builders.parameter))()
 
         <inject_constructor>
         Public Sub New(ByVal b As logic_gens)
             MyBase.New(b)
-            Me.rs = New read_scoped(Of vector(Of builders.parameter))()
         End Sub
 
         Public Shared Sub register(ByVal b As logic_gens)

@@ -72,11 +72,11 @@ Partial Public NotInheritable Class bstyle
                                If Not condition_value(ref, o) Then
                                    Return False
                                End If
-                               Using read_target As read_scoped(Of value.target).ref(Of value.single_data_slot_target) =
-                                   l.typed_code_gen(Of value)().read_target_single_data_slot()
+                               Using read_target As read_scoped(Of value.target).ref(Of String) =
+                                       l.typed_code_gen(Of value)().read_target_single_data_slot()
                                    Dim condition As String = Nothing
                                    ' TODO: May want to restrict the type of condition.
-                                   If Not value.single_data_slot_target.ignore_type(read_target, condition) Then
+                                   If Not read_target.retrieve(condition) Then
                                        raise_error(error_type.user, "Condition of for-loop cannot be a struct.")
                                        Return False
                                    End If

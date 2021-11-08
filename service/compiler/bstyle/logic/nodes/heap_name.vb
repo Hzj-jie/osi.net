@@ -36,10 +36,10 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Dim indexstr As String = Nothing
-            Using read_target As read_scoped(Of value.target).ref(Of value.single_data_slot_target) =
+            Using read_target As read_scoped(Of value.target).ref(Of String) =
                     l.typed_code_gen(Of value)().read_target_single_data_slot()
                 ' TODO: May want to restrict the type of indexstr.
-                If Not value.single_data_slot_target.ignore_type(read_target, indexstr) Then
+                If Not read_target.retrieve(indexstr) Then
                     raise_error(error_type.user, "Index or length of a heap declaration cannot be a struct.")
                     Return False
                 End If
@@ -57,7 +57,7 @@ Partial Public NotInheritable Class bstyle
                              Return l.typed_code_gen(Of variable_name)().build(
                                         n.child(0),
                                         Function(ByVal type As String,
-                                                 ByVal ps As vector(Of builders.parameter)) As Boolean
+                                                 ByVal ps As vector(Of single_data_slot_variable)) As Boolean
                                             Dim vs As vector(Of String) =
                                                 l.typed_code_gen(Of value)().with_temp_target(type, n, o)
                                             assert(Not ps Is Nothing)

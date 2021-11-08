@@ -49,10 +49,10 @@ Partial Public NotInheritable Class bstyle
                 Return s.v.define(type, name)
             End Function
 
-            Public Function define(ByVal vs As vector(Of builders.parameter)) As Boolean
+            Public Function define(ByVal vs As vector(Of single_data_slot_variable)) As Boolean
                 assert(Not vs Is Nothing)
                 Return vs.stream().
-                          map(Function(ByVal p As builders.parameter) As Boolean
+                          map(Function(ByVal p As single_data_slot_variable) As Boolean
                                   assert(Not p Is Nothing)
                                   Return define(p.type, p.name)
                               End Function).

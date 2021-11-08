@@ -43,7 +43,10 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             scope.current().current_function().define(raw_name, return_type, parameters)
-            If Not scope.current().variables().define(parameters) Then
+            If Not scope.current().variables().define(
+                    parameters.stream().
+                               map(AddressOf single_data_slot_variable.from_builders_parameter).
+                               collect(Of vector(Of single_data_slot_variable))()) Then
                 Return False
             End If
             Return builders.of_callee(name,

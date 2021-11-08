@@ -55,10 +55,10 @@ Partial Public NotInheritable Class bstyle
                     Return struct_copy((+r).names)
                 End Using
             Else
-                Using r As read_scoped(Of value.target).ref(Of value.single_data_slot_target) =
+                Using r As read_scoped(Of value.target).ref(Of String) =
                         l.typed_code_gen(Of value)().read_target_single_data_slot()
                     ' The type check of single-data-slot-target will be handled by logic.
-                    Return single_data_slot_copy((+r).name)
+                    Return single_data_slot_copy(+r)
                 End Using
             End If
         End Function

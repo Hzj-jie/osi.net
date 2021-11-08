@@ -34,18 +34,21 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 2 OrElse n.child_count() = 3)
-            Dim params As vector(Of builders.parameter) = Nothing
+            Dim params As vector(Of single_data_slot_variable) = Nothing
             If Not scope.current().structs().resolve(n.child(0).word().str(), n.last_child().word().str(), params) Then
-                params = vector.of(New builders.parameter(n.child(0).word().str(), n.last_child().word().str()))
+                params = vector.of(New single_data_slot_variable(n.child(0).word().str(), n.last_child().word().str()))
             End If
+            Dim ps As vector(Of builders.parameter) = params.stream().
+                                                             map(AddressOf single_data_slot_variable.to_builders_parameter).
+                                                             collect(Of vector(Of builders.parameter))()
             If n.child_count() = 3 Then
                 assert(n.child(1).leaf())
                 assert(n.child(1).type_name.Equals("reference"))
-                params = params.stream().
-                                map(AddressOf builders.parameter.to_ref).
-                                collect(Of vector(Of builders.parameter))()
+                ps = ps.stream().
+                        map(AddressOf builders.parameter.to_ref).
+                        collect(Of vector(Of builders.parameter))()
             End If
-            rs.push(params)
+            rs.push(ps)
             ' No parameter nesting expected, use read_scoped to reduce the cost of maintaining the state only.
             assert(rs.size() = 1)
             Return True

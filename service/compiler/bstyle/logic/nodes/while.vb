@@ -36,11 +36,11 @@ Partial Public NotInheritable Class bstyle
             If Not while_value(n, o) Then
                 Return False
             End If
-            Using value_target As read_scoped(Of value.target).ref(Of value.single_data_slot_target) =
+            Using value_target As read_scoped(Of value.target).ref(Of String) =
                     l.typed_code_gen(Of value)().read_target_single_data_slot()
                 Dim condition As String = Nothing
                 ' TODO: May want to restrict the type of condition.
-                If Not value.single_data_slot_target.ignore_type(value_target, condition) Then
+                If Not value_target.retrieve(condition) Then
                     raise_error(error_type.user, "Condition of while cannot be a struct.")
                     Return False
                 End If

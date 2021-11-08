@@ -46,40 +46,14 @@ Partial Public NotInheritable Class bstyle
             End Function
         End Class
 
-        Public NotInheritable Class single_data_slot_target
-            Public ReadOnly type As String
-            Public ReadOnly name As String
-
-            Public Sub New(ByVal type As String, ByVal name As String)
-                assert(Not type.null_or_whitespace())
-                assert(Not name.null_or_whitespace())
-                type = scope.current().type_alias()(type)
-                assert(Not scope.current().structs().defined(type))
-
-                Me.type = type
-                Me.name = name
-            End Sub
-
-            Public Shared Function ignore_type(ByVal i As read_scoped(Of target).ref(Of single_data_slot_target),
-                                               ByRef o As String) As Boolean
-                assert(Not i Is Nothing)
-                Dim t As single_data_slot_target = Nothing
-                If Not i.retrieve(t) Then
-                    Return False
-                End If
-                assert(Not t Is Nothing)
-                o = t.name
-                Return True
-            End Function
-        End Class
-
-        Public Function read_target_single_data_slot() As read_scoped(Of target).ref(Of single_data_slot_target)
-            Return read_targets.pop(Function(ByVal x As target, ByRef o As single_data_slot_target) As Boolean
+        ' Type of the single data slot is handled by logic.
+        Public Function read_target_single_data_slot() As read_scoped(Of target).ref(Of String)
+            Return read_targets.pop(Function(ByVal x As target, ByRef o As String) As Boolean
                                         assert(Not x Is Nothing)
                                         If x.names.size() <> 1 Then
                                             Return False
                                         End If
-                                        o = New single_data_slot_target(x.type, x.names(0))
+                                        o = x.names(0)
                                         Return True
                                     End Function)
         End Function
@@ -117,10 +91,10 @@ Partial Public NotInheritable Class bstyle
                                          ByVal o As writer) As vector(Of String)
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Dim params As vector(Of builders.parameter) = Nothing
+            Dim params As vector(Of single_data_slot_variable) = Nothing
             assert(scope.current().structs().resolve(type, logic_name.temp_variable(n), params))
             assert(Not params Is Nothing)
-            params.stream().foreach(Sub(ByVal p As builders.parameter)
+            params.stream().foreach(Sub(ByVal p As single_data_slot_variable)
                                         assert(Not p Is Nothing)
                                         define_single_data_slot_temp_target(p.type, p.name, o)
                                     End Sub)
@@ -128,10 +102,10 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Function with_target(ByVal type As String,
-                                    ByVal ps As vector(Of builders.parameter)) As vector(Of String)
+                                    ByVal ps As vector(Of single_data_slot_variable)) As vector(Of String)
             assert(Not ps Is Nothing)
             Dim vs As vector(Of String) = ps.stream().
-                                             map(Function(ByVal p As builders.parameter) As String
+                                             map(Function(ByVal p As single_data_slot_variable) As String
                                                      assert(Not p Is Nothing)
                                                      assert(Not p.name.null_or_whitespace())
                                                      Return p.name

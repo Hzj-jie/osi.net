@@ -32,11 +32,11 @@ Partial Public NotInheritable Class bstyle
             If Not l.of(n.child(2)).build(o) Then
                 Return False
             End If
-            Using read_target As read_scoped(Of value.target).ref(Of value.single_data_slot_target) =
+            Using read_target As read_scoped(Of value.target).ref(Of String) =
                     l.typed_code_gen(Of value)().read_target_single_data_slot()
                 Dim condition As String = Nothing
                 ' TODO: May want to restrict the type of condition.
-                If Not value.single_data_slot_target.ignore_type(read_target, condition) Then
+                If Not read_target.retrieve(condition) Then
                     raise_error(error_type.user, "Condition of if cannot be a struct.")
                     Return False
                 End If

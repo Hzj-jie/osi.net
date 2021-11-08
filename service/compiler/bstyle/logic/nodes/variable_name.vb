@@ -26,7 +26,7 @@ Partial Public NotInheritable Class bstyle
         End Sub
 
         Public Function build(ByVal n As typed_node,
-                              ByVal struct_handle As Func(Of String, vector(Of builders.parameter), Boolean),
+                              ByVal struct_handle As Func(Of String, vector(Of single_data_slot_variable), Boolean),
                               ByVal single_data_slot_handle As Func(Of String, String, Boolean),
                               ByVal o As writer) As Boolean
             assert(Not n Is Nothing)
@@ -38,7 +38,7 @@ Partial Public NotInheritable Class bstyle
             If Not scope.current().variables().resolve(n.word().str(), type) Then
                 Return False
             End If
-            Dim ps As vector(Of builders.parameter) = Nothing
+            Dim ps As vector(Of single_data_slot_variable) = Nothing
             If scope.current().structs().resolve(type, n.word().str(), ps) Then
                 Return struct_handle(type, ps)
             End If
@@ -49,7 +49,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(n.child_count() = 1)
             Return build(n.child(),
-                         Function(ByVal type As String, ByVal ps As vector(Of builders.parameter)) As Boolean
+                         Function(ByVal type As String, ByVal ps As vector(Of single_data_slot_variable)) As Boolean
                              l.typed_code_gen(Of value)().with_target(type, ps)
                              Return True
                          End Function,

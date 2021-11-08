@@ -28,11 +28,11 @@ Partial Public NotInheritable Class bstyle
 
         Private Shared Function copy(ByVal sources As vector(Of String),
                                      ByVal target As String,
-                                     ByVal f As Func(Of vector(Of builders.parameter), Boolean)) As Boolean
+                                     ByVal f As Func(Of vector(Of single_data_slot_variable), Boolean)) As Boolean
             assert(Not sources Is Nothing)
             assert(Not target.null_or_whitespace())
             assert(Not f Is Nothing)
-            Dim vs As vector(Of builders.parameter) = Nothing
+            Dim vs As vector(Of single_data_slot_variable) = Nothing
             If Not scope.current().structs().resolve(target, vs) Then
                 Return False
             End If
@@ -56,7 +56,7 @@ Partial Public NotInheritable Class bstyle
                                   ByVal o As writer) As Boolean
             Return copy(sources,
                         target,
-                        Function(ByVal vs As vector(Of builders.parameter)) As Boolean
+                        Function(ByVal vs As vector(Of single_data_slot_variable)) As Boolean
                             assert(Not vs Is Nothing)
                             assert(vs.size() = sources.size())
                             Return l.typed_code_gen(Of heap_clause)().move(
@@ -80,7 +80,7 @@ Partial Public NotInheritable Class bstyle
                                     ByVal o As writer) As Boolean
             Return copy(sources,
                         target,
-                        Function(ByVal vs As vector(Of builders.parameter)) As Boolean
+                        Function(ByVal vs As vector(Of single_data_slot_variable)) As Boolean
                             assert(Not vs Is Nothing)
                             assert(vs.size() = sources.size())
                             Dim i As UInt32 = 0
@@ -132,7 +132,7 @@ Partial Public NotInheritable Class bstyle
 
         Private Function resolve(ByVal type As String,
                                  ByVal name As String,
-                                 ByRef v As vector(Of builders.parameter)) As Boolean
+                                 ByRef v As vector(Of single_data_slot_variable)) As Boolean
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
             If Not scope.current().structs().resolve(type, name, v) Then
@@ -147,13 +147,13 @@ Partial Public NotInheritable Class bstyle
 
         Public Function define_in_stack(ByVal type As String, ByVal name As String, ByVal o As writer) As Boolean
             assert(Not o Is Nothing)
-            Dim v As vector(Of builders.parameter) = Nothing
+            Dim v As vector(Of single_data_slot_variable) = Nothing
             If Not resolve(type, name, v) Then
                 Return False
             End If
             assert(Not v Is Nothing)
             Return v.stream().
-                     map(Function(ByVal m As builders.parameter) As Boolean
+                     map(Function(ByVal m As single_data_slot_variable) As Boolean
                              assert(Not m Is Nothing)
                              Return value_declaration.declare_single_data_slot(m.type, m.name, o)
                          End Function).
@@ -166,7 +166,7 @@ Partial Public NotInheritable Class bstyle
                                        ByVal o As writer) As Boolean
             assert(Not length Is Nothing)
             assert(Not o Is Nothing)
-            Dim v As vector(Of builders.parameter) = Nothing
+            Dim v As vector(Of single_data_slot_variable) = Nothing
             If Not resolve(type, name, v) Then
                 Return False
             End If
@@ -176,7 +176,7 @@ Partial Public NotInheritable Class bstyle
                 o,
                 Function(ByVal len_name As String) As Boolean
                     Return v.stream().
-                             map(Function(ByVal m As builders.parameter) As Boolean
+                             map(Function(ByVal m As single_data_slot_variable) As Boolean
                                      assert(Not m Is Nothing)
                                      Return heap_declaration.declare_single_data_slot(m.type, m.name, len_name, o)
                                  End Function).
@@ -193,16 +193,16 @@ Partial Public NotInheritable Class bstyle
                          structs().
                          define(n.child(1).word().str(),
                                 streams.range_closed(CUInt(3), n.child_count() - CUInt(3)).
-                                        map(Function(ByVal index As Int32) As builders.parameter
+                                        map(Function(ByVal index As Int32) As struct_member
                                                 ' TODO: Support value_definition.
                                                 Dim c As typed_node = n.child(CUInt(index))
                                                 assert(Not c Is Nothing)
                                                 assert(c.child_count() = 2)
                                                 assert(c.child(0).child_count() = 2)
-                                                Return New builders.parameter(c.child(0).child(0).word().str(),
-                                                                              c.child(0).child(1).word().str())
+                                                Return New struct_member(c.child(0).child(0).word().str(),
+                                                                         c.child(0).child(1).word().str())
                                             End Function).
-                                        collect(Of vector(Of builders.parameter))())
+                                        collect(Of vector(Of struct_member))())
         End Function
     End Class
 End Class
