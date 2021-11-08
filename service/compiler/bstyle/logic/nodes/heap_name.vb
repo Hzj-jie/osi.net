@@ -36,9 +36,10 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Dim indexstr As String = Nothing
-            Using read_target As read_scoped(Of vector(Of String)).ref(Of String) =
+            Using read_target As read_scoped(Of value.target).ref(Of value.single_data_slot_target) =
                     l.typed_code_gen(Of value)().read_target_single_data_slot()
-                If Not read_target.retrieve(indexstr) Then
+                ' TODO: May want to restrict the type of indexstr.
+                If Not value.single_data_slot_target.ignore_type(read_target, indexstr) Then
                     raise_error(error_type.user, "Index or length of a heap declaration cannot be a struct.")
                     Return False
                 End If

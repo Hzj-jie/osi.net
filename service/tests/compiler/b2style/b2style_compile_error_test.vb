@@ -56,6 +56,36 @@ Public NotInheritable Class b2style_compile_error_test
             End Sub)).contains("CYCLE_TYPEDEF__A", "CYCLE_TYPEDEF__C")
     End Sub
 
+    <test>
+    Private Shared Sub value_clause_struct_type_mismatch()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(b2style.
+                    with_functions(New interrupts()).
+                    parse(_b2style_test_data.errors_value_clause_struct_type_mismatch.as_text(), Nothing))
+            End Sub)).contains("S2", "s", "S1")
+    End Sub
+
+    <test>
+    Private Shared Sub value_clause_struct_type_mismatch2()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(b2style.
+                    with_functions(New interrupts()).
+                    parse(_b2style_test_data.errors_value_clause_struct_type_mismatch2.as_text(), Nothing))
+            End Sub)).contains("S2", "s", "S1")
+    End Sub
+
+    <test>
+    Private Shared Sub function_return_struct_type_mismatch()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(b2style.
+                    with_functions(New interrupts()).
+                    parse(_b2style_test_data.errors_function_return_struct_type_mismatch.as_text(), Nothing))
+            End Sub)).contains("S2", "f", "S1")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

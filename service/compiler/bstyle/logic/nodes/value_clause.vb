@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
@@ -40,13 +41,24 @@ Partial Public NotInheritable Class bstyle
             Dim type As String = Nothing
             assert(scope.current().variables().resolve(name.word().str(), type))
             If scope.current().structs().defined(type) Then
-                Using r As read_scoped(Of vector(Of String)).ref = l.typed_code_gen(Of value)().read_target()
-                    Return struct_copy(+r)
+                Using r As read_scoped(Of value.target).ref = l.typed_code_gen(Of value)().read_target()
+                    If Not (+r).type.Equals(type) Then
+                        raise_error(error_type.user,
+                                    "Type ",
+                                    type,
+                                    " of ",
+                                    name.word().str(),
+                                    " does not match the rvalue ",
+                                    (+r).type)
+                        Return False
+                    End If
+                    Return struct_copy((+r).names)
                 End Using
             Else
-                Using r As read_scoped(Of vector(Of String)).ref(Of String) =
+                Using r As read_scoped(Of value.target).ref(Of value.single_data_slot_target) =
                         l.typed_code_gen(Of value)().read_target_single_data_slot()
-                    Return single_data_slot_copy(+r)
+                    ' The type check of single-data-slot-target will be handled by logic.
+                    Return single_data_slot_copy((+r).name)
                 End Using
             End If
         End Function

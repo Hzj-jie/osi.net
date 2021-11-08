@@ -46,25 +46,35 @@ Partial Public NotInheritable Class bstyle
             If Not l.of(n.child(1)).build(o) Then
                 Return False
             End If
-            Using r As read_scoped(Of vector(Of String)).ref = l.typed_code_gen(Of value)().read_target()
+            Using r As read_scoped(Of value.target).ref = l.typed_code_gen(Of value)().read_target()
                 If scope.current().current_function().return_struct() Then
-                    ' TODO: Check if return-type matches value-type.
+                    ' The return type check of single-data-slot-target will be handled by logic.
+                    If Not scope.current().current_function().return_type().Equals((+r).type) Then
+                        raise_error(error_type.user,
+                                    "Return type ",
+                                    scope.current().current_function().return_type(),
+                                    " of function ",
+                                    scope.current().current_function().name(),
+                                    " does not match ",
+                                    (+r).type)
+                        Return False
+                    End If
                     Dim return_value As String = strcat(logic_name.temp_variable(n),
                                                         "@",
                                                         scope.current().current_function().name(),
                                                         "@return_value")
                     assert(value_declaration.declare_single_data_slot(
                                types.variable_type, return_value, o))
-                    Return struct.pack(+r, return_value, o) AndAlso
+                    Return struct.pack((+r).names, return_value, o) AndAlso
                            builders.of_return(scope.current().current_function().name(), return_value).to(o)
                 End If
-                If (+r).size() <> 1 Then
+                If (+r).names.size() <> 1 Then
                     raise_error(error_type.user,
-                                    "Unexpected return value, do not expect a struct to be returned by ",
-                                    scope.current().current_function().name())
+                                "Unexpected return value, do not expect a struct to be returned by ",
+                                scope.current().current_function().name())
                     Return False
                 End If
-                Return builders.of_return(scope.current().current_function().name(), (+r)(0)).to(o)
+                Return builders.of_return(scope.current().current_function().name(), (+r).names(0)).to(o)
             End Using
         End Function
     End Class

@@ -72,11 +72,16 @@ Public NotInheritable Class error_event
 
     Public Shared Function capture_logs(ByVal err_type As error_type, ByVal d As Action) As List(Of String)
         assert(Not d Is Nothing)
+        Dim tid As Int32 = Threading.Thread.CurrentThread().ManagedThreadId()
         Dim r As New List(Of String)()
         Dim capturer As r3EventHandler = Sub(ByVal et As error_type, ByVal msg As String)
-                                             If err_type = et Then
-                                                 r.Add(msg)
+                                             If err_type <> et Then
+                                                 Return
                                              End If
+                                             If Threading.Thread.CurrentThread().ManagedThreadId() <> tid Then
+                                                 Return
+                                             End If
+                                             r.Add(msg)
                                          End Sub
         AddHandler r3, capturer
         Try

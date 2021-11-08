@@ -123,7 +123,6 @@ Partial Public NotInheritable Class bstyle
             Return targets.stream().
                            map(Function(ByVal target As String) As Boolean
                                    assert(Not target.null_or_whitespace())
-                                   ' TODO: Check if the type of source is the same as targets.
                                    ' TODO: Should include bstyle_constant.h automatically.
                                    Return builders.of_cut_slice(target, source, index).to(o) AndAlso
                                           builders.of_add(index, index, "@@prefixes@constants@int_1").to(o)

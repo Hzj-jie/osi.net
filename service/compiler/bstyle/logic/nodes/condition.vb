@@ -32,24 +32,23 @@ Partial Public NotInheritable Class bstyle
             If Not l.of(n.child(2)).build(o) Then
                 Return False
             End If
-            Using read_target As read_scoped(Of vector(Of String)).ref(Of String) =
+            Using read_target As read_scoped(Of value.target).ref(Of value.single_data_slot_target) =
                     l.typed_code_gen(Of value)().read_target_single_data_slot()
                 Dim condition As String = Nothing
-                If Not read_target.retrieve(condition) Then
+                ' TODO: May want to restrict the type of condition.
+                If Not value.single_data_slot_target.ignore_type(read_target, condition) Then
                     raise_error(error_type.user, "Condition of if cannot be a struct.")
                     Return False
                 End If
-                Dim satisfied_paragraph As Func(Of Boolean) = Nothing
-                satisfied_paragraph = Function() As Boolean
-                                          Return l.[of](n.child(4)).build(o)
-                                      End Function
+                Dim satisfied_paragraph As Func(Of Boolean) = Function() As Boolean
+                                                                  Return l.[of](n.child(4)).build(o)
+                                                              End Function
                 If n.child_count() = 5 Then
                     Return builders.of_if(condition, satisfied_paragraph).to(o)
                 End If
-                Dim unsatisfied_paragraph As Func(Of Boolean) = Nothing
-                unsatisfied_paragraph = Function() As Boolean
-                                            Return l.[of](n.child(5)).build(o)
-                                        End Function
+                Dim unsatisfied_paragraph As Func(Of Boolean) = Function() As Boolean
+                                                                    Return l.[of](n.child(5)).build(o)
+                                                                End Function
                 Return builders.of_if(condition, satisfied_paragraph, unsatisfied_paragraph).to(o)
             End Using
         End Function

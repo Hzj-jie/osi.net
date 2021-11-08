@@ -38,8 +38,8 @@ Partial Public NotInheritable Class bstyle
                 If Not l.of(n.child(i)).build(o) Then
                     Return False
                 End If
-                Using r As read_scoped(Of vector(Of String)).ref = l.typed_code_gen(Of value)().read_target()
-                    v.emplace_back(+r)
+                Using r As read_scoped(Of value.target).ref = l.typed_code_gen(Of value)().read_target()
+                    v.emplace_back((+r).names)
                 End Using
                 i += uint32_1
             End While
