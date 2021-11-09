@@ -11,15 +11,6 @@ Imports osi.service.compiler.logic
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
         Private NotInheritable Class struct_t
-            Private Shared ReadOnly root_types As unordered_set(Of String) = unordered_set.of(
-                types.zero_type,
-                types.variable_type,
-                code_types.biguint,
-                code_types.bool,
-                code_types.int,
-                code_types.string,
-                code_types.ufloat
-            )
             Private ReadOnly s As New unordered_map(Of String, vector(Of single_data_slot_variable))()
 
             ' TODO: Support value_definition
@@ -31,24 +22,16 @@ Partial Public NotInheritable Class bstyle
                 ' the scope where the struct_t instance is being defined.
                 type = scope.current().type_alias()(type)
                 Dim sub_type As vector(Of single_data_slot_variable) = Nothing
-                If root_types.find(type) <> root_types.end() OrElse Not s.find(type, sub_type) Then
+                If Not s.find(type, sub_type) Then
                     o.emplace_back(New single_data_slot_variable(type, name))
                     Return True
                 End If
                 assert(Not sub_type Is Nothing)
-                Dim i As UInt32 = 0
-                While i < sub_type.size()
-                    Dim full_name As String = strcat(name, ".", sub_type(i).name)
-                    If Not resolve_type(sub_type(i).type, full_name, o) Then
-                        raise_error(error_type.user,
-                                    "Undefined type ",
-                                    sub_type(i).type,
-                                    " for variable ",
-                                    full_name)
-                        Return False
-                    End If
-                    i += uint32_1
-                End While
+                sub_type.stream().
+                         foreach(Sub(ByVal t As single_data_slot_variable)
+                                     assert(Not t Is Nothing)
+                                     o.emplace_back(New single_data_slot_variable(t.type, strcat(name, ".", t.name)))
+                                 End Sub)
                 Return True
             End Function
 
