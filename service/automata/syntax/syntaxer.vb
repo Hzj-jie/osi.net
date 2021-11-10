@@ -80,7 +80,7 @@ Partial Public NotInheritable Class syntaxer
                                                              debug_str(v, pos)
                                                          }
                                                      End Function
-                raise_error(error_type.user, "Cannot match token ", l(p), ". Longest match ", l(m.second().pos))
+                raise_error(error_type.user, "[syntaxer] Cannot match token ", l(p), ". Longest match ", l(m.second().pos))
                 Return [optional].empty(Of typed_node)()
             End If
             assert(Not m.first() Is Nothing)
