@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
@@ -25,7 +24,7 @@ Partial Public NotInheritable Class bstyle
             b.register(Of heap_clause)()
         End Sub
 
-        Public Function move(ByVal index As typed_node,
+        Public Function copy(ByVal index As typed_node,
                              ByVal f As Func(Of String, Boolean),
                              ByVal o As writer) As Boolean
             Return l.typed_code_gen(Of heap_name).build(index, o, f)
@@ -45,7 +44,7 @@ Partial Public NotInheritable Class bstyle
                            Return l.typed_code_gen(Of struct).copy_heap(r, name.word().str(), index, o)
                        End Function,
                        Function(ByVal r As String) As Boolean
-                           Return move(index,
+                           Return copy(index,
                                        Function(ByVal indexstr As String) As Boolean
                                            Return builders.of_copy_heap_in(name.word().str(), indexstr, r).to(o)
                                        End Function,

@@ -59,7 +59,7 @@ Partial Public NotInheritable Class bstyle
                         Function(ByVal vs As vector(Of single_data_slot_variable)) As Boolean
                             assert(Not vs Is Nothing)
                             assert(vs.size() = sources.size())
-                            Return l.typed_code_gen(Of heap_clause)().move(
+                            Return l.typed_code_gen(Of heap_clause)().copy(
                                        index,
                                        Function(ByVal indexstr As String) As Boolean
                                            Dim i As UInt32 = 0
