@@ -136,6 +136,7 @@
     <Content Include="b2style\codegen\for_loop.txt" />
     <Content Include="b2style\codegen\function_ref.txt" />
     <Content Include="b2style\codegen\heap_declaration.txt" />
+    <Content Include="b2style\codegen\heap_function_ref.txt" />
     <Content Include="b2style\codegen\i++.txt" />
     <Content Include="b2style\codegen\i++2.txt" />
     <Content Include="b2style\codegen\ifndef.txt" />

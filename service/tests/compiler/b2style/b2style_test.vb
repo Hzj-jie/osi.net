@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.automata
@@ -432,6 +433,23 @@ Public NotInheritable Class b2style_test
         assertion.equal(Convert.ToInt32(io.output()(1)), 2)
         assertion.equal(Convert.ToInt32(io.output()(2)), 3)
         assertion.equal(Convert.ToInt32(io.output()(3)), 4)
+    End Sub
+
+    '<test>
+    Private Shared Sub heap_function_ref()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.heap_function_ref.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(),
+                        streams.range_closed(1, 100).
+                                map(Function(ByVal x As Int32) As String
+                                        Return strcat(x, character.newline)
+                                    End Function).
+                                collect_by(stream(Of String).collectors.to_str(empty_string)).
+                                ToString())
     End Sub
 
     Private Sub New()
