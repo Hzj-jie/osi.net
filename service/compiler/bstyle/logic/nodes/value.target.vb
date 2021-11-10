@@ -35,10 +35,11 @@ Partial Public NotInheritable Class bstyle
             End Sub
 
             Public Function CompareTo(ByVal other As target) As Int32 Implements IComparable(Of target).CompareTo
-                If other Is Nothing Then
-                    Return 1
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
+                    Return c
                 End If
-                Dim c As Int32 = type.CompareTo(other.type)
+                c = type.CompareTo(other.type)
                 If c <> 0 Then
                     Return c
                 End If
