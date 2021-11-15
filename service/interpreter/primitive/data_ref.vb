@@ -100,7 +100,7 @@ Namespace primitive
             Return o
         End Function
 
-        Public Function [set](ByVal i As Int64) As Boolean
+        Private Function [set](ByVal i As Int64) As Boolean
             Dim r As ref_types = enum_def(Of ref_types)().from(i And 3)
             Dim o As Int64 = (i >> 2)
             If r = ref_types.rel OrElse r = ref_types.hrel Then
