@@ -5,14 +5,16 @@ Option Strict On
 
 Imports System.IO
 Imports System.Text
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 
 Namespace primitive
     Public NotInheritable Class simulator
         Implements imitation
+
+        Private Shared ReadOnly bit_count_in_uint32 As Int32 = CInt(root.constants.bit_count_in_byte * sizeof_uint32)
 
         Private ReadOnly _errors As New vector(Of executor.error_type)()
         Private ReadOnly _instructions As New vector(Of instruction)()
@@ -79,12 +81,12 @@ Namespace primitive
         End Function
 
         Public Function access_states(ByVal p As UInt64) As executor.state Implements executor.access_states
-            If p >= _states.size() Then
-                executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
-                assert(False)
-                Return executor.state.empty
+            If p < _states.size() Then
+                Return _states(CUInt(p))
             End If
-            Return _states(CUInt(p))
+            executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
+            assert(False)
+            Return executor.state.empty
         End Function
 
         Public Function states_size() As UInt64 Implements executor.states_size
@@ -96,12 +98,12 @@ Namespace primitive
         End Function
 
         Public Sub instruction_ref(ByVal v As Int64) Implements imitation.instruction_ref
-            If v < 0 OrElse v >= _instructions.size() Then
-                executor_stop_error.throw(executor.error_type.instruction_ref_overflow)
-                assert(False)
+            If v >= 0 AndAlso v < _instructions.size() Then
+                _instruction_ref = CULng(v)
                 Return
             End If
-            _instruction_ref = CULng(v)
+            executor_stop_error.throw(executor.error_type.instruction_ref_overflow)
+            assert(False)
         End Sub
 
         Public Sub advance_instruction_ref(ByVal v As Int64) Implements imitation.advance_instruction_ref
@@ -120,11 +122,28 @@ Namespace primitive
             _stop = True
         End Sub
 
-        Public Function access_stack(ByVal p As data_ref) As ref(Of Byte()) Implements executor.access_stack
+        ' VisibleForTesting
+        Public Function access_heap(ByVal p As UInt64) As ref(Of Byte())
+            Dim h As UInt32 = CUInt(p >> bit_count_in_uint32)
+            Dim l As UInt32 = CUInt(p And max_uint32)
+            If Not _heap.has(h) Then
+                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
+                assert(False)
+                Return Nothing
+            End If
+            If _heap(h).Length() <= l Then
+                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
+                assert(False)
+                Return Nothing
+            End If
+            Return _heap(h)(CInt(l))
+        End Function
+
+        Public Function access(ByVal p As data_ref) As ref(Of Byte()) Implements executor.access
             assert(Not p Is Nothing)
-            ' data_ref has only 63 bits, so using int64 instead of uint64 is safe.
+            ' data_ref has only 62 bits, so using int64 instead of uint64 is safe.
             Dim l As Int64 = 0
-            If p.relative() Then
+            If p.relative() OrElse p.heap_relative() Then
                 l = _stack.size() - p.offset() - 1
             Else
                 l = p.offset()
@@ -134,22 +153,11 @@ Namespace primitive
                 assert(False)
                 Return Nothing
             End If
-            Return _stack(CUInt(l))
-        End Function
-
-        Public Function access_heap(ByVal p As heap_ref) As ref(Of Byte()) Implements imitation.access_heap
-            assert(Not p Is Nothing)
-            If Not _heap.has(p.high) Then
-                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
-                assert(False)
-                Return Nothing
+            Dim r As ref(Of Byte()) = _stack(CUInt(l))
+            If p.on_stack() Then
+                Return r
             End If
-            If _heap(p.high).Length() <= p.low Then
-                executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
-                assert(False)
-                Return Nothing
-            End If
-            Return _heap(p.high)(CInt(p.low))
+            Return access_heap(access_ref_as_uint64(r))
         End Function
 
         Public Sub push_stack() Implements imitation.push_stack
@@ -157,15 +165,15 @@ Namespace primitive
         End Sub
 
         Public Sub pop_stack() Implements imitation.pop_stack
-            If _stack.empty() Then
-                executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
-                assert(False)
+            If Not _stack.empty() Then
+                _stack.pop_back()
                 Return
             End If
-            _stack.pop_back()
+            executor_stop_error.throw(executor.error_type.stack_access_out_of_boundary)
+            assert(False)
         End Sub
 
-        Public Function alloc(ByVal size As UInt64) As heap_ref Implements imitation.alloc
+        Public Function alloc(ByVal size As UInt64) As UInt64 Implements imitation.alloc
             If size > max_int32 Then
                 executor_stop_error.throw(executor.error_type.out_of_heap_memory)
                 assert(False)
@@ -173,21 +181,22 @@ Namespace primitive
             End If
             Dim v(CInt(size) - 1) As ref(Of Byte())
             arrays.fill(v, New ref(Of Byte()))
-            Return heap_ref.of_high(_heap.emplace(v))
+            Return CULng(_heap.emplace(v)) << bit_count_in_uint32
         End Function
 
-        Public Sub dealloc(ByVal pos As heap_ref) Implements imitation.dealloc
-            If Not pos.head_of_alloc() Then
+        Public Sub dealloc(ByVal pos As UInt64) Implements imitation.dealloc
+            If (pos And max_uint32) <> 0 Then
                 executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
                 assert(False)
                 Return
             End If
-            If Not _heap.has(pos.high) Then
+            Dim h As UInt32 = CUInt(pos >> bit_count_in_uint32)
+            If Not _heap.has(h) Then
                 executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
                 assert(False)
                 Return
             End If
-            _heap.erase(pos.high)
+            _heap.erase(h)
         End Sub
 
         Public Sub store_state() Implements imitation.store_state

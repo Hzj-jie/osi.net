@@ -1,17 +1,19 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.interpreter.primitive
 
 Namespace primitive
-    Public Class data_block_exportable_test
+    Public NotInheritable Class data_block_exportable_test
         Inherits exportable_test(Of data_block)
 
         Protected Overrides Function create() As data_block
             Dim c As Char = Nothing
-            Dim d1 As data_block = Nothing
-            d1 = data_block.random(c)
+            Dim d1 As data_block = data_block.random(c)
             Dim s As String = Nothing
             If rnd_bool() Then
                 Select Case c
@@ -37,8 +39,7 @@ Namespace primitive
             Else
                 assert(d1.str(data_block.prefix.array, s))
             End If
-            Dim d2 As data_block = Nothing
-            d2 = New data_block()
+            Dim d2 As New data_block()
             assertion.is_true(d2.import(s))
             assertion.equal(d1, d2)
             Return d2

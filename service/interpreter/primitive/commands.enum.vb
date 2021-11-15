@@ -98,14 +98,6 @@ Namespace primitive
         [alloc]
         ' de-allocate a block of memory identified by its reference (*A) 
         [dealloc]
-        ' copy (*B) in stack to (**A) in heap 
-        [hcpin]
-        ' copy (**B) in heap to (*A) in stack 
-        [hcpout]
-        ' move (*B) in stack to (**A) in heap 
-        [hmovin]
-        ' move (**B) in heap to (*A) in stack 
-        [hmovout]
 
         COUNT
     End Enum

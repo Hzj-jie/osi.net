@@ -11,36 +11,33 @@ Namespace primitive
     Public NotInheritable Class data_ref
         Implements exportable, IComparable(Of data_ref), IComparable
 
-        Public Const max_value As Int64 = (max_int64 >> 1)
-        Public Const rel_min_value As Int64 = (min_int64 >> 1)
+        Public Const max_value As Int64 = (max_int64 >> 2)
+        Public Const rel_min_value As Int64 = (min_int64 >> 2)
         Public Const abs_min_value As Int64 = 0
-        Private Const rel_str As String = "rel"
-        Private Const abs_str As String = "abs"
-        Private Shared ReadOnly ref_types() As String = {rel_str, abs_str}
 
-        Private r As Boolean
+        Private Enum ref_types
+            abs = 0
+            rel = 1
+            habs = 2
+            hrel = 3
+        End Enum
+
+        Private r As ref_types
         Private o As Int64
 
         Public Shared Function random(Optional ByRef r As Int64 = 0) As data_ref
             Dim o As data_ref = Nothing
             Do
-                r = rnd_int64()
+                ' rnd_int64 is not very well distributed because of the precision.
+                r = (rnd_int64() Or rnd_int(ref_types.abs, ref_types.hrel + 1))
             Loop Until [New](r, o)
             assert(Not o Is Nothing)
             Return o
         End Function
 
-        Public Sub New()
-            Me.New(0)
-        End Sub
-
-        Public Sub New(ByVal i As Int64)
-            assert([set](i))
-        End Sub
-
         Public Shared Function [New](ByVal i As Int64, ByRef o As data_ref) As Boolean
             Dim x As New data_ref()
-            If x.[set](i) Then
+            If x.set(i) Then
                 o = x
                 Return True
             End If
@@ -48,11 +45,11 @@ Namespace primitive
         End Function
 
         Public Shared Function rel(ByVal i As Int64, ByRef o As data_ref) As Boolean
-            If i <= max_value AndAlso i >= rel_min_value Then
-                o = New data_ref() With {.r = True, .o = i}
-                Return True
+            If i > max_value OrElse i < rel_min_value Then
+                Return False
             End If
-            Return False
+            o = New data_ref() With {.r = ref_types.rel, .o = i}
+            Return True
         End Function
 
         Public Shared Function rel(ByVal i As Int64) As data_ref
@@ -61,12 +58,26 @@ Namespace primitive
             Return o
         End Function
 
-        Public Shared Function abs(ByVal i As Int64, ByRef o As data_ref) As Boolean
-            If i <= max_value AndAlso i >= abs_min_value Then
-                o = New data_ref() With {.r = False, .o = i}
-                Return True
+        Public Shared Function hrel(ByVal i As Int64, ByRef o As data_ref) As Boolean
+            If i > max_value OrElse i < rel_min_value Then
+                Return False
             End If
-            Return False
+            o = New data_ref() With {.r = ref_types.hrel, .o = i}
+            Return True
+        End Function
+
+        Public Shared Function hrel(ByVal i As Int64) As data_ref
+            Dim o As data_ref = Nothing
+            assert(hrel(i, o))
+            Return o
+        End Function
+
+        Public Shared Function abs(ByVal i As Int64, ByRef o As data_ref) As Boolean
+            If i > max_value OrElse i < abs_min_value Then
+                Return False
+            End If
+            o = New data_ref() With {.r = ref_types.abs, .o = i}
+            Return True
         End Function
 
         Public Shared Function abs(ByVal i As Int64) As data_ref
@@ -75,38 +86,24 @@ Namespace primitive
             Return o
         End Function
 
-        Public Function to_rel(ByVal size As UInt64, ByRef o As data_ref) As Boolean
-            If relative() Then
-                o = Me
-                Return True
+        Public Shared Function habs(ByVal i As Int64, ByRef o As data_ref) As Boolean
+            If i > max_value OrElse i < abs_min_value Then
+                Return False
             End If
-            Return rel(CLng(size) - offset() - 1, o)
+            o = New data_ref() With {.r = ref_types.habs, .o = i}
+            Return True
         End Function
 
-        Public Function to_rel(ByVal size As UInt64) As data_ref
+        Public Shared Function habs(ByVal i As Int64) As data_ref
             Dim o As data_ref = Nothing
-            assert(to_rel(size, o))
-            Return o
-        End Function
-
-        Public Function to_abs(ByVal size As UInt64, ByRef o As data_ref) As Boolean
-            If absolute() Then
-                o = Me
-                Return True
-            End If
-            Return abs(CLng(size) - offset() - 1, o)
-        End Function
-
-        Public Function to_abs(ByVal size As UInt64) As data_ref
-            Dim o As data_ref = Nothing
-            assert(to_abs(size, o))
+            assert(habs(i, o))
             Return o
         End Function
 
         Public Function [set](ByVal i As Int64) As Boolean
-            Dim r As Boolean = ((i And 1) = 1)
-            Dim o As Int64 = (i >> 1)
-            If r Then
+            Dim r As ref_types = enum_def(Of ref_types)().from(i And 3)
+            Dim o As Int64 = (i >> 2)
+            If r = ref_types.rel OrElse r = ref_types.hrel Then
                 If o < rel_min_value OrElse o > max_value Then
                     Return False
                 End If
@@ -120,12 +117,63 @@ Namespace primitive
             Return True
         End Function
 
+        ' TODO: May remove these to_* function.
+        Public Function to_rel(ByVal size As UInt64, ByRef o As data_ref) As Boolean
+            If relative() OrElse heap_relative() Then
+                o = Me
+                Return True
+            End If
+            If on_heap() Then
+                Return hrel(CLng(size) - offset() - 1, o)
+            End If
+            Return rel(CLng(size) - offset() - 1, o)
+        End Function
+
+        Public Function to_rel(ByVal size As UInt64) As data_ref
+            Dim o As data_ref = Nothing
+            assert(to_rel(size, o))
+            Return o
+        End Function
+
+        Public Function to_abs(ByVal size As UInt64, ByRef o As data_ref) As Boolean
+            If absolute() OrElse heap_absolute() Then
+                o = Me
+                Return True
+            End If
+            If on_heap() Then
+                Return habs(CLng(size) - offset() - 1, o)
+            End If
+            Return abs(CLng(size) - offset() - 1, o)
+        End Function
+
+        Public Function to_abs(ByVal size As UInt64) As data_ref
+            Dim o As data_ref = Nothing
+            assert(to_abs(size, o))
+            Return o
+        End Function
+
+        Public Function on_stack() As Boolean
+            Return relative() OrElse absolute()
+        End Function
+
+        Public Function on_heap() As Boolean
+            Return heap_relative() OrElse heap_absolute()
+        End Function
+
         Public Function relative() As Boolean
-            Return r
+            Return r = ref_types.rel
         End Function
 
         Public Function absolute() As Boolean
-            Return Not r
+            Return r = ref_types.abs
+        End Function
+
+        Public Function heap_relative() As Boolean
+            Return r = ref_types.hrel
+        End Function
+
+        Public Function heap_absolute() As Boolean
+            Return r = ref_types.habs
         End Function
 
         Public Function offset() As Int64
@@ -133,7 +181,7 @@ Namespace primitive
         End Function
 
         Public Function export() As Int64
-            Return (o << 1) + If(r, 1, 0)
+            Return (o << 2) Or enum_def(Of ref_types)().to(Of Int32)(r)
         End Function
 
         Public Function bytes_size() As UInt32 Implements exportable.bytes_size
@@ -146,7 +194,7 @@ Namespace primitive
         End Function
 
         Public Function export(ByRef s As String) As Boolean Implements exportable.export
-            s = strcat(If(relative(), rel_str, abs_str), o)
+            s = strcat(r, o)
             Return True
         End Function
 
@@ -161,9 +209,9 @@ Namespace primitive
                 Return False
             End If
             t = Nothing
-            For i As Int32 = 0 To array_size_i(ref_types) - 1
-                If strstartwith(s, ref_types(i)) Then
-                    t = ref_types(i)
+            For Each i As ref_types In {ref_types.abs, ref_types.rel, ref_types.habs, ref_types.hrel}
+                If strstartwith(s, i.ToString()) Then
+                    t = i.ToString()
                     assert(Not t Is Nothing)
                     Exit For
                 End If
@@ -184,11 +232,7 @@ Namespace primitive
                 Return False
             End If
 
-            If ref_type.Equals(rel_str) Then
-                r = True
-            ElseIf ref_type.Equals(abs_str) Then
-                r = False
-            Else
+            If Not enum_def(Of ref_types)().from(ref_type, r) Then
                 Return False
             End If
             o = offset

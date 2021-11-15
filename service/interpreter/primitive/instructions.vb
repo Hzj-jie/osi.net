@@ -124,7 +124,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub
@@ -197,7 +197,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -214,7 +214,7 @@ Namespace primitive
                 d1 = New data_block()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_block)
                 Me.d0 = d0
@@ -308,7 +308,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -325,7 +325,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -419,14 +419,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -443,7 +443,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -537,14 +537,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -563,7 +563,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -678,21 +678,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -711,7 +711,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -826,21 +826,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -859,7 +859,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -974,21 +974,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1009,7 +1009,7 @@ Namespace primitive
                 d3 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref,
@@ -1145,28 +1145,28 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p3(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d3)
+                Dim p As ref(Of Byte()) = imi.access(d3)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1187,7 +1187,7 @@ Namespace primitive
                 d3 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref,
@@ -1323,28 +1323,28 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p3(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d3)
+                Dim p As ref(Of Byte()) = imi.access(d3)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1363,7 +1363,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -1478,21 +1478,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1509,7 +1509,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -1603,14 +1603,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1625,7 +1625,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub
@@ -1698,7 +1698,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1713,7 +1713,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub
@@ -1786,7 +1786,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1801,7 +1801,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub
@@ -1874,7 +1874,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -1944,7 +1944,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -2059,21 +2059,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2092,7 +2092,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -2207,21 +2207,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2238,7 +2238,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -2332,14 +2332,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2356,7 +2356,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -2450,14 +2450,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2476,7 +2476,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -2591,21 +2591,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2626,7 +2626,7 @@ Namespace primitive
                 d3 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref,
@@ -2762,28 +2762,28 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p3(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d3)
+                Dim p As ref(Of Byte()) = imi.access(d3)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2802,7 +2802,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -2917,21 +2917,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -2946,7 +2946,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub
@@ -3019,7 +3019,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3038,7 +3038,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -3153,21 +3153,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3184,7 +3184,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -3278,14 +3278,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3302,7 +3302,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -3396,14 +3396,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3422,7 +3422,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -3537,21 +3537,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3570,7 +3570,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -3685,21 +3685,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3716,7 +3716,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -3810,14 +3810,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -3938,7 +3938,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4053,21 +4053,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4086,7 +4086,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4201,21 +4201,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4234,7 +4234,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4349,21 +4349,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4382,7 +4382,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4497,21 +4497,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4530,7 +4530,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4645,21 +4645,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4678,7 +4678,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4793,21 +4793,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4826,7 +4826,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4941,21 +4941,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -4974,7 +4974,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -5089,21 +5089,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -5122,7 +5122,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -5237,21 +5237,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -5270,7 +5270,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -5385,21 +5385,21 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d2)
+                Dim p As ref(Of Byte()) = imi.access(d2)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -5416,7 +5416,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -5510,14 +5510,14 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d1)
                 assert(Not p Is Nothing)
                 Return p
             End Function
@@ -5532,7 +5532,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New( _
+            Public Sub New(
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub
@@ -5605,479 +5605,7 @@ Namespace primitive
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
                 assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
-                assert(Not p Is Nothing)
-                Return p
-            End Function
-        End Class
-
-        Partial Public NotInheritable Class [hcpin]
-            Implements instruction, IComparable, IComparable(Of [hcpin])
-
-            Private ReadOnly d0 As data_ref
-            Private ReadOnly d1 As data_ref
-
-            Public Sub New()
-                d0 = New data_ref()
-                d1 = New data_ref()
-            End Sub
-
-            Public Sub New( _
-                       ByVal d0 As data_ref,
-                       ByVal d1 As data_ref)
-                Me.d0 = d0
-                Me.d1 = d1
-            End Sub
-
-            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
-                Return sizeof_uint32 +
-                       d0.bytes_size() +
-                       d1.bytes_size()
-            End Function
-
-            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
-                Dim b0() As Byte = Nothing
-                If Not d0.export(b0) Then
-                    Return False
-                End If
-                Dim b1() As Byte = Nothing
-                If Not d1.export(b1) Then
-                    Return False
-                End If
-                b = array_concat(uint32_bytes(command.hcpin),
-                                 b0,
-                                 b1)
-                Return True
-            End Function
-
-            Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As New StringBuilder()
-                b.Append(command_str(command.hcpin))
-                If Not d0.export(s) Then
-                    Return False
-                End If
-                b.Append(character.blank)
-                b.Append(s)
-
-                If Not d1.export(s) Then
-                    Return False
-                End If
-                b.Append(character.blank)
-                b.Append(s)
-
-                s = Convert.ToString(b)
-                Return True
-            End Function
-
-            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
-                Dim o As UInt32 = 0
-                Return assert(bytes_uint32(i, o, p) AndAlso o = command.hcpin) AndAlso
-                       d0.import(i, p) AndAlso
-                       d1.import(i, p)
-            End Function
-
-            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
-                assert(Not s.null_or_empty() AndAlso s.size() > p)
-                assert(s(p) = command_str(command.hcpin))
-                p += uint32_1
-                Return True AndAlso
-                       d0.import(s, p) AndAlso
-                       d1.import(s, p)
-            End Function
-
-            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-                Return CompareTo(cast(Of [hcpin])(obj, False))
-            End Function
-
-            Public Function CompareTo(ByVal other As [hcpin]) As Int32 Implements IComparable(Of [hcpin]).CompareTo
-                Dim c As Int32 = object_compare(Me, other)
-                If c <> object_compare_undetermined Then
-                    Return c
-                End If
-                assert(Not other Is Nothing)
-                c = Me.d0.CompareTo(other.d0)
-                If c <> 0 Then
-                    Return c
-                End If
-
-                c = Me.d1.CompareTo(other.d1)
-                If c <> 0 Then
-                    Return c
-                End If
-
-                Return 0
-            End Function
-
-            Public Overrides Function ToString() As String
-                Dim s As String = Nothing
-                assert(export(s))
-                Return s
-            End Function
-
-            Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
-                assert(Not p Is Nothing)
-                Return p
-            End Function
-
-            Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
-                assert(Not p Is Nothing)
-                Return p
-            End Function
-        End Class
-
-        Partial Public NotInheritable Class [hcpout]
-            Implements instruction, IComparable, IComparable(Of [hcpout])
-
-            Private ReadOnly d0 As data_ref
-            Private ReadOnly d1 As data_ref
-
-            Public Sub New()
-                d0 = New data_ref()
-                d1 = New data_ref()
-            End Sub
-
-            Public Sub New( _
-                       ByVal d0 As data_ref,
-                       ByVal d1 As data_ref)
-                Me.d0 = d0
-                Me.d1 = d1
-            End Sub
-
-            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
-                Return sizeof_uint32 +
-                       d0.bytes_size() +
-                       d1.bytes_size()
-            End Function
-
-            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
-                Dim b0() As Byte = Nothing
-                If Not d0.export(b0) Then
-                    Return False
-                End If
-                Dim b1() As Byte = Nothing
-                If Not d1.export(b1) Then
-                    Return False
-                End If
-                b = array_concat(uint32_bytes(command.hcpout),
-                                 b0,
-                                 b1)
-                Return True
-            End Function
-
-            Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As New StringBuilder()
-                b.Append(command_str(command.hcpout))
-                If Not d0.export(s) Then
-                    Return False
-                End If
-                b.Append(character.blank)
-                b.Append(s)
-
-                If Not d1.export(s) Then
-                    Return False
-                End If
-                b.Append(character.blank)
-                b.Append(s)
-
-                s = Convert.ToString(b)
-                Return True
-            End Function
-
-            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
-                Dim o As UInt32 = 0
-                Return assert(bytes_uint32(i, o, p) AndAlso o = command.hcpout) AndAlso
-                       d0.import(i, p) AndAlso
-                       d1.import(i, p)
-            End Function
-
-            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
-                assert(Not s.null_or_empty() AndAlso s.size() > p)
-                assert(s(p) = command_str(command.hcpout))
-                p += uint32_1
-                Return True AndAlso
-                       d0.import(s, p) AndAlso
-                       d1.import(s, p)
-            End Function
-
-            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-                Return CompareTo(cast(Of [hcpout])(obj, False))
-            End Function
-
-            Public Function CompareTo(ByVal other As [hcpout]) As Int32 Implements IComparable(Of [hcpout]).CompareTo
-                Dim c As Int32 = object_compare(Me, other)
-                If c <> object_compare_undetermined Then
-                    Return c
-                End If
-                assert(Not other Is Nothing)
-                c = Me.d0.CompareTo(other.d0)
-                If c <> 0 Then
-                    Return c
-                End If
-
-                c = Me.d1.CompareTo(other.d1)
-                If c <> 0 Then
-                    Return c
-                End If
-
-                Return 0
-            End Function
-
-            Public Overrides Function ToString() As String
-                Dim s As String = Nothing
-                assert(export(s))
-                Return s
-            End Function
-
-            Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
-                assert(Not p Is Nothing)
-                Return p
-            End Function
-
-            Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
-                assert(Not p Is Nothing)
-                Return p
-            End Function
-        End Class
-
-        Partial Public NotInheritable Class [hmovin]
-            Implements instruction, IComparable, IComparable(Of [hmovin])
-
-            Private ReadOnly d0 As data_ref
-            Private ReadOnly d1 As data_ref
-
-            Public Sub New()
-                d0 = New data_ref()
-                d1 = New data_ref()
-            End Sub
-
-            Public Sub New( _
-                       ByVal d0 As data_ref,
-                       ByVal d1 As data_ref)
-                Me.d0 = d0
-                Me.d1 = d1
-            End Sub
-
-            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
-                Return sizeof_uint32 +
-                       d0.bytes_size() +
-                       d1.bytes_size()
-            End Function
-
-            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
-                Dim b0() As Byte = Nothing
-                If Not d0.export(b0) Then
-                    Return False
-                End If
-                Dim b1() As Byte = Nothing
-                If Not d1.export(b1) Then
-                    Return False
-                End If
-                b = array_concat(uint32_bytes(command.hmovin),
-                                 b0,
-                                 b1)
-                Return True
-            End Function
-
-            Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As New StringBuilder()
-                b.Append(command_str(command.hmovin))
-                If Not d0.export(s) Then
-                    Return False
-                End If
-                b.Append(character.blank)
-                b.Append(s)
-
-                If Not d1.export(s) Then
-                    Return False
-                End If
-                b.Append(character.blank)
-                b.Append(s)
-
-                s = Convert.ToString(b)
-                Return True
-            End Function
-
-            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
-                Dim o As UInt32 = 0
-                Return assert(bytes_uint32(i, o, p) AndAlso o = command.hmovin) AndAlso
-                       d0.import(i, p) AndAlso
-                       d1.import(i, p)
-            End Function
-
-            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
-                assert(Not s.null_or_empty() AndAlso s.size() > p)
-                assert(s(p) = command_str(command.hmovin))
-                p += uint32_1
-                Return True AndAlso
-                       d0.import(s, p) AndAlso
-                       d1.import(s, p)
-            End Function
-
-            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-                Return CompareTo(cast(Of [hmovin])(obj, False))
-            End Function
-
-            Public Function CompareTo(ByVal other As [hmovin]) As Int32 Implements IComparable(Of [hmovin]).CompareTo
-                Dim c As Int32 = object_compare(Me, other)
-                If c <> object_compare_undetermined Then
-                    Return c
-                End If
-                assert(Not other Is Nothing)
-                c = Me.d0.CompareTo(other.d0)
-                If c <> 0 Then
-                    Return c
-                End If
-
-                c = Me.d1.CompareTo(other.d1)
-                If c <> 0 Then
-                    Return c
-                End If
-
-                Return 0
-            End Function
-
-            Public Overrides Function ToString() As String
-                Dim s As String = Nothing
-                assert(export(s))
-                Return s
-            End Function
-
-            Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
-                assert(Not p Is Nothing)
-                Return p
-            End Function
-
-            Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
-                assert(Not p Is Nothing)
-                Return p
-            End Function
-        End Class
-
-        Partial Public NotInheritable Class [hmovout]
-            Implements instruction, IComparable, IComparable(Of [hmovout])
-
-            Private ReadOnly d0 As data_ref
-            Private ReadOnly d1 As data_ref
-
-            Public Sub New()
-                d0 = New data_ref()
-                d1 = New data_ref()
-            End Sub
-
-            Public Sub New( _
-                       ByVal d0 As data_ref,
-                       ByVal d1 As data_ref)
-                Me.d0 = d0
-                Me.d1 = d1
-            End Sub
-
-            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
-                Return sizeof_uint32 +
-                       d0.bytes_size() +
-                       d1.bytes_size()
-            End Function
-
-            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
-                Dim b0() As Byte = Nothing
-                If Not d0.export(b0) Then
-                    Return False
-                End If
-                Dim b1() As Byte = Nothing
-                If Not d1.export(b1) Then
-                    Return False
-                End If
-                b = array_concat(uint32_bytes(command.hmovout),
-                                 b0,
-                                 b1)
-                Return True
-            End Function
-
-            Public Function export(ByRef s As String) As Boolean Implements exportable.export
-                Dim b As New StringBuilder()
-                b.Append(command_str(command.hmovout))
-                If Not d0.export(s) Then
-                    Return False
-                End If
-                b.Append(character.blank)
-                b.Append(s)
-
-                If Not d1.export(s) Then
-                    Return False
-                End If
-                b.Append(character.blank)
-                b.Append(s)
-
-                s = Convert.ToString(b)
-                Return True
-            End Function
-
-            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
-                Dim o As UInt32 = 0
-                Return assert(bytes_uint32(i, o, p) AndAlso o = command.hmovout) AndAlso
-                       d0.import(i, p) AndAlso
-                       d1.import(i, p)
-            End Function
-
-            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
-                assert(Not s.null_or_empty() AndAlso s.size() > p)
-                assert(s(p) = command_str(command.hmovout))
-                p += uint32_1
-                Return True AndAlso
-                       d0.import(s, p) AndAlso
-                       d1.import(s, p)
-            End Function
-
-            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-                Return CompareTo(cast(Of [hmovout])(obj, False))
-            End Function
-
-            Public Function CompareTo(ByVal other As [hmovout]) As Int32 Implements IComparable(Of [hmovout]).CompareTo
-                Dim c As Int32 = object_compare(Me, other)
-                If c <> object_compare_undetermined Then
-                    Return c
-                End If
-                assert(Not other Is Nothing)
-                c = Me.d0.CompareTo(other.d0)
-                If c <> 0 Then
-                    Return c
-                End If
-
-                c = Me.d1.CompareTo(other.d1)
-                If c <> 0 Then
-                    Return c
-                End If
-
-                Return 0
-            End Function
-
-            Public Overrides Function ToString() As String
-                Dim s As String = Nothing
-                assert(export(s))
-                Return s
-            End Function
-
-            Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d0)
-                assert(Not p Is Nothing)
-                Return p
-            End Function
-
-            Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
-                Dim p As ref(Of Byte()) = imi.access_stack(d1)
+                Dim p As ref(Of Byte()) = imi.access(d0)
                 assert(Not p Is Nothing)
                 Return p
             End Function

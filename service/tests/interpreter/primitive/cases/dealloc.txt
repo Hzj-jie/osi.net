@@ -3,10 +3,10 @@ push
 cpc rel0 i100
 push
 alloc rel0 rel1
-hcpin rel0	rel1
+cp hrel0	rel1
 
 cpc rel1 i0
-hcpout rel1 rel0
+cp rel1 hrel0
 
 dealloc	rel0
 

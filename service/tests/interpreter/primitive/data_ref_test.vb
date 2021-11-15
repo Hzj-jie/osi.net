@@ -3,9 +3,10 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.lock
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.interpreter.primitive
@@ -14,19 +15,51 @@ Namespace primitive
     Public NotInheritable Class data_ref_exportable_test
         Inherits exportable_test(Of data_ref)
 
+        Private ReadOnly rel As New atomic_int()
+        Private ReadOnly abs As New atomic_int()
+        Private ReadOnly hrel As New atomic_int()
+        Private ReadOnly habs As New atomic_int()
+
+        Public Overrides Function prepare() As Boolean
+            If Not MyBase.prepare() Then
+                Return False
+            End If
+            rel.set(0)
+            abs.set(0)
+            hrel.set(0)
+            habs.set(0)
+            Return True
+        End Function
+
         Protected Overrides Function create() As data_ref
             Dim i As Int64 = 0
             Dim r As data_ref = data_ref.random(i)
             assertion.is_true((r.offset() < 0) = (i < 0))
             assertion.equal(r.export(), i)
             If r.relative() Then
+                rel.increment()
                 assertion.equal(data_ref.rel(r.offset()), r)
             ElseIf r.absolute() Then
+                abs.increment()
                 assertion.equal(data_ref.abs(r.offset()), r)
+            ElseIf r.heap_relative() Then
+                hrel.increment()
+                assertion.equal(data_ref.hrel(r.offset()), r)
+            ElseIf r.heap_absolute() Then
+                habs.increment()
+                assertion.equal(data_ref.habs(r.offset()), r)
             Else
                 assert(False)
             End If
             Return r
+        End Function
+
+        Public Overrides Function finish() As Boolean
+            assertion.more(rel.get(), 0)
+            assertion.more(abs.get(), 0)
+            assertion.more(hrel.get(), 0)
+            assertion.more(habs.get(), 0)
+            Return MyBase.finish()
         End Function
     End Class
 

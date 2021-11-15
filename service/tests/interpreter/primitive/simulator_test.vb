@@ -39,8 +39,7 @@ Namespace primitive
                 If Not execute(cases(CInt(i)).second, sim) Then
                     Return False
                 End If
-                Dim p As ref(Of Byte()) = Nothing
-                p = sim.access_stack(data_ref.abs(0))
+                Dim p As ref(Of Byte()) = sim.access(data_ref.abs(0))
                 assertion.array_equal(+p, cases(CInt(i)).first)
             Next
             Return True
@@ -51,11 +50,11 @@ Namespace primitive
             If Not execute(sim5.as_text(), sim) Then
                 Return False
             End If
-            assertion.equal(sim.access_stack_as_bool(data_ref.abs(0)), False)
-            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(1)), CUInt(1326))
-            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(2)), CUInt(51))
-            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(3)), CUInt(1))
-            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(4)), CUInt(50))
+            assertion.equal(sim.access_as_bool(data_ref.abs(0)), False)
+            assertion.equal(sim.access_as_uint32(data_ref.abs(1)), CUInt(1326))
+            assertion.equal(sim.access_as_uint32(data_ref.abs(2)), CUInt(51))
+            assertion.equal(sim.access_as_uint32(data_ref.abs(3)), CUInt(1))
+            assertion.equal(sim.access_as_uint32(data_ref.abs(4)), CUInt(50))
             Return True
         End Function
 
@@ -65,17 +64,17 @@ Namespace primitive
                 Return False
             End If
 
-            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(0)), CUInt(1))
-            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(1)), CUInt(104))
-            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_heap_ref(data_ref.abs(2)).shift(-4)),
+            assertion.equal(sim.access_as_uint32(data_ref.abs(0)), CUInt(1))
+            assertion.equal(sim.access_as_uint32(data_ref.abs(1)), CUInt(104))
+            assertion.equal(sim.access_ref_as_uint32(sim.access_heap(sim.access_as_uint64(data_ref.abs(2)) - CULng(4))),
                             CUInt(100))
-            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_heap_ref(data_ref.abs(2)).shift(-3)),
+            assertion.equal(sim.access_ref_as_uint32(sim.access_heap(sim.access_as_uint64(data_ref.abs(2)) - CULng(3))),
                             CUInt(101))
-            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_heap_ref(data_ref.abs(2)).shift(-2)),
+            assertion.equal(sim.access_ref_as_uint32(sim.access_heap(sim.access_as_uint64(data_ref.abs(2)) - CULng(2))),
                             CUInt(102))
-            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_heap_ref(data_ref.abs(2)).shift(-1)),
+            assertion.equal(sim.access_ref_as_uint32(sim.access_heap(sim.access_as_uint64(data_ref.abs(2)) - CULng(1))),
                             CUInt(103))
-            assertion.equal(sim.access_heap_as_uint32(sim.access_stack_as_heap_ref(data_ref.abs(2)).shift(0)),
+            assertion.equal(sim.access_ref_as_uint32(sim.access_heap(sim.access_as_uint64(data_ref.abs(2)))),
                             CUInt(104))
             Return True
         End Function
@@ -86,10 +85,10 @@ Namespace primitive
                 Return False
             End If
 
-            assertion.equal(sim.access_stack_as_uint32(data_ref.abs(0)), CUInt(100))
+            assertion.equal(sim.access_as_uint32(data_ref.abs(0)), CUInt(100))
             assertion.array_equal(assertion.catch_thrown(Of executor_stop_error) _
                                                         (Sub()
-                                                             sim.access_heap(data_ref.abs(1))
+                                                             sim.access(data_ref.habs(1))
                                                          End Sub).error_types,
                                   {executor.error_type.heap_access_out_of_boundary})
             Return True

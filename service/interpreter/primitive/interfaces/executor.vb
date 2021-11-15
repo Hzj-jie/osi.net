@@ -67,8 +67,7 @@ Namespace primitive
             End Sub
         End Structure
 
-        Function access_stack(ByVal p As data_ref) As ref(Of Byte())
-        Function access_heap(ByVal p As heap_ref) As ref(Of Byte())
+        Function access(ByVal p As data_ref) As ref(Of Byte())
         Function stack_size() As UInt64
         Function instruction_ref() As UInt64
         Function carry_over() As Boolean
@@ -84,49 +83,9 @@ Namespace primitive
     End Interface
 
     Public Module _executor
-        <Extension()> Public Function convert_stack_to_uint32(ByVal this As executor,
-                                                              ByVal p As data_ref,
-                                                              ByRef overflow As Boolean) As UInt32
+        <Extension()> Public Function access_as_bool(ByVal this As executor, ByVal p As data_ref) As Boolean
             assert(Not this Is Nothing)
-            Dim d As ref(Of Byte()) = this.access_stack(p)
-            assert(Not d Is Nothing)
-            Dim b As New big_uint(+d)
-            Return b.as_uint32(overflow)
-        End Function
-
-        <Extension()> Public Function convert_stack_to_uint64(ByVal this As executor,
-                                                              ByVal p As data_ref,
-                                                              ByRef overflow As Boolean) As UInt64
-            assert(Not this Is Nothing)
-            Dim d As ref(Of Byte()) = this.access_stack(p)
-            assert(Not d Is Nothing)
-            Dim b As New big_uint(+d)
-            Return b.as_uint64(overflow)
-        End Function
-
-        <Extension()> Public Function convert_heap_to_uint32(ByVal this As executor,
-                                                             ByVal p As heap_ref,
-                                                             ByRef overflow As Boolean) As UInt32
-            assert(Not this Is Nothing)
-            Dim d As ref(Of Byte()) = this.access_heap(p)
-            assert(Not d Is Nothing)
-            Dim b As New big_uint(+d)
-            Return b.as_uint32(overflow)
-        End Function
-
-        <Extension()> Public Function convert_heap_to_uint64(ByVal this As executor,
-                                                             ByVal p As heap_ref,
-                                                             ByRef overflow As Boolean) As UInt64
-            assert(Not this Is Nothing)
-            Dim d As ref(Of Byte()) = this.access_heap(p)
-            assert(Not d Is Nothing)
-            Dim b As New big_uint(+d)
-            Return b.as_uint64(overflow)
-        End Function
-
-        <Extension()> Public Function access_stack_as_bool(ByVal this As executor, ByVal p As data_ref) As Boolean
-            assert(Not this Is Nothing)
-            Dim d As ref(Of Byte()) = this.access_stack(p)
+            Dim d As ref(Of Byte()) = this.access(p)
             assert(Not d Is Nothing)
             Dim o As Boolean = False
             ' If the data slot is empty, treat it as false.
@@ -138,12 +97,7 @@ Namespace primitive
 
         <Extension()> Public Function stack_top(ByVal this As executor) As ref(Of Byte())
             assert(Not this Is Nothing)
-            Return this.access_stack(data_ref.rel(0))
-        End Function
-
-        <Extension()> Public Function convert_stack_top_to_uint64(ByVal this As executor,
-                                                                  ByRef overflow As Boolean) As UInt64
-            Return this.convert_stack_to_uint64(data_ref.rel(0), overflow)
+            Return this.access(data_ref.rel(0))
         End Function
 
         <Extension()> Public Function current_state(ByVal this As executor) As executor.state

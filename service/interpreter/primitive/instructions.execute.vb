@@ -154,7 +154,7 @@ Namespace primitive
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
-                If Not imi.access_stack_as_bool(d1) Then
+                If Not imi.access_as_bool(d1) Then
                     Return
                 End If
                 If d0.relative() Then
@@ -257,7 +257,7 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 Dim p0 As ref(Of Byte()) = Me.p0(imi)
                 Dim p1 As ref(Of Byte()) = Me.p1(imi)
-                Dim l As UInt32 = imi.access_stack_as_uint32(d2)
+                Dim l As UInt32 = imi.access_as_uint32(d2)
                 If l >= array_size(+p1) Then
                     p0.clear()
                 Else
@@ -275,7 +275,7 @@ Namespace primitive
                 assert(Not imi Is Nothing)
                 Dim p0 As ref(Of Byte()) = Me.p0(imi)
                 Dim p1 As ref(Of Byte()) = Me.p1(imi)
-                Dim sl() As UInt32 = imi.access_stack_as_uint32(d2, d3)
+                Dim sl() As UInt32 = imi.access_as_uint32(d2, d3)
                 assert(array_size(sl) = 2)
                 If sl(0) >= array_size(+p1) OrElse sl(1) = uint32_0 Then
                     p0.clear()
@@ -292,7 +292,7 @@ Namespace primitive
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 assert(Not imi Is Nothing)
-                p2(imi).set(imi.interrupts().invoke(imi.access_stack_as_uint32(d0), +p1(imi)))
+                p2(imi).set(imi.interrupts().invoke(imi.access_as_uint32(d0), +p1(imi)))
             End Sub
         End Class
 
@@ -309,7 +309,7 @@ Namespace primitive
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
                 Dim vs As vector(Of Byte()) = Nothing
-                Dim u As UInt32 = imi.access_stack_as_uint32(d2)
+                Dim u As UInt32 = imi.access_as_uint32(d2)
                 If chunks.parse(+p1(imi), vs) AndAlso
                    u < vs.size() Then
                     p0(imi).set(vs(u))
@@ -503,13 +503,13 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                Dim s As UInt32 = imi.access_stack_as_uint32(d1)
+                Dim s As UInt32 = imi.access_as_uint32(d1)
                 If imi.carry_over() Then
                     executor_stop_error.throw(executor.error_type.out_of_heap_memory)
                     assert(False)
                     Return
                 End If
-                p0(imi).set(uint64_bytes(imi.alloc(s).address()))
+                p0(imi).set(uint64_bytes(imi.alloc(s)))
             End Sub
         End Class
 
@@ -517,47 +517,13 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                Dim p As heap_ref = imi.access_stack_as_heap_ref(d0)
+                Dim p As UInt64 = imi.access_as_uint64(d0)
                 If imi.carry_over() Then
                     executor_stop_error.throw(executor.error_type.heap_access_out_of_boundary)
                     assert(False)
                     Return
                 End If
                 imi.dealloc(p)
-            End Sub
-        End Class
-
-        Partial Public NotInheritable Class [hcpin]
-            Implements instruction
-
-            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                imi.access_heap(d0).set(copy(+p1(imi)))
-            End Sub
-        End Class
-
-        Partial Public NotInheritable Class [hcpout]
-            Implements instruction
-
-            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                p0(imi).set(copy(+imi.access_heap(d1)))
-            End Sub
-        End Class
-
-        Partial Public NotInheritable Class [hmovin]
-            Implements instruction
-
-            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                imi.access_heap(d0).set(+p1(imi))
-                p1(imi).clear()
-            End Sub
-        End Class
-
-        Partial Public NotInheritable Class [hmovout]
-            Implements instruction
-
-            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                p0(imi).set(+imi.access_heap(d1))
-                imi.access_heap(d1).clear()
             End Sub
         End Class
     End Namespace

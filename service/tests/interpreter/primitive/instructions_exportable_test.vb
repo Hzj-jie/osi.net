@@ -472,45 +472,5 @@ Namespace primitive
             End Function
         End Class
 
-        Public NotInheritable Class hcpin_exportable_test
-            Inherits exportable_test(Of [hcpin])
-
-            Protected Overrides Function create() As [hcpin]
-                Return New [hcpin]( _
-                        data_ref.random(),
-                        data_ref.random())
-            End Function
-        End Class
-
-        Public NotInheritable Class hcpout_exportable_test
-            Inherits exportable_test(Of [hcpout])
-
-            Protected Overrides Function create() As [hcpout]
-                Return New [hcpout]( _
-                        data_ref.random(),
-                        data_ref.random())
-            End Function
-        End Class
-
-        Public NotInheritable Class hmovin_exportable_test
-            Inherits exportable_test(Of [hmovin])
-
-            Protected Overrides Function create() As [hmovin]
-                Return New [hmovin]( _
-                        data_ref.random(),
-                        data_ref.random())
-            End Function
-        End Class
-
-        Public NotInheritable Class hmovout_exportable_test
-            Inherits exportable_test(Of [hmovout])
-
-            Protected Overrides Function create() As [hmovout]
-                Return New [hmovout]( _
-                        data_ref.random(),
-                        data_ref.random())
-            End Function
-        End Class
-
     End Namespace
 End Namespace

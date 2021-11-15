@@ -43,7 +43,7 @@ Namespace primitive
                 s.execute()
                 assertion.equal(s.stack_size(), uint32_1)
                 assertion.equal(s.states_size(), uint32_0)
-                assertion.array_equal(+s.access_stack(data_ref.abs(0)),
+                assertion.array_equal(+s.access(data_ref.abs(0)),
                                       str_bytes(strcat("hello world", character.newline)))
                 Return True
             End Function

@@ -108,14 +108,6 @@ Namespace primitive
                     Me.i = New instructions.alloc()
                 Case command.dealloc
                     Me.i = New instructions.dealloc()
-                Case command.hcpin
-                    Me.i = New instructions.hcpin()
-                Case command.hcpout
-                    Me.i = New instructions.hcpout()
-                Case command.hmovin
-                    Me.i = New instructions.hmovin()
-                Case command.hmovout
-                    Me.i = New instructions.hmovout()
                 Case Else
                     Return False
             End Select

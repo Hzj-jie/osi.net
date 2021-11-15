@@ -1,5 +1,5 @@
 ﻿
-Entire memory space is separated into three parts,
+Entire memory space is separated into four parts,
 1. Instructions, readonly, contains only instructions.
 2. Stack, data, managed as data slot, each slot has zero or more bytes, which can be initialized by certain commands.
 3. States Stack, stores states, such as Instruction ref and Stack Size to maintain call stack.
@@ -29,13 +29,14 @@ Data reference
 Data is always in stack or heap. There are two ways to refer a data in stack,
 1. Relative, offset to current stack top, say, rel1 means the one below stack top
 2. Absolute, position in stack, say, abs1 means the one above stack bottom
+For heap data, the reference is always absolute and positive, use 64 bit unsigned int, e.g. hrel1 means access the heap
+address stored in rel1. Note, the rel1 must be an 64 bit unsigned int.
 Uses 64 bit signed int to represent a data reference in stack. The first bit of a relative reference is 1, of an
-absolute reference is 0. The high 63 bits are the real offset, which could be positive or negative, i.e. right shift by
-1.
-For heap data, the reference is always absolute and positive, use 64 bit unsigned int.
+absolute reference is 0. The second bit of a heap reference is 1, of a stack reference is 0. The high 62 bits are the
+real offset, which could be positive or negative, i.e. right shift by 2.
 
 Data block
-Data block is to store constant data in binary, several commands, such as cpc, can accept data block.
+Data block is to store constant data in binary, several commands, such as cpc, accept data blocks.
 The first character of a data block is type character, while in bytes format, the first byte is type byte.
 There are several formats of data block,
 1. Integer, i123, means 123 in integer. 4 bytes.

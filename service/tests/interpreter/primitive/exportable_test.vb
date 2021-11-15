@@ -1,6 +1,9 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.interpreter.primitive
 
@@ -12,13 +15,11 @@ Namespace primitive
 
         Public NotOverridable Overrides Function run() As Boolean
             For i As UInt32 = 0 To 65535
-                Dim x As T = Nothing
-                Dim y As T = Nothing
-                x = create()
+                Dim x As T = create()
                 assert(Not x Is Nothing)
                 Dim b() As Byte = Nothing
                 assertion.is_true(x.export(b))
-                y = create()
+                Dim y As T = create()
                 Dim p As UInt32 = 0
                 assertion.is_true(y.import(b, p))
                 assertion.equal(p, array_size(b))
