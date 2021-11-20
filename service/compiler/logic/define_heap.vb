@@ -12,23 +12,19 @@ Namespace logic
     Public NotInheritable Class define_heap
         Implements exportable
 
-        Private ReadOnly anchors As anchors
         Private ReadOnly types As types
         Private ReadOnly name As String
         Private ReadOnly type As String
         Private ReadOnly size As String
 
-        Public Sub New(ByVal anchors As anchors,
-                       ByVal types As types,
+        Public Sub New(ByVal types As types,
                        ByVal name As String,
                        ByVal type As String,
                        ByVal size As String)
-            assert(Not anchors Is Nothing)
             assert(Not types Is Nothing)
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
             assert(Not size.null_or_whitespace())
-            Me.anchors = anchors
             Me.types = types
             Me.name = name
             Me.type = type
@@ -41,7 +37,7 @@ Namespace logic
             If Not variable.of_stack(types, Me.size, size) Then
                 Return False
             End If
-            If Not define.export(anchors, types, name, heaps.ptr_type, o) Then
+            If Not define.export(types, name, heaps.ptr_type, o) Then
                 Return False
             End If
             Dim v As variable = Nothing

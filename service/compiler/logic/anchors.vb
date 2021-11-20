@@ -37,7 +37,7 @@ Namespace logic
     End Class
 
     Public NotInheritable Class anchors
-        Public Shared ReadOnly empty As anchors
+        Public Shared ReadOnly empty As New anchors()
 
         Private NotInheritable Class callee_ref
             Public ReadOnly begin As UInt32
@@ -53,10 +53,6 @@ Namespace logic
         End Class
 
         Private ReadOnly m As map(Of String, callee_ref)
-
-        Shared Sub New()
-            empty = New anchors()
-        End Sub
 
         Public Sub New()
             m = New map(Of String, callee_ref)()

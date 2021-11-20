@@ -13,31 +13,26 @@ Namespace logic
     Public NotInheritable Class define
         Implements exportable
 
-        Private ReadOnly anchors As anchors
         Private ReadOnly types As types
         Private ReadOnly name As String
         Private ReadOnly type As String
 
-        Public Sub New(ByVal anchors As anchors,
-                       ByVal types As types,
+        Public Sub New(ByVal types As types,
                        ByVal name As String,
                        ByVal type As String)
-            assert(Not anchors Is Nothing)
             assert(Not types Is Nothing)
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
-            Me.anchors = anchors
             Me.types = types
             Me.name = name
             Me.type = type
         End Sub
 
-        Public Shared Function export(ByVal anchors As anchors,
-                                      ByVal types As types,
+        Public Shared Function export(ByVal types As types,
                                       ByVal name As String,
                                       ByVal type As String,
                                       ByVal o As vector(Of String)) As Boolean
-            Return New define(anchors, types, name, type).export(o)
+            Return New define(types, name, type).export(o)
         End Function
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export

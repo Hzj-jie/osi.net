@@ -123,33 +123,33 @@ Namespace logic
         Private Function new_copy_heap_out(ByVal p1 As String,
                                            ByVal p2 As String,
                                            ByVal p3 As String) As copy_heap_out
-            Return New copy_heap_out(anchors, types, p1, p2, p3)
+            Return New copy_heap_out(types, p1, p2, p3)
         End Function
 
         Private Function new_copy_heap_in(ByVal p1 As String,
                                           ByVal p2 As String,
                                           ByVal p3 As String) As copy_heap_in
-            Return New copy_heap_in(anchors, types, p1, p2, p3)
+            Return New copy_heap_in(types, p1, p2, p3)
         End Function
 
         Private Function new_move_heap_out(ByVal p1 As String,
                                            ByVal p2 As String,
                                            ByVal p3 As String) As move_heap_out
-            Return New move_heap_out(anchors, types, p1, p2, p3)
+            Return New move_heap_out(types, p1, p2, p3)
         End Function
 
         Private Function new_move_heap_in(ByVal p1 As String,
                                           ByVal p2 As String,
                                           ByVal p3 As String) As move_heap_in
-            Return New move_heap_in(anchors, types, p1, p2, p3)
+            Return New move_heap_in(types, p1, p2, p3)
         End Function
 
         Private Function new_define(ByVal p1 As String, ByVal p2 As String) As define
-            Return New define(anchors, types, p1, p2)
+            Return New define(types, p1, p2)
         End Function
 
         Private Function new_define_heap(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As define_heap
-            Return New define_heap(anchors, types, p1, p2, p3)
+            Return New define_heap(types, p1, p2, p3)
         End Function
 
         Private Function new_do_until(ByVal p1 As String, ByVal p2 As paragraph) As do_until

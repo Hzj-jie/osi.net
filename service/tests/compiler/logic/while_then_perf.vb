@@ -58,11 +58,11 @@ Namespace logic
 
                 Public Sub New()
                     MyBase.New(
-                        New define(anchors.empty, types.empty, "state", types.variable_type),
-                        New define(anchors.empty, types.empty, "result", types.variable_type),
-                        New define(anchors.empty, types.empty, "i", types.variable_type),
-                        New define(anchors.empty, types.empty, "1", types.variable_type),
-                        New define(anchors.empty, types.empty, "UPPER_BOUND", types.variable_type),
+                        New define(types.empty, "state", types.variable_type),
+                        New define(types.empty, "result", types.variable_type),
+                        New define(types.empty, "i", types.variable_type),
+                        New define(types.empty, "1", types.variable_type),
+                        New define(types.empty, "UPPER_BOUND", types.variable_type),
                         New copy_const(types.empty, "state", unique_ptr.[New](New data_block(True))),
                         New copy_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
                         New copy_const(types.empty, "UPPER_BOUND", unique_ptr.[New](New data_block(upper_bound))),
@@ -116,11 +116,11 @@ Namespace logic
 
             Public Sub New()
                 MyBase.New({
-                New define(anchors.empty, types.empty, "state", types.variable_type),
-                New define(anchors.empty, types.empty, "result", types.variable_type),
-                New define(anchors.empty, types.empty, "i", types.variable_type),
-                New define(anchors.empty, types.empty, "1", types.variable_type),
-                New define(anchors.empty, types.empty, "UPPER_BOUND", types.variable_type),
+                New define(types.empty, "state", types.variable_type),
+                New define(types.empty, "result", types.variable_type),
+                New define(types.empty, "i", types.variable_type),
+                New define(types.empty, "1", types.variable_type),
+                New define(types.empty, "UPPER_BOUND", types.variable_type),
                 New copy_const(types.empty, "state", unique_ptr.[New](New data_block(True))),
                 New copy_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
                 New copy_const(types.empty, "UPPER_BOUND", unique_ptr.[New](New data_block(upper_bound))),

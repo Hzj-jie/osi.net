@@ -10,13 +10,11 @@ Namespace logic
     Public NotInheritable Class move_heap_in
         Inherits copy_heap
 
-        Public Sub New(ByVal anchors As anchors,
-                       ByVal types As types,
+        Public Sub New(ByVal types As types,
                        ByVal target As String,
                        ByVal target_index As String,
                        ByVal source As String)
-            MyBase.New(anchors,
-                       types,
+            MyBase.New(types,
                        target,
                        target_index,
                        source,

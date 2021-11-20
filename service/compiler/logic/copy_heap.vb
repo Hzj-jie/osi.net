@@ -11,7 +11,6 @@ Namespace logic
     Public MustInherit Class copy_heap
         Implements exportable
 
-        Private ReadOnly anchors As anchors
         Private ReadOnly types As types
         Private ReadOnly array As String
         Private ReadOnly array_index As String
@@ -19,21 +18,18 @@ Namespace logic
         Private ReadOnly type_match As Func(Of variable, variable, Boolean)
         Private ReadOnly operation As out_bool(Of String, String, String)
 
-        Public Sub New(ByVal anchors As anchors,
-                       ByVal types As types,
+        Public Sub New(ByVal types As types,
                        ByVal array As String,
                        ByVal array_index As String,
                        ByVal stack As String,
                        ByVal type_match As Func(Of variable, variable, Boolean),
                        ByVal operation As out_bool(Of String, String, String))
-            assert(Not anchors Is Nothing)
             assert(Not types Is Nothing)
             assert(Not String.IsNullOrEmpty(array))
             assert(Not String.IsNullOrEmpty(array_index))
             assert(Not String.IsNullOrEmpty(stack))
             assert(Not type_match Is Nothing)
             assert(Not operation Is Nothing)
-            Me.anchors = anchors
             Me.types = types
             Me.array = array
             Me.array_index = array_index
@@ -45,7 +41,7 @@ Namespace logic
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim array_ptr As String = scope.current().unique_name()
-            If Not define.export(anchors, types, array_ptr, heaps.ptr_type, o) Then
+            If Not define.export(types, array_ptr, heaps.ptr_type, o) Then
                 Return False
             End If
             If Not New add(types, array_ptr, array, array_index).export(o) Then

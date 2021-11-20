@@ -51,7 +51,7 @@ Namespace logic
                 errors.anchor_undefined(anchor.name)
                 Return False
             End If
-            If Not return_value.export(anchors, types, name, result_type, o) Then
+            If Not return_value.export(types, name, result_type, o) Then
                 Return False
             End If
             Return True
@@ -78,8 +78,7 @@ Namespace logic
             End If
             For i As Int32 = 0 To array_size_i(parameters) - 1
                 Dim parameter_place_holder As String = parameter_place_holder_of(i)
-                If Not define.export(anchors,
-                                     types,
+                If Not define.export(types,
                                      parameter_place_holder,
                                      callee_params(CUInt(i)).type,
                                      o) Then
