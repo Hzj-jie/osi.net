@@ -39,7 +39,7 @@ Namespace logic
             assert(r.size)
             If return_value Then
                 Dim var As variable = Nothing
-                If Not variable.of_stack(types, +return_value, var) Then
+                If Not variable.of(types, +return_value, var) Then
                     Return False
                 End If
                 ' TODO: Check if +return_value is a temporary variable or a reference to decide whether move can be

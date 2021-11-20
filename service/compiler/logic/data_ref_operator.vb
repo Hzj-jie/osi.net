@@ -28,7 +28,7 @@ Namespace logic
             Dim vars() As variable = Nothing
             ReDim vars(array_size_i(vs) - 1)
             For i As Int32 = 0 To array_size_i(vs) - 1
-                If Not variable.of_stack(types, vs(i), vars(i)) OrElse
+                If Not variable.of(types, vs(i), vars(i)) OrElse
                    Not variable_restrict(CUInt(i), vars(i)) Then
                     Return False
                 End If

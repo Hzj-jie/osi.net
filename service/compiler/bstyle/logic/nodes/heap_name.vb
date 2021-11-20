@@ -64,20 +64,20 @@ Partial Public NotInheritable Class bstyle
                                             assert(vs.size() = ps.size())
                                             Dim i As UInt32 = 0
                                             While i < vs.size()
-                                                If Not builders.of_copy_heap_out(vs(i), ps(i).name, indexstr).to(o) Then
-                                                    Return False
-                                                End If
+                                                '    If Not builders.of_copy_heap_out(vs(i), ps(i).name, indexstr).to(o) Then
+                                                '    Return False
+                                                '    End If
                                                 i += uint32_1
                                             End While
                                             Return True
                                         End Function,
                                         Function(ByVal type As String, ByVal source As String) As Boolean
-                                            Return builders.of_copy_heap_out(
-                                                                l.typed_code_gen(Of value)().
-                                                                  with_single_data_slot_temp_target(type, n, o),
-                                                                source,
-                                                                indexstr).
-                                                            to(o)
+                                            'Return builders.of_copy_heap_out(
+                                            'l.typed_code_gen(Of value)().
+                                            'with_single_data_slot_temp_target(type, n, o),
+                                            'source,
+                                            'indexstr).
+                                            '                to(o)
                                         End Function,
                                         o)
                          End Function)

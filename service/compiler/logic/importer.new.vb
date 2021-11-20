@@ -121,11 +121,11 @@ Namespace logic
         End Function
 
         Private Function new_define(ByVal p1 As String, ByVal p2 As String) As define
-            Return New define(anchors, types, p1, p2)
+            Return New define(types, p1, p2)
         End Function
 
         Private Function new_define_heap(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As define_heap
-            Return New define_heap(anchors, types, p1, p2, p3)
+            Return New define_heap(types, p1, p2, p3)
         End Function
 
         Private Function new_do_until(ByVal p1 As String, ByVal p2 As paragraph) As do_until

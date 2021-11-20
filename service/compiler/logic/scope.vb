@@ -14,31 +14,76 @@ Namespace logic
         Inherits scope(Of scope)
 
         ' This stack can be a real stack, but using map with offset can provide a better lookup performance.
-        Private ReadOnly stack As New unordered_map(Of String, stack_ref)()
-        ' Heap allocations need no offset, but only type to check assignability.
-        Private ReadOnly heap As New unordered_map(Of String, String)()
+        Private ReadOnly stack As New unordered_map(Of String, ref)()
 
-        Private NotInheritable Class stack_ref
-            'Starts from 1 to allow size()-top.offset=0.
-            Public ReadOnly offset As UInt64
-            Public ReadOnly type As String
+        Public Class typed_ref
+            Private ReadOnly type As String
+            Private ReadOnly ref_type As [optional](Of String)
 
-            Public Sub New(ByVal offset As UInt64, ByVal type As String)
+            Protected Sub New(ByVal type As String, ByVal ref_type As [optional](Of String))
                 assert(Not type.null_or_whitespace())
-                Me.offset = offset
                 Me.type = type
+                Me.ref_type = ref_type
+                If type.Equals(types.heap_ptr_type) Then
+                    assert(ref_type)
+                Else
+                    assert(Not ref_type)
+                End If
             End Sub
+
+            Protected Sub New(ByVal other As typed_ref)
+                assert(Not other Is Nothing)
+                Me.type = other.type
+                Me.ref_type = other.ref_type
+            End Sub
+
+            Public Function is_heap_ptr() As Boolean
+                Return type.Equals(types.heap_ptr_type)
+            End Function
+
+            Public Function debug_type_str() As String
+                If is_heap_ptr() Then
+                    Return strcat(type, "[", +ref_type, "]")
+                End If
+                Return type
+            End Function
+
+            Public Function value_type() As String
+                If is_heap_ptr() Then
+                    Return +ref_type
+                End If
+                Return type
+            End Function
         End Class
 
-        Public NotInheritable Class exported_stack_ref
-            Public ReadOnly data_ref As data_ref
-            Public ReadOnly type As String
+        Public NotInheritable Class ref
+            Inherits typed_ref
+            'Starts from 1 to allow size()-top.offset=0.
+            Public ReadOnly offset As UInt64
 
-            Public Sub New(ByVal data_ref As data_ref, ByVal type As String)
+            Private Sub New(ByVal offset As UInt64, ByVal type As String, ByVal ref_type As [optional](Of String))
+                MyBase.New(type, ref_type)
+                Me.offset = offset
+            End Sub
+
+            Public Shared Function of_stack(ByVal offset As UInt64, ByVal type As String) As ref
+                Return New ref(offset, type, [optional].empty(Of String)())
+            End Function
+
+            Public Shared Function of_heap(ByVal offset As UInt64, ByVal type As String) As ref
+                Return New ref(offset, types.heap_ptr_type, [optional].of(type))
+            End Function
+        End Class
+
+        Public NotInheritable Class exported_ref
+            Inherits typed_ref
+
+            Public ReadOnly data_ref As data_ref
+
+            Public Sub New(ByVal r As ref, ByVal data_ref As data_ref)
+                MyBase.New(r)
                 assert(Not data_ref Is Nothing)
-                assert(Not type.null_or_whitespace())
                 Me.data_ref = data_ref
-                Me.type = type
             End Sub
         End Class
 
@@ -60,88 +105,62 @@ Namespace logic
             MyBase.when_end_scope()
         End Sub
 
-        Public Function move_heap() As unordered_map(Of String, String)
-            Return unordered_map(Of String, String).move(heap)
+        Public Function heap() As unordered_set(Of String)
+            Return stack.stream().
+                         filter(Function(ByVal p As first_const_pair(Of String, ref)) As Boolean
+                                    assert(Not p Is Nothing)
+                                    Return p.second.is_heap_ptr()
+                                End Function).
+                         map(stack.first_selector).
+                         collect(Of unordered_set(Of String))()
         End Function
 
         Public Function unique_name() As String
-            Return strcat("@scope_", GetHashCode(), "_unique_name_", stack_size() + uint32_1)
+            Return strcat("@scope_", GetHashCode(), "_unique_name_", size() + uint32_1)
         End Function
 
         Private Function find_duplication(ByVal name As String, ByVal type As String) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
-            If stack.find(name) <> stack.end() OrElse heap.find(name) <> heap.end() Then
-                errors.redefine(name, type, Me.type(name))
+            If stack.find(name) <> stack.end() Then
+                errors.redefine(name, type, stack(name).debug_type_str())
                 Return True
             End If
             Return False
         End Function
 
-        Public Function define_stack(ByVal name As String, ByVal type As String) As Boolean
+        Private Function define(ByVal name As String,
+                                ByVal type As String,
+                                ByVal f As Func(Of UInt32, String, ref)) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
+            assert(Not f Is Nothing)
             If find_duplication(name, type) Then
                 Return False
             End If
-            stack.emplace(name, New stack_ref(stack_size() + uint32_1, type))
+            stack.emplace(name, f(size() + uint32_1, type))
             Return True
+        End Function
+
+        Public Function define_stack(ByVal name As String, ByVal type As String) As Boolean
+            Return define(name, type, AddressOf ref.of_stack)
         End Function
 
         Public Function define_heap(ByVal name As String, ByVal type As String) As Boolean
-            assert(Not name.null_or_whitespace())
-            assert(Not type.null_or_whitespace())
-            name = heaps.name_of(name)
-            If find_duplication(name, type) Then
-                Return False
-            End If
-            heap.emplace(name, type)
-            Return True
+            Return define(name, type, AddressOf ref.of_heap)
         End Function
 
-        Public Function stack_empty() As Boolean
-            Return stack_size() = uint32_0
-        End Function
-
-        Public Function stack_size() As UInt32
+        Public Function size() As UInt32
             Return stack.size()
         End Function
 
-        Public Function type(ByVal name As String, ByRef o As String) As Boolean
-            Dim s As scope = Me
-            While Not s Is Nothing
-                Using code_block
-                    Dim r As stack_ref = Nothing
-                    If s.stack.find(name, r) Then
-                        o = r.type
-                        Return True
-                    End If
-                End Using
-                Using code_block
-                    Dim r As String = Nothing
-                    If s.heap.find(name, r) Then
-                        o = r
-                        Return True
-                    End If
-                End Using
-                s = s.parent
-            End While
-            Return False
-        End Function
-
-        Public Function type(ByVal name As String) As String
-            Dim o As String = Nothing
-            assert(type(name, o))
-            Return o
-        End Function
-
-        Public Function export(ByVal name As String, ByRef o As exported_stack_ref) As Boolean
+        Public Function export(ByVal name As String, ByRef o As exported_ref) As Boolean
             Dim size As UInt64 = 0
             Dim s As scope = Me
             While Not s Is Nothing
-                Dim r As stack_ref = Nothing
+                Dim r As ref = Nothing
                 If Not s.stack.find(name, r) Then
-                    size += s.stack_size()
+                    size += s.size()
                     s = s.parent
                     Continue While
                 End If
@@ -152,22 +171,20 @@ Namespace logic
                         Return False
                     End If
                 Else
-                    If Not data_ref.rel(CLng(s.stack_size() - r.offset + size), d) Then
+                    If Not data_ref.rel(CLng(s.size() - r.offset + size), d) Then
                         Return False
                     End If
                 End If
-                o = New exported_stack_ref(d, r.type)
+                o = New exported_ref(r, d)
                 Return True
             End While
             Return False
         End Function
 
-        Public Function export(ByVal name As String, ByRef o As String) As Boolean
-            Dim ref As exported_stack_ref = Nothing
-            If Not export(name, ref) Then
-                Return False
-            End If
-            Return ref.data_ref.export(o)
+        Public Function export(ByVal name As String) As exported_ref
+            Dim o As exported_ref = Nothing
+            assert(export(name, o))
+            Return o
         End Function
     End Class
 
@@ -183,19 +200,15 @@ Namespace logic
         End Sub
 
         Protected Overrides Sub when_dispose()
-            new_scope.move_heap().
+            new_scope.heap().
                       stream().
-                      map(Function(ByVal x As first_const_pair(Of String, String)) As String
-                              assert(Not x Is Nothing)
-                              Return x.first
-                          End Function).
                       foreach(Sub(ByVal name As String)
-                                  Dim v As variable = Nothing
-                                  assert(variable.of_stack(heaps.original_name_of(name), v))
+                                  Dim v As String = Nothing
+                                  assert(new_scope.export(name).data_ref.export(v))
                                   o.emplace_back(instruction_builder.str(command.dealloc, v))
                               End Sub)
             Dim i As UInt32 = 0
-            While i < new_scope.stack_size()
+            While i < new_scope.size()
                 o.emplace_back(instruction_builder.str(command.pop))
                 i += uint32_1
             End While

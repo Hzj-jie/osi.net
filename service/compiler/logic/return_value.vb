@@ -14,18 +14,17 @@ Namespace logic
             Return scope.current().define_stack(variable_name(name), type)
         End Function
 
-        Public Shared Function export(ByVal anchors As anchors,
-                                      ByVal types As types,
+        Public Shared Function export(ByVal types As types,
                                       ByVal name As String,
                                       ByVal type As String,
                                       ByRef o As vector(Of String)) As Boolean
-            Return logic.define.export(anchors, types, variable_name(name), type, o)
+            Return logic.define.export(types, variable_name(name), type, o)
         End Function
 
         Public Shared Function retrieve(ByVal types As types,
                                         ByVal name As String,
                                         ByRef o As variable) As Boolean
-            Return variable.of_stack(types, variable_name(name), o)
+            Return variable.of(types, variable_name(name), o)
         End Function
 
         Private Shared Function variable_name(ByVal name As String) As String

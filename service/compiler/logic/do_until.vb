@@ -31,7 +31,7 @@ Namespace logic
             End If
 
             Dim var As variable = Nothing
-            If Not variable.of_stack(v, var) Then
+            If Not variable.of(v, var) Then
                 Return False
             End If
 

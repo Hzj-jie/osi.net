@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
@@ -18,6 +19,13 @@ Namespace logic
 
         Protected Overrides Function instruction() As command
             Return command.add
+        End Function
+
+        Public Overloads Shared Function export(ByVal result As String,
+                                                ByVal left As String,
+                                                ByVal right As String,
+                                                ByVal o As vector(Of String)) As Boolean
+            Return New add(types.default, result, left, right).export(o)
         End Function
     End Class
 

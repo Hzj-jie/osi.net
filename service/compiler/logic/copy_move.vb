@@ -46,8 +46,8 @@ Namespace logic
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             Dim t As variable = Nothing
             Dim s As variable = Nothing
-            Return variable.of_stack(types, target, t) AndAlso
-                   variable.of_stack(types, source, s) AndAlso
+            Return variable.of(types, target, t) AndAlso
+                   variable.of(types, source, s) AndAlso
                    export(cmd, t, s, o)
         End Function
     End Class

@@ -52,10 +52,10 @@ Namespace logic
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
             If assertion.equal(e.get().stack_size(), CULng(4)) Then
-                assertion.equal(e.get().access_stack_as_uint32(data_ref.abs(0)), CUInt(100))
-                assertion.equal(e.get().access_stack_as_uint32(data_ref.abs(1)), CUInt(200))
-                assertion.equal(e.get().access_stack_as_uint32(data_ref.abs(2)), CUInt(10000))
-                assertion.equal(e.get().access_stack_as_uint32(data_ref.abs(3)), CUInt(300))
+                assertion.equal(e.get().access_as_uint32(data_ref.abs(0)), CUInt(100))
+                assertion.equal(e.get().access_as_uint32(data_ref.abs(1)), CUInt(200))
+                assertion.equal(e.get().access_as_uint32(data_ref.abs(2)), CUInt(10000))
+                assertion.equal(e.get().access_as_uint32(data_ref.abs(3)), CUInt(300))
             End If
         End Sub
     End Class

@@ -146,6 +146,10 @@ Namespace logic
             raise_error(error_type.user, "Unknown macro ", n, " against ", s)
         End Sub
 
+        Public Shared Sub invalid_variable_name(ByVal name As String, ByVal ParamArray msgs() As Object)
+            raise_error(error_type.user, "Variable name ", name, " is invalid. ", msgs)
+        End Sub
+
         Private Sub New()
         End Sub
     End Class

@@ -46,7 +46,7 @@ Partial Public NotInheritable Class bstyle
                        Function(ByVal r As String) As Boolean
                            Return copy(index,
                                        Function(ByVal indexstr As String) As Boolean
-                                           Return builders.of_copy_heap_in(name.word().str(), indexstr, r).to(o)
+                                           ' Return builders.of_copy_heap_in(name.word().str(), indexstr, r).to(o)
                                        End Function,
                                        o)
                        End Function,

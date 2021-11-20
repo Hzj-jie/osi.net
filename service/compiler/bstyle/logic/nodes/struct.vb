@@ -64,9 +64,9 @@ Partial Public NotInheritable Class bstyle
                                        Function(ByVal indexstr As String) As Boolean
                                            Dim i As UInt32 = 0
                                            While i < vs.size()
-                                               If Not builders.of_copy_heap_in(vs(i).name, indexstr, sources(i)).to(o) Then
-                                                   Return False
-                                               End If
+                                               'If Not builders.of_copy_heap_in(vs(i).name, indexstr, sources(i)).to(o) Then
+                                               'Return False
+                                               'End If
                                                i += uint32_1
                                            End While
                                            Return True

@@ -114,7 +114,7 @@ Namespace logic
                 For j As UInt32 = 0 To array_size(cases(CInt(i)).second) - uint32_1
                     Dim x() As Byte = Nothing
                     Try
-                        x = +e.access_stack(data_ref.abs(j))
+                        x = +e.access(data_ref.abs(j))
                     Catch ex As executor_stop_error
                         assertion.is_true(False, ex)
                         Continue For

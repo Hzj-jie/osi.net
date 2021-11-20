@@ -51,7 +51,7 @@ Namespace logic
                 errors.anchor_undefined(anchor.name)
                 Return False
             End If
-            If Not return_value.export(anchors, types, name, result_type, o) Then
+            If Not return_value.export(types, name, result_type, o) Then
                 Return False
             End If
             Return True
@@ -78,8 +78,7 @@ Namespace logic
             End If
             For i As Int32 = 0 To array_size_i(parameters) - 1
                 Dim parameter_place_holder As String = parameter_place_holder_of(i)
-                If Not define.export(anchors,
-                                     types,
+                If Not define.export(types,
                                      parameter_place_holder,
                                      callee_params(CUInt(i)).type,
                                      o) Then
@@ -87,12 +86,12 @@ Namespace logic
                 End If
 
                 Dim target As variable = Nothing
-                If Not variable.of_stack(types, parameter_place_holder, target) Then
+                If Not variable.of(types, parameter_place_holder, target) Then
                     Return False
                 End If
 
                 Dim var As variable = Nothing
-                If Not variable.of_stack(types, parameters(i), var) Then
+                If Not variable.of(types, parameters(i), var) Then
                     Return False
                 End If
 
@@ -121,9 +120,9 @@ Namespace logic
                     Continue For
                 End If
                 Dim parameter_place_holder As variable = Nothing
-                assert(variable.of_stack(types, parameter_place_holder_of(i), parameter_place_holder))
+                assert(variable.of(types, parameter_place_holder_of(i), parameter_place_holder))
                 Dim parameter As variable = Nothing
-                assert(variable.of_stack(types, parameters(i), parameter))
+                assert(variable.of(types, parameters(i), parameter))
                 If Not move.export(parameter, parameter_place_holder, o) Then
                     Return False
                 End If
@@ -132,7 +131,7 @@ Namespace logic
                 Return True
             End If
             Dim result_var As variable = Nothing
-            If Not variable.of_stack(types, +result, result_var) Then
+            If Not variable.of(types, +result, result_var) Then
                 errors.variable_undefined(+result)
                 Return False
             End If
