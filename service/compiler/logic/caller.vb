@@ -76,7 +76,13 @@ Namespace logic
                 errors.mismatch_callee_parameters(anchor.name, parameters)
                 Return False
             End If
-            For i As Int32 = 0 To array_size_i(parameters) - 1
+            Dim vars(parameters.Length() - 1) As variable
+            For i As Int32 = 0 To parameters.Length() - 1
+                If Not variable.of(types, parameters(i), o, vars(i)) Then
+                    Return False
+                End If
+            Next
+            For i As Int32 = 0 To parameters.Length() - 1
                 Dim parameter_place_holder As String = parameter_place_holder_of(i)
                 If Not define.export(types,
                                      parameter_place_holder,
@@ -86,21 +92,16 @@ Namespace logic
                 End If
 
                 Dim target As variable = Nothing
-                If Not variable.of(types, parameter_place_holder, target) Then
-                    Return False
-                End If
-
-                Dim var As variable = Nothing
-                If Not variable.of(types, parameters(i), var) Then
+                If Not variable.of(types, parameter_place_holder, o, target) Then
                     Return False
                 End If
 
                 If callee_params(CUInt(i)).ref Then
-                    If Not move.export(target, var, o) Then
+                    If Not move.export(target, vars(i), o) Then
                         Return False
                     End If
                 Else
-                    If Not copy.export(target, var, o) Then
+                    If Not copy.export(target, vars(i), o) Then
                         Return False
                     End If
                 End If
@@ -120,9 +121,9 @@ Namespace logic
                     Continue For
                 End If
                 Dim parameter_place_holder As variable = Nothing
-                assert(variable.of(types, parameter_place_holder_of(i), parameter_place_holder))
+                assert(variable.of(types, parameter_place_holder_of(i), o, parameter_place_holder))
                 Dim parameter As variable = Nothing
-                assert(variable.of(types, parameters(i), parameter))
+                assert(variable.of(types, parameters(i), o, parameter))
                 If Not move.export(parameter, parameter_place_holder, o) Then
                     Return False
                 End If
@@ -131,12 +132,12 @@ Namespace logic
                 Return True
             End If
             Dim result_var As variable = Nothing
-            If Not variable.of(types, +result, result_var) Then
+            If Not variable.of(types, +result, o, result_var) Then
                 errors.variable_undefined(+result)
                 Return False
             End If
             Dim return_value_var As variable = Nothing
-            assert(return_value.retrieve(types, name, return_value_var))
+            assert(return_value.retrieve(types, name, o, return_value_var))
             Return move.export(result_var, return_value_var, o)
         End Function
 

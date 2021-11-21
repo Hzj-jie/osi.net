@@ -50,9 +50,10 @@ Namespace logic
             If Not scope.current().define_stack(name, type) Then
                 Return False
             End If
-            o.emplace_back(strcat(command_str(command.push),
-                                  character.tab,
-                                  comment_builder.str("+++ define ", name, type)))
+            If debug_dump Then
+                o.emplace_back(comment_builder.str("+++ define ", name, type))
+            End If
+            o.emplace_back(command_str(command.push))
             Return True
         End Function
     End Class

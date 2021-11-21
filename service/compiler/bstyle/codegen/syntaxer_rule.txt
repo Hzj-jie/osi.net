@@ -11,7 +11,7 @@ param name [reference]? name
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, kw-break, logic, typedef, heap-declaration, heap-clause]? semi-colon
+sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, kw-break, logic, typedef, heap-declaration]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
@@ -19,8 +19,7 @@ multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
 value-definition name name assignment value
 value-declaration name name
 heap-declaration name heap-name
-value-clause name assignment value
-heap-clause heap-name assignment value
+value-clause variable-name assignment value
 
 value-definition-with-semi-colon value-definition semi-colon
 value-declaration-with-semi-colon value-declaration semi-colon
@@ -35,9 +34,9 @@ for-loop kw-for start-bracket [value-declaration, value-definition]? semi-colon 
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
-value-without-bracket [function-call, variable-name, heap-name, integer, biguint, ufloat, bool, string]
+value-without-bracket [function-call, variable-name, integer, biguint, ufloat, bool, string]
 
-variable-name name
+variable-name [name, heap-name]
 heap-name name start-square-bracket value end-square-bracket
 
 ignore-result-function-call function-call

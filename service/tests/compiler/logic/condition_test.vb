@@ -28,15 +28,15 @@ Namespace logic
 
         Public Sub New()
             MyBase.New(
-                New define(types.empty, "a-bool", types.variable_type),
-                New define(types.empty, "value1", types.variable_type),
-                New copy_const(types.empty, "value1", unique_ptr.[New](New data_block(value1))),
-                New define(types.empty, "value2", types.variable_type),
-                New copy_const(types.empty, "value2", unique_ptr.[New](New data_block(value2))),
-                New define(types.empty, "value", types.variable_type),
-                New copy_const(types.empty, "a-bool", unique_ptr.[New](New data_block(True))),
+                New define(types.default, "a-bool", types.variable_type),
+                New define(types.default, "value1", types.variable_type),
+                New copy_const(types.default, "value1", unique_ptr.[New](New data_block(value1))),
+                New define(types.default, "value2", types.variable_type),
+                New copy_const(types.default, "value2", unique_ptr.[New](New data_block(value2))),
+                New define(types.default, "value", types.variable_type),
+                New copy_const(types.default, "a-bool", unique_ptr.[New](New data_block(True))),
                 create_condition(),
-                New copy_const(types.empty, "a-bool", unique_ptr.[New](New data_block(False))),
+                New copy_const(types.default, "a-bool", unique_ptr.[New](New data_block(False))),
                 create_condition(),
                 New [stop]()
             )
@@ -53,10 +53,10 @@ Namespace logic
         Private Shared Function create_condition() As condition
             Return New condition("a-bool",
                 unique_ptr.[New](New paragraph(
-                    New interrupt(types.empty, New interrupts(), "stdout", "value1", "value")
+                    New interrupt(types.default, New interrupts(), "stdout", "value1", "value")
                 )),
                 unique_ptr.[New](New paragraph(
-                    New interrupt(types.empty, New interrupts(), "stdout", "value2", "value")
+                    New interrupt(types.default, New interrupts(), "stdout", "value2", "value")
                 ))
             )
         End Function

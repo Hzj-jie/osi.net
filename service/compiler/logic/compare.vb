@@ -48,16 +48,16 @@ Namespace logic
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             Dim result_var As variable = Nothing
-            If Not variable.of(types, result, result_var) OrElse
+            If Not variable.of(types, result, o, result_var) OrElse
                Not result_var.is_assignable_from_bool() Then
                 Return False
             End If
             Dim left_var As variable = Nothing
-            If Not variable.of(types, left, left_var) Then
+            If Not variable.of(types, left, o, left_var) Then
                 Return False
             End If
             Dim right_var As variable = Nothing
-            If Not variable.of(types, right, right_var) Then
+            If Not variable.of(types, right, o, right_var) Then
                 Return False
             End If
             o.emplace_back(instruction_builder.str(compare(), result_var, left_var, right_var))

@@ -69,7 +69,6 @@
     <Compile Include="bstyle\bstyle_lib.vb" />
     <Compile Include="bstyle\includes.vb" />
     <Compile Include="bstyle\logic\nodes\defines.vb" />
-    <Compile Include="bstyle\logic\nodes\heap_clause.vb" />
     <Compile Include="bstyle\logic\nodes\heap_declaration.vb" />
     <Compile Include="bstyle\logic\nodes\heap_name.vb" />
     <Compile Include="bstyle\logic\nodes\includes.vb" />

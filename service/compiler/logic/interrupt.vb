@@ -48,12 +48,12 @@ Namespace logic
             End If
 
             Dim p As variable = Nothing
-            If Not variable.of(parameter, p) Then
+            If Not variable.of(parameter, o, p) Then
                 Return False
             End If
 
             Dim r As variable = Nothing
-            assert(variable.of(result, r))  ' Otherwise cpc.export() should not succeed.
+            assert(variable.of(result, o, r))  ' Otherwise cpc.export() should not succeed.
 
             o.emplace_back(instruction_builder.str(command.int, r, p, r))
             Return True

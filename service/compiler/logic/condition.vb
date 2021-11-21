@@ -29,7 +29,7 @@ Namespace logic
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim var As variable = Nothing
-            If Not variable.of(v, var) Then
+            If Not variable.of(v, o, var) Then
                 Return False
             End If
 

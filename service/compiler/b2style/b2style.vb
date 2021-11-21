@@ -98,7 +98,6 @@ Partial Public NotInheritable Class b2style
                        bypass.registerer("value-declaration-with-semi-colon"),
                        bypass.registerer("heap-declaration-with-semi-colon"),
                        bypass.registerer("value-clause"),
-                       bypass.registerer("heap-clause"),
                        bypass.registerer("heap-name"),
                        AddressOf heap_struct_name.register,
                        AddressOf self_value_clause.register,

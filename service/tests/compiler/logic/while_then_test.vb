@@ -14,18 +14,18 @@ Namespace logic
 
         Public Sub New()
             MyBase.New(
-                New define(types.empty, "state", types.variable_type),
-                New define(types.empty, "result", types.variable_type),
-                New define(types.empty, "i", types.variable_type),
-                New define(types.empty, "1", types.variable_type),
-                New define(types.empty, "50", types.variable_type),
-                New copy_const(types.empty, "state", unique_ptr.[New](New data_block(True))),
-                New copy_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
-                New copy_const(types.empty, "50", unique_ptr.[New](New data_block(50))),
+                New define(types.default, "state", types.variable_type),
+                New define(types.default, "result", types.variable_type),
+                New define(types.default, "i", types.variable_type),
+                New define(types.default, "1", types.variable_type),
+                New define(types.default, "50", types.variable_type),
+                New copy_const(types.default, "state", unique_ptr.[New](New data_block(True))),
+                New copy_const(types.default, "1", unique_ptr.[New](New data_block(1))),
+                New copy_const(types.default, "50", unique_ptr.[New](New data_block(50))),
                 New while_then("state", unique_ptr.[New](New paragraph(
-                    New add(types.empty, "i", "i", "1"),
-                    New add(types.empty, "result", "result", "i"),
-                    New less_or_equal(types.empty, "state", "i", "50")
+                    New add(types.default, "i", "i", "1"),
+                    New add(types.default, "result", "result", "i"),
+                    New less_or_equal(types.default, "state", "i", "50")
                 )))
             )
         End Sub

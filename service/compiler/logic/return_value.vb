@@ -23,8 +23,9 @@ Namespace logic
 
         Public Shared Function retrieve(ByVal types As types,
                                         ByVal name As String,
+                                        ByVal v As vector(Of String),
                                         ByRef o As variable) As Boolean
-            Return variable.of(types, variable_name(name), o)
+            Return variable.of(types, variable_name(name), v, o)
         End Function
 
         Private Shared Function variable_name(ByVal name As String) As String

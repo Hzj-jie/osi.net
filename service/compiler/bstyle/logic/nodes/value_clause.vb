@@ -25,11 +25,11 @@ Partial Public NotInheritable Class bstyle
             b.register(Of value_clause)()
         End Sub
 
-        Public Function build(ByVal name As typed_node,
-                              ByVal value As typed_node,
-                              ByVal struct_copy As Func(Of vector(Of String), Boolean),
-                              ByVal single_data_slot_copy As Func(Of String, Boolean),
-                              ByVal o As writer) As Boolean
+        Private Function build(ByVal name As typed_node,
+                               ByVal value As typed_node,
+                               ByVal struct_copy As Func(Of vector(Of String), Boolean),
+                               ByVal single_data_slot_copy As Func(Of String, Boolean),
+                               ByVal o As writer) As Boolean
             assert(Not name Is Nothing)
             assert(Not value Is Nothing)
             assert(Not struct_copy Is Nothing)
@@ -70,7 +70,7 @@ Partial Public NotInheritable Class bstyle
             Return build(name,
                          value,
                          Function(ByVal r As vector(Of String)) As Boolean
-                             Return struct.copy(r, name.word().str(), o)
+                             Return struct.copy(r, name.word().str(), [optional].empty(Of String)(), o)
                          End Function,
                          Function(ByVal r As String) As Boolean
                              Return builders.of_copy(name.word().str(), r).to(o)
@@ -82,8 +82,28 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
-            assert(n.child(0).leaf())
-            Return build(n.child(0), n.child(2), o)
+            If Not n.child(0).child().type_name.Equals("heap-name") Then
+                Return build(n.child(0).child(), n.child(2), o)
+            End If
+            Return l.typed_code_gen(Of heap_name)().build(
+                n.child(0).child().child(2),
+                o,
+                Function(ByVal indexstr As String) As Boolean
+                    Return build(n.child(0).child().child(0),
+                                 n.child(2),
+                                 Function(ByVal r As vector(Of String)) As Boolean
+                                     Return struct.copy(r,
+                                                        n.child(0).child().child(0).word().str(),
+                                                        [optional].of(indexstr),
+                                                        o)
+                                 End Function,
+                                 Function(ByVal r As String) As Boolean
+                                     Return builders.of_copy(
+                                             variable.name_of(n.child(0).child().child(0).word().str(), indexstr),
+                                             r).to(o)
+                                 End Function,
+                                 o)
+                End Function)
         End Function
     End Class
 End Class

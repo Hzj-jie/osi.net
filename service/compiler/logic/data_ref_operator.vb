@@ -15,7 +15,6 @@ Namespace logic
         Private ReadOnly vs() As String
 
         Public Sub New(ByVal types As types, ByVal ParamArray vs() As String)
-            assert(Not types Is Nothing)
             assert(Not isemptyarray(vs))
             Me.types = types
             Me.vs = vs
@@ -25,10 +24,9 @@ Namespace logic
         Protected MustOverride Function instruction() As command
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            Dim vars() As variable = Nothing
-            ReDim vars(array_size_i(vs) - 1)
+            Dim vars(array_size_i(vs) - 1) As variable
             For i As Int32 = 0 To array_size_i(vs) - 1
-                If Not variable.of(types, vs(i), vars(i)) OrElse
+                If Not variable.of(types, vs(i), o, vars(i)) OrElse
                    Not variable_restrict(CUInt(i), vars(i)) Then
                     Return False
                 End If

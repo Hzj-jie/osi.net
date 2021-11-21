@@ -17,18 +17,13 @@ Namespace logic
         Private ReadOnly stack As New unordered_map(Of String, ref)()
 
         Public Class typed_ref
-            Private ReadOnly type As String
-            Private ReadOnly ref_type As [optional](Of String)
+            Public ReadOnly type As String
+            Public ReadOnly ref_type As [optional](Of String)
 
             Protected Sub New(ByVal type As String, ByVal ref_type As [optional](Of String))
                 assert(Not type.null_or_whitespace())
                 Me.type = type
                 Me.ref_type = ref_type
-                If type.Equals(types.heap_ptr_type) Then
-                    assert(ref_type)
-                Else
-                    assert(Not ref_type)
-                End If
             End Sub
 
             Protected Sub New(ByVal other As typed_ref)
@@ -37,20 +32,9 @@ Namespace logic
                 Me.ref_type = other.ref_type
             End Sub
 
-            Public Function is_heap_ptr() As Boolean
-                Return type.Equals(types.heap_ptr_type)
-            End Function
-
             Public Function debug_type_str() As String
-                If is_heap_ptr() Then
+                If ref_type Then
                     Return strcat(type, "[", +ref_type, "]")
-                End If
-                Return type
-            End Function
-
-            Public Function value_type() As String
-                If is_heap_ptr() Then
-                    Return +ref_type
                 End If
                 Return type
             End Function
@@ -96,20 +80,11 @@ Namespace logic
             Me.New(Nothing)
         End Sub
 
-        Protected Overrides Sub when_end_scope()
-            ' The root scope needs not to clear the heap, the memory will be released when the root scope is running out
-            ' of the scope, e.g. the process finished.
-            If Not is_root() Then
-                assert(heap.empty())
-            End If
-            MyBase.when_end_scope()
-        End Sub
-
         Public Function heap() As unordered_set(Of String)
             Return stack.stream().
                          filter(Function(ByVal p As first_const_pair(Of String, ref)) As Boolean
                                     assert(Not p Is Nothing)
-                                    Return p.second.is_heap_ptr()
+                                    Return p.second.ref_type
                                 End Function).
                          map(stack.first_selector).
                          collect(Of unordered_set(Of String))()

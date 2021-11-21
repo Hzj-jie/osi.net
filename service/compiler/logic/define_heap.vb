@@ -35,15 +35,16 @@ Namespace logic
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim size As variable = Nothing
-            If Not variable.of(types, Me.size, size) Then
+            If Not variable.of(types, Me.size, o, size) Then
                 Return False
             End If
             If Not scope.current().define_heap(name, type) Then
                 Return False
             End If
-            o.emplace_back(strcat(command_str(command.push),
-                                  character.tab,
-                                  comment_builder.str("+++ define ", name, type)))
+            If debug_dump Then
+                o.emplace_back(comment_builder.str("+++ define ", name, type))
+            End If
+            o.emplace_back(command_str(command.push))
             o.emplace_back(instruction_builder.str(command.alloc, "rel0", size))
             Return True
         End Function

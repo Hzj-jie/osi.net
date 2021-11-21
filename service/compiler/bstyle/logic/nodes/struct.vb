@@ -9,7 +9,6 @@ Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
-Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class struct
@@ -26,12 +25,12 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(b)
         End Sub
 
-        Private Shared Function copy(ByVal sources As vector(Of String),
-                                     ByVal target As String,
-                                     ByVal f As Func(Of vector(Of single_data_slot_variable), Boolean)) As Boolean
+        Public Shared Function copy(ByVal sources As vector(Of String),
+                                    ByVal target As String,
+                                    ByVal indexstr As [optional](Of String),
+                                    ByVal o As writer) As Boolean
             assert(Not sources Is Nothing)
             assert(Not target.null_or_whitespace())
-            assert(Not f Is Nothing)
             Dim vs As vector(Of single_data_slot_variable) = Nothing
             If Not scope.current().structs().resolve(target, vs) Then
                 Return False
@@ -47,51 +46,18 @@ Partial Public NotInheritable Class bstyle
                             vs)
                 Return False
             End If
-            Return f(vs)
-        End Function
-
-        Public Function copy_heap(ByVal sources As vector(Of String),
-                                  ByVal target As String,
-                                  ByVal index As typed_node,
-                                  ByVal o As writer) As Boolean
-            Return copy(sources,
-                        target,
-                        Function(ByVal vs As vector(Of single_data_slot_variable)) As Boolean
-                            assert(Not vs Is Nothing)
-                            assert(vs.size() = sources.size())
-                            Return l.typed_code_gen(Of heap_clause)().copy(
-                                       index,
-                                       Function(ByVal indexstr As String) As Boolean
-                                           Dim i As UInt32 = 0
-                                           While i < vs.size()
-                                               'If Not builders.of_copy_heap_in(vs(i).name, indexstr, sources(i)).to(o) Then
-                                               'Return False
-                                               'End If
-                                               i += uint32_1
-                                           End While
-                                           Return True
-                                       End Function,
-                                       o)
-                        End Function)
-        End Function
-
-        Public Shared Function copy(ByVal sources As vector(Of String),
-                                    ByVal target As String,
-                                    ByVal o As writer) As Boolean
-            Return copy(sources,
-                        target,
-                        Function(ByVal vs As vector(Of single_data_slot_variable)) As Boolean
-                            assert(Not vs Is Nothing)
-                            assert(vs.size() = sources.size())
-                            Dim i As UInt32 = 0
-                            While i < vs.size()
-                                If Not builders.of_copy(vs(i).name, sources(i)).to(o) Then
-                                    Return False
-                                End If
-                                i += uint32_1
-                            End While
-                            Return True
-                        End Function)
+            Dim i As UInt32 = 0
+            While i < vs.size()
+                Dim name As String = vs(i).name
+                If indexstr Then
+                    name = variable.name_of(name, +indexstr)
+                End If
+                If Not builders.of_copy(name, sources(i)).to(o) Then
+                    Return False
+                End If
+                i += uint32_1
+            End While
+            Return True
         End Function
 
         Public Shared Function pack(ByVal sources As vector(Of String),

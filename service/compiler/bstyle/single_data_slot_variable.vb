@@ -21,6 +21,10 @@ Partial Public NotInheritable Class bstyle
             Me.name = name
         End Sub
 
+        Public Function rename(ByVal name As String) As single_data_slot_variable
+            Return New single_data_slot_variable(type, name)
+        End Function
+
         Public Shared Function to_builders_parameter(ByVal this As single_data_slot_variable) As builders.parameter
             assert(Not this Is Nothing)
             Return New builders.parameter(this.type, this.name)

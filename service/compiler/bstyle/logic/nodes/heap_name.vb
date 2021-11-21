@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
-Imports osi.service.compiler
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
@@ -58,26 +57,21 @@ Partial Public NotInheritable Class bstyle
                                         n.child(0),
                                         Function(ByVal type As String,
                                                  ByVal ps As vector(Of single_data_slot_variable)) As Boolean
-                                            Dim vs As vector(Of String) =
-                                                l.typed_code_gen(Of value)().with_temp_target(type, n, o)
-                                            assert(Not ps Is Nothing)
-                                            assert(vs.size() = ps.size())
-                                            Dim i As UInt32 = 0
-                                            While i < vs.size()
-                                                '    If Not builders.of_copy_heap_out(vs(i), ps(i).name, indexstr).to(o) Then
-                                                '    Return False
-                                                '    End If
-                                                i += uint32_1
-                                            End While
+                                            l.typed_code_gen(Of value)().with_target(
+                                                type,
+                                                ps.stream().
+                                                   map(Function(ByVal d As single_data_slot_variable) As _
+                                                           single_data_slot_variable
+                                                           assert(Not d Is Nothing)
+                                                           Return d.rename(variable.name_of(d.name, indexstr))
+                                                       End Function).
+                                                   collect(Of vector(Of single_data_slot_variable))())
                                             Return True
                                         End Function,
                                         Function(ByVal type As String, ByVal source As String) As Boolean
-                                            'Return builders.of_copy_heap_out(
-                                            'l.typed_code_gen(Of value)().
-                                            'with_single_data_slot_temp_target(type, n, o),
-                                            'source,
-                                            'indexstr).
-                                            '                to(o)
+                                            l.typed_code_gen(Of value)().with_single_data_slot_target(
+                                                type, variable.name_of(source, indexstr))
+                                            Return True
                                         End Function,
                                         o)
                          End Function)

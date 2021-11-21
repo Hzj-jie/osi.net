@@ -42,16 +42,15 @@ Namespace logic
             Next
 
             For i As Int32 = 0 To CInt(stack.size()) - 1
-                Dim var As scope.exported_stack_ref = Nothing
+                Dim var As scope.exported_ref = Nothing
                 If Not assertion.is_true(s.export(stack(CUInt(i)).first, var)) Then
                     Continue For
                 End If
-                Dim type As String = Nothing
+                Dim type As String = var.type
                 Dim offset As data_ref = var.data_ref
                 If assertion.is_true(offset.to_rel(stack.size(), offset)) AndAlso
                    assertion.more_or_equal(offset.offset(), uint32_0) AndAlso
-                   assertion.less(offset.offset(), stack.size()) AndAlso
-                   assertion.is_true(s.type(stack(CUInt(i)).first, type)) Then
+                   assertion.less(offset.offset(), stack.size()) Then
                     If stack.size() - i - 1 > offset.offset() Then
                         assertion.equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).first,
                                         stack(CUInt(i)).first)
@@ -65,15 +64,14 @@ Namespace logic
 
             For i As Int32 = 0 To 1000
                 Dim name As String = rnd_name()
-                Dim var As scope.exported_stack_ref = Nothing
+                Dim var As scope.exported_ref = Nothing
                 If Not s.export(name, var) Then
                     Continue For
                 End If
                 Dim offset As data_ref = var.data_ref
-                Dim type As String = Nothing
+                Dim type As String = var.type
                 If offset.to_rel(stack.size(), offset) AndAlso
-                   assertion.less(offset.offset(), stack.size()) AndAlso
-                   assertion.is_true(s.type(name, type)) Then
+                   assertion.less(offset.offset(), stack.size()) Then
                     assertion.equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).first, name)
                     assertion.equal(stack(stack.size() - CUInt(offset.offset()) - uint32_1).second, type)
                 End If

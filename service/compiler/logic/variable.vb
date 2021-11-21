@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' A variable in stack.
@@ -15,15 +16,16 @@ Namespace logic
         Public ReadOnly type As String
         Public ReadOnly size As [optional](Of UInt32)
 
-        Private Sub New(ByVal name As String,
+        Private Sub New(ByVal types As types,
+                        ByVal name As String,
                         ByVal index As [optional](Of variable),
-                        ByVal type As String,
-                        ByVal size As [optional](Of UInt32))
+                        ByVal type As String)
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
             Me.name = name
+            Me.index = index
             Me.type = type
-            Me.size = size
+            Me.size = size_of(types, type)
         End Sub
 
         Private Shared Function size_of(ByVal types As types, ByVal type As String) As [optional](Of UInt32)
@@ -36,60 +38,91 @@ Namespace logic
             Return [optional].of(size)
         End Function
 
-        Private Shared Function of_primitive(ByVal types As types,
-                                             ByVal name As String,
-                                             ByVal index As [optional](Of variable),
-                                             ByRef o As variable) As Boolean
-            assert(Not name.null_or_whitespace())
-            If name.IndexOf(character.left_mid_bracket) <> npos Then
-                errors.invalid_variable_name(name, "Unexpected openning bracket.")
-                Return False
-            End If
-            If name.IndexOf(character.right_mid_bracket) <> npos Then
-                errors.invalid_variable_name(name, "Unexpected closing bracket.")
-                Return False
-            End If
-            Dim r As scope.exported_ref = Nothing
-            If Not scope.current().export(name, r) Then
-                errors.variable_undefined(name)
-                Return False
-            End If
+        Public Shared Function name_of(ByVal array As String, ByVal index As String) As String
+            assert(Not array.null_or_whitespace())
+            array = array.Trim()
+            assert(Not array.null_or_whitespace())
+            assert(Not index.null_or_whitespace())
+            index = index.Trim()
+            assert(Not index.null_or_whitespace())
+            Return strcat(array, character.left_mid_bracket, index, character.right_mid_bracket)
+        End Function
 
-            o = New variable(name, index, r.value_type(), size_of(types, r.value_type()))
-            Return True
+        Public Shared Function heap_name_of_or_origin(ByVal array_with_index As String) As String
+            assert(Not array_with_index.null_or_whitespace())
+            array_with_index = array_with_index.Trim()
+            assert(Not array_with_index.null_or_whitespace())
+            ' TODO: More checks
+            Dim i As Int32 = array_with_index.IndexOf(character.left_mid_bracket)
+            If i = npos Then
+                Return array_with_index
+            End If
+            assert(i > 0)
+            Return array_with_index.Substring(0, i)
         End Function
 
         Public Shared Function [of](ByVal types As types,
                                     ByVal name As String,
+                                    ByVal v As vector(Of String),
                                     ByRef o As variable) As Boolean
             'TODO: Decide if accessing heap ptr as stack variable or vice versa are allowed.
             assert(Not name.null_or_whitespace())
-            If name.IndexOf(character.left_mid_bracket) = npos Then
-                Return of_primitive(types, name, [optional].empty(Of variable)(), o)
+            name = name.Trim()
+            assert(Not name.null_or_whitespace())
+            Dim index_start As Int32 = name.IndexOf(character.left_mid_bracket)
+            If index_start = npos Then
+                If name.IndexOf(character.right_mid_bracket) <> npos Then
+                    errors.invalid_variable_name(name, "Unexpected closing bracket.")
+                    Return False
+                End If
+                Dim r As scope.exported_ref = Nothing
+                If Not scope.current().export(name, r) Then
+                    errors.variable_undefined(name)
+                    Return False
+                End If
+
+                o = New variable(types, name, [optional].empty(Of variable), r.type)
+                Return True
+            Else
+                If Not name.EndsWith(character.right_mid_bracket) Then
+                    errors.invalid_variable_name(name, "Closing bracket is not at the end of the name.")
+                    Return False
+                End If
+                If name.IndexOf(character.right_mid_bracket) < index_start Then
+                    errors.invalid_variable_name(name, "Closing bracket is before openning bracket.")
+                    Return False
+                End If
+                If index_start = name.Length() - 2 Then
+                    errors.invalid_variable_name(name, "Empty index string.")
+                    Return False
+                End If
+                Dim index As variable = Nothing
+                If Not [of](types, name.Substring(index_start + 1, name.Length() - index_start - 2), v, index) Then
+                    errors.invalid_variable_name(name, "Index cannot be parsed.")
+                    Return False
+                End If
+                Dim ptr_name As String = scope.current().unique_name()
+                assert(define.export(ptr_name, types.heap_ptr_type, v))
+                Dim d As data_ref = scope.current().export(ptr_name).data_ref
+                Dim r As scope.exported_ref = Nothing
+                If Not scope.current().export(name.Substring(0, index_start), r) Then
+                    errors.variable_undefined(name.Substring(0, index_start))
+                    Return False
+                End If
+                v.emplace_back(instruction_builder.str(
+                    command.add,
+                    d,
+                    r.data_ref.ToString(),
+                    index.ToString()))
+                o = New variable(types, ptr_name, [optional].of(index), +r.ref_type)
+                Return True
             End If
-            Dim index_start As UInt32 = CUInt(name.IndexOf(character.left_mid_bracket))
-            If name.IndexOf(character.right_mid_bracket) < index_start Then
-                errors.invalid_variable_name(name, "Closing bracket is before openning bracket.")
-                Return False
-            End If
-            Dim index_end As Int32 = name.LastIndexOf(character.right_mid_bracket)
-            assert(index_end > index_start)
-            If index_end - 1 = index_start Then
-                errors.invalid_variable_name(name, "Empty index string.")
-                Return False
-            End If
-            Dim index As variable = Nothing
-            If Not [of](types, name.Substring(CInt(index_start + 1), CInt(index_end - index_start - 1)), index) Then
-                errors.invalid_variable_name(name, "Index cannot be parsed.")
-                Return False
-            End If
-            Return of_primitive(types, name.Substring(0, CInt(index_start)), [optional].of(index), o)
         End Function
 
         ' Create a variable without retrieving @size from types. Consumers who use this constructor should not use
         ' is_assignable or similar functions.
-        Public Shared Function [of](ByVal name As String, ByRef o As variable) As Boolean
-            Return [of](Nothing, name, o)
+        Public Shared Function [of](ByVal name As String, ByVal v As vector(Of String), ByRef o As variable) As Boolean
+            Return [of](Nothing, name, v, o)
         End Function
 
         Private Function is_zero_size() As Boolean
@@ -174,32 +207,12 @@ Namespace logic
             Return False
         End Function
 
-        Public Function export(ByVal o As vector(Of String),
-                               ByVal f As Func(Of String, Boolean)) As Boolean
-            assert(Not o Is Nothing)
-            assert(Not f Is Nothing)
-            If Not index Then
-                ' This is a stack value, just use its data_ref.
-                Dim r As String = Nothing
-                assert(scope.current().export(name).data_ref.export(r))
-                Return f(r)
-            End If
-            Return (+index).export(o,
-                                   Function(ByVal index_str As String) As Boolean
-                                       Dim ptr_name As String = scope.current().unique_name()
-                                       If Not define.export(ptr_name, types.heap_ptr_type, o) Then
-                                           Return False
-                                       End If
-                                       If Not add.export(ptr_name, name, index_str, o) Then
-                                           Return False
-                                       End If
-                                       Return f(ptr_name)
-                                   End Function)
-        End Function
-
         Public Overrides Function ToString() As String
-            assert(False)
-            Return Nothing
+            Dim d As data_ref = scope.current().export(name).data_ref
+            If index Then
+                Return d.to_heap().ToString()
+            End If
+            Return d.ToString()
         End Function
     End Class
 End Namespace

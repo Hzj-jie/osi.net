@@ -435,7 +435,7 @@ Public NotInheritable Class b2style_test
         assertion.equal(Convert.ToInt32(io.output()(3)), 4)
     End Sub
 
-    '<test>
+    <test>
     Private Shared Sub heap_function_ref()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing

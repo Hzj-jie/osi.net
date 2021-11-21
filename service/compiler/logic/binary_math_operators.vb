@@ -25,7 +25,8 @@ Namespace logic
                                                 ByVal left As String,
                                                 ByVal right As String,
                                                 ByVal o As vector(Of String)) As Boolean
-            Return New add(types.default, result, left, right).export(o)
+            ' binary_math_operator does not require size info of either parameters or result.
+            Return New add(Nothing, result, left, right).export(o)
         End Function
     End Class
 

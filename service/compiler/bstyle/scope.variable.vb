@@ -33,7 +33,7 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-                Return s.find(name, type)
+                Return s.find(variable.heap_name_of_or_origin(name), type)
             End Function
         End Class
 

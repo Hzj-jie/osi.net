@@ -34,6 +34,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not struct_handle Is Nothing)
             assert(Not single_data_slot_handle Is Nothing)
             assert(Not o Is Nothing)
+
             Dim type As String = Nothing
             If Not scope.current().variables().resolve(n.word().str(), type) Then
                 Return False
@@ -48,6 +49,9 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
             assert(Not n Is Nothing)
             assert(n.child_count() = 1)
+            If n.child().type_name.Equals("heap-name") Then
+                Return l.of(n.child()).build(o)
+            End If
             Return build(n.child(),
                          Function(ByVal type As String, ByVal ps As vector(Of single_data_slot_variable)) As Boolean
                              l.typed_code_gen(Of value)().with_target(type, ps)

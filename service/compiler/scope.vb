@@ -31,7 +31,6 @@ Public Class scope(Of T As scope(Of T))
     End Function
 
     Public Function end_scope() As T
-        when_end_scope()
         assert(object_compare(in_thread, Me) = 0)
         If Not parent Is Nothing Then
             assert(object_compare(parent.child, Me) = 0)
@@ -56,9 +55,6 @@ Public Class scope(Of T As scope(Of T))
     Public Function this() As T
         Return direct_cast(Of T)(Me)
     End Function
-
-    Protected Overridable Sub when_end_scope()
-    End Sub
 
     Public Function is_root() As Boolean
         Return parent Is Nothing

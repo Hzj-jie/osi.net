@@ -23,24 +23,24 @@ Namespace logic
 
         Public Sub New()
             MyBase.New(
-                New define(types.empty, "1", types.variable_type),
-                New copy_const(types.empty, "1", unique_ptr.[New](New data_block(1))),
-                New define(types.empty, "i", types.variable_type),
-                New define(types.empty, "input", types.variable_type),
-                New interrupt(types.empty, primitive.interrupts.default, "stdin", "i", "input"),
-                New interrupt(types.empty, primitive.interrupts.default, "stdout", "input", "i"),
-                New interrupt(types.empty, primitive.interrupts.default, "stderr", "input", "i"),
-                New define(types.empty, "len", types.variable_type),
-                New sizeof(types.empty, "len", "input"),
-                New define(types.empty, "i-less-then-len", types.variable_type),
+                New define(types.default, "1", types.variable_type),
+                New copy_const(types.default, "1", unique_ptr.[New](New data_block(1))),
+                New define(types.default, "i", types.variable_type),
+                New define(types.default, "input", types.variable_type),
+                New interrupt(types.default, primitive.interrupts.default, "stdin", "i", "input"),
+                New interrupt(types.default, primitive.interrupts.default, "stdout", "input", "i"),
+                New interrupt(types.default, primitive.interrupts.default, "stderr", "input", "i"),
+                New define(types.default, "len", types.variable_type),
+                New sizeof(types.default, "len", "input"),
+                New define(types.default, "i-less-then-len", types.variable_type),
                 New do_while("i-less-then-len", unique_ptr.[New](New paragraph(
-                    New define(types.empty, "char", types.variable_type),
-                    New define(types.empty, "result", types.variable_type),
-                    New cut_len(types.empty, "char", "input", "i", "1"),
-                    New interrupt(types.empty, primitive.interrupts.default, "stdout", "char", "result"),
-                    New interrupt(types.empty, primitive.interrupts.default, "stderr", "char", "result"),
-                    New add(types.empty, "i", "i", "1"),
-                    New less(types.empty, "i-less-then-len", "i", "len")
+                    New define(types.default, "char", types.variable_type),
+                    New define(types.default, "result", types.variable_type),
+                    New cut_len(types.default, "char", "input", "i", "1"),
+                    New interrupt(types.default, primitive.interrupts.default, "stdout", "char", "result"),
+                    New interrupt(types.default, primitive.interrupts.default, "stderr", "char", "result"),
+                    New add(types.default, "i", "i", "1"),
+                    New less(types.default, "i-less-then-len", "i", "len")
                 )))
             )
             text = rnd_en_chars(rnd_int(1000, 2000))

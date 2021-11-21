@@ -20,25 +20,25 @@ Namespace logic
 
         Public Sub New()
             MyBase.New(New callee(anchors,
-                                  types.empty,
+                                  types.default,
                                   "add",
                                   "type*",
                                   unique_ptr.[New](New paragraph(
-                                      New define(types.empty, "result", types.variable_type),
-                                      New add(types.empty, "result", "parameter1", "parameter2"),
-                                      New [return](anchors, types.empty, "add", "result")
+                                      New define(types.default, "result", types.variable_type),
+                                      New add(types.default, "result", "parameter1", "parameter2"),
+                                      New [return](anchors, types.default, "add", "result")
                                   )),
                                   pair.emplace_of("parameter1", types.variable_type),
                                   pair.emplace_of("parameter2", types.variable_type),
                                   pair.emplace_of("parameter3", types.variable_type)),
-                       New define(types.empty, "parameter1", types.variable_type),
-                       New define(types.empty, "parameter2", types.variable_type),
-                       New define(types.empty, "parameter3", types.variable_type),
-                       New define(types.empty, "result", types.variable_type),
-                       New copy_const(types.empty, "parameter1", unique_ptr.[New](New data_block(100))),
-                       New copy_const(types.empty, "parameter2", unique_ptr.[New](New data_block(200))),
-                       New copy_const(types.empty, "parameter3", unique_ptr.[New](New data_block(10000))),
-                       New caller(anchors, types.empty, "add", "result", "parameter1", "parameter2", "parameter3"))
+                       New define(types.default, "parameter1", types.variable_type),
+                       New define(types.default, "parameter2", types.variable_type),
+                       New define(types.default, "parameter3", types.variable_type),
+                       New define(types.default, "result", types.variable_type),
+                       New copy_const(types.default, "parameter1", unique_ptr.[New](New data_block(100))),
+                       New copy_const(types.default, "parameter2", unique_ptr.[New](New data_block(200))),
+                       New copy_const(types.default, "parameter3", unique_ptr.[New](New data_block(10000))),
+                       New caller(anchors, types.default, "add", "result", "parameter1", "parameter2", "parameter3"))
         End Sub
 
         Public Overrides Function prepare() As Boolean

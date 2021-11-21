@@ -74,6 +74,7 @@
     <Compile Include="logic\import_executor_tests.vb" />
     <Compile Include="logic\scope_test.vb" />
     <Compile Include="logic\interrupt_test.vb" />
+    <Compile Include="logic\variable_test.vb" />
     <Compile Include="logic\while_then_perf.vb" />
     <Compile Include="logic\while_then_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

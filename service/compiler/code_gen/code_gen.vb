@@ -51,7 +51,10 @@ Public Class code_gens(Of WRITER)
     End Sub
 
     Public Sub register(Of T As code_gen(Of WRITER))()
-        register(Of T)(code_gen_name(Of T)())
+        register(code_gen_name(Of T)(),
+                 Function(ByVal b As code_gens(Of WRITER)) As code_gen(Of WRITER)
+                     Return inject_constructor(Of T).invoke(b)
+                 End Function)
     End Sub
 
     Public Function code_gen_of(ByVal name As String) As code_gen(Of WRITER)

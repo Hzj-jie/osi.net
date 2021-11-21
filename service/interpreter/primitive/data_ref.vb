@@ -152,6 +152,14 @@ Namespace primitive
             Return o
         End Function
 
+        Public Function to_heap() As data_ref
+            assert(on_stack())
+            Dim r As New data_ref()
+            r.r = If(Me.r = ref_types.abs, ref_types.habs, ref_types.hrel)
+            r.o = o
+            Return r
+        End Function
+
         Public Function on_stack() As Boolean
             Return relative() OrElse absolute()
         End Function

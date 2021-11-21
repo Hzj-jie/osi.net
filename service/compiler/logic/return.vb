@@ -33,13 +33,13 @@ Namespace logic
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim r As variable = Nothing
-            If Not logic.return_value.retrieve(types, name, r) Then
+            If Not logic.return_value.retrieve(types, name, o, r) Then
                 Return False
             End If
             assert(r.size)
             If return_value Then
                 Dim var As variable = Nothing
-                If Not variable.of(types, +return_value, var) Then
+                If Not variable.of(types, +return_value, o, var) Then
                     Return False
                 End If
                 ' TODO: Check if +return_value is a temporary variable or a reference to decide whether move can be
