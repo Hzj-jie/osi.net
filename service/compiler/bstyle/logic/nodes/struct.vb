@@ -25,12 +25,13 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(b)
         End Sub
 
-        Public Shared Function copy(ByVal sources As vector(Of String),
-                                    ByVal target As String,
-                                    ByVal indexstr As [optional](Of String),
-                                    ByVal o As writer) As Boolean
+        Private Shared Function copy(ByVal sources As vector(Of String),
+                                     ByVal target As String,
+                                     ByVal target_naming As Func(Of String, String),
+                                     ByVal o As writer) As Boolean
             assert(Not sources Is Nothing)
             assert(Not target.null_or_whitespace())
+            assert(Not target_naming Is Nothing)
             Dim vs As vector(Of single_data_slot_variable) = Nothing
             If Not scope.current().structs().resolve(target, vs) Then
                 Return False
@@ -48,16 +49,35 @@ Partial Public NotInheritable Class bstyle
             End If
             Dim i As UInt32 = 0
             While i < vs.size()
-                Dim name As String = vs(i).name
-                If indexstr Then
-                    name = variable.name_of(name, +indexstr)
-                End If
-                If Not builders.of_copy(name, sources(i)).to(o) Then
+                If Not builders.of_copy(target_naming(vs(i).name), sources(i)).to(o) Then
                     Return False
                 End If
                 i += uint32_1
             End While
             Return True
+        End Function
+
+        Public Shared Function copy(ByVal sources As vector(Of String),
+                                    ByVal target As String,
+                                    ByVal o As writer) As Boolean
+            Return copy(sources,
+                        target,
+                        Function(ByVal n As String) As String
+                            Return n
+                        End Function,
+                        o)
+        End Function
+
+        Public Shared Function copy(ByVal sources As vector(Of String),
+                                    ByVal target As String,
+                                    ByVal indexstr As String,
+                                    ByVal o As writer) As Boolean
+            Return copy(sources,
+                        target,
+                        Function(ByVal n As String) As String
+                            Return variable.name_of(n, indexstr)
+                        End Function,
+                        o)
         End Function
 
         Public Shared Function pack(ByVal sources As vector(Of String),

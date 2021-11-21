@@ -33,6 +33,7 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
+                ' logic_name.of_function_call requires type of the parameter to set function name.
                 Return s.find(variable.heap_name_of_or_origin(name), type)
             End Function
         End Class

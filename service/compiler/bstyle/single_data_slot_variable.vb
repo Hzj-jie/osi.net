@@ -21,8 +21,8 @@ Partial Public NotInheritable Class bstyle
             Me.name = name
         End Sub
 
-        Public Function rename(ByVal name As String) As single_data_slot_variable
-            Return New single_data_slot_variable(type, name)
+        Public Function with_index(ByVal index As String) As single_data_slot_variable
+            Return New single_data_slot_variable(type, variable.name_of(name, index))
         End Function
 
         Public Shared Function to_builders_parameter(ByVal this As single_data_slot_variable) As builders.parameter

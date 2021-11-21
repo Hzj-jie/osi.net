@@ -70,7 +70,7 @@ Partial Public NotInheritable Class bstyle
             Return build(name,
                          value,
                          Function(ByVal r As vector(Of String)) As Boolean
-                             Return struct.copy(r, name.word().str(), [optional].empty(Of String)(), o)
+                             Return struct.copy(r, name.word().str(), o)
                          End Function,
                          Function(ByVal r As String) As Boolean
                              Return builders.of_copy(name.word().str(), r).to(o)
@@ -94,7 +94,7 @@ Partial Public NotInheritable Class bstyle
                                  Function(ByVal r As vector(Of String)) As Boolean
                                      Return struct.copy(r,
                                                         n.child(0).child().child(0).word().str(),
-                                                        [optional].of(indexstr),
+                                                        indexstr,
                                                         o)
                                  End Function,
                                  Function(ByVal r As String) As Boolean

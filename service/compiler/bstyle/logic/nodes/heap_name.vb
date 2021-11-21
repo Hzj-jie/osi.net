@@ -63,7 +63,7 @@ Partial Public NotInheritable Class bstyle
                                                    map(Function(ByVal d As single_data_slot_variable) As _
                                                            single_data_slot_variable
                                                            assert(Not d Is Nothing)
-                                                           Return d.rename(variable.name_of(d.name, indexstr))
+                                                           Return d.with_index(indexstr)
                                                        End Function).
                                                    collect(Of vector(Of single_data_slot_variable))())
                                             Return True
