@@ -55,15 +55,6 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fullstack\executor\assignment_test.vb" />
-    <Compile Include="fullstack\executor\definition_test.vb" />
-    <Compile Include="fullstack\executor\domain_test.vb" />
-    <Compile Include="fullstack\executor\expression_test.vb" />
-    <Compile Include="fullstack\executor\functions\rnd_function_test.vb" />
-    <Compile Include="fullstack\executor\location_test.vb" />
-    <Compile Include="fullstack\executor\rnd.vb" />
-    <Compile Include="fullstack\executor\type_test.vb" />
-    <Compile Include="fullstack\executor\variable_test.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -92,7 +83,6 @@
     <Compile Include="primitive\simulator_cases.vb" />
     <Compile Include="primitive\simulator_stdio_test.vb" />
     <Compile Include="primitive\simulator_test.vb" />
-    <Compile Include="turing\executor\variable_test.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

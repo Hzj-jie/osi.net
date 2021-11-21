@@ -58,38 +58,6 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fullstack\executor\exceptions.vb" />
-    <Compile Include="fullstack\executor\expression.vb" />
-    <Compile Include="fullstack\executor\functions\interpret_function.vb" />
-    <Compile Include="fullstack\executor\functions\rnd_functions.vb" />
-    <Compile Include="fullstack\executor\memory\domain.vb" />
-    <Compile Include="fullstack\executor\memory\location.vb" />
-    <Compile Include="fullstack\executor\memory\variables.vb" />
-    <Compile Include="fullstack\executor\sentences\assignment.vb" />
-    <Compile Include="fullstack\executor\sentences\break.vb" />
-    <Compile Include="fullstack\executor\sentences\condition.vb" />
-    <Compile Include="fullstack\executor\sentences\definition.vb" />
-    <Compile Include="fullstack\executor\sentences\for_loop.vb" />
-    <Compile Include="fullstack\executor\sentences\function.vb" />
-    <Compile Include="fullstack\executor\sentences\paragraph.vb" />
-    <Compile Include="fullstack\executor\sentences\return.vb" />
-    <Compile Include="fullstack\executor\sentences\sentence.vb" />
-    <Compile Include="fullstack\executor\sentences\while_loop.vb" />
-    <Compile Include="fullstack\executor\variable.vb" />
-    <Compile Include="fullstack\instruction\block.vb" />
-    <Compile Include="fullstack\instruction\compare.vb" />
-    <Compile Include="fullstack\instruction\instruction.vb" />
-    <Compile Include="fullstack\instruction\operator.vb" />
-    <Compile Include="fullstack\instruction\variable.vb" />
-    <Compile Include="fullstack\parser\functions.vb" />
-    <Compile Include="fullstack\parser\syntax_stack.vb" />
-    <Compile Include="fullstack\parser\types.vb" />
-    <Compile Include="fullstack\syntax\app.vb" />
-    <Compile Include="fullstack\syntax\definition.vb" />
-    <Compile Include="fullstack\syntax\domain.vb" />
-    <Compile Include="fullstack\syntax\expression.vb" />
-    <Compile Include="fullstack\syntax\variable.vb" />
-    <Compile Include="fullstack\type.vb" />
     <Compile Include="primitive\commands.enum.vb" />
     <Compile Include="primitive\commands.vb" />
     <Compile Include="primitive\console_io.vb" />
@@ -109,22 +77,6 @@
     <Compile Include="primitive\loaded_method.vb" />
     <Compile Include="primitive\loaded_methods.vb" />
     <Compile Include="primitive\simulator.vb" />
-    <Compile Include="turing\executor\call.vb" />
-    <Compile Include="turing\executor\clear.vb" />
-    <Compile Include="turing\executor\end.vb" />
-    <Compile Include="turing\executor\interrupter.vb" />
-    <Compile Include="turing\executor\functions\arithmetic.vb" />
-    <Compile Include="turing\executor\functions\compare.vb" />
-    <Compile Include="turing\executor\goto.vb" />
-    <Compile Include="turing\executor\goto_if.vb" />
-    <Compile Include="turing\executor\instruction.vb" />
-    <Compile Include="turing\executor\location.vb" />
-    <Compile Include="turing\executor\pop.vb" />
-    <Compile Include="turing\executor\processor.vb" />
-    <Compile Include="turing\executor\push.vb" />
-    <Compile Include="turing\executor\set.vb" />
-    <Compile Include="turing\executor\variable.vb" />
-    <Compile Include="turing\operator.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -140,7 +92,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="turing\type.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
