@@ -85,23 +85,6 @@ Partial Public Class code_gens(Of WRITER)
                               End Function)
         End Function
 
-        Public Shared Function of_only_child_with_wrapper(Of T As IDisposable) _
-                                                         (ByVal w As Func(Of T),
-                                                          ByVal s As String) As Action(Of code_gens(Of WRITER))
-            assert(Not w Is Nothing)
-            Return registerer(s,
-                              Function(ByVal this As code_gens(Of WRITER),
-                                       ByVal n As typed_node,
-                                       ByVal o As WRITER) As Boolean
-                                  assert(Not this Is Nothing)
-                                  assert(Not n Is Nothing)
-                                  assert(Not o Is Nothing)
-                                  Using w()
-                                      Return this.of(n.child()).build(o)
-                                  End Using
-                              End Function)
-        End Function
-
         Public Function build(ByVal n As typed_node,
                               ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
             assert(Not n Is Nothing)

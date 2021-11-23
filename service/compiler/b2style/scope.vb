@@ -19,10 +19,6 @@ Partial Public NotInheritable Class b2style
         Public Sub New()
             Me.New(Nothing)
         End Sub
-
-        Public Shared Function wrapper() As scope_wrapper
-            Return New scope_wrapper()
-        End Function
     End Class
 
     Public NotInheritable Class scope_wrapper

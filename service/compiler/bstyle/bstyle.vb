@@ -66,7 +66,7 @@ Public NotInheritable Class bstyle
                 AddressOf logic.register,
                 [default].of_first_child("logic-with-semi-colon"),
                 AddressOf multi_sentence_paragraph.register,
-                [default].of_only_child_with_wrapper(AddressOf scope.wrapper, "paragraph"),
+                [default].of_only_child("paragraph"),
                 AddressOf param.register,
                 [default].of_first_child("param-with-comma"),
                 AddressOf paramlist.register,

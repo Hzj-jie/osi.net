@@ -88,7 +88,7 @@ Partial Public NotInheritable Class b2style
                        [default].of_all_children("param-with-comma"),
                        AddressOf param.register,
                        AddressOf namespace_.register,
-                       [default].of_only_child_with_wrapper(AddressOf scope.wrapper, "paragraph"),
+                       [default].of_only_child("paragraph"),
                        [default].of_all_children("sentence"),
                        [default].of_all_children("sentence-with-semi-colon"),
                        [default].of_all_children("sentence-without-semi-colon"),
