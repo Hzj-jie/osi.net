@@ -14,11 +14,7 @@ Namespace rewriters
     Public NotInheritable Class typed_node_writer
         Private Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("rewrite", "debug", "dump"))
 
-        Private ReadOnly v As vector(Of Object)
-
-        Public Sub New()
-            v = New vector(Of Object)()
-        End Sub
+        Private ReadOnly v As New vector(Of Object)()
 
         Public Function append(ByVal n As typed_node) As typed_node_writer
             assert(Not n Is Nothing)
@@ -40,8 +36,7 @@ Namespace rewriters
         End Function
 
         Public Function dump() As String
-            Dim r As String = Nothing
-            r = v.str(character.blank)
+            Dim r As String = v.str(character.blank)
             If debug_dump Then
                 raise_error(error_type.user,
                         "Debug dump of typed_node_writer ",
