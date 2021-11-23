@@ -12,7 +12,7 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value_list
-        Inherits logic_gen_wrapper
+        Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
         Private ReadOnly rs As read_scoped(Of vector(Of String))

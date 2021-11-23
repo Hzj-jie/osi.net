@@ -11,7 +11,7 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class value_definition
-        Inherits logic_gen_wrapper
+        Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
         <inject_constructor>
@@ -28,10 +28,10 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4)
-            If Not logic_gen_of(Of value_declaration)().build(n.child(0), n.child(1), o) Then
+            If Not l.typed_code_gen(Of value_declaration)().build(n.child(0), n.child(1), o) Then
                 Return False
             End If
-            Return logic_gen_of(Of value_clause)().build(n.child(1), n.child(3), o)
+            Return l.typed_code_gen(Of value_clause)().build(n.child(1), n.child(3), o)
         End Function
     End Class
 End Class

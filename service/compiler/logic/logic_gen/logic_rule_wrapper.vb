@@ -10,18 +10,6 @@ Imports osi.service.interpreter.primitive
 Imports exportable = osi.service.compiler.logic.exportable
 Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.writer)
 
-Public MustInherit Class logic_gen_wrapper
-    Inherits code_gen_wrapper(Of writer)
-
-    Protected Sub New(ByVal l As code_gens(Of writer))
-        MyBase.New(l)
-    End Sub
-
-    Protected Function logic_gen_of(Of T As code_gen(Of writer))() As T
-        Return l.typed_code_gen(Of T)()
-    End Function
-End Class
-
 Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
                                    _syntaxer_rule As __do(Of Byte()),
                                    _prefixes As __do(Of vector(Of Action(Of statements))),

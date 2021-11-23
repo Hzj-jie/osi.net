@@ -11,7 +11,7 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class multi_sentence_paragraph
-        Inherits logic_gen_wrapper
+        Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
         <inject_constructor>

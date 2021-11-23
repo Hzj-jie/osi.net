@@ -10,7 +10,7 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value
-        Inherits logic_gen_wrapper
+        Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
         <inject_constructor>

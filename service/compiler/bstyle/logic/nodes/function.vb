@@ -11,7 +11,7 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class [function]
-        Inherits logic_gen_wrapper
+        Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
         <inject_constructor>
@@ -33,7 +33,7 @@ Partial Public NotInheritable Class bstyle
                     Return False
                 End If
             Else
-                logic_gen_of(Of paramlist)().empty_paramlist()
+                l.typed_code_gen(Of paramlist)().empty_paramlist()
             End If
             Using params As read_scoped(Of vector(Of builders.parameter)).ref =
                     l.typed_code_gen(Of paramlist)().current_target()

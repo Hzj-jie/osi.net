@@ -13,7 +13,7 @@ Imports osi.service.math
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class ufloat
-        Inherits logic_gen_wrapper
+        Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
         <inject_constructor>
