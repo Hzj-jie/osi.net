@@ -12,11 +12,7 @@ Public Interface statement(Of WRITER)
 End Interface
 
 Public Class statements(Of WRITER)
-    Private ReadOnly v As vector(Of statement(Of WRITER))
-
-    Public Sub New()
-        v = New vector(Of statement(Of WRITER))()
-    End Sub
+    Private ReadOnly v As New vector(Of statement(Of WRITER))()
 
     Public Sub register(ByVal p As statement(Of WRITER))
         v.emplace_back(p)

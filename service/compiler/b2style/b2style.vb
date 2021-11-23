@@ -14,8 +14,8 @@ Imports statements = osi.service.compiler.statements(Of osi.service.compiler.rew
 Partial Public NotInheritable Class b2style
     Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
                                       syntaxer_rule_t,
-                                      prefixes_t,
-                                      suffixes_t,
+                                      __do.default_of(Of vector(Of Action(Of statements))),
+                                      __do.default_of(Of vector(Of Action(Of statements))),
                                       rewriter_gens_t,
                                       scope)
     Public NotInheritable Class nlexer_rule_t
@@ -31,22 +31,6 @@ Partial Public NotInheritable Class b2style
 
         Protected Overrides Function at() As Byte()
             Return b2style_rules.syntaxer_rule
-        End Function
-    End Class
-
-    Public NotInheritable Class prefixes_t
-        Inherits __do(Of vector(Of Action(Of statements)))
-
-        Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return vector.of(Of Action(Of statements))()
-        End Function
-    End Class
-
-    Public NotInheritable Class suffixes_t
-        Inherits __do(Of vector(Of Action(Of statements)))
-
-        Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return New vector(Of Action(Of statements))()
         End Function
     End Class
 
@@ -156,8 +140,8 @@ Partial Public NotInheritable Class b2style
     Public NotInheritable Shadows Class parse_wrapper
         Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
                                           syntaxer_rule_t,
-                                          prefixes_t,
-                                          suffixes_t,
+                                          __do.default_of(Of vector(Of Action(Of statements))),
+                                          __do.default_of(Of vector(Of Action(Of statements))),
                                           rewriter_gens_t,
                                           scope).parse_wrapper
 

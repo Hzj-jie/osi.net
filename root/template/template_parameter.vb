@@ -5,6 +5,19 @@ Option Strict On
 
 Imports osi.root.delegates
 
+Public NotInheritable Class __do
+    Public NotInheritable Class default_of(Of T As New)
+        Inherits __do(Of T)
+
+        Protected Overrides Function at() As T
+            Return New T()
+        End Function
+    End Class
+
+    Private Sub New()
+    End Sub
+End Class
+
 Public MustInherit Class __do(Of T)
     Protected MustOverride Function at() As T
 
