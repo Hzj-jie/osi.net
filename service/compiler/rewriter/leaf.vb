@@ -15,7 +15,7 @@ Namespace rewriters
             MyBase.New(l)
         End Sub
 
-        Public Shared Function registerer(ByVal s As String) As Action(Of code_gens(Of typed_node_writer))
+        Public Shared Function [of](ByVal s As String) As Action(Of code_gens(Of typed_node_writer))
             Return Sub(ByVal l As code_gens(Of typed_node_writer))
                        assert(Not l Is Nothing)
                        assert(Not s.null_or_whitespace())

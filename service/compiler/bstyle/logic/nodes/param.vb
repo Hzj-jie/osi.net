@@ -38,9 +38,10 @@ Partial Public NotInheritable Class bstyle
             If Not scope.current().structs().resolve(n.child(0).word().str(), n.last_child().word().str(), params) Then
                 params = vector.of(New single_data_slot_variable(n.child(0).word().str(), n.last_child().word().str()))
             End If
-            Dim ps As vector(Of builders.parameter) = params.stream().
-                                                             map(AddressOf single_data_slot_variable.to_builders_parameter).
-                                                             collect(Of vector(Of builders.parameter))()
+            Dim ps As vector(Of builders.parameter) =
+                    params.stream().
+                           map(AddressOf single_data_slot_variable.to_builders_parameter).
+                           collect(Of vector(Of builders.parameter))()
             If n.child_count() = 3 Then
                 assert(n.child(1).leaf())
                 assert(n.child(1).type_name.Equals("reference"))
