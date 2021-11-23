@@ -61,7 +61,6 @@
     <Compile Include="b2style\rewriter\nodes\includes.vb" />
     <Compile Include="b2style\b2style_rules.vb" />
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
-    <Compile Include="b2style\rewriter\nodes\paragraph.vb" />
     <Compile Include="b2style\rewriter\nodes\param.vb" />
     <Compile Include="b2style\rewriter\nodes\struct.vb" />
     <Compile Include="b2style\scope.namespace.vb" />
@@ -80,6 +79,7 @@
     <Compile Include="b2style\rewriter\nodes\self_value_clause.vb" />
     <Compile Include="bstyle\bstyle.vb" />
     <Compile Include="bstyle\bstyle_rules.vb" />
+    <Compile Include="bstyle\logic\nodes\multi_sentence_paragraph.vb" />
     <Compile Include="bstyle\logic\nodes\struct.vb" />
     <Compile Include="bstyle\logic\nodes\logic_name.vb" />
     <Compile Include="bstyle\logic\nodes\typedef.vb" />
@@ -114,8 +114,8 @@
     <Compile Include="bstyle\scope.vb" />
     <Compile Include="bstyle\single_data_slot_variable.vb" />
     <Compile Include="bstyle\struct_member.vb" />
+    <Compile Include="code_gen\default.vb" />
     <Compile Include="logic\define_heap.vb" />
-    <Compile Include="logic\logic_gen\default.vb" />
     <Compile Include="logic\logic_gen\read_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />
     <Compile Include="logic\builder\builders.vb" />
@@ -184,10 +184,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="rewriter\bypass.vb" />
-    <Compile Include="rewriter\default.vb" />
     <Compile Include="rewriter\leaf.vb" />
-    <Compile Include="rewriter\rewriters.vb" />
     <Compile Include="code_gen\code_gen.vb" />
     <Compile Include="code_gen\statements.vb" />
     <Compile Include="code_gen\code_gen_rule_wrapper.vb" />

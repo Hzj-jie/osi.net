@@ -13,21 +13,21 @@ Imports osi.service.constructor
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class paramlist
         Inherits logic_gen_wrapper
-        Implements logic_gen
+        Implements code_gen(Of writer)
 
         Private ReadOnly rs As New read_scoped(Of vector(Of builders.parameter))()
 
         <inject_constructor>
-        Public Sub New(ByVal b As logic_gens)
+        Public Sub New(ByVal b As code_gens(Of writer))
             MyBase.New(b)
         End Sub
 
-        Public Shared Sub register(ByVal b As logic_gens)
+        Public Shared Sub register(ByVal b As code_gens(Of writer))
             assert(Not b Is Nothing)
             b.register(Of paramlist)()
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             assert(Not n Is Nothing)
             Dim v As New vector(Of builders.parameter)()
             Dim i As UInt32 = 0

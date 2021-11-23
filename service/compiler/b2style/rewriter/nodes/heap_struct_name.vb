@@ -11,11 +11,11 @@ Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class heap_struct_name
-        Implements rewriter
+        Implements code_gen(Of typed_node_writer)
 
         Private Shared ReadOnly instance As New heap_struct_name()
 
-        Public Shared Sub register(ByVal b As rewriters)
+        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
             assert(Not b Is Nothing)
             b.register(instance)
         End Sub

@@ -6,6 +6,8 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.compiler.logic
+Imports statement = osi.service.compiler.statement(Of osi.service.compiler.logic.writer)
+Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.writer)
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class main

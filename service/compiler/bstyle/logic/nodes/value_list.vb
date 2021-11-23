@@ -13,22 +13,22 @@ Imports osi.service.constructor
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value_list
         Inherits logic_gen_wrapper
-        Implements logic_gen
+        Implements code_gen(Of writer)
 
         Private ReadOnly rs As read_scoped(Of vector(Of String))
 
         <inject_constructor>
-        Public Sub New(ByVal b As logic_gens)
+        Public Sub New(ByVal b As code_gens(Of writer))
             MyBase.New(b)
             Me.rs = New read_scoped(Of vector(Of String))()
         End Sub
 
-        Public Shared Sub register(ByVal b As logic_gens)
+        Public Shared Sub register(ByVal b As code_gens(Of writer))
             assert(Not b Is Nothing)
             b.register(Of value_list)()
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() > 0)

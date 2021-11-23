@@ -6,24 +6,23 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.service.automata
-Imports osi.service.compiler.logic
 Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class namespace_
-        Inherits rewriter_wrapper
-        Implements rewriter
+        Inherits code_gen_wrapper(Of typed_node_writer)
+        Implements code_gen(Of typed_node_writer)
 
         Private Const namespace_separator As String = "::"
         Private Const namespace_replacer As String = "__"
 
         <inject_constructor>
-        Public Sub New(ByVal i As rewriters)
+        Public Sub New(ByVal i As code_gens(Of typed_node_writer))
             MyBase.New(i)
         End Sub
 
-        Public Shared Sub register(ByVal b As rewriters)
+        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
             assert(Not b Is Nothing)
             b.register(Of namespace_)()
         End Sub

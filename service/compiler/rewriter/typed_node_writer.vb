@@ -6,13 +6,14 @@ Option Strict On
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.service.automata
 
-Partial Public NotInheritable Class rewriters
-    Inherits code_gens(Of typed_node_writer)
-
+Namespace rewriters
     Public NotInheritable Class typed_node_writer
+        Private Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("rewrite", "debug", "dump"))
+
         Private ReadOnly v As vector(Of Object)
 
         Public Sub New()
@@ -43,10 +44,11 @@ Partial Public NotInheritable Class rewriters
             r = v.str(character.blank)
             If debug_dump Then
                 raise_error(error_type.user,
-                            "Debug dump of typed_node_writer ",
-                            r.Replace(";", ";" + newline.incode()).Replace("}", "}" + newline.incode()))
+                        "Debug dump of typed_node_writer ",
+                        r.Replace(";", ";" + newline.incode()).Replace("}", "}" + newline.incode()))
             End If
             Return r
         End Function
     End Class
-End Class
+End Namespace
+

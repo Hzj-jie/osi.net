@@ -3,10 +3,14 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.template
+Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.compiler.logic_gens
+Imports [default] = osi.service.compiler.code_gens(Of osi.service.compiler.logic.writer).[default]
+Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.writer)
 
 Public NotInheritable Class bstyle
     Inherits logic_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, logic_gens_t, scope)
@@ -44,10 +48,10 @@ Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class logic_gens_t
-        Inherits __do(Of vector(Of Action(Of logic_gens)))
+        Inherits __do(Of vector(Of Action(Of code_gens(Of writer))))
 
-        Protected Overrides Function at() As vector(Of Action(Of logic_gens))
-            Return vector.of(Of Action(Of logic_gens))(
+        Protected Overrides Function at() As vector(Of Action(Of code_gens(Of writer)))
+            Return vector.of(Of Action(Of code_gens(Of writer)))(
                 [default].of_only_child("root-type"),
                 AddressOf bool.register,
                 AddressOf condition.register,
@@ -61,7 +65,7 @@ Public NotInheritable Class bstyle
                 AddressOf biguint.register,
                 AddressOf logic.register,
                 [default].of_first_child("logic-with-semi-colon"),
-                [default].of_all_children("multi-sentence-paragraph"),
+                AddressOf multi_sentence_paragraph.register,
                 [default].of_only_child_with_wrapper(AddressOf scope.wrapper, "paragraph"),
                 AddressOf param.register,
                 [default].of_first_child("param-with-comma"),

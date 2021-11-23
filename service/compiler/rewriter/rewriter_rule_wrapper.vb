@@ -3,38 +3,21 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.interpreter.primitive
 Imports osi.service.compiler.rewriters
 Imports exportable = osi.service.compiler.logic.exportable
-
-Partial Public NotInheritable Class rewriters
-    Inherits code_gens(Of typed_node_writer)
-
-    Public Interface rewriter
-        Inherits code_gen(Of typed_node_writer)
-    End Interface
-
-    Public MustInherit Class rewriter_wrapper
-        Inherits code_gen_wrapper(Of typed_node_writer)
-
-        Protected Sub New(ByVal i As rewriters)
-            MyBase.New(i)
-        End Sub
-    End Class
-End Class
+Imports statements = osi.service.compiler.statements(Of osi.service.compiler.rewriters.typed_node_writer)
 
 Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
                                       _syntaxer_rule As __do(Of Byte()),
                                       _prefixes As __do(Of vector(Of Action(Of statements))),
                                       _suffixes As __do(Of vector(Of Action(Of statements))),
-                                      _rewriter_gens As __do(Of vector(Of Action(Of rewriters))),
+                                      _rewriter_gens As __do(Of vector(Of Action(Of code_gens(Of typed_node_writer)))),
                                        SCOPE_T As scope(Of SCOPE_T))
     Inherits code_gen_rule_wrapper(Of typed_node_writer,
-                                      rewriters,
+                                      code_gens(Of typed_node_writer),
                                       statements,
                                       _nlexer_rule,
                                       _syntaxer_rule,
@@ -54,7 +37,7 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
 
     Public MustInherit Shadows Class parse_wrapper
         Inherits code_gen_rule_wrapper(Of typed_node_writer,
-                                          rewriters,
+                                          code_gens(Of typed_node_writer),
                                           statements,
                                           _nlexer_rule,
                                           _syntaxer_rule,

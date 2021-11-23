@@ -71,19 +71,19 @@ Partial Public NotInheritable Class bstyle
                                         default_includes.folders,
                                         default_includes.ignore_default_folder,
                                         default_includes.default_folder)
-        Implements logic_gen
+        Implements code_gen(Of writer)
 
         Private Shared ReadOnly instance As New include_with_string()
 
         Private Sub New()
         End Sub
 
-        Public Shared Sub register(ByVal b As logic_gens)
+        Public Shared Sub register(ByVal b As code_gens(Of writer))
             assert(Not b Is Nothing)
             b.register(instance)
         End Sub
 
-        Public Shadows Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
+        Public Shadows Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             Return MyBase.build(n, o)
         End Function
     End Class
@@ -94,19 +94,19 @@ Partial Public NotInheritable Class bstyle
                                       default_includes.folders,
                                       default_includes.ignore_default_folder,
                                       default_includes.default_folder)
-        Implements logic_gen
+        Implements code_gen(Of writer)
 
         Private Shared ReadOnly instance As New include_with_file()
 
         Private Sub New()
         End Sub
 
-        Public Shared Sub register(ByVal b As logic_gens)
+        Public Shared Sub register(ByVal b As code_gens(Of writer))
             assert(Not b Is Nothing)
             b.register(instance)
         End Sub
 
-        Public Shadows Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements logic_gen.build
+        Public Shadows Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             Return MyBase.build(n, o)
         End Function
     End Class

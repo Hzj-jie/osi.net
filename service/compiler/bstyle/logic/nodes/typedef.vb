@@ -10,14 +10,14 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class typedef
-        Implements logic_gen
+        Implements code_gen(Of writer)
 
         Private Shared ReadOnly instance As New typedef()
 
         Private Sub New()
         End Sub
 
-        Public Shared Sub register(ByVal b As logic_gens)
+        Public Shared Sub register(ByVal b As code_gens(Of writer))
             assert(Not b Is Nothing)
             b.register(instance)
         End Sub

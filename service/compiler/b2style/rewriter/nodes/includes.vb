@@ -11,7 +11,6 @@ Imports osi.root.template
 Imports osi.root.utils
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
-Imports osi.service.constructor
 Imports osi.service.resource
 
 Partial Public NotInheritable Class b2style
@@ -72,20 +71,20 @@ Partial Public NotInheritable Class b2style
                                                default_includes.folders,
                                                default_includes.ignore_default_folder,
                                                default_includes.default_folder)
-        Implements rewriter
+        Implements code_gen(Of typed_node_writer)
 
         Private Shared ReadOnly instance As New include_with_string()
 
         Private Sub New()
         End Sub
 
-        Public Shared Sub register(ByVal b As rewriters)
+        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
             assert(Not b Is Nothing)
             b.register(instance)
         End Sub
 
         Public Shadows Function build(ByVal n As typed_node,
-                                      ByVal o As typed_node_writer) As Boolean Implements rewriter.build
+                                      ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             If Not MyBase.build(n, o) Then
                 o.append(n)
             End If
@@ -99,20 +98,20 @@ Partial Public NotInheritable Class b2style
                                              default_includes.folders,
                                              default_includes.ignore_default_folder,
                                              default_includes.default_folder)
-        Implements rewriter
+        Implements code_gen(Of typed_node_writer)
 
         Private Shared ReadOnly instance As New include_with_file()
 
         Private Sub New()
         End Sub
 
-        Public Shared Sub register(ByVal b As rewriters)
+        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
             assert(Not b Is Nothing)
             b.register(instance)
         End Sub
 
         Public Shadows Function build(ByVal n As typed_node,
-                                      ByVal o As typed_node_writer) As Boolean Implements rewriter.build
+                                      ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             If Not MyBase.build(n, o) Then
                 o.append(n)
             End If

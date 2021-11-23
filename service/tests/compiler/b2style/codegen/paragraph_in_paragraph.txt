@@ -1,0 +1,8 @@
+﻿
+#include <b2style.h>
+
+void main() { { { {
+    b2style::std_out("hello world\n");
+	} } } {
+	b2style::std_out("hello again world\n");
+} }

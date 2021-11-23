@@ -10,18 +10,18 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class binary_operation_value
-        Inherits rewriter_wrapper
-        Implements rewriter
+        Inherits code_gen_wrapper(Of typed_node_writer)
+        Implements code_gen(Of typed_node_writer)
 
         Private ReadOnly operations As operations
 
         <inject_constructor>
-        Public Sub New(ByVal i As rewriters)
+        Public Sub New(ByVal i As code_gens(Of typed_node_writer))
             MyBase.New(i)
             Me.operations = New operations(i)
         End Sub
 
-        Public Shared Sub register(ByVal b As rewriters)
+        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
             assert(Not b Is Nothing)
             b.register(Of binary_operation_value)()
         End Sub

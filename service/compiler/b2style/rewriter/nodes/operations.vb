@@ -5,13 +5,14 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.service.automata
+Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class operations
         Private Const self_prefix As String = "self-"
-        Private ReadOnly l As rewriters
+        Private ReadOnly l As code_gens(Of typed_node_writer)
 
-        Public Sub New(ByVal l As rewriters)
+        Public Sub New(ByVal l As code_gens(Of typed_node_writer))
             assert(Not l Is Nothing)
             Me.l = l
         End Sub

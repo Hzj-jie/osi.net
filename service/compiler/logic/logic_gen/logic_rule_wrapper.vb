@@ -8,45 +8,28 @@ Imports osi.root.template
 Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
 Imports exportable = osi.service.compiler.logic.exportable
-
-Public Interface logic_gen
-    Inherits code_gen(Of writer)
-End Interface
+Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.writer)
 
 Public MustInherit Class logic_gen_wrapper
     Inherits code_gen_wrapper(Of writer)
 
-    Protected Sub New(ByVal l As logic_gens)
+    Protected Sub New(ByVal l As code_gens(Of writer))
         MyBase.New(l)
     End Sub
 
-    Protected Function logic_gen_of(Of T As logic_gen)() As T
+    Protected Function logic_gen_of(Of T As code_gen(Of writer))() As T
         Return l.typed_code_gen(Of T)()
     End Function
 End Class
-
-Partial Public NotInheritable Class logic_gens
-    Inherits code_gens(Of writer)
-End Class
-
-Namespace logic
-    Public Interface statement
-        Inherits statement(Of writer)
-    End Interface
-
-    Public NotInheritable Class statements
-        Inherits statements(Of writer)
-    End Class
-End Namespace
 
 Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
                                    _syntaxer_rule As __do(Of Byte()),
                                    _prefixes As __do(Of vector(Of Action(Of statements))),
                                    _suffixes As __do(Of vector(Of Action(Of statements))),
-                                   _logic_gens As __do(Of vector(Of Action(Of logic_gens))),
+                                   _logic_gens As __do(Of vector(Of Action(Of code_gens(Of writer)))),
                                     SCOPE_T As scope(Of SCOPE_T))
     Inherits code_gen_rule_wrapper(Of writer,
-                                      logic_gens,
+                                      code_gens(Of writer),
                                       statements,
                                       _nlexer_rule,
                                       _syntaxer_rule,
@@ -70,7 +53,7 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
 
     Public NotInheritable Shadows Class parse_wrapper
         Inherits code_gen_rule_wrapper(Of writer,
-                                          logic_gens,
+                                          code_gens(Of writer),
                                           statements,
                                           _nlexer_rule,
                                           _syntaxer_rule,
