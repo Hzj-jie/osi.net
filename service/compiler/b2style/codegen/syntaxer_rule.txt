@@ -16,7 +16,7 @@ sentence [sentence-with-semi-colon, sentence-without-semi-colon]
 sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, kw-break, logic, self-value-clause, typedef, heap-declaration, pre-operation-value, post-operation-value]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
-multi-sentence-paragraph start-paragraph [sentence]* end-paragraph
+multi-sentence-paragraph start-paragraph [paragraph]* end-paragraph
 
 value-declaration name name
 value-definition name name assignment value

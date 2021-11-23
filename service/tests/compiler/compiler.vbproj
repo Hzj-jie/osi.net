@@ -149,7 +149,7 @@
     <Content Include="b2style\codegen\namespaces.txt" />
     <Content Include="b2style\codegen\negative_int.txt" />
     <Content Include="b2style\codegen\order_of_operators.txt" />
-    <Content Include="b2style\codegen\paragraph_in_paragraph.txt" />
+    <Content Include="b2style\codegen\nested_paragraph.txt" />
     <Content Include="b2style\codegen\pi_integral_0_1.txt" />
     <Content Include="b2style\codegen\self_add.txt" />
     <Content Include="b2style\codegen\shift.txt" />
