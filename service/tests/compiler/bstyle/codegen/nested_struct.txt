@@ -10,10 +10,18 @@ struct S2 {
   int y;
 };
 
+void print(S1 s) {
+  bstyle__putchar(s.x);
+}
+
+void print(S2 s) {
+  print(s.x);
+  bstyle__putchar(s.y);
+}
+
 void main() {
   S2 s;
   s.x.x = 100;
   s.y = 100;
-  bstyle__putchar(s.x.x);
-  bstyle__putchar(s.y);
+  print(s);
 }

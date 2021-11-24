@@ -132,6 +132,7 @@
     <Content Include="b2style\codegen\errors\function-return-struct-type-mismatch.txt" />
     <Content Include="b2style\codegen\errors\include-needs-wraps.txt" />
     <Content Include="b2style\codegen\errors\dollar-in-number.txt" />
+    <Content Include="b2style\codegen\errors\function-name-ends-with-dot.txt" />
     <Content Include="b2style\codegen\errors\three-pluses.txt" />
     <Content Include="b2style\codegen\errors\value-clause-struct-type-mismatch2.txt" />
     <Content Include="b2style\codegen\errors\value-clause-struct-type-mismatch.txt" />
@@ -149,6 +150,7 @@
     <Content Include="b2style\codegen\multiline_string.txt" />
     <Content Include="b2style\codegen\namespaces.txt" />
     <Content Include="b2style\codegen\negative_int.txt" />
+    <Content Include="b2style\codegen\nested_class.txt" />
     <Content Include="b2style\codegen\order_of_operators.txt" />
     <Content Include="b2style\codegen\nested_paragraph.txt" />
     <Content Include="b2style\codegen\pi_integral_0_1.txt" />

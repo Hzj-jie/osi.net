@@ -86,6 +86,16 @@ Public NotInheritable Class b2style_compile_error_test
             End Sub)).contains("S2", "f", "S1")
     End Sub
 
+    <test>
+    Private Shared Sub function_name_ends_with_dot()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(b2style.
+                    with_functions(New interrupts()).
+                    parse(_b2style_test_data.errors_function_name_ends_with_dot.as_text(), Nothing))
+            End Sub)).contains("c.")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
