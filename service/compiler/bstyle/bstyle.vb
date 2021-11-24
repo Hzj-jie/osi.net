@@ -3,11 +3,8 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.template
-Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports [default] = osi.service.compiler.code_gens(Of osi.service.compiler.logic.writer).[default]
 Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.writer)
@@ -35,7 +32,7 @@ Public NotInheritable Class bstyle
         Inherits __do(Of vector(Of Action(Of statements)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return vector.of(Of Action(Of statements))(AddressOf code_types.register)
+            Return vector.emplace_of(Of Action(Of statements))(AddressOf code_types.register)
         End Function
     End Class
 
@@ -43,7 +40,7 @@ Public NotInheritable Class bstyle
         Inherits __do(Of vector(Of Action(Of statements)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return vector.of(Of Action(Of statements))(AddressOf main.register)
+            Return vector.emplace_of(Of Action(Of statements))(AddressOf main.register)
         End Function
     End Class
 
@@ -51,7 +48,7 @@ Public NotInheritable Class bstyle
         Inherits __do(Of vector(Of Action(Of code_gens(Of writer))))
 
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of writer)))
-            Return vector.of(Of Action(Of code_gens(Of writer)))(
+            Return vector.emplace_of(Of Action(Of code_gens(Of writer)))(
                 [default].of_only_child("root-type"),
                 AddressOf bool.register,
                 AddressOf condition.register,

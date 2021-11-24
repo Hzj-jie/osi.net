@@ -38,7 +38,7 @@ Partial Public NotInheritable Class b2style
         Inherits __do(Of vector(Of Action(Of code_gens(Of typed_node_writer))))
 
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of typed_node_writer)))
-            Return vector.of(Of Action(Of code_gens(Of typed_node_writer)))(
+            Return vector.emplace_of(Of Action(Of code_gens(Of typed_node_writer)))(
                        [default].of_all_children("root-type"),
  _
                        leaf.of("kw-if"),

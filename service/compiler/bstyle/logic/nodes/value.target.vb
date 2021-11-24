@@ -6,7 +6,6 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.automata
-Imports osi.service.compiler
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
@@ -92,14 +91,16 @@ Partial Public NotInheritable Class bstyle
                                          ByVal o As writer) As vector(Of String)
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Dim params As vector(Of single_data_slot_variable) = Nothing
+            Dim params As struct_def = Nothing
             assert(scope.current().structs().resolve(type, logic_name.temp_variable(n), params))
             assert(Not params Is Nothing)
-            params.stream().foreach(Sub(ByVal p As single_data_slot_variable)
-                                        assert(Not p Is Nothing)
-                                        define_single_data_slot_temp_target(p.type, p.name, o)
-                                    End Sub)
-            Return with_target(type, params)
+            params.expanded.
+                   stream().
+                   foreach(Sub(ByVal p As single_data_slot_variable)
+                               assert(Not p Is Nothing)
+                               define_single_data_slot_temp_target(p.type, p.name, o)
+                           End Sub)
+            Return with_target(type, params.expanded)
         End Function
 
         Public Function with_target(ByVal type As String,

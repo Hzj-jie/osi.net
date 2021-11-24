@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
@@ -39,9 +38,9 @@ Partial Public NotInheritable Class bstyle
             If Not scope.current().variables().resolve(n.word().str(), type) Then
                 Return False
             End If
-            Dim ps As vector(Of single_data_slot_variable) = Nothing
+            Dim ps As struct_def = Nothing
             If scope.current().structs().resolve(type, n.word().str(), ps) Then
-                Return struct_handle(type, ps)
+                Return struct_handle(type, ps.expanded)
             End If
             Return single_data_slot_handle(type, n.word().str())
         End Function

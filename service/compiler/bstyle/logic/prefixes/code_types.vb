@@ -22,7 +22,7 @@ Partial Public NotInheritable Class bstyle
         Public Const [string] As String = "String"
         Public Const ufloat As String = "BigUnsignedFloat"
 
-        Private Shared ReadOnly v As vector(Of pair(Of String, UInt32)) = vector.of(
+        Private Shared ReadOnly v As vector(Of pair(Of String, UInt32)) = vector.emplace_of(
             type_of(int, 4),
             type_of(bool, 1),
             type_of(biguint, max_uint32 - 1),

@@ -32,12 +32,12 @@ Partial Public NotInheritable Class bstyle
             assert(Not sources Is Nothing)
             assert(Not target.null_or_whitespace())
             assert(Not target_naming Is Nothing)
-            Dim vs As vector(Of single_data_slot_variable) = Nothing
+            Dim vs As struct_def = Nothing
             If Not scope.current().structs().resolve(target, vs) Then
                 Return False
             End If
             assert(Not vs Is Nothing)
-            If vs.size() <> sources.size() Then
+            If vs.expanded.size() <> sources.size() Then
                 raise_error(error_type.user,
                             "Sources ",
                             sources,
@@ -48,8 +48,8 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Dim i As UInt32 = 0
-            While i < vs.size()
-                If Not builders.of_copy(target_naming(vs(i).name), sources(i)).to(o) Then
+            While i < vs.expanded.size()
+                If Not builders.of_copy(target_naming(vs.expanded(i).name), sources(i)).to(o) Then
                     Return False
                 End If
                 i += uint32_1
@@ -118,7 +118,7 @@ Partial Public NotInheritable Class bstyle
 
         Private Function resolve(ByVal type As String,
                                  ByVal name As String,
-                                 ByRef v As vector(Of single_data_slot_variable)) As Boolean
+                                 ByRef v As struct_def) As Boolean
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
             If Not scope.current().structs().resolve(type, name, v) Then
@@ -137,12 +137,13 @@ Partial Public NotInheritable Class bstyle
 
         Public Function define_in_stack(ByVal type As String, ByVal name As String, ByVal o As writer) As Boolean
             assert(Not o Is Nothing)
-            Dim v As vector(Of single_data_slot_variable) = Nothing
+            Dim v As struct_def = Nothing
             If Not resolve(type, name, v) Then
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return v.stream().
+            Return v.expanded.
+                     stream().
                      map(Function(ByVal m As single_data_slot_variable) As Boolean
                              assert(Not m Is Nothing)
                              Return value_declaration.declare_single_data_slot(m.type, m.name, o)
@@ -156,7 +157,7 @@ Partial Public NotInheritable Class bstyle
                                        ByVal o As writer) As Boolean
             assert(Not length Is Nothing)
             assert(Not o Is Nothing)
-            Dim v As vector(Of single_data_slot_variable) = Nothing
+            Dim v As struct_def = Nothing
             If Not resolve(type, name, v) Then
                 Return False
             End If
@@ -165,7 +166,8 @@ Partial Public NotInheritable Class bstyle
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean
-                           Return v.stream().
+                           Return v.expanded.
+                                    stream().
                                     map(Function(ByVal m As single_data_slot_variable) As Boolean
                                             assert(Not m Is Nothing)
                                             Return heap_declaration.declare_single_data_slot(m.type, m.name, len_name, o)

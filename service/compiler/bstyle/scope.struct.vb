@@ -10,27 +10,24 @@ Imports osi.root.formation
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
         Private NotInheritable Class struct_t
-            Private ReadOnly s As New unordered_map(Of String, vector(Of single_data_slot_variable))()
+            Private ReadOnly s As New unordered_map(Of String, struct_def)()
 
             ' TODO: Support value_definition
             Private Function resolve_type(ByVal type As String,
                                           ByVal name As String,
-                                          ByVal o As vector(Of single_data_slot_variable)) As Boolean
-                assert(Not o Is Nothing)
+                                          ByVal d As struct_def) As Boolean
+                assert(Not d Is Nothing)
                 ' Struct member types are always resolved during the define / build stage, so scope.current() equals to
                 ' the scope where the struct_t instance is being defined.
                 type = scope.current().type_alias()(type)
-                Dim sub_type As vector(Of single_data_slot_variable) = Nothing
+                Dim sub_type As struct_def = Nothing
                 If Not s.find(type, sub_type) Then
-                    o.emplace_back(New single_data_slot_variable(type, name))
+                    d.expanded.emplace_back(New single_data_slot_variable(type, name))
                     Return True
                 End If
                 assert(Not sub_type Is Nothing)
-                sub_type.stream().
-                         foreach(Sub(ByVal t As single_data_slot_variable)
-                                     assert(Not t Is Nothing)
-                                     o.emplace_back(New single_data_slot_variable(t.type, strcat(name, ".", t.name)))
-                                 End Sub)
+                d.nested_structs.emplace_back(New struct_member(type, name))
+                d.append(sub_type.append_prefix(name))
                 Return True
             End Function
 
@@ -38,16 +35,16 @@ Partial Public NotInheritable Class bstyle
                                    ByVal members As vector(Of struct_member)) As Boolean
                 assert(Not type.null_or_whitespace())
                 assert(Not members Is Nothing)
-                Dim o As New vector(Of single_data_slot_variable)()
+                Dim d As New struct_def()
                 Dim i As UInt32 = 0
                 While i < members.size()
                     assert(Not members(i) Is Nothing)
-                    If Not resolve_type(members(i).type, members(i).name, o) Then
+                    If Not resolve_type(members(i).type, members(i).name, d) Then
                         Return False
                     End If
                     i += uint32_1
                 End While
-                If s.emplace(type, o).second() Then
+                If s.emplace(type, d).second() Then
                     Return True
                 End If
                 raise_error(error_type.user, "Struct type ", type, " has been defined already as: ", s(type))
@@ -60,7 +57,7 @@ Partial Public NotInheritable Class bstyle
 
             Public Function resolve(ByVal type As String,
                                     ByVal name As String,
-                                    ByRef o As vector(Of single_data_slot_variable)) As Boolean
+                                    ByRef o As struct_def) As Boolean
                 assert(Not type.null_or_whitespace())
                 ' name can be null or whitespace to check the availability of a struct definition.
                 type = scope.current().type_alias()(type)
@@ -70,11 +67,7 @@ Partial Public NotInheritable Class bstyle
                     ' forwarding the defintion directly to the logic.
                     Return False
                 End If
-                o = o.stream().
-                      map(Function(ByVal member As single_data_slot_variable) As single_data_slot_variable
-                              Return New single_data_slot_variable(member.type, strcat(name, ".", member.name))
-                          End Function).
-                      collect(Of vector(Of single_data_slot_variable))()
+                o = o.append_prefix(name)
                 Return True
             End Function
         End Class
@@ -104,7 +97,7 @@ Partial Public NotInheritable Class bstyle
 
             Public Function resolve(ByVal type As String,
                                     ByVal name As String,
-                                    ByRef o As vector(Of single_data_slot_variable)) As Boolean
+                                    ByRef o As struct_def) As Boolean
                 Dim s As scope = Me.s
                 While Not s Is Nothing
                     If s.s.resolve(type, name, o) Then
@@ -115,7 +108,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End Function
 
-            Public Function resolve(ByVal name As String, ByRef o As vector(Of single_data_slot_variable)) As Boolean
+            Public Function resolve(ByVal name As String, ByRef o As struct_def) As Boolean
                 Dim type As String = Nothing
                 If Not s.variables().resolve(name, type) Then
                     Return False
