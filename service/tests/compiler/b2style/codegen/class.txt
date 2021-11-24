@@ -1,0 +1,15 @@
+﻿
+#include <b2style.h>
+
+class C {
+  int x;
+  int return_x() {
+    return x;
+  }
+};
+
+void main() {
+  C c;
+  c.x = 100;
+  b2style::std_out(c.return_x());
+}

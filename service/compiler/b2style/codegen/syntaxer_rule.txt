@@ -77,3 +77,5 @@ typedef-with-semi-colon typedef semi-colon
 
 # TODO: Support value-definition
 struct kw-struct name start-paragraph [value-declaration-with-semi-colon]* end-paragraph semi-colon
+
+class kw-class name start-paragraph [value-declaration-with-semi-colon, function]* end-paragraph semi-colon

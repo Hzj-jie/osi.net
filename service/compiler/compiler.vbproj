@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
+    <Compile Include="b2style\rewriter\nodes\class.vb" />
     <Compile Include="b2style\rewriter\nodes\heap_struct_name.vb" />
     <Compile Include="b2style\rewriter\nodes\includes.vb" />
     <Compile Include="b2style\b2style_rules.vb" />

@@ -86,6 +86,8 @@ kw-typedef typedef
 
 kw-struct struct
 
+kw-class class
+
 dot .
 
 name [\w,_,::][\w,\d,_,::,.]*

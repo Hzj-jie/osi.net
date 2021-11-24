@@ -29,6 +29,7 @@ Partial Public NotInheritable Class b2style
             Return n.parent().type_name.Equals("function") OrElse
                    n.parent().type_name.Equals("function-call") OrElse
                    n.parent().type_name.Equals("struct") OrElse
+                   n.parent().type_name.Equals("class") OrElse
                    n.parent().type_name.Equals("typedef-type") OrElse
                    ((n.parent().type_name.Equals("param") OrElse
                      n.parent().type_name.Equals("value-declaration") OrElse
