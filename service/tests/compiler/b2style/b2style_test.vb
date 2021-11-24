@@ -475,7 +475,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.[class].as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), strcat("100"))
+        assertion.equal(io.output(), "200100")
     End Sub
 
     Private Sub New()

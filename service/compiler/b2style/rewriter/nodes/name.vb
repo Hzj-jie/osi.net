@@ -38,15 +38,20 @@ Partial Public NotInheritable Class b2style
                     n.parent().child_index(n) = 0)
         End Function
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+        Public Function name(ByVal n As typed_node) As String
             assert(Not n Is Nothing)
             assert(n.leaf())
+            assert(n.type_name.Equals("name"))
             If should_prefix_with_namespace(n) Then
-                o.append(l.typed_code_gen(Of namespace_)().bstyle_format(n.word().str()))
+                Return l.typed_code_gen(Of namespace_)().bstyle_format(n.word().str())
             Else
-                o.append(n)
             End If
+            Return n.word().str()
+        End Function
+
+        Public Function build(ByVal n As typed_node,
+                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+            o.append(name(n))
             Return True
         End Function
     End Class

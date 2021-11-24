@@ -2,7 +2,7 @@
 IGNORE_TYPES blank, single-line-comment, multi-line-comment
 ROOT_TYPES root-type
 
-root-type [function, value-definition-with-semi-colon, value-declaration-with-semi-colon, namespace-, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, heap-declaration-with-semi-colon]
+root-type [function, value-definition-with-semi-colon, value-declaration-with-semi-colon, namespace-, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, class, heap-declaration-with-semi-colon]
 
 function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
 paramlist [param-with-comma]* param

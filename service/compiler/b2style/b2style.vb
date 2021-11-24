@@ -105,7 +105,7 @@ Partial Public NotInheritable Class b2style
                        AddressOf pre_operation_value.register,
                        AddressOf post_operation_value.register,
                        [default].of_all_children("variable-name"),
-                       [default].of_all_children("function-call"),
+                       AddressOf function_call.register,
                        [default].of_all_children("value-list"),
                        [default].of_all_children("value-with-comma"),
  _

@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
@@ -24,10 +25,76 @@ Partial Public NotInheritable Class b2style
             b.register(Of [class])()
         End Sub
 
+        Private Shared Function is_value_declaration(ByVal n As typed_node) As Boolean
+            assert(Not n Is Nothing)
+            assert(n.type_name.Equals("value-declaration-with-semi-colon") OrElse
+                   n.type_name.Equals("function"))
+            Return n.type_name.Equals("value-declaration-with-semi-colon")
+        End Function
+
+        Private Shared Function is_function(ByVal n As typed_node) As Boolean
+            assert(Not n Is Nothing)
+            assert(n.type_name.Equals("value-declaration-with-semi-colon") OrElse
+                   n.type_name.Equals("function"))
+            Return n.type_name.Equals("function")
+        End Function
+
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
+            assert(n.child_count() >= 5)
+            o.append("struct")
+            Dim class_name As String = l.typed_code_gen(Of name)().name(n.child(1))
+            o.append(class_name)
+            o.append("{")
+            ' Append variables into the structure.
+            If Not streams.range(3, n.child_count() - uint32_2).
+                           map(Function(ByVal i As Int32) As typed_node
+                                   Return n.child(CUInt(i))
+                               End Function).
+                           filter(AddressOf is_value_declaration).
+                           map(Function(ByVal node As typed_node) As Boolean
+                                   Return l.of(node).build(o)
+                               End Function).
+                           aggregate(bool_stream.aggregators.all_true) Then
+                Return False
+            End If
+            o.append("};")
+            ' Append functions after the structure.
+            If Not streams.range(3, n.child_count() - uint32_2).
+                           map(Function(ByVal i As Int32) As typed_node
+                                   Return n.child(CUInt(i))
+                               End Function).
+                           filter(AddressOf is_function).
+                           map(Function(ByVal node As typed_node) As Boolean
+                                   assert(Not node Is Nothing)
+                                   assert(node.child_count() = 5 OrElse node.child_count() = 6)
+                                   If Not l.of(node.child(0)).build(o) Then
+                                       Return False
+                                   End If
+                                   If Not l.of(node.child(1)).build(o) Then
+                                       Return False
+                                   End If
+                                   o.append("(").
+                                     append(class_name).
+                                     append("& this")
+                                   If node.child_count() = 6 Then
+                                       o.append(", ")
+                                       If Not l.of(node.child(3)).build(o) Then
+                                           Return False
+                                       End If
+                                   End If
+                                   o.append(")")
+                                   If Not l.of(node.last_child()).build(o) Then
+                                       Return False
+                                   End If
+                                   Return True
+                               End Function).
+                           aggregate(bool_stream.aggregators.all_true) Then
+                Return False
+            End If
+            Return True
         End Function
     End Class
 End Class
