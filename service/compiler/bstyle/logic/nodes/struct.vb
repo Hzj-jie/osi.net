@@ -125,10 +125,13 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            If Not scope.current().variables().define(type, name) Then
-                Return False
-            End If
-            Return True
+            Return streams.of(New struct_member(type, name)).
+                           concat(v.nested_structs.stream()).
+                           map(Function(ByVal s As struct_member) As Boolean
+                                   assert(Not s Is Nothing)
+                                   Return scope.current().variables().define(s.type, s.name)
+                               End Function).
+                           aggregate(bool_stream.aggregators.all_true)
         End Function
 
         Public Sub forward_in_stack(ByVal type As String, ByVal name As String)

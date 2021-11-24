@@ -72,7 +72,7 @@ Public NotInheritable Class bstyle_test
         assertion.equal(io.output(), "dabc")
     End Sub
 
-    '<test>
+    <test>
     Private Shared Sub nested_struct()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
