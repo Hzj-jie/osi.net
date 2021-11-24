@@ -34,6 +34,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 2 OrElse n.child_count() = 3)
+            l.typed_code_gen(Of struct)().forward_in_stack(n.child(0).word().str(), n.last_child().word().str())
             Dim params As vector(Of single_data_slot_variable) = Nothing
             If Not scope.current().structs().resolve(n.child(0).word().str(), n.last_child().word().str(), params) Then
                 params = vector.of(New single_data_slot_variable(n.child(0).word().str(), n.last_child().word().str()))

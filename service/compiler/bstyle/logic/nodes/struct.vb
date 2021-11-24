@@ -131,6 +131,10 @@ Partial Public NotInheritable Class bstyle
             Return True
         End Function
 
+        Public Sub forward_in_stack(ByVal type As String, ByVal name As String)
+            resolve(type, name, Nothing)
+        End Sub
+
         Public Function define_in_stack(ByVal type As String, ByVal name As String, ByVal o As writer) As Boolean
             assert(Not o Is Nothing)
             Dim v As vector(Of single_data_slot_variable) = Nothing
