@@ -12,9 +12,13 @@ void f(S s) {
   logic "interrupt stdout s.s2 temp";
 }
 
+void g(S s) {
+  f(s);
+}
+
 void main() {
   S s;
   s.s = "abc";
   s.s2 = "def";
-  f(s);
+  g(s);
 }

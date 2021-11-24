@@ -158,16 +158,16 @@ Partial Public NotInheritable Class bstyle
             End If
             assert(Not v Is Nothing)
             Return l.typed_code_gen(Of heap_declaration).build(
-                length,
-                o,
-                Function(ByVal len_name As String) As Boolean
-                    Return v.stream().
-                             map(Function(ByVal m As single_data_slot_variable) As Boolean
-                                     assert(Not m Is Nothing)
-                                     Return heap_declaration.declare_single_data_slot(m.type, m.name, len_name, o)
-                                 End Function).
-                             aggregate(bool_stream.aggregators.all_true)
-                End Function)
+                       length,
+                       o,
+                       Function(ByVal len_name As String) As Boolean
+                           Return v.stream().
+                                    map(Function(ByVal m As single_data_slot_variable) As Boolean
+                                            assert(Not m Is Nothing)
+                                            Return heap_declaration.declare_single_data_slot(m.type, m.name, len_name, o)
+                                        End Function).
+                                    aggregate(bool_stream.aggregators.all_true)
+                       End Function)
         End Function
 
         Public Function build(ByVal n As typed_node,
