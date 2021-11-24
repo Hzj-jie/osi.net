@@ -11,11 +11,11 @@ namespace b2style {
   string false_str = "False";
 
   void std_out(string i) {
-    logic "interrupt stdout b2style__i @@prefixes@temps@string";
+    logic "interrupt stdout i @@prefixes@temps@string";
   }
 
   void std_err(string i) {
-    logic "interrupt stderr b2style__i @@prefixes@temps@string";
+    logic "interrupt stderr i @@prefixes@temps@string";
   }
 
   void bool_std_out(bool i) {
@@ -61,7 +61,7 @@ namespace b2style {
   string biguint_to_str(biguint i) {
     ::bstyle::load_method("big_uint_to_str");
     string result;
-    logic "interrupt execute_loaded_method b2style__i b2style__result";
+    logic "interrupt execute_loaded_method i result";
     return result;
   }
 

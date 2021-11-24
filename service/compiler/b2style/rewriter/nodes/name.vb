@@ -23,11 +23,29 @@ Partial Public NotInheritable Class b2style
             b.register(Of name)()
         End Sub
 
+        Private Shared Function should_prefix_with_namespace(ByVal n As typed_node) As Boolean
+            assert(Not n Is Nothing)
+            assert(Not n.parent() Is Nothing)
+            Return n.parent().type_name.Equals("function") OrElse
+                   n.parent().type_name.Equals("function-call") OrElse
+                   n.parent().type_name.Equals("struct") OrElse
+                   n.parent().type_name.Equals("typedef-type") OrElse
+                   ((n.parent().type_name.Equals("param") OrElse
+                     n.parent().type_name.Equals("value-declaration") OrElse
+                     n.parent().type_name.Equals("value-definition") OrElse
+                     n.parent().type_name.Equals("heap-declaration")) AndAlso
+                    n.parent().child_index(n) = 0)
+        End Function
+
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(n.leaf())
-            o.append(l.typed_code_gen(Of namespace_)().bstyle_format(n.word().str()))
+            If should_prefix_with_namespace(n) Then
+                o.append(l.typed_code_gen(Of namespace_)().bstyle_format(n.word().str()))
+            Else
+                o.append(n)
+            End If
             Return True
         End Function
     End Class

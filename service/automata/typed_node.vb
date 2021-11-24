@@ -17,7 +17,7 @@ Partial Public NotInheritable Class typed_node
     Public ReadOnly [end] As UInt32 'exclusive
     Public ReadOnly subnodes As vector(Of typed_node)
     Private ReadOnly ref As vector(Of typed_word)
-    Private parent As typed_node
+    Private p As typed_node
 
     Public Sub New(ByVal ref As vector(Of typed_word),
                    ByVal type As UInt32,
@@ -49,8 +49,8 @@ Partial Public NotInheritable Class typed_node
 
     Public Sub attach_to(ByVal parent As typed_node)
         assert(Not parent Is Nothing)
-        assert(Me.parent Is Nothing)
-        Me.parent = parent
+        assert(Me.p Is Nothing)
+        Me.p = parent
         parent.subnodes.emplace_back(Me)
     End Sub
 
@@ -66,12 +66,16 @@ Partial Public NotInheritable Class typed_node
     End Sub
 
     Public Function root() As Boolean
-        Return parent Is Nothing
+        Return p Is Nothing
+    End Function
+
+    Public Function parent() As typed_node
+        Return p
     End Function
 
     Public Function child_index(ByVal c As typed_node) As UInt32
         assert(Not c Is Nothing)
-        assert(object_compare(Me, c.parent) = 0)
+        assert(object_compare(Me, c.p) = 0)
         assert(Not subnodes.empty())
         For i As UInt32 = 0 To subnodes.size() - uint32_1
             If object_compare(subnodes(i), c) = 0 Then

@@ -8,19 +8,19 @@
 namespace b2style {
   bool equal(ufloat i, ufloat j) {
     bool result;
-    logic "float_equal b2style__result b2style__i b2style__j";
+    logic "float_equal result i j";
     return result;
   }
 
   bool not_equal(ufloat i, ufloat j) {
     bool result;
-    logic "float_equal b2style__result b2style__i b2style__j";
+    logic "float_equal result i j";
     return not(result);
   }
 
   bool greater_than(ufloat i, ufloat j) {
     bool result;
-    logic "float_more b2style__result b2style__i b2style__j";
+    logic "float_more result i j";
     return result;
   }
 
@@ -30,7 +30,7 @@ namespace b2style {
 
   bool less_than(ufloat i, ufloat j) {
     bool result;
-    logic "float_less b2style__result b2style__i b2style__j";
+    logic "float_less result i j";
     return result;
   }
 
@@ -39,35 +39,35 @@ namespace b2style {
   }
 
   ufloat add(ufloat i, ufloat j) {
-    logic "float_add b2style__i b2style__i b2style__j";
+    logic "float_add i i j";
     return i;
   }
 
   ufloat minus(ufloat i, ufloat j) {
-    logic "float_subtract b2style__i b2style__i b2style__j";
+    logic "float_subtract i i j";
     return i;
   }
 
   ufloat multiply(ufloat i, ufloat j) {
-    logic "float_multiply b2style__i b2style__i b2style__j";
+    logic "float_multiply i i j";
     return i;
   }
 
   ufloat divide(ufloat i, ufloat j) {
     ufloat result;
-    logic "float_divide b2style__result b2style__i b2style__j";
+    logic "float_divide result i j";
     return result;
   }
 
   ufloat power(ufloat i, ufloat j) {
-    logic "float_power b2style__i b2style__i b2style__j";
+    logic "float_power i i j";
     return i;
   }
 
   string ufloat_to_str(ufloat i) {
     ::bstyle::load_method("big_udec_to_str");
     string result;
-    logic "interrupt execute_loaded_method b2style__i b2style__result";
+    logic "interrupt execute_loaded_method i result";
     return result;
   }
 
@@ -78,7 +78,7 @@ namespace b2style {
   ufloat ufloat__from(biguint i) {
     ::bstyle::load_method("big_uint_to_big_udec");
     ufloat result;
-    logic "interrupt execute_loaded_method b2style__i b2style__result";
+    logic "interrupt execute_loaded_method i result";
     return result;
   }
 

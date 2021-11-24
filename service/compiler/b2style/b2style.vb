@@ -124,7 +124,7 @@ Partial Public NotInheritable Class b2style
                        [default].of_all_children("typedef"),
                        [default].of_all_children("typedef-with-semi-colon"),
  _
-                       AddressOf struct.register,
+                       [default].of_all_children("struct"),
                        leaf.of("kw-struct")
                    )
         End Function
