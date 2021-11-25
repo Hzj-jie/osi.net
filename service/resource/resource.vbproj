@@ -112,6 +112,8 @@
     <Content Include="gen\gen.cs" />
     <Content Include="gen\gen.exe" />
     <Content Include="gen\gen.vector.cs" />
+    <Content Include="gen\genall.cs" />
+    <Content Include="gen\genall.exe" />
     <Content Include="gen\zipgen.array.cs" />
     <Content Include="gen\zipgen.base64.cs" />
     <Content Include="gen\zipgen.cs" />
