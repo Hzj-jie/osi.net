@@ -88,7 +88,8 @@ Partial Public NotInheritable Class b2style
                        AddressOf heap_struct_name.register,
                        AddressOf self_value_clause.register,
                        [default].of_all_children("return-clause"),
-                       [default].of_all_children("ignore-result-function-call"),
+                       [default].of_only_child("ignore-result-function-call"),
+                       [default].of_only_child("ignore-result-heap-struct-function-call"),
                        [default].of_all_children("logic"),
                        [default].of_all_children("logic-with-semi-colon"),
                        [default].of_all_children("condition"),
@@ -106,6 +107,7 @@ Partial Public NotInheritable Class b2style
                        AddressOf post_operation_value.register,
                        [default].of_all_children("variable-name"),
                        AddressOf function_call.register,
+                       AddressOf heap_struct_function_call.register,
                        [default].of_all_children("value-list"),
                        [default].of_all_children("value-with-comma"),
  _

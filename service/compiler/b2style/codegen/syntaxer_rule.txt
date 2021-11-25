@@ -13,7 +13,7 @@ namespace- kw-namespace name start-paragraph [root-type]* end-paragraph
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, kw-break, logic, self-value-clause, typedef, heap-declaration, pre-operation-value, post-operation-value]? semi-colon
+sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, ignore-result-heap-struct-function-call, kw-break, logic, self-value-clause, typedef, heap-declaration, pre-operation-value, post-operation-value]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [paragraph]* end-paragraph
@@ -34,11 +34,11 @@ else-condition kw-else paragraph
 
 while kw-while start-bracket value end-bracket paragraph
 
-for-loop kw-for start-bracket [value-declaration, value-definition]? semi-colon [value]? semi-colon [value-clause, self-value-clause, ignore-result-function-call, pre-operation-value, post-operation-value]? end-bracket paragraph
+for-loop kw-for start-bracket [value-declaration, value-definition]? semi-colon [value]? semi-colon [value-clause, self-value-clause, ignore-result-function-call, ignore-result-heap-struct-function-call, pre-operation-value, post-operation-value]? end-bracket paragraph
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
-raw-value [function-call, variable-name, integer, biguint, ufloat, bool, string]
+raw-value [function-call, heap-struct-function-call, variable-name, integer, biguint, ufloat, bool, string]
 value-without-bracket [raw-value, value-with-operation]
 value-with-operation [unary-operation-value, binary-operation-value]
 unary-operation-value [pre-operation-value, post-operation-value]
@@ -53,8 +53,11 @@ heap-name name start-square-bracket value end-square-bracket
 heap-struct-name heap-name dot name
 
 ignore-result-function-call function-call
+ignore-result-heap-struct-function-call heap-struct-function-call
 
 function-call name start-bracket [value-list]? end-bracket
+heap-struct-function-call heap-struct-name start-bracket [value-list]? end-bracket
+
 value-list [value-with-comma]* value
 value-with-comma value comma
 
