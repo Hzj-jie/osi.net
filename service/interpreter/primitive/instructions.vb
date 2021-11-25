@@ -124,7 +124,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub
@@ -214,7 +214,7 @@ Namespace primitive
                 d1 = New data_block()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_block)
                 Me.d0 = d0
@@ -325,7 +325,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -443,7 +443,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -563,7 +563,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -711,7 +711,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -859,7 +859,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -1009,7 +1009,7 @@ Namespace primitive
                 d3 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref,
@@ -1187,7 +1187,7 @@ Namespace primitive
                 d3 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref,
@@ -1363,7 +1363,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -1509,7 +1509,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -1625,7 +1625,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub
@@ -1713,7 +1713,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub
@@ -1801,7 +1801,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub
@@ -1944,7 +1944,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -2092,7 +2092,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -2238,7 +2238,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -2356,7 +2356,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -2476,7 +2476,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -2626,7 +2626,7 @@ Namespace primitive
                 d3 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref,
@@ -2802,7 +2802,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -2946,7 +2946,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub
@@ -3038,7 +3038,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -3184,7 +3184,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -3302,7 +3302,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -3422,7 +3422,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -3570,7 +3570,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -3716,7 +3716,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -3938,7 +3938,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4086,7 +4086,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4234,7 +4234,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4382,7 +4382,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4530,7 +4530,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4678,7 +4678,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4826,7 +4826,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -4974,7 +4974,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -5122,7 +5122,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -5270,7 +5270,7 @@ Namespace primitive
                 d2 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref,
                        ByVal d2 As data_ref)
@@ -5416,7 +5416,7 @@ Namespace primitive
                 d1 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref,
                        ByVal d1 As data_ref)
                 Me.d0 = d0
@@ -5532,7 +5532,7 @@ Namespace primitive
                 d0 = New data_ref()
             End Sub
 
-            Public Sub New(
+            Public Sub New( _
                        ByVal d0 As data_ref)
                 Me.d0 = d0
             End Sub

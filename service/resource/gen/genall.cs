@@ -42,7 +42,7 @@ public static class genall {
                              '\\' +
                              (use_zipgen ? "zipgen.exe" : "gen.exe");
         string binary_args = string.Join(" ", gen_args.ToArray());
-        Console.WriteLine("' This file is created by genall with ");
+        Console.WriteLine("' This file is created by genall with");
         Console.WriteLine("' " + binary_name);
         Console.WriteLine("' " + binary_args);
 
