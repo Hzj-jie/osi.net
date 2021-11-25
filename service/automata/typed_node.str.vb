@@ -73,7 +73,7 @@ Partial Public NotInheritable Class typed_node
         assert(Not s Is Nothing)
         self_debug_str(s)
         If Not root() Then
-            p.trace_back_str(s)
+            parent.trace_back_str(s)
         End If
         Return s
     End Function

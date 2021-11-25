@@ -10,7 +10,7 @@ typedef ::int int;
 int self_inc_post(int& x) {
   int r = x;
   int y = 1;
-  logic "add x x y";
+  logic "add b2style__x b2style__x b2style__y";
   return r;
 }
 
