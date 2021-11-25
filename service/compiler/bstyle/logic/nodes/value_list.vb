@@ -15,12 +15,11 @@ Partial Public NotInheritable Class bstyle
         Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
-        Private ReadOnly rs As read_scoped(Of vector(Of String))
+        Private ReadOnly rs As New read_scoped(Of vector(Of String))()
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of writer))
             MyBase.New(b)
-            Me.rs = New read_scoped(Of vector(Of String))()
         End Sub
 
         Public Shared Sub register(ByVal b As code_gens(Of writer))
