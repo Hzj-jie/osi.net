@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
@@ -48,7 +49,18 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Public Shared Function bstyle_format(ByVal i As String) As String
-            Return full_name(i).Replace(namespace_separator, namespace_replacer).Substring(namespace_replacer.Length())
+            assert(Not i.null_or_whitespace())
+            Return streams.of(full_name(i).Split("."c)).
+                           map(Function(ByVal x As String) As String
+                                   assert(Not x Is Nothing)
+                                   If Not x.Contains(namespace_separator) Then
+                                       Return x
+                                   End If
+                                   Return full_name(x).Replace(namespace_separator, namespace_replacer).
+                                                       Substring(namespace_replacer.Length())
+                               End Function).
+                           collect_by(stream(Of String).collectors.to_str(".")).
+                           ToString()
         End Function
 
         Public Function build(ByVal n As typed_node,
