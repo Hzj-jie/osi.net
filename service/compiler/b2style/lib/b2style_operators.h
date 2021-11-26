@@ -242,13 +242,13 @@ namespace b2style {
   long self_inc_post(long& x) {
     long r = x;
     logic "add b2style__x b2style__x @@prefixes@constants@int_1";
-    return r;
+    return ::bstyle::fit_in_long(r);
   }
 
   int self_inc_post(int& x) {
     int r = x;
     logic "add b2style__x b2style__x @@prefixes@constants@int_1";
-	return r;
+    return ::bstyle::fit_in_int(r);
   }
 
   biguint self_dec_post(biguint& x) {
@@ -260,13 +260,13 @@ namespace b2style {
   long self_dec_post(long& x) {
     long r = x;
     logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
-	return r;
+    return ::bstyle::fit_in_long(r);
   }
 
   int self_dec_post(int& x) {
     int r = x;
     logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
-	return r;
+    return ::bstyle::fit_in_int(r);
   }
 
   biguint self_inc_pre(biguint& x) {
@@ -356,7 +356,7 @@ namespace b2style {
   long left_shift(long i, long j) {
     return ::bstyle::to_long(
       left_shift(::bstyle::to_biguint(i),
-				 ::bstyle::to_biguint(j))
+                 ::bstyle::to_biguint(j))
     );
   }
 
