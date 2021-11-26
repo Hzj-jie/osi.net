@@ -66,9 +66,9 @@ Partial Public NotInheritable Class b2style
                        leaf.of("assignment"),
                        AddressOf name.register,
  _
-                       [default].of_all_children("function"),
+                       [default].of_all_children_with_wrapper(AddressOf scope.wrap, "function"),
                        [default].of_all_children("paramlist"),
-                       [default].of_all_children("multi-sentence-paragraph"),
+                       [default].of_all_children_with_wrapper(AddressOf scope.wrap, "multi-sentence-paragraph"),
                        [default].of_all_children("param-with-comma"),
                        leaf.of("bit-and"),  ' Allowing & in param.
                        [default].of_all_children("param"),
@@ -94,7 +94,7 @@ Partial Public NotInheritable Class b2style
                        [default].of_all_children("logic-with-semi-colon"),
                        [default].of_all_children("condition"),
                        [default].of_all_children("while"),
-                       [default].of_all_children("for-loop"),
+                       [default].of_all_children_with_wrapper(AddressOf scope.wrap, "for-loop"),
                        [default].of_all_children("value"),
                        [default].of_all_children("else-condition"),
                        [default].of_all_children("value-with-bracket"),

@@ -127,6 +127,7 @@
     <Content Include="b2style\codegen\biguint.txt" />
     <Content Include="b2style\codegen\calculate_pi_bbp.txt" />
     <Content Include="b2style\codegen\class.txt" />
+    <Content Include="b2style\codegen\class_in_namespace.txt" />
     <Content Include="b2style\codegen\class_on_heap.txt" />
     <Content Include="b2style\codegen\comments.txt" />
     <Content Include="b2style\codegen\errors\cycle-typedef.txt" />
@@ -139,6 +140,7 @@
     <Content Include="b2style\codegen\errors\value-clause-struct-type-mismatch.txt" />
     <Content Include="b2style\codegen\for_loop.txt" />
     <Content Include="b2style\codegen\function_ref.txt" />
+    <Content Include="b2style\codegen\function_with_global_namespace.txt" />
     <Content Include="b2style\codegen\heap_declaration.txt" />
     <Content Include="b2style\codegen\heap_function_ref.txt" />
     <Content Include="b2style\codegen\i++.txt" />

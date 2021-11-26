@@ -1,0 +1,14 @@
+﻿
+#include <b2style.h>
+
+namespace N {
+
+::void ::f() {
+  ::b2style::std_out("::f");
+}
+
+}  // namespace N
+
+void main() {
+  f();
+}

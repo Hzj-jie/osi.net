@@ -27,16 +27,28 @@ Partial Public NotInheritable Class b2style
             b.register(Of namespace_)()
         End Sub
 
-        Private Function format(ByVal i As String) As String
+        Private Shared Function full_name(ByVal i As String) As String
+            Return with_namespace(scope.current().current_namespace().name(), i)
+        End Function
+
+        Public Shared Function bstyle_format_in_global_namespace(ByVal i As String) As String
+            Return bstyle_format(with_namespace(empty_string, i))
+        End Function
+
+        Public Shared Function bstyle_format_in_root_namespace(ByVal n As String, ByVal i As String) As String
+            Return bstyle_format(with_namespace(empty_string, with_namespace(n, i)))
+        End Function
+
+        Private Shared Function with_namespace(ByVal n As String, ByVal i As String) As String
             assert(Not i.null_or_whitespace())
             If i.StartsWith(namespace_separator) Then
                 Return i
             End If
-            Return strcat(scope.current().current_namespace().name(), namespace_separator, i)
+            Return strcat(n, namespace_separator, i)
         End Function
 
-        Public Function bstyle_format(ByVal i As String) As String
-            Return format(i).Replace(namespace_separator, namespace_replacer).Substring(namespace_replacer.Length())
+        Public Shared Function bstyle_format(ByVal i As String) As String
+            Return full_name(i).Replace(namespace_separator, namespace_replacer).Substring(namespace_replacer.Length())
         End Function
 
         Public Function build(ByVal n As typed_node,
@@ -44,7 +56,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(n.child_count() >= 4)
             Using New scope_wrapper()
-                scope.current().current_namespace().define(format(n.child(1).word().str()))
+                scope.current().current_namespace().define(full_name(n.child(1).word().str()))
                 For i As UInt32 = 3 To n.child_count() - uint32_2
                     If Not l.of(n.child(i)).build(o) Then
                         Return False

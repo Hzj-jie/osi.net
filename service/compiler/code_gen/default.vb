@@ -66,23 +66,38 @@ Partial Public Class code_gens(Of WRITER)
                               End Function)
         End Function
 
-        Public Shared Function of_all_children(ByVal s As String) As Action(Of code_gens(Of WRITER))
+        Public Shared Function build_all_children(ByVal this As code_gens(Of WRITER),
+                                                  ByVal n As typed_node,
+                                                  ByVal o As WRITER) As Boolean
+            assert(Not this Is Nothing)
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
+            Dim i As UInt32 = 0
+            While i < n.child_count()
+                If Not this.of(n.child(i)).build(o) Then
+                    Return False
+                End If
+                i += uint32_1
+            End While
+            Return True
+        End Function
+
+        Public Shared Function of_all_children_with_wrapper(Of T As IDisposable) _
+                                                           (ByVal w As Func(Of T),
+                                                            ByVal s As String) As Action(Of code_gens(Of WRITER))
+            assert(Not w Is Nothing)
             Return registerer(s,
                               Function(ByVal this As code_gens(Of WRITER),
                                        ByVal n As typed_node,
                                        ByVal o As WRITER) As Boolean
-                                  assert(Not this Is Nothing)
-                                  assert(Not n Is Nothing)
-                                  assert(Not o Is Nothing)
-                                  Dim i As UInt32 = 0
-                                  While i < n.child_count()
-                                      If Not this.of(n.child(i)).build(o) Then
-                                          Return False
-                                      End If
-                                      i += uint32_1
-                                  End While
-                                  Return True
+                                  Using w()
+                                      Return build_all_children(this, n, o)
+                                  End Using
                               End Function)
+        End Function
+
+        Public Shared Function of_all_children(ByVal s As String) As Action(Of code_gens(Of WRITER))
+            Return registerer(s, AddressOf build_all_children)
         End Function
 
         Public Function build(ByVal n As typed_node,

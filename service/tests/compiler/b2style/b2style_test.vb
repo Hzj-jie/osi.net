@@ -506,6 +506,28 @@ Public NotInheritable Class b2style_test
                                              ToString())
     End Sub
 
+    <test>
+    Private Shared Sub class_in_namespace()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.class_in_namespace.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "123")
+    End Sub
+
+    <test>
+    Private Shared Sub function_with_global_namespace()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.function_with_global_namespace.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "::f")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

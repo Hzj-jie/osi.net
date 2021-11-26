@@ -58,6 +58,7 @@ Namespace logic
                 Return array_with_index
             End If
             assert(i > 0)
+            assert(array_with_index.LastIndexOf(character.right_mid_bracket) > i + 1)
             Return array_with_index.Substring(0, i)
         End Function
 

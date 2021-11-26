@@ -4,8 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
@@ -28,22 +26,7 @@ Partial Public NotInheritable Class b2style
         Public Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
                 Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
-            assert(n.child_count() = 3 OrElse n.child_count() = 4)
-            assert(n.child(0).child_count() = 3)
-            o.append(n.child(0).child(2).word().str()).
-              append("(")
-            If Not l.of(n.child(0).child(0)).build(o) Then
-                Return False
-            End If
-            If n.child_count() = 4 Then
-                o.append(", ")
-                If Not l.of(n.child(2)).build(o) Then
-                    Return False
-                End If
-            End If
-            o.append(")")
-            Return True
+            Return l.typed_code_gen(Of function_call)().build(heap_struct_name.bstyle_function(n.child(0)), n, o)
         End Function
     End Class
 End Class

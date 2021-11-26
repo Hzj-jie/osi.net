@@ -30,7 +30,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n.leaf())
             Dim i As UInt32 = 0
             While i < n.child_count()
-                If Not build(n.child(i), i, o) Then
+                If Not build_child(n.child(i), o) Then
                     Return False
                 End If
                 i += uint32_1
@@ -38,9 +38,13 @@ Partial Public NotInheritable Class b2style
             Return True
         End Function
 
-        Private Function build(ByVal child As typed_node,
-                               ByVal index As UInt32,
-                               ByVal o As typed_node_writer) As Boolean
+        Public Function build_value_declaration(ByVal child As typed_node, ByVal o As typed_node_writer) As Boolean
+            assert(Not child Is Nothing)
+            assert(child.type_name.Equals("value-declaration-with-semi-colon"))
+            Return build_child(child, o)
+        End Function
+
+        Private Function build_child(ByVal child As typed_node, ByVal o As typed_node_writer) As Boolean
             assert(Not child Is Nothing)
             assert(Not o Is Nothing)
             If Not child.type_name.Equals("value-declaration-with-semi-colon") Then

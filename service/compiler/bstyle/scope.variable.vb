@@ -19,6 +19,8 @@ Partial Public NotInheritable Class bstyle
                 ' Types are always resolved during the define / build stage, so scope.current() equals to the scope
                 ' where the variable_t instance Is being defined.
                 type = scope.current().type_alias()(type)
+                ' The name should not be an array with index.
+                assert(variable.heap_name_of_or_origin(name).Equals(name))
                 If s.emplace(name, type).second() Then
                     Return True
                 End If

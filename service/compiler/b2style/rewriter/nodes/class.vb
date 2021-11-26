@@ -45,7 +45,7 @@ Partial Public NotInheritable Class b2style
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             o.append("struct")
-            Dim class_name As String = l.typed_code_gen(Of namespace_)().bstyle_format(n.child(1).word().str())
+            Dim class_name As String = namespace_.bstyle_format(n.child(1).word().str())
             o.append(class_name)
             o.append("{")
             ' Append variables into the structure.
@@ -55,7 +55,7 @@ Partial Public NotInheritable Class b2style
                                End Function).
                            filter(AddressOf is_value_declaration).
                            map(Function(ByVal node As typed_node) As Boolean
-                                   Return l.of(node).build(o)
+                                   Return l.typed_code_gen(Of struct)().build_value_declaration(node, o)
                                End Function).
                            aggregate(bool_stream.aggregators.all_true) Then
                 Return False
@@ -73,12 +73,12 @@ Partial Public NotInheritable Class b2style
                                    If Not l.of(node.child(0)).build(o) Then
                                        Return False
                                    End If
-                                   If Not l.of(node.child(1)).build(o) Then
-                                       Return False
-                                   End If
-                                   o.append("(").
+                                   ' No namespace is necessary, the first parameter contains namespace.
+                                   o.append(namespace_.bstyle_format_in_global_namespace(node.child(1).word().str())).
+                                     append("(").
                                      append(class_name).
-                                     append("& this")
+                                     append("&").
+                                     append(namespace_.bstyle_format("this"))
                                    If node.child_count() = 6 Then
                                        o.append(", ")
                                        If Not l.of(node.child(3)).build(o) Then
