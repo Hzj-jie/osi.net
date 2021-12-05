@@ -39,6 +39,10 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
         Return New parse_wrapper(functions)
     End Function
 
+    Public Shared Function with_default_functions() As parse_wrapper
+        Return with_functions(interrupts.default)
+    End Function
+
     Public NotInheritable Shadows Class parse_wrapper
         Inherits code_gen_rule_wrapper(Of writer,
                                           code_gens(Of writer),

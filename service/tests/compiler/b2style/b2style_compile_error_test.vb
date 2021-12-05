@@ -18,7 +18,7 @@ Public NotInheritable Class b2style_compile_error_test
     Private Shared Sub dollar_in_number()
         assertions.of(error_event.capture_log(error_type.user,
             Sub()
-                assertion.is_false(b2style.with_functions(New interrupts()).
+                assertion.is_false(b2style.with_default_functions().
                                            parse(_b2style_test_data.errors_dollar_in_number.as_text(), Nothing))
             End Sub)).contains("nlexer", "$")
     End Sub
@@ -27,7 +27,7 @@ Public NotInheritable Class b2style_compile_error_test
     Private Shared Sub include_needs_wraps()
         assertions.of(error_event.capture_log(error_type.user,
             Sub()
-                assertion.is_false(b2style.with_functions(New interrupts()).
+                assertion.is_false(b2style.with_default_functions.
                                            parse(_b2style_test_data.errors_include_needs_wraps.as_text(), Nothing))
             End Sub)).contains(syntaxer.debug_str("abc.h", "name"))
     End Sub
@@ -38,7 +38,7 @@ Public NotInheritable Class b2style_compile_error_test
         ' "i++;" but "i++" to be a sentence.
         assertions.of(error_event.capture_log(error_type.user,
             Sub()
-                assertion.is_false(b2style.with_functions(New interrupts()).
+                assertion.is_false(b2style.with_default_functions.
                                            parse(_b2style_test_data.errors_three_pluses.as_text(), Nothing))
             End Sub)).contains(syntaxer.debug_str("void", "name"),
                                syntaxer.debug_str("main", "name"),
@@ -51,7 +51,7 @@ Public NotInheritable Class b2style_compile_error_test
     Private Shared Sub cycle_typedef()
         assertions.of(error_event.capture_log(error_type.user,
             Sub()
-                assertion.is_false(b2style.with_functions(New interrupts()).
+                assertion.is_false(b2style.with_default_functions.
                                            parse(_b2style_test_data.errors_cycle_typedef.as_text(), Nothing))
             End Sub)).contains("CYCLE_TYPEDEF__A", "CYCLE_TYPEDEF__C")
     End Sub
@@ -61,7 +61,7 @@ Public NotInheritable Class b2style_compile_error_test
         assertions.of(error_event.capture_log(error_type.user,
             Sub()
                 assertion.is_false(b2style.
-                    with_functions(New interrupts()).
+                    with_default_functions.
                     parse(_b2style_test_data.errors_value_clause_struct_type_mismatch.as_text(), Nothing))
             End Sub)).contains("S2", "s", "S1")
     End Sub
@@ -71,7 +71,7 @@ Public NotInheritable Class b2style_compile_error_test
         assertions.of(error_event.capture_log(error_type.user,
             Sub()
                 assertion.is_false(b2style.
-                    with_functions(New interrupts()).
+                    with_default_functions.
                     parse(_b2style_test_data.errors_value_clause_struct_type_mismatch2.as_text(), Nothing))
             End Sub)).contains("S2", "s", "S1")
     End Sub
@@ -81,7 +81,7 @@ Public NotInheritable Class b2style_compile_error_test
         assertions.of(error_event.capture_log(error_type.user,
             Sub()
                 assertion.is_false(b2style.
-                    with_functions(New interrupts()).
+                    with_default_functions.
                     parse(_b2style_test_data.errors_function_return_struct_type_mismatch.as_text(), Nothing))
             End Sub)).contains("S2", "f", "S1")
     End Sub
@@ -91,7 +91,7 @@ Public NotInheritable Class b2style_compile_error_test
         assertions.of(error_event.capture_log(error_type.user,
             Sub()
                 assertion.is_false(b2style.
-                    with_functions(New interrupts()).
+                    with_default_functions.
                     parse(_b2style_test_data.errors_function_name_ends_with_dot.as_text(), Nothing))
             End Sub)).contains("c.")
     End Sub
