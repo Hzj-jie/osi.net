@@ -103,6 +103,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="b2style\codegen\nested_heap_access.txt" />
     <None Include="b2style\codegen\run.cmd" />
     <None Include="bstyle\codegen\run.cmd" />
     <None Include="dotnet\codegen\run.cmd" />

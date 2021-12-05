@@ -539,6 +539,17 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), "100200")
     End Sub
 
+    <test>
+    Private Shared Sub nested_heap_access()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.nested_heap_access.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "2345")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

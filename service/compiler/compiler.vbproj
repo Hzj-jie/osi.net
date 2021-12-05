@@ -245,6 +245,7 @@
     <Content Include="logic\codegen\importer_gen.exe" />
     <Content Include="logic\definition.txt" />
     <Content Include="logic\design.txt" />
+    <Content Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
