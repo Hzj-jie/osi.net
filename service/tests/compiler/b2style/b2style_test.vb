@@ -550,7 +550,7 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), "2345")
     End Sub
 
-    ' <test>
+    <test>
     Private Shared Sub heap_ptr_to_int64()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
@@ -558,7 +558,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.heap_ptr_to_int64.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "2345")
+        assertion.equal(io.output(), strcat("0 4294967296 8589934592"))
     End Sub
 
     Private Sub New()

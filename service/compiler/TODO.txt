@@ -1,3 +1,4 @@
 ﻿resize array
 template
 remove unused functions in both bstyle and b2style (before code_builder)
+use first match rather than longest match in syntaxer

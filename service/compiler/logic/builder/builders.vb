@@ -19,12 +19,10 @@ Namespace logic
             Public ReadOnly ref As Boolean
 
             Public Sub New(ByVal type As String, ByVal name As String)
-                assert(Not type Is Nothing)
-                assert(Not name Is Nothing)
-                type = type.Trim()
-                name = name.Trim()
                 assert(Not type.null_or_whitespace())
                 assert(Not name.null_or_whitespace())
+                type = type.Trim()
+                name = name.Trim()
                 ' TODO: Try to avoid allowing only "&" as parameter type.
                 ' assert(Not type.Equals(type_ref_suffix))
                 Me.ref = type.EndsWith(type_ref_suffix) AndAlso Not type.Equals(type_ref_suffix)

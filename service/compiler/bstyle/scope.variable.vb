@@ -20,7 +20,7 @@ Partial Public NotInheritable Class bstyle
                 ' where the variable_t instance Is being defined.
                 type = scope.current().type_alias()(type)
                 ' The name should not be an array with index.
-                assert(variable.heap_name_of_or_origin(name).Equals(name))
+                assert(Not variable.is_heap_name(name))
                 If s.emplace(name, type).second() Then
                     Return True
                 End If
@@ -35,8 +35,9 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-                ' logic_name.of_function_call requires type of the parameter to set function name.
-                Return s.find(variable.heap_name_of_or_origin(name), type)
+                assert(Not name.null_or_whitespace())
+                name = name.Trim()
+                Return s.find(name, type)
             End Function
         End Class
 
@@ -48,8 +49,19 @@ Partial Public NotInheritable Class bstyle
                 Me.s = s
             End Sub
 
+            Private Shared Function heap_name_of(ByVal name As String) As String
+                assert(Not name.null_or_whitespace())
+                name = name.Trim()
+                Return strcat(name, "@")
+            End Function
+
             Public Function define(ByVal type As String, ByVal name As String) As Boolean
                 Return s.v.define(type, name)
+            End Function
+
+            Public Function define_heap(ByVal type As String, ByVal name As String) As Boolean
+                Return define(types.heap_ptr_type, name) AndAlso
+                       define(type, heap_name_of(name))
             End Function
 
             Public Function define(ByVal vs As vector(Of single_data_slot_variable)) As Boolean
@@ -67,6 +79,11 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Function try_resolve(ByVal name As String, ByRef type As String) As Boolean
+                ' logic_name.of_function_call requires type of the parameter to set function name.
+                If variable.is_heap_name(name) Then
+                    name = heap_name_of(name.Substring(0, name.IndexOf(character.left_mid_bracket)))
+                End If
+
                 Dim s As scope = Me.s
                 While Not s Is Nothing
                     If s.v.resolve(name, type) Then
