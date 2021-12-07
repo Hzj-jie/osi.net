@@ -75,6 +75,10 @@ namespace b2style {
     std_out(ufloat_to_str(i));
   }
 
+  void std_err(ufloat i) {
+    std_err(ufloat_to_str(i));
+  }
+
   ufloat ufloat__from(biguint i) {
     ::bstyle::load_method("big_uint_to_big_udec");
     ufloat result;

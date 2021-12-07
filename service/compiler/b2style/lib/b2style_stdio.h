@@ -18,7 +18,7 @@ namespace b2style {
     logic "interrupt stderr b2style__i @@prefixes@temps@string";
   }
 
-  void bool_std_out(bool i) {
+  void std_out(bool i) {
     if (i) {
       std_out(true_str);
     }
@@ -27,21 +27,13 @@ namespace b2style {
     }
   }
 
-  void bool_std_err(bool i) {
+  void std_err(bool i) {
     if (i) {
       std_err(true_str);
     }
     else {
       std_err(false_str);
     }
-  }
-
-  void std_out(bool i) {
-    bool_std_out(i);
-  }
-
-  void std_err(bool i) {
-    bool_std_err(i);
   }
 
   string legacy_biguint_to_str(biguint i) {
@@ -76,28 +68,20 @@ namespace b2style {
     return biguint_to_str(::bstyle::to_biguint(i));
   }
 
-  void biguint_std_out(biguint i) {
+  void std_out(biguint i) {
     std_out(biguint_to_str(i));
   }
 
-  void biguint_std_err(biguint i) {
+  void std_err(biguint i) {
     std_err(biguint_to_str(i));
   }
 
-  void int_std_out(int i) {
+  void std_out(int i) {
     std_out(int_to_str(i));
   }
 
-  void int_std_err(int i) {
-    std_err(int_to_str(i));
-  }
-
-  void std_out(int i) {
-    int_std_out(i);
-  }
-
   void std_err(int i) {
-    int_std_err(i);
+    std_err(int_to_str(i));
   }
 }  // namespace b2style
 

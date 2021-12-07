@@ -20,6 +20,6 @@ void main() {
     if (is_even(x)) {
 	  x = --x;
 	}
-    b2style::bool_std_out(is_even(x));
+    b2style::std_out(is_even(x));
   }
 } 

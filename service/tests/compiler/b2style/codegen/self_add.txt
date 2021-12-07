@@ -4,9 +4,9 @@
 void main() {
   int i = 100;
   i += 1;
-  b2style::int_std_out(i);
+  b2style::std_out(i);
   i = i++;
-  b2style::int_std_out(i);
+  b2style::std_out(i);
   i = ++i;
-  b2style::int_std_out(i);
+  b2style::std_out(i);
 }

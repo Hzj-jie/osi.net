@@ -8,6 +8,6 @@ void main() {
     i += 1;
 	x += i;
   }
-  b2style::int_std_out(x);
+  b2style::std_out(x);
   b2style::std_out("\n");
 }

@@ -66,7 +66,6 @@ Namespace logic
                                     ByVal name As String,
                                     ByVal v As vector(Of String),
                                     ByRef o As variable) As Boolean
-            'TODO: Decide if accessing heap ptr as stack variable or vice versa are allowed.
             assert(Not name.null_or_whitespace())
             name = name.Trim()
             assert(Not name.null_or_whitespace())
@@ -82,7 +81,7 @@ Namespace logic
                     Return False
                 End If
 
-                o = New variable(types, name, [optional].empty(Of variable), r.type)
+                o = New variable(types, name, [optional].empty(Of variable)(), r.type)
                 Return True
             Else
                 If Not name.EndsWith(character.right_mid_bracket) Then
