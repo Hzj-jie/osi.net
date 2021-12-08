@@ -31,24 +31,32 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(Not build_caller Is Nothing)
             assert(n.child_count() >= 3)
-            Dim callee_name As String = Nothing
-            callee_name = n.child(0).word().str()
+            Dim bc As Func(Of vector(Of String), Boolean) =
+                Function(ByVal parameters As vector(Of String)) As Boolean
+                    Dim name As String = Nothing
+                    If Not logic_name.of_function_call(n.child(0).word().str(), parameters, name) Then
+                        Return False
+                    End If
+                    scope.current().function_calls().define(name, scope.current().current_function().name())
+                    Return build_caller(name, parameters)
+                End Function
+
             If n.child_count() = 3 Then
-                Return build_caller(callee_name, vector.of(Of String)())
+                Return bc(vector.of(Of String)())
             End If
             If Not l.of(n.child(2)).build(o) Then
                 Return False
             End If
             Using targets As read_scoped(Of vector(Of String)).ref = l.typed_code_gen(Of value_list)().current_targets()
-                Return build_caller(callee_name, +targets)
+                Return bc(+targets)
             End Using
         End Function
 
         Public Function without_return(ByVal n As typed_node, ByVal o As writer) As Boolean
             Return build(n,
                          o,
-                         Function(ByVal callee_name As String, ByVal parameters As vector(Of String)) As Boolean
-                             Return logic_name.of_caller(callee_name, parameters, o)
+                         Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
+                             Return builders.of_caller(name, parameters).to(o)
                          End Function)
         End Function
 
@@ -58,11 +66,7 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() >= 3)
             Return build(n,
                          o,
-                         Function(ByVal callee_name As String, ByVal parameters As vector(Of String)) As Boolean
-                             Dim name As String = Nothing
-                             If Not logic_name.of_function_call(callee_name, parameters, name) Then
-                                 Return False
-                             End If
+                         Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
                              Dim return_type As String = Nothing
                              If Not scope.current().functions().return_type_of(name, return_type) Then
                                  Return False

@@ -20,5 +20,9 @@ Partial Public Class checks(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Public Function contains(ByVal ParamArray exps() As String) As Boolean
             Return check(Of IS_TRUE_FUNC).str_contains(i, exps)
         End Function
+
+        Public Function not_contains(ByVal ParamArray not_exps() As String) As Boolean
+            Return check(Of IS_TRUE_FUNC).str_not_contains(i, not_exps)
+        End Function
     End Class
 End Class

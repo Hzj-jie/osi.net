@@ -10,11 +10,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class writer
-        Private ReadOnly v As vector(Of Object)
-
-        Public Sub New()
-            v = New vector(Of Object)()
-        End Sub
+        Private ReadOnly v As New vector(Of Object)()
 
         Public Function append(ByVal s As UInt32) As Boolean
             v.emplace_back(s)
@@ -59,9 +55,14 @@ Namespace logic
             Return a()
         End Function
 
+        Public Function append(ByVal obj As Object) As Boolean
+            assert(Not obj Is Nothing)
+            v.emplace_back(obj)
+            Return True
+        End Function
+
         Public Function dump() As String
-            Dim r As String = Nothing
-            r = v.str(character.blank)
+            Dim r As String = v.str(character.blank)
             If builders.debug_dump Then
                 raise_error(error_type.user, "Debug dump of logic ", r)
             End If

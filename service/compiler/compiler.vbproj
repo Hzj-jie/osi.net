@@ -110,6 +110,7 @@
     <Compile Include="bstyle\scope.current_function.vb" />
     <Compile Include="bstyle\scope.define.vb" />
     <Compile Include="bstyle\scope.function.vb" />
+    <Compile Include="bstyle\scope.function_call.vb" />
     <Compile Include="bstyle\scope.struct.vb" />
     <Compile Include="bstyle\scope.type_alias.vb" />
     <Compile Include="bstyle\scope.variable.vb" />

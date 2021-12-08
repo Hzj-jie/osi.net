@@ -561,6 +561,15 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), strcat("0 4294967296 8589934592"))
     End Sub
 
+    '<test> 'TODO: Default argument(Boolean) should be undefined.
+    Private Shared Sub unused_functions_should_be_removed()
+        Dim bstyle_str As String = Nothing
+        assertion.is_true(b2style.parse(_b2style_test_data.case1.as_text(), bstyle_str))
+        Dim logic_str As String = Nothing
+        assertion.is_true(bstyle.parse(bstyle_str, logic_str))
+        assertions.of(logic_str).not_contains("b2style__ufloat")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
