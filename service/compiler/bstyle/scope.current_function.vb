@@ -58,6 +58,17 @@ Partial Public NotInheritable Class bstyle
                 Return s.cf
             End Function
 
+            Public Function is_defined() As Boolean
+                Dim s As scope = Me.s
+                While s.cf Is Nothing
+                    s = s.parent
+                    If s Is Nothing Then
+                        Return False
+                    End If
+                End While
+                Return True
+            End Function
+
             Public Function allow_return_value() As Boolean
                 Return current_function().allow_return_value()
             End Function

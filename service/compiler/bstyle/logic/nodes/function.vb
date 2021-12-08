@@ -65,18 +65,15 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Using params As read_scoped(Of vector(Of builders.parameter)).ref =
                           l.typed_code_gen(Of paramlist)().current_target()
-                    If Not logic_name.of_callee(n.child(1).word().str(),
+                    Return logic_name.of_callee(n.child(1).word().str(),
                                                 n.child(0).word().str(),
                                                 +params,
                                                 Function() As Boolean
                                                     Dim gi As UInt32 = CUInt(If(has_paramlist, 5, 4))
                                                     Return l.of(n.child(gi)).build(fo)
                                                 End Function,
-                                                fo) Then
-                        Return False
-                    End If
-                    o.append(New function_writer(fo, logic_name.of_function(n.child(1).word().str(), +params)))
-                    Return True
+                                                fo) AndAlso
+                           o.append(New function_writer(fo, logic_name.of_function(n.child(1).word().str(), +params)))
                 End Using
             End Using
         End Function

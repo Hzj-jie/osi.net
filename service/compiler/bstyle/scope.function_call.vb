@@ -14,8 +14,14 @@ Partial Public NotInheritable Class bstyle
             Private ReadOnly m As New unordered_map(Of String, vector(Of String))()
             Private ReadOnly tm As New unordered_map(Of String, Boolean)()
 
-            Public Sub define(ByVal [to] As String, ByVal [from] As String)
+            Public Sub define(ByVal [to] As String)
                 assert(Not [to].null_or_whitespace())
+                Dim [from] As String = Nothing
+                If scope.current().current_function().is_defined() Then
+                    [from] = scope.current().current_function().name()
+                Else
+                    [from] = "main"
+                End If
                 assert(Not [from].null_or_whitespace())
                 [to] = [to].Trim()
                 [from] = [from].Trim()
