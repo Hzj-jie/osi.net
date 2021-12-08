@@ -68,7 +68,7 @@ Public NotInheritable Class argument_setter
                     Return o
                 End If
             Next
-            Return False
+            Return Nothing
         End If
 
         static_constructor.once_execute(field_type)

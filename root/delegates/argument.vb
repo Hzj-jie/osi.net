@@ -30,6 +30,11 @@ Public NotInheritable Class argument(Of T)
         End If
     End Sub
 
+    Public Shared Operator -(ByVal this As argument(Of T)) As Boolean
+        assert_instance(this)
+        Return this.defined
+    End Operator
+
     Public Shared Operator +(ByVal this As argument(Of T)) As T
         assert_instance(this)
         Return this.v

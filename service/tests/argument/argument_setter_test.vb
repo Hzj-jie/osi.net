@@ -239,6 +239,24 @@ Public NotInheritable Class argument_setter_test
         End If
     End Sub
 
+    Private NotInheritable Class argument_holder9
+        Public Shared bool_arg As argument(Of Boolean)
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    <test>
+    Private Shared Sub unset_bool_should_be_undefined()
+        argument_holder9.bool_arg = Nothing
+        argument_setter.process_type(GetType(argument_holder9), var.default)
+        If assertion.is_not_null(argument_holder9.bool_arg) Then
+            assertion.is_false(-argument_holder9.bool_arg)
+            assertion.is_true(argument_holder9.bool_arg Or True)
+            assertion.is_false(argument_holder9.bool_arg Or False)
+        End If
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
