@@ -117,7 +117,7 @@ Namespace primitive
             Return True
         End Function
 
-        ' TODO: May remove these to_* function.
+        'VisibleForTesting
         Public Function to_rel(ByVal size As UInt64, ByRef o As data_ref) As Boolean
             If relative() OrElse heap_relative() Then
                 o = Me
@@ -127,29 +127,6 @@ Namespace primitive
                 Return hrel(CLng(size) - offset() - 1, o)
             End If
             Return rel(CLng(size) - offset() - 1, o)
-        End Function
-
-        Public Function to_rel(ByVal size As UInt64) As data_ref
-            Dim o As data_ref = Nothing
-            assert(to_rel(size, o))
-            Return o
-        End Function
-
-        Public Function to_abs(ByVal size As UInt64, ByRef o As data_ref) As Boolean
-            If absolute() OrElse heap_absolute() Then
-                o = Me
-                Return True
-            End If
-            If on_heap() Then
-                Return habs(CLng(size) - offset() - 1, o)
-            End If
-            Return abs(CLng(size) - offset() - 1, o)
-        End Function
-
-        Public Function to_abs(ByVal size As UInt64) As data_ref
-            Dim o As data_ref = Nothing
-            assert(to_abs(size, o))
-            Return o
         End Function
 
         Public Function to_heap() As data_ref
