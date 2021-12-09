@@ -166,57 +166,57 @@ Friend Module _registry
     End Function
 
     Sub New()
-        assert(constructor.register(Function(v As var, ByRef o As client_get_dev) As Boolean
+        assert(constructor.register(Function(ByVal v As var, ByRef o As client_get_dev) As Boolean
                                         Return create(v, o)
                                     End Function))
-        assert(constructor.register(Function(v As var, ByRef o As client_post_dev) As Boolean
+        assert(constructor.register(Function(ByVal v As var, ByRef o As client_post_dev) As Boolean
                                         Return create(v, o)
                                     End Function))
-        assert(constructor.register(Function(v As var, ByRef o As client_text_dev) As Boolean
+        assert(constructor.register(Function(ByVal v As var, ByRef o As client_text_dev) As Boolean
                                         Return create(v, o)
                                     End Function))
         assert(constructor.register("get",
-                                    Function(v As var, ByRef o As client_text_dev) As Boolean
+                                    Function(ByVal v As var, ByRef o As client_text_dev) As Boolean
                                         Return create_get(v, o)
                                     End Function))
         assert(constructor.register("post",
-                                    Function(v As var, ByRef o As client_text_dev) As Boolean
+                                    Function(ByVal v As var, ByRef o As client_text_dev) As Boolean
                                         Return create_post(v, o)
                                     End Function))
         assert(constructor.register("http-client",
-                                    Function(v As var, ByRef o As text) As Boolean
+                                    Function(ByVal v As var, ByRef o As text) As Boolean
                                         Return create(v, o)
                                     End Function))
         assert(constructor.register("http-get",
-                                    Function(v As var, ByRef o As text) As Boolean
+                                    Function(ByVal v As var, ByRef o As text) As Boolean
                                         Return create_get(v, o)
                                     End Function))
         assert(constructor.register("http-post",
-                                    Function(v As var, ByRef o As text) As Boolean
+                                    Function(ByVal v As var, ByRef o As text) As Boolean
                                         Return create_post(v, o)
                                     End Function))
         assert(constructor.register("http",
-                                    Function(v As var, ByRef o As idevice(Of text)) As Boolean
+                                    Function(ByVal v As var, ByRef o As idevice(Of text)) As Boolean
                                         Return create(v, o)
                                     End Function))
         assert(constructor.register("http-get",
-                                    Function(v As var, ByRef o As idevice(Of text)) As Boolean
+                                    Function(ByVal v As var, ByRef o As idevice(Of text)) As Boolean
                                         Return create_get(v, o)
                                     End Function))
         assert(constructor.register("http-post",
-                                    Function(v As var, ByRef o As idevice(Of text)) As Boolean
+                                    Function(ByVal v As var, ByRef o As idevice(Of text)) As Boolean
                                         Return create_post(v, o)
                                     End Function))
         assert(constructor.register("http",
-                                    Function(v As var) As idevice_creator(Of text)
+                                    Function(ByVal v As var) As idevice_creator(Of text)
                                         Return create(v)
                                     End Function))
         assert(constructor.register("http-get",
-                                    Function(v As var) As idevice_creator(Of text)
+                                    Function(ByVal v As var) As idevice_creator(Of text)
                                         Return create_get(v)
                                     End Function))
         assert(constructor.register("http-post",
-                                    Function(v As var) As idevice_creator(Of text)
+                                    Function(ByVal v As var) As idevice_creator(Of text)
                                         Return create(v)
                                     End Function))
     End Sub
