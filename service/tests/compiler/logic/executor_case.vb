@@ -14,10 +14,17 @@ Namespace logic
     Public Class executor_case
         Inherits [case]
 
-        Private ReadOnly es() As exportable
+        Private ReadOnly es As Func(Of exportable())
 
         Protected Sub New(ByVal ParamArray es() As exportable)
-            assert(Not isemptyarray(es))
+            assert(Not es.null_or_empty())
+            Me.es = Function() As exportable()
+                        Return es
+                    End Function
+        End Sub
+
+        Protected Sub New(ByVal es As Func(Of exportable()))
+            assert(Not es Is Nothing)
             Me.es = es
         End Sub
 
@@ -36,7 +43,7 @@ Namespace logic
             Else
                 e = New simulator(ext)
             End If
-            If Not assertion.is_true(e.import(es)) Then
+            If Not assertion.is_true(e.import(es())) Then
                 Return False
             End If
             e.execute()

@@ -30,17 +30,23 @@ Namespace logic
             Return +es
         End Function
 
-        Private Sub New(ByVal es() As exportable, ByVal functions As interrupts)
+        Private Sub New(ByVal es As Func(Of exportable()), ByVal functions As interrupts)
             MyBase.New(es)
             Me.functions = functions
         End Sub
 
         Protected Sub New(ByVal str As String, ByVal functions As interrupts)
-            Me.New(build_case(str, functions), functions)
+            Me.New(Function() As exportable()
+                       Return build_case(str, functions)
+                   End Function,
+                   functions)
         End Sub
 
         Protected Sub New(ByVal str As String)
-            Me.New(build_case(str), Nothing)
+            Me.New(Function() As exportable()
+                       Return build_case(str)
+                   End Function,
+                   Nothing)
         End Sub
 
         Protected NotOverridable Overrides Function interrupts() As interrupts
