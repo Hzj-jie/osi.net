@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.constructor
 
-Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of T As scope(Of T))
     <ThreadStatic> Private Shared in_thread As T
     Protected ReadOnly parent As T
     ' This variable has no functionality, but only ensures the start_scope() won't be executed multiple times.

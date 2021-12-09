@@ -58,6 +58,7 @@
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
     <Compile Include="b2style\rewriter\nodes\class.vb" />
+    <Compile Include="b2style\rewriter\nodes\function.vb" />
     <Compile Include="b2style\rewriter\nodes\function_call.vb" />
     <Compile Include="b2style\rewriter\nodes\heap_struct_function_call.vb" />
     <Compile Include="b2style\rewriter\nodes\heap_struct_name.vb" />
@@ -65,6 +66,7 @@
     <Compile Include="b2style\b2style_rules.vb" />
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\struct.vb" />
+    <Compile Include="b2style\scope.current_function.vb" />
     <Compile Include="b2style\scope.namespace.vb" />
     <Compile Include="b2style\scope.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
@@ -110,13 +112,14 @@
     <Compile Include="bstyle\scope.current_function.vb" />
     <Compile Include="bstyle\scope.define.vb" />
     <Compile Include="bstyle\scope.function.vb" />
-    <Compile Include="bstyle\scope.function_call.vb" />
+    <Compile Include="bstyle\scope.call_hierarchy.vb" />
     <Compile Include="bstyle\scope.struct.vb" />
     <Compile Include="bstyle\scope.type_alias.vb" />
     <Compile Include="bstyle\scope.variable.vb" />
     <Compile Include="bstyle\scope.vb" />
     <Compile Include="bstyle\single_data_slot_variable.vb" />
     <Compile Include="bstyle\struct_member.vb" />
+    <Compile Include="scope.call_hierarchy.vb" />
     <Compile Include="code_gen\default.vb" />
     <Compile Include="logic\define_heap.vb" />
     <Compile Include="logic\logic_gen\read_scoped.vb" />
@@ -206,6 +209,7 @@
   <ItemGroup>
     <None Include="b2style\codegen\run.cmd" />
     <None Include="b2style\lib\run.cmd" />
+    <Compile Include="b2style\scope.call_hierarchy.vb" />
     <None Include="bstyle\lib\cstdio" />
     <None Include="bstyle\lib\run.cmd" />
     <None Include="compiler.dep" />

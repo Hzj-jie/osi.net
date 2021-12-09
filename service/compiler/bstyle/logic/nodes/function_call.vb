@@ -37,7 +37,7 @@ Partial Public NotInheritable Class bstyle
                     If Not logic_name.of_function_call(n.child(0).word().str(), parameters, name) Then
                         Return False
                     End If
-                    scope.current().function_calls().define(name)
+                    scope.current().call_hierarchy().to(name)
                     Return build_caller(name, parameters)
                 End Function
 

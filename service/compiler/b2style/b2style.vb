@@ -66,7 +66,7 @@ Partial Public NotInheritable Class b2style
                        leaf.of("assignment"),
                        AddressOf name.register,
  _
-                       [default].of_all_children_with_wrapper(AddressOf scope.wrap, "function"),
+                       AddressOf [function].register,
                        [default].of_all_children("paramlist"),
                        [default].of_all_children_with_wrapper(AddressOf scope.wrap, "multi-sentence-paragraph"),
                        [default].of_all_children("param-with-comma"),

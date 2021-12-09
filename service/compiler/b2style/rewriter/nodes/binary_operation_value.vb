@@ -13,12 +13,9 @@ Partial Public NotInheritable Class b2style
         Inherits code_gen_wrapper(Of typed_node_writer)
         Implements code_gen(Of typed_node_writer)
 
-        Private ReadOnly operations As operations
-
         <inject_constructor>
         Public Sub New(ByVal i As code_gens(Of typed_node_writer))
             MyBase.New(i)
-            Me.operations = New operations(i)
         End Sub
 
         Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
@@ -31,8 +28,9 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
-            o.append(operations.function_name(n.child(1)))
-            o.append("(")
+            Dim function_name As String = operations.function_name(n.child(1))
+            scope.current().call_hierarchy().to(function_name)
+            o.append(function_name).append("(")
             If Not l.of(n.child(0)).build(o) Then
                 Return False
             End If

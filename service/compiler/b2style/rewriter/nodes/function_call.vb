@@ -33,6 +33,7 @@ Partial Public NotInheritable Class b2style
             assert(Not o Is Nothing)
             If Not name.Contains(".") Then
                 o.append(namespace_.bstyle_format(name))
+                scope.current().call_hierarchy().to(namespace_.bstyle_format(name))
                 For i As UInt32 = 1 To n.child_count() - uint32_1
                     If Not l.of(n.child(i)).build(o) Then
                         Return False
@@ -52,7 +53,9 @@ Partial Public NotInheritable Class b2style
                             "] is not allowed to be suffixed by dot.")
                 Return False
             End If
-            o.append(namespace_.bstyle_format_in_global_namespace(name.Substring(dot_pos + 1))).
+            Dim function_name As String = namespace_.bstyle_format_in_global_namespace(name.Substring(dot_pos + 1))
+            scope.current().call_hierarchy().to(function_name)
+            o.append(function_name).
               append("(").
               append(namespace_.bstyle_format(name.Substring(0, dot_pos)))
             If n.child_count() = 4 Then

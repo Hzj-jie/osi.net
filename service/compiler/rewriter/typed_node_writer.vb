@@ -11,6 +11,7 @@ Imports osi.root.formation
 Imports osi.service.automata
 
 Namespace rewriters
+    ' TODO: Maybe merge with logic.writer.
     Public NotInheritable Class typed_node_writer
         Private Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("rewrite", "debug", "dump"))
 
@@ -33,6 +34,12 @@ Namespace rewriters
         Public Function append(ByVal s As StringBuilder) As typed_node_writer
             assert(Not s Is Nothing)
             Return append(Convert.ToString(s))
+        End Function
+
+        Public Function append(ByVal obj As Object) As typed_node_writer
+            assert(Not obj Is Nothing)
+            v.emplace_back(obj)
+            Return Me
         End Function
 
         Public Function dump() As String

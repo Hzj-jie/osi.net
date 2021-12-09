@@ -28,28 +28,6 @@ Partial Public NotInheritable Class bstyle
             b.register(Of [function])()
         End Sub
 
-        Private NotInheritable Class function_writer
-            Private ReadOnly o As writer
-            Private ReadOnly scope As scope
-            Private ReadOnly f As String
-
-            Public Sub New(ByVal o As writer, ByVal f As String)
-                assert(Not o Is Nothing)
-                assert(Not f.null_or_whitespace())
-                Me.o = o
-                Me.scope = scope.current()
-                Me.f = f
-            End Sub
-
-            Public Overrides Function ToString() As String
-                If (remove_unused_functions Or True) AndAlso
-                   Not scope.function_calls().can_reach_main(f) Then
-                    Return empty_string
-                End If
-                Return o.dump()
-            End Function
-        End Class
-
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
@@ -73,7 +51,9 @@ Partial Public NotInheritable Class bstyle
                                                     Return l.of(n.child(gi)).build(fo)
                                                 End Function,
                                                 fo) AndAlso
-                           o.append(New function_writer(fo, logic_name.of_function(n.child(1).word().str(), +params)))
+                           o.append(scope.current().call_hierarchy().filter(
+                                        logic_name.of_function(n.child(1).word().str(), +params),
+                                        AddressOf fo.dump))
                 End Using
             End Using
         End Function

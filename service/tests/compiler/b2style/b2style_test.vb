@@ -565,6 +565,9 @@ Public NotInheritable Class b2style_test
     Private Shared Sub unused_functions_should_be_removed()
         Dim bstyle_str As String = Nothing
         assertion.is_true(b2style.parse(_b2style_test_data.case1.as_text(), bstyle_str))
+        ' b2style does not handle overload itself, so b2style::std_out(ufloat) and b2style::ufloat_to_str are included
+        ' in the output.
+        assertions.of(bstyle_str).not_contains("b2style__ufloat__from")
         Dim logic_str As String = Nothing
         assertion.is_true(bstyle.parse(bstyle_str, logic_str))
         assertions.of(logic_str).not_contains("b2style__ufloat")

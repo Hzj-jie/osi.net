@@ -9,7 +9,9 @@ Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
         Inherits scope(Of scope)
 
+        Private ReadOnly fc As call_hierarchy_t
         Private cn As String
+        Private f As String
 
         <inject_constructor>
         Public Sub New(ByVal parent As scope)
@@ -18,6 +20,7 @@ Partial Public NotInheritable Class b2style
 
         Public Sub New()
             Me.New(Nothing)
+            fc = New call_hierarchy_t()
         End Sub
 
         Public Shared Function wrap() As scope_wrapper

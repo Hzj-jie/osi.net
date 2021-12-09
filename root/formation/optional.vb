@@ -11,7 +11,7 @@ Public NotInheritable Class [optional]
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function new_or_empty(Of T)(ByVal v As T) As [optional](Of T)
         If v Is Nothing Then
-            Return [empty](Of T)()
+            Return empty(Of T)()
         End If
         Return [of](Of T)(v)
     End Function
@@ -27,7 +27,15 @@ Public NotInheritable Class [optional]
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Function [empty](Of T)() As [optional](Of T)
+    Public Shared Function optionally(Of T)(ByVal condition As Boolean, ByVal v As Func(Of T)) As [optional](Of T)
+        If condition Then
+            Return New [optional](Of T)(v())
+        End If
+        Return empty(Of T)()
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function empty(Of T)() As [optional](Of T)
         Return empty_cache(Of T).v
     End Function
 
