@@ -12,8 +12,7 @@ Imports osi.service.argument
 
 ' For client to directly construct an instance of T from var. i.e. constructor(Of T).resolve(v, r)
 Public NotInheritable Class constructor(Of T)
-    Private Shared ReadOnly lt As unique_strong_map(Of String, Func(Of var, ref(Of T), event_comb)) =
-        New unique_strong_map(Of String, Func(Of var, ref(Of T), event_comb))()
+    Private Shared ReadOnly lt As New unique_strong_map(Of String, Func(Of var, ref(Of T), event_comb))()
     Private Shared l As Func(Of var, ref(Of T), event_comb)
 
     Public Shared Function empty() As Boolean

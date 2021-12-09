@@ -15,16 +15,12 @@ Imports lock_t = osi.root.lock.slimlock.monitorlock
 #End If
 
 Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, VALUE_T)
-    Private ReadOnly m As unordered_map(Of KEY_T, STORE_T)
+    Private ReadOnly m As New unordered_map(Of KEY_T, STORE_T)()
 #If USE_DUALLOCK Then
     Private l As duallock
 #Else
     Private l As lock_t
 #End If
-
-    Public Sub New()
-        m = New unordered_map(Of KEY_T, STORE_T)()
-    End Sub
 
     Protected MustOverride Function store_value(ByVal i As STORE_T, ByRef o As VALUE_T) As Boolean
     Protected MustOverride Function value_store(ByVal i As VALUE_T) As STORE_T
@@ -62,26 +58,22 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
     End Sub
 
     Public Function size() As UInt32
-        Static f As Func(Of UInt32) = Function() m.size()
-        Return reader_locked(f)
+        Return reader_locked(AddressOf m.size)
     End Function
 
     Public Function empty() As Boolean
-        Static f As Func(Of Boolean) = Function() m.empty()
-        Return reader_locked(f)
+        Return reader_locked(AddressOf m.empty)
     End Function
 
     Public Sub clear()
-        Static f As Action = Sub() m.clear()
-        writer_locked(f)
+        writer_locked(AddressOf m.clear)
     End Sub
 
     Private Function unlocked_erase(ByVal key As KEY_T, ByRef v As VALUE_T) As Boolean
         If key Is Nothing Then
             Return False
         End If
-        Dim it As unordered_map(Of KEY_T, STORE_T).iterator = Nothing
-        it = m.find(key)
+        Dim it As unordered_map(Of KEY_T, STORE_T).iterator = m.find(key)
         If it = m.end() Then
             Return False
         End If
@@ -130,8 +122,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
         End If
         Return reader_locked(Function() As T
                                  Dim v As VALUE_T = Nothing
-                                 Dim it As unordered_map(Of KEY_T, STORE_T).iterator = Nothing
-                                 it = m.find(key)
+                                 Dim it As unordered_map(Of KEY_T, STORE_T).iterator = m.find(key)
                                  If it <> m.end() AndAlso
                                     store_value((+it).second, v) Then
                                      Return action(v)
@@ -167,8 +158,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
     End Function
 
     Public Function [get](ByVal keys() As KEY_T, ByRef o As vector(Of VALUE_T)) As Boolean
-        Dim r As Boolean = False
-        r = True
+        Dim r As Boolean = True
         o.renew()
         For i As Int32 = 0 To array_size_i(keys) - 1
             Dim t As VALUE_T = Nothing
@@ -195,13 +185,11 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
         If k Is Nothing Then
             Return False
         End If
-        Dim o As VALUE_T = Nothing
-        o = v
+        Dim o As VALUE_T = v
         Dim result As Boolean = False
         result = writer_locked(Function() As Boolean
-                                   Dim it As unordered_map(Of KEY_T, STORE_T).iterator = Nothing
                                    Dim r As VALUE_T = Nothing
-                                   it = m.find(k)
+                                   Dim it As unordered_map(Of KEY_T, STORE_T).iterator = m.find(k)
                                    If it = m.end() OrElse Not store_value((+it).second, r) Then
                                        m.insert(k, value_store(o))
                                        Return True
