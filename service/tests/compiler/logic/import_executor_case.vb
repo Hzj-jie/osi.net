@@ -17,11 +17,9 @@ Namespace logic
 
         Private Shared Function build_case(ByVal str As String,
                                            Optional ByVal functions As interrupts = Nothing) As exportable()
-            Dim o As writer = Nothing
-            o = New writer()
+            Dim o As New writer()
             o.append(str)
-            Dim es As vector(Of exportable) = Nothing
-            es = New vector(Of exportable)()
+            Dim es As New vector(Of exportable)()
             If functions Is Nothing Then
                 assertion.is_true(o.dump(es))
             Else
