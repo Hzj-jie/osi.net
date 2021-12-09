@@ -34,7 +34,7 @@ Public Class thread_static_resolver(Of T As Class, PROTECTOR)
     Private NotInheritable Class unregister_delegate
         Implements IDisposable
 
-        Public Shared ReadOnly instance As unregister_delegate = New unregister_delegate()
+        Public Shared ReadOnly instance As New unregister_delegate()
 
         Private Sub New()
         End Sub
@@ -52,9 +52,9 @@ Public Class thread_static_resolver(Of T As Class, PROTECTOR)
 
     <ThreadStatic()> Private Shared resolver As resolver(Of T)
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function create_resolver() As resolver(Of T)
-        Dim r As resolver(Of T) = Nothing
-        r = resolver
+        Dim r As resolver(Of T) = resolver
         If r Is Nothing Then
             r = New resolver(Of T)()
             resolver = r

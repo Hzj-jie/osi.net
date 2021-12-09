@@ -22,7 +22,7 @@ Public Class ##TYPE_NAME##(Of T As Class, PROTECTOR)
     Private NotInheritable Class unregister_delegate
         Implements IDisposable
 
-        Public Shared ReadOnly instance As unregister_delegate = New unregister_delegate()
+        Public Shared ReadOnly instance As New unregister_delegate()
 
         Private Sub New()
         End Sub

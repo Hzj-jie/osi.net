@@ -15,21 +15,14 @@ Option Strict On
 
 
 IMports System.Runtime.CompilerServices
-Imports osi.root.connector
 Imports osi.root.constants
 
 Public NotInheritable Class thread_safe_resolver(Of T As Class)
 #If True Then
-    Private ReadOnly l As Object
+    Private ReadOnly l As New Object()
 #End If
     Private f As Func(Of T)
     Private cached As T
-
-#If True Then
-    Public Sub New()
-        l = New Object()
-    End Sub
-#End If
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function registered() As Boolean
