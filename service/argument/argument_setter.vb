@@ -65,6 +65,7 @@ Public NotInheritable Class argument_setter
             For i As UInt32 = 0 To arg_names.size() - uint32_1
                 Dim o As Boolean = False
                 If [default].switch(arg_names(i), o) Then
+                    raise_error("Setting ", arg_names(0), " to ", o)
                     Return o
                 End If
             Next
@@ -86,17 +87,19 @@ Public NotInheritable Class argument_setter
                 ".",
                 field.Name()
             }
+            Dim v As Object = Nothing
             If field_type.IsEnum() Then
                 Try
-                    Return [Enum].Parse(field_type, o, True)
+                    v = [Enum].Parse(field_type, o, True)
                 Catch ex As Exception
                     assert(False, assert_msgs, ", ex ", ex)
                 End Try
+            Else
+                assert(type_string_serializer.r.from_str(field_type, False, o, v) OrElse
+                       type_json_serializer.r.from_str(field_type, False, o, v),
+                       assert_msgs)
             End If
-            Dim v As Object = Nothing
-            assert(type_string_serializer.r.from_str(field_type, False, o, v) OrElse
-                   type_json_serializer.r.from_str(field_type, False, o, v),
-                   assert_msgs)
+            raise_error("Setting ", arg_names(0), " to ", v)
             Return v
         Next
 

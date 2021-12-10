@@ -29,7 +29,7 @@ Partial Public NotInheritable Class syntaxer
             Me.New(c, matching_creator.create_matchings(c, ms))
         End Sub
 
-        Public NotInheritable Class best_match_result
+        Private NotInheritable Class best_match_result
             Public ReadOnly id As UInt32
             Public ReadOnly result As result
 
@@ -56,12 +56,8 @@ Partial Public NotInheritable Class syntaxer
             Return failure.of(Of best_match_result)(max_failure)
         End Function
 
-        Public Function best_match(ByVal v As vector(Of typed_word),
-                                   ByVal p As UInt32) As one_of(Of best_match_result, failure)
-            If prefer_first_match Or False Then
-                Return first_match(v, p)
-            End If
-
+        Private Function best_match(ByVal v As vector(Of typed_word),
+                                    ByVal p As UInt32) As one_of(Of best_match_result, failure)
             Dim max As best_match_result = Nothing
             Dim max_failure As UInt32 = 0
             For i As Int32 = 0 To array_size_i(ms) - 1
@@ -88,7 +84,8 @@ Partial Public NotInheritable Class syntaxer
             If v Is Nothing OrElse v.size() <= p Then
                 Return failure.of(p)
             End If
-            Dim r As one_of(Of best_match_result, failure) = best_match(v, p)
+            Dim r As one_of(Of best_match_result, failure) =
+                If(prefer_first_match Or False, first_match(v, p), best_match(v, p))
             If r.is_second() Then
                 log_unmatched(v, r.second().pos, Me)
                 Return r.of_second(Of result)()

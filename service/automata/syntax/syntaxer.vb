@@ -69,7 +69,7 @@ Partial Public NotInheritable Class syntaxer
         Dim root As typed_node = typed_node.of_root(v)
         Dim p As UInt32 = 0
         While p < v.size()
-            Dim m As one_of(Of matching_group.best_match_result, matching.failure) = mg.best_match(v, p)
+            Dim m As one_of(Of matching.result, matching.failure) = mg.match(v, p)
             If m.is_second() Then
                 Dim l As Func(Of UInt32, String()) = Function(ByVal pos As UInt32) As String()
                                                          Return {
@@ -88,7 +88,7 @@ Partial Public NotInheritable Class syntaxer
                 Return [optional].empty(Of typed_node)()
             End If
             assert(Not m.first() Is Nothing)
-            Dim r As matching.result = m.first().result
+            Dim r As matching.result = m.first()
             assert(Not r Is Nothing)
             If p = r.pos Then
                 Return [optional].empty(Of typed_node)()
