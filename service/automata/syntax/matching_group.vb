@@ -14,7 +14,7 @@ Partial Public NotInheritable Class syntaxer
         Inherits matching
         Implements IComparable(Of matching_group)
 
-        Private Shared prefer_first_match As argument(Of Boolean)
+        Private Shared prefer_best_match As argument(Of Boolean)
 
         Private ReadOnly ms() As matching
 
@@ -85,7 +85,7 @@ Partial Public NotInheritable Class syntaxer
                 Return failure.of(p)
             End If
             Dim r As one_of(Of best_match_result, failure) =
-                If(prefer_first_match Or False, first_match(v, p), best_match(v, p))
+                If(prefer_best_match Or False, best_match(v, p), first_match(v, p))
             If r.is_second() Then
                 log_unmatched(v, r.second().pos, Me)
                 Return r.of_second(Of result)()
@@ -103,8 +103,7 @@ Partial Public NotInheritable Class syntaxer
 
         Public Overloads Function CompareTo(ByVal other As matching_group) As Int32 _
                                            Implements IComparable(Of matching_group).CompareTo
-            Dim c As Int32 = 0
-            c = object_compare(Me, other)
+            Dim c As Int32 = object_compare(Me, other)
             If c <> object_compare_undetermined Then
                 Return c
             End If
@@ -113,8 +112,7 @@ Partial Public NotInheritable Class syntaxer
         End Function
 
         Public Overrides Function ToString() As String
-            Dim r As StringBuilder = Nothing
-            r = New StringBuilder("matching_group [")
+            Dim r As New StringBuilder("matching_group [")
             For i As Int32 = 0 To array_size_i(ms) - 1
                 assert(Not ms(i) Is Nothing)
                 r.Append(ms(i)).Append(",")
