@@ -2,7 +2,7 @@
 IGNORE_TYPES blank, single-line-comment, multi-line-comment
 ROOT_TYPES root-type
 
-root-type [function, value-definition-with-semi-colon, value-declaration-with-semi-colon, namespace-, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, class, heap-declaration-with-semi-colon]
+root-type [function, value-definition-with-semi-colon, heap-declaration-with-semi-colon, value-declaration-with-semi-colon, namespace-, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, class]
 
 function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
 paramlist [param-with-comma]* param
@@ -13,7 +13,7 @@ namespace- kw-namespace name start-paragraph [root-type]* end-paragraph
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, ignore-result-heap-struct-function-call, kw-break, logic, self-value-clause, typedef, heap-declaration, pre-operation-value, post-operation-value]? semi-colon
+sentence-with-semi-colon [ignore-result-heap-struct-function-call, ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, self-value-clause, typedef, pre-operation-value, post-operation-value]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [paragraph]* end-paragraph
@@ -34,12 +34,12 @@ else-condition kw-else paragraph
 
 while kw-while start-bracket value end-bracket paragraph
 
-for-loop kw-for start-bracket [value-declaration, value-definition]? semi-colon [value]? semi-colon [value-clause, self-value-clause, ignore-result-function-call, ignore-result-heap-struct-function-call, pre-operation-value, post-operation-value]? end-bracket paragraph
+for-loop kw-for start-bracket [value-definition, value-declaration]? semi-colon [value]? semi-colon [value-clause, self-value-clause, ignore-result-heap-struct-function-call, ignore-result-function-call, pre-operation-value, post-operation-value]? end-bracket paragraph
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
-raw-value [function-call, heap-struct-function-call, variable-name, integer, biguint, ufloat, bool, string]
-value-without-bracket [raw-value, value-with-operation]
+raw-value [heap-struct-function-call, function-call, variable-name, integer, biguint, ufloat, bool, string]
+value-without-bracket [value-with-operation, raw-value]
 value-with-operation [unary-operation-value, binary-operation-value]
 unary-operation-value [pre-operation-value, post-operation-value]
 pre-operation-value [not, self-inc, self-dec] value
@@ -48,7 +48,7 @@ post-operation-value raw-value [self-inc, self-dec]
 # Should support binary-operation-value value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, less-than, greater-than, less-or-equal, greater-or-equal, equal, not-equal] value
 binary-operation-value raw-value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, left-shift, right-shift, less-than, greater-than, less-or-equal, greater-or-equal, equal, not-equal] value
 
-variable-name [name, heap-name, heap-struct-name]
+variable-name [heap-struct-name, heap-name, name]
 heap-name name start-square-bracket value end-square-bracket
 heap-struct-name heap-name dot name
 

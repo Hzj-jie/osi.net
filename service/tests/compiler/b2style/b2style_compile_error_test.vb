@@ -9,7 +9,6 @@ Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.automata
 Imports osi.service.compiler
-Imports osi.service.interpreter.primitive
 Imports osi.service.resource
 
 <test>
@@ -94,6 +93,16 @@ Public NotInheritable Class b2style_compile_error_test
                     with_default_functions.
                     parse(_b2style_test_data.errors_function_name_ends_with_dot.as_text(), Nothing))
             End Sub)).contains("c.")
+    End Sub
+
+    <test>
+    Private Shared Sub missing_ending_quota()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(b2style.
+                    with_default_functions.
+                    parse(_b2style_test_data.errors_missing_ending_quota.as_text(), Nothing))
+            End Sub)).contains("[nlexer]", """")
     End Sub
 
     Private Sub New()

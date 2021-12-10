@@ -44,7 +44,7 @@ Partial Public NotInheritable Class syntaxer
         End Operator
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32
-            Return CompareTo(cast(Of any_matching_group)().from(other, False))
+            Return CompareTo(cast(Of matching_wrapper)().from(other, False))
         End Function
 
         Public Overloads Function CompareTo(ByVal other As matching_wrapper) As Int32 _

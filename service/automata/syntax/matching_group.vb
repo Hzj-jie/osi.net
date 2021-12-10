@@ -5,7 +5,7 @@ Option Strict On
 
 Imports System.Text
 Imports osi.root.connector
-Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 
 Partial Public NotInheritable Class syntaxer
@@ -14,12 +14,15 @@ Partial Public NotInheritable Class syntaxer
         Inherits matching
         Implements IComparable(Of matching_group)
 
+        Private Shared prefer_first_match As argument(Of Boolean)
+
         Private ReadOnly ms() As matching
 
         Public Sub New(ByVal c As syntax_collection, ByVal ParamArray ms() As matching)
             MyBase.New(c)
             assert(Not isemptyarray(ms))
             Me.ms = ms
+            ' TODO: find a way to sort the matchings to avoid manual sorting in syntaxer rule file.
         End Sub
 
         Public Sub New(ByVal c As syntax_collection, ByVal ParamArray ms() As UInt32)
@@ -37,8 +40,28 @@ Partial Public NotInheritable Class syntaxer
             End Sub
         End Class
 
+        Private Function first_match(ByVal v As vector(Of typed_word),
+                                     ByVal p As UInt32) As one_of(Of best_match_result, failure)
+            Dim max_failure As UInt32 = 0
+            For i As Int32 = 0 To array_size_i(ms) - 1
+                assert(Not ms(i) Is Nothing)
+                Dim r As one_of(Of result, failure) = ms(i).match(v, p)
+                If r.is_first() Then
+                    Return one_of(Of best_match_result, failure).of_first(New best_match_result(CUInt(i), r.first()))
+                End If
+                If max_failure < r.second().pos Then
+                    max_failure = r.second().pos
+                End If
+            Next
+            Return failure.of(Of best_match_result)(max_failure)
+        End Function
+
         Public Function best_match(ByVal v As vector(Of typed_word),
                                    ByVal p As UInt32) As one_of(Of best_match_result, failure)
+            If prefer_first_match Or False Then
+                Return first_match(v, p)
+            End If
+
             Dim max As best_match_result = Nothing
             Dim max_failure As UInt32 = 0
             For i As Int32 = 0 To array_size_i(ms) - 1

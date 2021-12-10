@@ -43,8 +43,8 @@ Partial Public NotInheritable Class syntaxer
     End Function
 
     Private Function debug_str(ByVal v As vector(Of typed_word), ByVal p As UInt32) As String
-        Dim start As UInt32 = CUInt(max(0, p - 3))
-        Dim [end] As UInt32 = CUInt(min(start + 7, v.size()))
+        Dim start As UInt32 = CUInt(max(0, p - 6))
+        Dim [end] As UInt32 = CUInt(min(start + 13, v.size()))
         Dim r As New StringBuilder()
         Dim i As UInt32 = start
         While i < [end]
@@ -80,7 +80,11 @@ Partial Public NotInheritable Class syntaxer
                                                              debug_str(v, pos)
                                                          }
                                                      End Function
-                raise_error(error_type.user, "[syntaxer] Cannot match token ", l(p), ". Longest match ", l(m.second().pos))
+                raise_error(error_type.user,
+                            "[syntaxer] Cannot match token ",
+                            l(p),
+                            ". Longest match ",
+                            l(m.second().pos))
                 Return [optional].empty(Of typed_node)()
             End If
             assert(Not m.first() Is Nothing)

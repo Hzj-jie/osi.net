@@ -2,7 +2,7 @@
 IGNORE_TYPES blank, single-line-comment, multi-line-comment
 ROOT_TYPES root-type
 
-root-type [function, value-definition-with-semi-colon, value-declaration-with-semi-colon, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, heap-declaration-with-semi-colon]
+root-type [function, value-definition-with-semi-colon, heap-declaration-with-semi-colon, value-declaration-with-semi-colon, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct]
 
 function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
 paramlist [param-with-comma]* param
@@ -11,7 +11,7 @@ param name [reference]? name
 
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, sentence-without-semi-colon]
-sentence-with-semi-colon [value-definition, value-declaration, value-clause, return-clause, ignore-result-function-call, kw-break, logic, typedef, heap-declaration]? semi-colon
+sentence-with-semi-colon [ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, typedef]? semi-colon
 sentence-without-semi-colon [condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [paragraph]* end-paragraph
@@ -30,13 +30,13 @@ else-condition kw-else paragraph
 
 while kw-while start-bracket value end-bracket paragraph
 
-for-loop kw-for start-bracket [value-declaration, value-definition]? semi-colon [value]? semi-colon [value-clause, ignore-result-function-call]? end-bracket paragraph
+for-loop kw-for start-bracket [value-definition, value-declaration]? semi-colon [value]? semi-colon [value-clause, ignore-result-function-call]? end-bracket paragraph
 
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
 value-without-bracket [function-call, variable-name, integer, biguint, ufloat, bool, string]
 
-variable-name [name, heap-name]
+variable-name [heap-name, name]
 heap-name name start-square-bracket value end-square-bracket
 
 ignore-result-function-call function-call
