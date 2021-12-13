@@ -9,7 +9,7 @@ Option Strict On
 
 
 
-IMports System.Runtime.CompilerServices
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public NotInheritable Class resolver(Of T As Class)

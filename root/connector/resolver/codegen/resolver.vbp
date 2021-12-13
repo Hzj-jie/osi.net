@@ -2,7 +2,7 @@
 ##DEFAULT THREAD_SAFE False
 ##DEFAULT TYPE_NAME resolver
 
-IMports System.Runtime.CompilerServices
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public NotInheritable Class ##TYPE_NAME##(Of T As Class)

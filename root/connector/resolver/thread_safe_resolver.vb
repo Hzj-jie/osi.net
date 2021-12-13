@@ -14,7 +14,7 @@ Option Strict On
 
 
 
-IMports System.Runtime.CompilerServices
+Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public NotInheritable Class thread_safe_resolver(Of T As Class)
