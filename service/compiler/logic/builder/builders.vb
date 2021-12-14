@@ -71,7 +71,7 @@ Namespace logic
         Public Shared Function of_callee(ByVal name As String,
                                          ByVal type As String,
                                          ByVal parameters As vector(Of parameter),
-                                         ByVal paragraph As Func(Of Boolean)) As callee_builder_16
+                                         ByVal paragraph As Func(Of writer, Boolean)) As callee_builder_16
             Return of_callee(name,
                              type,
                              parameters.stream().
@@ -91,7 +91,7 @@ Namespace logic
                 Me.o = o
             End Sub
 
-            Public Function [of](ByVal f As Func(Of Boolean)) As Boolean
+            Public Function [of](ByVal f As Func(Of writer, Boolean)) As Boolean
                 Return of_start_scope(f).to(o)
             End Function
         End Class

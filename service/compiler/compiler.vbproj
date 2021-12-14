@@ -119,6 +119,7 @@
     <Compile Include="bstyle\scope.vb" />
     <Compile Include="bstyle\single_data_slot_variable.vb" />
     <Compile Include="bstyle\struct_member.vb" />
+    <Compile Include="object_list_writer.vb" />
     <Compile Include="scope.call_hierarchy.vb" />
     <Compile Include="code_gen\default.vb" />
     <Compile Include="logic\define_heap.vb" />

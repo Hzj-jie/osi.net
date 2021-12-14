@@ -31,7 +31,9 @@ Partial Public NotInheritable Class b2style
             End If
             Dim function_name As String = operations.self_function_name(n.child(1))
             scope.current().call_hierarchy().to(function_name)
-            o.append("=").append(function_name).append("(")
+            o.append("=")
+            o.append(function_name)
+            o.append("(")
             If Not l.of(n.child(0)).build(o) Then
                 Return False
             End If

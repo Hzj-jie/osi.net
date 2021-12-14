@@ -40,15 +40,15 @@ Partial Public NotInheritable Class bstyle
                     raise_error(error_type.user, "Condition of if cannot be a struct.")
                     Return False
                 End If
-                Dim satisfied_paragraph As Func(Of Boolean) = Function() As Boolean
-                                                                  Return l.[of](n.child(4)).build(o)
-                                                              End Function
+                Dim satisfied_paragraph As Func(Of writer, Boolean) = Function(ByVal oo As writer) As Boolean
+                                                                          Return l.[of](n.child(4)).build(oo)
+                                                                      End Function
                 If n.child_count() = 5 Then
                     Return builders.of_if(condition, satisfied_paragraph).to(o)
                 End If
-                Dim unsatisfied_paragraph As Func(Of Boolean) = Function() As Boolean
-                                                                    Return l.[of](n.child(5)).build(o)
-                                                                End Function
+                Dim unsatisfied_paragraph As Func(Of writer, Boolean) = Function(ByVal oo As writer) As Boolean
+                                                                            Return l.[of](n.child(5)).build(oo)
+                                                                        End Function
                 Return builders.of_if(condition, satisfied_paragraph, unsatisfied_paragraph).to(o)
             End Using
         End Function

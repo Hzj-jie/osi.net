@@ -74,11 +74,11 @@ Partial Public NotInheritable Class b2style
                                        Return False
                                    End If
                                    ' No namespace is necessary, the first parameter contains namespace.
-                                   o.append(namespace_.bstyle_format_in_global_namespace(node.child(1).word().str())).
-                                     append("(").
-                                     append(class_name).
-                                     append("&").
-                                     append(namespace_.bstyle_format("this"))
+                                   o.append(namespace_.bstyle_format_in_global_namespace(node.child(1).word().str()))
+                                   o.append("(")
+                                   o.append(class_name)
+                                   o.append("&")
+                                   o.append(namespace_.bstyle_format("this"))
                                    If node.child_count() = 6 Then
                                        o.append(", ")
                                        If Not l.of(node.child(3)).build(o) Then
