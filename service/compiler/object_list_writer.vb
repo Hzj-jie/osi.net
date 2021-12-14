@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.template
 
-Public Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String))
+Public MustInherit Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String))
     Private Shared ReadOnly debug_dump As Action(Of String) = AddressOf alloc(Of DEBUG_DUMP_T)().invoke
     Private ReadOnly v As New vector(Of Object)()
 

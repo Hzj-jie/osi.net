@@ -10,9 +10,8 @@ Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.automata
 
-Partial Public NotInheritable Class bstyle
-    Public MustInherit Class includes(Of WRITER,
-                                         _PARSER As __do(Of String, WRITER, Boolean),
+Partial Public Class code_gens(Of WRITER)
+    Public MustInherit Class includes(Of _PARSER As __do(Of String, WRITER, Boolean),
                                          _FOLDERS As __do(Of vector(Of String)),
                                          _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                          _DEFAULT_FOLDER As __do(Of String))
@@ -27,7 +26,7 @@ Partial Public NotInheritable Class bstyle
                                              ByVal o As WRITER) As Boolean
             Dim f As String = Path.Combine(p, s)
             If File.Exists(f) Then
-                If (+parser)(File.ReadAllText(f), o) Then
+                If parser(File.ReadAllText(f), o) Then
                     Return True
                 End If
                 raise_error(error_type.user, "Cannot include file ", f)
@@ -59,12 +58,11 @@ Partial Public NotInheritable Class bstyle
         End Function
     End Class
 
-    Public MustInherit Class include_with_string(Of WRITER,
-                                                    _PARSER As __do(Of String, WRITER, Boolean),
+    Public MustInherit Class include_with_string(Of _PARSER As __do(Of String, WRITER, Boolean),
                                                     _FOLDERS As __do(Of vector(Of String)),
                                                     _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                     _DEFAULT_FOLDER As __do(Of String))
-        Inherits includes(Of WRITER, _PARSER, _FOLDERS, _IGNORE_DEFAULT_FOLDER, _DEFAULT_FOLDER)
+        Inherits includes(Of _PARSER, _FOLDERS, _IGNORE_DEFAULT_FOLDER, _DEFAULT_FOLDER)
 
         Protected Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean
             assert(Not n Is Nothing)
@@ -74,12 +72,11 @@ Partial Public NotInheritable Class bstyle
         End Function
     End Class
 
-    Public MustInherit Class include_with_file(Of WRITER,
-                                                  _PARSER As __do(Of String, WRITER, Boolean),
+    Public MustInherit Class include_with_file(Of _PARSER As __do(Of String, WRITER, Boolean),
                                                   _FOLDERS As __do(Of vector(Of String)),
                                                   _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                   _DEFAULT_FOLDER As __do(Of String))
-        Inherits includes(Of WRITER, _PARSER, _FOLDERS, _IGNORE_DEFAULT_FOLDER, _DEFAULT_FOLDER)
+        Inherits includes(Of _PARSER, _FOLDERS, _IGNORE_DEFAULT_FOLDER, _DEFAULT_FOLDER)
 
         Private Const kw_include As String = "#include"
 

@@ -17,6 +17,14 @@ Partial Public NotInheritable Class b2style
     Private Shared include_folders As argument(Of vector(Of String))
     Private Shared ignore_default_include As argument(Of Boolean)
 
+    Public NotInheritable Class parser
+        Inherits __do(Of String, typed_node_writer, Boolean)
+
+        Public Overrides Function at(ByRef i As String, ByRef j As typed_node_writer) As Boolean
+            Return code_builder.current().build(i, j)
+        End Function
+    End Class
+
     Public NotInheritable Class default_includes
         Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "b2style-inc")
 
@@ -28,14 +36,6 @@ Partial Public NotInheritable Class b2style
             assert(b2style_lib.b2style_ufloat_h.sync_export(Path.Combine(folder, "b2style_ufloat.h"), True))
             assert(b2style_lib.b2style_types_h.sync_export(Path.Combine(folder, "b2style_types.h"), True))
         End Sub
-
-        Public NotInheritable Class parser
-            Inherits __do(Of String, typed_node_writer, Boolean)
-
-            Public Overrides Function at(ByRef i As String, ByRef j As typed_node_writer) As Boolean
-                Return code_builder.current().build(i, j)
-            End Function
-        End Class
 
         Public NotInheritable Class folders
             Inherits __do(Of vector(Of String))
@@ -66,11 +66,10 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Public NotInheritable Class include_with_string
-        Inherits bstyle.include_with_string(Of typed_node_writer,
-                                               default_includes.parser,
-                                               default_includes.folders,
-                                               default_includes.ignore_default_folder,
-                                               default_includes.default_folder)
+        Inherits code_gens(Of typed_node_writer).include_with_string(Of parser,
+                                                                        default_includes.folders,
+                                                                        default_includes.ignore_default_folder,
+                                                                        default_includes.default_folder)
         Implements code_gen(Of typed_node_writer)
 
         Private Shared ReadOnly instance As New include_with_string()
@@ -93,11 +92,10 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Public NotInheritable Class include_with_file
-        Inherits bstyle.include_with_file(Of typed_node_writer,
-                                             default_includes.parser,
-                                             default_includes.folders,
-                                             default_includes.ignore_default_folder,
-                                             default_includes.default_folder)
+        Inherits code_gens(Of typed_node_writer).include_with_file(Of parser,
+                                                                      default_includes.folders,
+                                                                      default_includes.ignore_default_folder,
+                                                                      default_includes.default_folder)
         Implements code_gen(Of typed_node_writer)
 
         Private Shared ReadOnly instance As New include_with_file()
