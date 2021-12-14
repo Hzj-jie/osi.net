@@ -83,9 +83,3 @@ struct kw-struct name start-paragraph [value-declaration-with-semi-colon]* end-p
 
 # TODO: Support static function
 class kw-class name start-paragraph [value-declaration-with-semi-colon, function]* end-paragraph semi-colon
-
-type-param-list [type-param-with-comma]* type-param
-type-param-with-comma type-param comma
-type-param name
-
-template kw-template less-than type-param-list greater-than class

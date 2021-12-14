@@ -90,6 +90,4 @@ kw-class class
 
 dot .
 
-kw-template template
-
 name [\w,_,::][\w,\d,_,::,.]*
