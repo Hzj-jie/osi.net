@@ -13,22 +13,20 @@ Namespace logic
     Partial Public NotInheritable Class importer
         Private Const comment_start As String = "##"
         Private Const comment_end As String = character.newline
-        Private Shared ReadOnly separators() As String
-        Private Shared ReadOnly surround_strs() As String
+        Private Shared ReadOnly separators() As String = build_separators()
+        Private Shared ReadOnly surround_strs() As String = Nothing
 
         Private ReadOnly anchors As anchors
         Private ReadOnly types As types
         Private ReadOnly functions As interrupts
 
-        Shared Sub New()
-            Dim v As vector(Of String) = Nothing
-            v = New vector(Of String)()
+        Private Shared Function build_separators() As String()
+            Dim v As New vector(Of String)()
             For i As UInt32 = 0 To strlen(space_chars) - uint32_1
                 v.emplace_back(space_chars(CInt(i)))
             Next
-            separators = (+v)
-            surround_strs = Nothing
-        End Sub
+            Return +v
+        End Function
 
         Public Sub New(ByVal anchors As anchors, ByVal types As types, ByVal functions As interrupts)
             assert(Not anchors Is Nothing)
@@ -39,27 +37,13 @@ Namespace logic
             Me.functions = functions
         End Sub
 
-        Public Shared Function [New](ByVal anchors As anchors,
-                                     ByVal types As types,
-                                     ByVal functions As interrupts) As importer
-            Return New importer(anchors, types, functions)
-        End Function
-
         Public Sub New(ByVal functions As interrupts)
             Me.New(New anchors(), New types(), functions)
         End Sub
 
-        Public Shared Function [New](ByVal functions As interrupts) As importer
-            Return New importer(functions)
-        End Function
-
         Public Sub New()
             Me.New(New interrupts())
         End Sub
-
-        Public Shared Function [New]() As importer
-            Return New importer()
-        End Function
 
         Public Function import(ByVal s As vector(Of String), ByVal o As vector(Of exportable)) As Boolean
             If s Is Nothing OrElse o Is Nothing Then

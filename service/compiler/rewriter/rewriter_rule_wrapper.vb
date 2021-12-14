@@ -3,11 +3,11 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.interpreter.primitive
 Imports osi.service.compiler.rewriters
-Imports exportable = osi.service.compiler.logic.exportable
 Imports statements = osi.service.compiler.statements(Of osi.service.compiler.rewriters.typed_node_writer)
 
 Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
@@ -49,16 +49,14 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
             MyBase.New(functions)
         End Sub
 
-        Protected Overrides Function import(ByVal e As interpreter.primitive.exportable,
-                                            ByVal o As typed_node_writer) As Boolean
-            Dim l() As exportable = Nothing
-            If Not logic_parse(o.dump(), l) Then
-                Return False
-            End If
-            Return logic.import(e, l)
+        Protected NotOverridable Overrides Function import(ByVal e As interpreter.primitive.exportable,
+                                                           ByVal o As typed_node_writer) As Boolean
+            assert(Not o Is Nothing)
+            Return text_import(o.dump(), e)
         End Function
 
-        Protected MustOverride Function logic_parse(ByVal s As String, ByRef e() As exportable) As Boolean
+        Protected MustOverride Function text_import(ByVal i As String,
+                                                    ByVal e As interpreter.primitive.exportable) As Boolean
     End Class
 
     Protected Sub New()

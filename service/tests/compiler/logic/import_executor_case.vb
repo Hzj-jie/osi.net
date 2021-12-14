@@ -17,13 +17,11 @@ Namespace logic
 
         Private Shared Function build_case(ByVal str As String,
                                            Optional ByVal functions As interrupts = Nothing) As exportable()
-            Dim o As New writer()
-            o.append(str)
             Dim es As New vector(Of exportable)()
             If functions Is Nothing Then
-                assertion.is_true(o.dump(es))
+                assertion.is_true(New importer().import(str, es))
             Else
-                assertion.is_true(o.dump(functions, es))
+                assertion.is_true(New importer(functions).import(str, es))
             End If
             Return +es
         End Function

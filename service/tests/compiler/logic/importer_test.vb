@@ -76,9 +76,9 @@ Namespace logic
 
         Private Shared Function import_empty() As Boolean
             Dim e As executor = Nothing
-            assertion.is_false(importer.[New]().import("", e))
+            assertion.is_false(New importer().import("", e))
             assertion.is_null(e)
-            assertion.is_false(importer.[New]().import(Nothing, e))
+            assertion.is_false(New importer().import(Nothing, e))
             assertion.is_null(e)
             Return True
         End Function
@@ -86,7 +86,7 @@ Namespace logic
         Private Shared Function importable() As Boolean
             For i As UInt32 = 0 To array_size(importable_cases) - uint32_1
                 Dim e As executor = Nothing
-                assertion.is_true(importer.[New]().import(importable_cases(CInt(i)), e))
+                assertion.is_true(New importer().import(importable_cases(CInt(i)), e))
                 assertion.is_not_null(e)
             Next
             Return True
@@ -95,7 +95,7 @@ Namespace logic
         Private Shared Function not_importable() As Boolean
             For i As UInt32 = 0 To array_size(not_importable_cases) - uint32_1
                 Dim e As executor = Nothing
-                assertion.is_false(importer.[New]().import(not_importable_cases(CInt(i)), e))
+                assertion.is_false(New importer().import(not_importable_cases(CInt(i)), e))
                 assertion.is_null(e)
             Next
             Return True
@@ -104,7 +104,7 @@ Namespace logic
         Private Shared Function execute_cases() As Boolean
             For i As UInt32 = 0 To array_size(cases) - uint32_1
                 Dim e As executor = Nothing
-                If Not assertion.is_true(importer.[New]().import(cases(CInt(i)).first, e)) OrElse
+                If Not assertion.is_true(New importer().import(cases(CInt(i)).first, e)) OrElse
                    Not assertion.is_not_null(e) Then
                     Return False
                 End If

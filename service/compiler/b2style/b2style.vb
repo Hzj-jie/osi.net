@@ -154,14 +154,8 @@ Partial Public NotInheritable Class b2style
             MyBase.New(functions)
         End Sub
 
-        Protected Overrides Function logic_parse(ByVal s As String, ByRef e() As logic.exportable) As Boolean
-            Dim w As New logic.writer()
-            Dim v As vector(Of logic.exportable) = Nothing
-            If bstyle.parse(s, w) AndAlso w.dump(functions, v.renew()) Then
-                e = +v
-                Return True
-            End If
-            Return False
+        Protected Overrides Function text_import(ByVal s As String, ByVal o As exportable) As Boolean
+            Return bstyle.with_functions(functions).parse(s, o)
         End Function
     End Class
 
