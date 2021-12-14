@@ -65,7 +65,7 @@ public static class Program {
             parameter = "vector(Of pair(Of String, String))";
             break;
           case "paragraph":
-            parameter = "Func(Of Boolean)";
+            parameter = "Func(Of writer, Boolean)";
             break;
           default:
             parameter = null;

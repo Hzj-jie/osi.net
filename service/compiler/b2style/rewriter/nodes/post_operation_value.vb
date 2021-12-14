@@ -28,7 +28,8 @@ Partial Public NotInheritable Class b2style
             assert(n.child_count() = 2)
             Dim function_name As String = operations.post_function_name(n.child(1))
             scope.current().call_hierarchy().to(function_name)
-            o.append(function_name).append("(")
+            o.append(function_name)
+            o.append("(")
             If Not l.of(n.child(0)).build(o) Then
                 Return False
             End If

@@ -17,6 +17,14 @@ Partial Public NotInheritable Class bstyle
     Private Shared include_folders As argument(Of vector(Of String))
     Private Shared ignore_default_include As argument(Of Boolean)
 
+    Public NotInheritable Class parser
+        Inherits __do(Of String, writer, Boolean)
+
+        Public Overrides Function at(ByRef i As String, ByRef j As writer) As Boolean
+            Return code_builder.current().build(i, j)
+        End Function
+    End Class
+
     Public NotInheritable Class default_includes
         Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "bstyle-inc")
 
@@ -28,14 +36,6 @@ Partial Public NotInheritable Class bstyle
             assert(bstyle_lib.bstyle_types_h.sync_export(Path.Combine(folder, "bstyle_types.h"), True))
             assert(bstyle_lib.bstyle_constants_h.sync_export(Path.Combine(folder, "bstyle_constants.h"), True))
         End Sub
-
-        Public NotInheritable Class parser
-            Inherits __do(Of String, writer, Boolean)
-
-            Public Overrides Function at(ByRef i As String, ByRef j As writer) As Boolean
-                Return code_builder.current().build(i, j)
-            End Function
-        End Class
 
         Public NotInheritable Class folders
             Inherits __do(Of vector(Of String))
@@ -66,11 +66,10 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class include_with_string
-        Inherits include_with_string(Of writer,
-                                        default_includes.parser,
-                                        default_includes.folders,
-                                        default_includes.ignore_default_folder,
-                                        default_includes.default_folder)
+        Inherits code_gens(Of writer).include_with_string(Of parser,
+                                                             default_includes.folders,
+                                                             default_includes.ignore_default_folder,
+                                                             default_includes.default_folder)
         Implements code_gen(Of writer)
 
         Private Shared ReadOnly instance As New include_with_string()
@@ -89,11 +88,10 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class include_with_file
-        Inherits include_with_file(Of writer,
-                                      default_includes.parser,
-                                      default_includes.folders,
-                                      default_includes.ignore_default_folder,
-                                      default_includes.default_folder)
+        Inherits code_gens(Of writer).include_with_file(Of parser,
+                                                           default_includes.folders,
+                                                           default_includes.ignore_default_folder,
+                                                           default_includes.default_folder)
         Implements code_gen(Of writer)
 
         Private Shared ReadOnly instance As New include_with_file()

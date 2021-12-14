@@ -58,11 +58,7 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of Byte()),
         End Sub
 
         Protected Overrides Function import(ByVal e As interpreter.primitive.exportable, ByVal o As writer) As Boolean
-            Dim es As New vector(Of exportable)()
-            If Not o.dump(functions, es) Then
-                Return False
-            End If
-            Return e.import(+es)
+            Return New importer(functions).import(o.dump(), e)
         End Function
     End Class
 

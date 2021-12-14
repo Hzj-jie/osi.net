@@ -55,9 +55,9 @@ Partial Public NotInheritable Class b2style
             End If
             Dim function_name As String = namespace_.bstyle_format_in_global_namespace(name.Substring(dot_pos + 1))
             scope.current().call_hierarchy().to(function_name)
-            o.append(function_name).
-              append("(").
-              append(namespace_.bstyle_format(name.Substring(0, dot_pos)))
+            o.append(function_name)
+            o.append("(")
+            o.append(namespace_.bstyle_format(name.Substring(0, dot_pos)))
             If n.child_count() = 4 Then
                 o.append(", ")
                 If Not l.of(n.child(2)).build(o) Then

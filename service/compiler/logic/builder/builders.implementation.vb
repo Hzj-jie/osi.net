@@ -14,15 +14,15 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     Partial Public NotInheritable Class builders
 
-        Public Shared Function of_start_scope(ByVal paragraph_1 As Func(Of Boolean)) As start_scope_builder_1
+        Public Shared Function of_start_scope(ByVal paragraph_1 As Func(Of writer, Boolean)) As start_scope_builder_1
             Return New start_scope_builder_1(paragraph_1)
         End Function
 
         Public NotInheritable Class start_scope_builder_1
 
-            Private ReadOnly paragraph_1 As Func(Of Boolean)
+            Private ReadOnly paragraph_1 As Func(Of writer, Boolean)
 
-            Public Sub New(ByVal paragraph_1 As Func(Of Boolean))
+            Public Sub New(ByVal paragraph_1 As Func(Of writer, Boolean))
                 assert(Not paragraph_1 Is Nothing)
                 Me.paragraph_1 = paragraph_1
             End Sub
@@ -438,7 +438,7 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_callee(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of Boolean)) As callee_builder_16
+        Public Shared Function of_callee(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of writer, Boolean)) As callee_builder_16
             Return New callee_builder_16(string_1, string_2, typed_parameters_3, paragraph_4)
         End Function
 
@@ -447,9 +447,9 @@ Namespace logic
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
             Private ReadOnly typed_parameters_3 As vector(Of pair(Of String, String))
-            Private ReadOnly paragraph_4 As Func(Of Boolean)
+            Private ReadOnly paragraph_4 As Func(Of writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not string_2.null_or_whitespace())
@@ -678,17 +678,17 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean), ByVal paragraph_4 As Func(Of Boolean)) As if_builder_24
+        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean), ByVal paragraph_4 As Func(Of writer, Boolean)) As if_builder_24
             Return New if_builder_24(string_1, paragraph_2, paragraph_4)
         End Function
 
         Public NotInheritable Class if_builder_24
 
             Private ReadOnly string_1 As String
-            Private ReadOnly paragraph_2 As Func(Of Boolean)
-            Private ReadOnly paragraph_4 As Func(Of Boolean)
+            Private ReadOnly paragraph_2 As Func(Of writer, Boolean)
+            Private ReadOnly paragraph_4 As Func(Of writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean), ByVal paragraph_4 As Func(Of Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean), ByVal paragraph_4 As Func(Of writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not paragraph_2 Is Nothing)
@@ -712,16 +712,16 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As if_builder_25
+        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean)) As if_builder_25
             Return New if_builder_25(string_1, paragraph_2)
         End Function
 
         Public NotInheritable Class if_builder_25
 
             Private ReadOnly string_1 As String
-            Private ReadOnly paragraph_2 As Func(Of Boolean)
+            Private ReadOnly paragraph_2 As Func(Of writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not paragraph_2 Is Nothing)
@@ -843,16 +843,16 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_do_until(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As do_until_builder_30
+        Public Shared Function of_do_until(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean)) As do_until_builder_30
             Return New do_until_builder_30(string_1, paragraph_2)
         End Function
 
         Public NotInheritable Class do_until_builder_30
 
             Private ReadOnly string_1 As String
-            Private ReadOnly paragraph_2 As Func(Of Boolean)
+            Private ReadOnly paragraph_2 As Func(Of writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not paragraph_2 Is Nothing)
@@ -870,16 +870,16 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_do_while(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As do_while_builder_31
+        Public Shared Function of_do_while(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean)) As do_while_builder_31
             Return New do_while_builder_31(string_1, paragraph_2)
         End Function
 
         Public NotInheritable Class do_while_builder_31
 
             Private ReadOnly string_1 As String
-            Private ReadOnly paragraph_2 As Func(Of Boolean)
+            Private ReadOnly paragraph_2 As Func(Of writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not paragraph_2 Is Nothing)
@@ -1098,16 +1098,16 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_while_then(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean)) As while_then_builder_40
+        Public Shared Function of_while_then(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean)) As while_then_builder_40
             Return New while_then_builder_40(string_1, paragraph_2)
         End Function
 
         Public NotInheritable Class while_then_builder_40
 
             Private ReadOnly string_1 As String
-            Private ReadOnly paragraph_2 As Func(Of Boolean)
+            Private ReadOnly paragraph_2 As Func(Of writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not paragraph_2 Is Nothing)

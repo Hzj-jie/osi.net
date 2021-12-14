@@ -70,7 +70,7 @@
     <Compile Include="b2style\scope.namespace.vb" />
     <Compile Include="b2style\scope.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
-    <Compile Include="bstyle\includes.vb" />
+    <Compile Include="code_gen\includes.vb" />
     <Compile Include="bstyle\logic\nodes\defines.vb" />
     <Compile Include="bstyle\logic\nodes\heap_declaration.vb" />
     <Compile Include="bstyle\logic\nodes\heap_name.vb" />
@@ -119,6 +119,8 @@
     <Compile Include="bstyle\scope.vb" />
     <Compile Include="bstyle\single_data_slot_variable.vb" />
     <Compile Include="bstyle\struct_member.vb" />
+    <Compile Include="code_gen\reparser.vb" />
+    <Compile Include="object_list_writer.vb" />
     <Compile Include="scope.call_hierarchy.vb" />
     <Compile Include="code_gen\default.vb" />
     <Compile Include="logic\define_heap.vb" />
