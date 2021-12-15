@@ -199,6 +199,8 @@
     <Compile Include="rewriter\rewriter_rule_wrapper.vb" />
     <Compile Include="rewriter\typed_node_writer.vb" />
     <Compile Include="rule_wrapper.vb" />
+    <Compile Include="shared\shared_rules.vb" />
+    <Compile Include="shared\shared_rules_exporter.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -228,6 +230,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="shared\run.cmd" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -252,6 +255,8 @@
     <Content Include="logic\codegen\importer_gen.exe" />
     <Content Include="logic\definition.txt" />
     <Content Include="logic\design.txt" />
+    <Content Include="shared\nlexer_rule.txt" />
+    <Content Include="shared\syntaxer_rule.txt" />
     <Content Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup />

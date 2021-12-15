@@ -27,14 +27,14 @@ Public MustInherit Class rule
         If Not File.Exists(s) AndAlso File.Exists(current_file()) Then
             s = pather.default.combine(pather.default.parent_path(current_file()), s)
         End If
-        Return File.Exists(s) AndAlso parse_file(s)
+        Return File.Exists(s) AndAlso parse_file_impl(s)
     End Function
 
     Protected Overridable Function finish() As Boolean
         Return True
     End Function
 
-    Public Function parse(ByVal ParamArray ls() As String) As Boolean
+    Private Function parse_impl(ByVal ls() As String) As Boolean
         If isemptyarray(ls) Then
             Return True
         End If
@@ -78,10 +78,14 @@ Public MustInherit Class rule
             End If
         Next
 
-        Return finish()
+        Return True
     End Function
 
-    Public Function parse_file(ByVal rule_file As String) As Boolean
+    Public Function parse(ByVal ParamArray ls() As String) As Boolean
+        Return parse_impl(ls) AndAlso finish()
+    End Function
+
+    Private Function parse_file_impl(ByVal rule_file As String) As Boolean
         Dim ls() As String = Nothing
         Try
             ls = File.ReadAllLines(rule_file)
@@ -90,23 +94,23 @@ Public MustInherit Class rule
             Return False
         End Try
 
-        Dim last_file As String = Nothing
-        last_file = cur_file
+        Dim last_file As String = cur_file
         cur_file = rule_file
         Using defer.to(Sub()
                            cur_file = last_file
                        End Sub)
-            Return parse(ls)
+            Return parse_impl(ls)
         End Using
+    End Function
+
+    Public Function parse_file(ByVal rule_file As String) As Boolean
+        Return parse_file_impl(rule_file) AndAlso finish()
     End Function
 
     Public Function parse_content(ByVal content As String) As Boolean
         Static newline_strs() As String = {newline.incode(), character.newline}
         Static empty_surround_strs() As pair(Of String, String) = Nothing
         Dim vs As vector(Of String) = Nothing
-        If content.strsplit(newline_strs, empty_surround_strs, vs, True, True) Then
-            Return parse(+vs)
-        End If
-        Return False
+        Return content.strsplit(newline_strs, empty_surround_strs, vs, True, True) AndAlso parse(+vs)
     End Function
 End Class

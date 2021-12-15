@@ -17,7 +17,7 @@ Imports osi.service.resource
 Public NotInheritable Class b2style_test
     <test>
     Private Shared Sub nlp_parsable()
-        assertion.is_true(nlp.of(b2style.nlexer_rule, b2style.syntaxer_rule, Nothing))
+        assertion.is_true(nlp.of_file(b2style.nlexer_rule, b2style.syntaxer_rule, Nothing))
     End Sub
 
     <test>

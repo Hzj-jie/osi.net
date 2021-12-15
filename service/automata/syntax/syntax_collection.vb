@@ -233,10 +233,8 @@ Partial Public NotInheritable Class syntaxer
         End Function
 
         Public Function complete() As Boolean
-            Dim it As map(Of String, UInt32).iterator = Nothing
-            it = syntax_str_type.begin()
-            Dim s As [set](Of UInt32) = Nothing
-            s = New [set](Of UInt32)()
+            Dim it As map(Of String, UInt32).iterator = syntax_str_type.begin()
+            Dim s As New [set](Of UInt32)()
             While it <> syntax_str_type.end()
                 assert(s.insert((+it).second).second)
                 If Not [get]((+it).second, Nothing) Then

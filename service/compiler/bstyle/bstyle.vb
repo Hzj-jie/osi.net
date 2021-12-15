@@ -3,28 +3,45 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.IO
+Imports osi.root.utils
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.compiler.logic
+Imports osi.service.resource
 Imports [default] = osi.service.compiler.code_gens(Of osi.service.compiler.logic.writer).[default]
 Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.writer)
 
 Public NotInheritable Class bstyle
     Inherits logic_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, logic_gens_t, scope)
 
-    Public NotInheritable Class nlexer_rule_t
-        Inherits __do(Of Byte())
+    Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "service/compiler/bstyle")
 
-        Protected Overrides Function at() As Byte()
-            Return bstyle_rules.nlexer_rule
+    Public NotInheritable Class nlexer_rule_t
+        Inherits __do(Of String)
+
+        Private Shared ReadOnly file As String = Path.Combine(folder, "nlexer_rule.txt")
+
+        Shared Sub New()
+            bstyle_rules.nlexer_rule.sync_export(file)
+        End Sub
+
+        Protected Overrides Function at() As String
+            Return file
         End Function
     End Class
 
     Public NotInheritable Class syntaxer_rule_t
-        Inherits __do(Of Byte())
+        Inherits __do(Of String)
 
-        Protected Overrides Function at() As Byte()
-            Return bstyle_rules.syntaxer_rule
+        Private Shared ReadOnly file As String = Path.Combine(folder, "syntaxer_rule.txt")
+
+        Shared Sub New()
+            bstyle_rules.syntaxer_rule.sync_export(file)
+        End Sub
+
+        Protected Overrides Function at() As String
+            Return file
         End Function
     End Class
 

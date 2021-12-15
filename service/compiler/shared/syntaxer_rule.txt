@@ -1,0 +1,58 @@
+﻿
+IGNORE_TYPES blank, single-line-comment, multi-line-comment
+ROOT_TYPES root-type
+
+function name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
+paramlist [param-with-comma]* param
+param-with-comma param comma
+
+paragraph [sentence, multi-sentence-paragraph]
+sentence [sentence-with-semi-colon, sentence-without-semi-colon]
+sentence-without-semi-colon [condition, while, for-loop]
+
+multi-sentence-paragraph start-paragraph [paragraph]* end-paragraph
+
+value-definition name name assignment value
+value-declaration name name
+heap-declaration name heap-name
+value-clause variable-name assignment value
+
+value-definition-with-semi-colon value-definition semi-colon
+value-declaration-with-semi-colon value-declaration semi-colon
+heap-declaration-with-semi-colon heap-declaration semi-colon
+
+condition kw-if start-bracket value end-bracket paragraph [else-condition]?
+else-condition kw-else paragraph
+
+while kw-while start-bracket value end-bracket paragraph
+
+value [value-with-bracket, value-without-bracket]
+value-with-bracket start-bracket value end-bracket
+
+heap-name name start-square-bracket value end-square-bracket
+
+ignore-result-function-call function-call
+
+function-call name start-bracket [value-list]? end-bracket
+value-list [value-with-comma]* value
+value-with-comma value comma
+
+return-clause kw-return [value]?
+
+# Embed a logic statement directly, like logic "int stdout a_string"
+logic kw-logic string
+logic-with-semi-colon logic semi-colon
+
+include-with-string kw-include string
+include [include-with-string, include-with-file]
+
+ifndef-wrapped kw-ifndef name [root-type]* kw-endif
+define kw-define name
+
+# Allow type* to be used as a string.
+typedef-type [name, string]
+typedef kw-typedef typedef-type typedef-type
+typedef-with-semi-colon typedef semi-colon
+
+# TODO: Support value-definition
+struct kw-struct name start-paragraph [value-declaration-with-semi-colon]* end-paragraph semi-colon
