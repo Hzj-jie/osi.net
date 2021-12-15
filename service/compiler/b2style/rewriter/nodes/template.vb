@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
-Imports osi.service.compiler
 Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
