@@ -129,7 +129,9 @@ Partial Public NotInheritable Class b2style
                        AddressOf struct.register,
                        leaf.of("kw-struct"),
  _
-                       AddressOf [class].register
+                       AddressOf [class].register,
+ _
+                       AddressOf template.register
                    )
         End Function
     End Class
