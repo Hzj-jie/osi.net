@@ -3,11 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
+Imports System.IO
 Imports osi.root.formation
 Imports osi.root.template
+Imports osi.root.utils
 Imports osi.service.compiler.rewriters
 Imports osi.service.interpreter.primitive
+Imports osi.service.resource
 Imports [default] = osi.service.compiler.code_gens(Of osi.service.compiler.rewriters.typed_node_writer).[default]
 Imports statements = osi.service.compiler.statements(Of osi.service.compiler.rewriters.typed_node_writer)
 
@@ -18,19 +20,34 @@ Partial Public NotInheritable Class b2style
                                       __do.default_of(Of vector(Of Action(Of statements))),
                                       rewriter_gens_t,
                                       scope)
-    Public NotInheritable Class nlexer_rule_t
-        Inherits __do(Of Byte())
 
-        Protected Overrides Function at() As Byte()
-            Return b2style_rules.nlexer_rule
+    Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "service/compiler/b2style")
+
+    Public NotInheritable Class nlexer_rule_t
+        Inherits __do(Of String)
+
+        Private Shared ReadOnly file As String = Path.Combine(folder, "nlexer_rule.txt")
+
+        Shared Sub New()
+            b2style_rules.nlexer_rule.sync_export(file)
+        End Sub
+
+        Protected Overrides Function at() As String
+            Return file
         End Function
     End Class
 
     Public NotInheritable Class syntaxer_rule_t
-        Inherits __do(Of Byte())
+        Inherits __do(Of String)
 
-        Protected Overrides Function at() As Byte()
-            Return b2style_rules.syntaxer_rule
+        Private Shared ReadOnly file As String = Path.Combine(folder, "syntaxer_rule.txt")
+
+        Shared Sub New()
+            b2style_rules.syntaxer_rule.sync_export(file)
+        End Sub
+
+        Protected Overrides Function at() As String
+            Return file
         End Function
     End Class
 

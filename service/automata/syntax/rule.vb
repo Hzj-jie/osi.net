@@ -12,7 +12,6 @@ Partial Public NotInheritable Class syntaxer
     Partial Public NotInheritable Class rule
         Inherits configuration.rule
 
-        Public Const command_clear As String = "CLEAR"
         Public Const command_ignore_types As String = "IGNORE_TYPES"
         Public Const command_root_types As String = "ROOT_TYPES"
         Public Const ignore_types_separator As Char = character.comma
@@ -26,7 +25,6 @@ Partial Public NotInheritable Class syntaxer
         Public Sub New(ByVal collection As syntax_collection)
             assert(Not collection Is Nothing)
             m = New map(Of String, Func(Of String, Boolean))()
-            m.emplace(command_clear, AddressOf clear)
             m.emplace(command_ignore_types, AddressOf ignore_types)
             m.emplace(command_root_types, AddressOf root_types)
             ignores = New [set](Of UInt32)()
@@ -106,11 +104,6 @@ Partial Public NotInheritable Class syntaxer
                     Return False
                 End If
             Next
-            Return True
-        End Function
-
-        Private Function clear(ByVal s As String) As Boolean
-            collection.clear()
             Return True
         End Function
     End Class

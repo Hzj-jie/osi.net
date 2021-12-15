@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.IO
 Imports osi.root.constants
@@ -26,26 +30,29 @@ Public Module _resource
         Return New event_comb(Function() As Boolean
                                   If isemptyarray(b) Then
                                       Return False
-                                  Else
-                                      Try
-                                          w = New FileStream(file_name,
-                                                             If(overwrite, FileMode.Create, FileMode.CreateNew),
-                                                             FileAccess.Write,
-                                                             FileShare.Read,
-                                                             4096,
-                                                             True)
-                                      Catch ex As Exception
-                                          raise_error(error_type.warning,
-                                                      "failed to export resource to local file ",
-                                                      file_name,
-                                                      ", ex ",
-                                                      ex.Message())
-                                          Return False
-                                      End Try
-                                      ec = w.send(b, 0, array_size(b), close_when_finish:=True)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
                                   End If
+                                  Try
+                                      Directory.GetParent(file_name).Create()
+                                  Catch
+                                  End Try
+                                  Try
+                                      w = New FileStream(file_name,
+                                                         If(overwrite, FileMode.Create, FileMode.CreateNew),
+                                                         FileAccess.Write,
+                                                         FileShare.Read,
+                                                         4096,
+                                                         True)
+                                  Catch ex As Exception
+                                      raise_error(error_type.warning,
+                                                  "failed to export resource to local file ",
+                                                  file_name,
+                                                  ", ex ",
+                                                  ex.Message())
+                                      Return False
+                                  End Try
+                                  ec = w.send(b, 0, array_size(b), close_when_finish:=True)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso

@@ -1,39 +1,10 @@
 ﻿
-# This file will be converted into resource, so #INCLUDE does not work.
-# Following definitions are copied from bstyle/codegen/nlexer_rule.txt.
-kw-if if
-kw-else else
-kw-for for
-kw-while while
-kw-do do
-kw-loop loop
-kw-return return
-kw-break break
-kw-logic logic
+INCLUDE ../shared/nlexer_rule.txt
 
-blank [\b]+
+kw-namespace namespace
+kw-class class
 
-bool [true,false]
-integer [+,-]?[\d]+
-biguint [\d]+[l,L]
-ufloat [\d]*.[\d]+
-string "[\",*|"]*"
-
-comma \,
-colon :
-question-mark ?
-start-paragraph {
-end-paragraph }
-start-bracket (
-end-bracket )
-start-square-bracket \[
-end-square-bracket \]
-semi-colon ;
-
-assignment =
-
-# Different rules
-
+# Comparison
 less-or-equal <=
 greater-or-equal >=
 equal ==
@@ -41,6 +12,7 @@ not-equal !=
 less-than <
 greater-than >
 
+# Operator
 add \+
 minus -
 multiply \*
@@ -69,24 +41,6 @@ self-and &&=
 self-or \|\|=
 self-left-shift <<=
 self-right-shift >>=
-
-kw-namespace namespace
-
-kw-include #include
-include-with-file #include[\b]+<[*|>]+>
-
-kw-ifndef #ifndef
-kw-define #define
-kw-endif #endif
-
-single-line-comment //[*|\n]*
-multi-line-comment /\*[*|\*/]*\*/
-
-kw-typedef typedef
-
-kw-struct struct
-
-kw-class class
 
 dot .
 
