@@ -107,6 +107,7 @@
     <Compile Include="encoding_test.vb" />
     <Compile Include="endian_test.vb" />
     <Compile Include="enum_def_test.vb" />
+    <Compile Include="enum_to_string_behavior_test.vb" />
     <Compile Include="enum_to_string_perf.vb" />
     <Compile Include="equal_test.vb" />
     <Compile Include="event_attach_perf.vb" />

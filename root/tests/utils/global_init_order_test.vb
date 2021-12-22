@@ -1,10 +1,14 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.lock
 Imports osi.root.utils
 Imports osi.root.utt
 
-Public Class global_init_order_test
+Public NotInheritable Class global_init_order_test
     Inherits [case]
 
     <global_init(False, uint8_0)>

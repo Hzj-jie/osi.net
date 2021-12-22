@@ -36,7 +36,7 @@ Public NotInheritable Class enum_to_string_perf
         k
     End Enum
 
-    Private Class enum_getnames_case
+    Private NotInheritable Class enum_getnames_case
         Inherits [case]
 
         Public Overrides Function run() As Boolean
@@ -45,7 +45,7 @@ Public NotInheritable Class enum_to_string_perf
         End Function
     End Class
 
-    Private Class enum_def_case
+    Private NotInheritable Class enum_def_case
         Inherits [case]
 
         Public Overrides Function run() As Boolean
