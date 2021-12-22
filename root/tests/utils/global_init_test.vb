@@ -12,11 +12,7 @@ Imports osi.tests.root.utils.global_init_test_private_namespace
 Namespace global_init_test_private_namespace
     <global_init(True)>
     Friend Module global_init_case_6
-        Private ReadOnly i As atomic_int
-
-        Sub New()
-            i = New atomic_int()
-        End Sub
+        Private ReadOnly i As New atomic_int()
 
         Public Sub init()
             i.increment()
@@ -27,12 +23,8 @@ Namespace global_init_test_private_namespace
         End Function
     End Module
 
-    Friend Class global_init_case_7_holder
-        Private Shared ReadOnly i As atomic_int
-
-        Shared Sub New()
-            i = New atomic_int()
-        End Sub
+    Friend NotInheritable Class global_init_case_7_holder
+        Private Shared ReadOnly i As New atomic_int()
 
         Public Shared Sub execute()
             i.increment()
@@ -50,12 +42,8 @@ Namespace global_init_test_private_namespace
         End Sub
     End Module
 
-    Friend Class global_init_case_8_holder
-        Private Shared ReadOnly i As atomic_int
-
-        Shared Sub New()
-            i = New atomic_int()
-        End Sub
+    Friend NotInheritable Class global_init_case_8_holder
+        Private Shared ReadOnly i As New atomic_int()
 
         Public Shared Sub execute()
             i.increment()
@@ -82,11 +70,7 @@ Public NotInheritable Class global_init_test
 
     <global_init(True)>
     Public NotInheritable Class global_init_case_1
-        Private Shared ReadOnly i As atomic_int
-
-        Shared Sub New()
-            i = New atomic_int()
-        End Sub
+        Private Shared ReadOnly i As New atomic_int()
 
         Public Shared Sub init()
             i.increment()
@@ -102,11 +86,7 @@ Public NotInheritable Class global_init_test
 
     <global_init(False)>
     Public NotInheritable Class global_init_case_2
-        Private Shared ReadOnly i As atomic_int
-
-        Shared Sub New()
-            i = New atomic_int()
-        End Sub
+        Private Shared ReadOnly i As New atomic_int()
 
         Public Shared Sub init()
             i.increment()
@@ -121,11 +101,7 @@ Public NotInheritable Class global_init_test
     End Class
 
     Private NotInheritable Class global_init_case_3_holder
-        Private Shared ReadOnly i As atomic_int
-
-        Shared Sub New()
-            i = New atomic_int()
-        End Sub
+        Private Shared ReadOnly i As New atomic_int()
 
         Public Shared Sub execute()
             i.increment()
@@ -152,10 +128,9 @@ Public NotInheritable Class global_init_test
 
     <global_init(True)>
     Public NotInheritable Class global_init_case_4
-        Private Shared ReadOnly i As atomic_int
+        Private Shared ReadOnly i As New atomic_int()
 
         Shared Sub New()
-            i = New atomic_int()
             i.increment()
         End Sub
 
@@ -170,11 +145,7 @@ Public NotInheritable Class global_init_test
 
     <global_init(True)>
     Private NotInheritable Class global_init_case_5
-        Private Shared ReadOnly i As atomic_int
-
-        Shared Sub New()
-            i = New atomic_int()
-        End Sub
+        Private Shared ReadOnly i As New atomic_int()
 
         Private Shared Sub init()
             i.increment()
@@ -187,11 +158,7 @@ Public NotInheritable Class global_init_test
 
     <global_init(False, global_init_level.other)>
     Private NotInheritable Class global_init_case_9
-        Private Shared ReadOnly i As atomic_int
-
-        Shared Sub New()
-            i = New atomic_int()
-        End Sub
+        Public Shared ReadOnly i As New atomic_int()
 
         Private Shared Sub init()
             i.increment()
@@ -204,6 +171,7 @@ Public NotInheritable Class global_init_test
 
     Public Overrides Function run() As Boolean
         type_lock(Of global_init).wait()
+        global_init_case_9.i.set(0)
         global_init.execute()
         global_init.execute()
         global_init.execute(global_init_level.max - 1)
@@ -216,7 +184,7 @@ Public NotInheritable Class global_init_test
         assertion.equal(global_init_case_6.invoke_times(), 1)
         assertion.equal(global_init_case_7_holder.invoke_times(), 0)
         assertion.equal(global_init_case_8_holder.invoke_times(), 1)
-        assertion.equal(global_init_case_9.invoke_times(), global_init.init_times() - 1)
+        assertion.equal(global_init_case_9.invoke_times(), 2)
         type_lock(Of global_init).release()
         Return True
     End Function

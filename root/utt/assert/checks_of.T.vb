@@ -24,5 +24,9 @@ Partial Public Class checks(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Public Function between_include(ByVal min As T, ByVal max As T) As Boolean
             Return check(Of IS_TRUE_FUNC).more_or_equal_and_less_or_equal(i, min, max)
         End Function
+
+        Public Function equal(ByVal other As T) As Boolean
+            Return check(Of IS_TRUE_FUNC).equal(i, other)
+        End Function
     End Class
 End Class

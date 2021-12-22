@@ -67,6 +67,7 @@
     <Compile Include="flip_events\flip_events_timeout_test.vb" />
     <Compile Include="global_init_order_test.vb" />
     <Compile Include="global_init_test.vb" />
+    <Compile Include="global_init_test2.vb" />
     <Compile Include="implicit_conversions.vb" />
     <Compile Include="invoker\invoker_perf.vb" />
     <Compile Include="invoker\invoker_post_alloc_bind_test.vb" />

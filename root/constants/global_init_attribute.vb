@@ -17,9 +17,11 @@ Public Enum global_init_level As Byte
     productions
     test
 
-    max = max_uint8
+    max = max_uint8 - byte_1
     other = max
     all = max
+
+    not_run = max_uint8
 End Enum
 
 ' Follow .net naming rules: using global_init as attribute name will be accepted. It also avoids conflict with

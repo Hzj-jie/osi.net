@@ -13,8 +13,8 @@ Imports global_init_attribute = osi.root.constants.global_initAttribute
 Imports lock_t = osi.root.lock.slimlock.monitorlock
 
 Public NotInheritable Class global_init
-    Private Shared ReadOnly times As atomic_int = New atomic_int()
-    Private Shared ReadOnly inited As [set](Of comparable_type) = New [set](Of comparable_type)()
+    Private Shared ReadOnly times As New atomic_int()
+    Private Shared ReadOnly inited As New [set](Of comparable_type)()
     Private Shared initiating As lock_t
 
     Public Shared Function init_times() As Int32
@@ -52,16 +52,18 @@ Public NotInheritable Class global_init
                 If t.allocate() Is Nothing Then
                     ' A public or private class should have an constructor.
                     ' A module may not have a contructor, but nothing else can be done.
-                    ' t.allocate() returns null if the constructor threw an exception. But the static constructor should be
-                    ' triggered already. Though the implementation may not be correct, it's not good to assert here.
-                    raise_error(error_type.warning, "may fail to invoke any initialization functions in type ", t.FullName())
+                    ' t.allocate() returns null if the constructor threw an exception. But the static constructor should
+                    ' be triggered already. Though the implementation may not be correct, it's not good to assert here.
+                    raise_error(error_type.warning,
+                                "may fail to invoke any initialization functions in type ",
+                                t.FullName())
                 End If
             End Using
         End If
     End Sub
 
     Private Shared Function not_initialized(ByVal t As Type) As Boolean
-        Dim ct As comparable_type = New comparable_type(t)
+        Dim ct As New comparable_type(t)
         SyncLock inited
             If inited.find(ct) = inited.end() Then
                 assert(inited.insert(ct).second)
@@ -78,8 +80,7 @@ Public NotInheritable Class global_init
                                                 Environment.CurrentDirectory()})
         End If
         times.increment()
-        Dim its() As vector(Of Type) = Nothing
-        ReDim its(level)
+        Dim its(level) As vector(Of Type)
         For Each i As Assembly In AppDomain.CurrentDomain().GetAssemblies()
             assert(Not i Is Nothing)
             Try

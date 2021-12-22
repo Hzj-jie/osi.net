@@ -16,13 +16,12 @@ Public Module _custom_attributes
                                                           ByRef o As AT,
                                                           Optional ByVal inherit As Boolean = False) As Boolean
         Dim ats() As AT = Nothing
-        If custom_attributes(this, ats) Then
-            assert(Not isemptyarray(ats))
-            o = ats(0)
-            Return True
-        Else
+        If Not custom_attributes(this, ats) Then
             Return False
         End If
+        assert(Not isemptyarray(ats))
+        o = ats(0)
+        Return True
     End Function
 
     <Extension()> Public Function custom_attribute(Of AT)(ByVal this As MemberInfo,
