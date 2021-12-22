@@ -12,7 +12,7 @@ Public NotInheritable Class global_init_order_test
     Inherits [case]
 
     <global_init(False, uint8_0)>
-    Private Class case1
+    Private NotInheritable Class case1
         Private Shared ReadOnly i As atomic_uint32
 
         Shared Sub New()
@@ -29,7 +29,7 @@ Public NotInheritable Class global_init_order_test
     End Class
 
     <global_init(False, uint8_1)>
-    Private Class case2
+    Private NotInheritable Class case2
         Private Shared ReadOnly i As atomic_uint32
 
         Shared Sub New()
@@ -48,7 +48,7 @@ Public NotInheritable Class global_init_order_test
     End Class
 
     <global_init(False, CByte(2))>
-    Private Class case3
+    Private NotInheritable Class case3
         Private Shared ReadOnly i As atomic_uint32
 
         Shared Sub New()
@@ -68,7 +68,7 @@ Public NotInheritable Class global_init_order_test
     End Class
 
     <global_init(False, uint8_0)>
-    Private Class case4
+    Private NotInheritable Class case4
         Private Shared ReadOnly i As atomic_uint32
 
         Shared Sub New()
