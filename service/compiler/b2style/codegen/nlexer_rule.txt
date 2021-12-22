@@ -42,6 +42,4 @@ self-or \|\|=
 self-left-shift <<=
 self-right-shift >>=
 
-dot .
-
 name [\w,_,::][\w,\d,_,::,.]*

@@ -40,3 +40,4 @@ end-square-bracket \]
 semi-colon ;
 assignment =
 
+dot .
