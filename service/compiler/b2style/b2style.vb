@@ -87,6 +87,7 @@ Partial Public NotInheritable Class b2style
                        [default].of_all_children("paramlist"),
                        [default].of_all_children_with_wrapper(AddressOf scope.wrap, "multi-sentence-paragraph"),
                        [default].of_all_children("param-with-comma"),
+                       [default].of_only_child("reference"),
                        leaf.of("bit-and"),  ' Allowing & in param.
                        [default].of_all_children("param"),
                        AddressOf namespace_.register,

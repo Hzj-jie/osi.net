@@ -2,7 +2,7 @@
 INCLUDE ../shared/syntaxer_rule.txt
 
 root-type [function, value-definition-with-semi-colon, heap-declaration-with-semi-colon, value-declaration-with-semi-colon, namespace-, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, class]
-param name [bit-and]? name
+reference bit-and
 namespace- kw-namespace name start-paragraph [root-type]* end-paragraph
 sentence-with-semi-colon [ignore-result-heap-struct-function-call, ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, self-value-clause, typedef, pre-operation-value, post-operation-value]? semi-colon
 self-operator [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or, self-left-shift, self-right-shift]
