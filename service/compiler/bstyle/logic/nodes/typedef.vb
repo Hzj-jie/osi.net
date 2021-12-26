@@ -27,11 +27,7 @@ Partial Public NotInheritable Class bstyle
             If n.child().type_name.Equals("string") Then
                 Return n.child().word().str().Trim(character.quote).c_unescape()
             End If
-            If n.child().type_name.Equals("name") Then
-                Return n.child().word().str()
-            End If
-            assert(False)
-            Return Nothing
+            Return n.children_word_str()
         End Function
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build

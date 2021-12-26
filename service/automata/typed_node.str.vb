@@ -56,7 +56,20 @@ Partial Public NotInheritable Class typed_node
             End If
             s.Append(character.blank)
         End While
-        Return Convert.ToString(s)
+        Return s.ToString()
+    End Function
+
+    Public Function children_word_str() As String
+        If leaf() Then
+            Return word().str()
+        End If
+        Dim s As New StringBuilder()
+        Dim i As UInt32 = 0
+        While i < child_count()
+            s.Append(child(i).children_word_str())
+            i += uint32_1
+        End While
+        Return s.ToString()
     End Function
 
     Private Function self_debug_str(ByVal s As StringBuilder) As StringBuilder

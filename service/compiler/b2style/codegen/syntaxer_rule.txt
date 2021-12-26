@@ -23,4 +23,4 @@ ignore-result-heap-struct-function-call heap-struct-function-call
 heap-struct-function-call heap-struct-name start-bracket [value-list]? end-bracket
 
 # TODO: Support static function
-class kw-class name start-paragraph [value-declaration-with-semi-colon, function]* end-paragraph semi-colon
+class kw-class type-name start-paragraph [value-declaration-with-semi-colon, function]* end-paragraph semi-colon
