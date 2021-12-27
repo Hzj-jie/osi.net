@@ -30,20 +30,19 @@ Partial Public NotInheritable Class bstyle
                               ByVal single_data_slot_handle As Func(Of String, String, Boolean),
                               ByVal o As writer) As Boolean
             assert(Not n Is Nothing)
-            assert(n.leaf())
             assert(Not struct_handle Is Nothing)
             assert(Not single_data_slot_handle Is Nothing)
             assert(Not o Is Nothing)
 
             Dim type As String = Nothing
-            If Not scope.current().variables().resolve(n.word().str(), type) Then
+            If Not scope.current().variables().resolve(n.children_word_str(), type) Then
                 Return False
             End If
             Dim ps As struct_def = Nothing
-            If scope.current().structs().resolve(type, n.word().str(), ps) Then
+            If scope.current().structs().resolve(type, n.children_word_str(), ps) Then
                 Return struct_handle(type, ps.expanded)
             End If
-            Return single_data_slot_handle(type, n.word().str())
+            Return single_data_slot_handle(type, n.children_word_str())
         End Function
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build

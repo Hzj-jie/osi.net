@@ -45,6 +45,7 @@ Partial Public NotInheritable Class typed_node
         Return Convert.ToString(str(New StringBuilder()))
     End Function
 
+    ' TODO: Remove input, use children_word_str instead.
     Public Function input() As String
         Dim s As New StringBuilder()
         Dim i As UInt32 = 0

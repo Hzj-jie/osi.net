@@ -23,10 +23,16 @@ Partial Public NotInheritable Class b2style
             b.register(Of name)()
         End Sub
 
+        Public Shared Function [of](ByVal name As String) As Action(Of code_gens(Of typed_node_writer))
+            Return Sub(ByVal b As code_gens(Of typed_node_writer))
+                       assert(Not b Is Nothing)
+                       b.register(Of name)(name)
+                   End Sub
+        End Function
+
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
-            assert(n.leaf())
             o.append(namespace_.bstyle_format(n.children_word_str()))
             Return True
         End Function

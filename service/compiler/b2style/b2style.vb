@@ -82,7 +82,7 @@ Partial Public NotInheritable Class b2style
                        leaf.of("end-bracket"),
                        leaf.of("assignment"),
                        AddressOf name.register,
-                       [default].of_only_child("type-name"),
+                       name.of("type-name"),
  _
                        AddressOf [function].register,
                        [default].of_all_children("paramlist"),

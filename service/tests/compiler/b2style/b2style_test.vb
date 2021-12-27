@@ -525,7 +525,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.function_with_global_namespace.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "::f")
+        assertion.equal(io.output(), "f::f")
     End Sub
 
     <test>

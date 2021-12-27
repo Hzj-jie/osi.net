@@ -74,7 +74,8 @@ Partial Public NotInheritable Class b2style
                                        Return False
                                    End If
                                    ' No namespace is necessary, the first parameter contains namespace.
-                                   o.append(namespace_.bstyle_format_in_global_namespace(node.child(1).word().str()))
+                                   o.append(namespace_.bstyle_format_in_global_namespace(
+                                                node.child(1).children_word_str()))
                                    o.append("(")
                                    o.append(class_name)
                                    o.append("&")

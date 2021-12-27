@@ -1,6 +1,11 @@
 
 INCLUDE ../shared/syntaxer_rule.txt
 
+raw-name-with-dot raw-name dot
+# Support a.N::b function call and a.::N::b.
+# Otherwise it should be name [double-colon]? [raw-name-with-double-colon]* [raw-name-with-dot]* raw-name
+name [raw-name-with-dot]* [double-colon]? [raw-name-with-double-colon, raw-name-with-dot]* raw-name
+type-name [double-colon]? [raw-name-with-double-colon]* raw-name
 root-type [function, value-definition-with-semi-colon, heap-declaration-with-semi-colon, value-declaration-with-semi-colon, namespace-, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, class]
 reference bit-and
 namespace- kw-namespace name start-paragraph [root-type]* end-paragraph

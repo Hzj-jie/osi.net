@@ -2,5 +2,6 @@
 INCLUDE ../shared/nlexer_rule.txt
 
 reference &
-name [\w,_][\w,\d,_,.]*
+
+INCLUDE ../shared/nlexer_rule2.txt
 

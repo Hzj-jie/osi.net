@@ -42,4 +42,8 @@ self-or \|\|=
 self-left-shift <<=
 self-right-shift >>=
 
-name [\w,_,::][\w,\d,_,::,.]*
+double-colon ::
+# "void :: f" is not allowed, it should be "void ::f", otherwise it's conflict with "void::f".
+raw-name-with-double-colon [\w,_][\w,\d,_]*::
+
+INCLUDE ../shared/nlexer_rule2.txt

@@ -83,17 +83,17 @@ Partial Public NotInheritable Class typed_node
     End Function
 
     Public Function child(ByVal id As UInt32) As typed_node
-        assert(subnodes.available_index(id))
+        assert(subnodes.available_index(id), type_name)
         Return subnodes(id)
     End Function
 
     Public Function child() As typed_node
-        assert(child_count() = 1)
+        assert(child_count() = 1, type_name)
         Return child(0)
     End Function
 
     Public Function last_child() As typed_node
-        assert(child_count() > 0)
+        assert(child_count() > 0, type_name)
         Return child(child_count() - uint32_1)
     End Function
 

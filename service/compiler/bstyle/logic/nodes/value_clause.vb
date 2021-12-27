@@ -39,7 +39,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Dim type As String = Nothing
-            assert(scope.current().variables().resolve(name.word().str(), type))
+            assert(scope.current().variables().resolve(name.children_word_str(), type))
             If scope.current().structs().defined(type) Then
                 Using r As read_scoped(Of value.target).ref = l.typed_code_gen(Of value)().read_target()
                     If Not (+r).type.Equals(type) Then
@@ -47,7 +47,7 @@ Partial Public NotInheritable Class bstyle
                                     "Type ",
                                     type,
                                     " of ",
-                                    name.word().str(),
+                                    name.children_word_str(),
                                     " does not match the rvalue ",
                                     (+r).type)
                         Return False
@@ -65,15 +65,14 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal name As typed_node, ByVal value As typed_node, ByVal o As writer) As Boolean
             assert(Not name Is Nothing)
-            assert(name.leaf())
             ' TODO: If the value on the right is a temporary value (rvalue), move can be used to reduce memory copy.
             Return build(name,
                          value,
                          Function(ByVal r As vector(Of String)) As Boolean
-                             Return struct.copy(r, name.word().str(), o)
+                             Return struct.copy(r, name.children_word_str(), o)
                          End Function,
                          Function(ByVal r As String) As Boolean
-                             Return builders.of_copy(name.word().str(), r).to(o)
+                             Return builders.of_copy(name.children_word_str(), r).to(o)
                          End Function,
                          o)
         End Function
@@ -93,14 +92,15 @@ Partial Public NotInheritable Class bstyle
                                  n.child(2),
                                  Function(ByVal r As vector(Of String)) As Boolean
                                      Return struct.copy(r,
-                                                        n.child(0).child().child(0).word().str(),
+                                                        n.child(0).child().child(0).children_word_str(),
                                                         indexstr,
                                                         o)
                                  End Function,
                                  Function(ByVal r As String) As Boolean
                                      Return builders.of_copy(
-                                             variable.name_of(n.child(0).child().child(0).word().str(), indexstr),
-                                             r).to(o)
+                                                variable.name_of(n.child(0).child().child(0).children_word_str(),
+                                                                 indexstr),
+                                            r).to(o)
                                  End Function,
                                  o)
                 End Function)

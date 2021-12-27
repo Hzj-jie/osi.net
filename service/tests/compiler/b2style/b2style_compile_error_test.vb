@@ -28,7 +28,9 @@ Public NotInheritable Class b2style_compile_error_test
             Sub()
                 assertion.is_false(b2style.with_default_functions.
                                            parse(_b2style_test_data.errors_include_needs_wraps.as_text(), Nothing))
-            End Sub)).contains(syntaxer.debug_str("abc.h", "name"))
+            End Sub)).contains(syntaxer.debug_str("abc", "raw-name"),
+                               syntaxer.debug_str(".", "dot"),
+                               syntaxer.debug_str("h", "raw-name"))
     End Sub
 
     <test>
@@ -39,9 +41,9 @@ Public NotInheritable Class b2style_compile_error_test
             Sub()
                 assertion.is_false(b2style.with_default_functions.
                                            parse(_b2style_test_data.errors_three_pluses.as_text(), Nothing))
-            End Sub)).contains(syntaxer.debug_str("void", "name"),
-                               syntaxer.debug_str("main", "name"),
-                               syntaxer.debug_str("i", "name"),
+            End Sub)).contains(syntaxer.debug_str("void", "raw-name"),
+                               syntaxer.debug_str("main", "raw-name"),
+                               syntaxer.debug_str("i", "raw-name"),
                                syntaxer.debug_str("++", "self-inc"),
                                syntaxer.debug_str("+", "add"))
     End Sub
@@ -92,7 +94,8 @@ Public NotInheritable Class b2style_compile_error_test
                 assertion.is_false(b2style.
                     with_default_functions.
                     parse(_b2style_test_data.errors_function_name_ends_with_dot.as_text(), Nothing))
-            End Sub)).contains("c.")
+            End Sub)).contains(syntaxer.debug_str("c", "raw-name"),
+                               syntaxer.debug_str(".", "dot"))
     End Sub
 
     <test>
