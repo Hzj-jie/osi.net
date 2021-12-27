@@ -45,21 +45,6 @@ Partial Public NotInheritable Class typed_node
         Return Convert.ToString(str(New StringBuilder()))
     End Function
 
-    ' TODO: Remove input, use children_word_str instead.
-    Public Function input() As String
-        Dim s As New StringBuilder()
-        Dim i As UInt32 = 0
-        While True
-            s.Append(word(i))
-            i += uint32_1
-            If i = word_count() Then
-                Exit While
-            End If
-            s.Append(character.blank)
-        End While
-        Return s.ToString()
-    End Function
-
     Public Function children_word_str() As String
         If leaf() Then
             Return word().str()

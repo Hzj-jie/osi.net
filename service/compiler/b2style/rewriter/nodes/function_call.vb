@@ -44,15 +44,7 @@ Partial Public NotInheritable Class b2style
 
             Dim dot_pos As Int32 = name.LastIndexOf(".")
             ' dot is not allowed to be the first character.
-            assert(dot_pos > 0)
-            ' TODO: This should be handled by nlexer_rule.
-            If dot_pos = name.Length() - 1 Then
-                raise_error(error_type.user,
-                            "Name [",
-                            name,
-                            "] is not allowed to be suffixed by dot.")
-                Return False
-            End If
+            assert(dot_pos > 0 AndAlso dot_pos <name.Length() - 1)
             Dim function_name As String = namespace_.bstyle_format_in_global_namespace(name.Substring(dot_pos + 1))
             scope.current().call_hierarchy().to(function_name)
             o.append(function_name)

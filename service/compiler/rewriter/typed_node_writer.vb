@@ -17,7 +17,7 @@ Namespace rewriters
 
         Public Overloads Function append(ByVal t As typed_node) As Boolean
             assert(Not t Is Nothing)
-            Return append(t.input())
+            Return append(t.children_word_str())
         End Function
 
         Public NotInheritable Class debug_dump_t
