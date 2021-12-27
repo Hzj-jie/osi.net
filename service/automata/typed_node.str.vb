@@ -45,7 +45,7 @@ Partial Public NotInheritable Class typed_node
         Return Convert.ToString(debug_str(New StringBuilder()))
     End Function
 
-    Public Function raw_input() As String
+    Public Function input() As String
         Dim s As New StringBuilder()
         Dim i As UInt32 = 0
         While i < word_count()

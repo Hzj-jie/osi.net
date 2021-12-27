@@ -82,6 +82,7 @@
     <Compile Include="nlexer\rule_test.vb" />
     <Compile Include="nlp\nlp_test.vb" />
     <Compile Include="nlp\nlp_test_rules.vb" />
+    <Compile Include="nlp\typed_node_test.vb" />
     <Compile Include="regex\any_character_matching_group_test.vb" />
     <Compile Include="regex\any_matching_group_test.vb" />
     <Compile Include="regex\macros_test.vb" />
