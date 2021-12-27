@@ -32,9 +32,9 @@ Partial Public NotInheritable Class typed_node
           Append(":").
           Append(type_name).
           Append("<").
-          Append(start).
+          Append(word_start).
           Append(",").
-          Append([end]).
+          Append(word_end).
           Append(">")
         nodes_debug_str(s)
         s.Append("]")

@@ -47,6 +47,6 @@ Public Class typed_word
     End Function
 
     Public NotOverridable Overrides Function ToString() As String
-        Return str()
+        Return debug_str()
     End Function
 End Class

@@ -13,8 +13,8 @@ Partial Public NotInheritable Class typed_node
     Public Const ROOT_TYPE_NAME As String = "ROOT"
     Public ReadOnly type As UInt32
     Public ReadOnly type_name As String
-    Public ReadOnly start As UInt32
-    Public ReadOnly [end] As UInt32 'exclusive
+    Public ReadOnly word_start As UInt32
+    Public ReadOnly word_end As UInt32 'exclusive
     Public ReadOnly subnodes As vector(Of typed_node)
     Private ReadOnly ref As vector(Of typed_word)
     Private parent As typed_node
@@ -22,17 +22,17 @@ Partial Public NotInheritable Class typed_node
     Public Sub New(ByVal ref As vector(Of typed_word),
                    ByVal type As UInt32,
                    ByVal type_name As String,
-                   ByVal start As UInt32,
-                   ByVal [end] As UInt32)
+                   ByVal word_start As UInt32,
+                   ByVal word_end As UInt32)
         assert(Not ref Is Nothing)
-        assert(start <= [end])  ' start == end means empty-matching
-        assert([end] <= ref.size())
+        assert(word_start <= word_end)  ' start == end means empty-matching
+        assert(word_end <= ref.size())
         assert(Not type_name.null_or_whitespace())
         Me.ref = ref
         Me.type = type
         Me.type_name = type_name
-        Me.start = start
-        Me.end = [end]
+        Me.word_start = word_start
+        Me.word_end = word_end
         Me.subnodes = New vector(Of typed_node)()
 
 #If NOT_IMPLEMENTED Then
@@ -107,7 +107,7 @@ Partial Public NotInheritable Class typed_node
 
     Public Function word(ByVal id As UInt32) As typed_word
         assert(id < word_count())
-        Return ref(start + id)
+        Return ref(word_start + id)
     End Function
 
     Public Function word() As typed_word
@@ -116,7 +116,7 @@ Partial Public NotInheritable Class typed_node
     End Function
 
     Public Function word_count() As UInt32
-        Return [end] - start
+        Return word_end - word_start
     End Function
 
     Public Function char_start() As UInt32

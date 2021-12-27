@@ -197,13 +197,13 @@ Namespace syntaxer
         Private Shared Function assert_node(ByVal n As typed_node,
                                             ByVal id As UInt32,
                                             ByVal type As UInt32,
-                                            ByVal start As UInt32,
-                                            ByVal [end] As UInt32) As Boolean
+                                            ByVal word_start As UInt32,
+                                            ByVal word_end As UInt32) As Boolean
             assert(Not n Is Nothing)
             Return assertion.more(n.subnodes.size(), id) AndAlso
                    assertion.equal(n.subnodes(id).type, type) AndAlso
-                   assertion.equal(n.subnodes(id).start, start) AndAlso
-                   assertion.equal(n.subnodes(id).end, [end])
+                   assertion.equal(n.subnodes(id).word_start, word_start) AndAlso
+                   assertion.equal(n.subnodes(id).word_end, word_end)
         End Function
 
         Private Shared Function assert_node(ByVal n As typed_node,

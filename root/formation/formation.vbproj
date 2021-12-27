@@ -196,7 +196,7 @@
     <Compile Include="unordered_set.vb" />
     <Compile Include="vector.adaptive_array.vb" />
     <Compile Include="vector.container.vb" />
-    <Compile Include="vector.extension.vb" />
+    <Compile Include="vector.ext.vb" />
     <Compile Include="vector.iterator.vb" />
     <Compile Include="vector.ref.vb" />
     <Compile Include="vector.vb" />
