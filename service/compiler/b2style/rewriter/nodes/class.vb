@@ -57,7 +57,7 @@ Partial Public NotInheritable Class b2style
                            map(Function(ByVal node As typed_node) As Boolean
                                    Return l.typed_code_gen(Of struct)().build_value_declaration(node, o)
                                End Function).
-                           aggregate(bool_stream.aggregators.all_true) Then
+                           aggregate(bool_stream.aggregators.all_true, True) Then
                 Return False
             End If
             o.append("};")
@@ -92,7 +92,7 @@ Partial Public NotInheritable Class b2style
                                    End If
                                    Return True
                                End Function).
-                           aggregate(bool_stream.aggregators.all_true) Then
+                           aggregate(bool_stream.aggregators.all_true, True) Then
                 Return False
             End If
             Return True
