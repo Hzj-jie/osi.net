@@ -17,9 +17,9 @@ Partial Public NotInheritable Class bstyle
             Return strcat("temp_value_@",
                           code_builder.current().nested_build_level(),
                           "@",
-                          n.word_start(),
+                          n.char_start(),
                           "-",
-                          n.word_end())
+                          n.char_end())
         End Function
 
         Public Shared Function of_function(ByVal raw_name As String,
