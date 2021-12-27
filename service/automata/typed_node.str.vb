@@ -8,7 +8,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public NotInheritable Class typed_node
-    Private Sub nodes_str(ByVal s As StringBuilder)
+    Private Sub nodes_debug_str(ByVal s As StringBuilder)
         assert(Not s Is Nothing)
         If subnodes.empty() Then
             Return
@@ -19,13 +19,13 @@ Partial Public NotInheritable Class typed_node
             If i > 0 Then
                 s.Append(", ")
             End If
-            subnodes(i).str(s)
+            subnodes(i).debug_str(s)
             i += uint32_1
         End While
         s.Append("}")
     End Sub
 
-    Private Function str(ByVal s As StringBuilder) As StringBuilder
+    Private Function debug_str(ByVal s As StringBuilder) As StringBuilder
         assert(Not s Is Nothing)
         s.Append("[").
           Append(type).
@@ -36,13 +36,23 @@ Partial Public NotInheritable Class typed_node
           Append(",").
           Append([end]).
           Append(">")
-        nodes_str(s)
+        nodes_debug_str(s)
         s.Append("]")
         Return s
     End Function
 
-    Public Function str() As String
-        Return Convert.ToString(str(New StringBuilder()))
+    Public Function debug_str() As String
+        Return Convert.ToString(debug_str(New StringBuilder()))
+    End Function
+
+    Public Function raw_input() As String
+        Dim s As New StringBuilder()
+        Dim i As UInt32 = 0
+        While i < word_count()
+            s.Append(word(i).str())
+            i += uint32_1
+        End While
+        Return s.ToString()
     End Function
 
     Public Function children_word_str() As String
@@ -82,6 +92,6 @@ Partial Public NotInheritable Class typed_node
     End Function
 
     Public Overrides Function ToString() As String
-        Return str()
+        Return debug_str()
     End Function
 End Class
