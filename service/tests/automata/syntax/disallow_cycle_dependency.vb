@@ -7,6 +7,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.utt.attributes
+Imports osi.service.automata
 Imports osi.service.automata.syntaxer
 
 Namespace syntaxer
@@ -19,7 +20,7 @@ Namespace syntaxer
                                                       pair.emplace_of("self-dec", uint32_2),
                                                       pair.emplace_of("variable-name", uint32_3))))
             assertion.is_true(r.parse_content(syntaxer_test_rule_files.cycle_dependency_syntaxer))
-            assertion.is_false(r.export().syntaxer.match(fake_typed_word.create(uint32_3, uint32_1)))
+            assertion.is_false(r.export().syntaxer.match(typed_word.fakes(uint32_3, uint32_1)))
         End Sub
 
         Private Sub New()

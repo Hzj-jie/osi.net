@@ -5,8 +5,9 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 
-Public Class typed_word
+Public NotInheritable Class typed_word
     Public Const unknown_type As UInt32 = max_uint32
     Public ReadOnly ref As String
     Public ReadOnly start As UInt32
@@ -34,6 +35,18 @@ Public Class typed_word
         Me.New(ref, start, [end], unknown_type)
     End Sub
 
+    Public Shared Function fake(ByVal type As UInt32) As typed_word
+        Return New typed_word("fake-typed-word", uint32_0, uint32_1, type)
+    End Function
+
+    Public Shared Function fakes(ByVal ParamArray types() As UInt32) As vector(Of typed_word)
+        Dim r As New vector(Of typed_word)()
+        For i As Int32 = 0 To array_size_i(types) - 1
+            r.emplace_back(fake(types(i)))
+        Next
+        Return r
+    End Function
+
     Public Function unknown() As Boolean
         Return type = unknown_type
     End Function
@@ -46,7 +59,7 @@ Public Class typed_word
         Return strcat("[", type, "]: ", str(), "@", start, "-", [end])
     End Function
 
-    Public NotOverridable Overrides Function ToString() As String
+    Public Overrides Function ToString() As String
         Return debug_str()
     End Function
 End Class

@@ -102,7 +102,6 @@
     <Compile Include="syntax\any_matching_group_test.vb" />
     <Compile Include="syntax\disallow_cycle_dependency.vb" />
     <Compile Include="syntax\fake_matching_delegate.vb" />
-    <Compile Include="syntax\fake_typed_word.vb" />
     <Compile Include="syntax\matching_group_test.vb" />
     <Compile Include="syntax\matching_test.vb" />
     <Compile Include="syntax\multi_matching_group_test.vb" />

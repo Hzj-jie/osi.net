@@ -214,31 +214,29 @@ Namespace syntaxer
         End Function
 
         Public Overrides Function run() As Boolean
-            Dim s As syntax = Nothing
-            s = build_syntax()
-            Dim v As vector(Of typed_word) = Nothing
-            v = fake_typed_word.create(types.name,
-                                       types.blank,
-                                       types.blank,
-                                       types.name,
-                                       types.start_bracket,
-                                       types.blank,
-                                       types.name,
-                                       types.blank,
-                                       types.name,
-                                       types.comma,
-                                       types.blank,
-                                       types.blank,
-                                       types.name,
-                                       types.name,
-                                       types.end_bracket,
-                                       types.blank,
-                                       types.start_paragraph,
-                                       types.name,
-                                       types.assignment,
-                                       types.name,
-                                       types.semi_colon,
-                                       types.end_paragraph)
+            Dim s As syntax = build_syntax()
+            Dim v As vector(Of typed_word) = typed_word.fakes(types.name,
+                                                              types.blank,
+                                                              types.blank,
+                                                              types.name,
+                                                              types.start_bracket,
+                                                              types.blank,
+                                                              types.name,
+                                                              types.blank,
+                                                              types.name,
+                                                              types.comma,
+                                                              types.blank,
+                                                              types.blank,
+                                                              types.name,
+                                                              types.name,
+                                                              types.end_bracket,
+                                                              types.blank,
+                                                              types.start_paragraph,
+                                                              types.name,
+                                                              types.assignment,
+                                                              types.name,
+                                                              types.semi_colon,
+                                                              types.end_paragraph)
             Dim r As one_of(Of matching.result, matching.failure) = s.match(v, 0)
             If Not assertion.is_true(r.is_first()) Then
                 Return False
@@ -283,28 +281,28 @@ Namespace syntaxer
                 End If
             End If
 
-            v = fake_typed_word.create(types.name,
-                                       types.blank,
-                                       types.blank,
-                                       types.name,
-                                       types.start_bracket,
-                                       types.blank,
-                                       types.name,
-                                       types.blank,
-                                       types.name,
-                                       types.comma,
-                                       types.blank,
-                                       types.blank,
-                                       types.name,
-                                       types.name,
-                                       types.end_bracket,
-                                       types.blank,
-                                       types.start_paragraph,
-                                       types.name,
-                                       types.equal,
-                                       types.name,
-                                       types.semi_colon,
-                                       types.end_paragraph)
+            v = typed_word.fakes(types.name,
+                                 types.blank,
+                                 types.blank,
+                                 types.name,
+                                 types.start_bracket,
+                                 types.blank,
+                                 types.name,
+                                 types.blank,
+                                 types.name,
+                                 types.comma,
+                                 types.blank,
+                                 types.blank,
+                                 types.name,
+                                 types.name,
+                                 types.end_bracket,
+                                 types.blank,
+                                 types.start_paragraph,
+                                 types.name,
+                                 types.equal,
+                                 types.name,
+                                 types.semi_colon,
+                                 types.end_paragraph)
             assertion.is_false(s.match(v, 0).is_first())
             Return True
         End Function
