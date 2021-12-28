@@ -14,6 +14,7 @@ Partial Public NotInheritable Class nlexer
     Private Shared ReadOnly debug_log As Boolean
     Private Shared ReadOnly dump_rules As Boolean
     Private ReadOnly rs As vector(Of pair(Of String, rule))
+    Private ReadOnly sc As syntax_collection
 
     Shared Sub New()
         dump_rules = env_bool(env_keys("nlexer", "rules", "debug")) OrElse
@@ -30,13 +31,16 @@ Partial Public NotInheritable Class nlexer
     Private Sub New(ByVal rs As vector(Of pair(Of String, rule)))
         assert(Not rs.null_or_empty())
         Me.rs = rs
-        If dump_rules Then
-            Dim i As UInt32 = 0
-            While i < rs.size()
-                raise_error(error_type.user, "Rule ", rs(i).first, ": ", rs(i).second)
-                i += uint32_1
-            End While
-        End If
+        Me.sc = New syntax_collection(map.emplace_index(
+                        rs.stream().
+                           map(Function(ByVal i As pair(Of String, rule)) As String
+                                   assert(Not i Is Nothing)
+                                   If dump_rules Then
+                                       raise_error(error_type.user, "Rule ", i.first, ": ", i.second)
+                                   End If
+                                   Return i.first
+                               End Function).
+                           to_array()))
     End Sub
 
     Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of result)
@@ -192,11 +196,6 @@ Partial Public NotInheritable Class nlexer
     End Function
 
     Public Function str_type_mapping() As syntax_collection
-        Return New syntax_collection(map.emplace_index(rs.stream().
-                                                          map(Function(ByVal i As pair(Of String, rule)) As String
-                                                                  assert(Not i Is Nothing)
-                                                                  Return i.first
-                                                              End Function).
-                                                          to_array()))
+        Return sc.CloneT()
     End Function
 End Class

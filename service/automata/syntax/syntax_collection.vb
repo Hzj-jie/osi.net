@@ -6,10 +6,11 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports envs = osi.root.envs
 
 Partial Public NotInheritable Class syntaxer
     Public NotInheritable Class syntax_collection
-        Implements IComparable, IComparable(Of syntax_collection)
+        Implements IComparable, IComparable(Of syntax_collection), ICloneable, ICloneable(Of syntax_collection)
 
         Private ReadOnly token_str_type As map(Of String, UInt32)
         Private ReadOnly str_token_type As map(Of UInt32, String)
@@ -17,6 +18,26 @@ Partial Public NotInheritable Class syntaxer
         Private ReadOnly str_syntax_type As map(Of UInt32, String)
         Private ReadOnly v As vector(Of syntax)
         Private next_type As UInt32
+
+        <copy_constructor>
+        Private Sub New(ByVal token_str_type As map(Of String, UInt32),
+                        ByVal str_token_type As map(Of UInt32, String),
+                        ByVal syntax_str_type As map(Of String, UInt32),
+                        ByVal str_syntax_type As map(Of UInt32, String),
+                        ByVal v As vector(Of syntax),
+                        ByVal next_type As UInt32)
+            assert(Not token_str_type Is Nothing)
+            assert(Not str_token_type Is Nothing)
+            assert(Not syntax_str_type Is Nothing)
+            assert(Not str_syntax_type Is Nothing)
+            assert(Not v Is Nothing)
+            Me.token_str_type = token_str_type
+            Me.str_token_type = str_token_type
+            Me.syntax_str_type = syntax_str_type
+            Me.str_syntax_type = str_syntax_type
+            Me.v = v
+            Me.next_type = next_type
+        End Sub
 
         Private Sub New(ByVal private_constructor As Boolean)
             syntax_str_type = New map(Of String, UInt32)()
@@ -70,8 +91,7 @@ Partial Public NotInheritable Class syntaxer
         Private Function find_next_type() As UInt32
             assert(Not token_str_type Is Nothing)
             Dim max As UInt32 = 0
-            Dim it As map(Of String, UInt32).iterator = Nothing
-            it = token_str_type.begin()
+            Dim it As map(Of String, UInt32).iterator = token_str_type.begin()
             While it <> token_str_type.end()
                 If (+it).second > max Then
                     max = (+it).second
@@ -96,8 +116,7 @@ Partial Public NotInheritable Class syntaxer
             If Not characters.valid_type_str(name) Then
                 Return False
             End If
-            Dim it As map(Of String, UInt32).iterator = Nothing
-            it = m.find(name)
+            Dim it As map(Of String, UInt32).iterator = m.find(name)
             If it = m.end() Then
                 o = next_type
                 m.emplace(name, o)
@@ -187,9 +206,18 @@ Partial Public NotInheritable Class syntaxer
         End Function
 
         Public Function type_name(ByVal id As UInt32) As String
-            Dim o As String = Nothing
-            assert(type_name(id, o))
-            Return o
+            If Not envs.utt.is_current Then
+                Dim o As String = Nothing
+                assert(type_name(id, o))
+                Return o
+            End If
+
+            Dim type_str As String = Nothing
+            ' TODO: Fix the tests to avoid undefined type.
+            If Not type_name(id, type_str) Then
+                Return strcat("UNDEFINED_TYPE-", id)
+            End If
+            Return type_str
         End Function
 
         Public Function [set](ByVal s As syntax) As Boolean
@@ -267,6 +295,19 @@ Partial Public NotInheritable Class syntaxer
                 Return compare(Me.v, other.v)
             End If
             Return c
+        End Function
+
+        Public Function Clone() As Object Implements ICloneable.Clone
+            Return CloneT()
+        End Function
+
+        Public Function CloneT() As syntax_collection Implements ICloneable(Of syntax_collection).Clone
+            Return copy_constructor(Of syntax_collection).copy_from(token_str_type,
+                                                                    str_token_type,
+                                                                    syntax_str_type,
+                                                                    str_syntax_type,
+                                                                    v,
+                                                                    next_type)
         End Function
     End Class
 End Class

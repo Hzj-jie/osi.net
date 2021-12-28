@@ -11,6 +11,7 @@ Imports osi.root.formation
 Partial Public NotInheritable Class typed_node
     Public Const root_type As UInt32 = uint32_0
     Public Const root_type_name As String = "ROOT"
+    ' TODO: type should be removed in favor of type_name, now it's used only in tests.
     Public ReadOnly type As UInt32
     Public ReadOnly type_name As String
     Public ReadOnly word_start As UInt32

@@ -44,8 +44,7 @@ Public NotInheritable Class nlp
         If Not n(i) Then
             Return False
         End If
-        Dim j As syntaxer.rule = Nothing
-        j = New syntaxer.rule(i.str_type_mapping())
+        Dim j As New syntaxer.rule(i.str_type_mapping())
         If Not s(j) Then
             Return False
         End If

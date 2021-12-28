@@ -47,7 +47,7 @@ Partial Public NotInheritable Class syntaxer
         End Function
 
         Public Overrides Function ToString() As String
-            Return strcat("single_matching ", type_name(m))
+            Return strcat("single_matching ", c.type_name(m))
         End Function
     End Class
 End Class
