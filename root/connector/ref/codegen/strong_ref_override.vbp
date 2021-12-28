@@ -3,8 +3,7 @@
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function clear() As ##INNER_TYPE##
-        Dim r As ##INNER_TYPE## = Nothing
-        r = p
+        Dim r As ##INNER_TYPE## = p
         p = Nothing
         Return r
     End Function

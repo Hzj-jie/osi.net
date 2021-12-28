@@ -189,8 +189,7 @@ Public NotInheritable Class vector(Of T)
     End Sub
 
     Public Sub resize(ByVal n As UInt32, ByVal d As T)
-        Dim os As UInt32 = 0
-        os = size()
+        Dim os As UInt32 = size()
         v.resize(n)
         For i As UInt32 = os To n - uint32_1
             v.set(i, copy_no_error(d))
@@ -235,14 +234,12 @@ Public NotInheritable Class vector(Of T)
         reserve(n + size())
         If need_copy Then
             For i As UInt32 = start To start + n - uint32_1
-                Dim m As T = Nothing
-                copy(m, vs(CInt(i)))
+                Dim m As T = copy_no_error(vs(CInt(i)))
                 emplace_back(m)
             Next
         Else
             For i As UInt32 = start To start + n - uint32_1
-                Dim m As T = Nothing
-                m = vs(CInt(i))
+                Dim m As T = vs(CInt(i))
                 emplace_back(m)
             Next
         End If
@@ -280,8 +277,7 @@ Public NotInheritable Class vector(Of T)
     End Function
 
     Public Function CompareTo(ByVal other As vector(Of T)) As Int32 Implements IComparable(Of vector(Of T)).CompareTo
-        Dim c As Int32 = 0
-        c = object_compare(Me, other)
+        Dim c As Int32 = object_compare(Me, other)
         If c <> object_compare_undetermined Then
             Return c
         End If
@@ -291,7 +287,7 @@ Public NotInheritable Class vector(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overrides Function ToString() As String
-        Return str(character.tab)
+        Return str(character.blank)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

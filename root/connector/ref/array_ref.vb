@@ -34,8 +34,7 @@ End Module
 Public NotInheritable Class array_refs
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of T)(ByVal ParamArray i As T()()) As array_ref(Of T)()
-        Dim r() As array_ref(Of T) = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As array_ref(Of T)
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = array_ref.[of](i(j))
         Next
@@ -77,8 +76,7 @@ Public Class array_ref(Of T)
         If that Is Nothing Then
             Return Nothing
         End If
-        Dim r As array_ref(Of T) = Nothing
-        r = New array_ref(Of T)(that)
+        Dim r As New array_ref(Of T)(that)
         that.clear()
         Return r
     End Function
@@ -137,8 +135,7 @@ Public Class array_ref(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function clear() As T()
-        Dim r As T() = Nothing
-        r = p
+        Dim r As T() = p
         p = Nothing
         Return r
     End Function
@@ -193,10 +190,8 @@ Public Class array_ref(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator ^(ByVal p As array_ref(Of T), ByVal ji As Decimal) As Object
         On Error GoTo finish
-        Dim p2 As Object = Nothing
-        p2 = p
-        Dim jumps As Int64 = 0
-        jumps = CLng(Math.Truncate(ji))
+        Dim p2 As Object = p
+        Dim jumps As Int64 = CLng(Math.Truncate(ji))
         While jumps > 0
             p2 = +(cast(Of array_ref(Of T))().from(p2, False))
             jumps -= 1
@@ -332,8 +327,7 @@ finish:
 
     'open for array_ref
     Public NotOverridable Overrides Function GetHashCode() As Int32
-        Dim i As T() = Nothing
-        i = [get]()
+        Dim i As T() = [get]()
         Return If(i Is Nothing, 0, hash(i))
     End Function
 
