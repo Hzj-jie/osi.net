@@ -9,10 +9,12 @@ Imports osi.root.formation
 
 Public NotInheritable Class typed_word
     Public Const unknown_type As UInt32 = max_uint32
+    Public Const unknown_type_name As String = "UNKNOWN_TYPE"
     Public ReadOnly ref As String
     Public ReadOnly start As UInt32
     Public ReadOnly [end] As UInt32
     Public ReadOnly len As UInt32
+    ' Used by syntax to match the node type without using string comparison.
     Public ReadOnly type As UInt32
 
     Public Sub New(ByVal ref As String,
