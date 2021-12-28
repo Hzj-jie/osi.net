@@ -114,7 +114,7 @@ Partial Public NotInheritable Class nlexer
         If Not match(i, r, ignore_types) Then
             Return False
         End If
-        o = nlexer.result.typed_words(i, r)
+        o = nlexer.result.typed_words(i, r, sc)
         Return True
     End Function
 
