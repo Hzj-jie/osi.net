@@ -69,9 +69,8 @@ Partial Public NotInheritable Class bstyle
         Inherits code_gens(Of writer).include_with_string(Of parser,
                                                              default_includes.folders,
                                                              default_includes.ignore_default_folder,
-                                                             default_includes.default_folder)
-        Implements code_gen(Of writer)
-
+                                                             default_includes.default_folder,
+                                                             _false)
         Private Shared ReadOnly instance As New include_with_string()
 
         Private Sub New()
@@ -81,19 +80,14 @@ Partial Public NotInheritable Class bstyle
             assert(Not b Is Nothing)
             b.register(instance)
         End Sub
-
-        Public Shadows Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
-            Return MyBase.build(n, o)
-        End Function
     End Class
 
     Public NotInheritable Class include_with_file
         Inherits code_gens(Of writer).include_with_file(Of parser,
                                                            default_includes.folders,
                                                            default_includes.ignore_default_folder,
-                                                           default_includes.default_folder)
-        Implements code_gen(Of writer)
-
+                                                           default_includes.default_folder,
+                                                           _false)
         Private Shared ReadOnly instance As New include_with_file()
 
         Private Sub New()
@@ -103,9 +97,5 @@ Partial Public NotInheritable Class bstyle
             assert(Not b Is Nothing)
             b.register(instance)
         End Sub
-
-        Public Shadows Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
-            Return MyBase.build(n, o)
-        End Function
     End Class
 End Class

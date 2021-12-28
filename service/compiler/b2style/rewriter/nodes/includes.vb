@@ -69,24 +69,20 @@ Partial Public NotInheritable Class b2style
         Inherits code_gens(Of typed_node_writer).include_with_string(Of parser,
                                                                         default_includes.folders,
                                                                         default_includes.ignore_default_folder,
-                                                                        default_includes.default_folder)
-        Implements code_gen(Of typed_node_writer)
-
+                                                                        default_includes.default_folder,
+                                                                        _true)
         Private Shared ReadOnly instance As New include_with_string()
-
-        Private Sub New()
-        End Sub
 
         Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
             assert(Not b Is Nothing)
             b.register(instance)
         End Sub
 
-        Public Shadows Function build(ByVal n As typed_node,
-                                      ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
-            If Not MyBase.build(n, o) Then
-                o.append(n)
-            End If
+        ' Forward missing files to the bstyle.
+        Protected Overrides Function handle_not_dumpable(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
+            o.append(n)
             Return True
         End Function
     End Class
@@ -95,24 +91,20 @@ Partial Public NotInheritable Class b2style
         Inherits code_gens(Of typed_node_writer).include_with_file(Of parser,
                                                                       default_includes.folders,
                                                                       default_includes.ignore_default_folder,
-                                                                      default_includes.default_folder)
-        Implements code_gen(Of typed_node_writer)
-
+                                                                      default_includes.default_folder,
+                                                                      _true)
         Private Shared ReadOnly instance As New include_with_file()
-
-        Private Sub New()
-        End Sub
 
         Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
             assert(Not b Is Nothing)
             b.register(instance)
         End Sub
 
-        Public Shadows Function build(ByVal n As typed_node,
-                                      ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
-            If Not MyBase.build(n, o) Then
-                o.append(n)
-            End If
+        ' Forward missing files to the bstyle.
+        Protected Overrides Function handle_not_dumpable(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
+            o.append(n)
             Return True
         End Function
     End Class

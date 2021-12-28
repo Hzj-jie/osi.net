@@ -11,32 +11,32 @@ Imports osi.root.template
 Imports osi.service.automata
 
 Partial Public Class code_gens(Of WRITER)
-    Public MustInherit Class includes(Of _PARSER As __do(Of String, WRITER, Boolean),
+    Public MustInherit Class includes(Of PARSER As __do(Of String, WRITER, Boolean),
                                          _FOLDERS As __do(Of vector(Of String)),
                                          _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
-                                         _DEFAULT_FOLDER As __do(Of String))
+                                         _DEFAULT_FOLDER As __do(Of String),
+                                         _IGNORE_INCLUDE_ERROR As __do(Of Boolean))
+        Inherits reparser(Of PARSER)
 
-        Private Shared ReadOnly parser As _PARSER = alloc(Of _PARSER)()
         Private Shared ReadOnly folders As _FOLDERS = alloc(Of _FOLDERS)()
         Private Shared ReadOnly ignore_default_folder As _IGNORE_DEFAULT_FOLDER = alloc(Of _IGNORE_DEFAULT_FOLDER)()
         Private Shared ReadOnly default_folder As _DEFAULT_FOLDER = alloc(Of _DEFAULT_FOLDER)()
+        Private Shared ReadOnly ignore_include_error As _IGNORE_INCLUDE_ERROR = alloc(Of _IGNORE_INCLUDE_ERROR)()
 
         Private Shared Function include_file(ByVal p As String,
                                              ByVal s As String,
-                                             ByVal o As WRITER) As Boolean
+                                             ByRef o As String) As Boolean
             Dim f As String = Path.Combine(p, s)
             If File.Exists(f) Then
-                If parser(File.ReadAllText(f), o) Then
-                    Return True
-                End If
-                raise_error(error_type.user, "Cannot include file ", f)
+                o = File.ReadAllText(f)
+                Return True
             End If
             Return False
         End Function
 
         Private Shared Function include_file(ByVal v As vector(Of String),
                                              ByVal s As String,
-                                             ByVal o As WRITER) As Boolean
+                                             ByRef o As String) As Boolean
             Dim i As UInt32 = 0
             While i < v.size_or_0()
                 If include_file(v(i), s, o) Then
@@ -47,42 +47,45 @@ Partial Public Class code_gens(Of WRITER)
             Return False
         End Function
 
-        Protected Shared Function include_file(ByVal s As String, ByVal o As WRITER) As Boolean
+        Protected Shared Function include_file(ByVal s As String, ByRef o As String) As Boolean
             If include_file(+folders, s, o) Then
                 Return True
             End If
             If Not (+ignore_default_folder) AndAlso include_file(+default_folder, s, o) Then
                 Return True
             End If
+            If Not (+ignore_include_error) Then
+                raise_error(error_type.user, "Cannot find include file ", s)
+            End If
             Return False
         End Function
     End Class
 
-    Public MustInherit Class include_with_string(Of _PARSER As __do(Of String, WRITER, Boolean),
-                                                    _FOLDERS As __do(Of vector(Of String)),
-                                                    _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
-                                                    _DEFAULT_FOLDER As __do(Of String))
-        Inherits includes(Of _PARSER, _FOLDERS, _IGNORE_DEFAULT_FOLDER, _DEFAULT_FOLDER)
+    Public MustInherit Class include_with_string(Of PARSER As __do(Of String, WRITER, Boolean),
+                                                    FOLDERS As __do(Of vector(Of String)),
+                                                    IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
+                                                    DEFAULT_FOLDER As __do(Of String),
+                                                    IGNORE_INCLUDE_ERROR As __do(Of Boolean))
+        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR)
 
-        Protected Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean
+        Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
             assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
             assert(n.child_count() = 2)
             Return include_file(n.child(1).word().str().Trim(character.quote).c_unescape(), o)
         End Function
     End Class
 
-    Public MustInherit Class include_with_file(Of _PARSER As __do(Of String, WRITER, Boolean),
-                                                  _FOLDERS As __do(Of vector(Of String)),
-                                                  _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
-                                                  _DEFAULT_FOLDER As __do(Of String))
-        Inherits includes(Of _PARSER, _FOLDERS, _IGNORE_DEFAULT_FOLDER, _DEFAULT_FOLDER)
+    Public MustInherit Class include_with_file(Of PARSER As __do(Of String, WRITER, Boolean),
+                                                  FOLDERS As __do(Of vector(Of String)),
+                                                  IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
+                                                  DEFAULT_FOLDER As __do(Of String),
+                                                  IGNORE_INCLUDE_ERROR As __do(Of Boolean))
+        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR)
 
         Private Const kw_include As String = "#include"
 
-        Protected Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean
+        Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
             assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
             assert(n.leaf())
             Dim file As String = n.word().str()
             assert(file.StartsWith(kw_include))
