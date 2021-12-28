@@ -46,8 +46,8 @@ Public Class code_gen_rule_wrapper(Of WRITER,
                     Return False
                 End If
                 assert(Not root Is Nothing)
-                assert(root.type = typed_node.ROOT_TYPE)
-                assert(strsame(root.type_name, typed_node.ROOT_TYPE_NAME))
+                assert(root.type = typed_node.root_type)
+                assert(strsame(root.type_name, typed_node.root_type_name))
                 If root.leaf() Then
                     Return False
                 End If
