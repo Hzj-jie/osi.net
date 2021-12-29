@@ -12,11 +12,6 @@ Public MustInherit Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String)
     Private Shared ReadOnly debug_dump As Action(Of String) = AddressOf alloc(Of DEBUG_DUMP_T)().invoke
     Private ReadOnly v As New vector(Of Object)()
 
-    Public Function append(ByVal s As UInt32) As Boolean
-        v.emplace_back(s)
-        Return True
-    End Function
-
     Public Function append(ByVal s As String) As Boolean
         ' Allow appending newline characters.
         assert(Not s.null_or_empty())
@@ -24,22 +19,15 @@ Public MustInherit Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String)
         Return True
     End Function
 
-    Public Function append(ByVal v As vector(Of String)) As Boolean
-        assert(Not v Is Nothing)
-        Me.v.emplace_back(v)
-        Return True
-    End Function
-
     Public Function append(ByVal v As vector(Of pair(Of String, String))) As Boolean
         assert(Not v Is Nothing)
-        Me.v.emplace_back(lazier.of(Function() As String
-                                        Return v.str(Function(ByVal x As pair(Of String, String)) As String
-                                                         assert(Not x Is Nothing)
-                                                         Return strcat(x.first, character.blank, x.second)
-                                                     End Function,
-                                                     character.blank)
-                                    End Function))
-        Return True
+        Return append(lazier.of(Function() As String
+                                    Return v.str(Function(ByVal x As pair(Of String, String)) As String
+                                                     assert(Not x Is Nothing)
+                                                     Return strcat(x.first, character.blank, x.second)
+                                                 End Function,
+                                                 character.blank)
+                                End Function))
     End Function
 
     Public Function append(Of WRITER As object_list_writer(Of DEBUG_DUMP_T)) _
@@ -48,7 +36,7 @@ Public MustInherit Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String)
         Return a(direct_cast(Of WRITER)(Me))
     End Function
 
-    Public Function append(ByVal obj As Object) As Boolean
+    Public Function append(Of T)(ByVal obj As T) As Boolean
         assert(Not obj Is Nothing)
         v.emplace_back(obj)
         Return True
