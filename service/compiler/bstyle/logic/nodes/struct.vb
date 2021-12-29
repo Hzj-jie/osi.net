@@ -151,7 +151,7 @@ Partial Public NotInheritable Class bstyle
                              assert(Not m Is Nothing)
                              Return value_declaration.declare_single_data_slot(m.type, m.name, o)
                          End Function).
-                     aggregate(bool_stream.aggregators.all_true)
+                     aggregate(bool_stream.aggregators.all_true, True)
         End Function
 
         Public Function define_in_heap(ByVal type As String,
