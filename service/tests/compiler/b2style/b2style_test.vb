@@ -558,7 +558,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.heap_ptr_to_int64.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), strcat("0 4294967296 8589934592"))
+        assertion.equal(io.output(), "0 4294967296 8589934592")
     End Sub
 
     <test>
@@ -571,6 +571,17 @@ Public NotInheritable Class b2style_test
         Dim logic_str As String = Nothing
         assertion.is_true(bstyle.parse(bstyle_str, logic_str))
         assertions.of(logic_str).not_contains("b2style__ufloat")
+    End Sub
+
+    <test>
+    Private Shared Sub empty_struct()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.empty_struct.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "f3ff2")
     End Sub
 
     Private Sub New()

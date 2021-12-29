@@ -23,7 +23,8 @@ Partial Public NotInheritable Class bstyle
 
             Public Sub New(ByVal type As String, ByVal names As vector(Of String))
                 assert(Not type.null_or_whitespace())
-                assert(Not names.null_or_empty())
+                ' Allow empty struct, so the names can be empty.
+                assert(Not names Is Nothing)
                 type = scope.current().type_alias()(type)
                 If Not scope.current().structs().defined(type) Then
                     assert(names.size() = 1)

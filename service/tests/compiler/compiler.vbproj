@@ -179,6 +179,7 @@
     <Content Include="bstyle\codegen\call_struct_on_heap.txt" />
     <Content Include="bstyle\codegen\case1.txt" />
     <Content Include="bstyle\codegen\case2.txt" />
+    <Content Include="b2style\codegen\empty_struct.txt" />
     <Content Include="bstyle\codegen\errors\dot-is-disallowed-as-the-end-of-name.txt" />
     <Content Include="bstyle\codegen\for_loop.txt" />
     <Content Include="bstyle\codegen\function_struct.txt" />
