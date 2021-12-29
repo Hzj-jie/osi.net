@@ -26,22 +26,20 @@ Public MustInherit Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String)
 
     Public Function append(ByVal v As vector(Of String)) As Boolean
         assert(Not v Is Nothing)
-        If v.empty() Then
-            Return True
-        End If
-        Return append(v.str(character.blank))
+        Me.v.emplace_back(v)
+        Return True
     End Function
 
     Public Function append(ByVal v As vector(Of pair(Of String, String))) As Boolean
         assert(Not v Is Nothing)
-        If v.empty() Then
-            Return True
-        End If
-        Return append(v.str(Function(ByVal x As pair(Of String, String)) As String
-                                assert(Not x Is Nothing)
-                                Return strcat(x.first, character.blank, x.second)
-                            End Function,
-                            character.blank))
+        Me.v.emplace_back(lazier.of(Function() As String
+                                        Return v.str(Function(ByVal x As pair(Of String, String)) As String
+                                                         assert(Not x Is Nothing)
+                                                         Return strcat(x.first, character.blank, x.second)
+                                                     End Function,
+                                                     character.blank)
+                                    End Function))
+        Return True
     End Function
 
     Public Function append(Of WRITER As object_list_writer(Of DEBUG_DUMP_T)) _
@@ -60,5 +58,10 @@ Public MustInherit Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String)
         Dim r As String = v.str(character.blank)
         debug_dump(r)
         Return r
+    End Function
+
+    ' Allows an object_list_writer to be injected into another object_list_writer.
+    Public NotOverridable Overrides Function ToString() As String
+        Return dump()
     End Function
 End Class
