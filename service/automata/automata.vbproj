@@ -132,6 +132,7 @@
     <Compile Include="syntax\matching_group.vb" />
     <Compile Include="syntax\matching_wrapper.vb" />
     <Compile Include="syntax\multi_matching_group.vb" />
+    <Compile Include="typed_node.search.vb" />
     <Compile Include="typed_node.named_map.vb" />
     <Compile Include="typed_node.str.vb" />
     <Compile Include="typed_node.vb" />

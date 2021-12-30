@@ -3,6 +3,7 @@ INCLUDE ../shared/nlexer_rule.txt
 
 kw-namespace namespace
 kw-class class
+kw-template template
 
 # Comparison
 less-or-equal <=

@@ -43,7 +43,7 @@ Partial Public NotInheritable Class b2style
             End If
 
             Dim dot_pos As Int32 = name.LastIndexOf(".")
-            ' dot is not allowed to be the first character.
+            ' dot is not allowed to be the first or last character.
             assert(dot_pos > 0 AndAlso dot_pos <name.Length() - 1)
             Dim function_name As String = namespace_.bstyle_format_in_global_namespace(name.Substring(dot_pos + 1))
             scope.current().call_hierarchy().to(function_name)

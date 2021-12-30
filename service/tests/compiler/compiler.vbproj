@@ -60,6 +60,7 @@
     <Compile Include="b2style\b2style_main.vb" />
     <Compile Include="b2style\b2style_test.vb" />
     <Compile Include="b2style\b2style_test_data.vb" />
+    <Compile Include="b2style\template_template_test.vb" />
     <Compile Include="bstyle\bstyle_compiler_error_test.vb" />
     <Compile Include="bstyle\bstyle_test.vb" />
     <Compile Include="bstyle\bstyle_test_data.vb" />
@@ -103,6 +104,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="b2style\codegen\errors\duplicate_template_type_parameters.txt" />
     <Content Include="b2style\codegen\errors\missing-ending-quota.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />
     <Content Include="b2style\codegen\nested_heap_access.txt" />
@@ -166,6 +168,9 @@
     <Content Include="b2style\codegen\shift.txt" />
     <Content Include="b2style\codegen\struct_function_ref.txt" />
     <Content Include="b2style\codegen\struct_in_namespace.txt" />
+    <Content Include="b2style\codegen\template.txt" />
+    <Content Include="b2style\codegen\template_template_case1.txt" />
+    <Content Include="b2style\codegen\two_template_type_parameters.txt" />
     <Content Include="b2style\codegen\typedef.txt" />
     <Content Include="b2style\codegen\ufloat_operators.txt" />
     <Content Include="b2style\codegen\ufloat_std_out.txt" />

@@ -16,7 +16,7 @@ Partial Public NotInheritable Class typed_node
     Public ReadOnly type_name As String
     Public ReadOnly word_start As UInt32
     Public ReadOnly word_end As UInt32 'exclusive
-    Public ReadOnly subnodes As vector(Of typed_node)
+    Public ReadOnly subnodes As New vector(Of typed_node)()
     Private ReadOnly ref As vector(Of typed_word)
     Private parent As typed_node
 
@@ -34,7 +34,6 @@ Partial Public NotInheritable Class typed_node
         Me.type_name = type_name
         Me.word_start = word_start
         Me.word_end = word_end
-        Me.subnodes = New vector(Of typed_node)()
 
 #If NOT_IMPLEMENTED Then
         If leaf() Then

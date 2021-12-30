@@ -45,7 +45,7 @@ Partial Public NotInheritable Class b2style
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             o.append("struct")
-            Dim class_name As String = namespace_.bstyle_format(n.child(1).word().str())
+            Dim class_name As String = namespace_.bstyle_format(n.child(1).children_word_str())
             o.append(class_name)
             o.append("{")
             ' Append variables into the structure.

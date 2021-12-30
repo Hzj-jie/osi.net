@@ -82,7 +82,8 @@ Partial Public NotInheritable Class b2style
                        leaf.of("end-bracket"),
                        leaf.of("assignment"),
                        AddressOf name.register,
-                       name.of("type-name"),
+                       name.of("raw-type-name"),
+                       [default].of_only_child("type-name"),
  _
                        AddressOf [function].register,
                        [default].of_all_children("paramlist"),
@@ -148,7 +149,10 @@ Partial Public NotInheritable Class b2style
                        AddressOf struct.register,
                        leaf.of("kw-struct"),
  _
-                       AddressOf [class].register
+                       AddressOf [class].register,
+ _
+                       AddressOf template.register,
+                       AddressOf template_type_name.register
                    )
         End Function
     End Class
