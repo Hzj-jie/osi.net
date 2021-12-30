@@ -6,6 +6,8 @@
 #include <b2style_types.h>
 
 namespace b2style {
+  ufloat __1 = 1.0;
+
   bool equal(ufloat i, ufloat j) {
     bool result;
     logic "float_equal b2style__result b2style__i b2style__j";
@@ -77,6 +79,28 @@ namespace b2style {
 
   void std_err(ufloat i) {
     std_err(ufloat_to_str(i));
+  }
+
+  ufloat self_inc_post(ufloat& x) {
+    ufloat r = x;
+	x = add(x, __1);
+    return r;
+  }
+
+  ufloat self_dec_post(ufloat& x) {
+    ufloat r = x;
+	x = minus(x, __1);
+    return r;
+  }
+
+  ufloat self_inc_pre(ufloat& x) {
+	x = add(x, __1);
+    return x;
+  }
+
+  ufloat self_dec_pre(ufloat& x) {
+	x = minus(x, __1);
+    return x;
   }
 
   ufloat ufloat__from(biguint i) {

@@ -164,6 +164,7 @@
     <Content Include="b2style\codegen\order_of_operators.txt" />
     <Content Include="b2style\codegen\nested_paragraph.txt" />
     <Content Include="b2style\codegen\pi_integral_0_1.txt" />
+    <Content Include="b2style\codegen\primitive_template.txt" />
     <Content Include="b2style\codegen\self_add.txt" />
     <Content Include="b2style\codegen\shift.txt" />
     <Content Include="b2style\codegen\struct_function_ref.txt" />
