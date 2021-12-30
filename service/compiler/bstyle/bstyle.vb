@@ -82,7 +82,6 @@ Public NotInheritable Class bstyle
                 AddressOf multi_sentence_paragraph.register,
                 [default].of_only_child("paragraph"),
                 AddressOf param.register,
-                [default].of_first_child("param-with-comma"),
                 AddressOf paramlist.register,
                 AddressOf return_clause.register,
                 [default].of_only_child("sentence"),

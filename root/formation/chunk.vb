@@ -36,7 +36,7 @@ Public NotInheritable Class chunk
             Return False
         End If
 
-        If v Is Nothing Then
+        If v.null_or_empty() Then
             Return True
         End If
         Return ms.try_write(v.buff, v.offset, v.count)

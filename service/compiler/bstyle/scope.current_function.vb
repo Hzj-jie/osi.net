@@ -10,23 +10,19 @@ Imports osi.service.compiler.logic
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
         Private NotInheritable Class current_function_t
-            Private ReadOnly raw_name As String
+            Public ReadOnly name As String
             Public ReadOnly return_type As String
             Private ReadOnly params As vector(Of builders.parameter)
-            Public ReadOnly name As lazier(Of String)
 
-            Public Sub New(ByVal raw_name As String,
+            Public Sub New(ByVal name As String,
                            ByVal return_type As String,
                            ByVal params As vector(Of builders.parameter))
-                assert(Not raw_name.null_or_whitespace())
+                assert(Not name.null_or_whitespace())
                 assert(Not return_type.null_or_whitespace())
                 assert(Not params Is Nothing)
-                Me.raw_name = raw_name
+                Me.name = name
                 Me.return_type = scope.current().type_alias()(return_type)
                 Me.params = params
-                Me.name = lazier.of(Function() As String
-                                        Return logic_name.of_function(raw_name, params)
-                                    End Function)
             End Sub
 
             Public Function allow_return_value() As Boolean
@@ -42,11 +38,11 @@ Partial Public NotInheritable Class bstyle
                 Me.s = s
             End Sub
 
-            Public Sub define(ByVal raw_name As String,
+            Public Sub define(ByVal name As String,
                               ByVal return_type As String,
                               ByVal params As vector(Of builders.parameter))
                 assert(s.cf Is Nothing)
-                s.cf = New current_function_t(raw_name, return_type, params)
+                s.cf = New current_function_t(name, return_type, params)
             End Sub
 
             Private Function current_function() As current_function_t
@@ -74,7 +70,7 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Function name() As String
-                Return +current_function().name
+                Return current_function().name
             End Function
 
             Public Function return_struct() As Boolean

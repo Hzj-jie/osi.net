@@ -33,28 +33,24 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             Using New scope_wrapper()
                 Dim fo As New writer()
+                Dim params As vector(Of builders.parameter)
                 Dim has_paramlist As Boolean = strsame(n.child(3).type_name, "paramlist")
                 If has_paramlist Then
-                    If Not l.of(n.child(3)).build(fo) Then
-                        Return False
-                    End If
+                    params = l.typed_code_gen(Of paramlist).build(n.child(3))
                 Else
-                    l.typed_code_gen(Of paramlist)().empty_paramlist()
+                    params = New vector(Of builders.parameter)()
                 End If
-                Using params As read_scoped(Of vector(Of builders.parameter)).ref =
-                          l.typed_code_gen(Of paramlist)().current_target()
-                    Return logic_name.of_callee(n.child(1).word().str(),
-                                                n.child(0).word().str(),
-                                                +params,
-                                                Function() As Boolean
-                                                    Dim gi As UInt32 = CUInt(If(has_paramlist, 5, 4))
-                                                    Return l.of(n.child(gi)).build(fo)
-                                                End Function,
-                                                fo) AndAlso
-                           o.append(scope.current().call_hierarchy().filter(
-                                        logic_name.of_function(n.child(1).word().str(), +params),
-                                        AddressOf fo.dump))
-                End Using
+                Return logic_name.of_callee(n.child(1).word().str(),
+                                            n.child(0).word().str(),
+                                            params,
+                                            Function() As Boolean
+                                                Dim gi As UInt32 = CUInt(If(has_paramlist, 5, 4))
+                                                Return l.of(n.child(gi)).build(fo)
+                                            End Function,
+                                            fo) AndAlso
+                       o.append(scope.current().call_hierarchy().filter(
+                                    logic_name.of_function(n.child(1).word().str(), params),
+                                    AddressOf fo.dump))
             End Using
         End Function
     End Class

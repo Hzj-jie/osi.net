@@ -13,6 +13,6 @@ Public Module _executor_ext
             Return False
         End If
         this.execute()
-        Return assertion.is_false(this.halt()) AndAlso assertion.vector_empty(this.errors())
+        Return assertion.is_false(this.halt()) And assertions.of(this.errors()).empty()
     End Function
 End Module

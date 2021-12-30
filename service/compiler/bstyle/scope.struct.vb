@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
             Public Function define(ByVal type As String,
                                    ByVal members As vector(Of struct_member)) As Boolean
                 assert(Not type.null_or_whitespace())
-                assert(Not members Is Nothing)
+                assert(Not members.null_or_empty())
                 Dim d As New struct_def()
                 Dim i As UInt32 = 0
                 While i < members.size()

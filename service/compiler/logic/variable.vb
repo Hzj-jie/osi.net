@@ -16,26 +16,39 @@ Namespace logic
         Public ReadOnly type As String
         Public ReadOnly size As [optional](Of UInt32)
 
-        Private Sub New(ByVal types As types,
-                        ByVal name As String,
+        Private Sub New(ByVal name As String,
                         ByVal index As [optional](Of variable),
-                        ByVal type As String)
+                        ByVal type As String,
+                        ByVal size As [optional](Of UInt32))
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
             Me.name = name
             Me.index = index
             Me.type = type
-            Me.size = size_of(types, type)
+            Me.size = size
         End Sub
 
-        Private Shared Function size_of(ByVal types As types, ByVal type As String) As [optional](Of UInt32)
+        Private Shared Function with_size(ByVal types As types,
+                                          ByVal name As String,
+                                          ByVal index As [optional](Of variable),
+                                          ByVal type As String,
+                                          ByRef o As variable) As Boolean
+            Dim new_var As Func(Of [optional](Of UInt32), variable) =
+                Function(ByVal x As [optional](Of UInt32)) As variable
+                    Return New variable(name, index, type, x)
+                End Function
             If types Is Nothing Then
-                Return [optional].empty(Of UInt32)()
+                o = new_var([optional].empty(Of UInt32)())
+                Return True
             End If
             Dim size As UInt32 = 0
             ' type should be checked when a variable is defined in the scope.
-            assert(types.retrieve(type, size))
-            Return [optional].of(size)
+            If Not types.retrieve(type, size) Then
+                errors.type_undefined(type)
+                Return False
+            End If
+            o = new_var([optional].of(size))
+            Return True
         End Function
 
         Public Shared Function name_of(ByVal array As String, ByVal index As String) As String
@@ -75,9 +88,7 @@ Namespace logic
                     errors.variable_undefined(name)
                     Return False
                 End If
-
-                o = New variable(types, name, [optional].empty(Of variable)(), r.type)
-                Return True
+                Return with_size(types, name, [optional].empty(Of variable)(), r.type, o)
             Else
                 If Not name.EndsWith(character.right_mid_bracket) Then
                     errors.invalid_variable_name(name, "Closing bracket is not at the end of the name.")
@@ -109,8 +120,7 @@ Namespace logic
                     d,
                     r.data_ref.ToString(),
                     index.ToString()))
-                o = New variable(types, ptr_name, [optional].of(index), +r.ref_type)
-                Return True
+                Return with_size(types, ptr_name, [optional].of(index), +r.ref_type, o)
             End If
         End Function
 
