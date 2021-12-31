@@ -39,8 +39,10 @@ Public Class code_gen_rule_wrapper(Of WRITER,
             Using defer.to(Sub()
                                nested -= uint32_1
                            End Sub)
-                assert(Not input.null_or_whitespace())
                 assert(Not o Is Nothing)
+                If input.null_or_whitespace() Then
+                    Return True
+                End If
                 Dim root As typed_node = Nothing
                 If Not nlp().parse(input, root:=root) Then
                     Return False

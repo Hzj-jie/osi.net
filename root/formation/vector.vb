@@ -291,6 +291,17 @@ Public NotInheritable Class vector(Of T)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Overrides Function GetHashCode() As Int32
+        Dim r As UInt32 = 0
+        Dim i As UInt32 = 0
+        While i < size()
+            r = r Xor fast_to_uint32(Of T).on(v.get(i))
+            i += uint32_1
+        End While
+        Return uint32_int32(r)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal this As vector(Of T)) As T()
         If this Is Nothing Then
             Return Nothing

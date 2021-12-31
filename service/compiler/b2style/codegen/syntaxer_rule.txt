@@ -8,7 +8,7 @@ name [raw-name-with-dot]* [double-colon]? [raw-name-with-double-colon, raw-name-
 raw-type-name [double-colon]? [raw-name-with-double-colon]* raw-name
 template-type-param-list [template-type-param-with-comma]* template-type-param
 template-type-param-with-comma template-type-param comma
-template-type-param raw-type-name
+template-type-param type-name
 template-type-name raw-type-name less-than template-type-param-list greater-than
 type-name [template-type-name, raw-type-name]
 root-type [function, value-definition-with-semi-colon, heap-declaration-with-semi-colon, value-declaration-with-semi-colon, namespace-, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, class, template]

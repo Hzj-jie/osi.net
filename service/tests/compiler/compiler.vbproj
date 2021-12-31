@@ -161,6 +161,7 @@
     <Content Include="b2style\codegen\namespaces.txt" />
     <Content Include="b2style\codegen\negative_int.txt" />
     <Content Include="b2style\codegen\nested_class.txt" />
+    <Content Include="b2style\codegen\nested_template.txt" />
     <Content Include="b2style\codegen\order_of_operators.txt" />
     <Content Include="b2style\codegen\nested_paragraph.txt" />
     <Content Include="b2style\codegen\pi_integral_0_1.txt" />
@@ -171,6 +172,7 @@
     <Content Include="b2style\codegen\struct_in_namespace.txt" />
     <Content Include="b2style\codegen\template.txt" />
     <Content Include="b2style\codegen\template_template_case1.txt" />
+    <Content Include="b2style\codegen\template_wont_be_extended_twice.txt" />
     <Content Include="b2style\codegen\two_template_type_parameters.txt" />
     <Content Include="b2style\codegen\typedef.txt" />
     <Content Include="b2style\codegen\ufloat_operators.txt" />

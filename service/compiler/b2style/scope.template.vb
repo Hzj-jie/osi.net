@@ -44,7 +44,10 @@ Partial Public NotInheritable Class b2style
                     ' The definition should be searched already in resolve.
                     assert(m.find(name, d))
                     assert(Not d Is Nothing)
-                    Dim types As vector(Of String) = template_type_name_types(n)
+                    Dim types As vector(Of String) = Nothing
+                    If Not template_type_name_types(n, types) Then
+                        Return False
+                    End If
                     ' TODO: Should resolve type-aliases.
                     If Not d.injected_types.emplace(types).second() Then
                         ' Injected already.
@@ -61,9 +64,12 @@ Partial Public NotInheritable Class b2style
                 Return n.child(0).children_word_str()
             End Function
 
-            Private Shared Function template_type_name_types(ByVal n As typed_node) As vector(Of String)
+            Private Shared Function template_type_name_types(ByVal n As typed_node,
+                                                             ByRef o As vector(Of String)) As Boolean
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
+                o.renew()
+                Dim v As vector(Of String) = o
                 Return streams.range(0, n.child(2).child_count()).
                                map(Function(ByVal index As Int32) As typed_node
                                        Return n.child(2).child(CUInt(index))
@@ -74,11 +80,21 @@ Partial Public NotInheritable Class b2style
                                        End If
                                        Return tn
                                    End Function).
-                               map(Function(ByVal tn As typed_node) As String
+                               map(Function(ByVal tn As typed_node) As Boolean
                                        assert(tn.type_name.Equals("template-type-param"))
-                                       Return tn.children_word_str()
+                                       tn = tn.child().child()
+                                       If tn.type_name.Equals("raw-type-name") Then
+                                           v.emplace_back(tn.children_word_str())
+                                           Return True
+                                       End If
+                                       Dim r As String = Nothing
+                                       If Not scope.current().template().resolve(tn, r) Then
+                                           Return False
+                                       End If
+                                       v.emplace_back(r)
+                                       Return True
                                    End Function).
-                               collect(Of vector(Of String))()
+                               aggregate(bool_stream.aggregators.all_true)
             End Function
 
             Public Function define(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
@@ -109,7 +125,11 @@ Partial Public NotInheritable Class b2style
                 If Not cr.build(n, d.injector) Then
                     Return False
                 End If
-                extended_class_name = d.template.extended_class_name(template_type_name_types(n))
+                Dim types As vector(Of String) = Nothing
+                If Not template_type_name_types(n, types) Then
+                    Return False
+                End If
+                extended_class_name = d.template.extended_class_name(types)
                 Return True
             End Function
         End Class
