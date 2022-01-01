@@ -8,14 +8,14 @@ Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
 
-Public Class alloc_perf
+Public NotInheritable Class alloc_perf
     Inherits performance_case_wrapper
 
     Public Sub New()
         MyBase.New(repeat(New alloc_test(), 1024 * 64))
     End Sub
 
-    Public NotOverridable Overrides Function prepare() As Boolean
+    Public Overrides Function prepare() As Boolean
         suppress.alloc_error.inc()
         Return MyBase.prepare()
     End Function
@@ -26,18 +26,18 @@ Public Class alloc_perf
     End Function
 End Class
 
-' alloc<T>() costs 50x more time than New operator in debug build, and 100x more time in release build.
-Public Class alloc_perf2
+' alloc<T>() costs ~30x more time than New operator in release build.
+Public NotInheritable Class alloc_perf2
     Inherits performance_comparison_case_wrapper
 
-    Private Const round As Int64 = 1024 * 1024
+    Private Const round As Int64 = 1024 * 1024 * 10
 
-    Private Class test_class
+    Private NotInheritable Class test_class
         Public Sub New()
         End Sub
     End Class
 
-    Private Class test_class2
+    Private NotInheritable Class test_class2
     End Class
 
     Private Class test_class3
@@ -55,7 +55,7 @@ Public Class alloc_perf2
         End Sub
     End Class
 
-    Private Class alloc_perf2_case
+    Private NotInheritable Class alloc_perf2_case
         Inherits [case]
 
         Private Shared Function alloc_vector_string() As Boolean
@@ -122,10 +122,10 @@ Public Class alloc_perf2
         End Function
     End Class
 
-    Private Class new_perf_case
+    Private NotInheritable Class new_perf2_case
         Inherits [case]
 
-        Private Class test_class3
+        Private NotInheritable Class test_class3
             Inherits alloc_perf2.test_class3
 
             Public Sub New(ByVal a As Int32, ByVal b As Boolean, ByVal c As String)
@@ -133,14 +133,14 @@ Public Class alloc_perf2
             End Sub
         End Class
 
-        Private Class test_class4
+        Private NotInheritable Class test_class4
             Inherits alloc_perf2.test_class4
             Public Sub New(ByVal a As String, ByVal b As Int32)
                 MyBase.New(a, b)
             End Sub
         End Class
 
-        Private Class test_class5
+        Private NotInheritable Class test_class5
             Inherits alloc_perf2.test_class5
             Public Sub New()
                 MyBase.New()
@@ -149,63 +149,85 @@ Public Class alloc_perf2
 
         Public Overrides Function run() As Boolean
             Using code_block
-                Dim v As vector(Of String) = Nothing
-                v = New vector(Of String)()
+                Dim v As New vector(Of String)()
             End Using
             Using code_block
-                Dim v As Int32 = 0
-                v = New Int32()
+                Dim v As New Int32()
             End Using
             Using code_block
-                Dim v As Object = Nothing
-                v = New Object()
+                Dim v As New Object()
             End Using
             Using code_block
-                Dim v As test_class = Nothing
-                v = New test_class()
+                Dim v As New test_class()
             End Using
             Using code_block
-                Dim v As test_class2 = Nothing
-                v = New test_class2()
+                Dim v As New test_class2()
             End Using
             Using code_block
-                Dim v As test_class3 = Nothing
-                v = New test_class3(0, False, Nothing)
+                Dim v As New test_class3(0, False, Nothing)
             End Using
             Using code_block
-                Dim v As Action = Nothing
-                v = New Action(Sub()
-                               End Sub)
+                Dim v As Action = Sub()
+                                  End Sub
             End Using
             Using code_block
-                Dim v As Func(Of Boolean) = Nothing
-                v = New Func(Of Boolean)(Function() As Boolean
-                                             Return False
-                                         End Function)
+                Dim v As Func(Of Boolean) = Function() As Boolean
+                                                Return False
+                                            End Function
             End Using
             Using code_block
-                Dim v As test_class4 = Nothing
-                v = New test_class4(Nothing, 0)
+                Dim v As New test_class4(Nothing, 0)
             End Using
             Using code_block
-                Dim v As test_class5 = Nothing
-                v = New test_class5()
+                Dim v As New test_class5()
             End Using
             Return True
         End Function
     End Class
 
-    Protected Overrides Function min_rate_table() As Double(,)
-        If isdebugbuild() Then
-            Return {{0, 0.6},
-                    {6, 0}}
-        Else
-            Return {{0, 0.9},
-                    {4, 0}}
-        End If
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+        Return loosen_bound({11473, 390}, i, j)
     End Function
 
     Public Sub New()
-        MyBase.New(repeat(New alloc_perf2_case(), round), repeat(New new_perf_case(), round * 50))
+        MyBase.New(repeat(New alloc_perf2_case(), round), repeat(New new_perf2_case(), round))
     End Sub
 End Class
+
+' For simple empty constructor, the performance penalty of alloc<T> is even more noticeable as alloc<T> uses around 50x
+' more time than new.
+Public NotInheritable Class alloc_perf3
+    Inherits performance_comparison_case_wrapper
+
+    Private Const round As Int64 = 1024 * 1024 * 10
+
+    Private NotInheritable Class test_class
+    End Class
+
+    Private NotInheritable Class alloc_perf3_case
+        Inherits [case]
+
+        Public Overrides Function run() As Boolean
+            Dim v As test_class = alloc(Of test_class)()
+            Return True
+        End Function
+    End Class
+
+    Private NotInheritable Class new_perf3_case
+        Inherits [case]
+
+        Public Overrides Function run() As Boolean
+            Dim v As New test_class()
+            Return True
+        End Function
+    End Class
+
+    Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+        Return loosen_bound({9137, 197}, i, j)
+    End Function
+
+    Public Sub New()
+        MyBase.New(repeat(New alloc_perf3_case(), round), repeat(New new_perf3_case(), round))
+    End Sub
+End Class
+

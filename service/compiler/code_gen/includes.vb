@@ -10,7 +10,7 @@ Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.automata
 
-Partial Public Class code_gens(Of WRITER)
+Partial Public Class code_gens(Of WRITER As New)
     Public MustInherit Class includes(Of PARSER As __do(Of String, WRITER, Boolean),
                                          _FOLDERS As __do(Of vector(Of String)),
                                          _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),

@@ -8,9 +8,8 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.template
 
-Public MustInherit Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String))
-    Private Shared ReadOnly debug_dump As Action(Of String) = AddressOf alloc(Of DEBUG_DUMP_T)().invoke
-    Private ReadOnly v As New vector(Of Object)()
+Public Class object_list_writer
+    Protected ReadOnly v As New vector(Of Object)()
 
     Public Function append(ByVal s As String) As Boolean
         ' Allow appending newline characters.
@@ -30,8 +29,7 @@ Public MustInherit Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String)
                                 End Function))
     End Function
 
-    Public Function append(Of WRITER As object_list_writer(Of DEBUG_DUMP_T)) _
-                          (ByVal a As Func(Of WRITER, Boolean)) As Boolean
+    Public Function append(Of WRITER As object_list_writer)(ByVal a As Func(Of WRITER, Boolean)) As Boolean
         assert(Not a Is Nothing)
         Return a(direct_cast(Of WRITER)(Me))
     End Function
@@ -41,6 +39,11 @@ Public MustInherit Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String)
         v.emplace_back(obj)
         Return True
     End Function
+End Class
+
+Public Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String))
+    Inherits object_list_writer
+    Private Shared ReadOnly debug_dump As Action(Of String) = AddressOf alloc(Of DEBUG_DUMP_T)().invoke
 
     Public Function dump() As String
         Dim r As String = v.str(character.blank)

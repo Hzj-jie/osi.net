@@ -74,6 +74,7 @@
     <Compile Include="b2style\scope.vb" />
     <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
+    <Compile Include="code_gen\code_gen.default.vb" />
     <Compile Include="code_gen\includes.vb" />
     <Compile Include="bstyle\logic\nodes\defines.vb" />
     <Compile Include="bstyle\logic\nodes\heap_declaration.vb" />
@@ -126,7 +127,6 @@
     <Compile Include="code_gen\reparser.vb" />
     <Compile Include="object_list_writer.vb" />
     <Compile Include="scope.call_hierarchy.vb" />
-    <Compile Include="code_gen\default.vb" />
     <Compile Include="logic\define_heap.vb" />
     <Compile Include="logic\logic_gen\read_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />

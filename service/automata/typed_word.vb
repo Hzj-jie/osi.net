@@ -16,6 +16,7 @@ Public NotInheritable Class typed_word
     Public ReadOnly len As UInt32
     ' Used by syntax to match the node type without using string comparison.
     Public ReadOnly type As UInt32
+    ' TODO: Remove
     Public ReadOnly type_name As String
 
     Public Sub New(ByVal ref As String,

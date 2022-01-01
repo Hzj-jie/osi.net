@@ -10,7 +10,7 @@ Imports osi.root.template
 Imports osi.service.automata
 Imports osi.service.interpreter.primitive
 
-Public Class code_gen_rule_wrapper(Of WRITER,
+Public Class code_gen_rule_wrapper(Of WRITER As New,
                                       CODE_GENS_IMPL As code_gens(Of WRITER),
                                       STATEMENTS_IMPL As statements(Of WRITER),
                                       _nlexer_rule As __do(Of String),

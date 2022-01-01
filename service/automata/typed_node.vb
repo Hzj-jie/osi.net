@@ -13,6 +13,7 @@ Partial Public NotInheritable Class typed_node
     Public Const root_type_name As String = "ROOT"
     ' TODO: type should be removed in favor of type_name, now it's used only in tests.
     Public ReadOnly type As UInt32
+    ' TODO: Limit the use of type_name.
     Public ReadOnly type_name As String
     Public ReadOnly word_start As UInt32
     Public ReadOnly word_end As UInt32 'exclusive

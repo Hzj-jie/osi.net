@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.constants
 
+' Avoid conflict with System.IO.Stream
 Partial Public NotInheritable Class streams
     Public Shared Function [of](Of T)(ByVal ParamArray i() As T) As stream(Of T)
         Return New stream(Of T)(enumerators.from_array(i))
