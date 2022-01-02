@@ -39,7 +39,10 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Dim type As String = Nothing
-            assert(scope.current().variables().resolve(name.children_word_str(), type))
+            If Not scope.current().variables().resolve(name.children_word_str(), type) Then
+                ' Emmmm, scope.variable should log the error already.
+                Return False
+            End If
             If scope.current().structs().defined(type) Then
                 Using r As read_scoped(Of value.target).ref = l.typed_code_gen(Of value)().read_target()
                     If Not (+r).type.Equals(type) Then
