@@ -66,7 +66,7 @@ Partial Public Class code_gens(Of WRITER As New)
         Return code_gen_of(n.type_name)
     End Function
 
-    ' Limit the use of this function.
+    ' Limit the use of this function, prefer code_gen_proxy.dump if possible.
     Public Function typed_code_gen(Of T As code_gen(Of WRITER))() As T
         Return direct_cast(Of T)(code_gen_of(code_gen_name(Of T)()))
     End Function
@@ -84,6 +84,21 @@ Partial Public Class code_gens(Of WRITER As New)
 
         Public Function build(ByVal o As WRITER) As Boolean
             Return b.build(n, o)
+        End Function
+
+        Public Function dump(ByRef o As String) As Boolean
+            Dim w As New WRITER()
+            If Not b.build(n, w) Then
+                Return False
+            End If
+            o = w.ToString()
+            Return True
+        End Function
+
+        Public Function dump() As String
+            Dim r As String = Nothing
+            assert(dump(r))
+            Return r
         End Function
     End Structure
 
