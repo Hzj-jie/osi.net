@@ -1,0 +1,3 @@
+﻿
+template<T, T>
+class C{};

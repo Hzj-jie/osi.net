@@ -14,8 +14,6 @@ Partial Public NotInheritable Class bstyle
         Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
-        Private ReadOnly rs As New read_scoped(Of vector(Of builders.parameter))
-
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of writer))
             MyBase.New(b)
@@ -26,19 +24,22 @@ Partial Public NotInheritable Class bstyle
             b.register(Of param)()
         End Sub
 
-        Public Function current_target() As read_scoped(Of vector(Of builders.parameter)).ref
-            Return rs.pop()
-        End Function
-
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
+        Public Function build(ByVal n As typed_node) As vector(Of builders.parameter)
             assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
+            If n.type_name.Equals("param-with-comma") Then
+                n = n.child(0)
+            End If
+            assert(n.type_name.Equals("param"))
             assert(n.child_count() = 2 OrElse n.child_count() = 3)
-            l.typed_code_gen(Of struct)().forward_in_stack(n.child(0).word().str(), n.last_child().word().str())
+            l.typed_code_gen(Of struct)().forward_in_stack(n.child(0).word().str(),
+                                                           n.last_child().word().str())
             Dim params As struct_def = Nothing
-            If Not scope.current().structs().resolve(n.child(0).word().str(), n.last_child().word().str(), params) Then
+            If Not scope.current().structs().resolve(n.child(0).word().str(),
+                                                     n.last_child().word().str(),
+                                                     params) Then
                 params = struct_def.of_single_data_slot_variable(
-                             New single_data_slot_variable(n.child(0).word().str(), n.last_child().word().str()))
+                             New single_data_slot_variable(n.child(0).word().str(),
+                                                           n.last_child().word().str()))
             End If
             Dim ps As vector(Of builders.parameter) =
                     params.expanded.
@@ -52,10 +53,12 @@ Partial Public NotInheritable Class bstyle
                         map(AddressOf builders.parameter.to_ref).
                         collect(Of vector(Of builders.parameter))()
             End If
-            rs.push(ps)
-            ' No parameter nesting expected, use read_scoped to reduce the cost of maintaining the state only.
-            assert(rs.size() = 1)
-            Return True
+            Return ps
+        End Function
+
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
+            assert(False)
+            Return False
         End Function
     End Class
 End Class

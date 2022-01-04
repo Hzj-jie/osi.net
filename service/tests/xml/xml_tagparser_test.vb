@@ -75,7 +75,7 @@ Public Class xml_tagparser_test
         assertion.equal(parse_tag(c.s, tag, attr, self_close, close_tag, True), c.return)
         If c.return Then
             assertion.equal(tag, c.tag)
-            assertion.vector_equal(attr, c.attr)
+            assertions.of(attr).equal(c.attr)
             assertion.equal(self_close, c.self_close)
             assertion.equal(close_tag, c.close_tag)
         End If

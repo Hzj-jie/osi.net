@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.service.math
 
 Namespace primitive
     Public NotInheritable Class data_block
@@ -28,8 +29,7 @@ Namespace primitive
 
         Public Shared Function random(Optional ByRef type As Char = Nothing,
                                       Optional ByVal safe_str_double As Boolean = True) As data_block
-            Dim i As UInt32 = 0
-            i = rnd_uint() Mod CUInt(6)
+            Dim i As UInt32 = rnd_uint() Mod CUInt(6)
             Select Case i
                 Case 0
                     type = prefix.int

@@ -41,14 +41,12 @@ Public Module vector_extension
         If that.null_or_empty() Then
             Return copy(this)
         End If
-        Dim s As [set](Of T) = Nothing
-        s = New [set](Of T)()
+        Dim s As New [set](Of T)()
         For i As UInt32 = 0 To that.size() - uint32_1
             s.insert(that(i))
         Next
 
-        Dim rtn As vector(Of T) = Nothing
-        rtn = New vector(Of T)()
+        Dim rtn As New vector(Of T)()
         For i As UInt32 = 0 To this.size() - uint32_1
             If s.find(this(i)) = s.end() Then
                 rtn.push_back(this(i))
@@ -87,23 +85,23 @@ Public Module vector_extension
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function take(Of T)(ByVal v As vector(Of T), ByVal i As Int64, ByRef o As T) As Boolean
-        If available_index(v, i) Then
-            assert(i >= 0)
-            assert(i <= max_uint32)
-            o = v(CUInt(i))
-            Return True
+        If Not available_index(v, i) Then
+            Return False
         End If
-        Return False
+        assert(i >= 0)
+        assert(i <= max_uint32)
+        o = v(CUInt(i))
+        Return True
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function take(Of T)(ByVal v As vector(Of T), ByVal i As UInt64, ByRef o As T) As Boolean
-        If available_index(v, i) Then
-            assert(i <= max_uint32)
-            o = v(CUInt(i))
-            Return True
+        If Not available_index(v, i) Then
+            Return False
         End If
-        Return False
+        assert(i <= max_uint32)
+        o = v(CUInt(i))
+        Return True
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -194,25 +192,37 @@ Public Module vector_extension
         If v.empty() Then
             Return String.Empty
         End If
-        Dim r As StringBuilder = Nothing
-        r = New StringBuilder()
+        Dim r As New StringBuilder()
         For i As UInt32 = 0 To v.size() - uint32_1
             If i > 0 Then
                 r.Append(separator)
             End If
             r.Append(f(v(i)))
         Next
-        Return Convert.ToString(r)
+        Return r.ToString()
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <Extension()> Public Function str(Of T)(ByVal v As vector(Of T), ByVal f As Func(Of T, String)) As String
+        Return str(v, f, Nothing)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function str(Of T)(ByVal v As vector(Of T), ByVal separator As String) As String
-        Return str(v, AddressOf Convert.ToString, separator)
+        Return str(v,
+                   Function(ByVal x As T) As String
+                       Return x.ToString()
+                   End Function,
+                   separator)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function str(Of T)(ByVal v As vector(Of T)) As String
-        Return str(v, Nothing)
+        Return str(v,
+                   Function(ByVal x As T) As String
+                       Return x.ToString()
+                   End Function,
+                   Nothing)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -223,8 +233,7 @@ End Module
 
 Public NotInheritable Class vector
     Private Shared Function create(Of T)(ByVal vs() As T, ByVal require_copy As Boolean) As vector(Of T)
-        Dim r As vector(Of T) = Nothing
-        r = New vector(Of T)()
+        Dim r As New vector(Of T)()
         If require_copy Then
             assert(r.push_back(vs))
         Else
@@ -245,8 +254,7 @@ Public NotInheritable Class vector
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function repeat_of(Of T)(ByVal v As T, ByVal size As UInt32) As vector(Of T)
-        Dim r As vector(Of T) = Nothing
-        r = New vector(Of T)()
+        Dim r As New vector(Of T)()
         Dim i As UInt32 = 0
         While i < size
             r.push_back(v)

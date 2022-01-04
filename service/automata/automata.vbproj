@@ -132,6 +132,7 @@
     <Compile Include="syntax\matching_group.vb" />
     <Compile Include="syntax\matching_wrapper.vb" />
     <Compile Include="syntax\multi_matching_group.vb" />
+    <Compile Include="typed_node.search.vb" />
     <Compile Include="typed_node.named_map.vb" />
     <Compile Include="typed_node.str.vb" />
     <Compile Include="typed_node.vb" />
@@ -141,7 +142,7 @@
     <Compile Include="syntax\single_matching.vb" />
     <Compile Include="syntax\syntax.vb" />
     <Compile Include="syntax\syntaxer.vb" />
-    <Compile Include="syntax\syntax_collection.vb" />
+    <Compile Include="syntax_collection.vb" />
     <Compile Include="typed_word.vb" />
   </ItemGroup>
   <ItemGroup>

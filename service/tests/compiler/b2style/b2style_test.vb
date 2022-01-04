@@ -525,7 +525,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.function_with_global_namespace.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "::f")
+        assertion.equal(io.output(), "f::f")
     End Sub
 
     <test>
@@ -558,7 +558,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.heap_ptr_to_int64.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), strcat("0 4294967296 8589934592"))
+        assertion.equal(io.output(), "0 4294967296 8589934592")
     End Sub
 
     <test>
@@ -571,6 +571,61 @@ Public NotInheritable Class b2style_test
         Dim logic_str As String = Nothing
         assertion.is_true(bstyle.parse(bstyle_str, logic_str))
         assertions.of(logic_str).not_contains("b2style__ufloat")
+    End Sub
+
+    <test>
+    Private Shared Sub empty_struct()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.empty_struct.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "f3ff2")
+    End Sub
+
+    <test>
+    Private Shared Sub template()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.template.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "DE")
+    End Sub
+
+    <test>
+    Private Shared Sub primitive_template()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.primitive_template.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "101101.11")
+    End Sub
+
+    <test>
+    Private Shared Sub nested_template()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.nested_template.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "C")
+    End Sub
+
+    <test>
+    Private Shared Sub template_wont_be_extended_twice()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.template_wont_be_extended_twice.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "24")
     End Sub
 
     Private Sub New()

@@ -36,12 +36,15 @@ Partial Public NotInheritable Class nlexer
             Return o
         End Function
 
-        Public Shared Function typed_words(ByVal str As String, ByVal v As vector(Of result)) As vector(Of typed_word)
+        Public Shared Function typed_words(ByVal str As String,
+                                           ByVal v As vector(Of result),
+                                           ByVal c As syntax_collection) As vector(Of typed_word)
             assert(Not str.null_or_empty())
             assert(Not v Is Nothing)
+            assert(Not c Is Nothing)
             Return v.stream().
                      map(Function(ByVal r As result) As typed_word
-                             Return New typed_word(str, r.start, r.end, r.rule_index)
+                             Return New typed_word(str, r.start, r.end, r.rule_index, c.type_name(r.rule_index))
                          End Function).
                      collect(Of vector(Of typed_word))()
         End Function

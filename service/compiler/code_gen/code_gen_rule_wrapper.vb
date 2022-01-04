@@ -10,7 +10,7 @@ Imports osi.root.template
 Imports osi.service.automata
 Imports osi.service.interpreter.primitive
 
-Public Class code_gen_rule_wrapper(Of WRITER,
+Public Class code_gen_rule_wrapper(Of WRITER As New,
                                       CODE_GENS_IMPL As code_gens(Of WRITER),
                                       STATEMENTS_IMPL As statements(Of WRITER),
                                       _nlexer_rule As __do(Of String),
@@ -39,15 +39,17 @@ Public Class code_gen_rule_wrapper(Of WRITER,
             Using defer.to(Sub()
                                nested -= uint32_1
                            End Sub)
-                assert(Not input.null_or_whitespace())
                 assert(Not o Is Nothing)
+                If input.null_or_whitespace() Then
+                    Return True
+                End If
                 Dim root As typed_node = Nothing
                 If Not nlp().parse(input, root:=root) Then
                     Return False
                 End If
                 assert(Not root Is Nothing)
-                assert(root.type = typed_node.ROOT_TYPE)
-                assert(strsame(root.type_name, typed_node.ROOT_TYPE_NAME))
+                assert(root.type = typed_node.root_type)
+                assert(strsame(root.type_name, typed_node.root_type_name))
                 If root.leaf() Then
                     Return False
                 End If

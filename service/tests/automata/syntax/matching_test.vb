@@ -32,7 +32,7 @@ Namespace syntaxer
                 Me.exp = exp
                 Me.start = start
                 Me.end = [end]
-                Me.v = fake_typed_word.create(v)
+                Me.v = typed_word.fakes(v)
                 assert(Not Me.v Is Nothing)
             End Sub
 

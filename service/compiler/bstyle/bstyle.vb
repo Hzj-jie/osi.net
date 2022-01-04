@@ -9,7 +9,6 @@ Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.compiler.logic
 Imports osi.service.resource
-Imports [default] = osi.service.compiler.code_gens(Of osi.service.compiler.logic.writer).[default]
 Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.writer)
 
 Public NotInheritable Class bstyle
@@ -66,10 +65,10 @@ Public NotInheritable Class bstyle
 
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of writer)))
             Return vector.emplace_of(Of Action(Of code_gens(Of writer)))(
-                [default].of_only_child("root-type"),
+                code_gen.of_only_child(Of writer)("root-type"),
                 AddressOf bool.register,
                 AddressOf condition.register,
-                [default].of("else-condition", 1),
+                code_gen.of_children(Of writer)("else-condition", 1),
                 AddressOf for_loop.register,
                 AddressOf ufloat.register,
                 AddressOf [function].register,
@@ -78,16 +77,15 @@ Public NotInheritable Class bstyle
                 AddressOf [integer].register,
                 AddressOf biguint.register,
                 AddressOf logic.register,
-                [default].of_first_child("logic-with-semi-colon"),
+                code_gen.of_first_child(Of writer)("logic-with-semi-colon"),
                 AddressOf multi_sentence_paragraph.register,
-                [default].of_only_child("paragraph"),
+                code_gen.of_only_child(Of writer)("paragraph"),
                 AddressOf param.register,
-                [default].of_first_child("param-with-comma"),
                 AddressOf paramlist.register,
                 AddressOf return_clause.register,
-                [default].of_only_child("sentence"),
-                [default].of_first_child("sentence-with-semi-colon"),
-                [default].of_only_child("sentence-without-semi-colon"),
+                code_gen.of_only_child(Of writer)("sentence"),
+                code_gen.of_first_child(Of writer)("sentence-with-semi-colon"),
+                code_gen.of_only_child(Of writer)("sentence-without-semi-colon"),
                 AddressOf [string].register,
                 AddressOf value.register,
                 AddressOf value_clause.register,
@@ -95,22 +93,22 @@ Public NotInheritable Class bstyle
                 AddressOf heap_declaration.register,
                 AddressOf value_definition.register,
                 AddressOf heap_name.register,
-                [default].of_first_child("value-declaration-with-semi-colon"),
-                [default].of_first_child("value-definition-with-semi-colon"),
-                [default].of_first_child("heap-declaration-with-semi-colon"),
+                code_gen.of_first_child(Of writer)("value-declaration-with-semi-colon"),
+                code_gen.of_first_child(Of writer)("value-definition-with-semi-colon"),
+                code_gen.of_first_child(Of writer)("heap-declaration-with-semi-colon"),
                 AddressOf value_list.register,
-                [default].of("value-with-bracket", 1),
-                [default].of_first_child("value-with-comma"),
-                [default].of_only_child("value-without-bracket"),
+                code_gen.of_children(Of writer)("value-with-bracket", 1),
+                code_gen.of_first_child(Of writer)("value-with-comma"),
+                code_gen.of_only_child(Of writer)("value-without-bracket"),
                 AddressOf variable_name.register,
                 AddressOf [while].register,
-                [default].of_only_child("include"),
+                code_gen.of_only_child(Of writer)("include"),
                 AddressOf include_with_string.register,
                 AddressOf include_with_file.register,
                 AddressOf ifndef_wrapped.register,
                 AddressOf define.register,
                 AddressOf typedef.register,
-                [default].of_first_child("typedef-with-semi-colon"),
+                code_gen.of_first_child(Of writer)("typedef-with-semi-colon"),
                 AddressOf struct.register)
         End Function
     End Class

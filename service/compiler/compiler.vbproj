@@ -67,11 +67,14 @@
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\struct.vb" />
     <Compile Include="b2style\rewriter\nodes\template.vb" />
+    <Compile Include="b2style\rewriter\nodes\template_type_name.vb" />
     <Compile Include="b2style\scope.current_function.vb" />
     <Compile Include="b2style\scope.namespace.vb" />
     <Compile Include="b2style\scope.template.vb" />
     <Compile Include="b2style\scope.vb" />
+    <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
+    <Compile Include="code_gen\code_gen.default.vb" />
     <Compile Include="code_gen\includes.vb" />
     <Compile Include="bstyle\logic\nodes\defines.vb" />
     <Compile Include="bstyle\logic\nodes\heap_declaration.vb" />
@@ -124,7 +127,6 @@
     <Compile Include="code_gen\reparser.vb" />
     <Compile Include="object_list_writer.vb" />
     <Compile Include="scope.call_hierarchy.vb" />
-    <Compile Include="code_gen\default.vb" />
     <Compile Include="logic\define_heap.vb" />
     <Compile Include="logic\logic_gen\read_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />
@@ -258,6 +260,7 @@
     <Content Include="logic\definition.txt" />
     <Content Include="logic\design.txt" />
     <Content Include="shared\nlexer_rule.txt" />
+    <Content Include="shared\nlexer_rule2.txt" />
     <Content Include="shared\syntaxer_rule.txt" />
     <Content Include="TODO.txt" />
   </ItemGroup>

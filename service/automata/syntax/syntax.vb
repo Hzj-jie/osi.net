@@ -214,7 +214,7 @@ Partial Public NotInheritable Class syntaxer
         End Function
 
         Public Overrides Function ToString() As String
-            Return strcat("syntax ", type_name(type))
+            Return strcat("syntax ", c.type_name(type))
         End Function
     End Class
 End Class

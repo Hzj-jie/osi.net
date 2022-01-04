@@ -50,6 +50,20 @@ Public NotInheritable Class copy_constructor(Of T)
         Return invoke(copy_no_error(i1), copy_no_error(i2), copy_no_error(i3), copy_no_error(i4), copy_no_error(i5))
     End Function
 
+    Public Shared Function copy_from(Of T1, T2, T3, T4, T5, T6)(ByVal i1 As T1,
+                                                                ByVal i2 As T2,
+                                                                ByVal i3 As T3,
+                                                                ByVal i4 As T4,
+                                                                ByVal i5 As T5,
+                                                                ByVal i6 As T6) As T
+        Return invoke(copy_no_error(i1),
+                      copy_no_error(i2),
+                      copy_no_error(i3),
+                      copy_no_error(i4),
+                      copy_no_error(i5),
+                      copy_no_error(i6))
+    End Function
+
     Private Sub New()
     End Sub
 End Class

@@ -47,7 +47,7 @@ Public NotInheritable Class bytes_serializer_test
         assertion.array_empty(b)
         Dim v As vector(Of String) = Nothing
         assertion.is_true(bytes_serializer.from_bytes(b, v))
-        assertion.vector_empty(v)
+        assertions.of(v).empty()
     End Sub
 
     Private Sub New()

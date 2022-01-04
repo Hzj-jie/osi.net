@@ -9,12 +9,14 @@ Imports osi.root.formation
 
 ' TODO: Implement typed_node.builder to ensure the immutability of typed_node.
 Partial Public NotInheritable Class typed_node
-    Public Const ROOT_TYPE As UInt32 = uint32_0
-    Public Const ROOT_TYPE_NAME As String = "ROOT"
+    Public Const root_type As UInt32 = uint32_0
+    Public Const root_type_name As String = "ROOT"
+    ' TODO: type should be removed in favor of type_name, now it's used only in tests.
     Public ReadOnly type As UInt32
+    ' TODO: Limit the use of type_name.
     Public ReadOnly type_name As String
-    Public ReadOnly start As UInt32
-    Public ReadOnly [end] As UInt32 'exclusive
+    Public ReadOnly word_start As UInt32
+    Public ReadOnly word_end As UInt32 'exclusive
     Public ReadOnly subnodes As New vector(Of typed_node)()
     Private ReadOnly ref As vector(Of typed_word)
     Private parent As typed_node
@@ -22,17 +24,17 @@ Partial Public NotInheritable Class typed_node
     Public Sub New(ByVal ref As vector(Of typed_word),
                    ByVal type As UInt32,
                    ByVal type_name As String,
-                   ByVal start As UInt32,
-                   ByVal [end] As UInt32)
+                   ByVal word_start As UInt32,
+                   ByVal word_end As UInt32)
         assert(Not ref Is Nothing)
-        assert(start <= [end])  ' start == end means empty-matching
-        assert([end] <= ref.size())
+        assert(word_start <= word_end)  ' start == end means empty-matching
+        assert(word_end <= ref.size())
         assert(Not type_name.null_or_whitespace())
         Me.ref = ref
         Me.type = type
         Me.type_name = type_name
-        Me.start = start
-        Me.end = [end]
+        Me.word_start = word_start
+        Me.word_end = word_end
 
 #If NOT_IMPLEMENTED Then
         If leaf() Then
@@ -43,7 +45,7 @@ Partial Public NotInheritable Class typed_node
 
     Public Shared Function of_root(ByVal ref As vector(Of typed_word)) As typed_node
         assert(Not ref Is Nothing)
-        Return New typed_node(ref, ROOT_TYPE, ROOT_TYPE_NAME, uint32_0, ref.size())
+        Return New typed_node(ref, root_type, root_type_name, uint32_0, ref.size())
     End Function
 
     Public Sub attach_to(ByVal parent As typed_node)
@@ -82,17 +84,17 @@ Partial Public NotInheritable Class typed_node
     End Function
 
     Public Function child(ByVal id As UInt32) As typed_node
-        assert(subnodes.available_index(id))
+        assert(subnodes.available_index(id), type_name)
         Return subnodes(id)
     End Function
 
     Public Function child() As typed_node
-        assert(child_count() = 1)
+        assert(child_count() = 1, type_name)
         Return child(0)
     End Function
 
     Public Function last_child() As typed_node
-        assert(child_count() > 0)
+        assert(child_count() > 0, type_name)
         Return child(child_count() - uint32_1)
     End Function
 
@@ -106,7 +108,7 @@ Partial Public NotInheritable Class typed_node
 
     Public Function word(ByVal id As UInt32) As typed_word
         assert(id < word_count())
-        Return ref(start + id)
+        Return ref(word_start + id)
     End Function
 
     Public Function word() As typed_word
@@ -115,14 +117,14 @@ Partial Public NotInheritable Class typed_node
     End Function
 
     Public Function word_count() As UInt32
-        Return [end] - start
+        Return word_end - word_start
     End Function
 
-    Public Function word_start() As UInt32
+    Public Function char_start() As UInt32
         Return word(0).start
     End Function
 
-    Public Function word_end() As UInt32
+    Public Function char_end() As UInt32
         Return word(word_count() - uint32_1).end
     End Function
 End Class

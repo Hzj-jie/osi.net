@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
+Imports osi.service.automata
 Imports osi.service.automata.syntaxer
 
 Namespace syntaxer

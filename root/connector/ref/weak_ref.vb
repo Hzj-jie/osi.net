@@ -34,8 +34,7 @@ End Module
 Public NotInheritable Class weak_refs
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function [of](Of T)(ByVal ParamArray i As T()) As weak_ref(Of T)()
-        Dim r() As weak_ref(Of T) = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As weak_ref(Of T)
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = weak_ref.[of](i(j))
         Next
@@ -77,8 +76,7 @@ Public Class weak_ref(Of T)
         If that Is Nothing Then
             Return Nothing
         End If
-        Dim r As weak_ref(Of T) = Nothing
-        r = New weak_ref(Of T)(that)
+        Dim r As New weak_ref(Of T)(that)
         that.clear()
         Return r
     End Function
@@ -131,16 +129,14 @@ Public Class weak_ref(Of T)
     
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function clear() As T
-        Dim r As T = Nothing
-        r = [get]()
+        Dim r As T = [get]()
         p = Nothing
         Return r
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
-        Dim p As WeakReference = Nothing
-        p = Me.p
+        Dim p As WeakReference = Me.p
         Return p Is Nothing OrElse
                Not p.IsAlive() OrElse
                p.Target() Is Nothing
@@ -153,8 +149,7 @@ Public Class weak_ref(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function [get](ByRef o As T) As Boolean
 #End If
-        Dim p As WeakReference = Nothing
-        p = Me.p
+        Dim p As WeakReference = Me.p
         If p Is Nothing Then
             Return False
         End If
@@ -168,8 +163,7 @@ Public Class weak_ref(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function alive() As Boolean
-        Dim p As WeakReference = Nothing
-        p = Me.p
+        Dim p As WeakReference = Me.p
         Return Not p Is Nothing AndAlso p.IsAlive()
     End Function
 
@@ -223,10 +217,8 @@ Public Class weak_ref(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator ^(ByVal p As weak_ref(Of T), ByVal ji As Decimal) As Object
         On Error GoTo finish
-        Dim p2 As Object = Nothing
-        p2 = p
-        Dim jumps As Int64 = 0
-        jumps = CLng(Math.Truncate(ji))
+        Dim p2 As Object = p
+        Dim jumps As Int64 = CLng(Math.Truncate(ji))
         While jumps > 0
             p2 = +(cast(Of weak_ref(Of T))().from(p2, False))
             jumps -= 1
@@ -362,8 +354,7 @@ finish:
 
     'open for array_ref
     Public NotOverridable Overrides Function GetHashCode() As Int32
-        Dim i As T = Nothing
-        i = [get]()
+        Dim i As T = [get]()
         Return If(i Is Nothing, 0, hash(i))
     End Function
 

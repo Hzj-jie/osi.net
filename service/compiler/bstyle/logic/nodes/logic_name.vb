@@ -17,19 +17,20 @@ Partial Public NotInheritable Class bstyle
             Return strcat("temp_value_@",
                           code_builder.current().nested_build_level(),
                           "@",
-                          n.word_start(),
+                          n.char_start(),
                           "-",
-                          n.word_end())
+                          n.char_end())
         End Function
 
         Public Shared Function of_function(ByVal raw_name As String,
-                                           ByVal parameters As vector(Of builders.parameter)) As String
+                                           ByVal params As vector(Of builders.parameter)) As String
+            assert(Not params Is Nothing)
             Return build(raw_name,
-                         parameters.stream().
-                                    map(Function(ByVal i As builders.parameter) As String
-                                            assert(Not i Is Nothing)
-                                            Return scope.current().type_alias()(i.type)
-                                        End Function).
+                               params.stream().
+                                      map(Function(ByVal i As builders.parameter) As String
+                                              assert(Not i Is Nothing)
+                                              Return i.type
+                                          End Function).
                                     collect(Of vector(Of String))())
         End Function
 
@@ -42,7 +43,7 @@ Partial Public NotInheritable Class bstyle
             If Not scope.current().functions().define(return_type, name) Then
                 Return False
             End If
-            scope.current().current_function().define(raw_name, return_type, parameters)
+            scope.current().current_function().define(name, return_type, parameters)
             If Not scope.current().variables().define(
                     parameters.stream().
                                map(AddressOf single_data_slot_variable.from_builders_parameter).
@@ -82,7 +83,7 @@ Partial Public NotInheritable Class bstyle
             Dim i As UInt32 = 0
             While i < types.size()
                 assert(Not types(i).contains_any(space_chars))
-                s.Append("&").Append(types(i))
+                s.Append("&").Append(scope.current().type_alias()(types(i)))
                 i += uint32_1
             End While
             Return Convert.ToString(s)

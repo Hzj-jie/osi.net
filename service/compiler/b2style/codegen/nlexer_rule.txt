@@ -3,6 +3,7 @@ INCLUDE ../shared/nlexer_rule.txt
 
 kw-namespace namespace
 kw-class class
+kw-template template
 
 # Comparison
 less-or-equal <=
@@ -42,8 +43,8 @@ self-or \|\|=
 self-left-shift <<=
 self-right-shift >>=
 
-dot .
+double-colon ::
+# "void :: f" is not allowed, it should be "void ::f", otherwise it's conflict with "void::f".
+raw-name-with-double-colon [\w,_][\w,\d,_]*::
 
-kw-template template
-
-name [\w,_,::][\w,\d,_,::,.]*
+INCLUDE ../shared/nlexer_rule2.txt

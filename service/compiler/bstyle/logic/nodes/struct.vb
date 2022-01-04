@@ -151,7 +151,7 @@ Partial Public NotInheritable Class bstyle
                              assert(Not m Is Nothing)
                              Return value_declaration.declare_single_data_slot(m.type, m.name, o)
                          End Function).
-                     aggregate(bool_stream.aggregators.all_true)
+                     aggregate(bool_stream.aggregators.all_true, True)
         End Function
 
         Public Function define_in_heap(ByVal type As String,
@@ -184,6 +184,8 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
+            Dim id_type As String = strcat(n.child(1).word().str(), "__struct__type__id__type")
+            assert(builders.of_type(id_type, uint32_1).to(o))
             Return scope.current().
                          structs().
                          define(n.child(1).word().str(),
@@ -197,6 +199,7 @@ Partial Public NotInheritable Class bstyle
                                                 Return New struct_member(c.child(0).child(0).word().str(),
                                                                          c.child(0).child(1).word().str())
                                             End Function).
+                                        concat(New struct_member(id_type, "__struct__type__id")).
                                         collect(Of vector(Of struct_member))())
         End Function
     End Class

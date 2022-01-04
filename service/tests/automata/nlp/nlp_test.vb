@@ -34,7 +34,8 @@ Public NotInheritable Class nlp_test
         assertion.is_true(nlp.of(nlp_test_rules.nlexer_rule.as_text(),
                                  nlp_test_rules.syntaxer_rule.as_text(),
                                  r))
-        assertion.is_true(r.parse("string main() { return ""\""""; }"))
+        Const code As String = "string main() { return ""\""""; }"
+        assertion.is_true(r.parse(code))
     End Sub
 
     Private Sub New()

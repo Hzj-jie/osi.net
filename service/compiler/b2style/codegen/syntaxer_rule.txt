@@ -1,8 +1,18 @@
 
 INCLUDE ../shared/syntaxer_rule.txt
 
-root-type [function, value-definition-with-semi-colon, heap-declaration-with-semi-colon, value-declaration-with-semi-colon, namespace-, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, class]
-param name [bit-and]? name
+raw-name-with-dot raw-name dot
+# Support a.N::b function call and a.::N::b.
+# Otherwise it should be name [double-colon]? [raw-name-with-double-colon]* [raw-name-with-dot]* raw-name
+name [raw-name-with-dot]* [double-colon]? [raw-name-with-double-colon, raw-name-with-dot]* raw-name
+raw-type-name [double-colon]? [raw-name-with-double-colon]* raw-name
+template-type-param-list [template-type-param-with-comma]* template-type-param
+template-type-param-with-comma template-type-param comma
+template-type-param type-name
+template-type-name raw-type-name less-than template-type-param-list greater-than
+type-name [template-type-name, raw-type-name]
+root-type [function, value-definition-with-semi-colon, heap-declaration-with-semi-colon, value-declaration-with-semi-colon, namespace-, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, class, template]
+reference bit-and
 namespace- kw-namespace name start-paragraph [root-type]* end-paragraph
 sentence-with-semi-colon [ignore-result-heap-struct-function-call, ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, self-value-clause, typedef, pre-operation-value, post-operation-value]? semi-colon
 self-operator [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or, self-left-shift, self-right-shift]
@@ -23,10 +33,9 @@ ignore-result-heap-struct-function-call heap-struct-function-call
 heap-struct-function-call heap-struct-name start-bracket [value-list]? end-bracket
 
 # TODO: Support static function
-class kw-class name start-paragraph [value-declaration-with-semi-colon, function]* end-paragraph semi-colon
+class kw-class type-name start-paragraph [value-declaration-with-semi-colon, function]* end-paragraph semi-colon
 
 type-param-list [type-param-with-comma]* type-param
 type-param-with-comma type-param comma
-type-param name
-
+type-param raw-name
 template kw-template less-than type-param-list greater-than class

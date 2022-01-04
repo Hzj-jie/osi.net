@@ -1,0 +1,6 @@
+﻿
+template <T>
+class C {
+  T x;
+  void f(T y) {}
+};

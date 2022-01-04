@@ -50,24 +50,4 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
     Public Shared Function array_not_empty(Of T)(ByVal i() As T, ByVal ParamArray msg() As Object) As Boolean
         Return not_equal(connector.array_size(i), uint32_0, msg)
     End Function
-
-    Public Shared Function vector_equal(Of T)(ByVal i As vector(Of T),
-                                              ByVal j As vector(Of T),
-                                              ByVal ParamArray msg() As Object) As Boolean
-        Return array_equal(+i, +j, msg)
-    End Function
-
-    Public Shared Function vector_not_equal(Of T)(ByVal i As vector(Of T),
-                                                  ByVal j As vector(Of T),
-                                                  ByVal ParamArray msg() As Object) As Boolean
-        Return array_not_equal(+i, +j, msg)
-    End Function
-
-    Public Shared Function vector_empty(Of T)(ByVal i As vector(Of T), ByVal ParamArray msg() As Object) As Boolean
-        Return is_not_null(i, msg) AndAlso equal(i.size(), uint32_0, msg)
-    End Function
-
-    Public Shared Function vector_not_empty(Of T)(ByVal i As vector(Of T), ByVal ParamArray msg() As Object) As Boolean
-        Return is_not_null(i, msg) AndAlso not_equal(i.size(), uint32_0, msg)
-    End Function
 End Class

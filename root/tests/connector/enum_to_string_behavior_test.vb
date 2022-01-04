@@ -14,10 +14,30 @@ Public NotInheritable Class enum_to_string_behavior_test
         c
     End Enum
 
+    Private Shared Function convert_to_string(Of T)(ByVal x As T) As String
+        Return Convert.ToString(x)
+    End Function
+
+    Private Shared Function object_to_string(Of T)(ByVal x As T) As String
+        Return x.ToString()
+    End Function
+
+    Private Shared Function convert_to_string_obj(ByVal x As Object) As String
+        Return Convert.ToString(x)
+    End Function
+
+    Private Shared Function object_to_string_obj(ByVal x As Object) As String
+        Return x.ToString()
+    End Function
+
     <test>
     Private Shared Sub to_string_vs_convert_to_string()
         assertions.of(E.a.ToString()).Equals("a")
         assertions.of(Convert.ToString(E.a)).Equals("0")
+        assertions.of(object_to_string(E.a)).Equals("a")
+        assertions.of(convert_to_string(E.a)).Equals("0")
+        assertions.of(object_to_string_obj(E.a)).Equals("a")
+        assertions.of(convert_to_string_obj(E.a)).Equals("0")
     End Sub
 
     Private Sub New()

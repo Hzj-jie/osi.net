@@ -33,10 +33,8 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal type As typed_node, ByVal name As typed_node, ByVal o As writer) As Boolean
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
-            assert(type.leaf())
-            assert(name.leaf())
-            Dim t As String = type.word().str()
-            Dim n As String = name.word().str()
+            Dim t As String = type.children_word_str()
+            Dim n As String = name.children_word_str()
             Return l.typed_code_gen(Of struct).define_in_stack(t, n, o) OrElse
                    declare_single_data_slot(t, n, o)
         End Function

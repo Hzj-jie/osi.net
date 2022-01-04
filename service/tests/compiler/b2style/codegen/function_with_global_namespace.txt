@@ -3,6 +3,10 @@
 
 namespace N {
 
+::void f() {
+  ::b2style::std_out("f");
+}
+
 ::void ::f() {
   ::b2style::std_out("::f");
 }
@@ -10,5 +14,6 @@ namespace N {
 }  // namespace N
 
 void main() {
+  N::f();
   f();
 }

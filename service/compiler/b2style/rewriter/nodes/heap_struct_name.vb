@@ -31,7 +31,7 @@ Partial Public NotInheritable Class b2style
                               n.child(0).child(3)).
                            map(Function(ByVal x As typed_node) As String
                                    assert(Not x Is Nothing)
-                                   Return x.input()
+                                   Return x.children_word_str()
                                End Function).
                            collect_by(stream(Of String).collectors.to_str(empty_string)).
                            ToString()

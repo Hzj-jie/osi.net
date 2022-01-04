@@ -82,6 +82,7 @@
     <Compile Include="nlexer\rule_test.vb" />
     <Compile Include="nlp\nlp_test.vb" />
     <Compile Include="nlp\nlp_test_rules.vb" />
+    <Compile Include="nlp\typed_node_test.vb" />
     <Compile Include="regex\any_character_matching_group_test.vb" />
     <Compile Include="regex\any_matching_group_test.vb" />
     <Compile Include="regex\macros_test.vb" />
@@ -101,7 +102,6 @@
     <Compile Include="syntax\any_matching_group_test.vb" />
     <Compile Include="syntax\disallow_cycle_dependency.vb" />
     <Compile Include="syntax\fake_matching_delegate.vb" />
-    <Compile Include="syntax\fake_typed_word.vb" />
     <Compile Include="syntax\matching_group_test.vb" />
     <Compile Include="syntax\matching_test.vb" />
     <Compile Include="syntax\multi_matching_group_test.vb" />

@@ -40,6 +40,10 @@ Partial Public NotInheritable Class b2style
             Return bstyle_format(with_namespace(empty_string, with_namespace(n, i)))
         End Function
 
+        Public Shared Function with_global_namespace(ByVal n As String) As String
+            Return with_namespace(empty_string, n)
+        End Function
+
         Private Shared Function with_namespace(ByVal n As String, ByVal i As String) As String
             assert(Not i.null_or_whitespace())
             If i.StartsWith(namespace_separator) Then

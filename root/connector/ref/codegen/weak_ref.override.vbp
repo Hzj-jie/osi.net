@@ -7,16 +7,14 @@
     
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function clear() As T
-        Dim r As T = Nothing
-        r = [get]()
+        Dim r As T = [get]()
         p = Nothing
         Return r
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
-        Dim p As WeakReference = Nothing
-        p = Me.p
+        Dim p As WeakReference = Me.p
         Return p Is Nothing OrElse
                Not p.IsAlive() OrElse
                p.Target() Is Nothing
@@ -29,8 +27,7 @@
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function [get](ByRef o As ##WEAKREFERENCE_TYPE##) As Boolean
 #End If
-        Dim p As WeakReference = Nothing
-        p = Me.p
+        Dim p As WeakReference = Me.p
         If p Is Nothing Then
             Return False
         End If
@@ -44,8 +41,7 @@
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function alive() As Boolean
-        Dim p As WeakReference = Nothing
-        p = Me.p
+        Dim p As WeakReference = Me.p
         Return Not p Is Nothing AndAlso p.IsAlive()
     End Function
 

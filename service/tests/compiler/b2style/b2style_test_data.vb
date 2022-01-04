@@ -1,13 +1,13 @@
 ' This file is created by genall with
-' C:\Users\Hzj_jie\Documents\Visual Studio 2015\Projects\gemini\osi\service\resource\gen\gen.exe
-' _b2style_test_data "[__i__]" "++i++.txt" "[__i]" "++i.txt" "[another_1_to_100]" "another_1_to_100.txt" "[biguint]" "biguint.txt" "[bool_and_bool]" "bool_and_bool.txt" "[calculate_pi_bbp]" "calculate_pi_bbp.txt" "[case1]" "case1.txt" "[case2]" "case2.txt" "[class]" "class.txt" "[class_function_with_namespace]" "class_function_with_namespace.txt" "[class_in_namespace]" "class_in_namespace.txt" "[class_on_heap]" "class_on_heap.txt" "[comments]" "comments.txt" "[for_loop]" "for_loop.txt" "[function_ref]" "function_ref.txt" "[function_with_global_namespace]" "function_with_global_namespace.txt" "[heap]" "heap.txt" "[heap_declaration]" "heap_declaration.txt" "[heap_function_ref]" "heap_function_ref.txt" "[heap_ptr_to_int64]" "heap_ptr_to_int64.txt" "[i__]" "i++.txt" "[i__2]" "i++2.txt" "[ifndef]" "ifndef.txt" "[include]" "include.txt" "[include2]" "include2.txt" "[legacy_biguint_to_str]" "legacy_biguint_to_str.txt" "[loaded_method]" "loaded_method.txt" "[multiline_string]" "multiline_string.txt" "[namespaces]" "namespaces.txt" "[negative_int]" "negative_int.txt" "[nested_class]" "nested_class.txt" "[nested_heap_access]" "nested_heap_access.txt" "[nested_paragraph]" "nested_paragraph.txt" "[order_of_operators]" "order_of_operators.txt" "[pi_integral_0_1]" "pi_integral_0_1.txt" "[self_add]" "self_add.txt" "[shift]" "shift.txt" "[struct_function_ref]" "struct_function_ref.txt" "[struct_in_namespace]" "struct_in_namespace.txt" "[str_unescape]" "str_unescape.txt" "[typedef]" "typedef.txt" "[ufloat_operators]" "ufloat_operators.txt" "[ufloat_std_out]" "ufloat_std_out.txt" "[while_0_to_1]" "while_0_to_1.txt" "[while_1_to_100]" "while_1_to_100.txt" "[_1_to_100]" "_1_to_100.txt" "[errors_cycle_typedef]" "errors\cycle-typedef.txt" "[errors_dollar_in_number]" "errors\dollar-in-number.txt" "[errors_function_name_ends_with_dot]" "errors\function-name-ends-with-dot.txt" "[errors_function_return_struct_type_mismatch]" "errors\function-return-struct-type-mismatch.txt" "[errors_include_needs_wraps]" "errors\include-needs-wraps.txt" "[errors_missing_ending_quota]" "errors\missing-ending-quota.txt" "[errors_three_pluses]" "errors\three-pluses.txt" "[errors_value_clause_struct_type_mismatch]" "errors\value-clause-struct-type-mismatch.txt" "[errors_value_clause_struct_type_mismatch2]" "errors\value-clause-struct-type-mismatch2.txt"
+' C:\Users\Hzj_jie\git\osi\service\resource\gen\gen.exe
+' _b2style_test_data "[__i__]" "++i++.txt" "[__i]" "++i.txt" "[another_1_to_100]" "another_1_to_100.txt" "[biguint]" "biguint.txt" "[bool_and_bool]" "bool_and_bool.txt" "[calculate_pi_bbp]" "calculate_pi_bbp.txt" "[case1]" "case1.txt" "[case2]" "case2.txt" "[class]" "class.txt" "[class_function_with_namespace]" "class_function_with_namespace.txt" "[class_in_namespace]" "class_in_namespace.txt" "[class_on_heap]" "class_on_heap.txt" "[comments]" "comments.txt" "[empty_struct]" "empty_struct.txt" "[for_loop]" "for_loop.txt" "[function_ref]" "function_ref.txt" "[function_with_global_namespace]" "function_with_global_namespace.txt" "[heap]" "heap.txt" "[heap_declaration]" "heap_declaration.txt" "[heap_function_ref]" "heap_function_ref.txt" "[heap_ptr_to_int64]" "heap_ptr_to_int64.txt" "[i__]" "i++.txt" "[i__2]" "i++2.txt" "[ifndef]" "ifndef.txt" "[include]" "include.txt" "[include2]" "include2.txt" "[legacy_biguint_to_str]" "legacy_biguint_to_str.txt" "[loaded_method]" "loaded_method.txt" "[multiline_string]" "multiline_string.txt" "[namespaces]" "namespaces.txt" "[negative_int]" "negative_int.txt" "[nested_class]" "nested_class.txt" "[nested_heap_access]" "nested_heap_access.txt" "[nested_paragraph]" "nested_paragraph.txt" "[nested_template]" "nested_template.txt" "[order_of_operators]" "order_of_operators.txt" "[pi_integral_0_1]" "pi_integral_0_1.txt" "[primitive_template]" "primitive_template.txt" "[self_add]" "self_add.txt" "[shift]" "shift.txt" "[struct_function_ref]" "struct_function_ref.txt" "[struct_in_namespace]" "struct_in_namespace.txt" "[str_unescape]" "str_unescape.txt" "[template]" "template.txt" "[template_template_case1]" "template_template_case1.txt" "[template_wont_be_extended_twice]" "template_wont_be_extended_twice.txt" "[two_template_type_parameters]" "two_template_type_parameters.txt" "[typedef]" "typedef.txt" "[ufloat_operators]" "ufloat_operators.txt" "[ufloat_std_out]" "ufloat_std_out.txt" "[while_0_to_1]" "while_0_to_1.txt" "[while_1_to_100]" "while_1_to_100.txt" "[_1_to_100]" "_1_to_100.txt" "[errors_cycle_typedef]" "errors\cycle-typedef.txt" "[errors_dollar_in_number]" "errors\dollar-in-number.txt" "[errors_duplicate_template_type_parameters]" "errors\duplicate_template_type_parameters.txt" "[errors_function_name_ends_with_dot]" "errors\function-name-ends-with-dot.txt" "[errors_function_return_struct_type_mismatch]" "errors\function-return-struct-type-mismatch.txt" "[errors_include_needs_wraps]" "errors\include-needs-wraps.txt" "[errors_missing_ending_quota]" "errors\missing-ending-quota.txt" "[errors_three_pluses]" "errors\three-pluses.txt" "[errors_undefined_value_clause]" "errors\undefined-value-clause.txt" "[errors_value_clause_struct_type_mismatch]" "errors\value-clause-struct-type-mismatch.txt" "[errors_value_clause_struct_type_mismatch2]" "errors\value-clause-struct-type-mismatch2.txt"
 
 Option Explicit On
 Option Infer Off
 Option Strict On
 
 'this file is generated by /osi/service/resource/gen/gen.exe with
-'[__i__] [__i] [another_1_to_100] [biguint] [bool_and_bool] [calculate_pi_bbp] [case1] [case2] [class] [class_function_with_namespace] [class_in_namespace] [class_on_heap] [comments] [for_loop] [function_ref] [function_with_global_namespace] [heap] [heap_declaration] [heap_function_ref] [heap_ptr_to_int64] [i__] [i__2] [ifndef] [include] [include2] [legacy_biguint_to_str] [loaded_method] [multiline_string] [namespaces] [negative_int] [nested_class] [nested_heap_access] [nested_paragraph] [order_of_operators] [pi_integral_0_1] [self_add] [shift] [struct_function_ref] [struct_in_namespace] [str_unescape] [typedef] [ufloat_operators] [ufloat_std_out] [while_0_to_1] [while_1_to_100] [_1_to_100] [errors_cycle_typedef] [errors_dollar_in_number] [errors_function_name_ends_with_dot] [errors_function_return_struct_type_mismatch] [errors_include_needs_wraps] [errors_missing_ending_quota] [errors_three_pluses] [errors_value_clause_struct_type_mismatch] [errors_value_clause_struct_type_mismatch2]
+'[__i__] [__i] [another_1_to_100] [biguint] [bool_and_bool] [calculate_pi_bbp] [case1] [case2] [class] [class_function_with_namespace] [class_in_namespace] [class_on_heap] [comments] [empty_struct] [for_loop] [function_ref] [function_with_global_namespace] [heap] [heap_declaration] [heap_function_ref] [heap_ptr_to_int64] [i__] [i__2] [ifndef] [include] [include2] [legacy_biguint_to_str] [loaded_method] [multiline_string] [namespaces] [negative_int] [nested_class] [nested_heap_access] [nested_paragraph] [nested_template] [order_of_operators] [pi_integral_0_1] [primitive_template] [self_add] [shift] [struct_function_ref] [struct_in_namespace] [str_unescape] [template] [template_template_case1] [template_wont_be_extended_twice] [two_template_type_parameters] [typedef] [ufloat_operators] [ufloat_std_out] [while_0_to_1] [while_1_to_100] [_1_to_100] [errors_cycle_typedef] [errors_dollar_in_number] [errors_duplicate_template_type_parameters] [errors_function_name_ends_with_dot] [errors_function_return_struct_type_mismatch] [errors_include_needs_wraps] [errors_missing_ending_quota] [errors_three_pluses] [errors_undefined_value_clause] [errors_value_clause_struct_type_mismatch] [errors_value_clause_struct_type_mismatch2]
 'so change /osi/service/resource/gen/gen.cs or resource files instead of this file
 
 Imports osi.root.connector
@@ -26,6 +26,7 @@ Friend Module _b2style_test_data
     Public ReadOnly [class_in_namespace]() As Byte
     Public ReadOnly [class_on_heap]() As Byte
     Public ReadOnly [comments]() As Byte
+    Public ReadOnly [empty_struct]() As Byte
     Public ReadOnly [for_loop]() As Byte
     Public ReadOnly [function_ref]() As Byte
     Public ReadOnly [function_with_global_namespace]() As Byte
@@ -46,13 +47,19 @@ Friend Module _b2style_test_data
     Public ReadOnly [nested_class]() As Byte
     Public ReadOnly [nested_heap_access]() As Byte
     Public ReadOnly [nested_paragraph]() As Byte
+    Public ReadOnly [nested_template]() As Byte
     Public ReadOnly [order_of_operators]() As Byte
     Public ReadOnly [pi_integral_0_1]() As Byte
+    Public ReadOnly [primitive_template]() As Byte
     Public ReadOnly [self_add]() As Byte
     Public ReadOnly [shift]() As Byte
     Public ReadOnly [struct_function_ref]() As Byte
     Public ReadOnly [struct_in_namespace]() As Byte
     Public ReadOnly [str_unescape]() As Byte
+    Public ReadOnly [template]() As Byte
+    Public ReadOnly [template_template_case1]() As Byte
+    Public ReadOnly [template_wont_be_extended_twice]() As Byte
+    Public ReadOnly [two_template_type_parameters]() As Byte
     Public ReadOnly [typedef]() As Byte
     Public ReadOnly [ufloat_operators]() As Byte
     Public ReadOnly [ufloat_std_out]() As Byte
@@ -61,11 +68,13 @@ Friend Module _b2style_test_data
     Public ReadOnly [_1_to_100]() As Byte
     Public ReadOnly [errors_cycle_typedef]() As Byte
     Public ReadOnly [errors_dollar_in_number]() As Byte
+    Public ReadOnly [errors_duplicate_template_type_parameters]() As Byte
     Public ReadOnly [errors_function_name_ends_with_dot]() As Byte
     Public ReadOnly [errors_function_return_struct_type_mismatch]() As Byte
     Public ReadOnly [errors_include_needs_wraps]() As Byte
     Public ReadOnly [errors_missing_ending_quota]() As Byte
     Public ReadOnly [errors_three_pluses]() As Byte
+    Public ReadOnly [errors_undefined_value_clause]() As Byte
     Public ReadOnly [errors_value_clause_struct_type_mismatch]() As Byte
     Public ReadOnly [errors_value_clause_struct_type_mismatch2]() As Byte
 
@@ -96,12 +105,14 @@ Friend Module _b2style_test_data
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDIHsNCiAgaW50IHg7DQogIHN0cmluZyB5Ow0KDQogIHZvaWQgcHJpbnQoKSB7DQogICAgYjJzdHlsZTo6c3RkX291dCh0aGlzLngpOw0KCWIyc3R5bGU6OnN0ZF9vdXQoIiAiKTsNCgliMnN0eWxlOjpzdGRfb3V0KHRoaXMueSk7DQogIH0NCn07DQoNCmNsYXNzIEMyIHsNCiAgQyB4Ow0KICBpbnQgeTsNCg0KICB2b2lkIHByaW50KCkgew0KICAgIHRoaXMueC5wcmludCgpOw0KCWIyc3R5bGU6OnN0ZF9vdXQoIiAiKTsNCgliMnN0eWxlOjpzdGRfb3V0KHRoaXMueSk7DQoJYjJzdHlsZTo6c3RkX291dCgiXG4iKTsNCiAgfQ0KfTsNCg0Kdm9pZCBtYWluKCkgew0KICBDMiBjc1sxMDBdOw0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSsrKSB7DQogICAgY3NbaV0ueC54ID0gaTsNCiAgICBjc1tpXS54LnkgPSBiMnN0eWxlOjppbnRfdG9fc3RyKGkpOw0KCWNzW2ldLnkgPSBpOw0KICB9DQoNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IGkrKykgew0KICAgIGNzW2ldLnByaW50KCk7DQogIH0NCn0="))
         [comments] = Convert.FromBase64String(strcat_hint(CUInt(440), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZV9vcGVyYXRvcnMuaD4NCiNpbmNsdWRlIDxzdGRpby5oPiAvLyBjb21tZW50IGNhbiBiZSBwbGFjZWQgaGVyZS4NCg0Kdm9pZCBtYWluKCAvKiBMT0wgKi8gKSB7IC8qIENvbW1lbnRzIGNhbiBiZSBhZGRlZCBoZXJlIGFzIHdlbGwuDQoqIFRoaXMgaXMgYSBtdWx0aSBsaW5lIGNvbW1lbnQuDQoqLw0KICBpbnQgaSA9IGdldGNoYXIoKTsNCiAgd2hpbGUgKGkgIT0gRU9GKSB7DQoJcHV0Y2hhcihpKTsgIC8vIGNvbW1lbnQgY2FuIGJlIHBsYWNlZCBoZXJlIGFzIHdlbGwuDQoJaSA9IGdldGNoYXIoKTsNCiAgfQ0KfSAgLy8gYWxzbyBoZXJlLg0K"))
+        [empty_struct] = Convert.FromBase64String(strcat_hint(CUInt(340), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUyB7fTsNCg0Kdm9pZCBmKFMgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmIik7DQp9DQoNCnZvaWQgZjIoUyYgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmMiIpOw0KfQ0KDQpTIGYzKCkgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmMyIpOw0KICBTIHM7DQogIHJldHVybiBzOw0KfQ0KDQp2b2lkIG1haW4oKSB7DQogIFMgcyA9IGYzKCk7DQogIGYocyk7DQogIGYyKHMpOw0KfQ=="))
         [for_loop] = Convert.FromBase64String(strcat_hint(CUInt(648), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIHNlbGZfaW5jcmVtZW50KGludCYgeCkgew0KICB4Kys7DQp9DQoNCnZvaWQgc2VsZl9pbmNyZW1lbnQyKGludCYgeCkgew0KICArK3g7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IHIgPSAwOw0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSsrKSB7DQogICAgciArPSBpOw0KICB9DQogIGIyc3R5bGU6OnN0ZF9vdXQocik7DQogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyArK2kpIHsNCiAgICByICs9IGk7DQogIH0NCiAgYjJzdHlsZTo6c3RkX291dChyKTsNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IHNlbGZfaW5jcmVtZW50KGkpKSB7DQogICAgciArPSBpOw0KICB9DQogIGIyc3R5bGU6OnN0ZF9vdXQocik7DQogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyBzZWxmX2luY3JlbWVudDIoaSkpIHsNCiAgICByICs9IGk7DQogIH0NCiAgYjJzdHlsZTo6c3RkX291dChyKTsNCn0="))
         [function_ref] = Convert.FromBase64String(strcat_hint(CUInt(968), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIHNlbGZfaW5jcmVtZW50KGludCYgeCkgew0KICB4ID0geCArIDE7DQp9DQoNCmludCBzZWxmX2luY3JlbWVudDIoaW50JiB4KSB7DQogIHggPSB4ICsgMTsNCiAgcmV0dXJuIHg7DQp9DQoNCmludCBzZWxmX2luY3JlbWVudDMoaW50JiB4KSB7DQogIHJldHVybiBzZWxmX2luY3JlbWVudDIoeCk7DQp9DQoNCnZvaWQgc2VsZl9pbmNyZW1lbnQ0KGludCYgeCkgew0KICBzZWxmX2luY3JlbWVudDMoeCk7DQp9DQoNCmludCBzZWxmX2luY3JlbWVudDUoaW50JiB4KSB7DQogIGludCByID0geDsNCiAgeCA9IHggKyAxOw0KICByZXR1cm4gcjsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBpbnQgeCA9IDA7DQogIHNlbGZfaW5jcmVtZW50KHgpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHgpOw0KICBzZWxmX2luY3JlbWVudCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dChzZWxmX2luY3JlbWVudDIoeCkpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHNlbGZfaW5jcmVtZW50Mih4KSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoc2VsZl9pbmNyZW1lbnQzKHgpKTsNCiAgc2VsZl9pbmNyZW1lbnQ0KHgpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHgpOw0KICBzZWxmX2luY3JlbWVudDUoeCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoeCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoc2VsZl9pbmNyZW1lbnQ1KHgpKTsNCn0="))
-        [function_with_global_namespace] = Convert.FromBase64String(strcat_hint(CUInt(192), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgTiB7DQoNCjo6dm9pZCA6OmYoKSB7DQogIDo6YjJzdHlsZTo6c3RkX291dCgiOjpmIik7DQp9DQoNCn0gIC8vIG5hbWVzcGFjZSBODQoNCnZvaWQgbWFpbigpIHsNCiAgZigpOw0KfQ=="))
+        [function_with_global_namespace] = Convert.FromBase64String(strcat_hint(CUInt(268), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgTiB7DQoNCjo6dm9pZCBmKCkgew0KICA6OmIyc3R5bGU6OnN0ZF9vdXQoImYiKTsNCn0NCg0KOjp2b2lkIDo6ZigpIHsNCiAgOjpiMnN0eWxlOjpzdGRfb3V0KCI6OmYiKTsNCn0NCg0KfSAgLy8gbmFtZXNwYWNlIE4NCg0Kdm9pZCBtYWluKCkgew0KICBOOjpmKCk7DQogIGYoKTsNCn0="))
         [heap] = Convert.FromBase64String(strcat_hint(CUInt(556), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUyB7DQogIHN0cmluZyBzOw0KfTsNCg0Kdm9pZCBmKFMgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KHMucyk7DQp9DQoNClMgbmV3KHN0cmluZyBzKSB7DQogIFMgcjsNCiAgci5zID0gczsNCiAgcmV0dXJuIHI7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IHggPSAxOw0KICBpbnQgdlt4KytdOw0KICBTIHYyWzEgKyArK3grK107DQogIHZbMF0gPSAxMDA7DQogIHYyWzBdID0gbmV3KCJhYmMiKTsNCiAgdjJbMV0gPSBuZXcoImRlZiIpOw0KICBmKHYyWzBdKTsNCiAgZih2MlsxXSk7DQogIHYyWzJdLnMgPSAiZ2hpIjsNCiAgZih2MlsyXSk7DQogIC8vIFRPRE86IE1ha2UgdjJbMl0uICBzID0gImdoaSIgd29yay4NCiAgYjJzdHlsZTo6c3RkX291dCh2WzBdKTsNCn0="))
         [heap_declaration] = Convert.FromBase64String(strcat_hint(CUInt(300), _
@@ -136,10 +147,14 @@ Friend Module _b2style_test_data
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBhWzEwXTsNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDsgaSsrKSB7DQogICAgYVtpXSA9IGkgKyAxOw0KICB9DQoNCiAgYjJzdHlsZTo6c3RkX291dChhW2FbMF1dKTsNCiAgYjJzdHlsZTo6c3RkX291dChhW2FbYVswXV1dKTsNCiAgYjJzdHlsZTo6c3RkX291dChhW2FbYVthWzBdXV1dKTsNCiAgYjJzdHlsZTo6c3RkX291dChhW2FbYVthW2FbMF1dXV1dKTsNCiAgLy8gdmFsdWUgc3ludGF4ZXIgbWF0Y2hpbmcgaXMgcXVpdGUgY29zdGx5Lg0KICAvKg0KICBiMnN0eWxlOjpzdGRfb3V0KGFbYVthW2FbYVthWzBdXV1dXV0pOw0KICBiMnN0eWxlOjpzdGRfb3V0KGFbYVthW2FbYVthW2FbMF1dXV1dXV0pOw0KICAqLw0KfQ=="))
         [nested_paragraph] = Convert.FromBase64String(strcat_hint(CUInt(348), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHsNCiAgICBzdHJpbmcgeCA9ICJoZWxsbyBhZ2FpbiBhZ2FpbiB3b3JsZCI7DQogICAgew0KCSAgc3RyaW5nIHggPSAiaGVsbG8gd29ybGRcbiI7DQoJICBiMnN0eWxlOjpzdGRfb3V0KHgpOw0KCX0NCgl7DQoJICBzdHJpbmcgeCA9ICJoZWxsbyBhZ2FpbiB3b3JsZFxuIjsNCgkgIGIyc3R5bGU6OnN0ZF9vdXQoeCk7DQoJfQ0KCWIyc3R5bGU6OnN0ZF9vdXQoeCk7DQogIH0NCn0="))
+        [nested_template] = Convert.FromBase64String(strcat_hint(CUInt(436), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDIHsNCiAgdm9pZCBwcmludCgpIHsNCiAgICBiMnN0eWxlOjpzdGRfb3V0KCJDIik7DQogIH0NCn07DQoNCnRlbXBsYXRlIDxUPg0KY2xhc3MgRCB7DQogIHZvaWQgcHJpbnQoVCB0KSB7DQogICAgdC5wcmludCgpOw0KICB9DQp9Ow0KDQp0ZW1wbGF0ZSA8VCwgVDI+DQpjbGFzcyBFIHsNCiAgdm9pZCBwcmludChUIHQsIFQyIHQyKSB7DQogICAgdC5wcmludCh0Mik7DQogIH0NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQyBjOw0KICBEPEM+IGQ7DQogIEU8RDxDPiwgQz4gZTsNCiAgZS5wcmludChkLCBjKTsNCn0="))
         [order_of_operators] = Convert.FromBase64String(strcat_hint(CUInt(152), _
         "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgYjJzdHlsZTo6c3RkX291dCgxICsgMiAqIDMgKyA0IC0gNSAqIDYgKiA3ICogOCAqIDkgLyAxMCAqICgxMSArIDEyKSk7Cn0="))
         [pi_integral_0_1] = Convert.FromBase64String(strcat_hint(CUInt(296), _
         "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgdWZsb2F0IGR4ID0gMC4xOwogIHVmbG9hdCB4ID0gMC4wOwogIHVmbG9hdCBzID0gMC4wOwogIHdoaWxlICh4IDwgMS4wKSB7CiAgICB1ZmxvYXQgYyA9IDEuMCAtICh4IF4gMi4wKTsKCWMgXj0gMC41OwoJYyAqPSBkeDsKCXMgKz0gYzsKCXggKz0gZHg7CiAgfQoKICBiMnN0eWxlOjpzdGRfb3V0KHMgKiA0LjApOwp9"))
+        [primitive_template] = Convert.FromBase64String(strcat_hint(CUInt(320), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEluY3JlYXNlciB7DQogIFQgaW5jKFQgdCkgew0KICAgIHJldHVybiArK3Q7DQogIH0NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgSW5jcmVhc2VyPGludD4gaTE7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaTEuaW5jKDEwMCkpOw0KICBJbmNyZWFzZXI8dWZsb2F0PiBpMjsNCiAgYjJzdHlsZTo6c3RkX291dChpMi5pbmMoMTAwLjExKSk7DQp9"))
         [self_add] = Convert.FromBase64String(strcat_hint(CUInt(212), _
         "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgaW50IGkgPSAxMDA7CiAgaSArPSAxOwogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7CiAgaSA9IGkrKzsKICBiMnN0eWxlOjpzdGRfb3V0KGkpOwogIGkgPSArK2k7CiAgYjJzdHlsZTo6c3RkX291dChpKTsKfQ=="))
         [shift] = Convert.FromBase64String(strcat_hint(CUInt(220), _
@@ -150,6 +165,14 @@ Friend Module _b2style_test_data
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgTiB7DQogIHR5cGVkZWYgOjpzdHJpbmcgc3RyaW5nOw0KICBzdHJ1Y3QgUyB7DQogICAgc3RyaW5nIHg7DQogIH07DQoNCiAgc3RydWN0IFQgew0KICAgIFMgczsNCiAgfTsNCn0gIC8vIG5hbWVzcGFjZSBODQoNCnZvaWQgbWFpbigpIHsNCiAgTjo6VCB0Ow0KICB0LnMueCA9ICIxMDAiOw0KICBiMnN0eWxlOjpzdGRfb3V0KHQucy54KTsNCn0="))
         [str_unescape] = Convert.FromBase64String(strcat_hint(CUInt(100), _
         "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgYjJzdHlsZTo6c3RkX291dCgiYWJjXHRkZWZcbiIpOwp9"))
+        [template] = Convert.FromBase64String(strcat_hint(CUInt(600), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBEIHsNCiAgc3RyaW5nIHRvX3N0cmluZygpIHsNCiAgICByZXR1cm4gIkQiOw0KICB9DQp9Ow0KDQpjbGFzcyBFIHsNCiAgc3RyaW5nIHRvX3N0cmluZygpIHsNCiAgICByZXR1cm4gIkUiOw0KICB9DQp9Ow0KDQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEMgew0KICBzdHJpbmcgdG9fc3RyaW5nKFQgdCkgew0KICAgIHJldHVybiB0LnRvX3N0cmluZygpOw0KICB9DQp9Ow0KDQovLyBUT0RPOiBBbGxvdyBjbGFzcyBEIGFuZCBjbGFzcyBFIHRvIGJlIGRlZmluZWQgYWZ0ZXIgdGVtcGxhdGU8VD4gQy4NCg0Kdm9pZCBtYWluKCkgew0KICBDPEQ+IGM7DQogIEQgZDsNCiAgYjJzdHlsZTo6c3RkX291dChjLnRvX3N0cmluZyhkKSk7DQogIEM8RT4gYzI7DQogIEUgZTsNCiAgYjJzdHlsZTo6c3RkX291dChjMi50b19zdHJpbmcoZSkpOw0KfQ0K"))
+        [template_template_case1] = Convert.FromBase64String(strcat_hint(CUInt(80), _
+        "77u/DQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEMgew0KICBUIHg7DQogIHZvaWQgZihUIHkpIHt9DQp9Ow=="))
+        [template_wont_be_extended_twice] = Convert.FromBase64String(strcat_hint(CUInt(312), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEFkZGVyIHsNCiAgVCBhZGQoVCB0LCBUIHQyKSB7DQogICAgcmV0dXJuIHQgKyB0MjsNCiAgfQ0KfTsNCg0Kdm9pZCBtYWluKCkgew0KICBBZGRlcjxpbnQ+IHQ7DQogIEFkZGVyPGludD4gdDI7DQogIGIyc3R5bGU6OnN0ZF9vdXQodC5hZGQoMSwgMSkpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHQyLmFkZCgyLCAyKSk7DQp9DQo="))
+        [two_template_type_parameters] = Convert.FromBase64String(strcat_hint(CUInt(104), _
+        "77u/DQp0ZW1wbGF0ZTxULCBUMj4NCmNsYXNzIEMgew0KICBUIHg7DQogIFQyIHk7DQogIHZvaWQgcChUIHgsIFQyIHkpIHt9DQp9Ow=="))
         [typedef] = Convert.FromBase64String(strcat_hint(CUInt(228), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgYSB7DQogIHR5cGVkZWYgOjp2b2lkIHZvaWQ7DQogIHZvaWQgZigpIHsNCiAgICA6OmIyc3R5bGU6OnN0ZF9vdXQoImFiYyIpOw0KICB9DQp9ICAvLyBuYW1lc3BhY2UgYQ0KDQp2b2lkIG1haW4oKSB7DQogIGE6OmYoKTsNCn0NCg=="))
         [ufloat_operators] = Convert.FromBase64String(strcat_hint(CUInt(240), _
@@ -166,6 +189,8 @@ Friend Module _b2style_test_data
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgQ1lDTEVfVFlQRURFRiB7DQogIHR5cGVkZWYgQSBCOw0KICB0eXBlZGVmIEIgQzsNCiAgdHlwZWRlZiBDIEE7DQp9ICAvLyBuYW1lc3BhY2UgQ1lDTEVfVFlQRURFRg0KDQp2b2lkIG1haW4oKSB7DQogIENZQ0xFX1RZUEVERUY6OkEgYTsNCn0="))
         [errors_dollar_in_number] = Convert.FromBase64String(strcat_hint(CUInt(52), _
         "77u/DQp2b2lkIG1haW4oKSB7DQogIGZsb2F0IHggPSAxJDE7DQp9"))
+        [errors_duplicate_template_type_parameters] = Convert.FromBase64String(strcat_hint(CUInt(44), _
+        "77u/DQp0ZW1wbGF0ZTxULCBUPg0KY2xhc3MgQ3t9Ow=="))
         [errors_function_name_ends_with_dot] = Convert.FromBase64String(strcat_hint(CUInt(116), _
         "77u/DQpjbGFzcyBDew0KICBpbnQgeDsNCg0KICB2b2lkIHByaW50KCkge30NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQyBjOw0KICBjLigpOw0KfQ=="))
         [errors_function_return_struct_type_mismatch] = Convert.FromBase64String(strcat_hint(CUInt(284), _
@@ -176,6 +201,8 @@ Friend Module _b2style_test_data
         "77u/CiNpbmNsdWRlIDxiMnN0eWxlLmg+Cgp2b2lkIG1haW4oKSB7CiAgYjJzdHlsZTo6c3RkX291dCgiYWJjKTsKfQo="))
         [errors_three_pluses] = Convert.FromBase64String(strcat_hint(CUInt(100), _
         "77u/DQojaW5jbHVkZSAgIDxiMnN0eWxlLmg+DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IGkgPSAwOw0KICBpICsrKzsNCn0NCg=="))
+        [errors_undefined_value_clause] = Convert.FromBase64String(strcat_hint(CUInt(88), _
+        "77u/DQp2b2lkIG1haW4oKSB7DQogIHRoaXNfaXNfYW5fdW5kZWZpbmVkX3ZhbHVlX2NsYXVzZSA9IDEwMDsNCn0="))
         [errors_value_clause_struct_type_mismatch] = Convert.FromBase64String(strcat_hint(CUInt(284), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUzEgew0KICBpbnQgeDsNCiAgc3RyaW5nIHk7DQp9Ow0KDQpzdHJ1Y3QgUzIgew0KICBpbnQgdjsNCiAgc3RyaW5nIHc7DQp9Ow0KDQpTMSBmKCkgew0KICBTMSBzOw0KICBzLnggPSAxMDA7DQogIHMueSA9ICJhYmMiOw0KICByZXR1cm4gczsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBTMiBzID0gZigpOw0KfQ=="))
         [errors_value_clause_struct_type_mismatch2] = Convert.FromBase64String(strcat_hint(CUInt(304), _

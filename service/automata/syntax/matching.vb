@@ -74,7 +74,7 @@ Partial Public NotInheritable Class syntaxer
                                        ByVal type As UInt32,
                                        ByVal start As UInt32,
                                        ByVal [end] As UInt32) As typed_node
-            Return New typed_node(v, type, type_name(type), start, [end])
+            Return New typed_node(v, type, c.type_name(type), start, [end])
         End Function
 
         Protected Function disallow_cycle_dependency(
@@ -89,7 +89,7 @@ Partial Public NotInheritable Class syntaxer
             If previous Then
                 assert((+previous) <= pos)
                 If (+previous) = pos Then
-                    raise_error(error_type.user, "Cycle dependency found at ", type_name(type))
+                    raise_error(error_type.user, "Cycle dependency found at ", c.type_name(type))
                     Return failure.of(pos)
                 End If
             End If
@@ -105,19 +105,6 @@ Partial Public NotInheritable Class syntaxer
                            End Sub)
                 Return f()
             End Using
-        End Function
-
-        Protected Function type_name(ByVal type As UInt32) As String
-            If Not envs.utt.is_current Then
-                Return c.type_name(type)
-            End If
-
-            Dim type_str As String = Nothing
-            ' TODO: Fix the tests to avoid undefined type.
-            If Not c.type_name(type, type_str) Then
-                Return strcat("UNDEFINED_TYPE-", type)
-            End If
-            Return type_str
         End Function
 
         Protected Sub log_matching(ByVal v As vector(Of typed_word),
