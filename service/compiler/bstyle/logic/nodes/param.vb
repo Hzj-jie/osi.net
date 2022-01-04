@@ -24,12 +24,8 @@ Partial Public NotInheritable Class bstyle
             b.register(Of param)()
         End Sub
 
-        Public Function build(ByVal n As typed_node) As vector(Of builders.parameter)
+        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             assert(Not n Is Nothing)
-            If n.type_name.Equals("param-with-comma") Then
-                n = n.child(0)
-            End If
-            assert(n.type_name.Equals("param"))
             assert(n.child_count() = 2 OrElse n.child_count() = 3)
             struct.forward_in_stack(n.child(0).word().str(),
                                     n.last_child().word().str())
@@ -53,12 +49,8 @@ Partial Public NotInheritable Class bstyle
                         map(AddressOf builders.parameter.to_ref).
                         collect(Of vector(Of builders.parameter))()
             End If
-            Return ps
-        End Function
-
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
-            assert(False)
-            Return False
+            scope.current().params().pack(ps)
+            Return True
         End Function
     End Class
 End Class

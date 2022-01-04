@@ -70,12 +70,7 @@ Partial Public NotInheritable Class bstyle
         End Class
 
         Public Function value_target() As value_target_t
-            If is_root() Then
-                assert(Not vt Is Nothing)
-                Return vt
-            End If
-            assert(vt Is Nothing)
-            Return (+root).value_target()
+            Return vt
         End Function
     End Class
 End Class

@@ -40,10 +40,8 @@ Partial Public NotInheritable Class bstyle
             assert(Not length Is Nothing)
             Dim t As String = type.word().str()
             Dim n As String = name.word().str()
-            If l.typed_code_gen(Of struct).define_in_heap(t, n, length, o) Then
-                Return True
-            End If
-            Return l.typed_code_gen(Of heap_name).build(
+            Return l.typed_code_gen(Of struct).define_in_heap(t, n, length, o) OrElse
+                   l.typed_code_gen(Of heap_name).build(
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean

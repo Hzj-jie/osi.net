@@ -25,10 +25,10 @@ Partial Public NotInheritable Class bstyle
             b.register(Of variable_name)()
         End Sub
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal struct_handle As Func(Of String, vector(Of single_data_slot_variable), Boolean),
-                              ByVal single_data_slot_handle As Func(Of String, String, Boolean),
-                              ByVal o As writer) As Boolean
+        Public Shared Function build(ByVal n As typed_node,
+                                     ByVal struct_handle As Func(Of String, vector(Of single_data_slot_variable), Boolean),
+                                     ByVal single_data_slot_handle As Func(Of String, String, Boolean),
+                                     ByVal o As writer) As Boolean
             assert(Not n Is Nothing)
             assert(Not struct_handle Is Nothing)
             assert(Not single_data_slot_handle Is Nothing)

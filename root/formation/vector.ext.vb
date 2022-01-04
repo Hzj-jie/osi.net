@@ -270,6 +270,11 @@ Public NotInheritable Class vector
         Return repeat_of(repeat_of(v, width), height)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function move(Of T)(ByVal v As vector(Of T)) As vector(Of T)
+        Return vector(Of T).move(v)
+    End Function
+
     Private Sub New()
     End Sub
 End Class
