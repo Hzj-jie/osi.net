@@ -53,11 +53,11 @@ Partial Public NotInheritable Class bstyle
             End If
             Return build(n.child(),
                          Function(ByVal type As String, ByVal ps As vector(Of single_data_slot_variable)) As Boolean
-                             l.typed_code_gen(Of value)().with_target(type, ps)
+                             value.with_target(type, ps)
                              Return True
                          End Function,
                          Function(ByVal type As String, ByVal source As String) As Boolean
-                             l.typed_code_gen(Of value)().with_single_data_slot_target(type, source)
+                             value.with_single_data_slot_target(type, source)
                              Return True
                          End Function,
                          o)

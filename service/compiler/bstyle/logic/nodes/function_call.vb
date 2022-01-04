@@ -79,12 +79,11 @@ Partial Public NotInheritable Class bstyle
                                             types.variable_type, return_value, o))
                                  Return builders.of_caller(name, return_value, parameters).to(o) AndAlso
                                         struct.unpack(return_value,
-                                                      l.typed_code_gen(Of value)().with_temp_target(return_type, n, o),
+                                                      value.with_temp_target(return_type, n, o),
                                                       o)
                              End If
                              Return builders.of_caller(name,
-                                                       l.typed_code_gen(Of value)().
-                                                         with_single_data_slot_temp_target(return_type, n, o),
+                                                       value.with_single_data_slot_temp_target(return_type, n, o),
                                                        parameters).
                                              to(o)
                          End Function)

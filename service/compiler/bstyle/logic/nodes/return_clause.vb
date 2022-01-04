@@ -46,7 +46,7 @@ Partial Public NotInheritable Class bstyle
             If Not l.of(n.child(1)).build(o) Then
                 Return False
             End If
-            Using r As read_scoped(Of value.target).ref = l.typed_code_gen(Of value)().read_target()
+            Using r As read_scoped(Of scope.value_target_t.target).ref = value.read_target()
                 If scope.current().current_function().return_struct() Then
                     ' The return type check of single-data-slot-target will be handled by logic.
                     If Not scope.current().current_function().return_type().Equals((+r).type) Then
