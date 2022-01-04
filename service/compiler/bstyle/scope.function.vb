@@ -38,7 +38,7 @@ Partial Public NotInheritable Class bstyle
                 Return f
             End If
             assert(f Is Nothing)
-            Return (+root).f
+            Return (+root).functions()
         End Function
     End Class
 End Class

@@ -44,7 +44,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             If scope.current().structs().defined(type) Then
-                Using r As read_scoped(Of value.target).ref = l.typed_code_gen(Of value)().read_target()
+                Using r As read_scoped(Of scope.value_target_t.target).ref = bstyle.value.read_target()
                     If Not (+r).type.Equals(type) Then
                         raise_error(error_type.user,
                                     "Type ",
@@ -58,8 +58,8 @@ Partial Public NotInheritable Class bstyle
                     Return struct_copy((+r).names)
                 End Using
             Else
-                Using r As read_scoped(Of value.target).ref(Of String) =
-                        l.typed_code_gen(Of value)().read_target_single_data_slot()
+                Using r As read_scoped(Of scope.value_target_t.target).ref(Of String) =
+                        bstyle.value.read_target_single_data_slot()
                     ' The type check of single-data-slot-target will be handled by logic.
                     Return single_data_slot_copy(+r)
                 End Using
