@@ -4,14 +4,13 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class variable_name
+    Public NotInheritable Class raw_variable_name
         Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
@@ -22,7 +21,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Sub register(ByVal b As code_gens(Of writer))
             assert(Not b Is Nothing)
-            b.register(Of variable_name)()
+            b.register(Of raw_variable_name)()
         End Sub
 
         Public Shared Function build(ByVal n As typed_node,
@@ -48,9 +47,6 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() = 1)
-            If n.child().type_name.Equals("heap-name") Then
-                Return l.of(n.child()).build(o)
-            End If
             Return build(n.child(),
                          Function(ByVal type As String, ByVal ps As vector(Of single_data_slot_variable)) As Boolean
                              value.with_target(type, ps)
