@@ -53,7 +53,7 @@ Partial Public NotInheritable Class bstyle
             Return build(n.child(2),
                          o,
                          Function(ByVal indexstr As String) As Boolean
-                             Return l.typed_code_gen(Of variable_name)().build(
+                             Return variable_name.build(
                                         n.child(0),
                                         Function(ByVal type As String,
                                                  ByVal ps As vector(Of single_data_slot_variable)) As Boolean
