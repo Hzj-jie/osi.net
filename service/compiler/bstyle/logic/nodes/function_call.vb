@@ -47,7 +47,7 @@ Partial Public NotInheritable Class bstyle
             If Not l.of(n.child(2)).build(o) Then
                 Return False
             End If
-            Using targets As read_scoped(Of vector(Of String)).ref = l.typed_code_gen(Of value_list)().current_targets()
+            Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
                 Return bc(+targets)
             End Using
         End Function

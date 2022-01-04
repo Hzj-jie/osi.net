@@ -34,8 +34,7 @@ Partial Public NotInheritable Class bstyle
                 raise_error(error_type.user, "Cannot parse data to int ", n.trace_back_str())
                 Return False
             End If
-            Return builders.of_copy_const(l.typed_code_gen(Of value)().
-                                            with_single_data_slot_temp_target(code_types.int, n, o),
+            Return builders.of_copy_const(value.with_single_data_slot_temp_target(code_types.int, n, o),
                                           New data_block(i)).
                             to(o)
         End Function
