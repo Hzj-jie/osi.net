@@ -35,7 +35,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not name Is Nothing)
             Dim t As String = type.children_word_str()
             Dim n As String = name.children_word_str()
-            Return l.typed_code_gen(Of struct).define_in_stack(t, n, o) OrElse
+            Return struct.define_in_stack(t, n, o) OrElse
                    declare_single_data_slot(t, n, o)
         End Function
 

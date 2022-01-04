@@ -10,7 +10,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public Class function_call
+    Public NotInheritable Class function_call
         Inherits code_gen_wrapper(Of typed_node_writer)
         Implements code_gen(Of typed_node_writer)
 
@@ -24,9 +24,9 @@ Partial Public NotInheritable Class b2style
             b.register(Of function_call)()
         End Sub
 
-        Protected Function build(ByVal name As String,
-                                 ByVal n As typed_node,
-                                 ByVal o As typed_node_writer) As Boolean
+        Public Function build(ByVal name As String,
+                              ByVal n As typed_node,
+                              ByVal o As typed_node_writer) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not n Is Nothing)
             assert(n.child_count() = 3 OrElse n.child_count() = 4)

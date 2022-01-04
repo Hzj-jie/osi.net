@@ -31,8 +31,8 @@ Partial Public NotInheritable Class bstyle
             End If
             assert(n.type_name.Equals("param"))
             assert(n.child_count() = 2 OrElse n.child_count() = 3)
-            l.typed_code_gen(Of struct)().forward_in_stack(n.child(0).word().str(),
-                                                           n.last_child().word().str())
+            struct.forward_in_stack(n.child(0).word().str(),
+                                    n.last_child().word().str())
             Dim params As struct_def = Nothing
             If Not scope.current().structs().resolve(n.child(0).word().str(),
                                                      n.last_child().word().str(),
