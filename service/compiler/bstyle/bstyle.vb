@@ -110,6 +110,9 @@ Public NotInheritable Class bstyle
                 AddressOf ifndef_wrapped.register,
                 AddressOf define.register,
                 AddressOf typedef.register,
+                code_gen.of_only_child(Of writer)("typedef-type"),
+                AddressOf typedef_type_name.register,
+                AddressOf typedef_type_str.register,
                 code_gen.of_first_child(Of writer)("typedef-with-semi-colon"),
                 AddressOf struct.register)
         End Function
