@@ -116,9 +116,9 @@ Partial Public NotInheritable Class bstyle
                            aggregate(bool_stream.aggregators.all_true)
         End Function
 
-        Private Function resolve(ByVal type As String,
-                                 ByVal name As String,
-                                 ByRef v As struct_def) As Boolean
+        Private Shared Function resolve(ByVal type As String,
+                                        ByVal name As String,
+                                        ByRef v As struct_def) As Boolean
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
             If Not scope.current().structs().resolve(type, name, v) Then
@@ -134,11 +134,12 @@ Partial Public NotInheritable Class bstyle
                            aggregate(bool_stream.aggregators.all_true)
         End Function
 
-        Public Sub forward_in_stack(ByVal type As String, ByVal name As String)
+        ' Forward the definition of, or declare the {type, name} pair in the scope.variable in stack.
+        Public Shared Sub forward_in_stack(ByVal type As String, ByVal name As String)
             resolve(type, name, Nothing)
         End Sub
 
-        Public Function define_in_stack(ByVal type As String, ByVal name As String, ByVal o As writer) As Boolean
+        Public Shared Function define_in_stack(ByVal type As String, ByVal name As String, ByVal o As writer) As Boolean
             assert(Not o Is Nothing)
             Dim v As struct_def = Nothing
             If Not resolve(type, name, v) Then
@@ -165,7 +166,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return l.typed_code_gen(Of heap_declaration).build(
+            Return l.typed_code_gen(Of heap_name).build(
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean
