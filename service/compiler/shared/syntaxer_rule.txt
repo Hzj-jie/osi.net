@@ -51,7 +51,9 @@ ifndef-wrapped kw-ifndef name [root-type]* kw-endif
 define kw-define name
 
 # Allow type* to be used as a string.
-typedef-type [type-name, string]
+typedef-type-str string
+typedef-type-name type-name
+typedef-type [typedef-type-name, typedef-type-str]
 typedef kw-typedef typedef-type typedef-type
 typedef-with-semi-colon typedef semi-colon
 
