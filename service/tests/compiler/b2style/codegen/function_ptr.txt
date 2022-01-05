@@ -1,0 +1,44 @@
+﻿
+#include <b2style.h>
+
+delegate int f(int x);
+
+int f1(int x) {
+  return x + 1;
+}
+
+int f2(int x) {
+  return x - 1;
+}
+
+void main() {
+  f a = f1;
+  b2style::std_out(a(100));
+  a = f2;
+  b2style::std_out(a(100));
+}
+
+/*
+struct f_f1 {};
+struct f_f2 {};
+
+int f(f_f1& this, int x) {
+  return f1(x);
+}
+
+int f(f_f2& this, int x) {
+  return f2(x);
+}
+
+class f_f1 {
+  int run(int x) {
+    return f1(x);
+  }
+};
+
+class f_f2 {
+  int run(int x) {
+    return f2(x);
+  }
+};
+*/
