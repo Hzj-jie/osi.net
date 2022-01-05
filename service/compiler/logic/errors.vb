@@ -107,13 +107,18 @@ Namespace logic
             raise("Anchor ", name, " is not defined.")
         End Sub
 
-        Public Shared Sub anchor_redefined(ByVal name As String, ByVal current_pos As UInt32, ByVal last_pos As UInt32)
+        Public Shared Sub anchor_redefined(ByVal name As String,
+                                           ByVal current_pos As UInt32,
+                                           ByVal last_pos As anchor,
+                                           ByVal last_name As anchor)
             raise("Anchor ",
                   name,
                   " redefined at ",
                   current_pos,
                   ", last position is ",
-                  last_pos)
+                  If(last_pos Is Nothing, "unknown", last_pos.begin.ToString()),
+                  ", last name is ",
+                  If(last_name Is Nothing, "unknown", last_name.name))
         End Sub
 
         Public Shared Sub unexpected_token(ByVal s As String)

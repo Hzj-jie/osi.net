@@ -46,12 +46,7 @@ Namespace logic
         ' Forward return-value to scope_wrapper.
         Private Function define_return_value(ByVal anchor As anchor, ByVal o As vector(Of String)) As Boolean
             assert(Not o Is Nothing)
-            Dim result_type As String = Nothing
-            If Not anchor.return_type(result_type) Then
-                errors.anchor_undefined(anchor.name)
-                Return False
-            End If
-            If Not return_value.export(types, name, result_type, o) Then
+            If Not return_value.export(types, name, anchor.return_type, o) Then
                 Return False
             End If
             Return True
@@ -67,12 +62,7 @@ Namespace logic
                                            ByVal o As vector(Of String)) As Boolean
             assert(Not anchor Is Nothing)
             assert(Not o Is Nothing)
-            Dim callee_params As const_array(Of builders.parameter) = Nothing
-            If Not anchor.parameters(callee_params) Then
-                errors.anchor_undefined(anchor.name)
-                Return False
-            End If
-            If array_size(parameters) <> callee_params.size() Then
+            If array_size(parameters) <> anchor.parameters.size() Then
                 errors.mismatch_callee_parameters(anchor.name, parameters)
                 Return False
             End If
@@ -86,7 +76,7 @@ Namespace logic
                 Dim parameter_place_holder As String = parameter_place_holder_of(i)
                 If Not define.export(types,
                                      parameter_place_holder,
-                                     callee_params(CUInt(i)).type,
+                                     anchor.parameters(CUInt(i)).type,
                                      o) Then
                     Return False
                 End If
@@ -96,7 +86,7 @@ Namespace logic
                     Return False
                 End If
 
-                If callee_params(CUInt(i)).ref Then
+                If anchor.parameters(CUInt(i)).ref Then
                     If Not move.export(target, vars(i), o) Then
                         Return False
                     End If
@@ -113,11 +103,10 @@ Namespace logic
         Private Function forward_to_result(ByVal anchor As anchor, ByVal o As vector(Of String)) As Boolean
             assert(Not anchor Is Nothing)
             assert(Not o Is Nothing)
-            Dim callee_params As const_array(Of builders.parameter) = Nothing
-            assert(anchor.parameters(callee_params))
-            assert(array_size(parameters) = callee_params.size())
+            ' The count of parameters should be checked already in define_parameter.
+            assert(array_size(parameters) = anchor.parameters.size())
             For i As Int32 = 0 To parameters.array_size_i() - 1
-                If Not callee_params(CUInt(i)).ref Then
+                If Not anchor.parameters(CUInt(i)).ref Then
                     Continue For
                 End If
                 Dim parameter_place_holder As variable = Nothing
@@ -145,7 +134,12 @@ Namespace logic
             assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is for return value.
             Using New scope_wrapper(o)
-                Dim anchor As anchor = anchors.of(name)
+                Dim anchor As anchor = Nothing
+                If Not anchors.of(name, anchor) Then
+                    errors.anchor_undefined(name)
+                    Return False
+                End If
+                assert(Not anchor Is Nothing)
 
                 If Not define_return_value(anchor, o) Then
                     Return False
@@ -154,13 +148,7 @@ Namespace logic
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.stst))
-
-                Dim pos As UInt32 = 0
-                If Not anchors.retrieve(name, pos) Then
-                    errors.anchor_undefined(name)
-                    Return False
-                End If
-                o.emplace_back(instruction_builder.str(command.jump, data_ref.abs(pos)))
+                o.emplace_back(instruction_builder.str(command.jump, data_ref.abs(anchor.begin)))
                 If Not forward_to_result(anchor, o) Then
                     Return False
                 End If

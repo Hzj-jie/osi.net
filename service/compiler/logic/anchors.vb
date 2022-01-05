@@ -8,58 +8,33 @@ Imports osi.root.formation
 
 Namespace logic
     Public NotInheritable Class anchor
-        Private ReadOnly anchors As anchors
         Public ReadOnly name As String
+        Public ReadOnly begin As UInt32
+        Public ReadOnly return_type As String
+        Public ReadOnly parameters As const_array(Of builders.parameter)
 
-        Public Sub New(ByVal anchors As anchors, ByVal name As String)
-            assert(Not anchors Is Nothing)
+        Public Sub New(ByVal name As String,
+                       ByVal begin As UInt32,
+                       ByVal return_type As String,
+                       ByVal parameters() As builders.parameter)
             assert(Not name.null_or_whitespace())
-            Me.anchors = anchors
+            assert(Not return_type.null_or_whitespace())
             Me.name = name
+            Me.begin = begin
+            Me.return_type = return_type
+            Me.parameters = const_array.of(parameters)
         End Sub
-
-        Public Function retrieve(ByRef pos As UInt32) As Boolean
-            Return anchors.retrieve(name, pos)
-        End Function
-
-        Public Function return_type(ByRef o As String) As Boolean
-            Return anchors.return_type(name, o)
-        End Function
-
-        Public Function parameters(ByRef o As const_array(Of builders.parameter)) As Boolean
-            Return anchors.parameters(name, o)
-        End Function
-
-        Public Shared Operator +(ByVal this As anchor) As UInt32
-            assert(Not this Is Nothing)
-            Return this.anchors(this.name)
-        End Operator
     End Class
 
     Public NotInheritable Class anchors
         Public Shared ReadOnly empty As New anchors()
 
-        Private NotInheritable Class callee_ref
-            Public ReadOnly begin As UInt32
-            Public ReadOnly return_type As String
-            Public ReadOnly parameters As const_array(Of builders.parameter)
-
-            Public Sub New(ByVal begin As UInt32, ByVal return_type As String, ByVal parameters() As builders.parameter)
-                assert(Not return_type.null_or_whitespace())
-                Me.begin = begin
-                Me.return_type = return_type
-                Me.parameters = const_array.of(parameters)
-            End Sub
-        End Class
-
-        Private ReadOnly m As map(Of String, callee_ref)
-
-        Public Sub New()
-            m = New map(Of String, callee_ref)()
-        End Sub
+        Private ReadOnly m As New map(Of String, anchor)()
+        Private ReadOnly p As New map(Of UInt32, anchor)()
 
         Public Sub clear()
             m.clear()
+            p.clear()
         End Sub
 
         Public Function define(ByVal name As String,
@@ -70,63 +45,21 @@ Namespace logic
             assert(Not name.null_or_whitespace())
             assert(Not o Is Nothing)
             assert(Not return_type.null_or_whitespace())
-            If m.find(name) = m.end() Then
-                m.emplace(name, New callee_ref(o.size(), return_type, parameters))
+            Dim a As New anchor(name, o.size(), return_type, parameters)
+            If m.find(a.name) = m.end() Then
+                assert(m.emplace(a.name, a).second() AndAlso p.emplace(a.begin, a).second())
                 Return True
             End If
-            errors.anchor_redefined(name, o.size(), Me(name))
+            errors.anchor_redefined(a.name, a.begin, m(a.name), p(a.begin))
             Return False
         End Function
 
-        Private Function find(Of T)(ByVal name As String, ByVal f As Func(Of callee_ref, T), ByRef o As T) As Boolean
-            assert(Not name.null_or_whitespace())
-            assert(Not f Is Nothing)
-            Dim it As map(Of String, callee_ref).iterator = Nothing
-            it = m.find(name)
-            If it = m.end() Then
-                Return False
-            End If
-            o = f((+it).second)
-            Return True
+        Public Function [of](ByVal name As String, ByRef o As anchor) As Boolean
+            Return m.find(name, o)
         End Function
 
-        Public Function retrieve(ByVal name As String, ByRef pos As UInt32) As Boolean
-            Return find(name,
-                        Function(ByVal i As callee_ref) As UInt32
-                            assert(Not i Is Nothing)
-                            Return i.begin
-                        End Function,
-                        pos)
-        End Function
-
-        Public Function return_type(ByVal name As String, ByRef o As String) As Boolean
-            Return find(name,
-                        Function(ByVal i As callee_ref) As String
-                            assert(Not i Is Nothing)
-                            Return i.return_type
-                        End Function,
-                        o)
-        End Function
-
-        Public Function parameters(ByVal name As String, ByRef o As const_array(Of builders.parameter)) As Boolean
-            Return find(name,
-                        Function(ByVal i As callee_ref) As const_array(Of builders.parameter)
-                            assert(Not i Is Nothing)
-                            Return i.parameters
-                        End Function,
-                        o)
-        End Function
-
-        Default Public ReadOnly Property D(ByVal name As String) As UInt32
-            Get
-                Dim o As UInt32 = 0
-                assert(retrieve(name, o))
-                Return o
-            End Get
-        End Property
-
-        Public Function [of](ByVal name As String) As anchor
-            Return New anchor(Me, name)
+        Public Function [of](ByVal begin As UInt32, ByRef o As anchor) As Boolean
+            Return p.find(begin, o)
         End Function
     End Class
 End Namespace
