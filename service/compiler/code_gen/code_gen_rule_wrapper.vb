@@ -49,7 +49,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
                 End If
                 assert(Not root Is Nothing)
                 assert(root.type = typed_node.root_type)
-                assert(strsame(root.type_name, typed_node.root_type_name))
+                assert(root.type_name.Equals(typed_node.root_type_name))
                 If root.leaf() Then
                     Return False
                 End If
