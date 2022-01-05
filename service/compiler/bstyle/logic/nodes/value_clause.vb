@@ -44,7 +44,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             If scope.current().structs().defined(type) Then
-                Using r As read_scoped(Of value.target).ref = l.typed_code_gen(Of value)().read_target()
+                Using r As read_scoped(Of scope.value_target_t.target).ref = bstyle.value.read_target()
                     If Not (+r).type.Equals(type) Then
                         raise_error(error_type.user,
                                     "Type ",
@@ -58,8 +58,8 @@ Partial Public NotInheritable Class bstyle
                     Return struct_copy((+r).names)
                 End Using
             Else
-                Using r As read_scoped(Of value.target).ref(Of String) =
-                        l.typed_code_gen(Of value)().read_target_single_data_slot()
+                Using r As read_scoped(Of scope.value_target_t.target).ref(Of String) =
+                        bstyle.value.read_target_single_data_slot()
                     ' The type check of single-data-slot-target will be handled by logic.
                     Return single_data_slot_copy(+r)
                 End Using
@@ -87,26 +87,26 @@ Partial Public NotInheritable Class bstyle
             If Not n.child(0).child().type_name.Equals("heap-name") Then
                 Return build(n.child(0).child(), n.child(2), o)
             End If
-            Return l.typed_code_gen(Of heap_name)().build(
-                n.child(0).child().child(2),
-                o,
-                Function(ByVal indexstr As String) As Boolean
-                    Return build(n.child(0).child().child(0),
-                                 n.child(2),
-                                 Function(ByVal r As vector(Of String)) As Boolean
-                                     Return struct.copy(r,
-                                                        n.child(0).child().child(0).children_word_str(),
-                                                        indexstr,
-                                                        o)
-                                 End Function,
-                                 Function(ByVal r As String) As Boolean
-                                     Return builders.of_copy(
-                                                variable.name_of(n.child(0).child().child(0).children_word_str(),
-                                                                 indexstr),
-                                            r).to(o)
-                                 End Function,
+            Return l.typed_code_gen(Of heap_name).build(
+                       n.child(0).child().child(2),
+                       o,
+                       Function(ByVal indexstr As String) As Boolean
+                           Return build(n.child(0).child().child(0),
+                                        n.child(2),
+                                        Function(ByVal r As vector(Of String)) As Boolean
+                                            Return struct.copy(r,
+                                                               n.child(0).child().child(0).children_word_str(),
+                                                               indexstr,
+                                                               o)
+                                        End Function,
+                                        Function(ByVal r As String) As Boolean
+                                            Return builders.of_copy(
+                                                       variable.name_of(n.child(0).child().child(0).children_word_str(),
+                                                                        indexstr),
+                                                   r).to(o)
+                                        End Function,
                                  o)
-                End Function)
+                       End Function)
         End Function
     End Class
 End Class

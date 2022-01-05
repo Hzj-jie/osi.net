@@ -15,8 +15,6 @@ Partial Public NotInheritable Class bstyle
         Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
-        Private ReadOnly rs As New read_scoped(Of vector(Of String))()
-
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of writer))
             MyBase.New(b)
@@ -37,17 +35,17 @@ Partial Public NotInheritable Class bstyle
                 If Not l.of(n.child(i)).build(o) Then
                     Return False
                 End If
-                Using r As read_scoped(Of value.target).ref = l.typed_code_gen(Of value)().read_target()
+                Using r As read_scoped(Of scope.value_target_t.target).ref = value.read_target()
                     v.emplace_back((+r).names)
                 End Using
                 i += uint32_1
             End While
-            rs.push(v)
+            scope.current().value_target().with_value_list(v)
             Return True
         End Function
 
-        Public Function current_targets() As read_scoped(Of vector(Of String)).ref
-            Return rs.pop()
+        Public Shared Function current_targets() As read_scoped(Of vector(Of String)).ref
+            Return scope.current().value_target().value_list()
         End Function
     End Class
 End Class

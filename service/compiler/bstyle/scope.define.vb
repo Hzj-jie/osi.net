@@ -26,7 +26,7 @@ Partial Public NotInheritable Class bstyle
                 Return d
             End If
             assert(d Is Nothing)
-            Return (+root).d
+            Return (+root).defines()
         End Function
     End Class
 End Class

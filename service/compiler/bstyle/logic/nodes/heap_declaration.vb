@@ -31,12 +31,6 @@ Partial Public NotInheritable Class bstyle
             Return build(n.child(0), n.child(1).child(0), n.child(1).child(2), o)
         End Function
 
-        Public Function build(ByVal length As typed_node,
-                              ByVal o As writer,
-                              ByVal f As Func(Of String, Boolean)) As Boolean
-            Return l.typed_code_gen(Of heap_name).build(length, o, f)
-        End Function
-
         Public Function build(ByVal type As typed_node,
                               ByVal name As typed_node,
                               ByVal length As typed_node,
@@ -46,14 +40,13 @@ Partial Public NotInheritable Class bstyle
             assert(Not length Is Nothing)
             Dim t As String = type.word().str()
             Dim n As String = name.word().str()
-            If l.typed_code_gen(Of struct).define_in_heap(t, n, length, o) Then
-                Return True
-            End If
-            Return build(length,
-                         o,
-                         Function(ByVal len_name As String) As Boolean
-                             Return declare_single_data_slot(t, n, len_name, o)
-                         End Function)
+            Return l.typed_code_gen(Of struct).define_in_heap(t, n, length, o) OrElse
+                   l.typed_code_gen(Of heap_name).build(
+                       length,
+                       o,
+                       Function(ByVal len_name As String) As Boolean
+                           Return declare_single_data_slot(t, n, len_name, o)
+                       End Function)
         End Function
 
         Public Shared Function declare_single_data_slot(ByVal type As String,

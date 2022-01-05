@@ -74,6 +74,10 @@
     <Compile Include="b2style\scope.vb" />
     <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
+    <Compile Include="bstyle\logic\nodes\typedef_type_name.vb" />
+    <Compile Include="bstyle\logic\nodes\typedef_type_str.vb" />
+    <Compile Include="bstyle\scope.params.vb" />
+    <Compile Include="bstyle\scope.value_target.vb" />
     <Compile Include="code_gen\code_gen.default.vb" />
     <Compile Include="code_gen\includes.vb" />
     <Compile Include="bstyle\logic\nodes\defines.vb" />
@@ -106,9 +110,8 @@
     <Compile Include="bstyle\logic\nodes\function_call.vb" />
     <Compile Include="bstyle\logic\nodes\value_list.vb" />
     <Compile Include="bstyle\logic\nodes\function.vb" />
-    <Compile Include="bstyle\logic\nodes\variable_name.vb" />
+    <Compile Include="bstyle\logic\nodes\raw_variable_name.vb" />
     <Compile Include="bstyle\logic\nodes\param.vb" />
-    <Compile Include="bstyle\logic\nodes\paramlist.vb" />
     <Compile Include="bstyle\logic\nodes\value.vb" />
     <Compile Include="bstyle\logic\nodes\value_clause.vb" />
     <Compile Include="bstyle\logic\nodes\value_declaration.vb" />

@@ -72,8 +72,8 @@ Partial Public NotInheritable Class bstyle
                                If Not condition_value(ref, o) Then
                                    Return False
                                End If
-                               Using read_target As read_scoped(Of value.target).ref(Of String) =
-                                       l.typed_code_gen(Of value)().read_target_single_data_slot()
+                               Using read_target As read_scoped(Of scope.value_target_t.target).ref(Of String) =
+                                       value.read_target_single_data_slot()
                                    Dim condition As String = Nothing
                                    ' TODO: May want to restrict the type of condition.
                                    If Not read_target.retrieve(condition) Then

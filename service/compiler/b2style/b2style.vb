@@ -143,7 +143,9 @@ Partial Public NotInheritable Class b2style
                        code_gen.of_all_children(Of typed_node_writer)("define"),
  _
                        code_gen.of_leaf_node("kw-typedef"),
-                       code_gen.of_all_children(Of typed_node_writer)("typedef-type"),
+                       code_gen.of_only_child(Of typed_node_writer)("typedef-type"),
+                       code_gen.of_all_children(Of typed_node_writer)("typedef-type-name"),
+                       code_gen.of_all_children(Of typed_node_writer)("typedef-type-str"),
                        code_gen.of_all_children(Of typed_node_writer)("typedef"),
                        code_gen.of_all_children(Of typed_node_writer)("typedef-with-semi-colon"),
  _

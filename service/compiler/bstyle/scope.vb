@@ -15,6 +15,8 @@ Partial Public NotInheritable Class bstyle
         Private ReadOnly v As New variable_t()
         Private ReadOnly f As function_t
         Private ReadOnly fc As call_hierarchy_t
+        Private ReadOnly vt As New value_target_t()
+        Private ReadOnly ps As New params_t()
         Private cf As current_function_t
 
         <inject_constructor>

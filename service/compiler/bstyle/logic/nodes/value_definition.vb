@@ -28,10 +28,8 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4)
-            If Not l.typed_code_gen(Of value_declaration)().build(n.child(0), n.child(1), o) Then
-                Return False
-            End If
-            Return l.typed_code_gen(Of value_clause)().build(n.child(1), n.child(3), o)
+            Return l.typed_code_gen(Of value_declaration)().build(n.child(0), n.child(1), o) AndAlso
+                   l.typed_code_gen(Of value_clause)().build(n.child(1), n.child(3), o)
         End Function
     End Class
 End Class

@@ -38,12 +38,6 @@ Partial Public NotInheritable Class b2style
             Return True
         End Function
 
-        Public Function build_value_declaration(ByVal child As typed_node, ByVal o As typed_node_writer) As Boolean
-            assert(Not child Is Nothing)
-            assert(child.type_name.Equals("value-declaration-with-semi-colon"))
-            Return build_child(child, o)
-        End Function
-
         Private Function build_child(ByVal child As typed_node, ByVal o As typed_node_writer) As Boolean
             assert(Not child Is Nothing)
             assert(Not o Is Nothing)

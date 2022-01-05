@@ -25,17 +25,19 @@ Partial Public NotInheritable Class b2style
             b.register(instance)
         End Sub
 
-        Private Shared Function is_value_declaration(ByVal n As typed_node) As Boolean
+        Private Shared Sub ensure_subnode_type(ByVal n As typed_node)
             assert(Not n Is Nothing)
             assert(n.type_name.Equals("value-declaration-with-semi-colon") OrElse
                    n.type_name.Equals("function"))
+        End Sub
+
+        Private Shared Function is_value_declaration(ByVal n As typed_node) As Boolean
+            ensure_subnode_type(n)
             Return n.type_name.Equals("value-declaration-with-semi-colon")
         End Function
 
         Private Shared Function is_function(ByVal n As typed_node) As Boolean
-            assert(Not n Is Nothing)
-            assert(n.type_name.Equals("value-declaration-with-semi-colon") OrElse
-                   n.type_name.Equals("function"))
+            ensure_subnode_type(n)
             Return n.type_name.Equals("function")
         End Function
 

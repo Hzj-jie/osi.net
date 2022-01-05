@@ -35,8 +35,8 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Dim indexstr As String = Nothing
-            Using read_target As read_scoped(Of value.target).ref(Of String) =
-                    l.typed_code_gen(Of value)().read_target_single_data_slot()
+            Using read_target As read_scoped(Of scope.value_target_t.target).ref(Of String) =
+                    value.read_target_single_data_slot()
                 ' TODO: May want to restrict the type of indexstr.
                 If Not read_target.retrieve(indexstr) Then
                     raise_error(error_type.user, "Index or length of a heap declaration cannot be a struct.")
@@ -53,11 +53,11 @@ Partial Public NotInheritable Class bstyle
             Return build(n.child(2),
                          o,
                          Function(ByVal indexstr As String) As Boolean
-                             Return l.typed_code_gen(Of variable_name)().build(
+                             Return raw_variable_name.build(
                                         n.child(0),
                                         Function(ByVal type As String,
                                                  ByVal ps As vector(Of single_data_slot_variable)) As Boolean
-                                            l.typed_code_gen(Of value)().with_target(
+                                            value.with_target(
                                                 type,
                                                 ps.stream().
                                                    map(Function(ByVal d As single_data_slot_variable) As _
@@ -69,7 +69,7 @@ Partial Public NotInheritable Class bstyle
                                             Return True
                                         End Function,
                                         Function(ByVal type As String, ByVal source As String) As Boolean
-                                            l.typed_code_gen(Of value)().with_single_data_slot_target(
+                                            value.with_single_data_slot_target(
                                                 type, variable.name_of(source, indexstr))
                                             Return True
                                         End Function,

@@ -21,7 +21,7 @@ Partial Public NotInheritable Class b2style
                 Return fc
             End If
             assert(fc Is Nothing)
-            Return (+root).fc
+            Return (+root).call_hierarchy()
         End Function
     End Class
 End Class

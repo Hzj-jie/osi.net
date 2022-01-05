@@ -8,4 +8,5 @@ root-type [function, value-definition-with-semi-colon, heap-declaration-with-sem
 sentence-with-semi-colon [ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, typedef]? semi-colon
 for-loop kw-for start-bracket [value-definition, value-declaration]? semi-colon [value]? semi-colon [value-clause, ignore-result-function-call]? end-bracket paragraph
 value-without-bracket [function-call, variable-name, integer, biguint, ufloat, bool, string]
-variable-name [heap-name, name]
+raw-variable-name name
+variable-name [heap-name, raw-variable-name]

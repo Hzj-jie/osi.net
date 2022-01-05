@@ -33,13 +33,13 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             Using New scope_wrapper()
                 Dim fo As New writer()
-                Dim params As vector(Of builders.parameter)
                 Dim has_paramlist As Boolean = strsame(n.child(3).type_name, "paramlist")
                 If has_paramlist Then
-                    params = l.typed_code_gen(Of paramlist).build(n.child(3))
-                Else
-                    params = New vector(Of builders.parameter)()
+                    If Not l.of(n.child(3)).build(o) Then
+                        Return False
+                    End If
                 End If
+                Dim params As vector(Of builders.parameter) = scope.current().params().unpack()
                 Return logic_name.of_callee(n.child(1).word().str(),
                                             n.child(0).word().str(),
                                             params,

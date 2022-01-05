@@ -32,7 +32,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(n.child_count() = 1)
             assert(n.child().type_name.StartsWith(self_prefix))
-            Return function_name(strmid(n.child().type_name, strlen(self_prefix)))
+            Return function_name(n.child().type_name.Substring(self_prefix.Length()))
         End Function
 
         Private Sub New()
