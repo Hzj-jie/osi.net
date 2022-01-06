@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 
 Namespace logic
     Public NotInheritable Class errors
@@ -109,16 +110,13 @@ Namespace logic
 
         Public Shared Sub anchor_redefined(ByVal name As String,
                                            ByVal current_pos As UInt32,
-                                           ByVal last_pos As anchor,
-                                           ByVal last_name As anchor)
+                                           ByVal last_pos As UInt32)
             raise("Anchor ",
                   name,
                   " redefined at ",
                   current_pos,
                   ", last position is ",
-                  If(last_pos Is Nothing, "unknown", last_pos.begin.ToString()),
-                  ", last name is ",
-                  If(last_name Is Nothing, "unknown", last_name.name))
+                  last_pos)
         End Sub
 
         Public Shared Sub unexpected_token(ByVal s As String)

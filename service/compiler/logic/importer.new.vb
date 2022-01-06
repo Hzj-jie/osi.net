@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
@@ -79,6 +80,29 @@ Namespace logic
 
         Private Function new_caller(ByVal p1 As String, ByVal p2 As vector(Of String)) As caller
             Return New caller(anchors, types, p1, +p2)
+        End Function
+
+        Private Function new_callee_ref(ByVal p1 As String,
+                                        ByVal p2 As String,
+                                        ByVal p3 As vector(Of pair(Of String, String))) As exportable
+            assert(False)
+            Return Nothing
+        End Function
+
+        Private Function new_caller_ref(ByVal p1 As String,
+                                        ByVal p2 As String,
+                                        ByVal p3 As vector(Of String)) As exportable
+            assert(False)
+            Return Nothing
+        End Function
+
+        Private Function new_caller_ref(ByVal p1 As String, ByVal p2 As vector(Of String)) As exportable
+            assert(False)
+            Return Nothing
+        End Function
+
+        Private Function new_address_of(ByVal p1 As String, ByVal p2 As String) As address_of
+            Return New address_of(types, anchors, p1, p2)
         End Function
 
         Private Function new_less(ByVal p1 As String, ByVal p2 As String, ByVal p3 As String) As less

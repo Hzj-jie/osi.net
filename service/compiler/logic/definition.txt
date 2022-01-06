@@ -10,7 +10,7 @@ start_scope	paragraph
 # define a type:
 #  type uint 4
 #  type biguint 0
-# setting size to 0 to define a variable-length type.
+# setting size >= max_int32 to define a variable-length type.
 type	string	uint
 
 # execute append_slice command against two variables:
@@ -77,6 +77,23 @@ caller	string	string	parameters
 # execute a function with parameters and discard the return value:
 #  caller f (p1, p2)
 caller	string	parameters
+
+# define a callee / function reference with name, parameters:
+#  callee_ref f int ( a uint )
+#  a type suffixed by "&" indicates that it's a "reference".
+callee_ref	string	string	typed_parameters
+
+# execute a function based on its address with parameters and store its return value:
+#  caller_ref f return-value (p1, p2)
+caller_ref	string	string	parameters
+
+# execute a function based on its address with parameters and discard the return value:
+#  caller_ref f (p1, p2)
+caller_ref	string	parameters
+
+# copy the position of a function:
+#  address_of target source
+address_of	string	string
 
 # execute less command against two variables and store the result in the first variable:
 #  less target source1 source2

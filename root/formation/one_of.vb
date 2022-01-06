@@ -9,7 +9,8 @@ Imports osi.root.constants
 
 Public Structure one_of(Of T1, T2)
     Implements ICloneable, ICloneable(Of one_of(Of T1, T2)),
-               IComparable, IComparable(Of one_of(Of T1, T2))
+               IComparable, IComparable(Of one_of(Of T1, T2)),
+               IEquatable(Of one_of(Of T1, T2))
 
     Private ReadOnly t As tuple(Of Boolean, T1, T2)
 
@@ -101,5 +102,27 @@ Public Structure one_of(Of T1, T2)
     Public Function CompareTo(ByVal other As one_of(Of T1, T2)) As Int32 _
             Implements IComparable(Of one_of(Of T1, T2)).CompareTo
         Return t.CompareTo(other.t)
+    End Function
+
+    Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Return EqualsT(cast(Of one_of(Of T1, T2))().from(obj, False))
+    End Function
+
+    Public Overrides Function GetHashCode() As Int32
+        If is_first() Then
+            Return uint32_int32(fast_to_uint32(Of T1).on(first()))
+        End If
+        Return uint32_int32(fast_to_uint32(Of T2).on(second()))
+    End Function
+
+    Public Overrides Function ToString() As String
+        If is_first() Then
+            Return Convert.ToString(first())
+        End If
+        Return Convert.ToString(second())
+    End Function
+
+    Public Overloads Function EqualsT(ByVal other As one_of(Of T1, T2)) As Boolean _
+                                     Implements IEquatable(Of one_of(Of T1, T2)).Equals
     End Function
 End Structure

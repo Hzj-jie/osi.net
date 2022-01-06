@@ -54,9 +54,7 @@ Namespace logic
         Public Shared Function name_of(ByVal array As String, ByVal index As String) As String
             assert(Not array.null_or_whitespace())
             assert(Not index.null_or_whitespace())
-            array = array.Trim()
-            index = index.Trim()
-            Return strcat(array, character.left_mid_bracket, index, character.right_mid_bracket)
+            Return strcat(array.Trim(), character.left_mid_bracket, index.Trim(), character.right_mid_bracket)
         End Function
 
         Public Shared Function is_heap_name(ByVal name As String) As Boolean
