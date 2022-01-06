@@ -46,7 +46,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(n.type_name.Equals("class"))
             assert(Not types.null_or_empty())
-            Me.class_name = New class_name_t(scope.template_proxy.template_name(n.child(1), types.size()))
+            Me.class_name = New class_name_t(template_name(n.child(1), types.size()))
             Me.types.resize(types.size(), New ref(Of String)())
             n.dfs(Sub(ByVal node As typed_node, ByVal stop_navigating_sub_nodes As Action)
                       assert(Not node Is Nothing)
@@ -74,6 +74,11 @@ Partial Public NotInheritable Class b2style
                       assert(w.append(leaf.word().str()))
                   End Sub)
         End Sub
+
+        Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
+            assert(Not n Is Nothing)
+            Return strcat(n.children_word_str(), "__", type_count)
+        End Function
 
         Public Shared Function [of](ByVal n As typed_node, ByRef o As template_template) As Boolean
             assert(Not n Is Nothing)

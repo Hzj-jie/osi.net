@@ -61,7 +61,7 @@ Partial Public NotInheritable Class b2style
             Public Shared Function template_type_name_name(ByVal n As typed_node) As String
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
-                Return template_proxy.template_name(n.child(0), n.child(2).child_count())
+                Return template_template.template_name(n.child(0), n.child(2).child_count())
             End Function
 
             Private Shared Function template_type_name_types(ByVal n As typed_node,
@@ -159,11 +159,6 @@ Partial Public NotInheritable Class b2style
                             template_t.template_type_name_name(n),
                             " has not been defined.")
                 Return False
-            End Function
-
-            Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
-                assert(Not n Is Nothing)
-                Return strcat(n.children_word_str(), "__", type_count)
             End Function
         End Structure
 
