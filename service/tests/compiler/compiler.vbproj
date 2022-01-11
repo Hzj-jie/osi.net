@@ -169,6 +169,7 @@
     <Content Include="b2style\codegen\primitive_template.txt" />
     <Content Include="b2style\codegen\self_add.txt" />
     <Content Include="b2style\codegen\shift.txt" />
+    <Content Include="b2style\codegen\reinterpret_cast.txt" />
     <Content Include="b2style\codegen\struct_function_ref.txt" />
     <Content Include="b2style\codegen\struct_in_namespace.txt" />
     <Content Include="b2style\codegen\template.txt" />

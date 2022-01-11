@@ -74,6 +74,7 @@
     <Compile Include="b2style\scope.vb" />
     <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
+    <Compile Include="bstyle\logic\nodes\reinterpret_cast.vb" />
     <Compile Include="bstyle\logic\nodes\typedef_type_name.vb" />
     <Compile Include="bstyle\logic\nodes\typedef_type_str.vb" />
     <Compile Include="bstyle\scope.params.vb" />

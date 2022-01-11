@@ -11,10 +11,11 @@ template-type-param-with-comma template-type-param comma
 template-type-param type-name
 template-type-name raw-type-name less-than template-type-param-list greater-than
 type-name [template-type-name, raw-type-name]
-root-type [function, value-definition-with-semi-colon, heap-declaration-with-semi-colon, value-declaration-with-semi-colon, namespace-, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, class, template]
+root-type [base-root-type, namespace-, class, template]
 reference bit-and
 namespace- kw-namespace name start-paragraph [root-type]* end-paragraph
-sentence-with-semi-colon [ignore-result-heap-struct-function-call, ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, self-value-clause, typedef, pre-operation-value, post-operation-value]? semi-colon
+b2style-sentence-with-semi-colon [ignore-result-heap-struct-function-call, self-value-clause, pre-operation-value, post-operation-value]? semi-colon
+sentence-with-semi-colon [b2style-sentence-with-semi-colon, base-sentence-with-semi-colon]
 self-operator [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or, self-left-shift, self-right-shift]
 self-value-clause variable-name self-operator value
 for-loop kw-for start-bracket [value-definition, value-declaration]? semi-colon [value]? semi-colon [value-clause, self-value-clause, ignore-result-heap-struct-function-call, ignore-result-function-call, pre-operation-value, post-operation-value]? end-bracket paragraph

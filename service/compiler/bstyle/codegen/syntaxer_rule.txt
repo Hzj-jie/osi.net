@@ -4,8 +4,8 @@ INCLUDE ../shared/syntaxer_rule.txt
 raw-name-with-dot raw-name dot
 name [raw-name-with-dot]* raw-name
 type-name raw-name
-root-type [function, value-definition-with-semi-colon, heap-declaration-with-semi-colon, value-declaration-with-semi-colon, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct]
-sentence-with-semi-colon [ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, typedef]? semi-colon
+root-type base-root-type
+sentence-with-semi-colon base-sentence-with-semi-colon
 for-loop kw-for start-bracket [value-definition, value-declaration]? semi-colon [value]? semi-colon [value-clause, ignore-result-function-call]? end-bracket paragraph
 value-without-bracket [function-call, variable-name, integer, biguint, ufloat, bool, string]
 raw-variable-name name

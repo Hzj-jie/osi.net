@@ -281,10 +281,12 @@ Public NotInheritable Class b2style_test
                           parse(_b2style_test_data.multiline_string.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), strcat("a", character.newline,
-                                            "    b", character.newline,
-                                            "    c", character.newline,
-                                            "    d"))
+        ' I hate different newline characters.
+        assertion.equal(io.output().Replace(newline.incode(), character.newline),
+                        strcat("a", character.newline,
+                               "    b", character.newline,
+                               "    c", character.newline,
+                               "    d"))
     End Sub
 
     <test>
@@ -547,7 +549,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.nested_heap_access.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "2345")
+        assertion.equal(io.output(), "234")
     End Sub
 
     <test>
@@ -637,6 +639,18 @@ Public NotInheritable Class b2style_test
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "12abc")
+    End Sub
+
+    <test>
+    Private Shared Sub reinterpret_cast()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.reinterpret_cast.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        ' TODO: Should be -100100
+        assertion.equal(io.output(), "-1000")
     End Sub
 
     Private Sub New()

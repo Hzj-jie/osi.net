@@ -31,7 +31,7 @@ Partial Public Class code_gens(Of WRITER As New)
     Public Sub register(ByVal s As String, ByVal b As code_gen(Of WRITER))
         assert(Not s.null_or_whitespace())
         assert(Not b Is Nothing)
-        assert(m.emplace(s, b).second())
+        assert(m.emplace(s, b).second(), s)
     End Sub
 
     Public Sub register(ByVal s As String, ByVal f As Func(Of code_gens(Of WRITER), code_gen(Of WRITER)))

@@ -55,7 +55,8 @@ Partial Public NotInheritable Class b2style
 
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of typed_node_writer)))
             Return vector.emplace_of(Of Action(Of code_gens(Of typed_node_writer)))(
-                       code_gen.of_all_children(Of typed_node_writer)("root-type"),
+                       code_gen.of_only_child(Of typed_node_writer)("base-root-type"),
+                       code_gen.of_only_child(Of typed_node_writer)("root-type"),
  _
                        code_gen.of_leaf_node("kw-if"),
                        code_gen.of_leaf_node("kw-else"),
@@ -66,6 +67,7 @@ Partial Public NotInheritable Class b2style
                        code_gen.of_leaf_node("kw-return"),
                        code_gen.of_leaf_node("kw-break"),
                        code_gen.of_leaf_node("kw-logic"),
+                       code_gen.of_leaf_node("kw-reinterpret-cast"),
                        code_gen.of_leaf_node("start-square-bracket"),
                        code_gen.of_leaf_node("end-square-bracket"),
                        code_gen.of_leaf_node("bool"),
@@ -95,7 +97,9 @@ Partial Public NotInheritable Class b2style
                        AddressOf namespace_.register,
                        code_gen.of_only_child(Of typed_node_writer)("paragraph"),
                        code_gen.of_all_children(Of typed_node_writer)("sentence"),
-                       code_gen.of_all_children(Of typed_node_writer)("sentence-with-semi-colon"),
+                       code_gen.of_all_children(Of typed_node_writer)("base-sentence-with-semi-colon"),
+                       code_gen.of_all_children(Of typed_node_writer)("b2style-sentence-with-semi-colon"),
+                       code_gen.of_only_child(Of typed_node_writer)("sentence-with-semi-colon"),
                        code_gen.of_all_children(Of typed_node_writer)("sentence-without-semi-colon"),
                        code_gen.of_all_children(Of typed_node_writer)("value-definition"),
                        code_gen.of_all_children(Of typed_node_writer)("value-declaration"),
@@ -155,7 +159,10 @@ Partial Public NotInheritable Class b2style
                        AddressOf [class].register,
  _
                        AddressOf template.register,
-                       AddressOf template_type_name.register
+                       AddressOf template_type_name.register,
+ _
+                       code_gen.of_all_children(Of typed_node_writer)("reinterpret-cast-with-semi-colon"),
+                       code_gen.of_all_children(Of typed_node_writer)("reinterpret-cast")
                    )
         End Function
     End Class

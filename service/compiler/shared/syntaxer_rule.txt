@@ -59,3 +59,9 @@ typedef-with-semi-colon typedef semi-colon
 
 # TODO: Support value-definition
 struct kw-struct type-name start-paragraph [value-declaration-with-semi-colon]* end-paragraph semi-colon
+
+reinterpret-cast kw-reinterpret-cast start-bracket variable-name comma type-name end-bracket
+reinterpret-cast-with-semi-colon reinterpret-cast semi-colon
+
+base-root-type [function, value-definition-with-semi-colon, heap-declaration-with-semi-colon, value-declaration-with-semi-colon, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, reinterpret-cast-with-semi-colon]
+base-sentence-with-semi-colon [ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, typedef, reinterpret-cast]? semi-colon
