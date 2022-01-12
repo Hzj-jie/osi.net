@@ -107,6 +107,9 @@
     <Content Include="b2style\codegen\class_inheritance.txt" />
     <Content Include="b2style\codegen\errors\duplicate_template_type_parameters.txt" />
     <Content Include="b2style\codegen\errors\missing-ending-quota.txt" />
+    <Content Include="b2style\codegen\errors\reinterpret_cast_heap_with_index.txt" />
+    <Content Include="b2style\codegen\errors\reinterpret_cast_unknown_type.txt" />
+    <Content Include="b2style\codegen\errors\reinterpret_cast_unknown_variable.txt" />
     <Content Include="b2style\codegen\errors\undefined-value-clause.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />
     <Content Include="b2style\codegen\nested_heap_access.txt" />
@@ -168,8 +171,10 @@
     <Content Include="b2style\codegen\nested_paragraph.txt" />
     <Content Include="b2style\codegen\pi_integral_0_1.txt" />
     <Content Include="b2style\codegen\primitive_template.txt" />
+    <Content Include="b2style\codegen\reinterpret_cast_heap.txt" />
     <Content Include="b2style\codegen\self_add.txt" />
     <Content Include="b2style\codegen\shift.txt" />
+    <Content Include="b2style\codegen\reinterpret_cast.txt" />
     <Content Include="b2style\codegen\struct_function_ref.txt" />
     <Content Include="b2style\codegen\struct_in_namespace.txt" />
     <Content Include="b2style\codegen\template.txt" />

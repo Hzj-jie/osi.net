@@ -200,7 +200,9 @@ Partial Public NotInheritable Class bstyle
                                                 Return New struct_member(c.child(0).child(0).word().str(),
                                                                          c.child(0).child(1).word().str())
                                             End Function).
-                                        concat(New struct_member(id_type, "__struct__type__id")).
+                                        concat(New struct_member(
+                                                       id_type,
+                                                       strcat(n.child(1).word().str(), "__struct__type__id"))).
                                         collect(Of vector(Of struct_member))())
         End Function
     End Class
