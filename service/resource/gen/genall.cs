@@ -12,6 +12,7 @@ public static class genall {
         string module_name = Array.Find(args, s => !s.StartsWith("--"));
         string pattern = Array.Find(args, s => s.StartsWith("--pattern=")).Substring("--pattern=".Length);
         string[] files = Directory.GetFiles(Directory.GetCurrentDirectory(), pattern, SearchOption.AllDirectories);
+        Array.Sort(files);
         var gen_args = new List<string>();
         gen_args.Add(module_name);
         foreach (var full_filename in files) {

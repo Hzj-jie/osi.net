@@ -281,10 +281,12 @@ Public NotInheritable Class b2style_test
                           parse(_b2style_test_data.multiline_string.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), strcat("a", character.newline,
-                                            "    b", character.newline,
-                                            "    c", character.newline,
-                                            "    d"))
+        ' I hate different newline characters.
+        assertion.equal(io.output().Replace(newline.incode(), character.newline),
+                        strcat("a", character.newline,
+                               "    b", character.newline,
+                               "    c", character.newline,
+                               "    d"))
     End Sub
 
     <test>

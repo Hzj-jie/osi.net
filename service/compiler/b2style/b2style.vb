@@ -155,7 +155,10 @@ Partial Public NotInheritable Class b2style
                        AddressOf [class].register,
  _
                        AddressOf template.register,
-                       AddressOf template_type_name.register
+                       AddressOf template_type_name.register,
+                       code_gen.of_all_children(Of typed_node_writer)("type-param-list"),
+                       code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma"),
+                       code_gen.of_children_word_str(Of typed_node_writer)("type-param")
                    )
         End Function
     End Class
