@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.constructor
@@ -72,12 +73,15 @@ Partial Public Class code_gens(Of WRITER As New)
     End Function
 
     Public Structure code_gen_proxy
+        Private ReadOnly l As code_gens(Of WRITER)
         Private ReadOnly b As code_gen(Of WRITER)
         Private ReadOnly n As typed_node
 
-        Public Sub New(ByVal b As code_gen(Of WRITER), ByVal n As typed_node)
+        Public Sub New(ByVal l As code_gens(Of WRITER), ByVal b As code_gen(Of WRITER), ByVal n As typed_node)
+            assert(Not l Is Nothing)
             assert(Not b Is Nothing)
             assert(Not n Is Nothing)
+            Me.l = l
             Me.b = b
             Me.n = n
         End Sub
@@ -100,10 +104,30 @@ Partial Public Class code_gens(Of WRITER As New)
             assert(dump(r))
             Return r
         End Function
+
+        Public Function dump_children(ByRef o As vector(Of String)) As Boolean
+            o.renew()
+            Dim i As UInt32 = 0
+            While i < n.child_count()
+                Dim s As String = Nothing
+                If Not l.of(n.child(i)).dump(s) Then
+                    Return False
+                End If
+                o.emplace_back(s)
+                i += uint32_1
+            End While
+            Return True
+        End Function
+
+        Public Function dump_children() As vector(Of String)
+            Dim v As vector(Of String) = Nothing
+            assert(dump_children(v))
+            Return v
+        End Function
     End Structure
 
     Public Function [of](ByVal n As typed_node) As code_gen_proxy
-        Return New code_gen_proxy(code_gen_of(n), n)
+        Return New code_gen_proxy(Me, code_gen_of(n), n)
     End Function
 End Class
 

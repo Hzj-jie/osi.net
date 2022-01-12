@@ -1,217 +1,217 @@
 ' This file is created by genall with
 ' C:\Users\Hzj_j\git\osi.net\service\resource\gen\gen.exe
-' _b2style_test_data "[order_of_operators]" "order_of_operators.txt" "[heap_function_ref]" "heap_function_ref.txt" "[self_add]" "self_add.txt" "[template_wont_be_extended_twice]" "template_wont_be_extended_twice.txt" "[shift]" "shift.txt" "[heap_declaration]" "heap_declaration.txt" "[empty_struct]" "empty_struct.txt" "[two_template_type_parameters]" "two_template_type_parameters.txt" "[for_loop]" "for_loop.txt" "[primitive_template]" "primitive_template.txt" "[struct_function_ref]" "struct_function_ref.txt" "[biguint]" "biguint.txt" "[typedef]" "typedef.txt" "[comments]" "comments.txt" "[bool_and_bool]" "bool_and_bool.txt" "[class_in_namespace]" "class_in_namespace.txt" "[include2]" "include2.txt" "[nested_heap_access]" "nested_heap_access.txt" "[heap]" "heap.txt" "[include]" "include.txt" "[while_1_to_100]" "while_1_to_100.txt" "[legacy_biguint_to_str]" "legacy_biguint_to_str.txt" "[template_with_different_length]" "template_with_different_length.txt" "[nested_class]" "nested_class.txt" "[function_ref]" "function_ref.txt" "[struct_in_namespace]" "struct_in_namespace.txt" "[loaded_method]" "loaded_method.txt" "[nested_template]" "nested_template.txt" "[multiline_string]" "multiline_string.txt" "[case2]" "case2.txt" "[function_with_global_namespace]" "function_with_global_namespace.txt" "[template_template_case1]" "template_template_case1.txt" "[namespaces]" "namespaces.txt" "[pi_integral_0_1]" "pi_integral_0_1.txt" "[ufloat_operators]" "ufloat_operators.txt" "[calculate_pi_bbp]" "calculate_pi_bbp.txt" "[i__]" "i++.txt" "[class_on_heap]" "class_on_heap.txt" "[heap_ptr_to_int64]" "heap_ptr_to_int64.txt" "[negative_int]" "negative_int.txt" "[template]" "template.txt" "[_1_to_100]" "_1_to_100.txt" "[reinterpret_cast]" "reinterpret_cast.txt" "[class_function_with_namespace]" "class_function_with_namespace.txt" "[another_1_to_100]" "another_1_to_100.txt" "[str_unescape]" "str_unescape.txt" "[case1]" "case1.txt" "[nested_paragraph]" "nested_paragraph.txt" "[i__2]" "i++2.txt" "[while_0_to_1]" "while_0_to_1.txt" "[ufloat_std_out]" "ufloat_std_out.txt" "[class]" "class.txt" "[ifndef]" "ifndef.txt" "[__i__]" "++i++.txt" "[__i]" "++i.txt" "[errors_duplicate_template_type_parameters]" "errors\duplicate_template_type_parameters.txt" "[errors_missing_ending_quota]" "errors\missing-ending-quota.txt" "[errors_function_name_ends_with_dot]" "errors\function-name-ends-with-dot.txt" "[errors_value_clause_struct_type_mismatch2]" "errors\value-clause-struct-type-mismatch2.txt" "[errors_undefined_value_clause]" "errors\undefined-value-clause.txt" "[errors_function_return_struct_type_mismatch]" "errors\function-return-struct-type-mismatch.txt" "[errors_three_pluses]" "errors\three-pluses.txt" "[errors_dollar_in_number]" "errors\dollar-in-number.txt" "[errors_value_clause_struct_type_mismatch]" "errors\value-clause-struct-type-mismatch.txt" "[errors_include_needs_wraps]" "errors\include-needs-wraps.txt" "[errors_cycle_typedef]" "errors\cycle-typedef.txt"
+' _b2style_test_data "[_1_to_100]" "_1_to_100.txt" "[__i]" "++i.txt" "[__i__]" "++i++.txt" "[another_1_to_100]" "another_1_to_100.txt" "[biguint]" "biguint.txt" "[bool_and_bool]" "bool_and_bool.txt" "[calculate_pi_bbp]" "calculate_pi_bbp.txt" "[case1]" "case1.txt" "[case2]" "case2.txt" "[class]" "class.txt" "[class_function_with_namespace]" "class_function_with_namespace.txt" "[class_in_namespace]" "class_in_namespace.txt" "[class_on_heap]" "class_on_heap.txt" "[comments]" "comments.txt" "[empty_struct]" "empty_struct.txt" "[errors_cycle_typedef]" "errors\cycle-typedef.txt" "[errors_dollar_in_number]" "errors\dollar-in-number.txt" "[errors_duplicate_template_type_parameters]" "errors\duplicate_template_type_parameters.txt" "[errors_function_name_ends_with_dot]" "errors\function-name-ends-with-dot.txt" "[errors_function_return_struct_type_mismatch]" "errors\function-return-struct-type-mismatch.txt" "[errors_include_needs_wraps]" "errors\include-needs-wraps.txt" "[errors_missing_ending_quota]" "errors\missing-ending-quota.txt" "[errors_three_pluses]" "errors\three-pluses.txt" "[errors_undefined_value_clause]" "errors\undefined-value-clause.txt" "[errors_value_clause_struct_type_mismatch]" "errors\value-clause-struct-type-mismatch.txt" "[errors_value_clause_struct_type_mismatch2]" "errors\value-clause-struct-type-mismatch2.txt" "[for_loop]" "for_loop.txt" "[function_ref]" "function_ref.txt" "[function_with_global_namespace]" "function_with_global_namespace.txt" "[heap]" "heap.txt" "[heap_declaration]" "heap_declaration.txt" "[heap_function_ref]" "heap_function_ref.txt" "[heap_ptr_to_int64]" "heap_ptr_to_int64.txt" "[i__]" "i++.txt" "[i__2]" "i++2.txt" "[ifndef]" "ifndef.txt" "[include]" "include.txt" "[include2]" "include2.txt" "[legacy_biguint_to_str]" "legacy_biguint_to_str.txt" "[loaded_method]" "loaded_method.txt" "[multiline_string]" "multiline_string.txt" "[namespaces]" "namespaces.txt" "[negative_int]" "negative_int.txt" "[nested_class]" "nested_class.txt" "[nested_heap_access]" "nested_heap_access.txt" "[nested_paragraph]" "nested_paragraph.txt" "[nested_template]" "nested_template.txt" "[order_of_operators]" "order_of_operators.txt" "[pi_integral_0_1]" "pi_integral_0_1.txt" "[primitive_template]" "primitive_template.txt" "[reinterpret_cast]" "reinterpret_cast.txt" "[self_add]" "self_add.txt" "[shift]" "shift.txt" "[str_unescape]" "str_unescape.txt" "[struct_function_ref]" "struct_function_ref.txt" "[struct_in_namespace]" "struct_in_namespace.txt" "[template]" "template.txt" "[template_template_case1]" "template_template_case1.txt" "[template_with_different_length]" "template_with_different_length.txt" "[template_wont_be_extended_twice]" "template_wont_be_extended_twice.txt" "[two_template_type_parameters]" "two_template_type_parameters.txt" "[typedef]" "typedef.txt" "[ufloat_operators]" "ufloat_operators.txt" "[ufloat_std_out]" "ufloat_std_out.txt" "[while_0_to_1]" "while_0_to_1.txt" "[while_1_to_100]" "while_1_to_100.txt"
 
 Option Explicit On
 Option Infer Off
 Option Strict On
 
 'this file is generated by /osi/service/resource/gen/gen.exe with
-'[order_of_operators] [heap_function_ref] [self_add] [template_wont_be_extended_twice] [shift] [heap_declaration] [empty_struct] [two_template_type_parameters] [for_loop] [primitive_template] [struct_function_ref] [biguint] [typedef] [comments] [bool_and_bool] [class_in_namespace] [include2] [nested_heap_access] [heap] [include] [while_1_to_100] [legacy_biguint_to_str] [template_with_different_length] [nested_class] [function_ref] [struct_in_namespace] [loaded_method] [nested_template] [multiline_string] [case2] [function_with_global_namespace] [template_template_case1] [namespaces] [pi_integral_0_1] [ufloat_operators] [calculate_pi_bbp] [i__] [class_on_heap] [heap_ptr_to_int64] [negative_int] [template] [_1_to_100] [reinterpret_cast] [class_function_with_namespace] [another_1_to_100] [str_unescape] [case1] [nested_paragraph] [i__2] [while_0_to_1] [ufloat_std_out] [class] [ifndef] [__i__] [__i] [errors_duplicate_template_type_parameters] [errors_missing_ending_quota] [errors_function_name_ends_with_dot] [errors_value_clause_struct_type_mismatch2] [errors_undefined_value_clause] [errors_function_return_struct_type_mismatch] [errors_three_pluses] [errors_dollar_in_number] [errors_value_clause_struct_type_mismatch] [errors_include_needs_wraps] [errors_cycle_typedef]
+'[_1_to_100] [__i] [__i__] [another_1_to_100] [biguint] [bool_and_bool] [calculate_pi_bbp] [case1] [case2] [class] [class_function_with_namespace] [class_in_namespace] [class_on_heap] [comments] [empty_struct] [errors_cycle_typedef] [errors_dollar_in_number] [errors_duplicate_template_type_parameters] [errors_function_name_ends_with_dot] [errors_function_return_struct_type_mismatch] [errors_include_needs_wraps] [errors_missing_ending_quota] [errors_three_pluses] [errors_undefined_value_clause] [errors_value_clause_struct_type_mismatch] [errors_value_clause_struct_type_mismatch2] [for_loop] [function_ref] [function_with_global_namespace] [heap] [heap_declaration] [heap_function_ref] [heap_ptr_to_int64] [i__] [i__2] [ifndef] [include] [include2] [legacy_biguint_to_str] [loaded_method] [multiline_string] [namespaces] [negative_int] [nested_class] [nested_heap_access] [nested_paragraph] [nested_template] [order_of_operators] [pi_integral_0_1] [primitive_template] [reinterpret_cast] [self_add] [shift] [str_unescape] [struct_function_ref] [struct_in_namespace] [template] [template_template_case1] [template_with_different_length] [template_wont_be_extended_twice] [two_template_type_parameters] [typedef] [ufloat_operators] [ufloat_std_out] [while_0_to_1] [while_1_to_100]
 'so change /osi/service/resource/gen/gen.cs or resource files instead of this file
 
 Imports osi.root.connector
 
 Friend Module _b2style_test_data
-    Public ReadOnly [order_of_operators]() As Byte
-    Public ReadOnly [heap_function_ref]() As Byte
-    Public ReadOnly [self_add]() As Byte
-    Public ReadOnly [template_wont_be_extended_twice]() As Byte
-    Public ReadOnly [shift]() As Byte
-    Public ReadOnly [heap_declaration]() As Byte
-    Public ReadOnly [empty_struct]() As Byte
-    Public ReadOnly [two_template_type_parameters]() As Byte
-    Public ReadOnly [for_loop]() As Byte
-    Public ReadOnly [primitive_template]() As Byte
-    Public ReadOnly [struct_function_ref]() As Byte
-    Public ReadOnly [biguint]() As Byte
-    Public ReadOnly [typedef]() As Byte
-    Public ReadOnly [comments]() As Byte
-    Public ReadOnly [bool_and_bool]() As Byte
-    Public ReadOnly [class_in_namespace]() As Byte
-    Public ReadOnly [include2]() As Byte
-    Public ReadOnly [nested_heap_access]() As Byte
-    Public ReadOnly [heap]() As Byte
-    Public ReadOnly [include]() As Byte
-    Public ReadOnly [while_1_to_100]() As Byte
-    Public ReadOnly [legacy_biguint_to_str]() As Byte
-    Public ReadOnly [template_with_different_length]() As Byte
-    Public ReadOnly [nested_class]() As Byte
-    Public ReadOnly [function_ref]() As Byte
-    Public ReadOnly [struct_in_namespace]() As Byte
-    Public ReadOnly [loaded_method]() As Byte
-    Public ReadOnly [nested_template]() As Byte
-    Public ReadOnly [multiline_string]() As Byte
-    Public ReadOnly [case2]() As Byte
-    Public ReadOnly [function_with_global_namespace]() As Byte
-    Public ReadOnly [template_template_case1]() As Byte
-    Public ReadOnly [namespaces]() As Byte
-    Public ReadOnly [pi_integral_0_1]() As Byte
-    Public ReadOnly [ufloat_operators]() As Byte
-    Public ReadOnly [calculate_pi_bbp]() As Byte
-    Public ReadOnly [i__]() As Byte
-    Public ReadOnly [class_on_heap]() As Byte
-    Public ReadOnly [heap_ptr_to_int64]() As Byte
-    Public ReadOnly [negative_int]() As Byte
-    Public ReadOnly [template]() As Byte
     Public ReadOnly [_1_to_100]() As Byte
-    Public ReadOnly [reinterpret_cast]() As Byte
-    Public ReadOnly [class_function_with_namespace]() As Byte
-    Public ReadOnly [another_1_to_100]() As Byte
-    Public ReadOnly [str_unescape]() As Byte
-    Public ReadOnly [case1]() As Byte
-    Public ReadOnly [nested_paragraph]() As Byte
-    Public ReadOnly [i__2]() As Byte
-    Public ReadOnly [while_0_to_1]() As Byte
-    Public ReadOnly [ufloat_std_out]() As Byte
-    Public ReadOnly [class]() As Byte
-    Public ReadOnly [ifndef]() As Byte
-    Public ReadOnly [__i__]() As Byte
     Public ReadOnly [__i]() As Byte
-    Public ReadOnly [errors_duplicate_template_type_parameters]() As Byte
-    Public ReadOnly [errors_missing_ending_quota]() As Byte
-    Public ReadOnly [errors_function_name_ends_with_dot]() As Byte
-    Public ReadOnly [errors_value_clause_struct_type_mismatch2]() As Byte
-    Public ReadOnly [errors_undefined_value_clause]() As Byte
-    Public ReadOnly [errors_function_return_struct_type_mismatch]() As Byte
-    Public ReadOnly [errors_three_pluses]() As Byte
-    Public ReadOnly [errors_dollar_in_number]() As Byte
-    Public ReadOnly [errors_value_clause_struct_type_mismatch]() As Byte
-    Public ReadOnly [errors_include_needs_wraps]() As Byte
+    Public ReadOnly [__i__]() As Byte
+    Public ReadOnly [another_1_to_100]() As Byte
+    Public ReadOnly [biguint]() As Byte
+    Public ReadOnly [bool_and_bool]() As Byte
+    Public ReadOnly [calculate_pi_bbp]() As Byte
+    Public ReadOnly [case1]() As Byte
+    Public ReadOnly [case2]() As Byte
+    Public ReadOnly [class]() As Byte
+    Public ReadOnly [class_function_with_namespace]() As Byte
+    Public ReadOnly [class_in_namespace]() As Byte
+    Public ReadOnly [class_on_heap]() As Byte
+    Public ReadOnly [comments]() As Byte
+    Public ReadOnly [empty_struct]() As Byte
     Public ReadOnly [errors_cycle_typedef]() As Byte
+    Public ReadOnly [errors_dollar_in_number]() As Byte
+    Public ReadOnly [errors_duplicate_template_type_parameters]() As Byte
+    Public ReadOnly [errors_function_name_ends_with_dot]() As Byte
+    Public ReadOnly [errors_function_return_struct_type_mismatch]() As Byte
+    Public ReadOnly [errors_include_needs_wraps]() As Byte
+    Public ReadOnly [errors_missing_ending_quota]() As Byte
+    Public ReadOnly [errors_three_pluses]() As Byte
+    Public ReadOnly [errors_undefined_value_clause]() As Byte
+    Public ReadOnly [errors_value_clause_struct_type_mismatch]() As Byte
+    Public ReadOnly [errors_value_clause_struct_type_mismatch2]() As Byte
+    Public ReadOnly [for_loop]() As Byte
+    Public ReadOnly [function_ref]() As Byte
+    Public ReadOnly [function_with_global_namespace]() As Byte
+    Public ReadOnly [heap]() As Byte
+    Public ReadOnly [heap_declaration]() As Byte
+    Public ReadOnly [heap_function_ref]() As Byte
+    Public ReadOnly [heap_ptr_to_int64]() As Byte
+    Public ReadOnly [i__]() As Byte
+    Public ReadOnly [i__2]() As Byte
+    Public ReadOnly [ifndef]() As Byte
+    Public ReadOnly [include]() As Byte
+    Public ReadOnly [include2]() As Byte
+    Public ReadOnly [legacy_biguint_to_str]() As Byte
+    Public ReadOnly [loaded_method]() As Byte
+    Public ReadOnly [multiline_string]() As Byte
+    Public ReadOnly [namespaces]() As Byte
+    Public ReadOnly [negative_int]() As Byte
+    Public ReadOnly [nested_class]() As Byte
+    Public ReadOnly [nested_heap_access]() As Byte
+    Public ReadOnly [nested_paragraph]() As Byte
+    Public ReadOnly [nested_template]() As Byte
+    Public ReadOnly [order_of_operators]() As Byte
+    Public ReadOnly [pi_integral_0_1]() As Byte
+    Public ReadOnly [primitive_template]() As Byte
+    Public ReadOnly [reinterpret_cast]() As Byte
+    Public ReadOnly [self_add]() As Byte
+    Public ReadOnly [shift]() As Byte
+    Public ReadOnly [str_unescape]() As Byte
+    Public ReadOnly [struct_function_ref]() As Byte
+    Public ReadOnly [struct_in_namespace]() As Byte
+    Public ReadOnly [template]() As Byte
+    Public ReadOnly [template_template_case1]() As Byte
+    Public ReadOnly [template_with_different_length]() As Byte
+    Public ReadOnly [template_wont_be_extended_twice]() As Byte
+    Public ReadOnly [two_template_type_parameters]() As Byte
+    Public ReadOnly [typedef]() As Byte
+    Public ReadOnly [ufloat_operators]() As Byte
+    Public ReadOnly [ufloat_std_out]() As Byte
+    Public ReadOnly [while_0_to_1]() As Byte
+    Public ReadOnly [while_1_to_100]() As Byte
 
     Sub New()
-        [order_of_operators] = Convert.FromBase64String(strcat_hint(CUInt(160), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoMSArIDIgKiAzICsgNCAtIDUgKiA2ICogNyAqIDggKiA5IC8gMTAgKiAoMTEgKyAxMikpOw0KfQ=="))
-        [heap_function_ref] = Convert.FromBase64String(strcat_hint(CUInt(340), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIGYoaW50JiB4KSB7DQogIHgrKzsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBpbnQgc1sxMDBdOw0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSsrKSB7DQogICAgc1tpXSA9IGk7DQoJZihzW2ldKTsNCiAgfQ0KDQogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyBpKyspIHsNCiAgICBiMnN0eWxlOjpzdGRfb3V0KHNbaV0pOw0KCWIyc3R5bGU6OnN0ZF9vdXQoIlxuIik7DQogIH0NCn0="))
-        [self_add] = Convert.FromBase64String(strcat_hint(CUInt(224), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBpID0gMTAwOw0KICBpICs9IDE7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGkgPSBpKys7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGkgPSArK2k7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQp9"))
-        [template_wont_be_extended_twice] = Convert.FromBase64String(strcat_hint(CUInt(312), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEFkZGVyIHsNCiAgVCBhZGQoVCB0LCBUIHQyKSB7DQogICAgcmV0dXJuIHQgKyB0MjsNCiAgfQ0KfTsNCg0Kdm9pZCBtYWluKCkgew0KICBBZGRlcjxpbnQ+IHQ7DQogIEFkZGVyPGludD4gdDI7DQogIGIyc3R5bGU6OnN0ZF9vdXQodC5hZGQoMSwgMSkpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHQyLmFkZCgyLCAyKSk7DQp9DQo="))
-        [shift] = Convert.FromBase64String(strcat_hint(CUInt(232), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBpID0gMTAwOw0KICBpIDw8PSAyOw0KICBiMnN0eWxlOjpzdGRfb3V0KGkpOw0KICBpbnQgaiA9IDA7DQogIGogPSBpID4+IDU7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaik7DQp9"))
-        [heap_declaration] = Convert.FromBase64String(strcat_hint(CUInt(300), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUyB7DQogIHN0cmluZyBzOw0KfTsNCg0Kdm9pZCBmKFMgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KHMucyk7DQp9DQoNClMgbmV3KHN0cmluZyBzKSB7DQogIFMgcjsNCiAgci5zID0gczsNCiAgcmV0dXJuIHI7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IHggPSAwOw0KICBpbnQgdlsrK3hdOw0KICBTIHYyWysreF07DQp9DQo="))
-        [empty_struct] = Convert.FromBase64String(strcat_hint(CUInt(340), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUyB7fTsNCg0Kdm9pZCBmKFMgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmIik7DQp9DQoNCnZvaWQgZjIoUyYgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmMiIpOw0KfQ0KDQpTIGYzKCkgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmMyIpOw0KICBTIHM7DQogIHJldHVybiBzOw0KfQ0KDQp2b2lkIG1haW4oKSB7DQogIFMgcyA9IGYzKCk7DQogIGYocyk7DQogIGYyKHMpOw0KfQ=="))
-        [two_template_type_parameters] = Convert.FromBase64String(strcat_hint(CUInt(104), _
-        "77u/DQp0ZW1wbGF0ZTxULCBUMj4NCmNsYXNzIEMgew0KICBUIHg7DQogIFQyIHk7DQogIHZvaWQgcChUIHgsIFQyIHkpIHt9DQp9Ow=="))
-        [for_loop] = Convert.FromBase64String(strcat_hint(CUInt(648), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIHNlbGZfaW5jcmVtZW50KGludCYgeCkgew0KICB4Kys7DQp9DQoNCnZvaWQgc2VsZl9pbmNyZW1lbnQyKGludCYgeCkgew0KICArK3g7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IHIgPSAwOw0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSsrKSB7DQogICAgciArPSBpOw0KICB9DQogIGIyc3R5bGU6OnN0ZF9vdXQocik7DQogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyArK2kpIHsNCiAgICByICs9IGk7DQogIH0NCiAgYjJzdHlsZTo6c3RkX291dChyKTsNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IHNlbGZfaW5jcmVtZW50KGkpKSB7DQogICAgciArPSBpOw0KICB9DQogIGIyc3R5bGU6OnN0ZF9vdXQocik7DQogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyBzZWxmX2luY3JlbWVudDIoaSkpIHsNCiAgICByICs9IGk7DQogIH0NCiAgYjJzdHlsZTo6c3RkX291dChyKTsNCn0="))
-        [primitive_template] = Convert.FromBase64String(strcat_hint(CUInt(320), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEluY3JlYXNlciB7DQogIFQgaW5jKFQgdCkgew0KICAgIHJldHVybiArK3Q7DQogIH0NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgSW5jcmVhc2VyPGludD4gaTE7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaTEuaW5jKDEwMCkpOw0KICBJbmNyZWFzZXI8dWZsb2F0PiBpMjsNCiAgYjJzdHlsZTo6c3RkX291dChpMi5pbmMoMTAwLjExKSk7DQp9"))
-        [struct_function_ref] = Convert.FromBase64String(strcat_hint(CUInt(272), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUyB7DQogIGludCB4Ow0KICBzdHJpbmcgeTsNCn07DQoNCnZvaWQgZihTJiBzKSB7DQogIHMueD0xMDA7DQogIHMueT0iYWJjIjsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBTIHM7DQogIGYocyk7DQogIGIyc3R5bGU6OnN0ZF9vdXQocy54KTsNCiAgYjJzdHlsZTo6c3RkX291dChzLnkpOw0KfQ0K"))
-        [biguint] = Convert.FromBase64String(strcat_hint(CUInt(256), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGJpZ3VpbnQgaSA9IDQyOTQ5NjcyOTZMOw0KICBiaWd1aW50IGogPSA0Mjk0OTY3Mjk2bDsNCiAgYmlndWludCBrID0gMUw7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaik7DQogIGIyc3R5bGU6OnN0ZF9vdXQoayk7DQp9"))
-        [typedef] = Convert.FromBase64String(strcat_hint(CUInt(228), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgYSB7DQogIHR5cGVkZWYgOjp2b2lkIHZvaWQ7DQogIHZvaWQgZigpIHsNCiAgICA6OmIyc3R5bGU6OnN0ZF9vdXQoImFiYyIpOw0KICB9DQp9ICAvLyBuYW1lc3BhY2UgYQ0KDQp2b2lkIG1haW4oKSB7DQogIGE6OmYoKTsNCn0NCg=="))
-        [comments] = Convert.FromBase64String(strcat_hint(CUInt(440), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZV9vcGVyYXRvcnMuaD4NCiNpbmNsdWRlIDxzdGRpby5oPiAvLyBjb21tZW50IGNhbiBiZSBwbGFjZWQgaGVyZS4NCg0Kdm9pZCBtYWluKCAvKiBMT0wgKi8gKSB7IC8qIENvbW1lbnRzIGNhbiBiZSBhZGRlZCBoZXJlIGFzIHdlbGwuDQoqIFRoaXMgaXMgYSBtdWx0aSBsaW5lIGNvbW1lbnQuDQoqLw0KICBpbnQgaSA9IGdldGNoYXIoKTsNCiAgd2hpbGUgKGkgIT0gRU9GKSB7DQoJcHV0Y2hhcihpKTsgIC8vIGNvbW1lbnQgY2FuIGJlIHBsYWNlZCBoZXJlIGFzIHdlbGwuDQoJaSA9IGdldGNoYXIoKTsNCiAgfQ0KfSAgLy8gYWxzbyBoZXJlLg0K"))
-        [bool_and_bool] = Convert.FromBase64String(strcat_hint(CUInt(448), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQodHJ1ZSAmJiB0cnVlKTsNCiAgYjJzdHlsZTo6c3RkX291dCh0cnVlICYmIGZhbHNlKTsNCiAgYjJzdHlsZTo6c3RkX291dChmYWxzZSAmJiB0cnVlKTsNCiAgYjJzdHlsZTo6c3RkX291dChmYWxzZSAmJiBmYWxzZSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQodHJ1ZSB8fCB0cnVlKTsNCiAgYjJzdHlsZTo6c3RkX291dCh0cnVlIHx8IGZhbHNlKTsNCiAgYjJzdHlsZTo6c3RkX291dChmYWxzZSB8fCB0cnVlKTsNCiAgYjJzdHlsZTo6c3RkX291dChmYWxzZSB8fCBmYWxzZSk7DQp9DQo="))
-        [class_in_namespace] = Convert.FromBase64String(strcat_hint(CUInt(528), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgTiB7DQoNCmNsYXNzIEMgew0KICA6OmludCB4Ow0KDQogIDo6dm9pZCBwcmludCgpIHsNCiAgICA6OmIyc3R5bGU6OnN0ZF9vdXQodGhpcy54KTsNCiAgfQ0KfTsNCg0KQyBjOw0KDQo6OnZvaWQgcHJpbnQoKSB7DQogIGMueCA9IDI7DQogIGMucHJpbnQoKTsNCn0NCg0KfSAgLy8gbmFtZXNwYWNlIE4NCg0KbmFtZXNwYWNlIE0gew0KDQo6Ok46OkMgYzsNCg0KOjp2b2lkIHByaW50KCkgew0KICBjLnggPSAzOw0KICBjLnByaW50KCk7DQp9DQoNCn0gIC8vIG5hbWVzcGFjZSBNDQoNCnZvaWQgbWFpbigpIHsNCiAgTjo6QyBjOw0KICBjLnggPSAxOw0KICBjLnByaW50KCk7DQogIE46OnByaW50KCk7DQogIE06OnByaW50KCk7DQp9"))
-        [include2] = Convert.FromBase64String(strcat_hint(CUInt(324), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQojaW5jbHVkZSAiY3N0ZGlvIg0KDQppbnQgbWFpbigpIHsNCiAgaW50IHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIGlmICh4ID09IEVPRikgew0KICAgIGIyc3R5bGU6OnN0ZF9vdXQoIkVvRiIpOw0KICB9DQp9DQo="))
-        [nested_heap_access] = Convert.FromBase64String(strcat_hint(CUInt(540), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBhWzEwXTsNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDsgaSsrKSB7DQogICAgYVtpXSA9IGkgKyAxOw0KICB9DQoNCiAgYjJzdHlsZTo6c3RkX291dChhW2FbMF1dKTsNCiAgYjJzdHlsZTo6c3RkX291dChhW2FbYVswXV1dKTsNCiAgYjJzdHlsZTo6c3RkX291dChhW2FbYVthWzBdXV1dKTsNCiAgLy8gdmFsdWUgc3ludGF4ZXIgbWF0Y2hpbmcgaXMgcXVpdGUgY29zdGx5Lg0KICAvKg0KICBiMnN0eWxlOjpzdGRfb3V0KGFbYVthW2FbYVswXV1dXV0pOw0KICBiMnN0eWxlOjpzdGRfb3V0KGFbYVthW2FbYVthWzBdXV1dXV0pOw0KICBiMnN0eWxlOjpzdGRfb3V0KGFbYVthW2FbYVthW2FbMF1dXV1dXV0pOw0KICAqLw0KfQ=="))
-        [heap] = Convert.FromBase64String(strcat_hint(CUInt(556), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUyB7DQogIHN0cmluZyBzOw0KfTsNCg0Kdm9pZCBmKFMgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KHMucyk7DQp9DQoNClMgbmV3KHN0cmluZyBzKSB7DQogIFMgcjsNCiAgci5zID0gczsNCiAgcmV0dXJuIHI7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IHggPSAxOw0KICBpbnQgdlt4KytdOw0KICBTIHYyWzEgKyArK3grK107DQogIHZbMF0gPSAxMDA7DQogIHYyWzBdID0gbmV3KCJhYmMiKTsNCiAgdjJbMV0gPSBuZXcoImRlZiIpOw0KICBmKHYyWzBdKTsNCiAgZih2MlsxXSk7DQogIHYyWzJdLnMgPSAiZ2hpIjsNCiAgZih2MlsyXSk7DQogIC8vIFRPRE86IE1ha2UgdjJbMl0uICBzID0gImdoaSIgd29yay4NCiAgYjJzdHlsZTo6c3RkX291dCh2WzBdKTsNCn0="))
-        [include] = Convert.FromBase64String(strcat_hint(CUInt(320), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQojaW5jbHVkZSA8Y3N0ZGlvPg0KDQppbnQgbWFpbigpIHsNCiAgaW50IHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIGlmICh4ID09IEVPRikgew0KICAgIGIyc3R5bGU6OnN0ZF9vdXQoIkVPRiIpOw0KICB9DQp9"))
-        [while_1_to_100] = Convert.FromBase64String(strcat_hint(CUInt(232), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCB4ID0gMDsNCiAgaW50IGkgPSAwOw0KICB3aGlsZSAoaSA8IDEwMCkgew0KICAgIGkgKz0gMTsNCgl4ICs9IGk7DQogIH0NCiAgYjJzdHlsZTo6c3RkX291dCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dCgiXG4iKTsNCn0="))
-        [legacy_biguint_to_str] = Convert.FromBase64String(strcat_hint(CUInt(488), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGJpZ3VpbnQgaSA9IDQyOTQ5NjcyOTZMOw0KICBiaWd1aW50IGogPSA0Mjk0OTY3Mjk2bDsNCiAgYmlndWludCBrID0gMUw7DQogIGJpZ3VpbnQgbCA9IDBMOw0KICBiMnN0eWxlOjpzdGRfb3V0KGIyc3R5bGU6OmxlZ2FjeV9iaWd1aW50X3RvX3N0cihpKSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoYjJzdHlsZTo6bGVnYWN5X2JpZ3VpbnRfdG9fc3RyKGopKTsNCiAgYjJzdHlsZTo6c3RkX291dChiMnN0eWxlOjpsZWdhY3lfYmlndWludF90b19zdHIoaykpOw0KICBiMnN0eWxlOjpzdGRfb3V0KGIyc3R5bGU6OmxlZ2FjeV9iaWd1aW50X3RvX3N0cihsKSk7DQp9DQo="))
-        [template_with_different_length] = Convert.FromBase64String(strcat_hint(CUInt(400), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEMgew0KICBUIHQ7DQp9Ow0KDQp0ZW1wbGF0ZSA8VCwgVDI+DQpjbGFzcyBDIHsNCiAgVCB0Ow0KICBUMiB0MjsNCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQzxpbnQ+IGM7DQogIEM8aW50LCBzdHJpbmc+IGMyOw0KICBjLnQgPSAxOw0KICBjMi50ID0gMjsNCiAgYzIudDIgPSAiYWJjIjsNCg0KICBiMnN0eWxlOjpzdGRfb3V0KGMudCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoYzIudCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoYzIudDIpOw0KfQ=="))
-        [nested_class] = Convert.FromBase64String(strcat_hint(CUInt(388), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDMSB7DQogIGludCB4Ow0KDQogIHZvaWQgcHJpbnQoKSB7DQogICAgYjJzdHlsZTo6c3RkX291dCh0aGlzLngpOw0KICB9DQp9Ow0KDQpjbGFzcyBDMiB7DQogIGludCB4Ow0KICBDMSB5Ow0KDQogIHZvaWQgcHJpbnQoKSB7DQogICAgYjJzdHlsZTo6c3RkX291dCh0aGlzLngpOw0KCXRoaXMueS5wcmludCgpOw0KICB9DQp9Ow0KDQp2b2lkIG1haW4oKSB7DQogIEMyIGM7DQogIGMueD0xMDA7DQogIGMueS54PTIwMDsNCiAgYy5wcmludCgpOw0KfQ=="))
-        [function_ref] = Convert.FromBase64String(strcat_hint(CUInt(968), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIHNlbGZfaW5jcmVtZW50KGludCYgeCkgew0KICB4ID0geCArIDE7DQp9DQoNCmludCBzZWxmX2luY3JlbWVudDIoaW50JiB4KSB7DQogIHggPSB4ICsgMTsNCiAgcmV0dXJuIHg7DQp9DQoNCmludCBzZWxmX2luY3JlbWVudDMoaW50JiB4KSB7DQogIHJldHVybiBzZWxmX2luY3JlbWVudDIoeCk7DQp9DQoNCnZvaWQgc2VsZl9pbmNyZW1lbnQ0KGludCYgeCkgew0KICBzZWxmX2luY3JlbWVudDMoeCk7DQp9DQoNCmludCBzZWxmX2luY3JlbWVudDUoaW50JiB4KSB7DQogIGludCByID0geDsNCiAgeCA9IHggKyAxOw0KICByZXR1cm4gcjsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBpbnQgeCA9IDA7DQogIHNlbGZfaW5jcmVtZW50KHgpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHgpOw0KICBzZWxmX2luY3JlbWVudCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dChzZWxmX2luY3JlbWVudDIoeCkpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHNlbGZfaW5jcmVtZW50Mih4KSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoc2VsZl9pbmNyZW1lbnQzKHgpKTsNCiAgc2VsZl9pbmNyZW1lbnQ0KHgpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHgpOw0KICBzZWxmX2luY3JlbWVudDUoeCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoeCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoc2VsZl9pbmNyZW1lbnQ1KHgpKTsNCn0="))
-        [struct_in_namespace] = Convert.FromBase64String(strcat_hint(CUInt(312), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgTiB7DQogIHR5cGVkZWYgOjpzdHJpbmcgc3RyaW5nOw0KICBzdHJ1Y3QgUyB7DQogICAgc3RyaW5nIHg7DQogIH07DQoNCiAgc3RydWN0IFQgew0KICAgIFMgczsNCiAgfTsNCn0gIC8vIG5hbWVzcGFjZSBODQoNCnZvaWQgbWFpbigpIHsNCiAgTjo6VCB0Ow0KICB0LnMueCA9ICIxMDAiOw0KICBiMnN0eWxlOjpzdGRfb3V0KHQucy54KTsNCn0="))
-        [loaded_method] = Convert.FromBase64String(strcat_hint(CUInt(660), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpsb25nIGxvYWRlZF9jdXJyZW50X21zKCkgew0KICBic3R5bGU6OmxvYWRfbWV0aG9kKCJjdXJyZW50X21zIik7DQogIGxvbmcgcmVzdWx0Ow0KICBsb2dpYyAiaW50ZXJydXB0IGV4ZWN1dGVfbG9hZGVkX21ldGhvZCBAQHByZWZpeGVzQHRlbXBzQHN0cmluZyByZXN1bHQiOw0KICByZXR1cm4gcmVzdWx0Ow0KfQ0KDQpib29sIGlzX2V2ZW4obG9uZyBpKSB7DQogIGxvbmcgXzIgPSAyOw0KICBsb25nIF8wID0gMDsNCiAgcmV0dXJuIGIyc3R5bGU6OmVxdWFsKGIyc3R5bGU6Om1vZChpLCBfMiksIF8wKTsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSArPSAxKSB7DQogICAgbG9uZyB4ID0gbG9hZGVkX2N1cnJlbnRfbXMoKTsNCiAgICBpZiAoaXNfZXZlbih4KSkgew0KCSAgeCA9IC0teDsNCgl9DQogICAgYjJzdHlsZTo6c3RkX291dChpc19ldmVuKHgpKTsNCiAgfQ0KfSANCg=="))
-        [nested_template] = Convert.FromBase64String(strcat_hint(CUInt(436), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDIHsNCiAgdm9pZCBwcmludCgpIHsNCiAgICBiMnN0eWxlOjpzdGRfb3V0KCJDIik7DQogIH0NCn07DQoNCnRlbXBsYXRlIDxUPg0KY2xhc3MgRCB7DQogIHZvaWQgcHJpbnQoVCB0KSB7DQogICAgdC5wcmludCgpOw0KICB9DQp9Ow0KDQp0ZW1wbGF0ZSA8VCwgVDI+DQpjbGFzcyBFIHsNCiAgdm9pZCBwcmludChUIHQsIFQyIHQyKSB7DQogICAgdC5wcmludCh0Mik7DQogIH0NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQyBjOw0KICBEPEM+IGQ7DQogIEU8RDxDPiwgQz4gZTsNCiAgZS5wcmludChkLCBjKTsNCn0="))
-        [multiline_string] = Convert.FromBase64String(strcat_hint(CUInt(124), _
-        "DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoImENCiAgICBiDQogICAgYw0KICAgIGQiKTsNCn0NCg=="))
-        [case2] = Convert.FromBase64String(strcat_hint(CUInt(428), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpib29sIGlzX2V2ZW4obG9uZyBpKSB7DQogIGxvbmcgXzIgPSAyOw0KICBsb25nIF8wID0gMDsNCiAgcmV0dXJuIGIyc3R5bGU6OmVxdWFsKGIyc3R5bGU6Om1vZChpLCBfMiksIF8wKTsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSArPSAxKSB7DQogICAgbG9uZyB4ID0gYnN0eWxlOjpjdXJyZW50X21zKCk7DQogICAgaWYgKGlzX2V2ZW4oeCkpIHsNCiAgICAgIHggPSAtLXg7DQogICAgfQ0KICAgIGIyc3R5bGU6OnN0ZF9vdXQoaXNfZXZlbih4KSk7DQogIH0NCn0NCg=="))
-        [function_with_global_namespace] = Convert.FromBase64String(strcat_hint(CUInt(268), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgTiB7DQoNCjo6dm9pZCBmKCkgew0KICA6OmIyc3R5bGU6OnN0ZF9vdXQoImYiKTsNCn0NCg0KOjp2b2lkIDo6ZigpIHsNCiAgOjpiMnN0eWxlOjpzdGRfb3V0KCI6OmYiKTsNCn0NCg0KfSAgLy8gbmFtZXNwYWNlIE4NCg0Kdm9pZCBtYWluKCkgew0KICBOOjpmKCk7DQogIGYoKTsNCn0="))
-        [template_template_case1] = Convert.FromBase64String(strcat_hint(CUInt(80), _
-        "77u/DQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEMgew0KICBUIHg7DQogIHZvaWQgZihUIHkpIHt9DQp9Ow=="))
-        [namespaces] = Convert.FromBase64String(strcat_hint(CUInt(720), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgYSB7DQogIG5hbWVzcGFjZSBiIHsNCiAgICA6OnZvaWQgZjIoKSB7DQogICAgICA6OmIyc3R5bGU6OnN0ZF9vdXQoImE6OmI6OmYyXG4iKTsNCiAgICB9DQogIH0NCg0KICA6OnZvaWQgZjMoKSB7DQogICAgOjpiMnN0eWxlOjpzdGRfb3V0KCJhOjpmM1xuIik7DQogIH0NCg0KICBuYW1lc3BhY2UgYiB7DQogICAgOjp2b2lkIGYxKCkgew0KICAgICAgOjpiMnN0eWxlOjpzdGRfb3V0KCJhOjpiOjpmMVxuIik7DQogICAgfQ0KICB9DQoNCiAgOjp2b2lkIGYyKCkgew0KICAgIDo6YjJzdHlsZTo6c3RkX291dCgiYTo6ZjJcbiIpOw0KICB9DQoNCiAgbmFtZXNwYWNlIGMgew0KICAgIDo6dm9pZCBmNCgpIHsNCiAgICAgIDo6YjJzdHlsZTo6c3RkX291dCgiYTo6Yzo6ZjRcbiIpOw0KICAgIH0NCiAgfQ0KfQ0KDQo6OnZvaWQgbWFpbigpIHsNCiAgYTo6Yjo6ZjEoKTsNCiAgYTo6ZjIoKTsNCg0KICA6OmE6OmI6OmYyKCk7DQogIDo6YTo6ZjMoKTsNCiAgOjphOjpjOjpmNCgpOw0KfQ0KDQo="))
-        [pi_integral_0_1] = Convert.FromBase64String(strcat_hint(CUInt(320), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHVmbG9hdCBkeCA9IDAuMTsNCiAgdWZsb2F0IHggPSAwLjA7DQogIHVmbG9hdCBzID0gMC4wOw0KICB3aGlsZSAoeCA8IDEuMCkgew0KICAgIHVmbG9hdCBjID0gMS4wIC0gKHggXiAyLjApOw0KCWMgXj0gMC41Ow0KCWMgKj0gZHg7DQoJcyArPSBjOw0KCXggKz0gZHg7DQogIH0NCg0KICBiMnN0eWxlOjpzdGRfb3V0KHMgKiA0LjApOw0KfQ=="))
-        [ufloat_operators] = Convert.FromBase64String(strcat_hint(CUInt(256), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHVmbG9hdCBpID0gMi4yOw0KICBpICs9IDMuMDsNCiAgaSAtPSAzLjA7DQogIGkgLz0gMi4wOw0KICBiMnN0eWxlOjpzdGRfb3V0KGkpOw0KICBpID0gYjJzdHlsZTo6dWZsb2F0OjpmcmFjdGlvbigxLCAyKTsNCiAgYjJzdHlsZTo6c3RkX291dChpKTsNCn0="))
-        [calculate_pi_bbp] = Convert.FromBase64String(strcat_hint(CUInt(560), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHVmbG9hdCBzID0gMC4wOw0KICBmb3IgKGludCBpID0gMDsgaSA8IDU1OyBpICs9IDEpIHsNCiAgICB1ZmxvYXQgYyA9IGIyc3R5bGU6OnVmbG9hdDo6ZnJhY3Rpb24oNCwgMSArICg4ICogaSkpOw0KCWMgLT0gYjJzdHlsZTo6dWZsb2F0OjpmcmFjdGlvbigyLCA0ICsgKDggKiBpKSk7DQoJYyAtPSBiMnN0eWxlOjp1ZmxvYXQ6OmZyYWN0aW9uKDEsIDUgKyAoOCAqIGkpKTsNCgljIC09IGIyc3R5bGU6OnVmbG9hdDo6ZnJhY3Rpb24oMSwgNiArICg4ICogaSkpOw0KCWJpZ3VpbnQgYiA9IDE7DQoJYyAqPSBiMnN0eWxlOjp1ZmxvYXQ6OmZyYWN0aW9uKDEsIGIgPDwgKDQgKiBpKSk7DQoJcyArPSBjOw0KICB9DQogIGIyc3R5bGU6OnN0ZF9vdXQocyk7DQp9DQo="))
-        [i__] = Convert.FromBase64String(strcat_hint(CUInt(484), _
-        "77u/DQp0eXBlZGVmIEludGVnZXIgaW50Ow0KdHlwZWRlZiB0eXBlMCB2b2lkOw0KdHlwZWRlZiBTdHJpbmcgc3RyaW5nOw0KDQpuYW1lc3BhY2UgYjJzdHlsZSB7DQoNCnR5cGVkZWYgOjppbnQgaW50Ow0KDQppbnQgc2VsZl9pbmNfcG9zdChpbnQmIHgpIHsNCiAgaW50IHIgPSB4Ow0KICBpbnQgeSA9IDE7DQogIGxvZ2ljICJhZGQgYjJzdHlsZV9feCBiMnN0eWxlX194IGIyc3R5bGVfX3kiOw0KICByZXR1cm4gcjsNCn0NCg0KfSAgLy8gbmFtZXNwYWNlIGIyc3R5bGUNCg0Kdm9pZCBtYWluKCkgew0KICBpbnQgaSA9IDA7DQogIGkrKzsNCiAgc3RyaW5nIHRtcDsNCiAgbG9naWMgImludGVycnVwdCBwdXRjaGFyIGkgdG1wIjsNCn0NCg=="))
-        [class_on_heap] = Convert.FromBase64String(strcat_hint(CUInt(732), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDIHsNCiAgaW50IHg7DQogIHN0cmluZyB5Ow0KDQogIHZvaWQgcHJpbnQoKSB7DQogICAgYjJzdHlsZTo6c3RkX291dCh0aGlzLngpOw0KCWIyc3R5bGU6OnN0ZF9vdXQoIiAiKTsNCgliMnN0eWxlOjpzdGRfb3V0KHRoaXMueSk7DQogIH0NCn07DQoNCmNsYXNzIEMyIHsNCiAgQyB4Ow0KICBpbnQgeTsNCg0KICB2b2lkIHByaW50KCkgew0KICAgIHRoaXMueC5wcmludCgpOw0KCWIyc3R5bGU6OnN0ZF9vdXQoIiAiKTsNCgliMnN0eWxlOjpzdGRfb3V0KHRoaXMueSk7DQoJYjJzdHlsZTo6c3RkX291dCgiXG4iKTsNCiAgfQ0KfTsNCg0Kdm9pZCBtYWluKCkgew0KICBDMiBjc1sxMDBdOw0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSsrKSB7DQogICAgY3NbaV0ueC54ID0gaTsNCiAgICBjc1tpXS54LnkgPSBiMnN0eWxlOjppbnRfdG9fc3RyKGkpOw0KCWNzW2ldLnkgPSBpOw0KICB9DQoNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IGkrKykgew0KICAgIGNzW2ldLnByaW50KCk7DQogIH0NCn0="))
-        [heap_ptr_to_int64] = Convert.FromBase64String(strcat_hint(CUInt(552), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpiaWd1aW50IGZyb21fcHRyKHR5cGVfcHRyIHgpIHsNCiAgcmV0dXJuIHg7DQp9DQoNCnZvaWQgYjJzdHlsZTo6c3RkX291dCh0eXBlX3B0ciB4KSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoZnJvbV9wdHIoeCkpOw0KfQ0KDQp2b2lkIG1haW4oKSB7DQogIGludCB4WzEwMF07DQogIHhbMF0gPSAxMDA7DQogIGJpZ3VpbnQgeSA9IHg7DQogIGludCBsWzEwMF07DQogIGxbMF0gPSAxMDE7DQogIGludCBvWzEwMF07DQogIG9bMF0gPSAxMDI7DQogIGIyc3R5bGU6OnN0ZF9vdXQoeSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIiAiKTsNCiAgYjJzdHlsZTo6c3RkX291dChmcm9tX3B0cihsKSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIiAiKTsNCiAgYjJzdHlsZTo6c3RkX291dChvKTsNCn0="))
-        [negative_int] = Convert.FromBase64String(strcat_hint(CUInt(160), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoLTEpOw0KICBiMnN0eWxlOjpzdGRfb3V0KC0yKTsNCiAgYjJzdHlsZTo6c3RkX291dCgtMyk7DQp9"))
-        [template] = Convert.FromBase64String(strcat_hint(CUInt(600), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBEIHsNCiAgc3RyaW5nIHRvX3N0cmluZygpIHsNCiAgICByZXR1cm4gIkQiOw0KICB9DQp9Ow0KDQpjbGFzcyBFIHsNCiAgc3RyaW5nIHRvX3N0cmluZygpIHsNCiAgICByZXR1cm4gIkUiOw0KICB9DQp9Ow0KDQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEMgew0KICBzdHJpbmcgdG9fc3RyaW5nKFQgdCkgew0KICAgIHJldHVybiB0LnRvX3N0cmluZygpOw0KICB9DQp9Ow0KDQovLyBUT0RPOiBBbGxvdyBjbGFzcyBEIGFuZCBjbGFzcyBFIHRvIGJlIGRlZmluZWQgYWZ0ZXIgdGVtcGxhdGU8VD4gQy4NCg0Kdm9pZCBtYWluKCkgew0KICBDPEQ+IGM7DQogIEQgZDsNCiAgYjJzdHlsZTo6c3RkX291dChjLnRvX3N0cmluZyhkKSk7DQogIEM8RT4gYzI7DQogIEUgZTsNCiAgYjJzdHlsZTo6c3RkX291dChjMi50b19zdHJpbmcoZSkpOw0KfQ0K"))
         [_1_to_100] = Convert.FromBase64String(strcat_hint(CUInt(232), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCB4ID0gMDsNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IGkgKz0gMSkgew0KICAgIHggPSB4ICsgaSArIDE7DQogIH0NCiAgYjJzdHlsZTo6c3RkX291dCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dCgiXG4iKTsNCn0="))
-        [reinterpret_cast] = Convert.FromBase64String(strcat_hint(CUInt(764), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBTIHsNCiAgaW50IHg7DQogIHZvaWQgcHJpbnQoKSB7DQogICAgYjJzdHlsZTo6c3RkX291dCh0aGlzLngpOw0KICB9DQp9Ow0KDQpzdHJ1Y3QgUzIgew0KICBpbnQgeDsNCn07DQoNCi8vIFRoaXMgZnVuY3Rpb24gc2hvdWxkIG5vdCBiZSB1c2VkLg0Kdm9pZCBmKFMmIHMpIHsNCiAgcy54ID0gMDsNCn0NCg0Kdm9pZCBmKFMyJiBzKSB7DQogIHMueCA9IDEwMDsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBTIHM7DQogIHMueCA9IC0xMDA7DQogIHMucHJpbnQoKTsNCiAgbG9naWMgImRlZmluZSBzLlMyX19zdHJ1Y3RfX3R5cGVfX2lkIFMyX19zdHJ1Y3RfX3R5cGVfX2lkX190eXBlIjsNCiAgLy8gTm90ZTogdGhpcyBpcyBub3QgYSB0eXBpY2FsIHdheSBvZiB1c2luZyByZWludGVycHJldF9jYXN0LCBpdCdzIHByZXR0eSBtdWNoIHVzZWxlc3Mgd2l0aG91dCB0aGUgc3VwcG9ydCBvZiBpbmhlcml0YW5jZS4NCiAgcmVpbnRlcnByZXRfY2FzdChzLCBTMik7DQogIGYocyk7DQogIHJlaW50ZXJwcmV0X2Nhc3QocywgUyk7DQogIHMucHJpbnQoKTsNCn0="))
-        [class_function_with_namespace] = Convert.FromBase64String(strcat_hint(CUInt(292), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDIHsNCiAgaW50IE46Ong7DQoNCiAgdm9pZCBOOjpwcmludCgpIHsNCiAgICBiMnN0eWxlOjpzdGRfb3V0KHRoaXMuTjo6eCk7DQogIH0NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQyBjOw0KICBjLk46OnggPSAxMDA7DQogIGMuTjo6cHJpbnQoKTsNCiAgYy46Ok46OnggPSAyMDA7DQogIGMuOjpOOjpwcmludCgpOw0KfQ=="))
-        [another_1_to_100] = Convert.FromBase64String(strcat_hint(CUInt(224), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCB4ID0gMDsNCiAgZm9yIChpbnQgaSA9IDE7IGkgPD0gMTAwOyBpICs9IDEpIHsNCiAgICB4ICs9IGk7DQogIH0NCiAgYjJzdHlsZTo6c3RkX291dCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dCgiXG4iKTsNCn0="))
-        [str_unescape] = Convert.FromBase64String(strcat_hint(CUInt(108), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoImFiY1x0ZGVmXG4iKTsNCn0="))
-        [case1] = Convert.FromBase64String(strcat_hint(CUInt(108), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIkhlbGxvIFdvcmxkIik7DQp9"))
-        [nested_paragraph] = Convert.FromBase64String(strcat_hint(CUInt(348), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHsNCiAgICBzdHJpbmcgeCA9ICJoZWxsbyBhZ2FpbiBhZ2FpbiB3b3JsZCI7DQogICAgew0KCSAgc3RyaW5nIHggPSAiaGVsbG8gd29ybGRcbiI7DQoJICBiMnN0eWxlOjpzdGRfb3V0KHgpOw0KCX0NCgl7DQoJICBzdHJpbmcgeCA9ICJoZWxsbyBhZ2FpbiB3b3JsZFxuIjsNCgkgIGIyc3R5bGU6OnN0ZF9vdXQoeCk7DQoJfQ0KCWIyc3R5bGU6OnN0ZF9vdXQoeCk7DQogIH0NCn0="))
-        [i__2] = Convert.FromBase64String(strcat_hint(CUInt(248), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBpID0gMDsNCiAgaSsrOw0KICBic3R5bGU6OnB1dGNoYXIoaSk7DQogIGkrKzsNCiAgYnN0eWxlOjpwdXRjaGFyKGkpOw0KICBpKys7DQogIGJzdHlsZTo6cHV0Y2hhcihpKTsNCiAgaSsrOw0KICBic3R5bGU6OnB1dGNoYXIoaSk7DQp9DQo="))
-        [while_0_to_1] = Convert.FromBase64String(strcat_hint(CUInt(252), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHVmbG9hdCB4ID0gMC4wOw0KICB1ZmxvYXQgaSA9IDAuMDsNCiAgd2hpbGUgKGkgPCAxLjApIHsNCiAgICBpICs9IDAuMDE7DQoJeCArPSBpOw0KICB9DQogIGIyc3R5bGU6OnN0ZF9vdXQoeCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIlxuIik7DQp9DQo="))
-        [ufloat_std_out] = Convert.FromBase64String(strcat_hint(CUInt(120), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHVmbG9hdCBmID0gMS4xOw0KICBiMnN0eWxlOjpzdGRfb3V0KGYpOw0KfQ=="))
-        [class] = Convert.FromBase64String(strcat_hint(CUInt(424), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDIHsNCiAgaW50IHg7DQoNCiAgdm9pZCBhZGRfeChpbnQgeSkgew0KICAgIHRoaXMueCArPSB5Ow0KICB9DQoNCiAgaW50IHdpdGhfeChpbnQgeSkgew0KICAgIHJldHVybiB0aGlzLnggKyB5Ow0KICB9DQoNCiAgaW50IHJldHVybl94KCkgew0KICAgIHJldHVybiB0aGlzLng7DQogIH0NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQyBjOw0KICBjLmFkZF94KDEwMCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoYy53aXRoX3goMTAwKSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoYy5yZXR1cm5feCgpKTsNCn0="))
-        [ifndef] = Convert.FromBase64String(strcat_hint(CUInt(212), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQojaW5jbHVkZSA8c3RkaW8uaD4NCiNpbmNsdWRlICJzdGRpby5oIg0KI2luY2x1ZGUgPGNzdGRpbz4NCiNpbmNsdWRlICJjc3RkaW8iDQoNCnZvaWQgbWFpbiAoKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoImdvb2QiKTsNCn0NCg=="))
-        [__i__] = Convert.FromBase64String(strcat_hint(CUInt(856), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBpID0gMTsNCiAgaSArPSBpKys7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIl8iKTsNCiAgaSArPSArK2k7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIl8iKTsNCiAgKytpOw0KICBpICs9IGkrKzsNCiAgYjJzdHlsZTo6c3RkX291dChpKTsNCiAgYjJzdHlsZTo6c3RkX291dCgiXyIpOw0KICArK2k7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIl8iKTsNCiAgaSsrOw0KICBiMnN0eWxlOjpzdGRfb3V0KGkpOw0KICBiMnN0eWxlOjpzdGRfb3V0KCJfIik7DQoNCiAgLy8gVGhpcyBpcyBub3Qgc3VwcG9ydGVkIGJ5IGMrKyBzaW5jZSB0aGUgKCsraSkgaXMgYSBydmFsdWUgYW5kICgrK2kpKysgZG9lcyBub3QgdGFrZSBlZmZlY3QgdG8gdGhlIG9yaWdpbmFsIGkuDQogIC8vIEJ1dCBiMnN0eWxlIGRvZXMgbm90IGRldGVjdCBydmFsdWUgcmVmZXJlbmNlIG5vdywgc28gdGhlIGV4cGVjdGVkIHJlc3VsdCBpcyB0byBpbmNyZWFzZSBpIGJ5IDEgcmF0aGVyIHRoYW4gMi4NCiAgKytpKys7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQp9DQo="))
         [__i] = Convert.FromBase64String(strcat_hint(CUInt(248), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBpID0gMDsNCiAgKytpOw0KICBic3R5bGU6OnB1dGNoYXIoaSk7DQogICsraTsNCiAgYnN0eWxlOjpwdXRjaGFyKGkpOw0KICArK2k7DQogIGJzdHlsZTo6cHV0Y2hhcihpKTsNCiAgKytpOw0KICBic3R5bGU6OnB1dGNoYXIoaSk7DQp9DQo="))
-        [errors_duplicate_template_type_parameters] = Convert.FromBase64String(strcat_hint(CUInt(44), _
-        "77u/DQp0ZW1wbGF0ZTxULCBUPg0KY2xhc3MgQ3t9Ow=="))
-        [errors_missing_ending_quota] = Convert.FromBase64String(strcat_hint(CUInt(100), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoImFiYyk7DQp9DQo="))
-        [errors_function_name_ends_with_dot] = Convert.FromBase64String(strcat_hint(CUInt(116), _
-        "77u/DQpjbGFzcyBDew0KICBpbnQgeDsNCg0KICB2b2lkIHByaW50KCkge30NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQyBjOw0KICBjLigpOw0KfQ=="))
-        [errors_value_clause_struct_type_mismatch2] = Convert.FromBase64String(strcat_hint(CUInt(304), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUzEgew0KICBpbnQgeDsNCiAgc3RyaW5nIHk7DQp9Ow0KDQpzdHJ1Y3QgUzIgew0KICBpbnQgdjsNCiAgc3RyaW5nIHc7DQp9Ow0KDQpTMSBmKCkgew0KICBTMSBzOw0KICBzLnggPSAxMDA7DQogIHMueSA9ICJhYmMiOw0KICByZXR1cm4gczsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBTMSBzMSA9IGYoKTsNCiAgUzIgczIgPSBzMTsNCn0="))
-        [errors_undefined_value_clause] = Convert.FromBase64String(strcat_hint(CUInt(88), _
-        "77u/DQp2b2lkIG1haW4oKSB7DQogIHRoaXNfaXNfYW5fdW5kZWZpbmVkX3ZhbHVlX2NsYXVzZSA9IDEwMDsNCn0="))
-        [errors_function_return_struct_type_mismatch] = Convert.FromBase64String(strcat_hint(CUInt(284), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUzEgew0KICBpbnQgeDsNCiAgc3RyaW5nIHk7DQp9Ow0KDQpzdHJ1Y3QgUzIgew0KICBpbnQgdjsNCiAgc3RyaW5nIHc7DQp9Ow0KDQpTMiBmKCkgew0KICBTMSBzOw0KICBzLnggPSAxMDA7DQogIHMueSA9ICJhYmMiOw0KICByZXR1cm4gczsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBTMiBzID0gZigpOw0KfQ0K"))
-        [errors_three_pluses] = Convert.FromBase64String(strcat_hint(CUInt(100), _
-        "77u/DQojaW5jbHVkZSAgIDxiMnN0eWxlLmg+DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IGkgPSAwOw0KICBpICsrKzsNCn0NCg=="))
-        [errors_dollar_in_number] = Convert.FromBase64String(strcat_hint(CUInt(52), _
-        "77u/DQp2b2lkIG1haW4oKSB7DQogIGZsb2F0IHggPSAxJDE7DQp9"))
-        [errors_value_clause_struct_type_mismatch] = Convert.FromBase64String(strcat_hint(CUInt(284), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUzEgew0KICBpbnQgeDsNCiAgc3RyaW5nIHk7DQp9Ow0KDQpzdHJ1Y3QgUzIgew0KICBpbnQgdjsNCiAgc3RyaW5nIHc7DQp9Ow0KDQpTMSBmKCkgew0KICBTMSBzOw0KICBzLnggPSAxMDA7DQogIHMueSA9ICJhYmMiOw0KICByZXR1cm4gczsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBTMiBzID0gZigpOw0KfQ=="))
-        [errors_include_needs_wraps] = Convert.FromBase64String(strcat_hint(CUInt(52), _
-        "77u/DQojaW5jbHVkZSBhYmMuaA0KDQp2b2lkIG1haW4oKSB7fQ=="))
+        [__i__] = Convert.FromBase64String(strcat_hint(CUInt(856), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBpID0gMTsNCiAgaSArPSBpKys7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIl8iKTsNCiAgaSArPSArK2k7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIl8iKTsNCiAgKytpOw0KICBpICs9IGkrKzsNCiAgYjJzdHlsZTo6c3RkX291dChpKTsNCiAgYjJzdHlsZTo6c3RkX291dCgiXyIpOw0KICArK2k7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIl8iKTsNCiAgaSsrOw0KICBiMnN0eWxlOjpzdGRfb3V0KGkpOw0KICBiMnN0eWxlOjpzdGRfb3V0KCJfIik7DQoNCiAgLy8gVGhpcyBpcyBub3Qgc3VwcG9ydGVkIGJ5IGMrKyBzaW5jZSB0aGUgKCsraSkgaXMgYSBydmFsdWUgYW5kICgrK2kpKysgZG9lcyBub3QgdGFrZSBlZmZlY3QgdG8gdGhlIG9yaWdpbmFsIGkuDQogIC8vIEJ1dCBiMnN0eWxlIGRvZXMgbm90IGRldGVjdCBydmFsdWUgcmVmZXJlbmNlIG5vdywgc28gdGhlIGV4cGVjdGVkIHJlc3VsdCBpcyB0byBpbmNyZWFzZSBpIGJ5IDEgcmF0aGVyIHRoYW4gMi4NCiAgKytpKys7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQp9DQo="))
+        [another_1_to_100] = Convert.FromBase64String(strcat_hint(CUInt(224), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCB4ID0gMDsNCiAgZm9yIChpbnQgaSA9IDE7IGkgPD0gMTAwOyBpICs9IDEpIHsNCiAgICB4ICs9IGk7DQogIH0NCiAgYjJzdHlsZTo6c3RkX291dCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dCgiXG4iKTsNCn0="))
+        [biguint] = Convert.FromBase64String(strcat_hint(CUInt(256), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGJpZ3VpbnQgaSA9IDQyOTQ5NjcyOTZMOw0KICBiaWd1aW50IGogPSA0Mjk0OTY3Mjk2bDsNCiAgYmlndWludCBrID0gMUw7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaik7DQogIGIyc3R5bGU6OnN0ZF9vdXQoayk7DQp9"))
+        [bool_and_bool] = Convert.FromBase64String(strcat_hint(CUInt(448), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQodHJ1ZSAmJiB0cnVlKTsNCiAgYjJzdHlsZTo6c3RkX291dCh0cnVlICYmIGZhbHNlKTsNCiAgYjJzdHlsZTo6c3RkX291dChmYWxzZSAmJiB0cnVlKTsNCiAgYjJzdHlsZTo6c3RkX291dChmYWxzZSAmJiBmYWxzZSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQodHJ1ZSB8fCB0cnVlKTsNCiAgYjJzdHlsZTo6c3RkX291dCh0cnVlIHx8IGZhbHNlKTsNCiAgYjJzdHlsZTo6c3RkX291dChmYWxzZSB8fCB0cnVlKTsNCiAgYjJzdHlsZTo6c3RkX291dChmYWxzZSB8fCBmYWxzZSk7DQp9DQo="))
+        [calculate_pi_bbp] = Convert.FromBase64String(strcat_hint(CUInt(560), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHVmbG9hdCBzID0gMC4wOw0KICBmb3IgKGludCBpID0gMDsgaSA8IDU1OyBpICs9IDEpIHsNCiAgICB1ZmxvYXQgYyA9IGIyc3R5bGU6OnVmbG9hdDo6ZnJhY3Rpb24oNCwgMSArICg4ICogaSkpOw0KCWMgLT0gYjJzdHlsZTo6dWZsb2F0OjpmcmFjdGlvbigyLCA0ICsgKDggKiBpKSk7DQoJYyAtPSBiMnN0eWxlOjp1ZmxvYXQ6OmZyYWN0aW9uKDEsIDUgKyAoOCAqIGkpKTsNCgljIC09IGIyc3R5bGU6OnVmbG9hdDo6ZnJhY3Rpb24oMSwgNiArICg4ICogaSkpOw0KCWJpZ3VpbnQgYiA9IDE7DQoJYyAqPSBiMnN0eWxlOjp1ZmxvYXQ6OmZyYWN0aW9uKDEsIGIgPDwgKDQgKiBpKSk7DQoJcyArPSBjOw0KICB9DQogIGIyc3R5bGU6OnN0ZF9vdXQocyk7DQp9DQo="))
+        [case1] = Convert.FromBase64String(strcat_hint(CUInt(108), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIkhlbGxvIFdvcmxkIik7DQp9"))
+        [case2] = Convert.FromBase64String(strcat_hint(CUInt(428), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpib29sIGlzX2V2ZW4obG9uZyBpKSB7DQogIGxvbmcgXzIgPSAyOw0KICBsb25nIF8wID0gMDsNCiAgcmV0dXJuIGIyc3R5bGU6OmVxdWFsKGIyc3R5bGU6Om1vZChpLCBfMiksIF8wKTsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSArPSAxKSB7DQogICAgbG9uZyB4ID0gYnN0eWxlOjpjdXJyZW50X21zKCk7DQogICAgaWYgKGlzX2V2ZW4oeCkpIHsNCiAgICAgIHggPSAtLXg7DQogICAgfQ0KICAgIGIyc3R5bGU6OnN0ZF9vdXQoaXNfZXZlbih4KSk7DQogIH0NCn0NCg=="))
+        [class] = Convert.FromBase64String(strcat_hint(CUInt(424), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDIHsNCiAgaW50IHg7DQoNCiAgdm9pZCBhZGRfeChpbnQgeSkgew0KICAgIHRoaXMueCArPSB5Ow0KICB9DQoNCiAgaW50IHdpdGhfeChpbnQgeSkgew0KICAgIHJldHVybiB0aGlzLnggKyB5Ow0KICB9DQoNCiAgaW50IHJldHVybl94KCkgew0KICAgIHJldHVybiB0aGlzLng7DQogIH0NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQyBjOw0KICBjLmFkZF94KDEwMCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoYy53aXRoX3goMTAwKSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoYy5yZXR1cm5feCgpKTsNCn0="))
+        [class_function_with_namespace] = Convert.FromBase64String(strcat_hint(CUInt(292), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDIHsNCiAgaW50IE46Ong7DQoNCiAgdm9pZCBOOjpwcmludCgpIHsNCiAgICBiMnN0eWxlOjpzdGRfb3V0KHRoaXMuTjo6eCk7DQogIH0NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQyBjOw0KICBjLk46OnggPSAxMDA7DQogIGMuTjo6cHJpbnQoKTsNCiAgYy46Ok46OnggPSAyMDA7DQogIGMuOjpOOjpwcmludCgpOw0KfQ=="))
+        [class_in_namespace] = Convert.FromBase64String(strcat_hint(CUInt(528), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgTiB7DQoNCmNsYXNzIEMgew0KICA6OmludCB4Ow0KDQogIDo6dm9pZCBwcmludCgpIHsNCiAgICA6OmIyc3R5bGU6OnN0ZF9vdXQodGhpcy54KTsNCiAgfQ0KfTsNCg0KQyBjOw0KDQo6OnZvaWQgcHJpbnQoKSB7DQogIGMueCA9IDI7DQogIGMucHJpbnQoKTsNCn0NCg0KfSAgLy8gbmFtZXNwYWNlIE4NCg0KbmFtZXNwYWNlIE0gew0KDQo6Ok46OkMgYzsNCg0KOjp2b2lkIHByaW50KCkgew0KICBjLnggPSAzOw0KICBjLnByaW50KCk7DQp9DQoNCn0gIC8vIG5hbWVzcGFjZSBNDQoNCnZvaWQgbWFpbigpIHsNCiAgTjo6QyBjOw0KICBjLnggPSAxOw0KICBjLnByaW50KCk7DQogIE46OnByaW50KCk7DQogIE06OnByaW50KCk7DQp9"))
+        [class_on_heap] = Convert.FromBase64String(strcat_hint(CUInt(732), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDIHsNCiAgaW50IHg7DQogIHN0cmluZyB5Ow0KDQogIHZvaWQgcHJpbnQoKSB7DQogICAgYjJzdHlsZTo6c3RkX291dCh0aGlzLngpOw0KCWIyc3R5bGU6OnN0ZF9vdXQoIiAiKTsNCgliMnN0eWxlOjpzdGRfb3V0KHRoaXMueSk7DQogIH0NCn07DQoNCmNsYXNzIEMyIHsNCiAgQyB4Ow0KICBpbnQgeTsNCg0KICB2b2lkIHByaW50KCkgew0KICAgIHRoaXMueC5wcmludCgpOw0KCWIyc3R5bGU6OnN0ZF9vdXQoIiAiKTsNCgliMnN0eWxlOjpzdGRfb3V0KHRoaXMueSk7DQoJYjJzdHlsZTo6c3RkX291dCgiXG4iKTsNCiAgfQ0KfTsNCg0Kdm9pZCBtYWluKCkgew0KICBDMiBjc1sxMDBdOw0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSsrKSB7DQogICAgY3NbaV0ueC54ID0gaTsNCiAgICBjc1tpXS54LnkgPSBiMnN0eWxlOjppbnRfdG9fc3RyKGkpOw0KCWNzW2ldLnkgPSBpOw0KICB9DQoNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IGkrKykgew0KICAgIGNzW2ldLnByaW50KCk7DQogIH0NCn0="))
+        [comments] = Convert.FromBase64String(strcat_hint(CUInt(440), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZV9vcGVyYXRvcnMuaD4NCiNpbmNsdWRlIDxzdGRpby5oPiAvLyBjb21tZW50IGNhbiBiZSBwbGFjZWQgaGVyZS4NCg0Kdm9pZCBtYWluKCAvKiBMT0wgKi8gKSB7IC8qIENvbW1lbnRzIGNhbiBiZSBhZGRlZCBoZXJlIGFzIHdlbGwuDQoqIFRoaXMgaXMgYSBtdWx0aSBsaW5lIGNvbW1lbnQuDQoqLw0KICBpbnQgaSA9IGdldGNoYXIoKTsNCiAgd2hpbGUgKGkgIT0gRU9GKSB7DQoJcHV0Y2hhcihpKTsgIC8vIGNvbW1lbnQgY2FuIGJlIHBsYWNlZCBoZXJlIGFzIHdlbGwuDQoJaSA9IGdldGNoYXIoKTsNCiAgfQ0KfSAgLy8gYWxzbyBoZXJlLg0K"))
+        [empty_struct] = Convert.FromBase64String(strcat_hint(CUInt(340), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUyB7fTsNCg0Kdm9pZCBmKFMgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmIik7DQp9DQoNCnZvaWQgZjIoUyYgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmMiIpOw0KfQ0KDQpTIGYzKCkgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmMyIpOw0KICBTIHM7DQogIHJldHVybiBzOw0KfQ0KDQp2b2lkIG1haW4oKSB7DQogIFMgcyA9IGYzKCk7DQogIGYocyk7DQogIGYyKHMpOw0KfQ=="))
         [errors_cycle_typedef] = Convert.FromBase64String(strcat_hint(CUInt(236), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgQ1lDTEVfVFlQRURFRiB7DQogIHR5cGVkZWYgQSBCOw0KICB0eXBlZGVmIEIgQzsNCiAgdHlwZWRlZiBDIEE7DQp9ICAvLyBuYW1lc3BhY2UgQ1lDTEVfVFlQRURFRg0KDQp2b2lkIG1haW4oKSB7DQogIENZQ0xFX1RZUEVERUY6OkEgYTsNCn0="))
+        [errors_dollar_in_number] = Convert.FromBase64String(strcat_hint(CUInt(52), _
+        "77u/DQp2b2lkIG1haW4oKSB7DQogIGZsb2F0IHggPSAxJDE7DQp9"))
+        [errors_duplicate_template_type_parameters] = Convert.FromBase64String(strcat_hint(CUInt(44), _
+        "77u/DQp0ZW1wbGF0ZTxULCBUPg0KY2xhc3MgQ3t9Ow=="))
+        [errors_function_name_ends_with_dot] = Convert.FromBase64String(strcat_hint(CUInt(116), _
+        "77u/DQpjbGFzcyBDew0KICBpbnQgeDsNCg0KICB2b2lkIHByaW50KCkge30NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQyBjOw0KICBjLigpOw0KfQ=="))
+        [errors_function_return_struct_type_mismatch] = Convert.FromBase64String(strcat_hint(CUInt(284), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUzEgew0KICBpbnQgeDsNCiAgc3RyaW5nIHk7DQp9Ow0KDQpzdHJ1Y3QgUzIgew0KICBpbnQgdjsNCiAgc3RyaW5nIHc7DQp9Ow0KDQpTMiBmKCkgew0KICBTMSBzOw0KICBzLnggPSAxMDA7DQogIHMueSA9ICJhYmMiOw0KICByZXR1cm4gczsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBTMiBzID0gZigpOw0KfQ0K"))
+        [errors_include_needs_wraps] = Convert.FromBase64String(strcat_hint(CUInt(52), _
+        "77u/DQojaW5jbHVkZSBhYmMuaA0KDQp2b2lkIG1haW4oKSB7fQ=="))
+        [errors_missing_ending_quota] = Convert.FromBase64String(strcat_hint(CUInt(100), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoImFiYyk7DQp9DQo="))
+        [errors_three_pluses] = Convert.FromBase64String(strcat_hint(CUInt(100), _
+        "77u/DQojaW5jbHVkZSAgIDxiMnN0eWxlLmg+DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IGkgPSAwOw0KICBpICsrKzsNCn0NCg=="))
+        [errors_undefined_value_clause] = Convert.FromBase64String(strcat_hint(CUInt(88), _
+        "77u/DQp2b2lkIG1haW4oKSB7DQogIHRoaXNfaXNfYW5fdW5kZWZpbmVkX3ZhbHVlX2NsYXVzZSA9IDEwMDsNCn0="))
+        [errors_value_clause_struct_type_mismatch] = Convert.FromBase64String(strcat_hint(CUInt(284), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUzEgew0KICBpbnQgeDsNCiAgc3RyaW5nIHk7DQp9Ow0KDQpzdHJ1Y3QgUzIgew0KICBpbnQgdjsNCiAgc3RyaW5nIHc7DQp9Ow0KDQpTMSBmKCkgew0KICBTMSBzOw0KICBzLnggPSAxMDA7DQogIHMueSA9ICJhYmMiOw0KICByZXR1cm4gczsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBTMiBzID0gZigpOw0KfQ=="))
+        [errors_value_clause_struct_type_mismatch2] = Convert.FromBase64String(strcat_hint(CUInt(304), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUzEgew0KICBpbnQgeDsNCiAgc3RyaW5nIHk7DQp9Ow0KDQpzdHJ1Y3QgUzIgew0KICBpbnQgdjsNCiAgc3RyaW5nIHc7DQp9Ow0KDQpTMSBmKCkgew0KICBTMSBzOw0KICBzLnggPSAxMDA7DQogIHMueSA9ICJhYmMiOw0KICByZXR1cm4gczsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBTMSBzMSA9IGYoKTsNCiAgUzIgczIgPSBzMTsNCn0="))
+        [for_loop] = Convert.FromBase64String(strcat_hint(CUInt(648), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIHNlbGZfaW5jcmVtZW50KGludCYgeCkgew0KICB4Kys7DQp9DQoNCnZvaWQgc2VsZl9pbmNyZW1lbnQyKGludCYgeCkgew0KICArK3g7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IHIgPSAwOw0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSsrKSB7DQogICAgciArPSBpOw0KICB9DQogIGIyc3R5bGU6OnN0ZF9vdXQocik7DQogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyArK2kpIHsNCiAgICByICs9IGk7DQogIH0NCiAgYjJzdHlsZTo6c3RkX291dChyKTsNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDA7IHNlbGZfaW5jcmVtZW50KGkpKSB7DQogICAgciArPSBpOw0KICB9DQogIGIyc3R5bGU6OnN0ZF9vdXQocik7DQogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyBzZWxmX2luY3JlbWVudDIoaSkpIHsNCiAgICByICs9IGk7DQogIH0NCiAgYjJzdHlsZTo6c3RkX291dChyKTsNCn0="))
+        [function_ref] = Convert.FromBase64String(strcat_hint(CUInt(968), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIHNlbGZfaW5jcmVtZW50KGludCYgeCkgew0KICB4ID0geCArIDE7DQp9DQoNCmludCBzZWxmX2luY3JlbWVudDIoaW50JiB4KSB7DQogIHggPSB4ICsgMTsNCiAgcmV0dXJuIHg7DQp9DQoNCmludCBzZWxmX2luY3JlbWVudDMoaW50JiB4KSB7DQogIHJldHVybiBzZWxmX2luY3JlbWVudDIoeCk7DQp9DQoNCnZvaWQgc2VsZl9pbmNyZW1lbnQ0KGludCYgeCkgew0KICBzZWxmX2luY3JlbWVudDMoeCk7DQp9DQoNCmludCBzZWxmX2luY3JlbWVudDUoaW50JiB4KSB7DQogIGludCByID0geDsNCiAgeCA9IHggKyAxOw0KICByZXR1cm4gcjsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBpbnQgeCA9IDA7DQogIHNlbGZfaW5jcmVtZW50KHgpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHgpOw0KICBzZWxmX2luY3JlbWVudCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dChzZWxmX2luY3JlbWVudDIoeCkpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHNlbGZfaW5jcmVtZW50Mih4KSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoc2VsZl9pbmNyZW1lbnQzKHgpKTsNCiAgc2VsZl9pbmNyZW1lbnQ0KHgpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHgpOw0KICBzZWxmX2luY3JlbWVudDUoeCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoeCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoc2VsZl9pbmNyZW1lbnQ1KHgpKTsNCn0="))
+        [function_with_global_namespace] = Convert.FromBase64String(strcat_hint(CUInt(268), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgTiB7DQoNCjo6dm9pZCBmKCkgew0KICA6OmIyc3R5bGU6OnN0ZF9vdXQoImYiKTsNCn0NCg0KOjp2b2lkIDo6ZigpIHsNCiAgOjpiMnN0eWxlOjpzdGRfb3V0KCI6OmYiKTsNCn0NCg0KfSAgLy8gbmFtZXNwYWNlIE4NCg0Kdm9pZCBtYWluKCkgew0KICBOOjpmKCk7DQogIGYoKTsNCn0="))
+        [heap] = Convert.FromBase64String(strcat_hint(CUInt(556), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUyB7DQogIHN0cmluZyBzOw0KfTsNCg0Kdm9pZCBmKFMgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KHMucyk7DQp9DQoNClMgbmV3KHN0cmluZyBzKSB7DQogIFMgcjsNCiAgci5zID0gczsNCiAgcmV0dXJuIHI7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IHggPSAxOw0KICBpbnQgdlt4KytdOw0KICBTIHYyWzEgKyArK3grK107DQogIHZbMF0gPSAxMDA7DQogIHYyWzBdID0gbmV3KCJhYmMiKTsNCiAgdjJbMV0gPSBuZXcoImRlZiIpOw0KICBmKHYyWzBdKTsNCiAgZih2MlsxXSk7DQogIHYyWzJdLnMgPSAiZ2hpIjsNCiAgZih2MlsyXSk7DQogIC8vIFRPRE86IE1ha2UgdjJbMl0uICBzID0gImdoaSIgd29yay4NCiAgYjJzdHlsZTo6c3RkX291dCh2WzBdKTsNCn0="))
+        [heap_declaration] = Convert.FromBase64String(strcat_hint(CUInt(300), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUyB7DQogIHN0cmluZyBzOw0KfTsNCg0Kdm9pZCBmKFMgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KHMucyk7DQp9DQoNClMgbmV3KHN0cmluZyBzKSB7DQogIFMgcjsNCiAgci5zID0gczsNCiAgcmV0dXJuIHI7DQp9DQoNCnZvaWQgbWFpbigpIHsNCiAgaW50IHggPSAwOw0KICBpbnQgdlsrK3hdOw0KICBTIHYyWysreF07DQp9DQo="))
+        [heap_function_ref] = Convert.FromBase64String(strcat_hint(CUInt(340), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIGYoaW50JiB4KSB7DQogIHgrKzsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBpbnQgc1sxMDBdOw0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSsrKSB7DQogICAgc1tpXSA9IGk7DQoJZihzW2ldKTsNCiAgfQ0KDQogIGZvciAoaW50IGkgPSAwOyBpIDwgMTAwOyBpKyspIHsNCiAgICBiMnN0eWxlOjpzdGRfb3V0KHNbaV0pOw0KCWIyc3R5bGU6OnN0ZF9vdXQoIlxuIik7DQogIH0NCn0="))
+        [heap_ptr_to_int64] = Convert.FromBase64String(strcat_hint(CUInt(552), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpiaWd1aW50IGZyb21fcHRyKHR5cGVfcHRyIHgpIHsNCiAgcmV0dXJuIHg7DQp9DQoNCnZvaWQgYjJzdHlsZTo6c3RkX291dCh0eXBlX3B0ciB4KSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoZnJvbV9wdHIoeCkpOw0KfQ0KDQp2b2lkIG1haW4oKSB7DQogIGludCB4WzEwMF07DQogIHhbMF0gPSAxMDA7DQogIGJpZ3VpbnQgeSA9IHg7DQogIGludCBsWzEwMF07DQogIGxbMF0gPSAxMDE7DQogIGludCBvWzEwMF07DQogIG9bMF0gPSAxMDI7DQogIGIyc3R5bGU6OnN0ZF9vdXQoeSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIiAiKTsNCiAgYjJzdHlsZTo6c3RkX291dChmcm9tX3B0cihsKSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIiAiKTsNCiAgYjJzdHlsZTo6c3RkX291dChvKTsNCn0="))
+        [i__] = Convert.FromBase64String(strcat_hint(CUInt(484), _
+        "77u/DQp0eXBlZGVmIEludGVnZXIgaW50Ow0KdHlwZWRlZiB0eXBlMCB2b2lkOw0KdHlwZWRlZiBTdHJpbmcgc3RyaW5nOw0KDQpuYW1lc3BhY2UgYjJzdHlsZSB7DQoNCnR5cGVkZWYgOjppbnQgaW50Ow0KDQppbnQgc2VsZl9pbmNfcG9zdChpbnQmIHgpIHsNCiAgaW50IHIgPSB4Ow0KICBpbnQgeSA9IDE7DQogIGxvZ2ljICJhZGQgYjJzdHlsZV9feCBiMnN0eWxlX194IGIyc3R5bGVfX3kiOw0KICByZXR1cm4gcjsNCn0NCg0KfSAgLy8gbmFtZXNwYWNlIGIyc3R5bGUNCg0Kdm9pZCBtYWluKCkgew0KICBpbnQgaSA9IDA7DQogIGkrKzsNCiAgc3RyaW5nIHRtcDsNCiAgbG9naWMgImludGVycnVwdCBwdXRjaGFyIGkgdG1wIjsNCn0NCg=="))
+        [i__2] = Convert.FromBase64String(strcat_hint(CUInt(248), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBpID0gMDsNCiAgaSsrOw0KICBic3R5bGU6OnB1dGNoYXIoaSk7DQogIGkrKzsNCiAgYnN0eWxlOjpwdXRjaGFyKGkpOw0KICBpKys7DQogIGJzdHlsZTo6cHV0Y2hhcihpKTsNCiAgaSsrOw0KICBic3R5bGU6OnB1dGNoYXIoaSk7DQp9DQo="))
+        [ifndef] = Convert.FromBase64String(strcat_hint(CUInt(212), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQojaW5jbHVkZSA8c3RkaW8uaD4NCiNpbmNsdWRlICJzdGRpby5oIg0KI2luY2x1ZGUgPGNzdGRpbz4NCiNpbmNsdWRlICJjc3RkaW8iDQoNCnZvaWQgbWFpbiAoKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoImdvb2QiKTsNCn0NCg=="))
+        [include] = Convert.FromBase64String(strcat_hint(CUInt(320), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQojaW5jbHVkZSA8Y3N0ZGlvPg0KDQppbnQgbWFpbigpIHsNCiAgaW50IHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIGlmICh4ID09IEVPRikgew0KICAgIGIyc3R5bGU6OnN0ZF9vdXQoIkVPRiIpOw0KICB9DQp9"))
+        [include2] = Convert.FromBase64String(strcat_hint(CUInt(324), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQojaW5jbHVkZSAiY3N0ZGlvIg0KDQppbnQgbWFpbigpIHsNCiAgaW50IHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIHB1dGNoYXIoeCk7DQogIHggPSBnZXRjaGFyKCk7DQogIGlmICh4ID09IEVPRikgew0KICAgIGIyc3R5bGU6OnN0ZF9vdXQoIkVvRiIpOw0KICB9DQp9DQo="))
+        [legacy_biguint_to_str] = Convert.FromBase64String(strcat_hint(CUInt(488), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGJpZ3VpbnQgaSA9IDQyOTQ5NjcyOTZMOw0KICBiaWd1aW50IGogPSA0Mjk0OTY3Mjk2bDsNCiAgYmlndWludCBrID0gMUw7DQogIGJpZ3VpbnQgbCA9IDBMOw0KICBiMnN0eWxlOjpzdGRfb3V0KGIyc3R5bGU6OmxlZ2FjeV9iaWd1aW50X3RvX3N0cihpKSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoYjJzdHlsZTo6bGVnYWN5X2JpZ3VpbnRfdG9fc3RyKGopKTsNCiAgYjJzdHlsZTo6c3RkX291dChiMnN0eWxlOjpsZWdhY3lfYmlndWludF90b19zdHIoaykpOw0KICBiMnN0eWxlOjpzdGRfb3V0KGIyc3R5bGU6OmxlZ2FjeV9iaWd1aW50X3RvX3N0cihsKSk7DQp9DQo="))
+        [loaded_method] = Convert.FromBase64String(strcat_hint(CUInt(660), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpsb25nIGxvYWRlZF9jdXJyZW50X21zKCkgew0KICBic3R5bGU6OmxvYWRfbWV0aG9kKCJjdXJyZW50X21zIik7DQogIGxvbmcgcmVzdWx0Ow0KICBsb2dpYyAiaW50ZXJydXB0IGV4ZWN1dGVfbG9hZGVkX21ldGhvZCBAQHByZWZpeGVzQHRlbXBzQHN0cmluZyByZXN1bHQiOw0KICByZXR1cm4gcmVzdWx0Ow0KfQ0KDQpib29sIGlzX2V2ZW4obG9uZyBpKSB7DQogIGxvbmcgXzIgPSAyOw0KICBsb25nIF8wID0gMDsNCiAgcmV0dXJuIGIyc3R5bGU6OmVxdWFsKGIyc3R5bGU6Om1vZChpLCBfMiksIF8wKTsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBmb3IgKGludCBpID0gMDsgaSA8IDEwMDsgaSArPSAxKSB7DQogICAgbG9uZyB4ID0gbG9hZGVkX2N1cnJlbnRfbXMoKTsNCiAgICBpZiAoaXNfZXZlbih4KSkgew0KCSAgeCA9IC0teDsNCgl9DQogICAgYjJzdHlsZTo6c3RkX291dChpc19ldmVuKHgpKTsNCiAgfQ0KfSANCg=="))
+        [multiline_string] = Convert.FromBase64String(strcat_hint(CUInt(124), _
+        "DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoImENCiAgICBiDQogICAgYw0KICAgIGQiKTsNCn0NCg=="))
+        [namespaces] = Convert.FromBase64String(strcat_hint(CUInt(720), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgYSB7DQogIG5hbWVzcGFjZSBiIHsNCiAgICA6OnZvaWQgZjIoKSB7DQogICAgICA6OmIyc3R5bGU6OnN0ZF9vdXQoImE6OmI6OmYyXG4iKTsNCiAgICB9DQogIH0NCg0KICA6OnZvaWQgZjMoKSB7DQogICAgOjpiMnN0eWxlOjpzdGRfb3V0KCJhOjpmM1xuIik7DQogIH0NCg0KICBuYW1lc3BhY2UgYiB7DQogICAgOjp2b2lkIGYxKCkgew0KICAgICAgOjpiMnN0eWxlOjpzdGRfb3V0KCJhOjpiOjpmMVxuIik7DQogICAgfQ0KICB9DQoNCiAgOjp2b2lkIGYyKCkgew0KICAgIDo6YjJzdHlsZTo6c3RkX291dCgiYTo6ZjJcbiIpOw0KICB9DQoNCiAgbmFtZXNwYWNlIGMgew0KICAgIDo6dm9pZCBmNCgpIHsNCiAgICAgIDo6YjJzdHlsZTo6c3RkX291dCgiYTo6Yzo6ZjRcbiIpOw0KICAgIH0NCiAgfQ0KfQ0KDQo6OnZvaWQgbWFpbigpIHsNCiAgYTo6Yjo6ZjEoKTsNCiAgYTo6ZjIoKTsNCg0KICA6OmE6OmI6OmYyKCk7DQogIDo6YTo6ZjMoKTsNCiAgOjphOjpjOjpmNCgpOw0KfQ0KDQo="))
+        [negative_int] = Convert.FromBase64String(strcat_hint(CUInt(160), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoLTEpOw0KICBiMnN0eWxlOjpzdGRfb3V0KC0yKTsNCiAgYjJzdHlsZTo6c3RkX291dCgtMyk7DQp9"))
+        [nested_class] = Convert.FromBase64String(strcat_hint(CUInt(388), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDMSB7DQogIGludCB4Ow0KDQogIHZvaWQgcHJpbnQoKSB7DQogICAgYjJzdHlsZTo6c3RkX291dCh0aGlzLngpOw0KICB9DQp9Ow0KDQpjbGFzcyBDMiB7DQogIGludCB4Ow0KICBDMSB5Ow0KDQogIHZvaWQgcHJpbnQoKSB7DQogICAgYjJzdHlsZTo6c3RkX291dCh0aGlzLngpOw0KCXRoaXMueS5wcmludCgpOw0KICB9DQp9Ow0KDQp2b2lkIG1haW4oKSB7DQogIEMyIGM7DQogIGMueD0xMDA7DQogIGMueS54PTIwMDsNCiAgYy5wcmludCgpOw0KfQ=="))
+        [nested_heap_access] = Convert.FromBase64String(strcat_hint(CUInt(540), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBhWzEwXTsNCiAgZm9yIChpbnQgaSA9IDA7IGkgPCAxMDsgaSsrKSB7DQogICAgYVtpXSA9IGkgKyAxOw0KICB9DQoNCiAgYjJzdHlsZTo6c3RkX291dChhW2FbMF1dKTsNCiAgYjJzdHlsZTo6c3RkX291dChhW2FbYVswXV1dKTsNCiAgYjJzdHlsZTo6c3RkX291dChhW2FbYVthWzBdXV1dKTsNCiAgLy8gdmFsdWUgc3ludGF4ZXIgbWF0Y2hpbmcgaXMgcXVpdGUgY29zdGx5Lg0KICAvKg0KICBiMnN0eWxlOjpzdGRfb3V0KGFbYVthW2FbYVswXV1dXV0pOw0KICBiMnN0eWxlOjpzdGRfb3V0KGFbYVthW2FbYVthWzBdXV1dXV0pOw0KICBiMnN0eWxlOjpzdGRfb3V0KGFbYVthW2FbYVthW2FbMF1dXV1dXV0pOw0KICAqLw0KfQ=="))
+        [nested_paragraph] = Convert.FromBase64String(strcat_hint(CUInt(348), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHsNCiAgICBzdHJpbmcgeCA9ICJoZWxsbyBhZ2FpbiBhZ2FpbiB3b3JsZCI7DQogICAgew0KCSAgc3RyaW5nIHggPSAiaGVsbG8gd29ybGRcbiI7DQoJICBiMnN0eWxlOjpzdGRfb3V0KHgpOw0KCX0NCgl7DQoJICBzdHJpbmcgeCA9ICJoZWxsbyBhZ2FpbiB3b3JsZFxuIjsNCgkgIGIyc3R5bGU6OnN0ZF9vdXQoeCk7DQoJfQ0KCWIyc3R5bGU6OnN0ZF9vdXQoeCk7DQogIH0NCn0="))
+        [nested_template] = Convert.FromBase64String(strcat_hint(CUInt(436), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBDIHsNCiAgdm9pZCBwcmludCgpIHsNCiAgICBiMnN0eWxlOjpzdGRfb3V0KCJDIik7DQogIH0NCn07DQoNCnRlbXBsYXRlIDxUPg0KY2xhc3MgRCB7DQogIHZvaWQgcHJpbnQoVCB0KSB7DQogICAgdC5wcmludCgpOw0KICB9DQp9Ow0KDQp0ZW1wbGF0ZSA8VCwgVDI+DQpjbGFzcyBFIHsNCiAgdm9pZCBwcmludChUIHQsIFQyIHQyKSB7DQogICAgdC5wcmludCh0Mik7DQogIH0NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQyBjOw0KICBEPEM+IGQ7DQogIEU8RDxDPiwgQz4gZTsNCiAgZS5wcmludChkLCBjKTsNCn0="))
+        [order_of_operators] = Convert.FromBase64String(strcat_hint(CUInt(160), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoMSArIDIgKiAzICsgNCAtIDUgKiA2ICogNyAqIDggKiA5IC8gMTAgKiAoMTEgKyAxMikpOw0KfQ=="))
+        [pi_integral_0_1] = Convert.FromBase64String(strcat_hint(CUInt(320), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHVmbG9hdCBkeCA9IDAuMTsNCiAgdWZsb2F0IHggPSAwLjA7DQogIHVmbG9hdCBzID0gMC4wOw0KICB3aGlsZSAoeCA8IDEuMCkgew0KICAgIHVmbG9hdCBjID0gMS4wIC0gKHggXiAyLjApOw0KCWMgXj0gMC41Ow0KCWMgKj0gZHg7DQoJcyArPSBjOw0KCXggKz0gZHg7DQogIH0NCg0KICBiMnN0eWxlOjpzdGRfb3V0KHMgKiA0LjApOw0KfQ=="))
+        [primitive_template] = Convert.FromBase64String(strcat_hint(CUInt(320), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEluY3JlYXNlciB7DQogIFQgaW5jKFQgdCkgew0KICAgIHJldHVybiArK3Q7DQogIH0NCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgSW5jcmVhc2VyPGludD4gaTE7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaTEuaW5jKDEwMCkpOw0KICBJbmNyZWFzZXI8dWZsb2F0PiBpMjsNCiAgYjJzdHlsZTo6c3RkX291dChpMi5pbmMoMTAwLjExKSk7DQp9"))
+        [reinterpret_cast] = Convert.FromBase64String(strcat_hint(CUInt(764), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBTIHsNCiAgaW50IHg7DQogIHZvaWQgcHJpbnQoKSB7DQogICAgYjJzdHlsZTo6c3RkX291dCh0aGlzLngpOw0KICB9DQp9Ow0KDQpzdHJ1Y3QgUzIgew0KICBpbnQgeDsNCn07DQoNCi8vIFRoaXMgZnVuY3Rpb24gc2hvdWxkIG5vdCBiZSB1c2VkLg0Kdm9pZCBmKFMmIHMpIHsNCiAgcy54ID0gMDsNCn0NCg0Kdm9pZCBmKFMyJiBzKSB7DQogIHMueCA9IDEwMDsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBTIHM7DQogIHMueCA9IC0xMDA7DQogIHMucHJpbnQoKTsNCiAgbG9naWMgImRlZmluZSBzLlMyX19zdHJ1Y3RfX3R5cGVfX2lkIFMyX19zdHJ1Y3RfX3R5cGVfX2lkX190eXBlIjsNCiAgLy8gTm90ZTogdGhpcyBpcyBub3QgYSB0eXBpY2FsIHdheSBvZiB1c2luZyByZWludGVycHJldF9jYXN0LCBpdCdzIHByZXR0eSBtdWNoIHVzZWxlc3Mgd2l0aG91dCB0aGUgc3VwcG9ydCBvZiBpbmhlcml0YW5jZS4NCiAgcmVpbnRlcnByZXRfY2FzdChzLCBTMik7DQogIGYocyk7DQogIHJlaW50ZXJwcmV0X2Nhc3QocywgUyk7DQogIHMucHJpbnQoKTsNCn0="))
+        [self_add] = Convert.FromBase64String(strcat_hint(CUInt(224), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBpID0gMTAwOw0KICBpICs9IDE7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGkgPSBpKys7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGkgPSArK2k7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQp9"))
+        [shift] = Convert.FromBase64String(strcat_hint(CUInt(232), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCBpID0gMTAwOw0KICBpIDw8PSAyOw0KICBiMnN0eWxlOjpzdGRfb3V0KGkpOw0KICBpbnQgaiA9IDA7DQogIGogPSBpID4+IDU7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaSk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoaik7DQp9"))
+        [str_unescape] = Convert.FromBase64String(strcat_hint(CUInt(108), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGIyc3R5bGU6OnN0ZF9vdXQoImFiY1x0ZGVmXG4iKTsNCn0="))
+        [struct_function_ref] = Convert.FromBase64String(strcat_hint(CUInt(272), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUyB7DQogIGludCB4Ow0KICBzdHJpbmcgeTsNCn07DQoNCnZvaWQgZihTJiBzKSB7DQogIHMueD0xMDA7DQogIHMueT0iYWJjIjsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBTIHM7DQogIGYocyk7DQogIGIyc3R5bGU6OnN0ZF9vdXQocy54KTsNCiAgYjJzdHlsZTo6c3RkX291dChzLnkpOw0KfQ0K"))
+        [struct_in_namespace] = Convert.FromBase64String(strcat_hint(CUInt(312), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgTiB7DQogIHR5cGVkZWYgOjpzdHJpbmcgc3RyaW5nOw0KICBzdHJ1Y3QgUyB7DQogICAgc3RyaW5nIHg7DQogIH07DQoNCiAgc3RydWN0IFQgew0KICAgIFMgczsNCiAgfTsNCn0gIC8vIG5hbWVzcGFjZSBODQoNCnZvaWQgbWFpbigpIHsNCiAgTjo6VCB0Ow0KICB0LnMueCA9ICIxMDAiOw0KICBiMnN0eWxlOjpzdGRfb3V0KHQucy54KTsNCn0="))
+        [template] = Convert.FromBase64String(strcat_hint(CUInt(600), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpjbGFzcyBEIHsNCiAgc3RyaW5nIHRvX3N0cmluZygpIHsNCiAgICByZXR1cm4gIkQiOw0KICB9DQp9Ow0KDQpjbGFzcyBFIHsNCiAgc3RyaW5nIHRvX3N0cmluZygpIHsNCiAgICByZXR1cm4gIkUiOw0KICB9DQp9Ow0KDQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEMgew0KICBzdHJpbmcgdG9fc3RyaW5nKFQgdCkgew0KICAgIHJldHVybiB0LnRvX3N0cmluZygpOw0KICB9DQp9Ow0KDQovLyBUT0RPOiBBbGxvdyBjbGFzcyBEIGFuZCBjbGFzcyBFIHRvIGJlIGRlZmluZWQgYWZ0ZXIgdGVtcGxhdGU8VD4gQy4NCg0Kdm9pZCBtYWluKCkgew0KICBDPEQ+IGM7DQogIEQgZDsNCiAgYjJzdHlsZTo6c3RkX291dChjLnRvX3N0cmluZyhkKSk7DQogIEM8RT4gYzI7DQogIEUgZTsNCiAgYjJzdHlsZTo6c3RkX291dChjMi50b19zdHJpbmcoZSkpOw0KfQ0K"))
+        [template_template_case1] = Convert.FromBase64String(strcat_hint(CUInt(80), _
+        "77u/DQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEMgew0KICBUIHg7DQogIHZvaWQgZihUIHkpIHt9DQp9Ow=="))
+        [template_with_different_length] = Convert.FromBase64String(strcat_hint(CUInt(400), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEMgew0KICBUIHQ7DQp9Ow0KDQp0ZW1wbGF0ZSA8VCwgVDI+DQpjbGFzcyBDIHsNCiAgVCB0Ow0KICBUMiB0MjsNCn07DQoNCnZvaWQgbWFpbigpIHsNCiAgQzxpbnQ+IGM7DQogIEM8aW50LCBzdHJpbmc+IGMyOw0KICBjLnQgPSAxOw0KICBjMi50ID0gMjsNCiAgYzIudDIgPSAiYWJjIjsNCg0KICBiMnN0eWxlOjpzdGRfb3V0KGMudCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoYzIudCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoYzIudDIpOw0KfQ=="))
+        [template_wont_be_extended_twice] = Convert.FromBase64String(strcat_hint(CUInt(312), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp0ZW1wbGF0ZSA8VD4NCmNsYXNzIEFkZGVyIHsNCiAgVCBhZGQoVCB0LCBUIHQyKSB7DQogICAgcmV0dXJuIHQgKyB0MjsNCiAgfQ0KfTsNCg0Kdm9pZCBtYWluKCkgew0KICBBZGRlcjxpbnQ+IHQ7DQogIEFkZGVyPGludD4gdDI7DQogIGIyc3R5bGU6OnN0ZF9vdXQodC5hZGQoMSwgMSkpOw0KICBiMnN0eWxlOjpzdGRfb3V0KHQyLmFkZCgyLCAyKSk7DQp9DQo="))
+        [two_template_type_parameters] = Convert.FromBase64String(strcat_hint(CUInt(104), _
+        "77u/DQp0ZW1wbGF0ZTxULCBUMj4NCmNsYXNzIEMgew0KICBUIHg7DQogIFQyIHk7DQogIHZvaWQgcChUIHgsIFQyIHkpIHt9DQp9Ow=="))
+        [typedef] = Convert.FromBase64String(strcat_hint(CUInt(228), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgYSB7DQogIHR5cGVkZWYgOjp2b2lkIHZvaWQ7DQogIHZvaWQgZigpIHsNCiAgICA6OmIyc3R5bGU6OnN0ZF9vdXQoImFiYyIpOw0KICB9DQp9ICAvLyBuYW1lc3BhY2UgYQ0KDQp2b2lkIG1haW4oKSB7DQogIGE6OmYoKTsNCn0NCg=="))
+        [ufloat_operators] = Convert.FromBase64String(strcat_hint(CUInt(256), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHVmbG9hdCBpID0gMi4yOw0KICBpICs9IDMuMDsNCiAgaSAtPSAzLjA7DQogIGkgLz0gMi4wOw0KICBiMnN0eWxlOjpzdGRfb3V0KGkpOw0KICBpID0gYjJzdHlsZTo6dWZsb2F0OjpmcmFjdGlvbigxLCAyKTsNCiAgYjJzdHlsZTo6c3RkX291dChpKTsNCn0="))
+        [ufloat_std_out] = Convert.FromBase64String(strcat_hint(CUInt(120), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHVmbG9hdCBmID0gMS4xOw0KICBiMnN0eWxlOjpzdGRfb3V0KGYpOw0KfQ=="))
+        [while_0_to_1] = Convert.FromBase64String(strcat_hint(CUInt(252), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIHVmbG9hdCB4ID0gMC4wOw0KICB1ZmxvYXQgaSA9IDAuMDsNCiAgd2hpbGUgKGkgPCAxLjApIHsNCiAgICBpICs9IDAuMDE7DQoJeCArPSBpOw0KICB9DQogIGIyc3R5bGU6OnN0ZF9vdXQoeCk7DQogIGIyc3R5bGU6OnN0ZF9vdXQoIlxuIik7DQp9DQo="))
+        [while_1_to_100] = Convert.FromBase64String(strcat_hint(CUInt(232), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp2b2lkIG1haW4oKSB7DQogIGludCB4ID0gMDsNCiAgaW50IGkgPSAwOw0KICB3aGlsZSAoaSA8IDEwMCkgew0KICAgIGkgKz0gMTsNCgl4ICs9IGk7DQogIH0NCiAgYjJzdHlsZTo6c3RkX291dCh4KTsNCiAgYjJzdHlsZTo6c3RkX291dCgiXG4iKTsNCn0="))
     End Sub
 End Module

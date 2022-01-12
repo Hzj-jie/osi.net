@@ -80,23 +80,15 @@ Partial Public NotInheritable Class b2style
             Return strcat(n.children_word_str(), "__", type_count)
         End Function
 
-        Public Shared Function [of](ByVal n As typed_node, ByRef o As template_template) As Boolean
+        ' TODO: May move the logic into template.vb
+        ' @VisibleForTesting
+        Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
+                                    ByVal n As typed_node,
+                                    ByRef o As template_template) As Boolean
             assert(Not n Is Nothing)
             assert(n.type_name.Equals("template"))
             assert(n.child_count() = 5)
-            Dim v As vector(Of String) = streams.range(0, n.child(2).child_count()).
-                                                 map(Function(ByVal id As Int32) As typed_node
-                                                         Return n.child(2).child(CUInt(id))
-                                                     End Function).
-                                                 map(Function(ByVal param As typed_node) As String
-                                                         assert(Not param Is Nothing)
-                                                         If param.type_name.Equals("type-param-with-comma") Then
-                                                             param = param.child(0)
-                                                         End If
-                                                         assert(param.type_name.Equals("type-param"))
-                                                         Return param.children_word_str()
-                                                     End Function).
-                                                 collect(Of vector(Of String))()
+            Dim v As vector(Of String) = l.of(n.child(2)).dump_children()
             If v.size() > v.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
                             "Template ",
@@ -107,6 +99,10 @@ Partial Public NotInheritable Class b2style
             End If
             o = New template_template(n.child(4), v)
             Return True
+        End Function
+
+        Public Shared Function [of](ByVal n As typed_node, ByRef o As template_template) As Boolean
+            Return [of](b2style.code_builder.current().code_gens, n, o)
         End Function
 
         Public Function name() As String
