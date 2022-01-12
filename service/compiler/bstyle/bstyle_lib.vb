@@ -35,8 +35,8 @@ Friend Module bstyle_lib
         "H4sIAAAAAAAEAH2PPQqDQBCFe8E7DHoAky5gJxgiWAQ0hZVodnYZkNmga8CzpciRcoXs5oeYEKzeMO9j3rzb5ep7IUkWKCEpyipP6zxL6tdYVvu0qHcWsT4xLiG+Z6YTujsZG1TYA7GJfa/Tio4QOBM6zQo2QfxhE607bBhaqz9wOxmE9RdM6sADKUbxzmhJjc+cP9C2042BUTqZEYXpyf4xPGS2d7qCsyYRuzohsiAJEEVLte9fnGrDQgEAAA=="))
 
         assert(bstyle_types_h.ungzip(bstyle_types_h))
-        bstyle_constants_h = Convert.FromBase64String(strcat_hint(CUInt(388), _
-        "H4sIAAAAAAAEAJ3UsWrDMBAG4D2QdxDJXBJBKYUuqktDAyEd7A6dRGKfxIFzMpYCTV+tQx+pr1BbToNDIbE0WZj7OHz/yT9f3+PRFBUVoFiSZu+rZ7laJvJ4fHpdp9njOkvlS1PW1CDBtbLxqDQaczY5lgtR1c3pA6zIDVm3IWcFkpNztiQHGurJw2DDA81elWbTsgT1G1nUBMWifTXQW/wEaZRsegd2/pOlIR1Jt8aUsfTgIJL6iQVaMKovTiY31UH6sktrgPNemyGEM+QB5LQERYjqR4+3EdAnj/cR0gcf9IlnuUfJLnbkdwG2jR1v+Fnk/9fEwa6yYot6346ydxGH7FiHrauxGWbqH127KVCBirHZ7NoP6Rc2rlhr5AQAAA=="))
+        bstyle_constants_h = Convert.FromBase64String(strcat_hint(CUInt(360), _
+        "H4sIAAAAAAAEAJ2UwUoDMRCG74W+Q2jP0gaKCF7iimCh1MOuB0+h3Z2EgXVm2aRgfTUPPpKvYJotsiLY3Zwyh/9jkvmGfH18TidzNFSBEVlevGwe9Gad6XN5/7TNi7ttkevHEAsZJLgUm05qtliK2TmuVNOG6g2cKpmc35F3CsnrpViTBwvt7HYwI0cyDt9Bs9GBTSRrJpuI7pnrVPToIRE1Ne/GPhbY9IkfpuTmqGPsP4247LUZgkiBcgTSl4irBDA6xJsEMipMumw0mER2AlFej2BPAvFK/pL3V7iH18apPdrDaZQZ2mdyaAmqIdvSwc63GIaZx6NrNweq0AixWFz6Gr4BsTySzW4EAAA="))
 
         assert(bstyle_constants_h.ungzip(bstyle_constants_h))
     End Sub

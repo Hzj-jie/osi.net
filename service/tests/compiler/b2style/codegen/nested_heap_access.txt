@@ -10,9 +10,9 @@ void main() {
   b2style::std_out(a[a[0]]);
   b2style::std_out(a[a[a[0]]]);
   b2style::std_out(a[a[a[a[0]]]]);
-  b2style::std_out(a[a[a[a[a[0]]]]]);
   // value syntaxer matching is quite costly.
   /*
+  b2style::std_out(a[a[a[a[a[0]]]]]);
   b2style::std_out(a[a[a[a[a[a[0]]]]]]);
   b2style::std_out(a[a[a[a[a[a[a[0]]]]]]]);
   */
