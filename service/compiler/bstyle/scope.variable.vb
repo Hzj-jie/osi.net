@@ -43,12 +43,6 @@ Partial Public NotInheritable Class bstyle
                 ' The name should not be an array with index.
                 assert(Not variable.is_heap_name(name))
                 If s.find(name) = s.end() Then
-                    raise_error(error_type.user,
-                                "Variable ",
-                                name,
-                                " (new type ",
-                                type,
-                                ") has not been defined yet.")
                     Return False
                 End If
                 s(name) = type
@@ -83,11 +77,17 @@ Partial Public NotInheritable Class bstyle
             Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    If s.v.redefine(type, name) Then
+                    If s.v.redefine(type, name) OrElse s.v.redefine(type, heap_name_of(name)) Then
                         Return True
                     End If
                     s = s.parent
                 End While
+                raise_error(error_type.user,
+                            "Variable ",
+                            name,
+                            " (new type ",
+                            type,
+                            ") has not been defined yet.")
                 Return False
             End Function
 

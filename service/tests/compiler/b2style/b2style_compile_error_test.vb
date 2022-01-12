@@ -118,6 +118,26 @@ Public NotInheritable Class b2style_compile_error_test
             End Sub)).contains("this_is_an_undefined_value_clause")
     End Sub
 
+    <test>
+    Private Shared Sub reinterpret_cast_unknown_variable()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(b2style.
+                    with_default_functions.
+                    parse(_b2style_test_data.errors_reinterpret_cast_unknown_variable.as_text(), Nothing))
+            End Sub)).contains("this_is_an_unknown_variable")
+    End Sub
+
+    <test>
+    Private Shared Sub reinterpret_cast_unknown_type()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(b2style.
+                    with_default_functions.
+                    parse(_b2style_test_data.errors_reinterpret_cast_unknown_type.as_text(), Nothing))
+            End Sub)).contains("this_is_an_unknown_type")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
