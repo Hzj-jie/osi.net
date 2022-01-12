@@ -24,7 +24,7 @@ Partial Public NotInheritable Class bstyle
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
-            Return True
+            Return scope.current().variables().redefine(n.child(4).children_word_str(), n.child(2).children_word_str())
         End Function
     End Class
 End Class

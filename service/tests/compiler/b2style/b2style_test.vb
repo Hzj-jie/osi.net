@@ -649,8 +649,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.reinterpret_cast.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        ' TODO: Should be -100100
-        assertion.equal(io.output(), "-1000")
+        assertion.equal(io.output(), "-100100")
     End Sub
 
     Private Sub New()

@@ -25,8 +25,9 @@ void main() {
   S s;
   s.x = -100;
   s.print();
-  logic "define s.S2__struct__type__id S2__struct__type__id__type";
-  // Note: this is not a typical way of using reinterpret_cast, it's pretty much useless without the support of inheritance.
+  S2__struct__type__id__type s.S2__struct__type__id;
+  // Note: this is not a typical way of using reinterpret_cast, it's pretty much useless without the support of
+  // inheritance.
   reinterpret_cast(s, S2);
   f(s);
   reinterpret_cast(s, S);
