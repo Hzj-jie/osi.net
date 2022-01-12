@@ -11,7 +11,7 @@ Imports osi.service.automata
 Imports osi.service.interpreter.primitive
 
 Public Class code_gen_rule_wrapper(Of WRITER As New,
-                                      CODE_GENS_IMPL As code_gens(Of WRITER),
+                                      CODE_GENS_IMPL As {code_gens(Of WRITER), New},
                                       STATEMENTS_IMPL As statements(Of WRITER),
                                       _nlexer_rule As __do(Of String),
                                       _syntaxer_rule As __do(Of String),
@@ -21,14 +21,21 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
                                        SCOPE_T As scope(Of SCOPE_T))
     Inherits rule_wrapper(Of _nlexer_rule, _syntaxer_rule)
 
-    Public NotInheritable Class code_builder
-        Private ReadOnly l As CODE_GENS_IMPL
-        Private nested As UInt32
+    ' @VisibleForTesting
+    Public Shared Function new_code_gens() As CODE_GENS_IMPL
+        Dim l As New CODE_GENS_IMPL()
+        Dim v As vector(Of Action(Of CODE_GENS_IMPL)) = +alloc(Of _code_gens)()
+        Dim i As UInt32 = 0
+        While i < v.size()
+            v(i)(l)
+            i += uint32_1
+        End While
+        Return l
+    End Function
 
-        Public Sub New()
-            l = alloc(Of CODE_GENS_IMPL)()
-            init_code_gens()
-        End Sub
+    Public NotInheritable Class code_builder
+        Public ReadOnly code_gens As CODE_GENS_IMPL = new_code_gens()
+        Private nested As UInt32
 
         Public Function nested_build_level() As UInt32
             Return nested
@@ -56,7 +63,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
                 assert(root.child_count() > 0)
                 Dim i As UInt32 = 0
                 While i < root.child_count()
-                    If Not l.of(root.child(i)).build(o) Then
+                    If Not code_gens.of(root.child(i)).build(o) Then
                         Return False
                     End If
                     i += uint32_1
@@ -64,15 +71,6 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
                 Return True
             End Using
         End Function
-
-        Private Sub init_code_gens()
-            Dim v As vector(Of Action(Of CODE_GENS_IMPL)) = +alloc(Of _code_gens)()
-            Dim i As UInt32 = 0
-            While i < v.size()
-                v(i)(l)
-                i += uint32_1
-            End While
-        End Sub
 
         Public Shared Function current() As code_builder
             Return thread_static_implementation_of(Of builder).resolve().cb
