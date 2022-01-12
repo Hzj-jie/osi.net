@@ -75,6 +75,15 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
+                If variable.is_heap_name(name) Then
+                    raise_error(error_type.user,
+                                "Redefine works for heap name without index, but got ",
+                                name,
+                                " (new type ",
+                                type,
+                                ")")
+                    Return False
+                End If
                 Dim s As scope = Me.s
                 While Not s Is Nothing
                     If s.v.redefine(type, name) OrElse s.v.redefine(type, heap_name_of(name)) Then
