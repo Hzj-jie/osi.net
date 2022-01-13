@@ -56,6 +56,7 @@ Partial Public NotInheritable Class b2style
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of typed_node_writer)))
             Return vector.emplace_of(Of Action(Of code_gens(Of typed_node_writer)))(
                        code_gen.of_only_child(Of typed_node_writer)("base-root-type"),
+                       code_gen.of_all_children(Of typed_node_writer)("root-type-with-semi-colon"),
                        code_gen.of_only_child(Of typed_node_writer)("root-type"),
  _
                        code_gen.of_leaf_node("kw-if"),
@@ -100,7 +101,6 @@ Partial Public NotInheritable Class b2style
                        code_gen.of_all_children(Of typed_node_writer)("base-sentence-with-semi-colon"),
                        code_gen.of_all_children(Of typed_node_writer)("b2style-sentence-with-semi-colon"),
                        code_gen.of_only_child(Of typed_node_writer)("sentence-with-semi-colon"),
-                       code_gen.of_all_children(Of typed_node_writer)("sentence-without-semi-colon"),
                        code_gen.of_all_children(Of typed_node_writer)("value-definition"),
                        code_gen.of_all_children(Of typed_node_writer)("value-declaration"),
                        code_gen.of_all_children(Of typed_node_writer)("heap-declaration"),

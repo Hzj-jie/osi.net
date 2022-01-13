@@ -66,6 +66,7 @@ Public NotInheritable Class bstyle
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of writer)))
             Return vector.emplace_of(Of Action(Of code_gens(Of writer)))(
                 code_gen.of_only_child(Of writer)("base-root-type"),
+                code_gen.of_first_child(Of writer)("root-type-with-semi-colon"),
                 code_gen.of_only_child(Of writer)("root-type"),
                 AddressOf bool.register,
                 AddressOf condition.register,
@@ -90,7 +91,6 @@ Public NotInheritable Class bstyle
                 code_gen.of_only_child(Of writer)("sentence"),
                 code_gen.of_first_child(Of writer)("base-sentence-with-semi-colon"),
                 code_gen.of_only_child(Of writer)("sentence-with-semi-colon"),
-                code_gen.of_only_child(Of writer)("sentence-without-semi-colon"),
                 AddressOf [string].register,
                 AddressOf value.register,
                 AddressOf value_clause.register,
