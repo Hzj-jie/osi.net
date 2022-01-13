@@ -8,8 +8,7 @@ paramlist [param-with-comma]* param
 param-with-comma param comma
 
 paragraph [sentence, multi-sentence-paragraph]
-sentence [sentence-with-semi-colon, sentence-without-semi-colon]
-sentence-without-semi-colon [condition, while, for-loop]
+sentence [sentence-with-semi-colon, condition, while, for-loop]
 
 multi-sentence-paragraph start-paragraph [paragraph]* end-paragraph
 
@@ -17,17 +16,19 @@ value-definition type-name name assignment value
 value-declaration type-name name
 heap-declaration type-name heap-name
 value-clause variable-name assignment value
-
-value-definition-with-semi-colon value-definition semi-colon
+# Use in struct and class.
 value-declaration-with-semi-colon value-declaration semi-colon
-heap-declaration-with-semi-colon heap-declaration semi-colon
 
 condition kw-if start-bracket value end-bracket paragraph [else-condition]?
 else-condition kw-else paragraph
 
 while kw-while start-bracket value end-bracket paragraph
 
+base-for-increase [value-clause, ignore-result-function-call]
+for-loop kw-for start-bracket [value-definition, value-declaration]? semi-colon [value]? semi-colon [for-increase]? end-bracket paragraph 
+
 value [value-with-bracket, value-without-bracket]
+base-value-without-bracket [function-call, variable-name, integer, biguint, ufloat, bool, string]
 value-with-bracket start-bracket value end-bracket
 
 heap-name name start-square-bracket value end-square-bracket
@@ -42,7 +43,6 @@ return-clause kw-return [value]?
 
 # Embed a logic statement directly, like logic "int stdout a_string"
 logic kw-logic string
-logic-with-semi-colon logic semi-colon
 
 include-with-string kw-include string
 include [include-with-string, include-with-file]
@@ -55,13 +55,12 @@ typedef-type-str string
 typedef-type-name type-name
 typedef-type [typedef-type-name, typedef-type-str]
 typedef kw-typedef typedef-type typedef-type
-typedef-with-semi-colon typedef semi-colon
 
 # TODO: Support value-definition
 struct kw-struct type-name start-paragraph [value-declaration-with-semi-colon]* end-paragraph semi-colon
 
 reinterpret-cast kw-reinterpret-cast start-bracket variable-name comma type-name end-bracket
-reinterpret-cast-with-semi-colon reinterpret-cast semi-colon
 
-base-root-type [function, value-definition-with-semi-colon, heap-declaration-with-semi-colon, value-declaration-with-semi-colon, include, define, ifndef-wrapped, logic-with-semi-colon, typedef-with-semi-colon, struct, reinterpret-cast-with-semi-colon]
+root-type-with-semi-colon [value-definition, heap-declaration, value-declaration, logic, typedef]? semi-colon
+base-root-type [root-type-with-semi-colon, function, include, define, ifndef-wrapped, struct]
 base-sentence-with-semi-colon [ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, typedef, reinterpret-cast]? semi-colon

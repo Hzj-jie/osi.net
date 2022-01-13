@@ -1,12 +1,13 @@
 
 INCLUDE ../shared/syntaxer_rule.txt
 
+root-type base-root-type
+
 raw-name-with-dot raw-name dot
 name [raw-name-with-dot]* raw-name
 type-name raw-name
-root-type base-root-type
 sentence-with-semi-colon base-sentence-with-semi-colon
-for-loop kw-for start-bracket [value-definition, value-declaration]? semi-colon [value]? semi-colon [value-clause, ignore-result-function-call]? end-bracket paragraph
-value-without-bracket [function-call, variable-name, integer, biguint, ufloat, bool, string]
+for-increase base-for-increase
+value-without-bracket base-value-without-bracket
 raw-variable-name name
 variable-name [heap-name, raw-variable-name]

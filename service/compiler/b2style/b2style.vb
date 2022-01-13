@@ -56,6 +56,7 @@ Partial Public NotInheritable Class b2style
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of typed_node_writer)))
             Return vector.emplace_of(Of Action(Of code_gens(Of typed_node_writer)))(
                        code_gen.of_only_child(Of typed_node_writer)("base-root-type"),
+                       code_gen.of_all_children(Of typed_node_writer)("root-type-with-semi-colon"),
                        code_gen.of_only_child(Of typed_node_writer)("root-type"),
  _
                        code_gen.of_leaf_node("kw-if"),
@@ -100,13 +101,10 @@ Partial Public NotInheritable Class b2style
                        code_gen.of_all_children(Of typed_node_writer)("base-sentence-with-semi-colon"),
                        code_gen.of_all_children(Of typed_node_writer)("b2style-sentence-with-semi-colon"),
                        code_gen.of_only_child(Of typed_node_writer)("sentence-with-semi-colon"),
-                       code_gen.of_all_children(Of typed_node_writer)("sentence-without-semi-colon"),
                        code_gen.of_all_children(Of typed_node_writer)("value-definition"),
                        code_gen.of_all_children(Of typed_node_writer)("value-declaration"),
                        code_gen.of_all_children(Of typed_node_writer)("heap-declaration"),
-                       code_gen.of_all_children(Of typed_node_writer)("value-definition-with-semi-colon"),
                        code_gen.of_all_children(Of typed_node_writer)("value-declaration-with-semi-colon"),
-                       code_gen.of_all_children(Of typed_node_writer)("heap-declaration-with-semi-colon"),
                        code_gen.of_all_children(Of typed_node_writer)("value-clause"),
                        code_gen.of_all_children(Of typed_node_writer)("heap-name"),
                        AddressOf heap_struct_name.register,
@@ -115,16 +113,18 @@ Partial Public NotInheritable Class b2style
                        code_gen.of_only_child(Of typed_node_writer)("ignore-result-function-call"),
                        code_gen.of_only_child(Of typed_node_writer)("ignore-result-heap-struct-function-call"),
                        code_gen.of_all_children(Of typed_node_writer)("logic"),
-                       code_gen.of_all_children(Of typed_node_writer)("logic-with-semi-colon"),
                        code_gen.of_all_children(Of typed_node_writer)("condition"),
                        code_gen.of_all_children(Of typed_node_writer)("while"),
                        code_gen.of_all_children_with_wrapper(Of scope_wrapper, typed_node_writer) _
                                                             (AddressOf scope.wrap, "for-loop"),
+                       code_gen.of_only_child(Of typed_node_writer)("for-increase"),
+                       code_gen.of_only_child(Of typed_node_writer)("base-for-increase"),
                        code_gen.of_all_children(Of typed_node_writer)("value"),
                        code_gen.of_all_children(Of typed_node_writer)("else-condition"),
                        code_gen.of_all_children(Of typed_node_writer)("value-with-bracket"),
                        code_gen.of_all_children(Of typed_node_writer)("raw-value"),
                        code_gen.of_all_children(Of typed_node_writer)("value-without-bracket"),
+                       code_gen.of_only_child(Of typed_node_writer)("base-value-without-bracket"),
                        code_gen.of_all_children(Of typed_node_writer)("value-with-operation"),
                        code_gen.of_all_children(Of typed_node_writer)("unary-operation-value"),
                        AddressOf binary_operation_value.register,
@@ -151,7 +151,6 @@ Partial Public NotInheritable Class b2style
                        code_gen.of_all_children(Of typed_node_writer)("typedef-type-name"),
                        code_gen.of_all_children(Of typed_node_writer)("typedef-type-str"),
                        code_gen.of_all_children(Of typed_node_writer)("typedef"),
-                       code_gen.of_all_children(Of typed_node_writer)("typedef-with-semi-colon"),
  _
                        AddressOf struct.register,
                        code_gen.of_leaf_node("kw-struct"),
@@ -164,7 +163,6 @@ Partial Public NotInheritable Class b2style
                        code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma"),
                        code_gen.of_children_word_str(Of typed_node_writer)("type-param"),
  _
-                       code_gen.of_all_children(Of typed_node_writer)("reinterpret-cast-with-semi-colon"),
                        code_gen.of_all_children(Of typed_node_writer)("reinterpret-cast")
                    )
         End Function
