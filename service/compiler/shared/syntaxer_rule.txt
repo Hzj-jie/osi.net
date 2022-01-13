@@ -27,6 +27,9 @@ else-condition kw-else paragraph
 
 while kw-while start-bracket value end-bracket paragraph
 
+base-for-increase [value-clause, ignore-result-function-call]
+for-loop kw-for start-bracket [value-definition, value-declaration]? semi-colon [value]? semi-colon [for-increase]? end-bracket paragraph 
+
 value [value-with-bracket, value-without-bracket]
 value-with-bracket start-bracket value end-bracket
 

@@ -120,6 +120,8 @@ Partial Public NotInheritable Class b2style
                        code_gen.of_all_children(Of typed_node_writer)("while"),
                        code_gen.of_all_children_with_wrapper(Of scope_wrapper, typed_node_writer) _
                                                             (AddressOf scope.wrap, "for-loop"),
+                       code_gen.of_only_child(Of typed_node_writer)("for-increase"),
+                       code_gen.of_only_child(Of typed_node_writer)("base-for-increase"),
                        code_gen.of_all_children(Of typed_node_writer)("value"),
                        code_gen.of_all_children(Of typed_node_writer)("else-condition"),
                        code_gen.of_all_children(Of typed_node_writer)("value-with-bracket"),

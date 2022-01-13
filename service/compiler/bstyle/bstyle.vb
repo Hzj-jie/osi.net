@@ -71,6 +71,8 @@ Public NotInheritable Class bstyle
                 AddressOf condition.register,
                 code_gen.of_children(Of writer)("else-condition", 1),
                 AddressOf for_loop.register,
+                code_gen.of_only_child(Of writer)("for-increase"),
+                code_gen.of_only_child(Of writer)("base-for-increase"),
                 AddressOf ufloat.register,
                 AddressOf [function].register,
                 AddressOf function_call.register,

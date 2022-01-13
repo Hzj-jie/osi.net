@@ -6,7 +6,7 @@ name [raw-name-with-dot]* raw-name
 type-name raw-name
 root-type base-root-type
 sentence-with-semi-colon base-sentence-with-semi-colon
-for-loop kw-for start-bracket [value-definition, value-declaration]? semi-colon [value]? semi-colon [value-clause, ignore-result-function-call]? end-bracket paragraph
+for-increase base-for-increase
 value-without-bracket [function-call, variable-name, integer, biguint, ufloat, bool, string]
 raw-variable-name name
 variable-name [heap-name, raw-variable-name]

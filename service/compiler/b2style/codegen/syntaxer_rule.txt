@@ -18,7 +18,7 @@ b2style-sentence-with-semi-colon [ignore-result-heap-struct-function-call, self-
 sentence-with-semi-colon [b2style-sentence-with-semi-colon, base-sentence-with-semi-colon]
 self-operator [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or, self-left-shift, self-right-shift]
 self-value-clause variable-name self-operator value
-for-loop kw-for start-bracket [value-definition, value-declaration]? semi-colon [value]? semi-colon [value-clause, self-value-clause, ignore-result-heap-struct-function-call, ignore-result-function-call, pre-operation-value, post-operation-value]? end-bracket paragraph
+for-increase [self-value-clause, ignore-result-heap-struct-function-call, pre-operation-value, post-operation-value, base-for-increase]
 raw-value [heap-struct-function-call, function-call, variable-name, integer, biguint, ufloat, bool, string]
 value-without-bracket [value-with-operation, raw-value]
 value-with-operation [unary-operation-value, binary-operation-value]

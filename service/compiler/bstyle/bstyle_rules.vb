@@ -16,12 +16,12 @@ Friend Module bstyle_rules
     Public ReadOnly syntaxer_rule() As Byte
 
     Sub New()
-        nlexer_rule = Convert.FromBase64String(strcat_hint(CUInt(108), _
-        "H4sIAAAAAAAEAHu/ez8vl6efs0+oi6uCnp5+cUZiUWqKfl5OakVqUXxRaU6qXklFCS8XL1dRalpqUWpecqqCGoiLV48RTBMAfAhv7l8AAAA="))
+        nlexer_rule = Convert.FromBase64String(strcat_hint(CUInt(104), _
+        "H4sIAAAAAAAEAHu/ez+Xp5+zT6iLq4Kenn5xRmJRaop+Xk5qRWpRfFFpTqpeSUUJF1dRalpqUWpecqqCGhd+9UYQDQBUYCSlWAAAAA=="))
 
         assert(nlexer_rule.ungzip(nlexer_rule))
-        syntaxer_rule = Convert.FromBase64String(strcat_hint(CUInt(388), _
-        "H4sIAAAAAAAEAHVRzU7DMAy+R8o75Iya7RE4AAckxI1TNSG3ddtoWVw5DtvenpRsZdXgFPuzv58kWr2+P719PL+YzWYbR2DstvEcBE7In5w8buQkWmnFcLQBDmiPTkbbkZgrYnKj1U9V323tHpY9reQ8YaH8Ykwkdh6YBiLapdUqYhAM7UUr4sHZljyFsvjfVKue2HqiyeyPNtcmCrDYhqHdo5j6C3xC22HvghNHoTJXpPXAMEO7R3NjVxh/YTYzUsTKuCEQ5/AYkxfbp9DOMrYF7zMPQ7fYT9liYJhGrYrEHJ/STb4Vew7HDhpf3i075VsPyJVp3JByU5nUe4J8NkR5PQq7MOzKf624prz3GqtHhOkifcfIKt9L9dOwHwIAAA=="))
+        syntaxer_rule = Convert.FromBase64String(strcat_hint(CUInt(304), _
+        "H4sIAAAAAAAEAHWQPW7DMAyFd52Cc2E5h2g7FCi6dTKMgFJoW6giBhSVn9tHsVOjQdCJek/fIyWaj6/Xz++3d2jbTZ5QaLfJl6R4JtlKidTqWY0RPNmEe7KnoJPdscKvA1WY+dA9Qf3Lihm9HGgJrJYwq7354DCTXaXJlJSSvzfKtA/Wc+S0cP/dmoHFhuSFKrWgfx1zxFiWEBe1TtD/kEI3lOQ1cLIeY2zgiBLQxeWtDYQ6ayRpwIWxVNFAGSJjrY654lklpLGfF/QQhfmLj1Y3ER7ujZ8CvbkCiEWeDIsBAAA="))
 
         assert(syntaxer_rule.ungzip(syntaxer_rule))
     End Sub
