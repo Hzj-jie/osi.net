@@ -81,7 +81,6 @@ Public NotInheritable Class bstyle
                 AddressOf [integer].register,
                 AddressOf biguint.register,
                 AddressOf logic.register,
-                code_gen.of_first_child(Of writer)("logic-with-semi-colon"),
                 AddressOf multi_sentence_paragraph.register,
                 code_gen.of_only_child(Of writer)("paragraph"),
                 AddressOf param.register,
@@ -101,8 +100,6 @@ Public NotInheritable Class bstyle
                 AddressOf heap_name.register,
                 AddressOf raw_variable_name.register,
                 code_gen.of_first_child(Of writer)("value-declaration-with-semi-colon"),
-                code_gen.of_first_child(Of writer)("value-definition-with-semi-colon"),
-                code_gen.of_first_child(Of writer)("heap-declaration-with-semi-colon"),
                 AddressOf value_list.register,
                 code_gen.of_children(Of writer)("value-with-bracket", 1),
                 code_gen.of_first_child(Of writer)("value-with-comma"),
@@ -117,9 +114,7 @@ Public NotInheritable Class bstyle
                 code_gen.of_only_child(Of writer)("typedef-type"),
                 AddressOf typedef_type_name.register,
                 AddressOf typedef_type_str.register,
-                code_gen.of_first_child(Of writer)("typedef-with-semi-colon"),
                 AddressOf struct.register,
-                code_gen.of_first_child(Of writer)("reinterpret-cast-with-semi-colon"),
                 AddressOf reinterpret_cast.register)
         End Function
     End Class
