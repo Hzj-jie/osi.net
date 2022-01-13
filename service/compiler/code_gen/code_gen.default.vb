@@ -48,6 +48,18 @@ Public NotInheritable Class code_gen_delegate(Of WRITER As New)
 End Class
 
 Public NotInheritable Class code_gen
+    Public Shared Function of_ignore(Of WRITER As New)(ByVal name As String) As Action(Of code_gens(Of WRITER))
+        Return code_gen_delegate(Of WRITER).of(name,
+                                               Function(ByVal this As code_gens(Of WRITER),
+                                                        ByVal n As typed_node,
+                                                        ByVal o As WRITER) As Boolean
+                                                   assert(Not this Is Nothing)
+                                                   assert(Not n Is Nothing)
+                                                   assert(Not o Is Nothing)
+                                                   Return True
+                                               End Function)
+    End Function
+
     Public Shared Function of_children(Of WRITER As New) _
                                       (ByVal name As String,
                                        ByVal ParamArray selected_children() As UInt32) _

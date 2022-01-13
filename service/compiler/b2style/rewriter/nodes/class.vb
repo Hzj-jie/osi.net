@@ -28,7 +28,8 @@ Partial Public NotInheritable Class b2style
         Private Shared Sub ensure_subnode_type(ByVal n As typed_node)
             assert(Not n Is Nothing)
             assert(n.type_name.Equals("value-declaration-with-semi-colon") OrElse
-                   n.type_name.Equals("function"))
+                   n.type_name.Equals("function") OrElse
+                   n.type_name.Equals("semi-colon"))
         End Sub
 
         Private Shared Function is_value_declaration(ByVal n As typed_node) As Boolean
