@@ -60,6 +60,6 @@ struct kw-struct type-name start-paragraph [value-declaration-with-semi-colon]* 
 
 reinterpret-cast kw-reinterpret-cast start-bracket variable-name comma type-name end-bracket
 
-root-type-with-semi-colon [value-definition, heap-declaration, value-declaration, logic, typedef, reinterpret-cast]? semi-colon
+root-type-with-semi-colon [value-definition, heap-declaration, value-declaration, logic, typedef]? semi-colon
 base-root-type [root-type-with-semi-colon, function, include, define, ifndef-wrapped, struct]
 base-sentence-with-semi-colon [ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, typedef, reinterpret-cast]? semi-colon
