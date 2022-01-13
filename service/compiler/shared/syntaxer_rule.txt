@@ -28,6 +28,7 @@ base-for-increase [value-clause, ignore-result-function-call]
 for-loop kw-for start-bracket [value-definition, value-declaration]? semi-colon [value]? semi-colon [for-increase]? end-bracket paragraph 
 
 value [value-with-bracket, value-without-bracket]
+base-value-without-bracket [function-call, variable-name, integer, biguint, ufloat, bool, string]
 value-with-bracket start-bracket value end-bracket
 
 heap-name name start-square-bracket value end-square-bracket

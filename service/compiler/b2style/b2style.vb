@@ -124,6 +124,7 @@ Partial Public NotInheritable Class b2style
                        code_gen.of_all_children(Of typed_node_writer)("value-with-bracket"),
                        code_gen.of_all_children(Of typed_node_writer)("raw-value"),
                        code_gen.of_all_children(Of typed_node_writer)("value-without-bracket"),
+                       code_gen.of_only_child(Of typed_node_writer)("base-value-without-bracket"),
                        code_gen.of_all_children(Of typed_node_writer)("value-with-operation"),
                        code_gen.of_all_children(Of typed_node_writer)("unary-operation-value"),
                        AddressOf binary_operation_value.register,

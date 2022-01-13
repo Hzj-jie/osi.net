@@ -1,25 +1,29 @@
 
 INCLUDE ../shared/syntaxer_rule.txt
 
+root-type [base-root-type, namespace-, class, template]
+
 raw-name-with-dot raw-name dot
 # Support a.N::b function call and a.::N::b.
 # Otherwise it should be name [double-colon]? [raw-name-with-double-colon]* [raw-name-with-dot]* raw-name
 name [raw-name-with-dot]* [double-colon]? [raw-name-with-double-colon, raw-name-with-dot]* raw-name
 raw-type-name [double-colon]? [raw-name-with-double-colon]* raw-name
-template-type-param-list [template-type-param-with-comma]* template-type-param
-template-type-param-with-comma template-type-param comma
-template-type-param type-name
-template-type-name raw-type-name less-than template-type-param-list greater-than
+
 type-name [template-type-name, raw-type-name]
-root-type [base-root-type, namespace-, class, template]
+
 reference bit-and
+
 namespace- kw-namespace name start-paragraph [root-type]* end-paragraph
+
 b2style-sentence-with-semi-colon [ignore-result-heap-struct-function-call, self-value-clause, pre-operation-value, post-operation-value]? semi-colon
 sentence-with-semi-colon [b2style-sentence-with-semi-colon, base-sentence-with-semi-colon]
+
 self-operator [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or, self-left-shift, self-right-shift]
 self-value-clause variable-name self-operator value
+
 for-increase [self-value-clause, ignore-result-heap-struct-function-call, pre-operation-value, post-operation-value, base-for-increase]
-raw-value [heap-struct-function-call, function-call, variable-name, integer, biguint, ufloat, bool, string]
+
+raw-value [heap-struct-function-call, base-value-without-bracket]
 value-without-bracket [value-with-operation, raw-value]
 value-with-operation [unary-operation-value, binary-operation-value]
 unary-operation-value [pre-operation-value, post-operation-value]
@@ -36,6 +40,10 @@ heap-struct-function-call heap-struct-name start-bracket [value-list]? end-brack
 # TODO: Support static function
 class kw-class type-name start-paragraph [value-declaration-with-semi-colon, function]* end-paragraph semi-colon
 
+template-type-param-list [template-type-param-with-comma]* template-type-param
+template-type-param-with-comma template-type-param comma
+template-type-param type-name
+template-type-name raw-type-name less-than template-type-param-list greater-than
 type-param-list [type-param-with-comma]* type-param
 type-param-with-comma type-param comma
 type-param raw-name

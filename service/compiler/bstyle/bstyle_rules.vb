@@ -20,8 +20,8 @@ Friend Module bstyle_rules
         "H4sIAAAAAAAEAHu/ez+Xp5+zT6iLq4Kenn5xRmJRaop+Xk5qRWpRfFFpTqpeSUUJF1dRalpqUWpecqqCGhd+9UYQDQBUYCSlWAAAAA=="))
 
         assert(nlexer_rule.ungzip(nlexer_rule))
-        syntaxer_rule = Convert.FromBase64String(strcat_hint(CUInt(304), _
-        "H4sIAAAAAAAEAHWQPW7DMAyFd52Cc2E5h2g7FCi6dTKMgFJoW6giBhSVn9tHsVOjQdCJek/fIyWaj6/Xz++3d2jbTZ5QaLfJl6R4JtlKidTqWY0RPNmEe7KnoJPdscKvA1WY+dA9Qf3Lihm9HGgJrJYwq7354DCTXaXJlJSSvzfKtA/Wc+S0cP/dmoHFhuSFKrWgfx1zxFiWEBe1TtD/kEI3lOQ1cLIeY2zgiBLQxeWtDYQ6ayRpwIWxVNFAGSJjrY654lklpLGfF/QQhfmLj1Y3ER7ujZ8CvbkCiEWeDIsBAAA="))
+        syntaxer_rule = Convert.FromBase64String(strcat_hint(CUInt(256), _
+        "H4sIAAAAAAAEAHWPyw6CMBBF9/MVXRsLH6EuTIw7V4aYoYyhsbSkHV5/L1IkGnQ3c++584DjeXe67A8iSdJQoqciDYNl7MnffGMo4Z4BvHMseahJ5BhILu3oYCctViQ7zaUsHIu3IsYGpuK6grLNgsFrTgwsUiDLZNXMB6q0VM44G7f/c+HuvNRWeRqpiH4q0KJpYsg1LHOP6kEcuZ/W9FuLXmNu5gun676la0lYT+VWrAIZPAHJgrsmYAEAAA=="))
 
         assert(syntaxer_rule.ungzip(syntaxer_rule))
     End Sub

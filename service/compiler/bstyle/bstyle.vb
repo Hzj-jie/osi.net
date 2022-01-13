@@ -104,6 +104,7 @@ Public NotInheritable Class bstyle
                 code_gen.of_children(Of writer)("value-with-bracket", 1),
                 code_gen.of_first_child(Of writer)("value-with-comma"),
                 code_gen.of_only_child(Of writer)("value-without-bracket"),
+                code_gen.of_only_child(Of writer)("base-value-without-bracket"),
                 AddressOf [while].register,
                 code_gen.of_only_child(Of writer)("include"),
                 AddressOf include_with_string.register,
