@@ -148,6 +148,16 @@ Public NotInheritable Class b2style_compile_error_test
             End Sub)).contains("s[0]")
     End Sub
 
+    <test>
+    Private Shared Sub reinterpret_cast_without_type_id()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(b2style.
+                    with_default_functions.
+                    parse(_b2style_test_data.errors_reinterpret_cast_without_type_id.as_text(), Nothing))
+            End Sub)).contains("s.S2__struct__type__id")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
