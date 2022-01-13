@@ -68,6 +68,7 @@ Public NotInheritable Class bstyle
                 code_gen.of_only_child(Of writer)("base-root-type"),
                 code_gen.of_first_child(Of writer)("root-type-with-semi-colon"),
                 code_gen.of_only_child(Of writer)("root-type"),
+                code_gen.of_ignore(Of writer)("semi-colon"),
                 AddressOf bool.register,
                 AddressOf condition.register,
                 code_gen.of_children(Of writer)("else-condition", 1),

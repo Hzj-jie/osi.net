@@ -57,7 +57,7 @@ typedef-type [typedef-type-name, typedef-type-str]
 typedef kw-typedef typedef-type typedef-type
 
 # TODO: Support value-definition
-struct kw-struct type-name start-paragraph [value-declaration-with-semi-colon]* end-paragraph semi-colon
+struct kw-struct type-name start-paragraph [value-declaration-with-semi-colon, semi-colon]* end-paragraph semi-colon
 
 reinterpret-cast kw-reinterpret-cast start-bracket variable-name comma type-name end-bracket
 
