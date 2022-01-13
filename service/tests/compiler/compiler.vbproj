@@ -110,6 +110,7 @@
     <Content Include="b2style\codegen\errors\reinterpret_cast_heap_with_index.txt" />
     <Content Include="b2style\codegen\errors\reinterpret_cast_unknown_type.txt" />
     <Content Include="b2style\codegen\errors\reinterpret_cast_unknown_variable.txt" />
+    <Content Include="b2style\codegen\errors\reinterpret_cast_without_type_id.txt" />
     <Content Include="b2style\codegen\errors\undefined-value-clause.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />
     <Content Include="b2style\codegen\lots-of-semi-colons.txt" />
