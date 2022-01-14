@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.compiler.rewriters
 
 Public NotInheritable Class typed_node_writer_code_gens_registrar
-    Inherits code_gens_registrar(Of typed_node_writer, typed_node_writer_code_gens_registrar)
+    Inherits object_list_writer_code_gens_registrar(Of typed_node_writer, typed_node_writer_code_gens_registrar)
 
     Public Function with_of_leaf_nodes(ByVal ParamArray names() As String) As typed_node_writer_code_gens_registrar
         v.emplace_back(streams.of(names).
@@ -20,6 +20,24 @@ Public NotInheritable Class typed_node_writer_code_gens_registrar
     End Function
 End Class
 
+Public NotInheritable Class object_list_writer_code_gens_registrar
+    Inherits object_list_writer_code_gens_registrar(Of object_list_writer, object_list_writer_code_gens_registrar)
+End Class
+
+Public Class object_list_writer_code_gens_registrar(Of WRITER As {object_list_writer, New},
+                                                       RT As object_list_writer_code_gens_registrar(Of WRITER, RT))
+    Inherits code_gens_registrar(Of WRITER, RT)
+
+    Public Function with_of_names(ByVal ParamArray names() As String) As RT
+        v.emplace_back(streams.of(names).
+                       map(Function(ByVal name As String) As Action(Of code_gens(Of WRITER))
+                               Return code_gen.of_name(Of WRITER)(name)
+                           End Function).
+                       to_array())
+        Return this()
+    End Function
+End Class
+
 Public NotInheritable Class code_gens_registrar(Of WRITER As New)
     Inherits code_gens_registrar(Of WRITER, code_gens_registrar(Of WRITER))
 End Class
@@ -27,7 +45,7 @@ End Class
 Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of WRITER, RT))
     Protected ReadOnly v As New vector(Of Action(Of code_gens(Of WRITER)))()
 
-    Private Function this() As RT
+    Protected Function this() As RT
         Return direct_cast(Of RT)(Me)
     End Function
 

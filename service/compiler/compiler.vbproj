@@ -88,7 +88,6 @@
     <Compile Include="bstyle\logic\nodes\includes.vb" />
     <Compile Include="b2style\rewriter\nodes\name.vb" />
     <Compile Include="b2style\rewriter\nodes\namespace_.vb" />
-    <Compile Include="b2style\rewriter\nodes\operations.vb" />
     <Compile Include="b2style\rewriter\nodes\post_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\pre_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\self_value_clause.vb" />

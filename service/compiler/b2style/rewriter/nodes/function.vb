@@ -25,7 +25,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             Using New scope_wrapper()
-                Dim function_name As String = namespace_.bstyle_format(n.child(1).children_word_str())
+                Dim function_name As String = namespace_.bstyle_format.of(n.child(1).children_word_str())
                 Dim fo As New typed_node_writer()
                 scope.current().current_function().define(function_name)
                 Return l.of_all_children(n).build(fo) AndAlso

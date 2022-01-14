@@ -30,7 +30,7 @@ Partial Public NotInheritable Class b2style
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
-            o.append(namespace_.bstyle_format(n.children_word_str()))
+            o.append(namespace_.bstyle_format.of(n.children_word_str()))
             Return True
         End Function
     End Class

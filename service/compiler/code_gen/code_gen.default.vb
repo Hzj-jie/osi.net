@@ -175,7 +175,7 @@ Public NotInheritable Class code_gen
                    Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
                        assert(Not n Is Nothing)
                        assert(Not o Is Nothing)
-                       Return o.append(name.Replace("-"c, "_"c))
+                       Return o.append(name)
                    End Function)
     End Function
 

@@ -80,10 +80,10 @@ Partial Public NotInheritable Class b2style
                            with(Of [function])().
                            with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).
                            with(code_gen.of_children_word_str(Of typed_node_writer)("type-param")).
+                           with(code_gen.of_children_word_str(Of typed_node_writer)("reference")).
                            with_of_only_childs(
                                "base-root-type",
                                "root-type",
-                               "reference",
                                "paragraph",
                                "sentence-with-semi-colon",
                                "ignore-result-function-call",
@@ -92,7 +92,8 @@ Partial Public NotInheritable Class b2style
                                "base-for-increase",
                                "base-value-without-bracket",
                                "typedef-type",
-                               "type-name").
+                               "type-name",
+                               "self-operator").
                            with_of_leaf_nodes(
                                "kw-if",
                                "kw-else",
@@ -121,7 +122,6 @@ Partial Public NotInheritable Class b2style
                                "kw-ifndef",
                                "kw-define",
                                "kw-endif",
-                               "bit-and",  ' Allowing & in param.
                                "kw-typedef",
                                "kw-struct").
                            with_of_all_childrens(
@@ -158,7 +158,40 @@ Partial Public NotInheritable Class b2style
                                "typedef-type-str",
                                "typedef",
                                "type-param-list",
-                               "reinterpret-cast")
+                               "reinterpret-cast").
+                           with_of_names(
+                               "add",
+                               "minus",
+                               "multiply",
+                               "divide",
+                               "mod",
+                               "power",
+                               "bit-and",
+                               "bit-or",
+                               "and",
+                               "or",
+                               "left-shift",
+                               "right-shift",
+                               "less-than",
+                               "greater-than",
+                               "less-or-equal",
+                               "greater-or-equal",
+                               "equal",
+                               "not-equal",
+                               "self-add",
+                               "self-minus",
+                               "self-multiply",
+                               "self-divide",
+                               "self-mod",
+                               "self-power",
+                               "self-bit-and",
+                               "self-bit-or",
+                               "self-and",
+                               "self-or",
+                               "self-left-shift",
+                               "self-right-shift",
+                               "self-inc",
+                               "self-dec")
         End Function
     End Class
 
