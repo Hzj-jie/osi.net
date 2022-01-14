@@ -20,16 +20,10 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Return GetType(T).Name().Replace("_"c, "-"c)
     End Function
 
-    ' TODO: Hide most of the register.
     Public Sub register(ByVal s As String, ByVal b As code_gen(Of WRITER))
         assert(Not s.null_or_whitespace())
         assert(Not b Is Nothing)
         assert(m.emplace(s, b).second(), s)
-    End Sub
-
-    Public Sub register(ByVal s As String, ByVal f As Func(Of code_gens(Of WRITER), code_gen(Of WRITER)))
-        assert(Not f Is Nothing)
-        register(s, f(Me))
     End Sub
 
     Public Sub register(Of T As code_gen(Of WRITER))(ByVal b As T)
@@ -37,10 +31,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
     End Sub
 
     Public Sub register(Of T As code_gen(Of WRITER))(ByVal name As String)
-        register(name,
-                 Function(ByVal b As code_gens(Of WRITER)) As code_gen(Of WRITER)
-                     Return inject_constructor(Of T).invoke(b)
-                 End Function)
+        register(name, inject_constructor(Of T).invoke(Me))
     End Sub
 
     Public Sub register(Of T As code_gen(Of WRITER))()
@@ -53,15 +44,22 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Return (+it).second
     End Function
 
-    ' TODO: Merge with the one above.
     Private Function code_gen_of(ByVal n As typed_node) As code_gen(Of WRITER)
         assert(Not n Is Nothing)
         Return code_gen_of(n.type_name)
     End Function
 
     ' Limit the use of this function, prefer code_gen_proxy.dump if possible.
-    Public Function typed_code_gen(Of T As code_gen(Of WRITER))() As T
+    Public Function typed(Of T As code_gen(Of WRITER))() As T
         Return direct_cast(Of T)(code_gen_of(code_gen_name(Of T)()))
+    End Function
+
+    Public Function [of](ByVal n As typed_node) As code_gen_proxy
+        Return New code_gen_proxy(code_gen_of(n), n)
+    End Function
+
+    Public Function of_all_children(ByVal n As typed_node) As code_gen_all_children_proxy
+        Return New code_gen_all_children_proxy(Me, n)
     End Function
 
     Public Structure code_gen_proxy
@@ -137,13 +135,5 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             Return r
         End Function
     End Class
-
-    Public Function of_all_children(ByVal n As typed_node) As code_gen_all_children_proxy
-        Return New code_gen_all_children_proxy(Me, n)
-    End Function
-
-    Public Function [of](ByVal n As typed_node) As code_gen_proxy
-        Return New code_gen_proxy(code_gen_of(n), n)
-    End Function
 End Class
 
