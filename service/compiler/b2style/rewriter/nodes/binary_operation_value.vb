@@ -18,11 +18,6 @@ Partial Public NotInheritable Class b2style
             MyBase.New(i)
         End Sub
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(Of binary_operation_value)()
-        End Sub
-
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)

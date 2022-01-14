@@ -19,11 +19,6 @@ Partial Public NotInheritable Class b2style
             MyBase.New(i)
         End Sub
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(Of struct)()
-        End Sub
-
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
@@ -41,8 +36,15 @@ Partial Public NotInheritable Class b2style
         Private Function build_child(ByVal child As typed_node, ByVal o As typed_node_writer) As Boolean
             assert(Not child Is Nothing)
             assert(Not o Is Nothing)
-            If Not child.type_name.Equals("value-declaration-with-semi-colon") Then
+            If Not child.type_name.Equals("struct-body") Then
                 Return l.of(child).build(o)
+            End If
+
+            ' Though not really necessary, just forward semi-colons directly to bstyle, this behavior ensures random
+            ' semi-colons can be handled by bstyle as well.
+            If child.child_count() = 1 Then
+                o.append(child.child().input())
+                Return True
             End If
 
             ' TODO: Support value-definition

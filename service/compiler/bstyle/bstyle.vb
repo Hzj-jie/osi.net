@@ -66,9 +66,8 @@ Public NotInheritable Class bstyle
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of writer)))
             Return vector.emplace_of(Of Action(Of code_gens(Of writer)))(
                 code_gen.of_only_child(Of writer)("base-root-type"),
-                code_gen.of_first_child(Of writer)("root-type-with-semi-colon"),
+                code_gen.of_ignore_last_child(Of writer)("root-type-with-semi-colon"),
                 code_gen.of_only_child(Of writer)("root-type"),
-                code_gen.of_ignore(Of writer)("semi-colon"),
                 AddressOf bool.register,
                 AddressOf condition.register,
                 code_gen.of_children(Of writer)("else-condition", 1),
@@ -89,7 +88,7 @@ Public NotInheritable Class bstyle
                 code_gen.of_all_children(Of writer)("paramlist"),
                 AddressOf return_clause.register,
                 code_gen.of_only_child(Of writer)("sentence"),
-                code_gen.of_first_child(Of writer)("base-sentence-with-semi-colon"),
+                code_gen.of_ignore_last_child(Of writer)("base-sentence-with-semi-colon"),
                 code_gen.of_only_child(Of writer)("sentence-with-semi-colon"),
                 AddressOf [string].register,
                 AddressOf value.register,
@@ -100,7 +99,6 @@ Public NotInheritable Class bstyle
                 code_gen.of_only_child(Of writer)("variable-name"),
                 AddressOf heap_name.register,
                 AddressOf raw_variable_name.register,
-                code_gen.of_first_child(Of writer)("value-declaration-with-semi-colon"),
                 AddressOf value_list.register,
                 code_gen.of_children(Of writer)("value-with-bracket", 1),
                 code_gen.of_first_child(Of writer)("value-with-comma"),

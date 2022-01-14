@@ -73,10 +73,11 @@ Partial Public NotInheritable Class b2style
                                                                         _true)
         Private Shared ReadOnly instance As New include_with_string()
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(instance)
-        End Sub
+        Public Shared ReadOnly code_gen As Action(Of code_gens(Of typed_node_writer)) =
+            Sub(ByVal b As code_gens(Of typed_node_writer))
+                assert(Not b Is Nothing)
+                b.register(instance)
+            End Sub
 
         ' Forward missing files to the bstyle.
         Protected Overrides Function handle_not_dumpable(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
@@ -95,10 +96,11 @@ Partial Public NotInheritable Class b2style
                                                                       _true)
         Private Shared ReadOnly instance As New include_with_file()
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(instance)
-        End Sub
+        Public Shared ReadOnly code_gen As Action(Of code_gens(Of typed_node_writer)) =
+            Sub(ByVal b As code_gens(Of typed_node_writer))
+                assert(Not b Is Nothing)
+                b.register(instance)
+            End Sub
 
         ' Forward missing files to the bstyle.
         Protected Overrides Function handle_not_dumpable(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean

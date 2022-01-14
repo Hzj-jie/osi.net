@@ -20,21 +20,22 @@ Partial Public NotInheritable Class b2style
         Private Sub New()
         End Sub
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(instance)
-        End Sub
+        Public Shared ReadOnly code_gen As Action(Of code_gens(Of typed_node_writer)) =
+            Sub(ByVal b As code_gens(Of typed_node_writer))
+                assert(Not b Is Nothing)
+                b.register(instance)
+            End Sub
 
         Private Shared Sub ensure_subnode_type(ByVal n As typed_node)
             assert(Not n Is Nothing)
-            assert(n.type_name.Equals("value-declaration-with-semi-colon") OrElse
-                   n.type_name.Equals("function") OrElse
-                   n.type_name.Equals("semi-colon"))
+            assert(n.type_name.Equals("struct-body") OrElse
+                   n.type_name.Equals("function"),
+                   n.type_name)
         End Sub
 
-        Private Shared Function is_value_declaration(ByVal n As typed_node) As Boolean
+        Private Shared Function is_struct_body(ByVal n As typed_node) As Boolean
             ensure_subnode_type(n)
-            Return n.type_name.Equals("value-declaration-with-semi-colon")
+            Return n.type_name.Equals("struct-body")
         End Function
 
         Private Shared Function is_function(ByVal n As typed_node) As Boolean
@@ -50,21 +51,23 @@ Partial Public NotInheritable Class b2style
             o.Append("struct ")
             Dim class_name As String = n.child(1).input()
             o.Append(class_name).Append("{")
-            ' Append variables into the structure.
+            ' Append struct-body back into the structure.
+            Dim class_body As Func(Of Int32, typed_node) =
+                    Function(ByVal i As Int32) As typed_node
+                        Dim c As typed_node = n.child(CUInt(i))
+                        assert(c.type_name.Equals("class-body"))
+                        Return c.child()
+                    End Function
             streams.range(3, n.child_count() - uint32_2).
-                    map(Function(ByVal i As Int32) As typed_node
-                            Return n.child(CUInt(i))
-                        End Function).
-                     filter(AddressOf is_value_declaration).
-                     foreach(Sub(ByVal node As typed_node)
-                                 o.Append(node.input())
-                             End Sub)
+                    map(class_body).
+                    filter(AddressOf is_struct_body).
+                    foreach(Sub(ByVal node As typed_node)
+                                o.Append(node.input())
+                            End Sub)
             o.Append("};")
             ' Append functions after the structure.
             streams.range(3, n.child_count() - uint32_2).
-                    map(Function(ByVal i As Int32) As typed_node
-                            Return n.child(CUInt(i))
-                        End Function).
+                    map(class_body).
                     filter(AddressOf is_function).
                     foreach(Sub(ByVal node As typed_node)
                                 assert(Not node Is Nothing)

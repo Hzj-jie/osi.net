@@ -15,10 +15,11 @@ Partial Public NotInheritable Class b2style
 
         Private Shared ReadOnly instance As New heap_struct_name()
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(instance)
-        End Sub
+        Public Shared ReadOnly code_gen As Action(Of code_gens(Of typed_node_writer)) =
+            Sub(ByVal b As code_gens(Of typed_node_writer))
+                assert(Not b Is Nothing)
+                b.register(instance)
+            End Sub
 
         Private Shared Function bstyle_format(ByVal n As typed_node) As String
             assert(n.child_count() = 3)

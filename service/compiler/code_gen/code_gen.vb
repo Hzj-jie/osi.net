@@ -29,6 +29,29 @@ Partial Public Class code_gens(Of WRITER As New)
         Return GetType(T).Name().Replace("_"c, "-"c)
     End Function
 
+    Public Shared Function registrars_of(ByVal ParamArray inputs() As Object) _
+                                        As vector(Of Action(Of code_gens(Of WRITER)))
+        Dim r As New vector(Of Action(Of code_gens(Of WRITER)))()
+        For Each input As Object In inputs
+            assert(Not input Is Nothing)
+            If TypeOf input Is Action(Of code_gens(Of WRITER)) Then
+                r.emplace_back(direct_cast(Of Action(Of code_gens(Of WRITER)))(input))
+            ElseIf TypeOf input Is Action(Of code_gens(Of WRITER))() Then
+                r.emplace_back(direct_cast(Of Action(Of code_gens(Of WRITER))())(input))
+            Else
+                assert(False)
+            End If
+        Next
+        Return r
+    End Function
+
+    Public Shared Function code_gen(Of T As code_gen(Of WRITER))() As Action(Of code_gens(Of WRITER))
+        Return Sub(ByVal b As code_gens(Of WRITER))
+                   assert(Not b Is Nothing)
+                   b.register(Of T)()
+               End Sub
+    End Function
+
     Public Sub register(ByVal s As String, ByVal b As code_gen(Of WRITER))
         assert(Not s.null_or_whitespace())
         assert(Not b Is Nothing)
@@ -73,15 +96,12 @@ Partial Public Class code_gens(Of WRITER As New)
     End Function
 
     Public Structure code_gen_proxy
-        Private ReadOnly l As code_gens(Of WRITER)
         Private ReadOnly b As code_gen(Of WRITER)
         Private ReadOnly n As typed_node
 
-        Public Sub New(ByVal l As code_gens(Of WRITER), ByVal b As code_gen(Of WRITER), ByVal n As typed_node)
-            assert(Not l Is Nothing)
+        Public Sub New(ByVal b As code_gen(Of WRITER), ByVal n As typed_node)
             assert(Not b Is Nothing)
             assert(Not n Is Nothing)
-            Me.l = l
             Me.b = b
             Me.n = n
         End Sub
@@ -104,8 +124,31 @@ Partial Public Class code_gens(Of WRITER As New)
             assert(dump(r))
             Return r
         End Function
+    End Structure
 
-        Public Function dump_children(ByRef o As vector(Of String)) As Boolean
+    Public NotInheritable Class code_gen_all_children_proxy
+        Private ReadOnly l As code_gens(Of WRITER)
+        Private ReadOnly n As typed_node
+
+        Public Sub New(ByVal l As code_gens(Of WRITER), ByVal n As typed_node)
+            assert(Not l Is Nothing)
+            assert(Not n Is Nothing)
+            Me.l = l
+            Me.n = n
+        End Sub
+
+        Public Function build(ByVal o As WRITER) As Boolean
+            Dim i As UInt32 = 0
+            While i < n.child_count()
+                If Not l.of(n.child(i)).build(o) Then
+                    Return False
+                End If
+                i += uint32_1
+            End While
+            Return True
+        End Function
+
+        Public Function dump(ByRef o As vector(Of String)) As Boolean
             o.renew()
             Dim i As UInt32 = 0
             While i < n.child_count()
@@ -119,15 +162,19 @@ Partial Public Class code_gens(Of WRITER As New)
             Return True
         End Function
 
-        Public Function dump_children() As vector(Of String)
-            Dim v As vector(Of String) = Nothing
-            assert(dump_children(v))
-            Return v
+        Public Function dump() As vector(Of String)
+            Dim r As vector(Of String) = Nothing
+            assert(dump(r))
+            Return r
         End Function
-    End Structure
+    End Class
+
+    Public Function of_all_children(ByVal n As typed_node) As code_gen_all_children_proxy
+        Return New code_gen_all_children_proxy(Me, n)
+    End Function
 
     Public Function [of](ByVal n As typed_node) As code_gen_proxy
-        Return New code_gen_proxy(Me, code_gen_of(n), n)
+        Return New code_gen_proxy(code_gen_of(n), n)
     End Function
 End Class
 

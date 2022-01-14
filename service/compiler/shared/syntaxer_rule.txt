@@ -16,8 +16,6 @@ value-definition type-name name assignment value
 value-declaration type-name name
 heap-declaration type-name heap-name
 value-clause variable-name assignment value
-# Use in struct and class.
-value-declaration-with-semi-colon value-declaration semi-colon
 
 condition kw-if start-bracket value end-bracket paragraph [else-condition]?
 else-condition kw-else paragraph
@@ -57,7 +55,8 @@ typedef-type [typedef-type-name, typedef-type-str]
 typedef kw-typedef typedef-type typedef-type
 
 # TODO: Support value-definition
-struct kw-struct type-name start-paragraph [value-declaration-with-semi-colon, semi-colon]* end-paragraph semi-colon
+struct-body [value-declaration]? semi-colon
+struct kw-struct type-name start-paragraph [struct-body]* end-paragraph semi-colon
 
 reinterpret-cast kw-reinterpret-cast start-bracket variable-name comma type-name end-bracket
 

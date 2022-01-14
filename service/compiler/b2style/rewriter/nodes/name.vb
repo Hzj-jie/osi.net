@@ -18,11 +18,6 @@ Partial Public NotInheritable Class b2style
             MyBase.New(i)
         End Sub
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(Of name)()
-        End Sub
-
         Public Shared Function [of](ByVal name As String) As Action(Of code_gens(Of typed_node_writer))
             Return Sub(ByVal b As code_gens(Of typed_node_writer))
                        assert(Not b Is Nothing)

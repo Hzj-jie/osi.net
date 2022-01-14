@@ -191,14 +191,25 @@ Partial Public NotInheritable Class bstyle
                          structs().
                          define(n.child(1).word().str(),
                                 streams.range_closed(CUInt(3), n.child_count() - CUInt(3)).
-                                        map(Function(ByVal index As Int32) As struct_member
-                                                ' TODO: Support value_definition.
-                                                Dim c As typed_node = n.child(CUInt(index))
+                                        map(Function(ByVal index As Int32) As typed_node
+                                                Return n.child(CUInt(index))
+                                            End Function).
+                                        filter(Function(ByVal c As typed_node) As Boolean
+                                                   assert(Not c Is Nothing)
+                                                   assert(c.type_name.Equals("struct-body"))
+                                                   assert(c.child_count() <= 2)
+                                                   Return c.child_count() = 2
+                                               End Function).
+                                        map(Function(ByVal c As typed_node) As typed_node
+                                                Return c.child(0)
+                                            End Function).
+                                        map(Function(ByVal c As typed_node) As struct_member
+                                                ' TODO: Support value_definition.str_bytes_val
                                                 assert(Not c Is Nothing)
+                                                assert(c.type_name.Equals("value-declaration"))
                                                 assert(c.child_count() = 2)
-                                                assert(c.child(0).child_count() = 2)
-                                                Return New struct_member(c.child(0).child(0).word().str(),
-                                                                         c.child(0).child(1).word().str())
+                                                Return New struct_member(c.child(0).word().str(),
+                                                                         c.child(1).word().str())
                                             End Function).
                                         concat(New struct_member(
                                                        id_type,

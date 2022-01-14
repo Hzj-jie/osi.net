@@ -88,7 +88,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(n.type_name.Equals("template"))
             assert(n.child_count() = 5)
-            Dim v As vector(Of String) = l.of(n.child(2)).dump_children()
+            Dim v As vector(Of String) = l.of_all_children(n.child(2)).dump()
             If v.size() > v.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
                             "Template ",
