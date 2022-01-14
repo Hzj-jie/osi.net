@@ -45,12 +45,12 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public Shared Function in_global_namespace(ByVal i As String) As String
-                Return [of](with_namespace(empty_string, i))
+                Return [of](with_namespace("", i))
             End Function
 
             Public Shared Function operator_function_name(ByVal operator_name As String) As String
                 assert(Not operator_name.null_or_whitespace())
-                Return [of](with_namespace(empty_string, with_namespace("b2style", operator_name.Replace("-"c, "_"c))))
+                Return [of](with_namespace("", with_namespace("b2style", operator_name.Replace("-"c, "_"c))))
             End Function
 
             Private Sub New()
@@ -58,7 +58,7 @@ Partial Public NotInheritable Class b2style
         End Class
 
         Public Shared Function with_global_namespace(ByVal n As String) As String
-            Return with_namespace(empty_string, n)
+            Return with_namespace("", n)
         End Function
 
         Private Shared Function with_namespace(ByVal n As String, ByVal i As String) As String

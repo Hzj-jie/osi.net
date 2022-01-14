@@ -190,7 +190,7 @@ Public Module vector_extension
             Return Nothing
         End If
         If v.empty() Then
-            Return String.Empty
+            Return ""
         End If
         Dim r As New StringBuilder()
         For i As UInt32 = 0 To v.size() - uint32_1

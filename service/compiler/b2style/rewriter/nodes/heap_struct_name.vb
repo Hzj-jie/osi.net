@@ -31,7 +31,7 @@ Partial Public NotInheritable Class b2style
                                    assert(Not x Is Nothing)
                                    Return x.children_word_str()
                                End Function).
-                           collect_by(stream(Of String).collectors.to_str(empty_string)).
+                           collect_by(stream(Of String).collectors.to_str("")).
                            ToString()
         End Function
 

@@ -16,10 +16,10 @@ Public Class str_bytes_test
         Public Overrides Function run() As Boolean
             Dim o() As Byte = Nothing
             assertion.is_false(str_bytes_ref(Nothing, o))
-            assertion.is_true(str_bytes_ref(empty_string, o))
+            assertion.is_true(str_bytes_ref("", o))
             assertion.equal(array_size(o), uint32_0)
             assertion.is_null(str_bytes(Nothing))
-            assertion.is_not_null(str_bytes(String.Empty))
+            assertion.is_not_null(str_bytes(""))
             Return True
         End Function
     End Class
@@ -43,7 +43,7 @@ Public Class str_bytes_test
             If i = strlen(s) Then
                 assertion.is_not_null(bytes_str(str_bytes(s, i)))
                 assertion.is_true(String.IsNullOrEmpty(bytes_str(str_bytes(s, i))))
-                assertion.equal(bytes_str(str_bytes(s), str_byte_count(s)), empty_string)
+                assertion.equal(bytes_str(str_bytes(s), str_byte_count(s)), "")
             Else
                 assertion.equal(bytes_str(str_bytes(s, i)), strmid(s, i))
                 assertion.equal(bytes_str(str_bytes(s), str_byte_count(strleft(s, i))), strmid(s, i))
@@ -54,7 +54,7 @@ Public Class str_bytes_test
             If i = j Then
                 assertion.is_not_null(bytes_str(str_bytes(s, i, uint32_0)))
                 assertion.is_true(String.IsNullOrEmpty(bytes_str(str_bytes(s, i, uint32_0))))
-                assertion.equal(bytes_str(str_bytes(s), str_byte_count(strleft(s, i)), uint32_0), empty_string)
+                assertion.equal(bytes_str(str_bytes(s), str_byte_count(strleft(s, i)), uint32_0), "")
             Else
                 assertion.equal(bytes_str(str_bytes(s, i, j - i)), strmid(s, i, j - i))
                 assertion.equal(bytes_str(str_bytes(s),

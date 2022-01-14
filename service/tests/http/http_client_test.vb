@@ -88,13 +88,13 @@ Public Class http_client_test
         ReDim r(10, 1)
         assertion.is_false(r.to_http_headers(m))
         For i As Int32 = 0 To array_size(r) - 1
-            r(i, 0) = empty_string
+            r(i, 0) = ""
         Next
         assertion.is_false(r.to_http_headers(m))
         For i As Int32 = 0 To array_size(r) - 1
             r(i, 0) = random_key()
         Next
-        r(rnd_int(0, array_size(r) - 1), 0) = empty_string
+        r(rnd_int(0, array_size(r) - 1), 0) = ""
         assertion.is_false(r.to_http_headers(m))
         Return True
     End Function

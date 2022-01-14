@@ -69,7 +69,7 @@ Partial Public Class lp_test
 
     Private Shared Function case1(ByVal p As lp(Of vector(Of transition))) As Boolean
         Dim r As lp(Of vector(Of transition)).result = Nothing
-        r = p.execute(empty_string)
+        r = p.execute("")
         assertion.is_true(r.has_error())
         assertion.is_true(r.lex_error)
         Return True

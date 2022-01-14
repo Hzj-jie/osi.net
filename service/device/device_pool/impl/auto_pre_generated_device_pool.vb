@@ -34,7 +34,7 @@ Public NotInheritable Class auto_pre_generated_device_pool
 
     Public Shared Function [New](Of T)(ByVal e As iauto_device_exporter(Of T),
                                        ByVal max_count As UInt32) As auto_pre_generated_device_pool(Of T)
-        Return [New](e, max_count, String.Empty)
+        Return [New](e, max_count, "")
     End Function
 End Class
 

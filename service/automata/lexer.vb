@@ -82,7 +82,7 @@ Public Class lexer
         Public Shadows ReadOnly text As String
 
         Shared Sub New()
-            end_word = New word(empty_string, end_type)
+            end_word = New word("", end_type)
         End Sub
 
         Public Sub New(ByVal text As String, ByVal type As UInt32)

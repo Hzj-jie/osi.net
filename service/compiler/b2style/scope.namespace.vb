@@ -27,7 +27,7 @@ Partial Public NotInheritable Class b2style
                 While s.cn Is Nothing
                     s = s.parent
                     If s Is Nothing Then
-                        Return empty_string
+                        Return ""
                     End If
                 End While
                 Return s.cn

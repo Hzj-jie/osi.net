@@ -6,8 +6,6 @@ Option Strict On
 Imports System.Text
 
 Public Module _string
-    ' TODO: Remove
-    Public Const empty_string As String = ""
     Public Const newline_chars As String = character.newline +
                                            character.return
     Public ReadOnly space_chars As String = calculate_space_chars()

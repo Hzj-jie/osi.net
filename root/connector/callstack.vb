@@ -29,7 +29,7 @@ Public Module _callstack
                               Optional ByVal separator As Char = character.colon) As String
         Dim rtn As String = Environment.StackTrace()
         If remove_blanks Then
-            rtn = rtn.Replace("   ", empty_string) _
+            rtn = rtn.Replace("   ", "") _
                      .Replace(newline.incode(), separator)
         End If
         Return rtn
