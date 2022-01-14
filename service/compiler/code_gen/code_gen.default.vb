@@ -86,7 +86,8 @@ Public NotInheritable Class code_gen
         Return of_children(Of WRITER)(name, 0)
     End Function
 
-    Public Shared Function ignore_last_child(Of WRITER As New)(ByVal name As String) As Action(Of code_gens(Of WRITER))
+    Public Shared Function of_ignore_last_child(Of WRITER As New) _
+                                               (ByVal name As String) As Action(Of code_gens(Of WRITER))
         Return code_gen_delegate(Of WRITER).of(name,
                                                Function(ByVal this As code_gens(Of WRITER),
                                                         ByVal n As typed_node,

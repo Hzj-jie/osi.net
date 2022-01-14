@@ -31,7 +31,7 @@ Partial Public NotInheritable Class b2style
                 Dim function_name As String = namespace_.bstyle_format(n.child(1).children_word_str())
                 scope.current().current_function().define(function_name)
                 Dim fo As New typed_node_writer()
-                If Not code_gen.build_all_children(Of typed_node_writer)(l, n, fo) Then
+                If Not code_gen.build_all_children(l, n, fo) Then
                     Return False
                 End If
                 o.append(scope.current().call_hierarchy().filter(function_name, AddressOf fo.dump))
