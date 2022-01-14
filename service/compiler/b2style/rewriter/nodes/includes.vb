@@ -71,11 +71,9 @@ Partial Public NotInheritable Class b2style
                                                                         default_includes.ignore_default_folder,
                                                                         default_includes.default_folder,
                                                                         _true)
-        Private Shared ReadOnly instance As New include_with_string()
+        Public Shared ReadOnly instance As New include_with_string()
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(instance)
+        Private Sub New()
         End Sub
 
         ' Forward missing files to the bstyle.
@@ -93,11 +91,9 @@ Partial Public NotInheritable Class b2style
                                                                       default_includes.ignore_default_folder,
                                                                       default_includes.default_folder,
                                                                       _true)
-        Private Shared ReadOnly instance As New include_with_file()
+        Public Shared ReadOnly instance As New include_with_file()
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(instance)
+        Private Sub New()
         End Sub
 
         ' Forward missing files to the bstyle.

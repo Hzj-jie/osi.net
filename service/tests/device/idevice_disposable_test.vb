@@ -32,7 +32,7 @@ Public Class idevice_disposable_test
         End Function
 
         Public Function identity() As String Implements idevice.identity
-            Return String.Empty
+            Return ""
         End Function
 
         Public Function is_valid() As Boolean Implements idevice.is_valid

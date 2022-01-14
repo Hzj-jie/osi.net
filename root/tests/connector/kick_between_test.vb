@@ -11,7 +11,7 @@ Public Class kick_between_test
 
     Public Overrides Function run() As Boolean
         assertion.equal(kick_between("{abc}}", "{", "}"), "}")
-        assertion.equal(kick_between("abc", Nothing, Nothing), String.Empty)
+        assertion.equal(kick_between("abc", Nothing, Nothing), "")
         assertion.equal(kick_between("bcd{def{abc}efg}hij", "{", "}"), "bcdhij")
         assertion.equal(kick_between("abc{def{hig}klm", "{", "}"), "abc")
         assertion.equal(kick_between("abc<script><scrip abcde << >> lsf</scrip></script>def",

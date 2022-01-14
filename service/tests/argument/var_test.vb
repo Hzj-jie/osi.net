@@ -17,7 +17,7 @@ Public Class var_test
         assertion.equal(v("f"), "second")
         assertion.is_true(v.switch("t"))
         v.bind("first", "third")
-        assertion.is_false(v.value("f", String.Empty))  ' raw values have been removed
+        assertion.is_false(v.value("f", ""))  ' raw values have been removed
         assertion.equal(v("first"), "second")
         assertion.is_false(v.switch("t"))                 ' raw values have been removed.
         assertion.is_true(v.switch("third"))
@@ -29,7 +29,7 @@ Public Class var_test
 
         Dim v2 As var = Nothing
         assertion.is_true(copy(v2, v))
-        assertion.is_false(v2.value("f", String.Empty))   ' raw values have been removed.
+        assertion.is_false(v2.value("f", ""))   ' raw values have been removed.
         assertion.equal(v2("first"), "second")
         assertion.is_false(v.switch("t"))                 ' raw values have been removed.
         assertion.is_true(v2.switch("third"))

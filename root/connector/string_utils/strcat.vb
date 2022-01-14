@@ -254,7 +254,7 @@ Public Module _strcat
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function str_repeat(ByRef s As String, ByVal c As UInt32) As String
         If c = 0 Then
-            Return empty_string
+            Return ""
         End If
         If c = 1 Then
             Return s

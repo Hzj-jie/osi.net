@@ -10,17 +10,14 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class template_type_name
-        Inherits code_gen_wrapper(Of typed_node_writer)
         Implements code_gen(Of typed_node_writer)
+
+        Private ReadOnly l As code_gens(Of typed_node_writer)
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            MyBase.New(b)
-        End Sub
-
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
             assert(Not b Is Nothing)
-            b.register(Of template_type_name)()
+            Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node,

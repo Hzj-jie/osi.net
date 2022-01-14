@@ -28,16 +28,16 @@ Public NotInheritable Class failure_case
         If self_health_stage() Then
             assertion.is_true(False)
             report_self_health_failure(1, "assertion.is_true(False)")
-            assertion.is_null(empty_string)
-            report_self_health_failure(2, "assertion.is_null(empty_string)")
+            assertion.is_null("")
+            report_self_health_failure(2, "assertion.is_null("")")
             assertion.is_not_null(CStr(Nothing))  ' Convert.ToString conflict
             report_self_health_failure(3, "assertion.is_not_null(CStr(Nothing))")
             assertion.is_false(True)
             report_self_health_failure(4, "assertion.is_false(True)")
-            assertion.reference_equal(empty_string, CStr(Nothing))  ' Convert.ToString conflict
-            report_self_health_failure(5, "assertion.reference_equal(empty_string, CStr(Nothing))")
-            assertion.not_reference_equal(empty_string, empty_string)
-            report_self_health_failure(6, "assertion.not_reference_equal(empty_string, empty_string)")
+            assertion.reference_equal("", CStr(Nothing))  ' Convert.ToString conflict
+            report_self_health_failure(5, "assertion.reference_equal("", CStr(Nothing))")
+            assertion.not_reference_equal("", "")
+            report_self_health_failure(6, "assertion.not_reference_equal("", "")")
             assertion.not_equal(0, 0)
             report_self_health_failure(7, "assertion.not_equal(0, 0)")
             assertion.equal(0, 1)
@@ -97,10 +97,10 @@ Public NotInheritable Class failure_case
 
         assertion.is_true(True)
         assertion.is_null(CStr(Nothing))  ' Convert.ToString conflict
-        assertion.is_not_null(empty_string)
+        assertion.is_not_null("")
         assertion.is_false(False)
-        assertion.reference_equal(empty_string, empty_string)
-        assertion.not_reference_equal(empty_string, CStr(Nothing))  ' Convert.ToString conflict
+        assertion.reference_equal("", "")
+        assertion.not_reference_equal("", CStr(Nothing))  ' Convert.ToString conflict
         assertion.not_equal(0, 1)
         assertion.equal(0, 0)
         assertion.less(0, 1)

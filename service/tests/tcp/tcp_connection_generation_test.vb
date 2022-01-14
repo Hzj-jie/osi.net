@@ -140,7 +140,7 @@ Public Class tcp_connection_generation_test
         Private Function token1_case() As Boolean
             Return token1_case("token") AndAlso
                    token1_case(Nothing) AndAlso
-                   token1_case(empty_string) AndAlso
+                   token1_case("") AndAlso
                    token1_case(guid_str())
         End Function
 

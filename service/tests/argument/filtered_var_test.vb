@@ -30,7 +30,7 @@ Public NotInheritable Class filtered_var_test
         assertion.is_false(f.switch("e"))
         assertion.is_false(f.switch("def"))
         assertion.is_false(f.switch("filtered.efg"))
-        assertion.is_false(f.value("filtered.a", String.Empty))
+        assertion.is_false(f.value("filtered.a", ""))
         assertion.is_true(f.switch("efg"))
         assertion.equal(f("a"), "d")
         assertion.array_equal(+(f.other_values()), {"hij", "klm"})

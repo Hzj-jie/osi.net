@@ -92,7 +92,7 @@ Partial Public Class scope(Of T As scope(Of T))
 
             Public Overrides Function ToString() As String
                 If (scope_arguments.remove_unused_functions Or True) AndAlso Not ch(f) Then
-                    Return empty_string
+                    Return ""
                 End If
                 Return o()
             End Function

@@ -64,60 +64,59 @@ Public NotInheritable Class bstyle
         Inherits __do(Of vector(Of Action(Of code_gens(Of writer))))
 
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of writer)))
-            Return vector.emplace_of(Of Action(Of code_gens(Of writer)))(
-                code_gen.of_only_child(Of writer)("base-root-type"),
-                code_gen.of_first_child(Of writer)("root-type-with-semi-colon"),
-                code_gen.of_only_child(Of writer)("root-type"),
-                code_gen.of_ignore(Of writer)("semi-colon"),
-                AddressOf bool.register,
-                AddressOf condition.register,
-                code_gen.of_children(Of writer)("else-condition", 1),
-                AddressOf for_loop.register,
-                code_gen.of_only_child(Of writer)("for-increase"),
-                code_gen.of_only_child(Of writer)("base-for-increase"),
-                AddressOf ufloat.register,
-                AddressOf [function].register,
-                AddressOf function_call.register,
-                AddressOf ignore_result_function_call.register,
-                AddressOf [integer].register,
-                AddressOf biguint.register,
-                AddressOf logic.register,
-                AddressOf multi_sentence_paragraph.register,
-                code_gen.of_only_child(Of writer)("paragraph"),
-                AddressOf param.register,
-                code_gen.of_first_child(Of writer)("param-with-comma"),
-                code_gen.of_all_children(Of writer)("paramlist"),
-                AddressOf return_clause.register,
-                code_gen.of_only_child(Of writer)("sentence"),
-                code_gen.of_first_child(Of writer)("base-sentence-with-semi-colon"),
-                code_gen.of_only_child(Of writer)("sentence-with-semi-colon"),
-                AddressOf [string].register,
-                AddressOf value.register,
-                AddressOf value_clause.register,
-                AddressOf value_declaration.register,
-                AddressOf heap_declaration.register,
-                AddressOf value_definition.register,
-                code_gen.of_only_child(Of writer)("variable-name"),
-                AddressOf heap_name.register,
-                AddressOf raw_variable_name.register,
-                code_gen.of_first_child(Of writer)("value-declaration-with-semi-colon"),
-                AddressOf value_list.register,
-                code_gen.of_children(Of writer)("value-with-bracket", 1),
-                code_gen.of_first_child(Of writer)("value-with-comma"),
-                code_gen.of_only_child(Of writer)("value-without-bracket"),
-                code_gen.of_only_child(Of writer)("base-value-without-bracket"),
-                AddressOf [while].register,
-                code_gen.of_only_child(Of writer)("include"),
-                AddressOf include_with_string.register,
-                AddressOf include_with_file.register,
-                AddressOf ifndef_wrapped.register,
-                AddressOf define.register,
-                AddressOf typedef.register,
-                code_gen.of_only_child(Of writer)("typedef-type"),
-                AddressOf typedef_type_name.register,
-                AddressOf typedef_type_str.register,
-                AddressOf struct.register,
-                AddressOf reinterpret_cast.register)
+            Return New code_gens_registrar(Of writer)().
+                           with(Of bool)().
+                           with(Of condition)().
+                           with(Of for_loop)().
+                           with(Of ufloat)().
+                           with(Of [function])().
+                           with(Of function_call)().
+                           with(Of ignore_result_function_call)().
+                           with(Of [integer])().
+                           with(Of biguint)().
+                           with(Of logic)().
+                           with(Of multi_sentence_paragraph)().
+                           with(Of param)().
+                           with(Of return_clause)().
+                           with(Of [string])().
+                           with(Of value)().
+                           with(Of value_clause)().
+                           with(Of value_declaration)().
+                           with(Of heap_declaration)().
+                           with(Of value_definition)().
+                           with(Of heap_name)().
+                           with(Of raw_variable_name)().
+                           with(Of value_list)().
+                           with(Of [while])().
+                           with(include_with_string.instance).
+                           with(include_with_file.instance).
+                           with(Of ifndef_wrapped)().
+                           with(define.instance).
+                           with(Of typedef)().
+                           with(typedef_type_name.instance).
+                           with(typedef_type_str.instance).
+                           with(Of struct)().
+                           with(reinterpret_cast.instance).
+                           with_of_only_childs(
+                               "base-root-type",
+                               "root-type",
+                               "for-increase",
+                               "base-for-increase",
+                               "paragraph",
+                               "sentence",
+                               "sentence-with-semi-colon",
+                               "variable-name",
+                               "value-without-bracket",
+                               "base-value-without-bracket",
+                               "include",
+                               "typedef-type").
+                           with(code_gen.of_ignore_last_child(Of writer)("root-type-with-semi-colon")).
+                           with(code_gen.of_children(Of writer)("else-condition", 1)).
+                           with(code_gen.of_first_child(Of writer)("param-with-comma")).
+                           with(code_gen.of_children(Of writer)("value-with-bracket", 1)).
+                           with(code_gen.of_first_child(Of writer)("value-with-comma")).
+                           with(code_gen.of_all_children(Of writer)("paramlist")).
+                           with(code_gen.of_ignore_last_child(Of writer)("base-sentence-with-semi-colon"))
         End Function
     End Class
 

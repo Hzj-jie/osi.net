@@ -8,11 +8,13 @@ Imports osi.service.automata
 
 Namespace rewriters
     Public NotInheritable Class leaf
-        Inherits code_gen_wrapper(Of typed_node_writer)
         Implements code_gen(Of typed_node_writer)
 
-        Private Sub New(ByVal l As code_gens(Of typed_node_writer))
-            MyBase.New(l)
+        Private ReadOnly l As code_gens(Of typed_node_writer)
+
+        Private Sub New(ByVal b As code_gens(Of typed_node_writer))
+            assert(Not b Is Nothing)
+            Me.l = b
         End Sub
 
         Public Shared Function [of](ByVal s As String) As Action(Of code_gens(Of typed_node_writer))

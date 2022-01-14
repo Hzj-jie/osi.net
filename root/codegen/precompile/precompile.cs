@@ -42,7 +42,7 @@ public static class Program
             {
                 f = l.Substring(0, index);
                 s = l.Substring(index + 1);
-                if(s == null) s = string.Empty;
+                if(s == null) s = "";
                 if(string.IsNullOrWhiteSpace(f)) return false;
                 else
                 {

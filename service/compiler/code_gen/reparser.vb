@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.template
 Imports osi.service.automata
 
-Partial Public Class code_gens(Of WRITER As New)
+Partial Public NotInheritable Class code_gens(Of WRITER As New)
     Public MustInherit Class reparser(Of _PARSER As __do(Of String, WRITER, Boolean))
         Implements code_gen(Of WRITER)
 

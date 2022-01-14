@@ -13,11 +13,9 @@ Partial Public NotInheritable Class b2style
     Public NotInheritable Class heap_struct_name
         Implements code_gen(Of typed_node_writer)
 
-        Private Shared ReadOnly instance As New heap_struct_name()
+        Public Shared ReadOnly instance As New heap_struct_name()
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(instance)
+        Private Sub New()
         End Sub
 
         Private Shared Function bstyle_format(ByVal n As typed_node) As String
@@ -33,7 +31,7 @@ Partial Public NotInheritable Class b2style
                                    assert(Not x Is Nothing)
                                    Return x.children_word_str()
                                End Function).
-                           collect_by(stream(Of String).collectors.to_str(empty_string)).
+                           collect_by(stream(Of String).collectors.to_str("")).
                            ToString()
         End Function
 

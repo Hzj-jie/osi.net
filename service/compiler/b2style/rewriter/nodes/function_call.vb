@@ -11,17 +11,14 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class function_call
-        Inherits code_gen_wrapper(Of typed_node_writer)
         Implements code_gen(Of typed_node_writer)
+
+        Private ReadOnly l As code_gens(Of typed_node_writer)
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            MyBase.New(b)
-        End Sub
-
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
             assert(Not b Is Nothing)
-            b.register(Of function_call)()
+            Me.l = b
         End Sub
 
         Public Function build(ByVal name As String,
@@ -32,8 +29,8 @@ Partial Public NotInheritable Class b2style
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
             assert(Not o Is Nothing)
             If Not name.Contains(".") Then
-                o.append(namespace_.bstyle_format(name))
-                scope.current().call_hierarchy().to(namespace_.bstyle_format(name))
+                o.append(namespace_.bstyle_format.of(name))
+                scope.current().call_hierarchy().to(namespace_.bstyle_format.of(name))
                 For i As UInt32 = 1 To n.child_count() - uint32_1
                     If Not l.of(n.child(i)).build(o) Then
                         Return False
@@ -45,11 +42,11 @@ Partial Public NotInheritable Class b2style
             Dim dot_pos As Int32 = name.LastIndexOf(".")
             ' dot is not allowed to be the first or last character.
             assert(dot_pos > 0 AndAlso dot_pos < name.Length() - 1)
-            Dim function_name As String = namespace_.bstyle_format_in_global_namespace(name.Substring(dot_pos + 1))
+            Dim function_name As String = namespace_.bstyle_format.in_global_namespace(name.Substring(dot_pos + 1))
             scope.current().call_hierarchy().to(function_name)
             o.append(function_name)
             o.append("(")
-            o.append(namespace_.bstyle_format(name.Substring(0, dot_pos)))
+            o.append(namespace_.bstyle_format.of(name.Substring(0, dot_pos)))
             If n.child_count() = 4 Then
                 o.append(", ")
                 If Not l.of(n.child(2)).build(o) Then

@@ -74,7 +74,7 @@ Partial Public Class token_test
             Next
 
             If with_empty_token Then
-                r(rnd_int(0, count)) = New mock_ppt(String.Empty)
+                r(rnd_int(0, count)) = New mock_ppt("")
             End If
             If with_null_token Then
                 r(rnd_int(0, count)) = New mock_ppt(Nothing)

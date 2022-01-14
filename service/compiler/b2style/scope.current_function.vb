@@ -8,7 +8,7 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
-        Public Structure current_function_proxy
+        Public NotInheritable Class current_function_proxy
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
@@ -32,7 +32,7 @@ Partial Public NotInheritable Class b2style
                 End While
                 Return [optional].of(s.f)
             End Function
-        End Structure
+        End Class
 
         Public Function current_function() As current_function_proxy
             Return New current_function_proxy(Me)

@@ -450,7 +450,7 @@ Public NotInheritable Class b2style_test
                                 map(Function(ByVal x As Int32) As String
                                         Return strcat(x, character.newline)
                                     End Function).
-                                collect_by(stream(Of String).collectors.to_str(empty_string)).
+                                collect_by(stream(Of String).collectors.to_str("")).
                                 ToString())
     End Sub
 

@@ -10,17 +10,15 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class self_value_clause
-        Inherits code_gen_wrapper(Of typed_node_writer)
         Implements code_gen(Of typed_node_writer)
 
-        <inject_constructor>
-        Public Sub New(ByVal i As code_gens(Of typed_node_writer))
-            MyBase.New(i)
-        End Sub
+        Private Const self_prefix As String = "self-"
+        Private ReadOnly l As code_gens(Of typed_node_writer)
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
+        <inject_constructor>
+        Public Sub New(ByVal b As code_gens(Of typed_node_writer))
             assert(Not b Is Nothing)
-            b.register(Of self_value_clause)()
+            Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node,
@@ -29,7 +27,10 @@ Partial Public NotInheritable Class b2style
             If Not l.of(n.child(0)).build(o) Then
                 Return False
             End If
-            Dim function_name As String = operations.self_function_name(n.child(1))
+            Dim function_name As String = l.of(n.child(1)).dump()
+            assert(function_name.StartsWith(self_prefix))
+            function_name = namespace_.bstyle_format.operator_function_name(
+                                function_name.Substring(self_prefix.Length()))
             scope.current().call_hierarchy().to(function_name)
             o.append("=")
             o.append(function_name)

@@ -10,17 +10,14 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class [function]
-        Inherits code_gen_wrapper(Of typed_node_writer)
         Implements code_gen(Of typed_node_writer)
+
+        Private ReadOnly l As code_gens(Of typed_node_writer)
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            MyBase.New(b)
-        End Sub
-
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
             assert(Not b Is Nothing)
-            b.register(Of [function])()
+            Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node,
@@ -28,14 +25,11 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             Using New scope_wrapper()
-                Dim function_name As String = namespace_.bstyle_format(n.child(1).children_word_str())
-                scope.current().current_function().define(function_name)
+                Dim function_name As String = namespace_.bstyle_format.of(n.child(1).children_word_str())
                 Dim fo As New typed_node_writer()
-                If Not code_gen.build_all_children(Of typed_node_writer)(l, n, fo) Then
-                    Return False
-                End If
-                o.append(scope.current().call_hierarchy().filter(function_name, AddressOf fo.dump))
-                Return True
+                scope.current().current_function().define(function_name)
+                Return l.of_all_children(n).build(fo) AndAlso
+                       o.append(scope.current().call_hierarchy().filter(function_name, AddressOf fo.dump))
             End Using
         End Function
     End Class
