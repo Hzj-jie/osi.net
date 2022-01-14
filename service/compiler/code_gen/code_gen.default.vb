@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 
@@ -142,6 +143,15 @@ Public NotInheritable Class code_gen
                                                         ByVal o As WRITER) As Boolean
                                                    Return this.of_all_children(n).build(o)
                                                End Function)
+    End Function
+
+    Public Shared Function of_leaf_nodes(ByVal ParamArray names() As String) _
+                                        As Action(Of code_gens(Of typed_node_writer))()
+        Return streams.of(names).
+                       map(Function(ByVal name As String) As Action(Of code_gens(Of typed_node_writer))
+                               Return of_leaf_node(name)
+                           End Function).
+                       to_array()
     End Function
 
     Public Shared Function of_leaf_node(ByVal name As String) As Action(Of code_gens(Of typed_node_writer))

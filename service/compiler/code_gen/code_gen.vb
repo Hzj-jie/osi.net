@@ -29,6 +29,29 @@ Partial Public Class code_gens(Of WRITER As New)
         Return GetType(T).Name().Replace("_"c, "-"c)
     End Function
 
+    Public Shared Function registrars_of(ByVal ParamArray inputs() As Object) _
+                                        As vector(Of Action(Of code_gens(Of WRITER)))
+        Dim r As New vector(Of Action(Of code_gens(Of WRITER)))()
+        For Each input As Object In inputs
+            assert(Not input Is Nothing)
+            If TypeOf input Is Action(Of code_gens(Of WRITER)) Then
+                r.emplace_back(direct_cast(Of Action(Of code_gens(Of WRITER)))(input))
+            ElseIf TypeOf input Is Action(Of code_gens(Of WRITER))() Then
+                r.emplace_back(direct_cast(Of Action(Of code_gens(Of WRITER))())(input))
+            Else
+                assert(False)
+            End If
+        Next
+        Return r
+    End Function
+
+    Public Shared Function code_gen(Of T As code_gen(Of WRITER))() As Action(Of code_gens(Of WRITER))
+        Return Sub(ByVal b As code_gens(Of WRITER))
+                   assert(Not b Is Nothing)
+                   b.register(Of T)()
+               End Sub
+    End Function
+
     Public Sub register(ByVal s As String, ByVal b As code_gen(Of WRITER))
         assert(Not s.null_or_whitespace())
         assert(Not b Is Nothing)

@@ -20,10 +20,11 @@ Partial Public NotInheritable Class b2style
         Private Sub New()
         End Sub
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(instance)
-        End Sub
+        Public Shared ReadOnly code_gen As Action(Of code_gens(Of typed_node_writer)) =
+            Sub(ByVal b As code_gens(Of typed_node_writer))
+                assert(Not b Is Nothing)
+                b.register(instance)
+            End Sub
 
         Private Shared Sub ensure_subnode_type(ByVal n As typed_node)
             assert(Not n Is Nothing)

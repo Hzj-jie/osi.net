@@ -23,11 +23,6 @@ Partial Public NotInheritable Class b2style
             MyBase.New(i)
         End Sub
 
-        Public Shared Sub register(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            b.register(Of namespace_)()
-        End Sub
-
         Private Shared Function full_name(ByVal i As String) As String
             Return with_namespace(scope.current().current_namespace().name(), i)
         End Function
