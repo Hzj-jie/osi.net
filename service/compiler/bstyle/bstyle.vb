@@ -81,7 +81,7 @@ Public NotInheritable Class bstyle
                            with(Of [string])().
                            with(Of value)().
                            with(Of value_clause)().
-                           with(Of value_declaration)().
+                           with(value_declaration.instance).
                            with(Of heap_declaration)().
                            with(Of value_definition)().
                            with(Of heap_name)().

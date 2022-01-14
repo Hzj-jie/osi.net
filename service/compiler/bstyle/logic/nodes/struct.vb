@@ -163,7 +163,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return l.typed_code_gen(Of heap_name).build(
+            Return l.typed(Of heap_name).build(
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean

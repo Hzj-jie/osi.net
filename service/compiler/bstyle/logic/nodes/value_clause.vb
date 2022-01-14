@@ -84,7 +84,7 @@ Partial Public NotInheritable Class bstyle
             If Not n.child(0).child().type_name.Equals("heap-name") Then
                 Return build(n.child(0).child(), n.child(2), o)
             End If
-            Return l.typed_code_gen(Of heap_name).build(
+            Return l.typed(Of heap_name).build(
                        n.child(0).child().child(2),
                        o,
                        Function(ByVal indexstr As String) As Boolean

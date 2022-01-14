@@ -12,12 +12,9 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class value_declaration
         Implements code_gen(Of writer)
 
-        Private ReadOnly l As code_gens(Of writer)
+        Public Shared ReadOnly instance As New value_declaration()
 
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of writer))
-            assert(Not b Is Nothing)
-            Me.l = b
+        Private Sub New()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
@@ -27,7 +24,7 @@ Partial Public NotInheritable Class bstyle
             Return build(n.child(0), n.child(1), o)
         End Function
 
-        Public Function build(ByVal type As typed_node, ByVal name As typed_node, ByVal o As writer) As Boolean
+        Public Shared Function build(ByVal type As typed_node, ByVal name As typed_node, ByVal o As writer) As Boolean
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
             Dim t As String = type.children_word_str()
