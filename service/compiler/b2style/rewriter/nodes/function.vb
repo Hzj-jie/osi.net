@@ -34,8 +34,7 @@ Partial Public NotInheritable Class b2style
                 If Not code_gen.build_all_children(l, n, fo) Then
                     Return False
                 End If
-                o.append(scope.current().call_hierarchy().filter(function_name, AddressOf fo.dump))
-                Return True
+                Return assert(o.append(scope.current().call_hierarchy().filter(function_name, AddressOf fo.dump)))
             End Using
         End Function
     End Class
