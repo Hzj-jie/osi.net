@@ -221,7 +221,7 @@ Public NotInheritable Class strsplit_test
             s += v.back()
             s += rnd_in(separators)
         Next
-        v.emplace_back(empty_string)
+        v.emplace_back("")
         Return New case_t(s,
                           separators,
                           surround_strs,

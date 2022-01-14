@@ -64,7 +64,7 @@ Public Module _byte
             Return Nothing
         End If
         If len = 0 Then
-            Return empty_string
+            Return ""
         End If
         Dim r As StringBuilder = Nothing
         r = New StringBuilder(len * expected_hex_byte_length - 1)

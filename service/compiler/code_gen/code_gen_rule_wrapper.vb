@@ -11,20 +11,18 @@ Imports osi.service.automata
 Imports osi.service.interpreter.primitive
 
 Public Class code_gen_rule_wrapper(Of WRITER As New,
-                                      CODE_GENS_IMPL As {code_gens(Of WRITER), New},
-                                      STATEMENTS_IMPL As statements(Of WRITER),
                                       _nlexer_rule As __do(Of String),
                                       _syntaxer_rule As __do(Of String),
-                                      _prefixes As __do(Of vector(Of Action(Of STATEMENTS_IMPL))),
-                                      _suffixes As __do(Of vector(Of Action(Of STATEMENTS_IMPL))),
-                                      _code_gens As __do(Of vector(Of Action(Of CODE_GENS_IMPL))),
+                                      _prefixes As __do(Of vector(Of Action(Of statements(Of WRITER)))),
+                                      _suffixes As __do(Of vector(Of Action(Of statements(Of WRITER)))),
+                                      _code_gens As __do(Of vector(Of Action(Of code_gens(Of WRITER)))),
                                        SCOPE_T As scope(Of SCOPE_T))
     Inherits rule_wrapper(Of _nlexer_rule, _syntaxer_rule)
 
     ' @VisibleForTesting
-    Public Shared Function new_code_gens() As CODE_GENS_IMPL
-        Dim l As New CODE_GENS_IMPL()
-        Dim v As vector(Of Action(Of CODE_GENS_IMPL)) = +alloc(Of _code_gens)()
+    Public Shared Function new_code_gens() As code_gens(Of WRITER)
+        Dim l As New code_gens(Of WRITER)()
+        Dim v As vector(Of Action(Of code_gens(Of WRITER))) = +alloc(Of _code_gens)()
         Dim i As UInt32 = 0
         While i < v.size()
             v(i)(l)
@@ -34,7 +32,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
     End Function
 
     Public NotInheritable Class code_builder
-        Public ReadOnly code_gens As CODE_GENS_IMPL = new_code_gens()
+        Public ReadOnly code_gens As code_gens(Of WRITER) = new_code_gens()
         Private nested As UInt32
 
         Public Function nested_build_level() As UInt32
@@ -78,14 +76,11 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
     End Class
 
     Private NotInheritable Class builder
-        Public ReadOnly cb As code_builder
-        Private ReadOnly p As STATEMENTS_IMPL
-        Private ReadOnly s As STATEMENTS_IMPL
+        Public ReadOnly cb As New code_builder()
+        Private ReadOnly p As New statements(Of WRITER)()
+        Private ReadOnly s As New statements(Of WRITER)()
 
         Public Sub New()
-            cb = New code_builder()
-            p = alloc(Of STATEMENTS_IMPL)()
-            s = alloc(Of STATEMENTS_IMPL)()
             init_prefixes()
             init_suffixes()
         End Sub
@@ -102,8 +97,9 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             Return True
         End Function
 
-        Private Sub init_statements(Of T As __do(Of vector(Of Action(Of STATEMENTS_IMPL))))(ByVal p As STATEMENTS_IMPL)
-            Dim v As vector(Of Action(Of STATEMENTS_IMPL)) = +alloc(Of T)()
+        Private Shared Sub init_statements(Of T As __do(Of vector(Of Action(Of statements(Of WRITER))))) _
+                                          (ByVal p As statements(Of WRITER))
+            Dim v As vector(Of Action(Of statements(Of WRITER))) = +alloc(Of T)()
             Dim i As UInt32 = 0
             While i < v.size()
                 v(i)(p)
@@ -147,8 +143,6 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             assert(Not e Is Nothing)
             Dim o As WRITER = alloc(Of WRITER)()
             Return code_gen_rule_wrapper(Of WRITER,
-                                            CODE_GENS_IMPL,
-                                            STATEMENTS_IMPL,
                                             _nlexer_rule,
                                             _syntaxer_rule,
                                             _prefixes,

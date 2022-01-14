@@ -96,7 +96,7 @@ Public Class nothing_test
             assertion.is_false(type_info(Of String).is_valuetype)
             assertion.is_true(is_nothing(x))
             assertion.is_true(x Is Nothing)
-            x = String.Empty
+            x = ""
             assertion.is_false(is_nothing(x))
             assertion.is_false(x Is Nothing)
         End Using

@@ -11,12 +11,14 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class struct
-        Inherits code_gen_wrapper(Of typed_node_writer)
         Implements code_gen(Of typed_node_writer)
 
+        Private ReadOnly l As code_gens(Of typed_node_writer)
+
         <inject_constructor>
-        Public Sub New(ByVal i As code_gens(Of typed_node_writer))
-            MyBase.New(i)
+        Public Sub New(ByVal b As code_gens(Of typed_node_writer))
+            assert(Not b Is Nothing)
+            Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node,
@@ -54,7 +56,7 @@ Partial Public NotInheritable Class b2style
                 Return False
             End If
             ' Ignore namespace prefix for variables within the structure.
-            o.append(namespace_.bstyle_format_in_global_namespace(child.child(0).child(1).children_word_str()))
+            o.append(namespace_.bstyle_format.in_global_namespace(child.child(0).child(1).children_word_str()))
             If Not l.of(child.child(1)).build(o) Then
                 Return False
             End If

@@ -16,8 +16,6 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of String),
                                    _logic_gens As __do(Of vector(Of Action(Of code_gens(Of writer)))),
                                     SCOPE_T As scope(Of SCOPE_T))
     Inherits code_gen_rule_wrapper(Of writer,
-                                      code_gens(Of writer),
-                                      statements,
                                       _nlexer_rule,
                                       _syntaxer_rule,
                                       _prefixes,
@@ -44,8 +42,6 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of String),
 
     Public NotInheritable Shadows Class parse_wrapper
         Inherits code_gen_rule_wrapper(Of writer,
-                                          code_gens(Of writer),
-                                          statements,
                                           _nlexer_rule,
                                           _syntaxer_rule,
                                           _prefixes,

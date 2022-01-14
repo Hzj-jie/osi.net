@@ -51,7 +51,7 @@ Partial Public NotInheritable Class b2style
                     ' TODO: Should resolve type-aliases.
                     If Not d.injected_types.emplace(types).second() Then
                         ' Injected already.
-                        s = empty_string
+                        s = ""
                         Return True
                     End If
                     Return d.template.apply(types, s)

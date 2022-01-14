@@ -10,18 +10,21 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class post_operation_value
-        Inherits code_gen_wrapper(Of typed_node_writer)
         Implements code_gen(Of typed_node_writer)
 
+        Private ReadOnly l As code_gens(Of typed_node_writer)
+
         <inject_constructor>
-        Public Sub New(ByVal i As code_gens(Of typed_node_writer))
-            MyBase.New(i)
+        Public Sub New(ByVal b As code_gens(Of typed_node_writer))
+            assert(Not b Is Nothing)
+            Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(n.child_count() = 2)
-            Dim function_name As String = operations.post_function_name(n.child(1))
+            Dim function_name As String =
+                    namespace_.bstyle_format.operator_function_name(l.of(n.child(1)).dump()) + "_post"
             scope.current().call_hierarchy().to(function_name)
             o.append(function_name)
             o.append("(")

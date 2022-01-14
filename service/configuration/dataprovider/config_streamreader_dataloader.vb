@@ -122,12 +122,12 @@ Friend NotInheritable Class config_streamreader_dataloader
                                         "a line with only key value separator, ignore")
                     Else
                         l = v
-                        v = String.Empty
+                        v = ""
                     End If
                 End If
             Else
                 assert(Not String.IsNullOrEmpty(l))
-                v = String.Empty
+                v = ""
             End If
         End If
 

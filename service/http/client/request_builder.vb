@@ -21,7 +21,7 @@ Public NotInheritable Class request_builder
     Private response_link_status As link_status
 
     Public Sub New()
-        url = empty_string
+        url = ""
         method = constants.request_method.GET
         without_request_length()
     End Sub

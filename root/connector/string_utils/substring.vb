@@ -37,7 +37,7 @@ Public Module _substring
             Return Nothing
         End If
         If len = uint32_0 Then
-            Return empty_string
+            Return ""
         End If
         If start = uint32_0 Then
             If len = max_uint32 OrElse len >= s.Length() Then
@@ -58,7 +58,7 @@ Public Module _substring
             Return Nothing
         End If
         If len = 0 Then
-            Return empty_string
+            Return ""
         End If
         If len = max_uint32 OrElse len + start >= s.Length() Then
             Return s.ToString(CInt(start), s.Length() - CInt(start))
@@ -76,7 +76,7 @@ Public Module _substring
         End If
 
         If strlen(s) <= len Then
-            Return empty_string
+            Return ""
         End If
 
         Return s.Substring(0, CInt(strlen(s) - len))

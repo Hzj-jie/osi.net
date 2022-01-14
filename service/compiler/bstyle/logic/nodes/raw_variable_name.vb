@@ -11,17 +11,14 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class raw_variable_name
-        Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
+
+        Private ReadOnly l As code_gens(Of writer)
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of writer))
-            MyBase.New(b)
-        End Sub
-
-        Public Shared Sub register(ByVal b As code_gens(Of writer))
             assert(Not b Is Nothing)
-            b.register(Of raw_variable_name)()
+            Me.l = b
         End Sub
 
         Public Shared Function build(ByVal n As typed_node,

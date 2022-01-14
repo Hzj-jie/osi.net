@@ -71,14 +71,9 @@ Partial Public NotInheritable Class bstyle
                                                              default_includes.ignore_default_folder,
                                                              default_includes.default_folder,
                                                              _false)
-        Private Shared ReadOnly instance As New include_with_string()
+        Public Shared ReadOnly instance As New include_with_string()
 
         Private Sub New()
-        End Sub
-
-        Public Shared Sub register(ByVal b As code_gens(Of writer))
-            assert(Not b Is Nothing)
-            b.register(instance)
         End Sub
     End Class
 
@@ -88,14 +83,9 @@ Partial Public NotInheritable Class bstyle
                                                            default_includes.ignore_default_folder,
                                                            default_includes.default_folder,
                                                            _false)
-        Private Shared ReadOnly instance As New include_with_file()
+        Public Shared ReadOnly instance As New include_with_file()
 
         Private Sub New()
-        End Sub
-
-        Public Shared Sub register(ByVal b As code_gens(Of writer))
-            assert(Not b Is Nothing)
-            b.register(instance)
         End Sub
     End Class
 End Class

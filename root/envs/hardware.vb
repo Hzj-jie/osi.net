@@ -49,7 +49,7 @@ Public Module _hardware
                 Next
             End Using
         End Using
-        Return empty_string
+        Return ""
     End Function
 
     Private Sub init()

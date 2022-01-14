@@ -11,17 +11,14 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class ifndef_wrapped
-        Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
-        <inject_constructor>
-        Public Sub New(ByVal i As code_gens(Of writer))
-            MyBase.New(i)
-        End Sub
+        Private ReadOnly l As code_gens(Of writer)
 
-        Public Shared Sub register(ByVal b As code_gens(Of writer))
+        <inject_constructor>
+        Public Sub New(ByVal b As code_gens(Of writer))
             assert(Not b Is Nothing)
-            b.register(Of ifndef_wrapped)()
+            Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
@@ -42,14 +39,9 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class define
         Implements code_gen(Of writer)
 
-        Private Shared ReadOnly instance As New define()
+        Public Shared ReadOnly instance As New define()
 
         Private Sub New()
-        End Sub
-
-        Public Shared Sub register(ByVal b As code_gens(Of writer))
-            assert(Not b Is Nothing)
-            b.register(instance)
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build

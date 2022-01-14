@@ -3,24 +3,16 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class reinterpret_cast
-        Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of writer))
-            MyBase.New(b)
-        End Sub
+        Public Shared ReadOnly instance As New reinterpret_cast()
 
-        Public Shared Sub register(ByVal b As code_gens(Of writer))
-            assert(Not b Is Nothing)
-            b.register(Of reinterpret_cast)()
+        Private Sub New()
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build

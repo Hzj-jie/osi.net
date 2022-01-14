@@ -48,7 +48,7 @@ Namespace logic
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim pos As UInt32 = o.size()
-            o.emplace_back(String.Empty)
+            o.emplace_back("")
             If Not anchors.define(name, o, type, parameters) Then
                 Return False
             End If

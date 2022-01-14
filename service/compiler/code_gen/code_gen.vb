@@ -13,45 +13,14 @@ Public Interface code_gen(Of WRITER As New)
     Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean
 End Interface
 
-Public MustInherit Class code_gen_wrapper(Of WRITER As New)
-    Protected ReadOnly l As code_gens(Of WRITER)
-
-    Protected Sub New(ByVal l As code_gens(Of WRITER))
-        assert(Not l Is Nothing)
-        Me.l = l
-    End Sub
-End Class
-
-Partial Public Class code_gens(Of WRITER As New)
+Partial Public NotInheritable Class code_gens(Of WRITER As New)
     Private ReadOnly m As New unordered_map(Of String, code_gen(Of WRITER))()
 
     Private Shared Function code_gen_name(Of T As code_gen(Of WRITER))() As String
         Return GetType(T).Name().Replace("_"c, "-"c)
     End Function
 
-    Public Shared Function registrars_of(ByVal ParamArray inputs() As Object) _
-                                        As vector(Of Action(Of code_gens(Of WRITER)))
-        Dim r As New vector(Of Action(Of code_gens(Of WRITER)))()
-        For Each input As Object In inputs
-            assert(Not input Is Nothing)
-            If TypeOf input Is Action(Of code_gens(Of WRITER)) Then
-                r.emplace_back(direct_cast(Of Action(Of code_gens(Of WRITER)))(input))
-            ElseIf TypeOf input Is Action(Of code_gens(Of WRITER))() Then
-                r.emplace_back(direct_cast(Of Action(Of code_gens(Of WRITER))())(input))
-            Else
-                assert(False)
-            End If
-        Next
-        Return r
-    End Function
-
-    Public Shared Function code_gen(Of T As code_gen(Of WRITER))() As Action(Of code_gens(Of WRITER))
-        Return Sub(ByVal b As code_gens(Of WRITER))
-                   assert(Not b Is Nothing)
-                   b.register(Of T)()
-               End Sub
-    End Function
-
+    ' TODO: Hide most of the register.
     Public Sub register(ByVal s As String, ByVal b As code_gen(Of WRITER))
         assert(Not s.null_or_whitespace())
         assert(Not b Is Nothing)

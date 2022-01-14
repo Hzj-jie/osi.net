@@ -80,6 +80,7 @@
     <Compile Include="bstyle\scope.params.vb" />
     <Compile Include="bstyle\scope.value_target.vb" />
     <Compile Include="code_gen\code_gen.default.vb" />
+    <Compile Include="code_gen\code_gens_registrar.vb" />
     <Compile Include="code_gen\includes.vb" />
     <Compile Include="bstyle\logic\nodes\defines.vb" />
     <Compile Include="bstyle\logic\nodes\heap_declaration.vb" />
@@ -87,7 +88,6 @@
     <Compile Include="bstyle\logic\nodes\includes.vb" />
     <Compile Include="b2style\rewriter\nodes\name.vb" />
     <Compile Include="b2style\rewriter\nodes\namespace_.vb" />
-    <Compile Include="b2style\rewriter\nodes\operations.vb" />
     <Compile Include="b2style\rewriter\nodes\post_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\pre_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\self_value_clause.vb" />

@@ -52,7 +52,7 @@ Public NotInheritable Class pather_test
                  "/",
                  Nothing,
                  Nothing,
-                 {empty_string})
+                 {""})
         add_case("c:\windows\",
                  "c:/windows",
                  "c:",
@@ -99,7 +99,7 @@ Public NotInheritable Class pather_test
                  "/dev/mnt",
                  "/dev",
                  "mnt",
-                 {empty_string,
+                 {"",
                   "dev",
                   "mnt"})
         add_case("./dev/../dev/./mnt",
@@ -113,7 +113,7 @@ Public NotInheritable Class pather_test
                  "/dev/mnt",
                  "/dev",
                  "mnt",
-                 {empty_string,
+                 {"",
                   "dev",
                   "mnt"})
         add_case("./dev/../bin/../usr//local/././sbin/*",

@@ -15,16 +15,10 @@ Partial Public NotInheritable Class b2style
         Inherits code_gens(Of typed_node_writer).reparser(Of b2style.parser)
         Implements code_gen(Of typed_node_writer)
 
-        Private Shared ReadOnly instance As New [class]()
+        Public Shared ReadOnly instance As New [class]()
 
         Private Sub New()
         End Sub
-
-        Public Shared ReadOnly code_gen As Action(Of code_gens(Of typed_node_writer)) =
-            Sub(ByVal b As code_gens(Of typed_node_writer))
-                assert(Not b Is Nothing)
-                b.register(instance)
-            End Sub
 
         Private Shared Sub ensure_subnode_type(ByVal n As typed_node)
             assert(Not n Is Nothing)
