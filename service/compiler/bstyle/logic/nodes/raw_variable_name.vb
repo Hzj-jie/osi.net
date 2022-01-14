@@ -19,11 +19,6 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(b)
         End Sub
 
-        Public Shared Sub register(ByVal b As code_gens(Of writer))
-            assert(Not b Is Nothing)
-            b.register(Of raw_variable_name)()
-        End Sub
-
         Public Shared Function build(ByVal n As typed_node,
                                      ByVal struct_handle As Func(Of String, vector(Of single_data_slot_variable), Boolean),
                                      ByVal single_data_slot_handle As Func(Of String, String, Boolean),

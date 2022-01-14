@@ -20,11 +20,6 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(b)
         End Sub
 
-        Public Shared Sub register(ByVal b As code_gens(Of writer))
-            assert(Not b Is Nothing)
-            b.register(Of for_loop)()
-        End Sub
-
         Private NotInheritable Class ref
             Public ReadOnly first As typed_node
             Public ReadOnly second As typed_node

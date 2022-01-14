@@ -18,11 +18,6 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(b)
         End Sub
 
-        Public Shared Sub register(ByVal b As code_gens(Of writer))
-            assert(Not b Is Nothing)
-            b.register(Of reinterpret_cast)()
-        End Sub
-
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             Return scope.current().variables().redefine(n.child(4).children_word_str(), n.child(2).children_word_str())
         End Function

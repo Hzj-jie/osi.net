@@ -11,6 +11,7 @@ Public Interface statement(Of WRITER)
     Sub export(ByVal o As WRITER)
 End Interface
 
+' TODO: NotInheritable
 Public Class statements(Of WRITER)
     Private ReadOnly v As New vector(Of statement(Of WRITER))()
 

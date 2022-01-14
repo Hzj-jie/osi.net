@@ -20,11 +20,6 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(b)
         End Sub
 
-        Public Shared Sub register(ByVal b As code_gens(Of writer))
-            assert(Not b Is Nothing)
-            b.register(Of heap_name)()
-        End Sub
-
         Public Function build(ByVal index As typed_node,
                               ByVal o As writer,
                               ByVal f As Func(Of String, Boolean)) As Boolean

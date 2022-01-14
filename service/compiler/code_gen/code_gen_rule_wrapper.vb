@@ -11,8 +11,8 @@ Imports osi.service.automata
 Imports osi.service.interpreter.primitive
 
 Public Class code_gen_rule_wrapper(Of WRITER As New,
-                                      CODE_GENS_IMPL As {code_gens(Of WRITER), New},
-                                      STATEMENTS_IMPL As statements(Of WRITER),
+                                      CODE_GENS_IMPL As {code_gens(Of WRITER), New},  ' TODO: Remove
+                                      STATEMENTS_IMPL As statements(Of WRITER),  ' TODO: Remove
                                       _nlexer_rule As __do(Of String),
                                       _syntaxer_rule As __do(Of String),
                                       _prefixes As __do(Of vector(Of Action(Of STATEMENTS_IMPL))),

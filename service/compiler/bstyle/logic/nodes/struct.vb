@@ -15,11 +15,6 @@ Partial Public NotInheritable Class bstyle
         Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
-        Public Shared Sub register(ByVal b As code_gens(Of writer))
-            assert(Not b Is Nothing)
-            b.register(Of struct)()
-        End Sub
-
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of writer))
             MyBase.New(b)

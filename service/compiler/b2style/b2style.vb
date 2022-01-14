@@ -54,116 +54,111 @@ Partial Public NotInheritable Class b2style
         Inherits __do(Of vector(Of Action(Of code_gens(Of typed_node_writer))))
 
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of typed_node_writer)))
-            Return code_gens(Of typed_node_writer).registrars_of(
-                       code_gen.of_only_child(Of typed_node_writer)("base-root-type"),
-                       code_gen.of_all_children(Of typed_node_writer)("root-type-with-semi-colon"),
-                       code_gen.of_only_child(Of typed_node_writer)("root-type"),
- _
-                       code_gen.of_leaf_nodes("kw-if",
-                                              "kw-else",
-                                              "kw-for",
-                                              "kw-while",
-                                              "kw-do",
-                                              "kw-loop",
-                                              "kw-return",
-                                              "kw-break",
-                                              "kw-logic",
-                                              "kw-reinterpret-cast",
-                                              "start-square-bracket",
-                                              "end-square-bracket",
-                                              "bool",
-                                              "integer",
-                                              "biguint",
-                                              "ufloat",
-                                              "string",
-                                              "semi-colon",
-                                              "comma",
-                                              "start-paragraph",
-                                              "end-paragraph",
-                                              "start-bracket",
-                                              "end-bracket",
-                                              "assignment"),
-                       code_gens(Of typed_node_writer).code_gen(Of name)(),
-                       name.of("raw-type-name"),
-                       code_gen.of_only_child(Of typed_node_writer)("type-name"),
- _
-                       code_gens(Of typed_node_writer).code_gen(Of [function])(),
-                       code_gen.of_all_children(Of typed_node_writer)("paramlist"),
-                       code_gen.of_all_children_with_wrapper(Of scope_wrapper, typed_node_writer) _
-                                                            (AddressOf scope.wrap, "multi-sentence-paragraph"),
-                       code_gen.of_all_children(Of typed_node_writer)("param-with-comma"),
-                       code_gen.of_only_child(Of typed_node_writer)("reference"),
-                       code_gen.of_leaf_node("bit-and"),  ' Allowing & in param.
-                       code_gen.of_all_children(Of typed_node_writer)("param"),
-                       code_gens(Of typed_node_writer).code_gen(Of namespace_)(),
-                       code_gen.of_only_child(Of typed_node_writer)("paragraph"),
-                       code_gen.of_all_children(Of typed_node_writer)("sentence"),
-                       code_gen.of_all_children(Of typed_node_writer)("base-sentence-with-semi-colon"),
-                       code_gen.of_all_children(Of typed_node_writer)("b2style-sentence-with-semi-colon"),
-                       code_gen.of_only_child(Of typed_node_writer)("sentence-with-semi-colon"),
-                       code_gen.of_all_children(Of typed_node_writer)("value-definition"),
-                       code_gen.of_all_children(Of typed_node_writer)("value-declaration"),
-                       code_gen.of_all_children(Of typed_node_writer)("heap-declaration"),
-                       code_gen.of_all_children(Of typed_node_writer)("value-clause"),
-                       code_gen.of_all_children(Of typed_node_writer)("heap-name"),
-                       heap_struct_name.code_gen,
-                       code_gens(Of typed_node_writer).code_gen(Of self_value_clause)(),
-                       code_gen.of_all_children(Of typed_node_writer)("return-clause"),
-                       code_gen.of_only_child(Of typed_node_writer)("ignore-result-function-call"),
-                       code_gen.of_only_child(Of typed_node_writer)("ignore-result-heap-struct-function-call"),
-                       code_gen.of_all_children(Of typed_node_writer)("logic"),
-                       code_gen.of_all_children(Of typed_node_writer)("condition"),
-                       code_gen.of_all_children(Of typed_node_writer)("while"),
-                       code_gen.of_all_children_with_wrapper(Of scope_wrapper, typed_node_writer) _
-                                                            (AddressOf scope.wrap, "for-loop"),
-                       code_gen.of_only_child(Of typed_node_writer)("for-increase"),
-                       code_gen.of_only_child(Of typed_node_writer)("base-for-increase"),
-                       code_gen.of_all_children(Of typed_node_writer)("value"),
-                       code_gen.of_all_children(Of typed_node_writer)("else-condition"),
-                       code_gen.of_all_children(Of typed_node_writer)("value-with-bracket"),
-                       code_gen.of_all_children(Of typed_node_writer)("raw-value"),
-                       code_gen.of_all_children(Of typed_node_writer)("value-without-bracket"),
-                       code_gen.of_only_child(Of typed_node_writer)("base-value-without-bracket"),
-                       code_gen.of_all_children(Of typed_node_writer)("value-with-operation"),
-                       code_gen.of_all_children(Of typed_node_writer)("unary-operation-value"),
-                       code_gens(Of typed_node_writer).code_gen(Of binary_operation_value)(),
-                       code_gens(Of typed_node_writer).code_gen(Of pre_operation_value)(),
-                       code_gens(Of typed_node_writer).code_gen(Of post_operation_value)(),
-                       code_gen.of_all_children(Of typed_node_writer)("variable-name"),
-                       code_gens(Of typed_node_writer).code_gen(Of function_call)(),
-                       code_gens(Of typed_node_writer).code_gen(Of heap_struct_function_call)(),
-                       code_gen.of_all_children(Of typed_node_writer)("value-list"),
-                       code_gen.of_all_children(Of typed_node_writer)("value-with-comma"),
- _
-                       code_gen.of_all_children(Of typed_node_writer)("include"),
-                       include_with_string.code_gen,
-                       include_with_file.code_gen,
- _
-                       code_gen.of_leaf_nodes("kw-ifndef",
-                                              "kw-define",
-                                              "kw-endif"),
-                       code_gen.of_all_children(Of typed_node_writer)("ifndef-wrapped"),
-                       code_gen.of_all_children(Of typed_node_writer)("define"),
- _
-                       code_gen.of_leaf_node("kw-typedef"),
-                       code_gen.of_only_child(Of typed_node_writer)("typedef-type"),
-                       code_gen.of_all_children(Of typed_node_writer)("typedef-type-name"),
-                       code_gen.of_all_children(Of typed_node_writer)("typedef-type-str"),
-                       code_gen.of_all_children(Of typed_node_writer)("typedef"),
- _
-                       code_gens(Of typed_node_writer).code_gen(Of struct)(),
-                       code_gen.of_leaf_node("kw-struct"),
- _
-                       [class].code_gen,
- _
-                       code_gens(Of typed_node_writer).code_gen(Of template)(),
-                       code_gens(Of typed_node_writer).code_gen(Of template_type_name)(),
-                       code_gen.of_all_children(Of typed_node_writer)("type-param-list"),
-                       code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma"),
-                       code_gen.of_children_word_str(Of typed_node_writer)("type-param"),
- _
-                       code_gen.of_all_children(Of typed_node_writer)("reinterpret-cast")
-                   )
+            Return New typed_node_writer_code_gens_registrar().
+                           with(code_gen.of_all_children_with_wrapper _
+                                    (Of scope_wrapper, typed_node_writer) _
+                                    (AddressOf scope.wrap, "multi-sentence-paragraph")).
+                           with(code_gen.of_all_children_with_wrapper _
+                                    (Of scope_wrapper, typed_node_writer) _
+                                    (AddressOf scope.wrap, "for-loop")).
+                           with(Of namespace_)().
+                           with(heap_struct_name.instance).
+                           with(Of self_value_clause)().
+                           with(Of binary_operation_value)().
+                           with(Of pre_operation_value)().
+                           with(Of post_operation_value)().
+                           with(Of function_call)().
+                           with(Of heap_struct_function_call)().
+                           with(include_with_string.instance).
+                           with(include_with_file.instance).
+                           with(Of struct)().
+                           with([class].instance).
+                           with(Of template)().
+                           with(Of template_type_name)().
+                           with(Of name)().
+                           with(name.of("raw-type-name")).
+                           with(Of [function])().
+                           with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).
+                           with(code_gen.of_children_word_str(Of typed_node_writer)("type-param")).
+                           with_of_only_childs(
+                               "base-root-type",
+                               "root-type",
+                               "reference",
+                               "paragraph",
+                               "sentence-with-semi-colon",
+                               "ignore-result-function-call",
+                               "ignore-result-heap-struct-function-call",
+                               "for-increase",
+                               "base-for-increase",
+                               "base-value-without-bracket",
+                               "typedef-type",
+                               "type-name").
+                           with_of_leaf_nodes(
+                               "kw-if",
+                               "kw-else",
+                               "kw-for",
+                               "kw-while",
+                               "kw-do",
+                               "kw-loop",
+                               "kw-return",
+                               "kw-break",
+                               "kw-logic",
+                               "kw-reinterpret-cast",
+                               "start-square-bracket",
+                               "end-square-bracket",
+                               "bool",
+                               "integer",
+                               "biguint",
+                               "ufloat",
+                               "string",
+                               "semi-colon",
+                               "comma",
+                               "start-paragraph",
+                               "end-paragraph",
+                               "start-bracket",
+                               "end-bracket",
+                               "assignment",
+                               "kw-ifndef",
+                               "kw-define",
+                               "kw-endif",
+                               "bit-and",  ' Allowing & in param.
+                               "kw-typedef",
+                               "kw-struct").
+                           with_of_all_childrens(
+                               "root-type-with-semi-colon",
+                               "paramlist",
+                               "param-with-comma",
+                               "param",
+                               "sentence",
+                               "base-sentence-with-semi-colon",
+                               "b2style-sentence-with-semi-colon",
+                               "value-definition",
+                               "value-declaration",
+                               "heap-declaration",
+                               "value-clause",
+                               "heap-name",
+                               "return-clause",
+                               "logic",
+                               "condition",
+                               "while",
+                               "value",
+                               "else-condition",
+                               "value-with-bracket",
+                               "raw-value",
+                               "value-without-bracket",
+                               "value-with-operation",
+                               "unary-operation-value",
+                               "variable-name",
+                               "value-list",
+                               "value-with-comma",
+                               "include",
+                               "ifndef-wrapped",
+                               "define",
+                               "typedef-type-name",
+                               "typedef-type-str",
+                               "typedef",
+                               "type-param-list",
+                               "reinterpret-cast")
         End Function
     End Class
 
