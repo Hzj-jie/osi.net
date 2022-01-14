@@ -3,19 +3,16 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class template
-        Inherits code_gen_wrapper(Of typed_node_writer)
         Implements code_gen(Of typed_node_writer)
 
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            MyBase.New(b)
+        Public Shared ReadOnly instance As New template()
+
+        Private Sub New()
         End Sub
 
         Public Function build(ByVal n As typed_node,

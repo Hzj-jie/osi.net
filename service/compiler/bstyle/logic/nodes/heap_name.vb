@@ -12,12 +12,14 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class heap_name
-        Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
+
+        Private ReadOnly l As code_gens(Of writer)
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of writer))
-            MyBase.New(b)
+            assert(Not b Is Nothing)
+            Me.l = b
         End Sub
 
         Public Function build(ByVal index As typed_node,

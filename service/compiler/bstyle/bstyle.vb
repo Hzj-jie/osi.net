@@ -96,7 +96,7 @@ Public NotInheritable Class bstyle
                            with(typedef_type_name.instance).
                            with(typedef_type_str.instance).
                            with(Of struct)().
-                           with(Of reinterpret_cast)().
+                           with(reinterpret_cast.instance).
                            with_of_only_childs(
                                "base-root-type",
                                "root-type",

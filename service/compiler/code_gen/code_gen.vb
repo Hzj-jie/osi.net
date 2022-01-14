@@ -13,16 +13,6 @@ Public Interface code_gen(Of WRITER As New)
     Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean
 End Interface
 
-' TODO: Remove
-Public MustInherit Class code_gen_wrapper(Of WRITER As New)
-    Protected ReadOnly l As code_gens(Of WRITER)
-
-    Protected Sub New(ByVal l As code_gens(Of WRITER))
-        assert(Not l Is Nothing)
-        Me.l = l
-    End Sub
-End Class
-
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
     Private ReadOnly m As New unordered_map(Of String, code_gen(Of WRITER))()
 

@@ -73,7 +73,7 @@ Partial Public NotInheritable Class b2style
                            with(include_with_file.instance).
                            with(Of struct)().
                            with([class].instance).
-                           with(Of template)().
+                           with(template.instance).
                            with(Of template_type_name)().
                            with(Of name)().
                            with(name.of("raw-type-name")).

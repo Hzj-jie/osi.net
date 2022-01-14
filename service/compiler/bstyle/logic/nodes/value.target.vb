@@ -11,7 +11,6 @@ Imports target = osi.service.compiler.bstyle.scope.value_target_t.target
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value
-        Inherits code_gen_wrapper(Of writer)
         Implements code_gen(Of writer)
 
         ' Type of the single data slot is handled by logic.

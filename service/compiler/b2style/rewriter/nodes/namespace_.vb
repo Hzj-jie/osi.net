@@ -12,15 +12,16 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class namespace_
-        Inherits code_gen_wrapper(Of typed_node_writer)
         Implements code_gen(Of typed_node_writer)
 
         Private Const namespace_separator As String = "::"
         Private Const namespace_replacer As String = "__"
+        Private ReadOnly l As code_gens(Of typed_node_writer)
 
         <inject_constructor>
-        Public Sub New(ByVal i As code_gens(Of typed_node_writer))
-            MyBase.New(i)
+        Public Sub New(ByVal b As code_gens(Of typed_node_writer))
+            assert(Not b Is Nothing)
+            Me.l = b
         End Sub
 
         Private Shared Function full_name(ByVal i As String) As String
