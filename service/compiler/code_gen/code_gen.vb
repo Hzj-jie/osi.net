@@ -23,8 +23,7 @@ Public MustInherit Class code_gen_wrapper(Of WRITER As New)
     End Sub
 End Class
 
-' TODO: NotInheritable
-Partial Public Class code_gens(Of WRITER As New)
+Partial Public NotInheritable Class code_gens(Of WRITER As New)
     Private ReadOnly m As New unordered_map(Of String, code_gen(Of WRITER))()
 
     Private Shared Function code_gen_name(Of T As code_gen(Of WRITER))() As String
