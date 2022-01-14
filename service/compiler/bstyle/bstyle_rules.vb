@@ -16,8 +16,8 @@ Friend Module bstyle_rules
     Public ReadOnly syntaxer_rule() As Byte
 
     Sub New()
-        nlexer_rule = Convert.FromBase64String(strcat_hint(CUInt(104), _
-        "H4sIAAAAAAAEAHu/ez+Xp5+zT6iLq4Kenn5xRmJRaop+Xk5qRWpRfFFpTqpeSUUJF1dRalpqUWpecqqCGhd+9UYQDQBUYCSlWAAAAA=="))
+        nlexer_rule = Convert.FromBase64String(strcat_hint(CUInt(108), _
+        "H4sIAAAAAAAEAHu/ez8vl6efs0+oi6uCnp5+cUZiUWqKfl5OakVqUXxRaU6qXklFCS8XL1dRalpqUWpecqqCGoiLV48RTBMAfAhv7l8AAAA="))
 
         assert(nlexer_rule.ungzip(nlexer_rule))
         syntaxer_rule = Convert.FromBase64String(strcat_hint(CUInt(264), _

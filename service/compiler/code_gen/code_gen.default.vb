@@ -86,6 +86,28 @@ Public NotInheritable Class code_gen
         Return of_children(Of WRITER)(name, 0)
     End Function
 
+    Public Shared Function ignore_last_child(Of WRITER As New)(ByVal name As String) As Action(Of code_gens(Of WRITER))
+        Return code_gen_delegate(Of WRITER).of(name,
+                                               Function(ByVal this As code_gens(Of WRITER),
+                                                        ByVal n As typed_node,
+                                                        ByVal o As WRITER) As Boolean
+                                                   assert(Not this Is Nothing)
+                                                   assert(Not n Is Nothing)
+                                                   assert(Not o Is Nothing)
+                                                   If n.child_count() <= 1 Then
+                                                       Return True
+                                                   End If
+                                                   Dim i As UInt32 = 0
+                                                   While i < n.child_count() - uint32_1
+                                                       If Not this.of(n.child(i)).build(o) Then
+                                                           Return False
+                                                       End If
+                                                       i += uint32_1
+                                                   End While
+                                                   Return True
+                                               End Function)
+    End Function
+
     Public Shared Function of_only_child(Of WRITER As New)(ByVal name As String) As Action(Of code_gens(Of WRITER))
         Return code_gen_delegate(Of WRITER).of(name,
                                                Function(ByVal this As code_gens(Of WRITER),

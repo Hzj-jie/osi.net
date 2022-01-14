@@ -104,7 +104,6 @@ Partial Public NotInheritable Class b2style
                        code_gen.of_all_children(Of typed_node_writer)("value-definition"),
                        code_gen.of_all_children(Of typed_node_writer)("value-declaration"),
                        code_gen.of_all_children(Of typed_node_writer)("heap-declaration"),
-                       code_gen.of_all_children(Of typed_node_writer)("value-declaration-with-semi-colon"),
                        code_gen.of_all_children(Of typed_node_writer)("value-clause"),
                        code_gen.of_all_children(Of typed_node_writer)("heap-name"),
                        AddressOf heap_struct_name.register,
