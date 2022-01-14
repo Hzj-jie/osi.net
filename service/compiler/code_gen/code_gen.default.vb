@@ -121,23 +121,6 @@ Public NotInheritable Class code_gen
                                                End Function)
     End Function
 
-    Public Shared Function build_all_children(Of WRITER As New) _
-                                             (ByVal this As code_gens(Of WRITER),
-                                              ByVal n As typed_node,
-                                              ByVal o As WRITER) As Boolean
-        assert(Not this Is Nothing)
-        assert(Not n Is Nothing)
-        assert(Not o Is Nothing)
-        Dim i As UInt32 = 0
-        While i < n.child_count()
-            If Not this.of(n.child(i)).build(o) Then
-                Return False
-            End If
-            i += uint32_1
-        End While
-        Return True
-    End Function
-
     Public Shared Function of_all_children_with_wrapper(Of T As IDisposable, WRITER As New) _
                                                        (ByVal w As Func(Of T),
                                                         ByVal name As String) As Action(Of code_gens(Of WRITER))
@@ -147,13 +130,18 @@ Public NotInheritable Class code_gen
                                                         ByVal n As typed_node,
                                                         ByVal o As WRITER) As Boolean
                                                    Using w()
-                                                       Return build_all_children(this, n, o)
+                                                       Return this.of_all_children(n).build(o)
                                                    End Using
                                                End Function)
     End Function
 
     Public Shared Function of_all_children(Of WRITER As New)(ByVal name As String) As Action(Of code_gens(Of WRITER))
-        Return code_gen_delegate(Of WRITER).of(name, AddressOf build_all_children)
+        Return code_gen_delegate(Of WRITER).of(name,
+                                               Function(ByVal this As code_gens(Of WRITER),
+                                                        ByVal n As typed_node,
+                                                        ByVal o As WRITER) As Boolean
+                                                   Return this.of_all_children(n).build(o)
+                                               End Function)
     End Function
 
     Public Shared Function of_leaf_node(ByVal name As String) As Action(Of code_gens(Of typed_node_writer))
@@ -186,7 +174,7 @@ Public NotInheritable Class code_gen
                    Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
                        assert(Not n Is Nothing)
                        assert(Not o Is Nothing)
-                       Return o.append(name)
+                       Return o.append(name.Replace("-"c, "_"c))
                    End Function)
     End Function
 
