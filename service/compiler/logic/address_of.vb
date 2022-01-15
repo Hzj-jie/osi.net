@@ -29,9 +29,12 @@ Namespace logic
             End If
             Dim a As scope.anchor = Nothing
             If Not scope.current().anchors().of(name, a) Then
+                errors.anchor_undefined(name)
                 Return False
             End If
-            o.emplace_back(instruction_builder.str(command.cpc, t, New data_block(a.begin)))
+            assert(a.begin.on_stack())
+            assert(a.begin.absolute())
+            o.emplace_back(instruction_builder.str(command.cpc, t, New data_block(a.begin.offset())))
             Return True
         End Function
     End Class

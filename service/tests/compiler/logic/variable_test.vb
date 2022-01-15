@@ -41,8 +41,8 @@ Namespace logic
                 assertion.is_true(v.empty())
                 assertion.equal(o.name, "abc")
                 assertions.of(o.index).is_empty()
-                assertions.of(o.size).equal(scope.current().types()(scope.type_t.heap_ptr_type))
-                assertion.equal(o.type, scope.type_t.heap_ptr_type)
+                assertions.of(o.size).equal(scope.current().types()(scope.type_t.ptr_type))
+                assertion.equal(o.type, scope.type_t.ptr_type)
             End Using
         End Sub
 
@@ -51,7 +51,7 @@ Namespace logic
             Dim s As New scope()
             Using defer.to(AddressOf s.end_scope)
                 assertion.is_true(s.variables().define_heap("abc", scope.type_t.variable_type))
-                assertion.is_true(s.variables().define_stack("i", scope.type_t.heap_ptr_type))
+                assertion.is_true(s.variables().define_stack("i", scope.type_t.ptr_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of("abc[i]", v, o))
@@ -67,7 +67,7 @@ Namespace logic
                 assertion.equal((+o.index).name, "i")
                 assertions.of((+o.index).index).is_empty()
                 assertions.of((+o.index).size).equal(sizeof_uint64)
-                assertion.equal((+o.index).type, scope.type_t.heap_ptr_type)
+                assertion.equal((+o.index).type, scope.type_t.ptr_type)
             End Using
         End Sub
 
@@ -77,7 +77,7 @@ Namespace logic
             Using defer.to(AddressOf s.end_scope)
                 assertion.is_true(s.variables().define_heap("abc", scope.type_t.variable_type))
                 assertion.is_true(s.variables().define_heap("def", scope.type_t.variable_type))
-                assertion.is_true(s.variables().define_stack("i", scope.type_t.heap_ptr_type))
+                assertion.is_true(s.variables().define_stack("i", scope.type_t.ptr_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of("abc[def[i]]", v, o))
@@ -98,7 +98,7 @@ Namespace logic
 
                 assertions.of((+o.index).index).has_value()
                 assertion.equal((+(+o.index).index).name, "i")
-                assertion.equal((+(+o.index).index).type, scope.type_t.heap_ptr_type)
+                assertion.equal((+(+o.index).index).type, scope.type_t.ptr_type)
                 assertions.of((+(+o.index).index).size).equal(sizeof_uint64)
             End Using
         End Sub

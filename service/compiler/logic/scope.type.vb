@@ -13,17 +13,17 @@ Namespace logic
         ' the types instance won't be impacted by the source code or in another word, user input, of a language.
         Public NotInheritable Class type_t
             Public Const variable_type As String = "type*"
-            Public Const heap_ptr_type As String = "type_ptr"
+            Public Const ptr_type As String = "type_ptr"
             Public Const zero_type As String = "type0"
             Private Const variable_size As UInt32 = max_int32
-            Private Shared ReadOnly heap_size As UInt32 = sizeof_uint64
+            Private Shared ReadOnly ptr_size As UInt32 = sizeof_uint64
             Private Const zero_size As UInt32 = uint32_0
 
             Private ReadOnly sizes As New unordered_map(Of String, UInt32)()
 
             Public Sub New()
                 assert_define(variable_type, variable_size)
-                assert_define(heap_ptr_type, heap_size)
+                assert_define(ptr_type, ptr_size)
                 assert_define(zero_type, zero_size)
             End Sub
 

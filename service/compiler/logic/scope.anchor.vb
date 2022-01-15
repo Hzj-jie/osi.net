@@ -5,18 +5,28 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     Partial Public NotInheritable Class scope
         Public NotInheritable Class anchor
-            Inherits scope.anchor_ref
-            Public ReadOnly begin As UInt32
+            Inherits anchor_ref
+            Public ReadOnly begin As data_ref
 
             Public Sub New(ByVal name As String,
                            ByVal begin As UInt32,
                            ByVal return_type As String,
                            ByVal parameters() As builders.parameter)
                 MyBase.New(name, return_type, parameters)
+                Me.begin = data_ref.abs(begin)
+            End Sub
+
+            Public Sub New(ByVal name As String,
+                           ByVal begin As data_ref,
+                           ByVal return_type As String,
+                           ByVal parameters As const_array(Of builders.parameter))
+                MyBase.New(name, return_type, parameters)
+                assert(Not begin Is Nothing)
                 Me.begin = begin
             End Sub
         End Class

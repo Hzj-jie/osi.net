@@ -9,9 +9,9 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    ' A variable in stack.
     Public NotInheritable Class variable
         Public ReadOnly name As String
+        ' This field is not necessary, the "name" is a calculated stack variable to represent the heap location.
         Public ReadOnly index As [optional](Of variable)
         Public ReadOnly type As String
         Public ReadOnly size As UInt32
@@ -78,6 +78,7 @@ Namespace logic
                 End If
                 Return with_size(name, [optional].empty(Of variable)(), r.type, o)
             Else
+                assert(Not v Is Nothing)
                 If Not name.EndsWith(character.right_mid_bracket) Then
                     errors.invalid_variable_name(name, "Closing bracket is not at the end of the name.")
                     Return False
@@ -96,7 +97,7 @@ Namespace logic
                     Return False
                 End If
                 Dim ptr_name As String = scope.current().variables().unique_name()
-                assert(_define.export(ptr_name, scope.type_t.heap_ptr_type, v))
+                assert(_define.export(ptr_name, scope.type_t.ptr_type, v))
                 Dim d As data_ref = scope.current().variables().export(ptr_name).data_ref
                 Dim r As scope.variable_t.exported_ref = Nothing
                 If Not scope.current().variables().export(name.Substring(0, index_start), r) Then

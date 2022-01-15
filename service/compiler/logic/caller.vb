@@ -9,148 +9,32 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class _caller
-        Implements exportable
+        Inherits anchor_caller
 
         Private ReadOnly name As String
-        Private ReadOnly result As [optional](Of String)
-        Private ReadOnly parameters() As String
 
-        Public Sub New(ByVal name As String,
-                       ByVal result As String,
-                       ByVal parameters As vector(Of String))
+        ' @VisibleForTesting
+        Public Sub New(ByVal name As String, ByVal result As String, ParamArray ByVal parameters() As String)
+            MyBase.New(command.jump, result, parameters)
+            assert(Not name.null_or_whitespace())
+            Me.name = name
+        End Sub
+
+        Public Sub New(ByVal name As String, ByVal result As String, ByVal parameters As vector(Of String))
             Me.New(name, result, +parameters)
         End Sub
 
-        Public Sub New(ByVal name As String,
-                       ByVal result As String,
-                       ParamArray ByVal parameters() As String)
-            assert(Not name.null_or_whitespace())
-            assert(result Is Nothing OrElse Not result.null_or_whitespace())
-            Me.name = name
-            Me.result = [optional].of_nullable(result)
-            Me.parameters = parameters
-            For Each parameter As String In Me.parameters
-                assert(Not parameter.null_or_whitespace())
-            Next
-        End Sub
-
         Public Sub New(ByVal name As String, ByVal parameters As vector(Of String))
-            Me.New(name, +parameters)
+            Me.New(name, Nothing, +parameters)
         End Sub
 
-        Public Sub New(ByVal name As String, ParamArray ByVal parameters() As String)
-            Me.New(name, Nothing, parameters)
-        End Sub
-
-        ' Forward return-value to scope_wrapper.
-        Private Function define_return_value(ByVal anchor As scope.anchor, ByVal o As vector(Of String)) As Boolean
-            assert(Not o Is Nothing)
-            If Not return_value.export(name, anchor.return_type, o) Then
-                Return False
-            End If
-            Return True
-        End Function
-
-        Private Function parameter_place_holder_of(ByVal i As Int32) As String
-            assert(i < parameters.array_size_i())
-            Return strcat("@parameter_", i, "_of_", name, "_place_holder")
-        End Function
-
-        ' Forward parameters to scope_wrapper.
-        Private Function define_parameters(ByVal anchor As scope.anchor,
-                                           ByVal o As vector(Of String)) As Boolean
-            assert(Not anchor Is Nothing)
-            assert(Not o Is Nothing)
-            If array_size(parameters) <> anchor.parameters.size() Then
-                errors.mismatch_callee_parameters(anchor.name, parameters)
-                Return False
-            End If
-            Dim vars(parameters.Length() - 1) As variable
-            For i As Int32 = 0 To parameters.Length() - 1
-                If Not variable.of(parameters(i), o, vars(i)) Then
-                    Return False
-                End If
-            Next
-            For i As Int32 = 0 To parameters.Length() - 1
-                Dim parameter_place_holder As String = parameter_place_holder_of(i)
-                If Not _define.export(parameter_place_holder, anchor.parameters(CUInt(i)).type, o) Then
-                    Return False
-                End If
-
-                Dim target As variable = Nothing
-                If Not variable.of(parameter_place_holder, o, target) Then
-                    Return False
-                End If
-
-                If anchor.parameters(CUInt(i)).ref Then
-                    If Not _move.export(target, vars(i), o) Then
-                        Return False
-                    End If
-                Else
-                    If Not _copy.export(target, vars(i), o) Then
-                        Return False
-                    End If
-                End If
-            Next
-            Return True
-        End Function
-
-        ' Forward return-value from scope_wrapper.
-        Private Function forward_to_result(ByVal anchor As scope.anchor, ByVal o As vector(Of String)) As Boolean
-            assert(Not anchor Is Nothing)
-            assert(Not o Is Nothing)
-            ' The count of parameters should be checked already in define_parameter.
-            assert(array_size(parameters) = anchor.parameters.size())
-            For i As Int32 = 0 To parameters.array_size_i() - 1
-                If Not anchor.parameters(CUInt(i)).ref Then
-                    Continue For
-                End If
-                Dim parameter_place_holder As variable = Nothing
-                assert(variable.of(parameter_place_holder_of(i), o, parameter_place_holder))
-                Dim parameter As variable = Nothing
-                assert(variable.of(parameters(i), o, parameter))
-                If Not _move.export(parameter, parameter_place_holder, o) Then
-                    Return False
-                End If
-            Next
-            If Not result Then
+        Protected Overrides Function retrieve_anchor(ByVal o As vector(Of String),
+                                                     ByRef anchor As scope.anchor) As Boolean
+            If scope.current().anchors().of(name, anchor) Then
                 Return True
             End If
-            Dim result_var As variable = Nothing
-            If Not variable.of(+result, o, result_var) Then
-                errors.variable_undefined(+result)
-                Return False
-            End If
-            Dim return_value_var As variable = Nothing
-            assert(return_value.retrieve(name, o, return_value_var))
-            Return _move.export(result_var, return_value_var, o)
-        End Function
-
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            assert(Not o Is Nothing)
-            ' rel(array_size(parameters)) is for return value.
-            Using New scope_wrapper(o)
-                Dim anchor As scope.anchor = Nothing
-                If Not scope.current().anchors().of(name, anchor) Then
-                    errors.anchor_undefined(name)
-                    Return False
-                End If
-                assert(Not anchor Is Nothing)
-
-                If Not define_return_value(anchor, o) Then
-                    Return False
-                End If
-                If Not define_parameters(anchor, o) Then
-                    Return False
-                End If
-                o.emplace_back(instruction_builder.str(command.stst))
-                o.emplace_back(instruction_builder.str(command.jump, data_ref.abs(anchor.begin)))
-                If Not forward_to_result(anchor, o) Then
-                    Return False
-                End If
-            End Using
-
-            Return True
+            errors.anchor_undefined(name)
+            Return False
         End Function
     End Class
 End Namespace

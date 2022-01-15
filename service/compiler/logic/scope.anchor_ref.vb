@@ -5,23 +5,36 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     Partial Public NotInheritable Class scope
         Public Class anchor_ref
+            ' TODO: name may not be really necessary, the user should have the name to search from anchors.
             Public ReadOnly name As String
             Public ReadOnly return_type As String
             Public ReadOnly parameters As const_array(Of builders.parameter)
 
             Public Sub New(ByVal name As String,
+                            ByVal return_type As String,
+                            ByVal parameters() As builders.parameter)
+                Me.New(name, return_type, const_array.of(parameters))
+            End Sub
+
+            Public Sub New(ByVal name As String,
                            ByVal return_type As String,
-                           ByVal parameters() As builders.parameter)
+                           ByVal parameters As const_array(Of builders.parameter))
                 assert(Not name.null_or_whitespace())
                 assert(Not return_type.null_or_whitespace())
+                assert(Not parameters Is Nothing)
                 Me.name = name
                 Me.return_type = return_type
-                Me.parameters = const_array.of(parameters)
+                Me.parameters = parameters
             End Sub
+
+            Public Function with_begin(ByVal begin As data_ref) As anchor
+                Return New anchor(name, begin, return_type, parameters)
+            End Function
         End Class
 
         ' This class stores only the signatures of callee_refs, but not their variable definitions. Variable definitions

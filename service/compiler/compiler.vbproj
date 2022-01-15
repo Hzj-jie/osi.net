@@ -130,6 +130,7 @@
     <Compile Include="bstyle\struct_member.vb" />
     <Compile Include="code_gen\reparser.vb" />
     <Compile Include="logic\address_of.vb" />
+    <Compile Include="logic\anchor_caller.vb" />
     <Compile Include="logic\callee_ref.vb" />
     <Compile Include="logic\caller_ref.vb" />
     <Compile Include="logic\scope.anchor_ref.vb" />

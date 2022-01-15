@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.formation
+Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class errors
@@ -108,9 +108,13 @@ Namespace logic
             raise("Anchor ", name, " is not defined.")
         End Sub
 
+        Public Shared Sub anchor_ref_undefined(ByVal name As String)
+            raise("AnchorRef ", name, " is not defined.")
+        End Sub
+
         Public Shared Sub anchor_redefined(ByVal name As String,
-                                           ByVal current_pos As UInt32,
-                                           ByVal last_pos As UInt32)
+                                           ByVal current_pos As data_ref,
+                                           ByVal last_pos As data_ref)
             raise("Anchor ",
                   name,
                   " redefined at ",
