@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class divide
+    Public NotInheritable Class _divide
         Inherits pair_result_binary_operator
 
         Public Sub New(ByVal result1 As String,
@@ -32,7 +32,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class extract
+    Public NotInheritable Class _extract
         Inherits pair_result_binary_operator
 
         Public Sub New(ByVal result1 As String,

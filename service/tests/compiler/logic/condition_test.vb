@@ -28,17 +28,17 @@ Namespace logic
 
         Public Sub New()
             MyBase.New(
-                New define("a-bool", scope.type_t.variable_type),
-                New define("value1", scope.type_t.variable_type),
-                New copy_const("value1", New data_block(value1)),
-                New define("value2", scope.type_t.variable_type),
-                New copy_const("value2", New data_block(value2)),
-                New define("value", scope.type_t.variable_type),
-                New copy_const("a-bool", New data_block(True)),
+                New _define("a-bool", scope.type_t.variable_type),
+                New _define("value1", scope.type_t.variable_type),
+                New _copy_const("value1", New data_block(value1)),
+                New _define("value2", scope.type_t.variable_type),
+                New _copy_const("value2", New data_block(value2)),
+                New _define("value", scope.type_t.variable_type),
+                New _copy_const("a-bool", New data_block(True)),
                 create_condition(),
-                New copy_const("a-bool", New data_block(False)),
+                New _copy_const("a-bool", New data_block(False)),
                 create_condition(),
-                New [stop]()
+                New _stop()
             )
             out = make_disposer(New StringWriter())
             io = New console_io()
@@ -50,13 +50,13 @@ Namespace logic
             Return strcat(rnd_utf8_chars(rnd_int(100, 200)), newline.incode())
         End Function
 
-        Private Shared Function create_condition() As [if]
-            Return New [if]("a-bool",
+        Private Shared Function create_condition() As _if
+            Return New _if("a-bool",
                 New paragraph(
-                    New interrupt("stdout", "value1", "value")
+                    New _interrupt("stdout", "value1", "value")
                 ),
                 New paragraph(
-                    New interrupt("stdout", "value2", "value")
+                    New _interrupt("stdout", "value2", "value")
                 )
             )
         End Function

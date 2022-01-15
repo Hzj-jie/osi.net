@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace logic
-    Public NotInheritable Class start_scope
+    Public NotInheritable Class _start_scope
         Implements exportable
 
         Private ReadOnly p As paragraph

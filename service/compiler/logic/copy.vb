@@ -8,7 +8,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' Copy a variable from @source to @target.
-    Public NotInheritable Class copy
+    Public NotInheritable Class _copy
         Inherits copy_move
 
         Public Sub New(ByVal target As String, ByVal source As String)

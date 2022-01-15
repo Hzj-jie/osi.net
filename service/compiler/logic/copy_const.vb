@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' Copy (instead of moving) a @data to @target
-    Public NotInheritable Class copy_const
+    Public NotInheritable Class _copy_const
         Implements exportable
 
         Private ReadOnly target As String

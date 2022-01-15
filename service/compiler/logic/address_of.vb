@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class address_of
+    Public NotInheritable Class _address_of
         Implements exportable
 
         Private ReadOnly target As String

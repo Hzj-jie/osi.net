@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' do { do() } while (var)
-    Public NotInheritable Class do_while
+    Public NotInheritable Class _do_while
         Implements exportable
 
         Private ReadOnly v As String

@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class caller
+    Public NotInheritable Class _caller
         Implements exportable
 
         Private ReadOnly name As String
@@ -73,9 +73,7 @@ Namespace logic
             Next
             For i As Int32 = 0 To parameters.Length() - 1
                 Dim parameter_place_holder As String = parameter_place_holder_of(i)
-                If Not define.export(parameter_place_holder,
-                                     anchor.parameters(CUInt(i)).type,
-                                     o) Then
+                If Not _define.export(parameter_place_holder, anchor.parameters(CUInt(i)).type, o) Then
                     Return False
                 End If
 
@@ -85,11 +83,11 @@ Namespace logic
                 End If
 
                 If anchor.parameters(CUInt(i)).ref Then
-                    If Not move.export(target, vars(i), o) Then
+                    If Not _move.export(target, vars(i), o) Then
                         Return False
                     End If
                 Else
-                    If Not copy.export(target, vars(i), o) Then
+                    If Not _copy.export(target, vars(i), o) Then
                         Return False
                     End If
                 End If
@@ -111,7 +109,7 @@ Namespace logic
                 assert(variable.of(parameter_place_holder_of(i), o, parameter_place_holder))
                 Dim parameter As variable = Nothing
                 assert(variable.of(parameters(i), o, parameter))
-                If Not move.export(parameter, parameter_place_holder, o) Then
+                If Not _move.export(parameter, parameter_place_holder, o) Then
                     Return False
                 End If
             Next
@@ -125,7 +123,7 @@ Namespace logic
             End If
             Dim return_value_var As variable = Nothing
             assert(return_value.retrieve(name, o, return_value_var))
-            Return move.export(result_var, return_value_var, o)
+            Return _move.export(result_var, return_value_var, o)
         End Function
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export

@@ -7,7 +7,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class add
+    Public NotInheritable Class _add
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -25,11 +25,11 @@ Namespace logic
                                                 ByVal right As String,
                                                 ByVal o As vector(Of String)) As Boolean
             ' binary_math_operator does not require size info of either parameters or result.
-            Return New add(result, left, right).export(o)
+            Return New _add(result, left, right).export(o)
         End Function
     End Class
 
-    Public NotInheritable Class subtract
+    Public NotInheritable Class _subtract
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -43,7 +43,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class multiply
+    Public NotInheritable Class _multiply
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -57,7 +57,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class power
+    Public NotInheritable Class _power
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -71,7 +71,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class [and]
+    Public NotInheritable Class _and
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -85,7 +85,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class [or]
+    Public NotInheritable Class _or
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -99,7 +99,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class float_add
+    Public NotInheritable Class _float_add
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -113,7 +113,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class float_subtract
+    Public NotInheritable Class _float_subtract
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -127,7 +127,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class float_multiply
+    Public NotInheritable Class _float_multiply
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -141,7 +141,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class float_power
+    Public NotInheritable Class _float_power
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -155,7 +155,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class float_divide
+    Public NotInheritable Class _float_divide
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -169,7 +169,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class float_extract
+    Public NotInheritable Class _float_extract
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -183,7 +183,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class left_shift
+    Public NotInheritable Class _left_shift
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,
@@ -197,7 +197,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class right_shift
+    Public NotInheritable Class _right_shift
         Inherits binary_math_operator
 
         Public Sub New(ByVal result As String,

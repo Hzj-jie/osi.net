@@ -13,24 +13,24 @@ Namespace logic
         Inherits executor_case
 
         Public Sub New()
-            MyBase.New(New callee("add",
-                                  "type*",
-                                  New paragraph(
-                                      New define("result", scope.type_t.variable_type),
-                                      New add("result", "parameter1", "parameter2"),
-                                      New [return]("add", "result")
-                                  ),
-                                  pair.emplace_of("parameter1", scope.type_t.variable_type),
-                                  pair.emplace_of("parameter2", scope.type_t.variable_type),
-                                  pair.emplace_of("parameter3", scope.type_t.variable_type)),
-                       New define("parameter1", scope.type_t.variable_type),
-                       New define("parameter2", scope.type_t.variable_type),
-                       New define("parameter3", scope.type_t.variable_type),
-                       New define("result", scope.type_t.variable_type),
-                       New copy_const("parameter1", New data_block(100)),
-                       New copy_const("parameter2", New data_block(200)),
-                       New copy_const("parameter3", New data_block(10000)),
-                       New caller("add", "result", "parameter1", "parameter2", "parameter3"))
+            MyBase.New(New _callee("add",
+                                   "type*",
+                                   New paragraph(
+                                       New _define("result", scope.type_t.variable_type),
+                                       New _add("result", "parameter1", "parameter2"),
+                                       New _return("add", "result")
+                                   ),
+                                   pair.emplace_of("parameter1", scope.type_t.variable_type),
+                                   pair.emplace_of("parameter2", scope.type_t.variable_type),
+                                   pair.emplace_of("parameter3", scope.type_t.variable_type)),
+                       New _define("parameter1", scope.type_t.variable_type),
+                       New _define("parameter2", scope.type_t.variable_type),
+                       New _define("parameter3", scope.type_t.variable_type),
+                       New _define("result", scope.type_t.variable_type),
+                       New _copy_const("parameter1", New data_block(100)),
+                       New _copy_const("parameter2", New data_block(200)),
+                       New _copy_const("parameter3", New data_block(10000)),
+                       New _caller("add", "result", "parameter1", "parameter2", "parameter3"))
         End Sub
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))

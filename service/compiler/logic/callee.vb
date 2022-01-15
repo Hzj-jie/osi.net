@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class callee
+    Public NotInheritable Class _callee
         Implements exportable
 
         Private ReadOnly name As String

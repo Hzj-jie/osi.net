@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class interrupt
+    Public NotInheritable Class _interrupt
         Implements exportable
 
         Private ReadOnly function_name As String
@@ -34,7 +34,7 @@ Namespace logic
                 Return False
             End If
 
-            Dim cpc As New copy_const(result, New data_block(function_id))
+            Dim cpc As New _copy_const(result, New data_block(function_id))
             If Not cpc.export(o) Then
                 Return False
             End If

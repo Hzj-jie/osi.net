@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class [return]
+    Public NotInheritable Class _return
         Implements exportable
 
         Private ReadOnly name As String
@@ -39,7 +39,7 @@ Namespace logic
                 End If
                 ' TODO: Check if +return_value is a temporary variable or a reference to decide whether move can be
                 ' used.
-                If Not copy.export(r, var, o) Then
+                If Not _copy.export(r, var, o) Then
                     Return False
                 End If
             Else

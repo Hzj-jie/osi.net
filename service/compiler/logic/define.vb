@@ -10,7 +10,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' Define a variable with @name.
-    Public NotInheritable Class define
+    Public NotInheritable Class _define
         Implements exportable
 
         Private ReadOnly name As String
@@ -27,7 +27,7 @@ Namespace logic
         Public Shared Function export(ByVal name As String,
                                       ByVal type As String,
                                       ByVal o As vector(Of String)) As Boolean
-            Return New define(name, type).export(o)
+            Return New _define(name, type).export(o)
         End Function
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export

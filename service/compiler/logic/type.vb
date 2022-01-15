@@ -7,13 +7,14 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace logic
-    Public NotInheritable Class type
+    Public NotInheritable Class _type
         Implements exportable
 
         Private ReadOnly type As String
         Private ReadOnly size As UInt32
 
         Public Sub New(ByVal type As String, ByVal size As UInt32)
+            assert(Not type.null_or_empty())
             Me.type = type
             Me.size = size
         End Sub

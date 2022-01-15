@@ -96,7 +96,7 @@ Namespace logic
                     Return False
                 End If
                 Dim ptr_name As String = scope.current().variables().unique_name()
-                assert(define.export(ptr_name, scope.type_t.heap_ptr_type, v))
+                assert(_define.export(ptr_name, scope.type_t.heap_ptr_type, v))
                 Dim d As data_ref = scope.current().variables().export(ptr_name).data_ref
                 Dim r As scope.variable_t.exported_ref = Nothing
                 If Not scope.current().variables().export(name.Substring(0, index_start), r) Then

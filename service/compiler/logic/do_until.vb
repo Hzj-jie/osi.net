@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' do { do() } until(var)
-    Public NotInheritable Class do_until
+    Public NotInheritable Class _do_until
         Implements exportable
 
         Private ReadOnly v As String

@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace logic
-    Public NotInheritable Class callee_ref
+    Public NotInheritable Class _callee_ref
         Implements exportable
 
         Private ReadOnly name As String

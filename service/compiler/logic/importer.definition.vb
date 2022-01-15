@@ -33,7 +33,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [start_scope](
+            o = New _start_scope(
                 p1
             )
             o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
@@ -64,7 +64,7 @@ Namespace logic
                 Return False
             End If
             p += uint32_1
-            o = New [type](
+            o = New _type(
                 p1,
                 p2
             )
@@ -93,7 +93,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = New [append_slice](
+            o = New _append_slice(
                 p1,
                 p2
             )
@@ -127,7 +127,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [cut_slice](
+            o = New _cut_slice(
                 p1,
                 p2,
                 p3
@@ -162,7 +162,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [cut](
+            o = New _cut(
                 p1,
                 p2,
                 p3
@@ -202,7 +202,7 @@ Namespace logic
             End If
             Dim p4 As String = v(p)
             p += uint32_1
-            o = New [cut_len](
+            o = New _cut_len(
                 p1,
                 p2,
                 p3,
@@ -228,7 +228,7 @@ Namespace logic
             End If
             Dim p1 As String = v(p)
             p += uint32_1
-            o = New [clear](
+            o = New _clear(
                 p1
             )
             o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
@@ -261,7 +261,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [add](
+            o = New _add(
                 p1,
                 p2,
                 p3
@@ -296,7 +296,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [subtract](
+            o = New _subtract(
                 p1,
                 p2,
                 p3
@@ -331,7 +331,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [multiply](
+            o = New _multiply(
                 p1,
                 p2,
                 p3
@@ -371,7 +371,7 @@ Namespace logic
             End If
             Dim p4 As String = v(p)
             p += uint32_1
-            o = New [divide](
+            o = New _divide(
                 p1,
                 p2,
                 p3,
@@ -412,7 +412,7 @@ Namespace logic
             End If
             Dim p4 As String = v(p)
             p += uint32_1
-            o = New [extract](
+            o = New _extract(
                 p1,
                 p2,
                 p3,
@@ -448,7 +448,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [power](
+            o = New _power(
                 p1,
                 p2,
                 p3
@@ -483,7 +483,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [and](
+            o = New _and(
                 p1,
                 p2,
                 p3
@@ -518,7 +518,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [or](
+            o = New _or(
                 p1,
                 p2,
                 p3
@@ -566,7 +566,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [callee](
+            o = New _callee(
                 p1,
                 p2,
                 p3,
@@ -606,7 +606,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [caller](
+            o = New _caller(
                 p1,
                 p2,
                 p3
@@ -640,7 +640,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [caller](
+            o = New _caller(
                 p1,
                 p2
             )
@@ -678,7 +678,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [callee_ref](
+            o = New _callee_ref(
                 p1,
                 p2,
                 p3
@@ -717,7 +717,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [caller_ref](
+            o = New _caller_ref(
                 p1,
                 p2,
                 p3
@@ -751,7 +751,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [caller_ref](
+            o = New _caller_ref(
                 p1,
                 p2
             )
@@ -780,7 +780,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = New [address_of](
+            o = New _address_of(
                 p1,
                 p2
             )
@@ -814,7 +814,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [less](
+            o = New _less(
                 p1,
                 p2,
                 p3
@@ -849,7 +849,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [more](
+            o = New _more(
                 p1,
                 p2,
                 p3
@@ -884,7 +884,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [equal](
+            o = New _equal(
                 p1,
                 p2,
                 p3
@@ -919,7 +919,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [less_or_equal](
+            o = New _less_or_equal(
                 p1,
                 p2,
                 p3
@@ -954,7 +954,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [more_or_equal](
+            o = New _more_or_equal(
                 p1,
                 p2,
                 p3
@@ -1005,7 +1005,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [if](
+            o = New _if(
                 p1,
                 p2,
                 p3,
@@ -1040,7 +1040,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [if](
+            o = New _if(
                 p1,
                 p2
             )
@@ -1069,7 +1069,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = New [copy](
+            o = New _copy(
                 p1,
                 p2
             )
@@ -1103,7 +1103,7 @@ Namespace logic
             End If
             assert(new_pos = p + uint32_1)
             p += uint32_1
-            o = New [copy_const](
+            o = New _copy_const(
                 p1,
                 p2
             )
@@ -1132,7 +1132,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = New [define](
+            o = New _define(
                 p1,
                 p2
             )
@@ -1166,7 +1166,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [define_heap](
+            o = New _define_heap(
                 p1,
                 p2,
                 p3
@@ -1200,7 +1200,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [do_until](
+            o = New _do_until(
                 p1,
                 p2
             )
@@ -1233,7 +1233,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [do_while](
+            o = New _do_while(
                 p1,
                 p2
             )
@@ -1267,7 +1267,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [interrupt](
+            o = New _interrupt(
                 p1,
                 p2,
                 p3
@@ -1297,7 +1297,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = New [move](
+            o = New _move(
                 p1,
                 p2
             )
@@ -1329,7 +1329,7 @@ Namespace logic
                 Return False
             End If
             p += uint32_1
-            o = New [return](
+            o = New _return(
                 p1,
                 p2
             )
@@ -1358,7 +1358,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = New [return](
+            o = New _return(
                 p1,
                 p2
             )
@@ -1387,7 +1387,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = New [append](
+            o = New _append(
                 p1,
                 p2
             )
@@ -1416,7 +1416,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = New [not](
+            o = New _not(
                 p1,
                 p2
             )
@@ -1445,7 +1445,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = New [sizeof](
+            o = New _sizeof(
                 p1,
                 p2
             )
@@ -1474,7 +1474,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = New [empty](
+            o = New _empty(
                 p1,
                 p2
             )
@@ -1507,7 +1507,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = New [while_then](
+            o = New _while_then(
                 p1,
                 p2
             )
@@ -1526,7 +1526,7 @@ Namespace logic
             End If
             Dim start As UInt32 = p
             p += uint32_1
-            o = New [stop](
+            o = New _stop(
             )
             o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
@@ -1558,7 +1558,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [float_add](
+            o = New _float_add(
                 p1,
                 p2,
                 p3
@@ -1593,7 +1593,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [float_subtract](
+            o = New _float_subtract(
                 p1,
                 p2,
                 p3
@@ -1628,7 +1628,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [float_multiply](
+            o = New _float_multiply(
                 p1,
                 p2,
                 p3
@@ -1663,7 +1663,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [float_divide](
+            o = New _float_divide(
                 p1,
                 p2,
                 p3
@@ -1698,7 +1698,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [float_extract](
+            o = New _float_extract(
                 p1,
                 p2,
                 p3
@@ -1733,7 +1733,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [float_power](
+            o = New _float_power(
                 p1,
                 p2,
                 p3
@@ -1768,7 +1768,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [float_less](
+            o = New _float_less(
                 p1,
                 p2,
                 p3
@@ -1803,7 +1803,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [float_more](
+            o = New _float_more(
                 p1,
                 p2,
                 p3
@@ -1838,7 +1838,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [float_equal](
+            o = New _float_equal(
                 p1,
                 p2,
                 p3
@@ -1873,7 +1873,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [float_less_or_equal](
+            o = New _float_less_or_equal(
                 p1,
                 p2,
                 p3
@@ -1908,7 +1908,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [float_more_or_equal](
+            o = New _float_more_or_equal(
                 p1,
                 p2,
                 p3
@@ -1943,7 +1943,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [left_shift](
+            o = New _left_shift(
                 p1,
                 p2,
                 p3
@@ -1978,7 +1978,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = New [right_shift](
+            o = New _right_shift(
                 p1,
                 p2,
                 p3

@@ -105,7 +105,7 @@ public static class Program {
         }
         wl("            p += uint32_1");
       }
-      wl("            o = New [" + ss[0] + "](");
+      wl("            o = New _" + ss[0] + "(");
       for (int i = 1; i < ss.Length; i++) {
         w("                p" + i.ToString());
         if (i < ss.Length - 1) {

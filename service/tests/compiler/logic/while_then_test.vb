@@ -14,18 +14,18 @@ Namespace logic
 
         Public Sub New()
             MyBase.New(
-                New define("state", scope.type_t.variable_type),
-                New define("result", scope.type_t.variable_type),
-                New define("i", scope.type_t.variable_type),
-                New define("1", scope.type_t.variable_type),
-                New define("50", scope.type_t.variable_type),
-                New copy_const("state", New data_block(True)),
-                New copy_const("1", New data_block(1)),
-                New copy_const("50", New data_block(50)),
-                New while_then("state", New paragraph(
-                    New add("i", "i", "1"),
-                    New add("result", "result", "i"),
-                    New less_or_equal("state", "i", "50")
+                New _define("state", scope.type_t.variable_type),
+                New _define("result", scope.type_t.variable_type),
+                New _define("i", scope.type_t.variable_type),
+                New _define("1", scope.type_t.variable_type),
+                New _define("50", scope.type_t.variable_type),
+                New _copy_const("state", New data_block(True)),
+                New _copy_const("1", New data_block(1)),
+                New _copy_const("50", New data_block(50)),
+                New _while_then("state", New paragraph(
+                    New _add("i", "i", "1"),
+                    New _add("result", "result", "i"),
+                    New _less_or_equal("state", "i", "50")
                 ))
             )
         End Sub

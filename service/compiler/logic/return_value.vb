@@ -17,7 +17,7 @@ Namespace logic
         Public Shared Function export(ByVal name As String,
                                       ByVal type As String,
                                       ByRef o As vector(Of String)) As Boolean
-            Return logic.define.export(variable_name(name), type, o)
+            Return logic._define.export(variable_name(name), type, o)
         End Function
 
         Public Shared Function retrieve(ByVal name As String,

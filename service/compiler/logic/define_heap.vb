@@ -10,7 +10,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' Define an array with @name, @type and @size
-    Public NotInheritable Class define_heap
+    Public NotInheritable Class _define_heap
         Implements exportable
 
         Private ReadOnly name As String
