@@ -11,27 +11,14 @@ Namespace logic
     Public NotInheritable Class paragraph
         Implements exportable
 
-        Private ReadOnly s As vector(Of exportable)
+        Private ReadOnly s As New vector(Of exportable)()
 
         Public Sub New()
-            Me.s = New vector(Of exportable)()
         End Sub
 
-        Public Sub New(ByVal statements As unique_ptr(Of exportable()))
-            Me.New()
-            Me.s.emplace_back(statements.release())
-        End Sub
-
-        Public Sub New(ByVal statements As unique_ptr(Of vector(Of exportable)))
-            Me.New()
-            If statements Then
-                Me.s = statements.release()
-            End If
-        End Sub
-
+        ' @VisibleForTesting
         Public Sub New(ByVal ParamArray statements() As exportable)
-            Me.New()
-            Me.s.emplace_back(statements)
+            s.emplace_back(statements)
         End Sub
 
         Public Function push(ByVal e As exportable) As Boolean

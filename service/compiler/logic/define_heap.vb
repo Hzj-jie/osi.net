@@ -13,20 +13,16 @@ Namespace logic
     Public NotInheritable Class define_heap
         Implements exportable
 
-        Private ReadOnly types As types
         Private ReadOnly name As String
         Private ReadOnly type As String
         Private ReadOnly size As String
 
-        Public Sub New(ByVal types As types,
-                       ByVal name As String,
+        Public Sub New(ByVal name As String,
                        ByVal type As String,
                        ByVal size As String)
-            assert(Not types Is Nothing)
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
             assert(Not size.null_or_whitespace())
-            Me.types = types
             Me.name = name
             Me.type = type
             Me.size = size
@@ -35,7 +31,7 @@ Namespace logic
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim size As variable = Nothing
-            If Not variable.of(types, Me.size, o, size) Then
+            If Not variable.of(Me.size, o, size) Then
                 Return False
             End If
             If Not scope.current().variables().define_heap(name, type) Then

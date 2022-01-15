@@ -10,8 +10,8 @@ Namespace logic
     Public MustInherit Class binary_operator
         Inherits data_ref_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, left, right)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, left, right)
         End Sub
 
         Protected MustOverride Function result_restrict(ByVal result As variable) As Boolean

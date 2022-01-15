@@ -9,8 +9,8 @@ Namespace logic
     Public MustInherit Class binary_math_operator
         Inherits binary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, left, right)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, left, right)
         End Sub
 
         Protected Overrides Function parameter_restrict(ByVal parameter As variable) As Boolean

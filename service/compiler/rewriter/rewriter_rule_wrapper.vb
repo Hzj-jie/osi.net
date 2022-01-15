@@ -45,14 +45,13 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of String),
             MyBase.New(functions)
         End Sub
 
-        Protected NotOverridable Overrides Function import(ByVal e As interpreter.primitive.exportable,
+        Protected NotOverridable Overrides Function import(ByVal e As exportable,
                                                            ByVal o As typed_node_writer) As Boolean
             assert(Not o Is Nothing)
             Return text_import(o.dump(), e)
         End Function
 
-        Protected MustOverride Function text_import(ByVal i As String,
-                                                    ByVal e As interpreter.primitive.exportable) As Boolean
+        Protected MustOverride Function text_import(ByVal i As String, ByVal e As exportable) As Boolean
     End Class
 
     Protected Sub New()

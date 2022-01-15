@@ -10,8 +10,8 @@ Namespace logic
     Public NotInheritable Class append
         Inherits unary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
-            MyBase.New(types, result, parameter)
+        Public Sub New(ByVal result As String, ByVal parameter As String)
+            MyBase.New(result, parameter)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -31,8 +31,8 @@ Namespace logic
     Public NotInheritable Class [not]
         Inherits unary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
-            MyBase.New(types, result, parameter)
+        Public Sub New(ByVal result As String, ByVal parameter As String)
+            MyBase.New(result, parameter)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -52,8 +52,8 @@ Namespace logic
     Public NotInheritable Class sizeof
         Inherits unary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
-            MyBase.New(types, result, parameter)
+        Public Sub New(ByVal result As String, ByVal parameter As String)
+            MyBase.New(result, parameter)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -73,8 +73,8 @@ Namespace logic
     Public NotInheritable Class empty
         Inherits unary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
-            MyBase.New(types, result, parameter)
+        Public Sub New(ByVal result As String, ByVal parameter As String)
+            MyBase.New(result, parameter)
         End Sub
 
         Protected Overrides Function instruction() As command

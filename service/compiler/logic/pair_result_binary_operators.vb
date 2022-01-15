@@ -10,12 +10,11 @@ Namespace logic
     Public NotInheritable Class divide
         Inherits pair_result_binary_operator
 
-        Public Sub New(ByVal types As types,
-                       ByVal result1 As String,
+        Public Sub New(ByVal result1 As String,
                        ByVal result2 As String,
                        ByVal left As String,
                        ByVal right As String)
-            MyBase.New(types, result1, result2, left, right)
+            MyBase.New(result1, result2, left, right)
         End Sub
 
         Protected Overrides Function parameter_restrict(ByVal parameter As variable) As Boolean
@@ -36,12 +35,11 @@ Namespace logic
     Public NotInheritable Class extract
         Inherits pair_result_binary_operator
 
-        Public Sub New(ByVal types As types,
-                       ByVal result1 As String,
+        Public Sub New(ByVal result1 As String,
                        ByVal result2 As String,
                        ByVal left As String,
                        ByVal right As String)
-            MyBase.New(types, result1, result2, left, right)
+            MyBase.New(result1, result2, left, right)
         End Sub
 
         Protected Overrides Function parameter_restrict(ByVal parameter As variable) As Boolean

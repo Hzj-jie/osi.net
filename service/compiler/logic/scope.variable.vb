@@ -59,7 +59,7 @@ Namespace logic
                 End Function
 
                 Public Shared Function of_heap(ByVal offset As UInt64, ByVal type As String) As ref
-                    Return New ref(offset, types.heap_ptr_type, [optional].of(type))
+                    Return New ref(offset, type_t.heap_ptr_type, [optional].of(type))
                 End Function
             End Class
 

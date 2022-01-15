@@ -10,8 +10,8 @@ Namespace logic
     Public NotInheritable Class append_slice
         Inherits unary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
-            MyBase.New(types, result, parameter)
+        Public Sub New(ByVal result As String, ByVal parameter As String)
+            MyBase.New(result, parameter)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -32,8 +32,8 @@ Namespace logic
     Public NotInheritable Class cut_slice
         Inherits binary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, left, right)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, left, right)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -61,8 +61,8 @@ Namespace logic
     Public NotInheritable Class cut
         Inherits binary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, left, right)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, left, right)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -90,12 +90,11 @@ Namespace logic
     Public NotInheritable Class cut_len
         Inherits ternary_operator
 
-        Public Sub New(ByVal types As types,
-                       ByVal result As String,
+        Public Sub New(ByVal result As String,
                        ByVal p1 As String,
                        ByVal p2 As String,
                        ByVal p3 As String)
-            MyBase.New(types, result, p1, p2, p3)
+            MyBase.New(result, p1, p2, p3)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -126,8 +125,8 @@ Namespace logic
     Public NotInheritable Class clear
         Inherits unary_subroutine
 
-        Public Sub New(ByVal types As types, ByVal parameter As String)
-            MyBase.New(types, parameter)
+        Public Sub New(ByVal parameter As String)
+            MyBase.New(parameter)
         End Sub
 
         Protected Overrides Function instruction() As command

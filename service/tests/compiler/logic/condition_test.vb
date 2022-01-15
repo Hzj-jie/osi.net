@@ -28,15 +28,15 @@ Namespace logic
 
         Public Sub New()
             MyBase.New(
-                New define(types.default, "a-bool", types.variable_type),
-                New define(types.default, "value1", types.variable_type),
-                New copy_const(types.default, "value1", unique_ptr.[New](New data_block(value1))),
-                New define(types.default, "value2", types.variable_type),
-                New copy_const(types.default, "value2", unique_ptr.[New](New data_block(value2))),
-                New define(types.default, "value", types.variable_type),
-                New copy_const(types.default, "a-bool", unique_ptr.[New](New data_block(True))),
+                New define("a-bool", scope.type_t.variable_type),
+                New define("value1", scope.type_t.variable_type),
+                New copy_const("value1", New data_block(value1)),
+                New define("value2", scope.type_t.variable_type),
+                New copy_const("value2", New data_block(value2)),
+                New define("value", scope.type_t.variable_type),
+                New copy_const("a-bool", New data_block(True)),
                 create_condition(),
-                New copy_const(types.default, "a-bool", unique_ptr.[New](New data_block(False))),
+                New copy_const("a-bool", New data_block(False)),
                 create_condition(),
                 New [stop]()
             )
@@ -50,14 +50,14 @@ Namespace logic
             Return strcat(rnd_utf8_chars(rnd_int(100, 200)), newline.incode())
         End Function
 
-        Private Shared Function create_condition() As condition
-            Return New condition("a-bool",
-                unique_ptr.[New](New paragraph(
-                    New interrupt(types.default, New interrupts(), "stdout", "value1", "value")
-                )),
-                unique_ptr.[New](New paragraph(
-                    New interrupt(types.default, New interrupts(), "stdout", "value2", "value")
-                ))
+        Private Shared Function create_condition() As [if]
+            Return New [if]("a-bool",
+                New paragraph(
+                    New interrupt("stdout", "value1", "value")
+                ),
+                New paragraph(
+                    New interrupt("stdout", "value2", "value")
+                )
             )
         End Function
 

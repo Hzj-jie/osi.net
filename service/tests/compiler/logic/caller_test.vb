@@ -12,43 +12,26 @@ Namespace logic
     Public NotInheritable Class caller_test
         Inherits executor_case
 
-        Private Shared ReadOnly anchors As anchors
-
-        Shared Sub New()
-            anchors = New anchors()
-        End Sub
-
         Public Sub New()
-            MyBase.New(New callee(anchors,
-                                  types.default,
-                                  "add",
+            MyBase.New(New callee("add",
                                   "type*",
-                                  unique_ptr.[New](New paragraph(
-                                      New define(types.default, "result", types.variable_type),
-                                      New add(types.default, "result", "parameter1", "parameter2"),
-                                      New [return](anchors, types.default, "add", "result")
-                                  )),
-                                  pair.emplace_of("parameter1", types.variable_type),
-                                  pair.emplace_of("parameter2", types.variable_type),
-                                  pair.emplace_of("parameter3", types.variable_type)),
-                       New define(types.default, "parameter1", types.variable_type),
-                       New define(types.default, "parameter2", types.variable_type),
-                       New define(types.default, "parameter3", types.variable_type),
-                       New define(types.default, "result", types.variable_type),
-                       New copy_const(types.default, "parameter1", unique_ptr.[New](New data_block(100))),
-                       New copy_const(types.default, "parameter2", unique_ptr.[New](New data_block(200))),
-                       New copy_const(types.default, "parameter3", unique_ptr.[New](New data_block(10000))),
-                       New caller(anchors, types.default, "add", "result", "parameter1", "parameter2", "parameter3"))
+                                  New paragraph(
+                                      New define("result", scope.type_t.variable_type),
+                                      New add("result", "parameter1", "parameter2"),
+                                      New [return]("add", "result")
+                                  ),
+                                  pair.emplace_of("parameter1", scope.type_t.variable_type),
+                                  pair.emplace_of("parameter2", scope.type_t.variable_type),
+                                  pair.emplace_of("parameter3", scope.type_t.variable_type)),
+                       New define("parameter1", scope.type_t.variable_type),
+                       New define("parameter2", scope.type_t.variable_type),
+                       New define("parameter3", scope.type_t.variable_type),
+                       New define("result", scope.type_t.variable_type),
+                       New copy_const("parameter1", New data_block(100)),
+                       New copy_const("parameter2", New data_block(200)),
+                       New copy_const("parameter3", New data_block(10000)),
+                       New caller("add", "result", "parameter1", "parameter2", "parameter3"))
         End Sub
-
-        Public Overrides Function prepare() As Boolean
-            If MyBase.prepare() Then
-                anchors.clear()
-                Return True
-            Else
-                Return False
-            End If
-        End Function
 
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
             If assertion.equal(e.get().stack_size(), CULng(4)) Then

@@ -52,7 +52,7 @@ Partial Public NotInheritable Class bstyle
             End If
             Return builders.of_callee(name,
                                       If(scope.current().structs().defined(return_type),
-                                         types.variable_type,
+                                         compiler.logic.scope.type_t.variable_type,
                                          scope.current().type_alias()(return_type)),
                                       parameters.stream().
                                                  map(AddressOf scope.current().type_alias().canonical_of).

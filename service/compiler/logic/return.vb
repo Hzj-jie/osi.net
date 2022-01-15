@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
@@ -11,35 +12,29 @@ Namespace logic
     Public NotInheritable Class [return]
         Implements exportable
 
-        Private ReadOnly anchors As anchors
-        Private ReadOnly types As types
         Private ReadOnly name As String
         Private ReadOnly return_value As [optional](Of String)
 
-        Public Sub New(ByVal anchors As anchors,
-                       ByVal types As types,
-                       ByVal name As String,
-                       Optional ByVal return_value As String = Nothing)
-            assert(Not anchors Is Nothing)
-            assert(Not types Is Nothing)
+        Public Sub New(ByVal name As String, ByVal return_value As String)
             assert(Not name.null_or_whitespace())
             assert(return_value Is Nothing OrElse Not return_value.null_or_whitespace())
-            Me.anchors = anchors
-            Me.types = types
             Me.name = name
             Me.return_value = [optional].of_nullable(return_value)
+        End Sub
+
+        Public Sub New(ByVal name As String, ByVal no_return_value As importer.place_holder)
+            Me.New(name, [default](Of String).null)
         End Sub
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim r As variable = Nothing
-            If Not logic.return_value.retrieve(types, name, o, r) Then
+            If Not logic.return_value.retrieve(name, o, r) Then
                 Return False
             End If
-            assert(r.size)
             If return_value Then
                 Dim var As variable = Nothing
-                If Not variable.of(types, +return_value, o, var) Then
+                If Not variable.of(+return_value, o, var) Then
                     Return False
                 End If
                 ' TODO: Check if +return_value is a temporary variable or a reference to decide whether move can be
@@ -48,7 +43,7 @@ Namespace logic
                     Return False
                 End If
             Else
-                If Not types.is_zero_size(+(r.size)) Then
+                If Not scope.type_t.is_zero_size(r.size) Then
                     errors.no_return_value_provided(r)
                     Return False
                 End If

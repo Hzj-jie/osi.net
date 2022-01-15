@@ -10,8 +10,8 @@ Namespace logic
     Public MustInherit Class unary_operator
         Inherits data_ref_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
-            MyBase.New(types, result, parameter)
+        Public Sub New(ByVal result As String, ByVal parameter As String)
+            MyBase.New(result, parameter)
         End Sub
 
         Protected MustOverride Function result_restrict(ByVal result As variable) As Boolean

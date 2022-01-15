@@ -11,8 +11,8 @@ Namespace logic
     Public MustInherit Class compare
         Inherits binary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, left, right)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, left, right)
         End Sub
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
@@ -28,17 +28,14 @@ Namespace logic
     Public MustInherit Class compare_or_equal
         Implements exportable
 
-        Private ReadOnly types As types
         Private ReadOnly result As String
         Private ReadOnly left As String
         Private ReadOnly right As String
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            assert(Not types Is Nothing)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
             assert(Not String.IsNullOrEmpty(result))
             assert(Not String.IsNullOrEmpty(left))
             assert(Not String.IsNullOrEmpty(right))
-            Me.types = types
             Me.result = result
             Me.left = left
             Me.right = right
@@ -48,16 +45,16 @@ Namespace logic
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             Dim result_var As variable = Nothing
-            If Not variable.of(types, result, o, result_var) OrElse
+            If Not variable.of(result, o, result_var) OrElse
                Not result_var.is_assignable_from_bool() Then
                 Return False
             End If
             Dim left_var As variable = Nothing
-            If Not variable.of(types, left, o, left_var) Then
+            If Not variable.of(left, o, left_var) Then
                 Return False
             End If
             Dim right_var As variable = Nothing
-            If Not variable.of(types, right, o, right_var) Then
+            If Not variable.of(right, o, right_var) Then
                 Return False
             End If
             o.emplace_back(instruction_builder.str(compare(), result_var, left_var, right_var))

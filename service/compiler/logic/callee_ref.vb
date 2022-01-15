@@ -10,25 +10,24 @@ Namespace logic
     Public NotInheritable Class callee_ref
         Implements exportable
 
-        Private ReadOnly anchors As anchors
-        Private ReadOnly types As types
         Private ReadOnly name As String
         Private ReadOnly type As String
         Private ReadOnly parameters() As builders.parameter
 
-        Public Sub New(ByVal anchors As anchors,
-                       ByVal types As types,
-                       ByVal name As String,
+        Public Sub New(ByVal name As String,
                        ByVal type As String,
-                       ByVal parameters As unique_ptr(Of pair(Of String, String)()))
-            assert(Not anchors Is Nothing)
-            assert(Not types Is Nothing)
+                       ByVal ParamArray parameters As pair(Of String, String)())
             assert(Not String.IsNullOrEmpty(name))
-            Me.anchors = anchors
-            Me.types = types
+            assert(Not String.IsNullOrEmpty(type))
             Me.name = name
             Me.type = type
-            Me.parameters = builders.parameter.from_logic_callee_input(parameters.release_or_null())
+            Me.parameters = builders.parameter.from_logic_callee_input(parameters)
+        End Sub
+
+        Public Sub New(ByVal name As String,
+                       ByVal type As String,
+                       ByVal parameters As vector(Of pair(Of String, String)))
+            Me.New(name, type, +parameters)
         End Sub
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
