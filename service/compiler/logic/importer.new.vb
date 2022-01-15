@@ -84,21 +84,18 @@ Namespace logic
 
         Private Function new_callee_ref(ByVal p1 As String,
                                         ByVal p2 As String,
-                                        ByVal p3 As vector(Of pair(Of String, String))) As exportable
-            assert(False)
-            Return Nothing
+                                        ByVal p3 As vector(Of pair(Of String, String))) As callee_ref
+            Return New callee_ref(anchors, types, p1, p2, unique_ptr.[New](+p3))
         End Function
 
         Private Function new_caller_ref(ByVal p1 As String,
                                         ByVal p2 As String,
-                                        ByVal p3 As vector(Of String)) As exportable
-            assert(False)
-            Return Nothing
+                                        ByVal p3 As vector(Of String)) As caller_ref
+            Return New caller_ref(anchors, types, p1, p2, +p3)
         End Function
 
-        Private Function new_caller_ref(ByVal p1 As String, ByVal p2 As vector(Of String)) As exportable
-            assert(False)
-            Return Nothing
+        Private Function new_caller_ref(ByVal p1 As String, ByVal p2 As vector(Of String)) As caller_ref
+            Return New caller_ref(anchors, types, p1, +p2)
         End Function
 
         Private Function new_address_of(ByVal p1 As String, ByVal p2 As String) As address_of
