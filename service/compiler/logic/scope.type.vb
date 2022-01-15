@@ -19,10 +19,7 @@ Namespace logic
             Private Shared ReadOnly heap_size As UInt32 = sizeof_uint64
             Private Const zero_size As UInt32 = uint32_0
 
-            ' TODO: Remove
-            Public Shared ReadOnly [default] As New type_t()
-
-            Private ReadOnly sizes As New unordered_map(Of String, UInt32)
+            Private ReadOnly sizes As New unordered_map(Of String, UInt32)()
 
             Public Sub New()
                 assert_define(variable_type, variable_size)
@@ -31,7 +28,6 @@ Namespace logic
             End Sub
 
             Public Function define(ByVal type As String, ByVal size As UInt32) As Boolean
-                assert(object_compare(Me, [default]) <> 0)
                 assert(Not type.null_or_whitespace())
                 If size = variable_size AndAlso Not strsame(type, variable_type) Then
                     Return False

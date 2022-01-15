@@ -22,21 +22,12 @@ Namespace logic
         End Class
 
         Public NotInheritable Class anchor_t
-            ' TODO: Remove
-            Public Shared ReadOnly empty As New anchor_t()
-
             Private ReadOnly m As New map(Of String, anchor)()
-
-            ' TODO: Remove
-            Public Sub clear()
-                m.clear()
-            End Sub
 
             Public Function define(ByVal name As String,
                                    ByVal o As vector(Of String),
                                    ByVal return_type As String,
                                    ByVal parameters() As builders.parameter) As Boolean
-                assert(object_compare(Me, empty) <> 0)
                 assert(Not name.null_or_whitespace())
                 assert(Not o Is Nothing)
                 assert(Not return_type.null_or_whitespace())

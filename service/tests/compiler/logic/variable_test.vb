@@ -24,7 +24,7 @@ Namespace logic
                 assertion.is_true(v.empty())
                 assertion.equal(o.name, "abc")
                 assertions.of(o.index).is_empty()
-                assertions.of(o.size).equal(scope.type_t.default(scope.type_t.variable_type))
+                assertions.of(o.size).equal(scope.current().types()(scope.type_t.variable_type))
                 assertion.equal(o.type, scope.type_t.variable_type)
             End Using
         End Sub
@@ -41,7 +41,7 @@ Namespace logic
                 assertion.is_true(v.empty())
                 assertion.equal(o.name, "abc")
                 assertions.of(o.index).is_empty()
-                assertions.of(o.size).equal(scope.type_t.default(scope.type_t.heap_ptr_type))
+                assertions.of(o.size).equal(scope.current().types()(scope.type_t.heap_ptr_type))
                 assertion.equal(o.type, scope.type_t.heap_ptr_type)
             End Using
         End Sub
@@ -60,7 +60,7 @@ Namespace logic
                     "push",
                     "add abs2 abs0 abs1"})
                 assertion.not_equal(o.name, "abc")
-                assertions.of(o.size).equal(scope.type_t.default(scope.type_t.variable_type))
+                assertions.of(o.size).equal(scope.current().types()(scope.type_t.variable_type))
                 assertion.equal(o.type, scope.type_t.variable_type)
 
                 assertions.of(o.index).has_value()
@@ -88,13 +88,13 @@ Namespace logic
                     "push",
                     "add abs4 abs0 habs3"})
                 assertion.not_equal(o.name, "abc")
-                assertions.of(o.size).equal(scope.type_t.default(scope.type_t.variable_type))
+                assertions.of(o.size).equal(scope.current().types()(scope.type_t.variable_type))
                 assertion.equal(o.type, scope.type_t.variable_type)
 
                 assertions.of(o.index).has_value()
                 assertion.not_equal((+o.index).name, "def")
                 assertion.equal((+o.index).type, scope.type_t.variable_type)
-                assertions.of((+o.index).size).equal(scope.type_t.default(scope.type_t.variable_type))
+                assertions.of((+o.index).size).equal(scope.current().types()(scope.type_t.variable_type))
 
                 assertions.of((+o.index).index).has_value()
                 assertion.equal((+(+o.index).index).name, "i")

@@ -16,7 +16,7 @@ Namespace logic
         Private ReadOnly v As New variable_t(Me)
         Private ReadOnly t As type_t
         Private ReadOnly a As anchor_t
-        Private ReadOnly ar As New anchor_refs()
+        Private ReadOnly ar As New anchor_ref_t()
         Private ReadOnly f As interrupts
 
         <inject_constructor>
