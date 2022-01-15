@@ -16,7 +16,7 @@ Namespace logic
         Private Shared Sub primitive_without_sizes()
             Dim s As New scope()
             Using defer.to(AddressOf s.end_scope)
-                assertion.is_true(s.define_stack("abc", types.variable_type))
+                assertion.is_true(s.variables().define_stack("abc", types.variable_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of("abc", v, o))
@@ -33,7 +33,7 @@ Namespace logic
         Private Shared Sub primitive()
             Dim s As New scope()
             Using defer.to(AddressOf s.end_scope)
-                assertion.is_true(s.define_stack("abc", types.variable_type))
+                assertion.is_true(s.variables().define_stack("abc", types.variable_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of(types.default, "abc", v, o))
@@ -50,7 +50,7 @@ Namespace logic
         Private Shared Sub heap_ptr_without_sizes()
             Dim s As New scope()
             Using defer.to(AddressOf s.end_scope)
-                assertion.is_true(s.define_heap("abc", types.variable_type))
+                assertion.is_true(s.variables().define_heap("abc", types.variable_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of("abc", v, o))
@@ -67,7 +67,7 @@ Namespace logic
         Private Shared Sub heap_ptr()
             Dim s As New scope()
             Using defer.to(AddressOf s.end_scope)
-                assertion.is_true(s.define_heap("abc", types.variable_type))
+                assertion.is_true(s.variables().define_heap("abc", types.variable_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of(types.default, "abc", v, o))
@@ -84,9 +84,9 @@ Namespace logic
         Private Shared Sub heap_without_sizes()
             Dim s As New scope()
             Using defer.to(AddressOf s.end_scope)
-                assertion.is_true(s.define_heap("abc", types.variable_type))
+                assertion.is_true(s.variables().define_heap("abc", types.variable_type))
                 ' This is unlikely necessary, using ulong or big_uint are also OK.
-                assertion.is_true(s.define_stack("i", types.heap_ptr_type))
+                assertion.is_true(s.variables().define_stack("i", types.heap_ptr_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of("abc[i]", v, o))
@@ -110,8 +110,8 @@ Namespace logic
         Private Shared Sub heap()
             Dim s As New scope()
             Using defer.to(AddressOf s.end_scope)
-                assertion.is_true(s.define_heap("abc", types.variable_type))
-                assertion.is_true(s.define_stack("i", types.heap_ptr_type))
+                assertion.is_true(s.variables().define_heap("abc", types.variable_type))
+                assertion.is_true(s.variables().define_stack("i", types.heap_ptr_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of(types.default, "abc[i]", v, o))
@@ -135,9 +135,9 @@ Namespace logic
         Private Shared Sub nested_heap()
             Dim s As New scope()
             Using defer.to(AddressOf s.end_scope)
-                assertion.is_true(s.define_heap("abc", types.variable_type))
-                assertion.is_true(s.define_heap("def", types.variable_type))
-                assertion.is_true(s.define_stack("i", types.heap_ptr_type))
+                assertion.is_true(s.variables().define_heap("abc", types.variable_type))
+                assertion.is_true(s.variables().define_heap("def", types.variable_type))
+                assertion.is_true(s.variables().define_stack("i", types.heap_ptr_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of(types.default, "abc[def[i]]", v, o))

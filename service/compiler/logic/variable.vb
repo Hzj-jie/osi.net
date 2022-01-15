@@ -81,8 +81,8 @@ Namespace logic
                     errors.invalid_variable_name(name, "Unexpected closing bracket.")
                     Return False
                 End If
-                Dim r As scope.exported_ref = Nothing
-                If Not scope.current().export(name, r) Then
+                Dim r As scope.variable_t.exported_ref = Nothing
+                If Not scope.current().variables().export(name, r) Then
                     errors.variable_undefined(name)
                     Return False
                 End If
@@ -105,11 +105,11 @@ Namespace logic
                     errors.invalid_variable_name(name, "Index cannot be parsed.")
                     Return False
                 End If
-                Dim ptr_name As String = scope.current().unique_name()
+                Dim ptr_name As String = scope.current().variables().unique_name()
                 assert(define.export(ptr_name, types.heap_ptr_type, v))
-                Dim d As data_ref = scope.current().export(ptr_name).data_ref
-                Dim r As scope.exported_ref = Nothing
-                If Not scope.current().export(name.Substring(0, index_start), r) Then
+                Dim d As data_ref = scope.current().variables().export(ptr_name).data_ref
+                Dim r As scope.variable_t.exported_ref = Nothing
+                If Not scope.current().variables().export(name.Substring(0, index_start), r) Then
                     errors.variable_undefined(name.Substring(0, index_start))
                     Return False
                 End If
@@ -211,7 +211,7 @@ Namespace logic
         End Function
 
         Public Overrides Function ToString() As String
-            Dim d As data_ref = scope.current().export(name).data_ref
+            Dim d As data_ref = scope.current().variables().export(name).data_ref
             If index Then
                 Return d.to_heap().ToString()
             End If

@@ -47,7 +47,7 @@ Namespace logic
                 errors.type_undefined(type, name)
                 Return False
             End If
-            If Not scope.current().define_stack(name, type) Then
+            If Not scope.current().variables().define_stack(name, type) Then
                 Return False
             End If
             If debug_dump Then

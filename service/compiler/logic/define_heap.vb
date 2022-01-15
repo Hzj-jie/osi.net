@@ -38,7 +38,7 @@ Namespace logic
             If Not variable.of(types, Me.size, o, size) Then
                 Return False
             End If
-            If Not scope.current().define_heap(name, type) Then
+            If Not scope.current().variables().define_heap(name, type) Then
                 Return False
             End If
             If debug_dump Then

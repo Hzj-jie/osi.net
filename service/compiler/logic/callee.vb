@@ -64,7 +64,7 @@ Namespace logic
                     Return False
                 End If
                 For i As Int32 = 0 To array_size_i(parameters) - 1
-                    If Not scope.current().define_stack(parameters(i).name, parameters(i).type) Then
+                    If Not scope.current().variables().define_stack(parameters(i).name, parameters(i).type) Then
                         Return False
                     End If
                 Next
