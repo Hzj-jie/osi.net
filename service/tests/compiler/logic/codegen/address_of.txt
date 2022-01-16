@@ -13,7 +13,8 @@ callee m2 uint ( n uint ) {
   return m2 n
 }
 
-callee_ref f uint ( n uint )
+callee_ref delegate uint ( n uint )
+define f delegate
 define n uint
 define temp_string type*
 

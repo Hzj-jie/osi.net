@@ -31,11 +31,7 @@ Namespace logic
         End Sub
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            If Not _define.export(name, scope.type_t.ptr_type, o) Then
-                Return False
-            End If
-            scope.current().anchor_refs().define(name, return_type, parameters)
-            Return True
+            Return scope.current().anchor_refs().decl(name, return_type, parameters)
         End Function
     End Class
 End Namespace

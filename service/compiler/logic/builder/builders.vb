@@ -55,6 +55,7 @@ Namespace logic
                 Return of_ref(type, name)
             End Function
 
+            ' TODO: Remove
             Public Shared Function from_logic_callee_input(ByVal parameters() As pair(Of String, String)) As parameter()
                 If parameters Is Nothing Then
                     Return Nothing
@@ -65,6 +66,10 @@ Namespace logic
                                        Return New parameter(p.second, p.first)
                                    End Function).
                                to_array()
+            End Function
+
+            Public Overrides Function ToString() As String
+                Return strcat(name, ": ", type)
             End Function
         End Class
 

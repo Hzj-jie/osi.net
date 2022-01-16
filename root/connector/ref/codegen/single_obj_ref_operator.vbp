@@ -14,3 +14,9 @@
         assert(Not i Is Nothing)
         Return i.GetHashCode()
     End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Shared Function str(ByVal i As T) As String
+        assert(Not i Is Nothing)
+        Return i.ToString()
+    End Function

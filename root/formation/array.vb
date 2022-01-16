@@ -68,10 +68,10 @@ Public NotInheritable Class array(Of T)
         Return const_array(Of T).move(Of array(Of T))(i)
     End Function
 
-    Default Public Shadows Property data(ByVal i As UInt32) As T
+    Default Public Shadows Property at(ByVal i As UInt32) As T
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
-            Return MyBase.data(i)
+            Return MyBase.at(i)
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal v As T)
