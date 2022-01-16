@@ -1,3 +1,3 @@
 
-msbuild /p:Configuration=Release
+msbuild %1\%1.sln /p:Configuration=Release
 
