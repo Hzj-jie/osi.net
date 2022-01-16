@@ -12,17 +12,14 @@ Namespace logic
     Partial Public NotInheritable Class builders
         Public Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("compiler", "debug", "dump"))
 
-        Public NotInheritable Class parameter
+        Public Class parameter_type
             Private Const type_ref_suffix As Char = character.and_mark
             Public ReadOnly type As String
-            Public ReadOnly name As String
             Public ReadOnly ref As Boolean
 
-            Public Sub New(ByVal type As String, ByVal name As String)
+            Public Sub New(ByVal type As String)
                 assert(Not type.null_or_whitespace())
-                assert(Not name.null_or_whitespace())
                 type = type.Trim()
-                name = name.Trim()
                 ' TODO: Try to avoid allowing only "&" as parameter type.
                 ' assert(Not type.Equals(type_ref_suffix))
                 Me.ref = type.EndsWith(type_ref_suffix) AndAlso Not type.Equals(type_ref_suffix)
@@ -31,19 +28,51 @@ Namespace logic
                 Else
                     Me.type = type
                 End If
-                Me.name = name
             End Sub
 
             Public Function logic_type() As String
                 If ref Then
-                    Return strcat(type, type_ref_suffix)
+                    Return type + type_ref_suffix
                 End If
                 Return type
             End Function
 
-            Public Shared Function of_ref(ByVal type As String, ByVal name As String) As parameter
+            Protected Shared Function of_ref(ByVal type As String) As parameter_type
                 assert(Not type.null_or_whitespace())
-                Return New parameter(strcat(type, type_ref_suffix), name)
+                Return New parameter_type(type + type_ref_suffix)
+            End Function
+
+            Public Shared Function from_logic_callee_ref_input(ByVal parameters() As String) As parameter_type()
+                If parameters Is Nothing Then
+                    Return Nothing
+                End If
+                Return streams.of(parameters).
+                               map(Function(ByVal p As String) As parameter_type
+                                       assert(Not p Is Nothing)
+                                       Return New parameter_type(p)
+                                   End Function).
+                               to_array()
+            End Function
+
+            Public Overrides Function ToString() As String
+                Return logic_type()
+            End Function
+        End Class
+
+        Public NotInheritable Class parameter
+            Inherits parameter_type
+
+            Public ReadOnly name As String
+
+            Public Sub New(ByVal type As String, ByVal name As String)
+                MyBase.New(type)
+                assert(Not name.null_or_whitespace())
+                Me.name = name.Trim()
+            End Sub
+
+            Public Shared Shadows Function of_ref(ByVal type As String, ByVal name As String) As parameter
+                assert(Not type.null_or_whitespace())
+                Return New parameter(parameter_type.of_ref(type).logic_type(), name)
             End Function
 
             Public Shared Function to_ref(ByVal p As parameter) As parameter
@@ -55,7 +84,10 @@ Namespace logic
                 Return of_ref(type, name)
             End Function
 
-            ' TODO: Remove
+            Public Overrides Function ToString() As String
+                Return name + ": " + MyBase.ToString()
+            End Function
+
             Public Shared Function from_logic_callee_input(ByVal parameters() As pair(Of String, String)) As parameter()
                 If parameters Is Nothing Then
                     Return Nothing
@@ -66,10 +98,6 @@ Namespace logic
                                        Return New parameter(p.second, p.first)
                                    End Function).
                                to_array()
-            End Function
-
-            Public Overrides Function ToString() As String
-                Return strcat(name, ": ", type)
             End Function
         End Class
 

@@ -672,8 +672,8 @@ Namespace logic
             If Not v.available_index(p) Then
                 Return False
             End If
-            Dim p3 As New vector(Of pair(Of String, String))()
-            If Not parse_typed_parameters(p3, v, p) Then
+            Dim p3 As New vector(Of String)()
+            If Not parse_parameters(p3, v, p) Then
                 Return False
             End If
             p -= uint32_1

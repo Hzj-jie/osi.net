@@ -12,21 +12,21 @@ Namespace logic
 
         Private ReadOnly name As String
         Private ReadOnly return_type As String
-        Private ReadOnly parameters() As builders.parameter
+        Private ReadOnly parameters() As builders.parameter_type
 
         Public Sub New(ByVal name As String,
                        ByVal return_type As String,
-                       ByVal ParamArray parameters As pair(Of String, String)())
+                       ByVal ParamArray parameters As String())
             assert(Not String.IsNullOrEmpty(name))
             assert(Not String.IsNullOrEmpty(return_type))
             Me.name = name
             Me.return_type = return_type
-            Me.parameters = builders.parameter.from_logic_callee_input(parameters)
+            Me.parameters = builders.parameter_type.from_logic_callee_ref_input(parameters)
         End Sub
 
         Public Sub New(ByVal name As String,
                        ByVal return_type As String,
-                       ByVal parameters As vector(Of pair(Of String, String)))
+                       ByVal parameters As vector(Of String))
             Me.New(name, return_type, +parameters)
         End Sub
 

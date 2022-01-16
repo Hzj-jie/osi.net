@@ -533,23 +533,23 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_callee_ref(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String))) As callee_ref_builder_19
-            Return New callee_ref_builder_19(string_1, string_2, typed_parameters_3)
+        Public Shared Function of_callee_ref(ByVal string_1 As String, ByVal string_2 As String, ByVal parameters_3 As vector(Of String)) As callee_ref_builder_19
+            Return New callee_ref_builder_19(string_1, string_2, parameters_3)
         End Function
 
         Public NotInheritable Class callee_ref_builder_19
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
-            Private ReadOnly typed_parameters_3 As vector(Of pair(Of String, String))
+            Private ReadOnly parameters_3 As vector(Of String)
 
-            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)))
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal parameters_3 As vector(Of String))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not string_2.null_or_whitespace())
                 Me.string_2 = string_2
-                assert(Not typed_parameters_3 Is Nothing)
-                Me.typed_parameters_3 = typed_parameters_3
+                assert(Not parameters_3 Is Nothing)
+                Me.parameters_3 = parameters_3
             End Sub
 
             Public Function [to](ByVal o As writer) As Boolean
@@ -558,7 +558,7 @@ Namespace logic
                     o.append(string_1) AndAlso
                     o.append(string_2) AndAlso
                     o.append("(") AndAlso
-                    o.append(typed_parameters_3) AndAlso
+                    o.append(parameters_3) AndAlso
                     o.append(")") AndAlso
                     o.append(newline.incode())
             End Function

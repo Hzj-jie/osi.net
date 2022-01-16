@@ -16,7 +16,7 @@ Namespace logic
             Public Sub New(ByVal name As String,
                            ByVal begin As UInt32,
                            ByVal return_type As String,
-                           ByVal parameters() As builders.parameter)
+                           ByVal parameters() As builders.parameter_type)
                 MyBase.New(name, return_type, parameters)
                 Me.begin = lazier.of(Function() As data_ref
                                          Return data_ref.abs(begin)
@@ -26,7 +26,7 @@ Namespace logic
             Public Sub New(ByVal name As String,
                            ByVal begin As lazier(Of data_ref),
                            ByVal return_type As String,
-                           ByVal parameters As const_array(Of builders.parameter))
+                           ByVal parameters As const_array(Of builders.parameter_type))
                 MyBase.New(name, return_type, parameters)
                 assert(Not begin Is Nothing)
                 Me.begin = begin
@@ -39,7 +39,7 @@ Namespace logic
             Public Function define(ByVal name As String,
                                    ByVal o As vector(Of String),
                                    ByVal return_type As String,
-                                   ByVal parameters() As builders.parameter) As Boolean
+                                   ByVal parameters() As builders.parameter_type) As Boolean
                 assert(Not name.null_or_whitespace())
                 assert(Not o Is Nothing)
                 assert(Not return_type.null_or_whitespace())

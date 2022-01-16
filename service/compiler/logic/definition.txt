@@ -81,7 +81,7 @@ caller	string	parameters
 # define a callee / function reference with name, parameters:
 #  callee_ref f int ( a uint )
 #  a type suffixed by "&" indicates that it's a "reference".
-callee_ref	string	string	typed_parameters
+callee_ref	string	string	parameters
 
 # execute a function based on its address with parameters and store its return value:
 #  caller_ref f return-value (p1, p2)
