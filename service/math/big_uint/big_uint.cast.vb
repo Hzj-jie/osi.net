@@ -32,6 +32,23 @@ Partial Public NotInheritable Class big_uint
     '    Return this Is Nothing OrElse this.false()
     'End Operator
 
+    Public Function fit_int64() As Boolean
+        Return v.size() <= 2 AndAlso v.get(1) <= max_int32
+    End Function
+
+    Public Function as_int64(ByRef overflow As Boolean) As Int64
+        If v.size() = 0 Then
+            overflow = False
+            Return 0
+        End If
+        If v.size() = 1 Then
+            overflow = False
+            Return v.get(0)
+        End If
+        overflow = Not fit_int64()
+        Return v.get(0) + (CLng(v.get(1)) << bit_count_in_uint32)
+    End Function
+
     Public Function fit_uint64() As Boolean
         Return v.size() <= 2
     End Function
@@ -45,7 +62,7 @@ Partial Public NotInheritable Class big_uint
             overflow = False
             Return v.get(0)
         End If
-        overflow = (v.size() > 2)
+        overflow = Not fit_uint64()
         Return v.get(0) + (CULng(v.get(1)) << bit_count_in_uint32)
     End Function
 
@@ -58,7 +75,7 @@ Partial Public NotInheritable Class big_uint
             overflow = False
             Return 0
         End If
-        overflow = (v.size() > 1)
+        overflow = Not fit_uint32()
         Return v.get(0)
     End Function
 

@@ -68,8 +68,7 @@ Public Module _map
         If this Is Nothing OrElse that Is Nothing Then
             Return False
         End If
-        Dim it As map(Of KEY_T, VALUE_T).iterator = Nothing
-        it = that.begin()
+        Dim it As map(Of KEY_T, VALUE_T).iterator = that.begin()
         While it <> that.end()
             assert(f((+it).first, (+it).second).first <> this.end())
             it += 1
@@ -106,13 +105,10 @@ Public Module _map
         End If
 
         o.renew()
-        Dim it As map(Of KEY_T, VALUE_T).iterator = Nothing
-        it = i.begin()
+        Dim it As map(Of KEY_T, VALUE_T).iterator = i.begin()
         While it <> i.end()
-            Dim k As KEY_T = Nothing
-            Dim v As VALUE_T = Nothing
-            k = (+it).first
-            v = (+it).second
+            Dim k As KEY_T = (+it).first
+            Dim v As VALUE_T = (+it).second
             If copy_required Then
                 k = copy(k)
                 v = copy(v)
@@ -158,8 +154,7 @@ End Module
 Public NotInheritable Class map
     Private Shared Function create(Of KEY_T, VALUE_T)(ByVal vs() As pair(Of KEY_T, VALUE_T),
                                                       ByVal require_copy As Boolean) As map(Of KEY_T, VALUE_T)
-        Dim r As map(Of KEY_T, VALUE_T) = Nothing
-        r = New map(Of KEY_T, VALUE_T)()
+        Dim r As New map(Of KEY_T, VALUE_T)()
         For i As Int32 = 0 To array_size_i(vs) - 1
             If Not vs(i) Is Nothing Then
                 If require_copy Then
@@ -184,8 +179,7 @@ Public NotInheritable Class map
 
     Private Shared Function create_index(Of KEY_T)(ByVal vs() As KEY_T,
                                                    ByVal require_copy As Boolean) As map(Of KEY_T, UInt32)
-        Dim r As map(Of KEY_T, UInt32) = Nothing
-        r = New map(Of KEY_T, UInt32)()
+        Dim r As New map(Of KEY_T, UInt32)()
         Dim i As UInt32 = 0
         While i < array_size(vs)
             Dim v As KEY_T = Nothing

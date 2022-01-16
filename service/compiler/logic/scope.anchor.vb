@@ -32,7 +32,7 @@ Namespace logic
         End Class
 
         Public NotInheritable Class anchor_t
-            Private ReadOnly m As New map(Of String, anchor)()
+            Private ReadOnly m As New unordered_map(Of String, anchor)()
 
             Public Function define(ByVal name As String,
                                    ByVal o As vector(Of String),

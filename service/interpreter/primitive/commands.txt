@@ -1,11 +1,12 @@
 ﻿
 push	#push a data slot in to stack
 pop	#pop a data slot from stack
-jump	data_ref	#jump to instruction @A
+jump	data_ref	#jump to instruction @(A int64)
 cpc	data_ref	data_block	#(*A) = B
 mov	data_ref	data_ref	#(*A) = (*B), clr B
 cp	data_ref	data_ref	#(*A) = (*B)
 
+# Integer operations
 add	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) + (*C big_uint)
 sub	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) - (*C big_uint)
 mul	data_ref	data_ref	data_ref	#(*A big_uint) = (*B big_uint) * (*C big_uint)
@@ -35,6 +36,7 @@ not	data_ref	data_ref	#(*A big_uint) = NOT (*B big_uint)
 stst	#push current state into states, such as IP_AFTER_THIS_INSTRUCTION, i.e. IP + 1, Stack Size, a typical usage is [ stst, jump ? ]
 rest	#pop extra (StackSize - states.top.StackSize) slots from stack, and jump to instruction @(* states.top.IP uint64)
 
+# Float operations
 fadd	data_ref	data_ref	data_ref	#(*A big_udec) = (*B big_udec) + (*B big_udec)
 fsub	data_ref	data_ref	data_ref	#(*A big_udec) = (*B big_udec) - (*B big_udec)
 fmul	data_ref	data_ref	data_ref	#(*A big_udec) = (*B big_udec) * (*B big_udec)
@@ -49,3 +51,5 @@ rfs	data_ref	data_ref	data_ref	#(*A big_uint) = left_shift((*B big_uint), (*C bi
 
 alloc	data_ref	data_ref	#allocate a block of memory with size (*B big_uint) and store its reference into (*A), each one is a data slot
 dealloc	data_ref	#de-allocate a block of memory identified by its reference (*A)
+
+jmpr	data_ref	#jump to instruction @(*A int64)

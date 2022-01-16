@@ -39,9 +39,6 @@ Namespace logic
             If Not scope.current().variables().define_stack(name, type) Then
                 Return False
             End If
-            If debug_dump Then
-                o.emplace_back(comment_builder.str("+++ define ", name, type))
-            End If
             o.emplace_back(command_str(command.push))
             Return True
         End Function

@@ -37,9 +37,6 @@ Namespace logic
             If Not scope.current().variables().define_heap(name, type) Then
                 Return False
             End If
-            If debug_dump Then
-                o.emplace_back(comment_builder.str("+++ define ", name, type))
-            End If
             o.emplace_back(command_str(command.push))
             o.emplace_back(instruction_builder.str(command.alloc, "rel0", size))
             Return True

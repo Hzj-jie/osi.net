@@ -18,8 +18,7 @@ Namespace logic
         Public Sub New(ByVal name As String,
                        ByVal result As String,
                        ParamArray ByVal parameters() As String)
-            MyBase.New(command.jump, result, parameters)
-            ' TODO: jmpr should be used.
+            MyBase.New(command.jmpr, result, parameters)
             assert(Not name.null_or_whitespace())
             Me.name = name
         End Sub

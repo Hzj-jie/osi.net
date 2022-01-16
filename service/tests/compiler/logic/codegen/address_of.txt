@@ -10,11 +10,17 @@ callee m uint ( n uint ) {
 
 callee m2 uint ( n uint ) {
   subtract n n 1
-  return m n
+  return m2 n
 }
 
 callee_ref f uint ( n uint )
+define n uint
+define temp_string type*
+
 address_of f m
-caller_ref f ( 1 ) 
+caller_ref f n ( 1 ) 
+interrupt stdout n temp_string
+
 address_of f m2
-caller_ref f ( 1 )
+caller_ref f n ( n )
+interrupt stdout n temp_string
