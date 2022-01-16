@@ -5,13 +5,12 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class [while]
+    Public NotInheritable Class _while
         Implements code_gen(Of writer)
 
         Private ReadOnly l As code_gens(Of writer)

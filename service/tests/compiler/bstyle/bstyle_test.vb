@@ -138,6 +138,19 @@ Public NotInheritable Class bstyle_test
         assertion.equal(io.output(), "DE")
     End Sub
 
+    <test>
+    Private Shared Sub func_name_with_dot()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(bstyle.with_functions(New interrupts(+io)).
+                                 parse(_bstyle_test_data.func_name_with_dot.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output().Length(), 2)
+        assertion.equal(Convert.ToInt32(io.output()(0)), 1)
+        assertion.equal(Convert.ToInt32(io.output()(1)), 2)
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

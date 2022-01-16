@@ -24,7 +24,7 @@ Partial Public NotInheritable Class b2style
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(n.child_count() = 2)
             Dim function_name As String =
-                    namespace_.bstyle_format.operator_function_name(l.of(n.child(0)).dump()) + "_pre"
+                    _namespace.bstyle_format.operator_function_name(l.of(n.child(0)).dump()) + "_pre"
             scope.current().call_hierarchy().to(function_name)
             o.append(function_name)
             o.append("(")

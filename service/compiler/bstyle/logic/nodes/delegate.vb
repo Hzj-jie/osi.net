@@ -5,13 +5,15 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.service.automata
+Imports osi.service.compiler
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class _integer
+    Public NotInheritable Class _delegate
         Implements code_gen(Of writer)
 
         Private ReadOnly l As code_gens(Of writer)
@@ -25,15 +27,16 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            assert(n.leaf())
-            Dim i As Int32 = 0
-            If Not Int32.TryParse(n.word().str(), i) Then
-                raise_error(error_type.user, "Cannot parse data to int ", n.trace_back_str())
-                Return False
+            ' TODO: Implementation
+            Dim ps As vector(Of String) = Nothing
+            If n.child_count() = 5 Then
+                ps = New vector(Of String)()
+            Else
+                ps = l.of_all_children(n.child(4)).dump()
             End If
-            Return builders.of_copy_const(value.with_single_data_slot_temp_target(code_types.int, n, o),
-                                          New data_block(i)).
-                            to(o)
+            Return builders.of_callee_ref(n.child(1).children_word_str(),
+                                          n.child(0).children_word_str(),
+                                          ps).to(o)
         End Function
     End Class
 End Class

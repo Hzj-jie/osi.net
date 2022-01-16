@@ -15,6 +15,7 @@ kw-endif #endif
 kw-typedef typedef
 kw-struct struct
 kw-reinterpret-cast reinterpret_cast
+kw-delegate delegate
 
 single-line-comment //[*|\n]*
 multi-line-comment /\*[*|\*/]*\*/

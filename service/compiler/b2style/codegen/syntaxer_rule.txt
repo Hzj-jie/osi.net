@@ -1,7 +1,7 @@
 
 INCLUDE ../shared/syntaxer_rule.txt
 
-root-type [base-root-type, namespace-, class, template]
+root-type [base-root-type, namespace, class, template]
 
 raw-name-with-dot raw-name dot
 # Support a.N::b function call and a.::N::b.
@@ -13,7 +13,7 @@ type-name [template-type-name, raw-type-name]
 
 reference bit-and
 
-namespace- kw-namespace name start-paragraph [root-type]* end-paragraph
+namespace kw-namespace name start-paragraph [root-type]* end-paragraph
 
 b2style-sentence-with-semi-colon [ignore-result-heap-struct-function-call, self-value-clause, pre-operation-value, post-operation-value]? semi-colon
 sentence-with-semi-colon [b2style-sentence-with-semi-colon, base-sentence-with-semi-colon]

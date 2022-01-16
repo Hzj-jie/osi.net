@@ -29,7 +29,7 @@ Partial Public NotInheritable Class b2style
             End If
             Dim function_name As String = l.of(n.child(1)).dump()
             assert(function_name.StartsWith(self_prefix))
-            function_name = namespace_.bstyle_format.operator_function_name(
+            function_name = _namespace.bstyle_format.operator_function_name(
                                 function_name.Substring(self_prefix.Length()))
             scope.current().call_hierarchy().to(function_name)
             o.append("=")

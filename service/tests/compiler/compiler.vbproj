@@ -60,6 +60,7 @@
     <Compile Include="b2style\b2style_main.vb" />
     <Compile Include="b2style\b2style_test.vb" />
     <Compile Include="b2style\b2style_test_data.vb" />
+    <Content Include="b2style\codegen\delegate.txt" />
     <Compile Include="b2style\template_template_test.vb" />
     <Compile Include="bstyle\bstyle_compiler_error_test.vb" />
     <Compile Include="bstyle\bstyle_test.vb" />
@@ -112,6 +113,8 @@
     <Content Include="b2style\codegen\errors\reinterpret_cast_unknown_variable.txt" />
     <Content Include="b2style\codegen\errors\reinterpret_cast_without_type_id.txt" />
     <Content Include="b2style\codegen\errors\undefined-value-clause.txt" />
+    <Content Include="b2style\codegen\function_ptr.txt" />
+    <Content Include="bstyle\codegen\func_name_with_dot.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />
     <Content Include="b2style\codegen\lots-of-semi-colons.txt" />
     <Content Include="b2style\codegen\nested_heap_access.txt" />

@@ -11,11 +11,11 @@ Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class [class]
+    Public NotInheritable Class _class
         Inherits code_gens(Of typed_node_writer).reparser(Of b2style.parser)
         Implements code_gen(Of typed_node_writer)
 
-        Public Shared ReadOnly instance As New [class]()
+        Public Shared ReadOnly instance As New _class()
 
         Private Sub New()
         End Sub
@@ -69,7 +69,7 @@ Partial Public NotInheritable Class b2style
                                 ' No namespace is necessary, the first parameter contains namespace.
                                 o.Append(node.child(0).input()).
                                   Append(" ").
-                                  Append(namespace_.with_global_namespace(node.child(1).input())).
+                                  Append(_namespace.with_global_namespace(node.child(1).input())).
                                   Append("(").
                                   Append(class_name).
                                   Append("& this")

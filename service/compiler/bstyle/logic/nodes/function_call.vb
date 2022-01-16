@@ -31,7 +31,7 @@ Partial Public NotInheritable Class bstyle
             Dim bc As Func(Of vector(Of String), Boolean) =
                 Function(ByVal parameters As vector(Of String)) As Boolean
                     Dim name As String = Nothing
-                    If Not logic_name.of_function_call(n.child(0).word().str(), parameters, name) Then
+                    If Not logic_name.of_function_call(n.child(0).children_word_str(), parameters, name) Then
                         Return False
                     End If
                     scope.current().call_hierarchy().to(name)
