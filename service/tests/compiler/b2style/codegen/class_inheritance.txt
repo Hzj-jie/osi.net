@@ -1,0 +1,54 @@
+﻿
+#include <b2style.h>
+
+class B {
+  int x;
+
+  virtual int f() {
+    return x;
+  }
+
+  void f2() {
+    b2style::std_out("f2");
+  }
+};
+
+class C : B {
+  int y;
+
+  int f() override {
+    return x + y;
+  }
+};
+
+void main() {
+  C c;
+  c.x=1;
+  c.y=2;
+  c.f();
+  c.f2();
+}
+
+/*
+  struct B {
+	int x;
+	// B__type_id b_type_id;
+	logic "callee_ref f int ( x int& b_type_id B__type_id& )";
+	f __my_f;
+  };
+
+  struct C {
+    int x;
+	int y;
+	// C__type_id c_type_id;
+  };
+
+  int f(B& this) {
+	logic "caller_ref __my_f ( this.x this.b_type_id ) ";
+  }
+
+  int f(C& this) {
+    // static_cast is a compiler behavior.
+    f(static_cast<B>(this));
+  }
+*/

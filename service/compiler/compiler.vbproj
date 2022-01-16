@@ -129,6 +129,12 @@
     <Compile Include="bstyle\single_data_slot_variable.vb" />
     <Compile Include="bstyle\struct_member.vb" />
     <Compile Include="code_gen\reparser.vb" />
+    <Compile Include="logic\address_of.vb" />
+    <Compile Include="logic\anchor_caller.vb" />
+    <Compile Include="logic\callee_ref.vb" />
+    <Compile Include="logic\caller_ref.vb" />
+    <Compile Include="logic\scope.anchor_ref.vb" />
+    <Compile Include="logic\scope.variable.vb" />
     <Compile Include="object_list_writer.vb" />
     <Compile Include="scope.call_hierarchy.vb" />
     <Compile Include="logic\define_heap.vb" />
@@ -139,13 +145,13 @@
     <Compile Include="dotnet\source_executor.builder.build.vb" />
     <Compile Include="dotnet\source_executor.builder.vb" />
     <Compile Include="dotnet\source_executor.vb" />
-    <Compile Include="logic\anchors.vb" />
+    <Compile Include="logic\scope.anchor.vb" />
     <Compile Include="logic\binary_math_operator.vb" />
     <Compile Include="logic\binary_operator.vb" />
     <Compile Include="logic\callee.vb" />
     <Compile Include="logic\caller.vb" />
     <Compile Include="logic\compare.vb" />
-    <Compile Include="logic\condition.vb" />
+    <Compile Include="logic\if.vb" />
     <Compile Include="logic\copy.vb" />
     <Compile Include="logic\copy_move.vb" />
     <Compile Include="logic\data_ref_operator.vb" />
@@ -162,7 +168,6 @@
     <Compile Include="logic\binary_math_operators.vb" />
     <Compile Include="logic\importer.parser.vb" />
     <Compile Include="logic\importer.definition.vb" />
-    <Compile Include="logic\importer.new.vb" />
     <Compile Include="logic\importer.vb" />
     <Compile Include="logic\logic_gen\logic_rule_wrapper.vb" />
     <Compile Include="logic\pair_result_binary_operator.vb" />
@@ -179,7 +184,7 @@
     <Compile Include="logic\stop.vb" />
     <Compile Include="logic\ternary_operator.vb" />
     <Compile Include="logic\type.vb" />
-    <Compile Include="logic\types.vb" />
+    <Compile Include="logic\scope.type.vb" />
     <Compile Include="logic\unary_operator.vb" />
     <Compile Include="logic\unary_operators.vb" />
     <Compile Include="logic\unary_subroutine.vb" />

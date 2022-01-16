@@ -35,7 +35,7 @@ Namespace logic
             End Sub
 
             Private Sub assert_stack_order()
-                assert(_equal.equal(current, r.s.back()))
+                assert(equal(current, r.s.back()))
             End Sub
 
             Public Sub Dispose() Implements IDisposable.Dispose

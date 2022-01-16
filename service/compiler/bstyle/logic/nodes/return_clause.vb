@@ -61,7 +61,7 @@ Partial Public NotInheritable Class bstyle
                                                         scope.current().current_function().name(),
                                                         "@return_value")
                     assert(value_declaration.declare_single_data_slot(
-                               types.variable_type, return_value, o))
+                               compiler.logic.scope.type_t.variable_type, return_value, o))
                     Return struct.pack((+r).names, return_value, o) AndAlso
                            builders.of_return(scope.current().current_function().name(), return_value).to(o)
                 End If

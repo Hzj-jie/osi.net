@@ -10,12 +10,11 @@ Namespace logic
     Public MustInherit Class ternary_operator
         Inherits data_ref_operator
 
-        Public Sub New(ByVal types As types,
-                       ByVal result As String,
+        Public Sub New(ByVal result As String,
                        ByVal p1 As String,
                        ByVal p2 As String,
                        ByVal p3 As String)
-            MyBase.New(types, result, p1, p2, p3)
+            MyBase.New(result, p1, p2, p3)
         End Sub
 
         Protected MustOverride Function result_restrict(ByVal result As variable) As Boolean

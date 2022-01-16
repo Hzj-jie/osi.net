@@ -12,7 +12,7 @@ Namespace primitive
         [push]
         ' pop a data slot from stack 
         [pop]
-        ' jump to instruction @A 
+        ' jump to instruction @(A int64) 
         [jump]
         ' (*A) = B 
         [cpc]
@@ -98,6 +98,8 @@ Namespace primitive
         [alloc]
         ' de-allocate a block of memory identified by its reference (*A) 
         [dealloc]
+        ' jump to instruction @(*A int64) 
+        [jmpr]
 
         COUNT
     End Enum

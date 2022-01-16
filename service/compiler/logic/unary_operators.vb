@@ -7,11 +7,11 @@ Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class append
+    Public NotInheritable Class _append
         Inherits unary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
-            MyBase.New(types, result, parameter)
+        Public Sub New(ByVal result As String, ByVal parameter As String)
+            MyBase.New(result, parameter)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -28,11 +28,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class [not]
+    Public NotInheritable Class _not
         Inherits unary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
-            MyBase.New(types, result, parameter)
+        Public Sub New(ByVal result As String, ByVal parameter As String)
+            MyBase.New(result, parameter)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -49,11 +49,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class sizeof
+    Public NotInheritable Class _sizeof
         Inherits unary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
-            MyBase.New(types, result, parameter)
+        Public Sub New(ByVal result As String, ByVal parameter As String)
+            MyBase.New(result, parameter)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -70,11 +70,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class empty
+    Public NotInheritable Class _empty
         Inherits unary_operator
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal parameter As String)
-            MyBase.New(types, result, parameter)
+        Public Sub New(ByVal result As String, ByVal parameter As String)
+            MyBase.New(result, parameter)
         End Sub
 
         Protected Overrides Function instruction() As command

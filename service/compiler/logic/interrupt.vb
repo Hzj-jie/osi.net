@@ -8,27 +8,19 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class interrupt
+    Public NotInheritable Class _interrupt
         Implements exportable
 
-        Private ReadOnly types As types
-        Private ReadOnly functions As interrupts
         Private ReadOnly function_name As String
         Private ReadOnly parameter As String
         Private ReadOnly result As String
 
-        Public Sub New(ByVal types As types,
-                       ByVal functions As interrupts,
-                       ByVal function_name As String,
+        Public Sub New(ByVal function_name As String,
                        ByVal parameter As String,
                        ByVal result As String)
-            assert(Not types Is Nothing)
-            assert(Not functions Is Nothing)
             assert(Not String.IsNullOrEmpty(function_name))
             assert(Not String.IsNullOrEmpty(parameter))
             assert(Not String.IsNullOrEmpty(result))
-            Me.types = types
-            Me.functions = functions
             Me.function_name = function_name
             Me.parameter = parameter
             Me.result = result
@@ -37,12 +29,12 @@ Namespace logic
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             Dim function_id As UInt32 = 0
-            If Not functions.of(function_name, function_id) Then
+            If Not scope.current().functions().of(function_name, function_id) Then
                 errors.interrupt_undefined(function_name)
                 Return False
             End If
 
-            Dim cpc As New copy_const(types, result, unique_ptr.[New](New data_block(function_id)))
+            Dim cpc As New _copy_const(result, New data_block(function_id))
             If Not cpc.export(o) Then
                 Return False
             End If

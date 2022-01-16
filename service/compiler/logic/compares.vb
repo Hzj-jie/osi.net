@@ -6,11 +6,11 @@ Option Strict On
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class less
+    Public NotInheritable Class _less
         Inherits compare
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, left, right)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, left, right)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -18,11 +18,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class more
+    Public NotInheritable Class _more
         Inherits compare
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, right, left)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, right, left)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -30,11 +30,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class equal
+    Public NotInheritable Class _equal
         Inherits compare
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, left, right)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, left, right)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -42,11 +42,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class less_or_equal
+    Public NotInheritable Class _less_or_equal
         Inherits compare_or_equal
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, left, right)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, left, right)
         End Sub
 
         Protected Overrides Function compare() As command
@@ -54,11 +54,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class more_or_equal
+    Public NotInheritable Class _more_or_equal
         Inherits compare_or_equal
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, right, left)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, right, left)
         End Sub
 
         Protected Overrides Function compare() As command
@@ -66,11 +66,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class float_less
+    Public NotInheritable Class _float_less
         Inherits compare
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, left, right)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, left, right)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -78,11 +78,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class float_more
+    Public NotInheritable Class _float_more
         Inherits compare
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, right, left)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, right, left)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -90,11 +90,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class float_equal
+    Public NotInheritable Class _float_equal
         Inherits compare
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, left, right)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, left, right)
         End Sub
 
         Protected Overrides Function instruction() As command
@@ -102,11 +102,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class float_less_or_equal
+    Public NotInheritable Class _float_less_or_equal
         Inherits compare_or_equal
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, left, right)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, left, right)
         End Sub
 
         Protected Overrides Function compare() As command
@@ -114,11 +114,11 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class float_more_or_equal
+    Public NotInheritable Class _float_more_or_equal
         Inherits compare_or_equal
 
-        Public Sub New(ByVal types As types, ByVal result As String, ByVal left As String, ByVal right As String)
-            MyBase.New(types, result, right, left)
+        Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
+            MyBase.New(result, right, left)
         End Sub
 
         Protected Overrides Function compare() As command

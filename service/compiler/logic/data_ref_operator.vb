@@ -11,12 +11,10 @@ Namespace logic
     Public MustInherit Class data_ref_operator
         Implements exportable
 
-        Private ReadOnly types As types
         Private ReadOnly vs() As String
 
-        Public Sub New(ByVal types As types, ByVal ParamArray vs() As String)
+        Public Sub New(ByVal ParamArray vs() As String)
             assert(Not isemptyarray(vs))
-            Me.types = types
             Me.vs = vs
         End Sub
 
@@ -26,7 +24,7 @@ Namespace logic
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             Dim vars(array_size_i(vs) - 1) As variable
             For i As Int32 = 0 To array_size_i(vs) - 1
-                If Not variable.of(types, vs(i), o, vars(i)) OrElse
+                If Not variable.of(vs(i), o, vars(i)) OrElse
                    Not variable_restrict(CUInt(i), vars(i)) Then
                     Return False
                 End If

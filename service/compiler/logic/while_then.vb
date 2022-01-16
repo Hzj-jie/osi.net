@@ -9,17 +9,17 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' while(var) { do() }
-    Public NotInheritable Class while_then
+    Public NotInheritable Class _while_then
         Implements exportable
 
         Private ReadOnly v As String
         Private ReadOnly p As paragraph
 
-        Public Sub New(ByVal v As String, ByVal p As unique_ptr(Of paragraph))
+        Public Sub New(ByVal v As String, ByVal p As paragraph)
             assert(Not String.IsNullOrEmpty(v))
-            assert(p)
+            assert(Not p Is Nothing)
             Me.v = v
-            Me.p = p.release()
+            Me.p = p
         End Sub
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export

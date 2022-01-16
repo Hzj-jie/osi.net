@@ -16,8 +16,6 @@ Namespace logic
         Private Shared ReadOnly separators() As String = build_separators()
         Private Shared ReadOnly surround_strs() As String = Nothing
 
-        Private ReadOnly anchors As anchors
-        Private ReadOnly types As types
         Private ReadOnly functions As interrupts
 
         Private Shared Function build_separators() As String()
@@ -28,17 +26,9 @@ Namespace logic
             Return +v
         End Function
 
-        Public Sub New(ByVal anchors As anchors, ByVal types As types, ByVal functions As interrupts)
-            assert(Not anchors Is Nothing)
-            assert(Not types Is Nothing)
-            assert(Not functions Is Nothing)
-            Me.anchors = anchors
-            Me.types = types
-            Me.functions = functions
-        End Sub
-
         Public Sub New(ByVal functions As interrupts)
-            Me.New(New anchors(), New types(), functions)
+            assert(Not functions Is Nothing)
+            Me.functions = functions
         End Sub
 
         Public Sub New()
@@ -65,16 +55,15 @@ Namespace logic
                    import(v, o)
         End Function
 
-        Private Shared Function import_proxy(Of T)(ByVal i As T,
-                                                   ByVal f As Func(Of T, vector(Of exportable), Boolean),
-                                                   ByVal e As interpreter.primitive.exportable) As Boolean
+        Private Function import_proxy(Of T)(ByVal i As T,
+                                            ByVal f As Func(Of T, vector(Of exportable), Boolean),
+                                            ByVal e As interpreter.primitive.exportable) As Boolean
             assert(Not f Is Nothing)
             If e Is Nothing Then
                 Return False
             End If
 
-            Dim o As vector(Of exportable) = Nothing
-            o = New vector(Of exportable)()
+            Dim o As New vector(Of exportable)()
             Return f(i, o) AndAlso e.import(+o)
         End Function
 

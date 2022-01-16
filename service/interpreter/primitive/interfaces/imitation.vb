@@ -48,6 +48,16 @@ Namespace primitive
             Return o
         End Function
 
+        <Extension()> Public Function access_ref_as_int64(ByVal this As imitation, ByVal r As ref(Of Byte())) As Int64
+            assert(Not this Is Nothing)
+            assert(Not r Is Nothing)
+            Dim b As New big_uint(+r)
+            Dim overflow As Boolean = False
+            Dim o As Int64 = b.as_int64(overflow)
+            this.carry_over(overflow)
+            Return o
+        End Function
+
         <Extension()> Public Sub instruction_ref(ByVal this As imitation, ByVal v As UInt64)
             assert(Not this Is Nothing)
             If v > max_int64 Then
@@ -59,18 +69,17 @@ Namespace primitive
 
         <Extension()> Public Function access_as_uint32(ByVal this As imitation, ByVal p As data_ref) As UInt32
             assert(Not this Is Nothing)
-            Dim r As ref(Of Byte()) = this.access(p)
-            Dim b As New big_uint(+r)
-            Dim overflow As Boolean = False
-            Dim o As UInt32 = b.as_uint32(overflow)
-            this.carry_over(overflow)
-            Return o
             Return this.access_ref_as_uint32(this.access(p))
         End Function
 
         <Extension()> Public Function access_as_uint64(ByVal this As imitation, ByVal p As data_ref) As UInt64
             assert(Not this Is Nothing)
             Return this.access_ref_as_uint64(this.access(p))
+        End Function
+
+        <Extension()> Public Function access_as_int64(ByVal this As imitation, ByVal p As data_ref) As Int64
+            assert(Not this Is Nothing)
+            Return this.access_ref_as_int64(this.access(p))
         End Function
 
         <Extension()> Public Function access_as_uint32(ByVal this As imitation,

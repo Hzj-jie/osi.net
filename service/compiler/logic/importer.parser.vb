@@ -9,6 +9,9 @@ Imports osi.root.formation
 
 Namespace logic
     Partial Public NotInheritable Class importer
+        Public Structure place_holder
+        End Structure
+
         Private Shared Function parse_typed_parameters(ByVal o As vector(Of pair(Of String, String)),
                                                        ByVal v As vector(Of String),
                                                        ByRef p As UInt32) As Boolean

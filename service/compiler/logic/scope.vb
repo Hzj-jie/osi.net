@@ -10,156 +10,41 @@ Imports osi.service.constructor
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class scope
+    Partial Public NotInheritable Class scope
         Inherits scope(Of scope)
 
-        ' This stack can be a real stack, but using map with offset can provide a better lookup performance.
-        Private ReadOnly stack As New unordered_map(Of String, ref)()
-
-        Public Class typed_ref
-            Public ReadOnly type As String
-            Public ReadOnly ref_type As [optional](Of String)
-
-            Protected Sub New(ByVal type As String, ByVal ref_type As [optional](Of String))
-                assert(Not type.null_or_whitespace())
-                Me.type = type
-                Me.ref_type = ref_type
-            End Sub
-
-            Protected Sub New(ByVal other As typed_ref)
-                assert(Not other Is Nothing)
-                Me.type = other.type
-                Me.ref_type = other.ref_type
-            End Sub
-
-            Public Function debug_type_str() As String
-                If ref_type Then
-                    Return strcat(type, "[", +ref_type, "]")
-                End If
-                Return type
-            End Function
-        End Class
-
-        Public NotInheritable Class ref
-            Inherits typed_ref
-            'Starts from 1 to allow size()-top.offset=0.
-            Public ReadOnly offset As UInt64
-
-            Private Sub New(ByVal offset As UInt64, ByVal type As String, ByVal ref_type As [optional](Of String))
-                MyBase.New(type, ref_type)
-                Me.offset = offset
-            End Sub
-
-            Public Shared Function of_stack(ByVal offset As UInt64, ByVal type As String) As ref
-                Return New ref(offset, type, [optional].empty(Of String)())
-            End Function
-
-            Public Shared Function of_heap(ByVal offset As UInt64, ByVal type As String) As ref
-                Return New ref(offset, types.heap_ptr_type, [optional].of(type))
-            End Function
-        End Class
-
-        Public NotInheritable Class exported_ref
-            Inherits typed_ref
-
-            Public ReadOnly data_ref As data_ref
-
-            Public Sub New(ByVal r As ref, ByVal data_ref As data_ref)
-                MyBase.New(r)
-                assert(Not data_ref Is Nothing)
-                Me.data_ref = data_ref
-            End Sub
-        End Class
+        Private ReadOnly v As New variable_t(Me)
+        Private ReadOnly t As type_t
+        Private ReadOnly a As anchor_t
+        Private ReadOnly ar As New anchor_ref_t()
+        Private ReadOnly f As interrupts
 
         <inject_constructor>
         Public Sub New(ByVal parent As scope)
             MyBase.New(parent)
         End Sub
 
-        Public Sub New()
-            Me.New(Nothing)
+        Public Sub New(ByVal functions As interrupts)
+            Me.New([default](Of scope).null)
+            ' TODO: Types should be scoped.
+            Me.t = New type_t()
+            Me.a = New anchor_t()
+            assert(Not functions Is Nothing)
+            Me.f = functions
         End Sub
 
-        Public Function heap() As unordered_set(Of String)
-            Return stack.stream().
-                         filter(Function(ByVal p As first_const_pair(Of String, ref)) As Boolean
-                                    assert(Not p Is Nothing)
-                                    Return p.second.ref_type
-                                End Function).
-                         map(stack.first_selector).
-                         collect(Of unordered_set(Of String))()
-        End Function
+        ' @VisibleForTesting
+        Public Sub New()
+            Me.New(interrupts.default)
+        End Sub
 
-        Public Function unique_name() As String
-            Return strcat("@scope_", GetHashCode(), "_unique_name_", size() + uint32_1)
-        End Function
-
-        Private Function find_duplication(ByVal name As String, ByVal type As String) As Boolean
-            assert(Not name.null_or_whitespace())
-            assert(Not type.null_or_whitespace())
-            If stack.find(name) <> stack.end() Then
-                errors.redefine(name, type, stack(name).debug_type_str())
-                Return True
+        Public Function functions() As interrupts
+            If is_root() Then
+                assert(Not f Is Nothing)
+                Return f
             End If
-            Return False
-        End Function
-
-        Private Function define(ByVal name As String,
-                                ByVal type As String,
-                                ByVal f As Func(Of UInt32, String, ref)) As Boolean
-            assert(Not name.null_or_whitespace())
-            assert(Not type.null_or_whitespace())
-            assert(Not f Is Nothing)
-            If find_duplication(name, type) Then
-                Return False
-            End If
-            stack.emplace(name, f(size() + uint32_1, type))
-            Return True
-        End Function
-
-        Public Function define_stack(ByVal name As String, ByVal type As String) As Boolean
-            Return define(name, type, AddressOf ref.of_stack)
-        End Function
-
-        Public Function define_heap(ByVal name As String, ByVal type As String) As Boolean
-            Return define(name, type, AddressOf ref.of_heap)
-        End Function
-
-        Public Function size() As UInt32
-            Return stack.size()
-        End Function
-
-        Public Function export(ByVal name As String, ByRef o As exported_ref) As Boolean
-            Dim size As UInt64 = 0
-            Dim s As scope = Me
-            While Not s Is Nothing
-                Dim r As ref = Nothing
-                If Not s.stack.find(name, r) Then
-                    size += s.size()
-                    s = s.parent
-                    Continue While
-                End If
-                Dim d As data_ref = Nothing
-                If s.is_root() Then
-                    ' To allow a callee to access global variables.
-                    If Not data_ref.abs(CLng(r.offset - 1), d) Then
-                        Return False
-                    End If
-                Else
-                    If Not data_ref.rel(CLng(s.size() - r.offset + size), d) Then
-                        Return False
-                    End If
-                End If
-                o = New exported_ref(r, d)
-                Return True
-            End While
-            Return False
-        End Function
-
-        Public Function export(ByVal name As String) As exported_ref
-            Dim o As exported_ref = Nothing
-            assert(export(name, o))
-            Return o
+            assert(f Is Nothing)
+            Return (+root).functions()
         End Function
     End Class
 
@@ -175,15 +60,16 @@ Namespace logic
         End Sub
 
         Protected Overrides Sub when_dispose()
-            new_scope.heap().
+            new_scope.variables().
+                      heap().
                       stream().
                       foreach(Sub(ByVal name As String)
                                   Dim v As String = Nothing
-                                  assert(new_scope.export(name).data_ref.export(v))
+                                  assert(new_scope.variables().export(name).data_ref.export(v))
                                   o.emplace_back(instruction_builder.str(command.dealloc, v))
                               End Sub)
             Dim i As UInt32 = 0
-            While i < new_scope.size()
+            While i < new_scope.variables().size()
                 o.emplace_back(instruction_builder.str(command.pop))
                 i += uint32_1
             End While

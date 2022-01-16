@@ -33,7 +33,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = new_start_scope(
+            o = New _start_scope(
                 p1
             )
             o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
@@ -64,7 +64,7 @@ Namespace logic
                 Return False
             End If
             p += uint32_1
-            o = new_type(
+            o = New _type(
                 p1,
                 p2
             )
@@ -93,7 +93,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = new_append_slice(
+            o = New _append_slice(
                 p1,
                 p2
             )
@@ -127,7 +127,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_cut_slice(
+            o = New _cut_slice(
                 p1,
                 p2,
                 p3
@@ -162,7 +162,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_cut(
+            o = New _cut(
                 p1,
                 p2,
                 p3
@@ -202,7 +202,7 @@ Namespace logic
             End If
             Dim p4 As String = v(p)
             p += uint32_1
-            o = new_cut_len(
+            o = New _cut_len(
                 p1,
                 p2,
                 p3,
@@ -228,7 +228,7 @@ Namespace logic
             End If
             Dim p1 As String = v(p)
             p += uint32_1
-            o = new_clear(
+            o = New _clear(
                 p1
             )
             o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
@@ -261,7 +261,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_add(
+            o = New _add(
                 p1,
                 p2,
                 p3
@@ -296,7 +296,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_subtract(
+            o = New _subtract(
                 p1,
                 p2,
                 p3
@@ -331,7 +331,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_multiply(
+            o = New _multiply(
                 p1,
                 p2,
                 p3
@@ -371,7 +371,7 @@ Namespace logic
             End If
             Dim p4 As String = v(p)
             p += uint32_1
-            o = new_divide(
+            o = New _divide(
                 p1,
                 p2,
                 p3,
@@ -412,7 +412,7 @@ Namespace logic
             End If
             Dim p4 As String = v(p)
             p += uint32_1
-            o = new_extract(
+            o = New _extract(
                 p1,
                 p2,
                 p3,
@@ -448,7 +448,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_power(
+            o = New _power(
                 p1,
                 p2,
                 p3
@@ -483,7 +483,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_and(
+            o = New _and(
                 p1,
                 p2,
                 p3
@@ -518,7 +518,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_or(
+            o = New _or(
                 p1,
                 p2,
                 p3
@@ -566,7 +566,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = new_callee(
+            o = New _callee(
                 p1,
                 p2,
                 p3,
@@ -606,7 +606,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = new_caller(
+            o = New _caller(
                 p1,
                 p2,
                 p3
@@ -640,7 +640,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = new_caller(
+            o = New _caller(
                 p1,
                 p2
             )
@@ -648,7 +648,147 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_less_18(
+        Private Function parse_callee_ref_18(
+                ByVal v As vector(Of String),
+                ByRef p As UInt32,
+                ByRef o As exportable) As Boolean
+            assert(Not v Is Nothing)
+            assert(v.size() > p)
+            If Not v(p).Equals("callee_ref") Then
+                Return False
+            End If
+            Dim start As UInt32 = p
+            p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
+            p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
+            p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As New vector(Of pair(Of String, String))()
+            If Not parse_typed_parameters(p3, v, p) Then
+                Return False
+            End If
+            p -= uint32_1
+            p += uint32_1
+            o = New _callee_ref(
+                p1,
+                p2,
+                p3
+            )
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            Return True
+        End Function
+
+        Private Function parse_caller_ref_19(
+                ByVal v As vector(Of String),
+                ByRef p As UInt32,
+                ByRef o As exportable) As Boolean
+            assert(Not v Is Nothing)
+            assert(v.size() > p)
+            If Not v(p).Equals("caller_ref") Then
+                Return False
+            End If
+            Dim start As UInt32 = p
+            p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
+            p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
+            p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p3 As New vector(Of String)()
+            If Not parse_parameters(p3, v, p) Then
+                Return False
+            End If
+            p -= uint32_1
+            p += uint32_1
+            o = New _caller_ref(
+                p1,
+                p2,
+                p3
+            )
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            Return True
+        End Function
+
+        Private Function parse_caller_ref_20(
+                ByVal v As vector(Of String),
+                ByRef p As UInt32,
+                ByRef o As exportable) As Boolean
+            assert(Not v Is Nothing)
+            assert(v.size() > p)
+            If Not v(p).Equals("caller_ref") Then
+                Return False
+            End If
+            Dim start As UInt32 = p
+            p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
+            p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As New vector(Of String)()
+            If Not parse_parameters(p2, v, p) Then
+                Return False
+            End If
+            p -= uint32_1
+            p += uint32_1
+            o = New _caller_ref(
+                p1,
+                p2
+            )
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            Return True
+        End Function
+
+        Private Function parse_address_of_21(
+                ByVal v As vector(Of String),
+                ByRef p As UInt32,
+                ByRef o As exportable) As Boolean
+            assert(Not v Is Nothing)
+            assert(v.size() > p)
+            If Not v(p).Equals("address_of") Then
+                Return False
+            End If
+            Dim start As UInt32 = p
+            p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p1 As String = v(p)
+            p += uint32_1
+            If Not v.available_index(p) Then
+                Return False
+            End If
+            Dim p2 As String = v(p)
+            p += uint32_1
+            o = New _address_of(
+                p1,
+                p2
+            )
+            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            Return True
+        End Function
+
+        Private Function parse_less_22(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -674,7 +814,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_less(
+            o = New _less(
                 p1,
                 p2,
                 p3
@@ -683,7 +823,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_more_19(
+        Private Function parse_more_23(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -709,7 +849,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_more(
+            o = New _more(
                 p1,
                 p2,
                 p3
@@ -718,7 +858,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_equal_20(
+        Private Function parse_equal_24(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -744,7 +884,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_equal(
+            o = New _equal(
                 p1,
                 p2,
                 p3
@@ -753,7 +893,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_less_or_equal_21(
+        Private Function parse_less_or_equal_25(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -779,7 +919,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_less_or_equal(
+            o = New _less_or_equal(
                 p1,
                 p2,
                 p3
@@ -788,7 +928,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_more_or_equal_22(
+        Private Function parse_more_or_equal_26(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -814,7 +954,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_more_or_equal(
+            o = New _more_or_equal(
                 p1,
                 p2,
                 p3
@@ -823,7 +963,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_if_23(
+        Private Function parse_if_27(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -865,7 +1005,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = new_if(
+            o = New _if(
                 p1,
                 p2,
                 p3,
@@ -875,7 +1015,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_if_24(
+        Private Function parse_if_28(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -900,7 +1040,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = new_if(
+            o = New _if(
                 p1,
                 p2
             )
@@ -908,7 +1048,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_copy_25(
+        Private Function parse_copy_29(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -929,7 +1069,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = new_copy(
+            o = New _copy(
                 p1,
                 p2
             )
@@ -937,7 +1077,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_copy_const_26(
+        Private Function parse_copy_const_30(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -963,7 +1103,7 @@ Namespace logic
             End If
             assert(new_pos = p + uint32_1)
             p += uint32_1
-            o = new_copy_const(
+            o = New _copy_const(
                 p1,
                 p2
             )
@@ -971,7 +1111,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_define_27(
+        Private Function parse_define_31(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -992,7 +1132,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = new_define(
+            o = New _define(
                 p1,
                 p2
             )
@@ -1000,7 +1140,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_define_heap_28(
+        Private Function parse_define_heap_32(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1026,7 +1166,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_define_heap(
+            o = New _define_heap(
                 p1,
                 p2,
                 p3
@@ -1035,7 +1175,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_do_until_29(
+        Private Function parse_do_until_33(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1060,7 +1200,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = new_do_until(
+            o = New _do_until(
                 p1,
                 p2
             )
@@ -1068,7 +1208,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_do_while_30(
+        Private Function parse_do_while_34(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1093,7 +1233,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = new_do_while(
+            o = New _do_while(
                 p1,
                 p2
             )
@@ -1101,7 +1241,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_interrupt_31(
+        Private Function parse_interrupt_35(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1127,7 +1267,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_interrupt(
+            o = New _interrupt(
                 p1,
                 p2,
                 p3
@@ -1136,7 +1276,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_move_32(
+        Private Function parse_move_36(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1157,7 +1297,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = new_move(
+            o = New _move(
                 p1,
                 p2
             )
@@ -1165,7 +1305,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_return_33(
+        Private Function parse_return_37(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1189,7 +1329,7 @@ Namespace logic
                 Return False
             End If
             p += uint32_1
-            o = new_return(
+            o = New _return(
                 p1,
                 p2
             )
@@ -1197,7 +1337,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_return_34(
+        Private Function parse_return_38(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1218,7 +1358,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = new_return(
+            o = New _return(
                 p1,
                 p2
             )
@@ -1226,7 +1366,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_append_35(
+        Private Function parse_append_39(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1247,7 +1387,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = new_append(
+            o = New _append(
                 p1,
                 p2
             )
@@ -1255,7 +1395,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_not_36(
+        Private Function parse_not_40(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1276,7 +1416,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = new_not(
+            o = New _not(
                 p1,
                 p2
             )
@@ -1284,7 +1424,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_sizeof_37(
+        Private Function parse_sizeof_41(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1305,7 +1445,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = new_sizeof(
+            o = New _sizeof(
                 p1,
                 p2
             )
@@ -1313,7 +1453,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_empty_38(
+        Private Function parse_empty_42(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1334,7 +1474,7 @@ Namespace logic
             End If
             Dim p2 As String = v(p)
             p += uint32_1
-            o = new_empty(
+            o = New _empty(
                 p1,
                 p2
             )
@@ -1342,7 +1482,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_while_then_39(
+        Private Function parse_while_then_43(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1367,7 +1507,7 @@ Namespace logic
             End If
             p -= uint32_1
             p += uint32_1
-            o = new_while_then(
+            o = New _while_then(
                 p1,
                 p2
             )
@@ -1375,7 +1515,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_stop_40(
+        Private Function parse_stop_44(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1386,13 +1526,13 @@ Namespace logic
             End If
             Dim start As UInt32 = p
             p += uint32_1
-            o = new_stop(
+            o = New _stop(
             )
             o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
-        Private Function parse_float_add_41(
+        Private Function parse_float_add_45(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1418,7 +1558,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_float_add(
+            o = New _float_add(
                 p1,
                 p2,
                 p3
@@ -1427,7 +1567,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_subtract_42(
+        Private Function parse_float_subtract_46(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1453,7 +1593,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_float_subtract(
+            o = New _float_subtract(
                 p1,
                 p2,
                 p3
@@ -1462,7 +1602,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_multiply_43(
+        Private Function parse_float_multiply_47(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1488,7 +1628,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_float_multiply(
+            o = New _float_multiply(
                 p1,
                 p2,
                 p3
@@ -1497,7 +1637,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_divide_44(
+        Private Function parse_float_divide_48(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1523,7 +1663,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_float_divide(
+            o = New _float_divide(
                 p1,
                 p2,
                 p3
@@ -1532,7 +1672,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_extract_45(
+        Private Function parse_float_extract_49(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1558,7 +1698,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_float_extract(
+            o = New _float_extract(
                 p1,
                 p2,
                 p3
@@ -1567,7 +1707,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_power_46(
+        Private Function parse_float_power_50(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1593,7 +1733,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_float_power(
+            o = New _float_power(
                 p1,
                 p2,
                 p3
@@ -1602,7 +1742,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_less_47(
+        Private Function parse_float_less_51(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1628,7 +1768,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_float_less(
+            o = New _float_less(
                 p1,
                 p2,
                 p3
@@ -1637,7 +1777,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_more_48(
+        Private Function parse_float_more_52(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1663,7 +1803,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_float_more(
+            o = New _float_more(
                 p1,
                 p2,
                 p3
@@ -1672,7 +1812,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_equal_49(
+        Private Function parse_float_equal_53(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1698,7 +1838,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_float_equal(
+            o = New _float_equal(
                 p1,
                 p2,
                 p3
@@ -1707,7 +1847,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_less_or_equal_50(
+        Private Function parse_float_less_or_equal_54(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1733,7 +1873,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_float_less_or_equal(
+            o = New _float_less_or_equal(
                 p1,
                 p2,
                 p3
@@ -1742,7 +1882,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_float_more_or_equal_51(
+        Private Function parse_float_more_or_equal_55(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1768,7 +1908,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_float_more_or_equal(
+            o = New _float_more_or_equal(
                 p1,
                 p2,
                 p3
@@ -1777,7 +1917,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_left_shift_52(
+        Private Function parse_left_shift_56(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1803,7 +1943,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_left_shift(
+            o = New _left_shift(
                 p1,
                 p2,
                 p3
@@ -1812,7 +1952,7 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_right_shift_53(
+        Private Function parse_right_shift_57(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As exportable) As Boolean
@@ -1838,7 +1978,7 @@ Namespace logic
             End If
             Dim p3 As String = v(p)
             p += uint32_1
-            o = new_right_shift(
+            o = New _right_shift(
                 p1,
                 p2,
                 p3
@@ -1981,252 +2121,280 @@ Namespace logic
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_less_18(v, pos, o) Then
+                If parse_callee_ref_18(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_more_19(v, pos, o) Then
+                If parse_caller_ref_19(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_equal_20(v, pos, o) Then
+                If parse_caller_ref_20(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_less_or_equal_21(v, pos, o) Then
+                If parse_address_of_21(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_more_or_equal_22(v, pos, o) Then
+                If parse_less_22(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_if_23(v, pos, o) Then
+                If parse_more_23(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_if_24(v, pos, o) Then
+                If parse_equal_24(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_copy_25(v, pos, o) Then
+                If parse_less_or_equal_25(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_copy_const_26(v, pos, o) Then
+                If parse_more_or_equal_26(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_define_27(v, pos, o) Then
+                If parse_if_27(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_define_heap_28(v, pos, o) Then
+                If parse_if_28(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_do_until_29(v, pos, o) Then
+                If parse_copy_29(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_do_while_30(v, pos, o) Then
+                If parse_copy_const_30(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_interrupt_31(v, pos, o) Then
+                If parse_define_31(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_move_32(v, pos, o) Then
+                If parse_define_heap_32(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_return_33(v, pos, o) Then
+                If parse_do_until_33(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_return_34(v, pos, o) Then
+                If parse_do_while_34(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_append_35(v, pos, o) Then
+                If parse_interrupt_35(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_not_36(v, pos, o) Then
+                If parse_move_36(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_sizeof_37(v, pos, o) Then
+                If parse_return_37(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_empty_38(v, pos, o) Then
+                If parse_return_38(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_while_then_39(v, pos, o) Then
+                If parse_append_39(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_stop_40(v, pos, o) Then
+                If parse_not_40(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_float_add_41(v, pos, o) Then
+                If parse_sizeof_41(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_float_subtract_42(v, pos, o) Then
+                If parse_empty_42(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_float_multiply_43(v, pos, o) Then
+                If parse_while_then_43(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_float_divide_44(v, pos, o) Then
+                If parse_stop_44(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_float_extract_45(v, pos, o) Then
+                If parse_float_add_45(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_float_power_46(v, pos, o) Then
+                If parse_float_subtract_46(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_float_less_47(v, pos, o) Then
+                If parse_float_multiply_47(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_float_more_48(v, pos, o) Then
+                If parse_float_divide_48(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_float_equal_49(v, pos, o) Then
+                If parse_float_extract_49(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_float_less_or_equal_50(v, pos, o) Then
+                If parse_float_power_50(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_float_more_or_equal_51(v, pos, o) Then
+                If parse_float_less_51(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_left_shift_52(v, pos, o) Then
+                If parse_float_more_52(v, pos, o) Then
                     p = pos
                     Return True
                 End If
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_right_shift_53(v, pos, o) Then
+                If parse_float_equal_53(v, pos, o) Then
+                    p = pos
+                    Return True
+                End If
+            End Using
+            Using code_block
+                Dim pos As UInt32 = p
+                If parse_float_less_or_equal_54(v, pos, o) Then
+                    p = pos
+                    Return True
+                End If
+            End Using
+            Using code_block
+                Dim pos As UInt32 = p
+                If parse_float_more_or_equal_55(v, pos, o) Then
+                    p = pos
+                    Return True
+                End If
+            End Using
+            Using code_block
+                Dim pos As UInt32 = p
+                If parse_left_shift_56(v, pos, o) Then
+                    p = pos
+                    Return True
+                End If
+            End Using
+            Using code_block
+                Dim pos As UInt32 = p
+                If parse_right_shift_57(v, pos, o) Then
                     p = pos
                     Return True
                 End If

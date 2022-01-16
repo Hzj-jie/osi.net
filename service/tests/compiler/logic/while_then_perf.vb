@@ -58,19 +58,19 @@ Namespace logic
 
                 Public Sub New()
                     MyBase.New(
-                        New define(types.default, "state", types.variable_type),
-                        New define(types.default, "result", types.variable_type),
-                        New define(types.default, "i", types.variable_type),
-                        New define(types.default, "1", types.variable_type),
-                        New define(types.default, "UPPER_BOUND", types.variable_type),
-                        New copy_const(types.default, "state", unique_ptr.[New](New data_block(True))),
-                        New copy_const(types.default, "1", unique_ptr.[New](New data_block(1))),
-                        New copy_const(types.default, "UPPER_BOUND", unique_ptr.[New](New data_block(upper_bound))),
-                        New while_then("state", unique_ptr.[New](New paragraph(
-                            New add(types.default, "i", "i", "1"),
-                            New add(types.default, "result", "result", "i"),
-                            New less_or_equal(types.default, "state", "i", "UPPER_BOUND")
-                        )))
+                        New _define("state", scope.type_t.variable_type),
+                        New _define("result", scope.type_t.variable_type),
+                        New _define("i", scope.type_t.variable_type),
+                        New _define("1", scope.type_t.variable_type),
+                        New _define("UPPER_BOUND", scope.type_t.variable_type),
+                        New _copy_const("state", New data_block(True)),
+                        New _copy_const("1", New data_block(1)),
+                        New _copy_const("UPPER_BOUND", New data_block(upper_bound)),
+                        New _while_then("state", New paragraph(
+                            New _add("i", "i", "1"),
+                            New _add("result", "result", "i"),
+                            New _less_or_equal("state", "i", "UPPER_BOUND")
+                        ))
                     )
                 End Sub
 
@@ -116,19 +116,19 @@ Namespace logic
 
             Public Sub New()
                 MyBase.New({
-                New define(types.default, "state", types.variable_type),
-                New define(types.default, "result", types.variable_type),
-                New define(types.default, "i", types.variable_type),
-                New define(types.default, "1", types.variable_type),
-                New define(types.default, "UPPER_BOUND", types.variable_type),
-                New copy_const(types.default, "state", unique_ptr.[New](New data_block(True))),
-                New copy_const(types.default, "1", unique_ptr.[New](New data_block(1))),
-                New copy_const(types.default, "UPPER_BOUND", unique_ptr.[New](New data_block(upper_bound))),
-                New while_then("state", unique_ptr.[New](New paragraph(
-                    New add(types.default, "i", "i", "1"),
-                    New add(types.default, "result", "result", "i"),
-                    New less_or_equal(types.default, "state", "i", "UPPER_BOUND")
-                )))
+                New _define("state", scope.type_t.variable_type),
+                New _define("result", scope.type_t.variable_type),
+                New _define("i", scope.type_t.variable_type),
+                New _define("1", scope.type_t.variable_type),
+                New _define("UPPER_BOUND", scope.type_t.variable_type),
+                New _copy_const("state", New data_block(True)),
+                New _copy_const("1", New data_block(1)),
+                New _copy_const("UPPER_BOUND", New data_block(upper_bound)),
+                New _while_then("state", New paragraph(
+                    New _add("i", "i", "1"),
+                    New _add("result", "result", "i"),
+                    New _less_or_equal("state", "i", "UPPER_BOUND")
+                ))
             })
             End Sub
         End Class

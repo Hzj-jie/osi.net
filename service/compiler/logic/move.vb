@@ -8,11 +8,11 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     ' Move a variable from @source to @target.
-    Public NotInheritable Class move
+    Public NotInheritable Class _move
         Inherits copy_move
 
-        Public Sub New(ByVal types As types, ByVal target As String, ByVal source As String)
-            MyBase.New(types, target, source, command.mov)
+        Public Sub New(ByVal target As String, ByVal source As String)
+            MyBase.New(target, source, command.mov)
         End Sub
 
         Public Overloads Shared Function export(ByVal target As variable,

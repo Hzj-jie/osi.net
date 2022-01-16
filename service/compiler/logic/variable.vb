@@ -9,17 +9,17 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    ' A variable in stack.
     Public NotInheritable Class variable
         Public ReadOnly name As String
+        ' This field is not necessary, the "name" is a calculated stack variable to represent the heap location.
         Public ReadOnly index As [optional](Of variable)
         Public ReadOnly type As String
-        Public ReadOnly size As [optional](Of UInt32)
+        Public ReadOnly size As UInt32
 
         Private Sub New(ByVal name As String,
                         ByVal index As [optional](Of variable),
                         ByVal type As String,
-                        ByVal size As [optional](Of UInt32))
+                        ByVal size As UInt32)
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
             Me.name = name
@@ -28,35 +28,24 @@ Namespace logic
             Me.size = size
         End Sub
 
-        Private Shared Function with_size(ByVal types As types,
-                                          ByVal name As String,
+        Private Shared Function with_size(ByVal name As String,
                                           ByVal index As [optional](Of variable),
                                           ByVal type As String,
                                           ByRef o As variable) As Boolean
-            Dim new_var As Func(Of [optional](Of UInt32), variable) =
-                Function(ByVal x As [optional](Of UInt32)) As variable
-                    Return New variable(name, index, type, x)
-                End Function
-            If types Is Nothing Then
-                o = new_var([optional].empty(Of UInt32)())
-                Return True
-            End If
             Dim size As UInt32 = 0
             ' type should be checked when a variable is defined in the scope.
-            If Not types.retrieve(type, size) Then
+            If Not scope.current().types().retrieve(type, size) Then
                 errors.type_undefined(type)
                 Return False
             End If
-            o = new_var([optional].of(size))
+            o = New variable(name, index, type, size)
             Return True
         End Function
 
         Public Shared Function name_of(ByVal array As String, ByVal index As String) As String
             assert(Not array.null_or_whitespace())
             assert(Not index.null_or_whitespace())
-            array = array.Trim()
-            index = index.Trim()
-            Return strcat(array, character.left_mid_bracket, index, character.right_mid_bracket)
+            Return strcat(array.Trim(), character.left_mid_bracket, index.Trim(), character.right_mid_bracket)
         End Function
 
         Public Shared Function is_heap_name(ByVal name As String) As Boolean
@@ -71,8 +60,7 @@ Namespace logic
             Return False
         End Function
 
-        Public Shared Function [of](ByVal types As types,
-                                    ByVal name As String,
+        Public Shared Function [of](ByVal name As String,
                                     ByVal v As vector(Of String),
                                     ByRef o As variable) As Boolean
             assert(Not name.null_or_whitespace())
@@ -83,13 +71,14 @@ Namespace logic
                     errors.invalid_variable_name(name, "Unexpected closing bracket.")
                     Return False
                 End If
-                Dim r As scope.exported_ref = Nothing
-                If Not scope.current().export(name, r) Then
+                Dim r As scope.variable_t.exported_ref = Nothing
+                If Not scope.current().variables().export(name, r) Then
                     errors.variable_undefined(name)
                     Return False
                 End If
-                Return with_size(types, name, [optional].empty(Of variable)(), r.type, o)
+                Return with_size(name, [optional].empty(Of variable)(), r.type, o)
             Else
+                assert(Not v Is Nothing)
                 If Not name.EndsWith(character.right_mid_bracket) Then
                     errors.invalid_variable_name(name, "Closing bracket is not at the end of the name.")
                     Return False
@@ -103,15 +92,15 @@ Namespace logic
                     Return False
                 End If
                 Dim index As variable = Nothing
-                If Not [of](types, name.Substring(index_start + 1, name.Length() - index_start - 2), v, index) Then
+                If Not [of](name.Substring(index_start + 1, name.Length() - index_start - 2), v, index) Then
                     errors.invalid_variable_name(name, "Index cannot be parsed.")
                     Return False
                 End If
-                Dim ptr_name As String = scope.current().unique_name()
-                assert(define.export(ptr_name, types.heap_ptr_type, v))
-                Dim d As data_ref = scope.current().export(ptr_name).data_ref
-                Dim r As scope.exported_ref = Nothing
-                If Not scope.current().export(name.Substring(0, index_start), r) Then
+                Dim ptr_name As String = scope.current().variables().unique_name()
+                assert(_define.export(ptr_name, scope.type_t.ptr_type, v))
+                Dim d As data_ref = scope.current().variables().export(ptr_name).data_ref
+                Dim r As scope.variable_t.exported_ref = Nothing
+                If Not scope.current().variables().export(name.Substring(0, index_start), r) Then
                     errors.variable_undefined(name.Substring(0, index_start))
                     Return False
                 End If
@@ -120,19 +109,12 @@ Namespace logic
                     d,
                     r.data_ref.ToString(),
                     index.ToString()))
-                Return with_size(types, ptr_name, [optional].of(index), +r.ref_type, o)
+                Return with_size(ptr_name, [optional].of(index), +r.ref_type, o)
             End If
         End Function
 
-        ' Create a variable without retrieving @size from types. Consumers who use this constructor should not use
-        ' is_assignable or similar functions.
-        Public Shared Function [of](ByVal name As String, ByVal v As vector(Of String), ByRef o As variable) As Boolean
-            Return [of](Nothing, name, v, o)
-        End Function
-
         Private Function is_zero_size() As Boolean
-            assert(size)
-            If types.is_zero_size(+size) Then
+            If scope.type_t.is_zero_size(size) Then
                 errors.unassignable_zero_type(Me)
                 Return True
             End If
@@ -140,15 +122,14 @@ Namespace logic
         End Function
 
         Private Function is_assignable_from_size(ByVal exp_size As UInt32) As Boolean
-            assert(size)
             If is_zero_size() Then
                 Return False
             End If
-            If types.is_size_or_variable(+size, exp_size) Then
+            If scope.type_t.is_size_or_variable(size, exp_size) Then
                 Return True
             End If
             ' TODO: Should this be allowed?
-            If (+size) >= exp_size Then
+            If size >= exp_size Then
                 Return True
             End If
             Return False
@@ -156,8 +137,7 @@ Namespace logic
 
         Public Function is_assignable_from(ByVal source As variable) As Boolean
             assert(Not source Is Nothing)
-            assert(source.size)
-            If is_assignable_from_size(+(source.size)) Then
+            If is_assignable_from_size(source.size) Then
                 Return True
             End If
             errors.unassignable(Me, source)
@@ -181,11 +161,10 @@ Namespace logic
         End Function
 
         Public Function is_assignable_to_uint32() As Boolean
-            assert(size)
             If is_zero_size() Then
                 Return False
             End If
-            If (+size) <= sizeof_uint32 OrElse types.is_variable_size(+size) Then
+            If size <= sizeof_uint32 OrElse scope.type_t.is_variable_size(size) Then
                 Return True
             End If
             errors.unassignable_to_uint32(Me)
@@ -201,11 +180,10 @@ Namespace logic
         End Function
 
         Public Function is_variable_size() As Boolean
-            assert(size)
             If is_zero_size() Then
                 Return False
             End If
-            If types.is_variable_size(+size) Then
+            If scope.type_t.is_variable_size(size) Then
                 Return True
             End If
             errors.unassignable_variable_size(Me)
@@ -213,7 +191,7 @@ Namespace logic
         End Function
 
         Public Overrides Function ToString() As String
-            Dim d As data_ref = scope.current().export(name).data_ref
+            Dim d As data_ref = scope.current().variables().export(name).data_ref
             If index Then
                 Return d.to_heap().ToString()
             End If

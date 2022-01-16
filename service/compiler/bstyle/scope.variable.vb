@@ -101,7 +101,7 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Function define_heap(ByVal type As String, ByVal name As String) As Boolean
-                Return define(types.heap_ptr_type, name) AndAlso
+                Return define(compiler.logic.scope.type_t.ptr_type, name) AndAlso
                        define(type, heap_name_of(name))
             End Function
 

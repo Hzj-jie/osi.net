@@ -5611,5 +5611,93 @@ Namespace primitive
             End Function
         End Class
 
+        Partial Public NotInheritable Class [jmpr]
+            Implements instruction, IComparable, IComparable(Of [jmpr])
+
+            Private ReadOnly d0 As data_ref
+
+            Public Sub New()
+                d0 = New data_ref()
+            End Sub
+
+            Public Sub New( _
+                       ByVal d0 As data_ref)
+                Me.d0 = d0
+            End Sub
+
+            Public Function bytes_size() As UInt32 Implements exportable.bytes_size
+                Return sizeof_uint32 +
+                       d0.bytes_size()
+            End Function
+
+            Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
+                Dim b0() As Byte = Nothing
+                If Not d0.export(b0) Then
+                    Return False
+                End If
+                b = array_concat(uint32_bytes(command.jmpr),
+                                 b0)
+                Return True
+            End Function
+
+            Public Function export(ByRef s As String) As Boolean Implements exportable.export
+                Dim b As New StringBuilder()
+                b.Append(command_str(command.jmpr))
+                If Not d0.export(s) Then
+                    Return False
+                End If
+                b.Append(character.blank)
+                b.Append(s)
+
+                s = Convert.ToString(b)
+                Return True
+            End Function
+
+            Public Function import(ByVal i() As Byte, ByRef p As UInt32) As Boolean Implements exportable.import
+                Dim o As UInt32 = 0
+                Return assert(bytes_uint32(i, o, p) AndAlso o = command.jmpr) AndAlso
+                       d0.import(i, p)
+            End Function
+
+            Public Function import(s As vector(Of String), ByRef p As UInt32) As Boolean Implements exportable.import
+                assert(Not s.null_or_empty() AndAlso s.size() > p)
+                assert(s(p) = command_str(command.jmpr))
+                p += uint32_1
+                Return True AndAlso
+                       d0.import(s, p)
+            End Function
+
+            Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+                Return CompareTo(cast(Of [jmpr])(obj, False))
+            End Function
+
+            Public Function CompareTo(ByVal other As [jmpr]) As Int32 Implements IComparable(Of [jmpr]).CompareTo
+                Dim c As Int32 = object_compare(Me, other)
+                If c <> object_compare_undetermined Then
+                    Return c
+                End If
+                assert(Not other Is Nothing)
+                c = Me.d0.CompareTo(other.d0)
+                If c <> 0 Then
+                    Return c
+                End If
+
+                Return 0
+            End Function
+
+            Public Overrides Function ToString() As String
+                Dim s As String = Nothing
+                assert(export(s))
+                Return s
+            End Function
+
+            Private Function p0(ByVal imi As imitation) As ref(Of Byte())
+                assert(Not imi Is Nothing)
+                Dim p As ref(Of Byte()) = imi.access(d0)
+                assert(Not p Is Nothing)
+                Return p
+            End Function
+        End Class
+
     End Namespace
 End Namespace

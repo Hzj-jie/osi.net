@@ -11,21 +11,19 @@ Namespace logic
     Public NotInheritable Class return_value
         Public Shared Function define(ByVal name As String,
                                       ByVal type As String) As Boolean
-            Return scope.current().define_stack(variable_name(name), type)
+            Return scope.current().variables().define_stack(variable_name(name), type)
         End Function
 
-        Public Shared Function export(ByVal types As types,
-                                      ByVal name As String,
+        Public Shared Function export(ByVal name As String,
                                       ByVal type As String,
                                       ByRef o As vector(Of String)) As Boolean
-            Return logic.define.export(types, variable_name(name), type, o)
+            Return logic._define.export(variable_name(name), type, o)
         End Function
 
-        Public Shared Function retrieve(ByVal types As types,
-                                        ByVal name As String,
+        Public Shared Function retrieve(ByVal name As String,
                                         ByVal v As vector(Of String),
                                         ByRef o As variable) As Boolean
-            Return variable.of(types, variable_name(name), v, o)
+            Return variable.of(variable_name(name), v, o)
         End Function
 
         Private Shared Function variable_name(ByVal name As String) As String

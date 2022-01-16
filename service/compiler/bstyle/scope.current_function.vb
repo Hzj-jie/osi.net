@@ -26,7 +26,7 @@ Partial Public NotInheritable Class bstyle
             End Sub
 
             Public Function allow_return_value() As Boolean
-                Return Not return_type.Equals(types.zero_type)
+                Return Not return_type.Equals(compiler.logic.scope.type_t.zero_type)
             End Function
         End Class
 

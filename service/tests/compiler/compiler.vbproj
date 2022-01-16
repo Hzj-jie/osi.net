@@ -104,6 +104,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="b2style\codegen\class_inheritance.txt" />
     <Content Include="b2style\codegen\errors\duplicate_template_type_parameters.txt" />
     <Content Include="b2style\codegen\errors\missing-ending-quota.txt" />
     <Content Include="b2style\codegen\errors\reinterpret_cast_heap_with_index.txt" />
@@ -208,6 +209,7 @@
     <Content Include="bstyle\codegen\single_level_struct.txt" />
     <Content Include="bstyle\codegen\empty_struct_overloads.txt" />
     <Content Include="dotnet\codegen\from_source1.cs" />
+    <Content Include="logic\codegen\address_of.txt" />
     <Content Include="logic\codegen\callee_ref.txt" />
     <Content Include="logic\codegen\callee_ref2.txt" />
     <Content Include="logic\codegen\case1.txt" />

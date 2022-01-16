@@ -472,5 +472,14 @@ Namespace primitive
             End Function
         End Class
 
+        Public NotInheritable Class jmpr_exportable_test
+            Inherits exportable_test(Of [jmpr])
+
+            Protected Overrides Function create() As [jmpr]
+                Return New [jmpr]( _
+                        data_ref.random())
+            End Function
+        End Class
+
     End Namespace
 End Namespace

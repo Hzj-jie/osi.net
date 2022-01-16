@@ -73,7 +73,7 @@ Partial Public NotInheritable Class bstyle
                                  Dim return_value As String =
                                          strcat(logic_name.temp_variable(n), "@", name, "@return_value")
                                  assert(value_declaration.declare_single_data_slot(
-                                            types.variable_type, return_value, o))
+                                            compiler.logic.scope.type_t.variable_type, return_value, o))
                                  Return builders.of_caller(name, return_value, parameters).to(o) AndAlso
                                         struct.unpack(return_value,
                                                       value.with_temp_target(return_type, n, o),

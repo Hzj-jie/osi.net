@@ -108,6 +108,8 @@ Namespace primitive
                     Me.i = New instructions.alloc()
                 Case command.dealloc
                     Me.i = New instructions.dealloc()
+                Case command.jmpr
+                    Me.i = New instructions.jmpr()
                 Case Else
                     Return False
             End Select

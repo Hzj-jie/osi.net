@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Namespace logic
-    Public NotInheritable Class [stop]
+    Public NotInheritable Class _stop
         Implements exportable
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export

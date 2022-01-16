@@ -59,8 +59,7 @@ Public Module _unordered_map
         If this Is Nothing OrElse that Is Nothing Then
             Return False
         End If
-        Dim it As unordered_map(Of KEY_T, VALUE_T).iterator = Nothing
-        it = that.begin()
+        Dim it As unordered_map(Of KEY_T, VALUE_T).iterator = that.begin()
         While it <> that.end()
             assert(f((+it).first, (+it).second).first <> this.end())
             it += 1

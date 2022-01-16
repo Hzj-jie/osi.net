@@ -9,8 +9,8 @@ Namespace logic
     Public MustInherit Class unary_subroutine
         Inherits data_ref_operator
 
-        Public Sub New(ByVal types As types, ByVal parameter As String)
-            MyBase.New(types, parameter)
+        Public Sub New(ByVal parameter As String)
+            MyBase.New(parameter)
         End Sub
 
         Protected MustOverride Function parameter_restrict(ByVal parameter As variable) As Boolean

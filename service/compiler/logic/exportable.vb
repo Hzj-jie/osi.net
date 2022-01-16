@@ -14,9 +14,15 @@ Namespace logic
     Public Module _exportable
         Public ReadOnly debug_dump As Boolean = env_bool(env_keys("logic", "debug", "dump"))
 
+        ' TODO: Reconsider the way to share interrupts between simulator and scope.
         <Extension()> Public Function import(ByVal e As interpreter.primitive.exportable,
                                              ByVal es() As exportable) As Boolean
-            Dim s As New scope()
+            Return import(direct_cast(Of simulator)(e), es)
+        End Function
+
+        ' @VisibleForTesting
+        <Extension()> Public Function import(ByVal e As simulator, ByVal es() As exportable) As Boolean
+            Dim s As New scope(e.interrupts())
             Dim o As New vector(Of String)()
             Using defer.to(AddressOf s.end_scope)
                 For i As Int32 = 0 To es.Length() - 1

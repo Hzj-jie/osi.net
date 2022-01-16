@@ -526,5 +526,15 @@ Namespace primitive
                 imi.dealloc(p)
             End Sub
         End Class
+
+        Partial Public NotInheritable Class [jmpr]
+            Implements instruction
+
+            Public Sub execute(ByVal imi As imitation) Implements instruction.execute
+                Dim s As Int64 = imi.access_as_int64(d0)
+                imi.instruction_ref(s)
+                imi.do_not_advance_instruction_ref()
+            End Sub
+        End Class
     End Namespace
 End Namespace
