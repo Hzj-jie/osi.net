@@ -193,4 +193,27 @@ Namespace logic
             assertion.equal(Convert.ToInt32(io.output()(7)), 0)
         End Sub
     End Class
+
+    Public NotInheritable Class import_executor_address_of_ref
+        Inherits import_executor_case
+
+        Private Shared ReadOnly io As New console_io.test_wrapper()
+
+        Public Sub New()
+            MyBase.New(_import_executor_cases.address_of_ref.as_text(), New interrupts(+io))
+        End Sub
+
+        Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
+            MyBase.check_result(e)
+            assertion.equal(io.output().Length(), 8)
+            assertion.equal(Convert.ToInt32(io.output()(0)), 2)
+            assertion.equal(Convert.ToInt32(io.output()(1)), 0)
+            assertion.equal(Convert.ToInt32(io.output()(2)), 0)
+            assertion.equal(Convert.ToInt32(io.output()(3)), 0)
+            assertion.equal(Convert.ToInt32(io.output()(4)), 1)
+            assertion.equal(Convert.ToInt32(io.output()(5)), 0)
+            assertion.equal(Convert.ToInt32(io.output()(6)), 0)
+            assertion.equal(Convert.ToInt32(io.output()(7)), 0)
+        End Sub
+    End Class
 End Namespace
