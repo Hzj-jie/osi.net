@@ -14,7 +14,7 @@ callee m2 type0 ( f delegate ) {
   caller_ref f ( )
 }
 
-callee_ref delegate2 type0 ( f delegate )
+callee_ref delegate2 type0 ( delegate )
 
 define f delegate2
 address_of f m2

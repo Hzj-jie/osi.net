@@ -14,17 +14,17 @@ Namespace logic
             Public ReadOnly name As String
             Public ReadOnly return_type As String
             ' TODO: name in the builders.parameter is not used at all.
-            Public ReadOnly parameters As const_array(Of builders.parameter)
+            Public ReadOnly parameters As const_array(Of builders.parameter_type)
 
             Public Sub New(ByVal name As String,
                             ByVal return_type As String,
-                            ByVal parameters() As builders.parameter)
+                            ByVal parameters() As builders.parameter_type)
                 Me.New(name, return_type, const_array.of(parameters))
             End Sub
 
             Public Sub New(ByVal name As String,
                            ByVal return_type As String,
-                           ByVal parameters As const_array(Of builders.parameter))
+                           ByVal parameters As const_array(Of builders.parameter_type))
                 assert(Not name.null_or_whitespace())
                 assert(Not return_type.null_or_whitespace())
                 assert(Not parameters Is Nothing)
@@ -51,7 +51,7 @@ Namespace logic
 
             Public Function decl(ByVal type As String,
                                  ByVal return_type As String,
-                                 ByVal parameters() As builders.parameter) As Boolean
+                                 ByVal parameters() As builders.parameter_type) As Boolean
                 assert(Not type.null_or_whitespace())
                 assert(Not return_type.null_or_whitespace())
                 If decls.emplace(type, New anchor_ref(type, return_type, parameters)).second() Then
@@ -84,7 +84,7 @@ Namespace logic
 
             Public Function decl(ByVal type As String,
                                  ByVal return_type As String,
-                                 ByVal parameters() As builders.parameter) As Boolean
+                                 ByVal parameters() As builders.parameter_type) As Boolean
                 Return s.ar.decl(type, return_type, parameters)
             End Function
 

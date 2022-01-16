@@ -13,7 +13,7 @@ callee m2 uint ( n uint ) {
   return m2 n
 }
 
-callee_ref delegate uint ( n uint )
+callee_ref delegate uint ( uint )
 define n uint
 copy_const n i1
 define temp_string type*
