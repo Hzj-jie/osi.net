@@ -17,6 +17,7 @@ Namespace logic
 
         Protected Sub New(ByVal cmd As command, ByVal result As String, ByVal parameters() As String)
             assert(result Is Nothing OrElse Not result.null_or_whitespace())
+            assert(Not parameters Is Nothing)
             Me.cmd = cmd
             Me.result = [optional].of_nullable(result)
             Me.parameters = parameters
@@ -135,7 +136,7 @@ Namespace logic
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.stst))
-                o.emplace_back(instruction_builder.str(cmd, anchor.begin))
+                o.emplace_back(instruction_builder.str(cmd, +anchor.begin))
                 If Not forward_to_result(anchor, o) Then
                     Return False
                 End If

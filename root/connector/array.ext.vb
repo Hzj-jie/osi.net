@@ -66,6 +66,22 @@ Public Module _array_ext
         Return this
     End Function
 
+    <Extension()> Public Function hash(Of T)(ByVal this() As T) As Int32
+        'WTF, the Array.GetHashCode returns some random number in .net 3.5
+        Return this.hash(this.array_size())
+    End Function
+
+    <Extension()> Public Function hash(Of T)(ByVal this() As T, ByVal size As UInt32) As Int32
+        assert(size <= this.array_size())
+        Dim r As UInt32 = 0
+        Dim i As UInt32 = 0
+        While i < size
+            r = fast_to_uint32(Of T).on(this(CInt(i)))
+            i += uint32_1
+        End While
+        Return uint32_int32(r)
+    End Function
+
     <Extension()> Public Function to_string(Of T)(ByVal this() As T,
                                                   Optional ByVal limited_length As UInt32 = 8,
                                                   Optional ByVal separator As String = ", ",

@@ -43,57 +43,52 @@ Namespace logic
         Public Shared Sub unassignable(ByVal target As variable, ByVal source As variable)
             assert(Not target Is Nothing)
             assert(Not source Is Nothing)
-            raise(
-                        "Source ",
-                        source.name,
-                        " [",
-                        source.type,
-                        "] and target ",
-                        target.name,
-                        " [",
-                        target.type,
-                        "] have different sizes, unassignable.")
+            raise("Source ",
+                  source.name,
+                  " [",
+                  source.type,
+                  "] and target ",
+                  target.name,
+                  " [",
+                  target.type,
+                  "] have different sizes, unassignable.")
         End Sub
 
         Public Shared Sub unassignable_zero_type(ByVal target As variable)
             assert(Not target Is Nothing)
-            raise(
-                        "target ",
-                        target.name,
-                        " [",
-                        target.type,
-                        "] is zero-size, unassignable.")
+            raise("target ",
+                  target.name,
+                  " [",
+                  target.type,
+                  "] is zero-size, unassignable.")
         End Sub
 
         Public Shared Sub no_return_value_provided(ByVal target As variable)
             assert(Not target Is Nothing)
-            raise(
-                        "target ",
-                        target.name,
-                        " [",
-                        target.type,
-                        "] as return value is expected but not provided.")
+            raise("target ",
+                  target.name,
+                  " [",
+                  target.type,
+                  "] as return value is expected but not provided.")
         End Sub
 
         Public Shared Sub unassignable_array(ByVal target As variable, ByVal size As UInt32)
             assert(Not target Is Nothing)
-            raise(
-                        "Target ",
-                        target.name,
-                        " [",
-                        target.type,
-                        "] is not assignable from byte array with size ",
-                        size)
+            raise("Target ",
+                  target.name,
+                  " [",
+                  target.type,
+                  "] is not assignable from byte array with size ",
+                  size)
         End Sub
 
         Public Shared Sub unassignable_variable_size(ByVal target As variable)
             assert(Not target Is Nothing)
-            raise(
-                        "Target ",
-                        target.name,
-                        " [",
-                        target.type,
-                        "] is not a variable size type.")
+            raise("Target ",
+                  target.name,
+                  " [",
+                  target.type,
+                  "] is not a variable size type.")
         End Sub
 
         Public Shared Sub type_undefined(ByVal type As String, ByVal target As String)
@@ -121,6 +116,10 @@ Namespace logic
                   current_pos,
                   ", last position is ",
                   last_pos)
+        End Sub
+
+        Public Shared Sub anchor_ref_redefined(ByVal name As String, ByVal last As scope.anchor_ref)
+            raise("AnchorRef ", name, " has been defined already as ", last)
         End Sub
 
         Public Shared Sub unexpected_token(ByVal s As String)

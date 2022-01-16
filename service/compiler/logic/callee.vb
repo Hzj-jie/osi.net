@@ -50,17 +50,17 @@ Namespace logic
             scope.current().start_scope()
             Using defer.to(AddressOf scope.current().end_scope)
                 ' caller should setup the stack.
-                ' Note, variables are using reverse order to match the stack, and here the logic "define" without "push"ing
-                ' to use variables from the caller side.
+                ' Note, variables are using reverse order to match the stack, and here the logic "define" without
+                ' "push"ing to use variables from the caller side.
                 If Not return_value.define(name, type) Then
                     Return False
                 End If
                 For i As Int32 = 0 To array_size_i(parameters) - 1
-                    If Not scope.current().variables().define_stack(parameters(i).name, parameters(i).type) Then
+                    If Not _define.forward(parameters(i).name, parameters(i).type, o) Then
                         Return False
                     End If
                 Next
-                If Not paragraph Is Nothing AndAlso Not paragraph.export(o) Then
+                If Not paragraph.export(o) Then
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.rest))

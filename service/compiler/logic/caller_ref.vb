@@ -35,13 +35,25 @@ Namespace logic
 
         Protected Overrides Function retrieve_anchor(ByVal o As vector(Of String),
                                                      ByRef anchor As scope.anchor) As Boolean
-            Dim d As scope.variable_t.exported_ref = Nothing
-            If Not scope.current().variables().export(name, d) Then
+            Dim f As Func(Of scope.variable_t.exported_ref) =
+                Function() As scope.variable_t.exported_ref
+                    Dim d As scope.variable_t.exported_ref = Nothing
+                    If Not scope.current().variables().export(name, d) Then
+                        Return Nothing
+                    End If
+                    Return d
+                End Function
+            If f() Is Nothing Then
                 errors.anchor_ref_undefined(name)
                 Return False
             End If
-            assert(Not d Is Nothing)
-            anchor = scope.current().anchor_refs().of(name).with_begin(d.data_ref)
+            Dim r As scope.anchor_ref = Nothing
+            If Not scope.current().anchor_refs().of(name, r) Then
+                Return False
+            End If
+            anchor = r.with_begin(Function() As data_ref
+                                      Return f().data_ref
+                                  End Function)
             Return True
         End Function
     End Class

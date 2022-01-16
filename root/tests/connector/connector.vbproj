@@ -115,6 +115,7 @@
     <Compile Include="event_pin_object_behavior_test.vb" />
     <Compile Include="extension_behavior_test.vb" />
     <Compile Include="finalizer_test.vb" />
+    <Compile Include="for_each_behavior_test.vb" />
     <Compile Include="functor\bytes_serializer_container_test.vb" />
     <Compile Include="functor\bytes_serializer_test.vb" />
     <Compile Include="functor\json_serializer_test.vb" />

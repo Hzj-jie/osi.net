@@ -124,5 +124,12 @@ Public Structure one_of(Of T1, T2)
 
     Public Overloads Function EqualsT(ByVal other As one_of(Of T1, T2)) As Boolean _
                                      Implements IEquatable(Of one_of(Of T1, T2)).Equals
+        If is_first() <> other.is_first() Then
+            Return False
+        End If
+        If is_first() Then
+            Return equal(first(), other.first())
+        End If
+        Return equal(second(), other.second())
     End Function
 End Structure

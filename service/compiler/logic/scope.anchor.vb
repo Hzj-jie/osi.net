@@ -11,18 +11,20 @@ Namespace logic
     Partial Public NotInheritable Class scope
         Public NotInheritable Class anchor
             Inherits anchor_ref
-            Public ReadOnly begin As data_ref
+            Public ReadOnly begin As lazier(Of data_ref)
 
             Public Sub New(ByVal name As String,
                            ByVal begin As UInt32,
                            ByVal return_type As String,
                            ByVal parameters() As builders.parameter)
                 MyBase.New(name, return_type, parameters)
-                Me.begin = data_ref.abs(begin)
+                Me.begin = lazier.of(Function() As data_ref
+                                         Return data_ref.abs(begin)
+                                     End Function)
             End Sub
 
             Public Sub New(ByVal name As String,
-                           ByVal begin As data_ref,
+                           ByVal begin As lazier(Of data_ref),
                            ByVal return_type As String,
                            ByVal parameters As const_array(Of builders.parameter))
                 MyBase.New(name, return_type, parameters)
@@ -45,7 +47,7 @@ Namespace logic
                 If m.emplace(a.name, a).second() Then
                     Return True
                 End If
-                errors.anchor_redefined(a.name, a.begin, m(a.name).begin)
+                errors.anchor_redefined(a.name, +a.begin, +m(a.name).begin)
                 Return False
             End Function
 

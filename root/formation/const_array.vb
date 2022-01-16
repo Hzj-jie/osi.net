@@ -49,8 +49,7 @@ Public NotInheritable Class const_array
         assert(size > 0)
         assert(size <= max_int32)
 #End If
-        Dim r() As T = Nothing
-        ReDim r(CInt(size - uint32_1))
+        Dim r(CInt(size - uint32_1)) As T
         For i As Int32 = 0 To CInt(size) - 1
             r(i) = f()
         Next
@@ -97,10 +96,8 @@ Public Class const_array(Of T)
             Return Nothing
         End If
 
-        Dim a() As T = Nothing
-        ReDim a(CInt(i.size()) - 1)
-        Dim o As R = Nothing
-        o = copy_constructor(Of R).invoke(a)
+        Dim a(CInt(i.size()) - 1) As T
+        Dim o As R = copy_constructor(Of R).invoke(a)
         arrays.copy(o.v, i.v)
         arrays.clear(i.v)
         Return o
@@ -111,7 +108,7 @@ Public Class const_array(Of T)
         Return move(Of const_array(Of T))(i)
     End Function
 
-    Default Public ReadOnly Property data(ByVal i As UInt32) As T
+    Default Public ReadOnly Property at(ByVal i As UInt32) As T
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
 #If Not Performance Then
@@ -133,8 +130,7 @@ Public Class const_array(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function as_array() As T()
-        Dim r() As T = Nothing
-        ReDim r(CInt(size() - uint32_1))
+        Dim r(CInt(size() - uint32_1)) As T
         arrays.copy(r, v)
         Return r
     End Function
@@ -193,5 +189,13 @@ Public Class const_array(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public NotOverridable Overrides Function Equals(ByVal other As Object) As Boolean
         Return Equals(cast(Of const_array(Of T)()).from(other, False))
+    End Function
+
+    Public NotOverridable Overrides Function GetHashCode() As Int32
+        Return v.hash()
+    End Function
+
+    Public NotOverridable Overrides Function ToString() As String
+        Return v.to_string(size())
     End Function
 End Class

@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
@@ -15,13 +14,18 @@ Namespace logic
 
         Private ReadOnly name As String
         Private ReadOnly type As String
+        Private ReadOnly push As Boolean
 
-        Public Sub New(ByVal name As String,
-                       ByVal type As String)
+        Public Sub New(ByVal name As String, ByVal type As String)
+            Me.New(name, type, True)
+        End Sub
+
+        Private Sub New(ByVal name As String, ByVal type As String, ByVal push As Boolean)
             assert(Not name.null_or_whitespace())
             assert(Not type.null_or_whitespace())
             Me.name = name
             Me.type = type
+            Me.push = push
         End Sub
 
         Public Shared Function export(ByVal name As String,
@@ -30,17 +34,37 @@ Namespace logic
             Return New _define(name, type).export(o)
         End Function
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Shared Function forward(ByVal name As String,
+                                       ByVal type As String,
+                                       ByVal o As vector(Of String)) As Boolean
+            Return New _define(name, type, False).export(o)
+        End Function
+
+        Private Function define_variable(ByVal type As String, ByVal o As vector(Of String)) As Boolean
             assert(Not o Is Nothing)
             If Not scope.current().types().retrieve(type, Nothing) Then
-                errors.type_undefined(type, name)
                 Return False
             End If
             If Not scope.current().variables().define_stack(name, type) Then
                 Return False
             End If
-            o.emplace_back(command_str(command.push))
+            If push Then
+                o.emplace_back(command_str(command.push))
+            End If
             Return True
+        End Function
+
+        Private Function define_callee_ref(ByVal o As vector(Of String)) As Boolean
+            Return define_variable(scope.type_t.ptr_type, o) AndAlso
+                   scope.current().anchor_refs().define(type, name)
+        End Function
+
+        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+            If define_variable(type, o) OrElse define_callee_ref(o) Then
+                Return True
+            End If
+            errors.type_undefined(type, name)
+            Return False
         End Function
     End Class
 End Namespace

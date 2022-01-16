@@ -123,6 +123,12 @@ Public Class weak_ref(Of T)
         assert(Not i Is Nothing)
         Return i.GetHashCode()
     End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Shared Function str(ByVal i As T) As String
+        assert(Not i Is Nothing)
+        Return i.ToString()
+    End Function
 'finish single_obj_ref_operator.vbp --------
 
     Private p As WeakReference
