@@ -13,7 +13,7 @@ Namespace logic
             ' TODO: name may not be really necessary, the user should have the name to search from anchors.
             Public ReadOnly name As String
             Public ReadOnly return_type As String
-            ' TODO: should use string as type instead of builders.parameter
+            ' TODO: name in the builders.parameter is not used at all.
             Public ReadOnly parameters As const_array(Of builders.parameter)
 
             Public Sub New(ByVal name As String,
