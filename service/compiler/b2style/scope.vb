@@ -13,6 +13,7 @@ Partial Public NotInheritable Class b2style
         Private cn As String
         Private f As String
         Private ReadOnly t As New template_t()
+        Private ReadOnly v As New variable_t()
 
         <inject_constructor>
         Public Sub New(ByVal parent As scope)

@@ -23,7 +23,8 @@ Partial Public NotInheritable Class bstyle
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As writer,
-                               ByVal build_caller As Func(Of String, vector(Of String), Boolean)) As Boolean
+                               ByVal build_caller As Func(Of String, vector(Of String), Boolean),
+                               ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(Not build_caller Is Nothing)
@@ -54,6 +55,9 @@ Partial Public NotInheritable Class bstyle
                          o,
                          Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
                              Return builders.of_caller(name, parameters).to(o)
+                         End Function,
+                         Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
+                             Return builders.of_caller_ref(name, parameters).to(o)
                          End Function)
         End Function
 
@@ -61,29 +65,44 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 3)
+            Dim b As Func(Of Func(Of String, String, vector(Of String), Boolean),
+                             Func(Of String, vector(Of String), Boolean)) =
+                Function(ByVal builder As Func(Of String, String, vector(Of String), Boolean)) _
+                        As Func(Of String, vector(Of String), Boolean)
+                    assert(Not builder Is Nothing)
+                    Return Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
+                               Dim return_type As String = Nothing
+                               If Not scope.current().functions().return_type_of(name, return_type) Then
+                                   Return False
+                               End If
+                               If scope.current().structs().defined(return_type) Then
+                                   ' TODO: Check the type consistency between function_call and variable receiver.
+                                   Dim return_value As String =
+                                         strcat(logic_name.temp_variable(n), "@", name, "@return_value")
+                                   assert(value_declaration.declare_single_data_slot(
+                                            compiler.logic.scope.type_t.variable_type, return_value, o))
+                                   Return builder(name, return_value, parameters) AndAlso
+                                          struct.unpack(return_value,
+                                                        value.with_temp_target(return_type, n, o),
+                                                        o)
+                               End If
+                               Return builder(name,
+                                              value.with_single_data_slot_temp_target(return_type, n, o),
+                                              parameters)
+                           End Function
+                End Function
             Return build(n,
                          o,
-                         Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
-                             Dim return_type As String = Nothing
-                             If Not scope.current().functions().return_type_of(name, return_type) Then
-                                 Return False
-                             End If
-                             If scope.current().structs().defined(return_type) Then
-                                 ' TODO: Check the type consistency between function_call and variable receiver.
-                                 Dim return_value As String =
-                                         strcat(logic_name.temp_variable(n), "@", name, "@return_value")
-                                 assert(value_declaration.declare_single_data_slot(
-                                            compiler.logic.scope.type_t.variable_type, return_value, o))
-                                 Return builders.of_caller(name, return_value, parameters).to(o) AndAlso
-                                        struct.unpack(return_value,
-                                                      value.with_temp_target(return_type, n, o),
-                                                      o)
-                             End If
-                             Return builders.of_caller(name,
-                                                       value.with_single_data_slot_temp_target(return_type, n, o),
-                                                       parameters).
-                                             to(o)
-                         End Function)
+                         b(Function(ByVal name As String,
+                                    ByVal result As String,
+                                    ByVal parameters As vector(Of String)) As Boolean
+                               Return builders.of_caller(name, result, parameters).to(o)
+                           End Function),
+                         b(Function(ByVal name As String,
+                                    ByVal result As String,
+                                    ByVal parameters As vector(Of String)) As Boolean
+                               Return builders.of_caller_ref(name, result, parameters).to(o)
+                           End Function))
         End Function
     End Class
 End Class
