@@ -134,7 +134,7 @@ Partial Public NotInheritable Class bstyle
                         Continue While
                     End If
                     If Not is_delegate Is Nothing Then
-                        is_delegate.set(s.delegates().is_defined(type)
+                        is_delegate.set(s.delegates().is_defined(type))
                     End If
                     Return True
                 End While

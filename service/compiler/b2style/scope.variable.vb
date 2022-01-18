@@ -42,6 +42,12 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
+            Public Shared Function define() As Func(Of typed_node, Boolean)
+                Return Function(ByVal n As typed_node) As Boolean
+                           Return current().variables().define(n)
+                       End Function
+            End Function
+
             Public Function define(ByVal n As typed_node) As Boolean
                 Return s.v.define(n)
             End Function

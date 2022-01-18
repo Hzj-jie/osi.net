@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="b2style\codegen\class_inheritance.txt" />
+    <Content Include="b2style\codegen\delegate2.txt" />
     <Content Include="b2style\codegen\errors\duplicate_template_type_parameters.txt" />
     <Content Include="b2style\codegen\errors\missing-ending-quota.txt" />
     <Content Include="b2style\codegen\errors\reinterpret_cast_heap_with_index.txt" />
@@ -222,6 +223,7 @@
     <Content Include="logic\codegen\case2.txt" />
     <Content Include="logic\codegen\case3.txt" />
     <Content Include="logic\codegen\case4.txt" />
+    <Content Include="logic\codegen\copy_address_of.txt" />
     <Content Include="logic\codegen\heap.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

@@ -83,9 +83,9 @@ Partial Public NotInheritable Class b2style
                            with(code_gen.of_children_word_str(Of typed_node_writer)("type-param")).
                            with(code_gen.of_children_word_str(Of typed_node_writer)("reference")).
                            with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
-                                    AddressOf scope.current().variables().define, "value-definition")).
+                                    scope.variable_proxy.define(), "value-definition")).
                            with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
-                                    AddressOf scope.current().variables().define, "value-declaration")).
+                                    scope.variable_proxy.define(), "value-declaration")).
                            with_of_only_childs(
                                "base-root-type",
                                "root-type",
