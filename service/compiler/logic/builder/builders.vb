@@ -19,7 +19,6 @@ Namespace logic
 
             Public Sub New(ByVal type As String)
                 assert(Not type.null_or_whitespace())
-                type = type.Trim()
                 ' TODO: Try to avoid allowing only "&" as parameter type.
                 ' assert(Not type.Equals(type_ref_suffix))
                 Me.ref = type.EndsWith(type_ref_suffix) AndAlso Not type.Equals(type_ref_suffix)
@@ -67,7 +66,7 @@ Namespace logic
             Public Sub New(ByVal type As String, ByVal name As String)
                 MyBase.New(type)
                 assert(Not name.null_or_whitespace())
-                Me.name = name.Trim()
+                Me.name = name
             End Sub
 
             Public Shared Shadows Function of_ref(ByVal type As String, ByVal name As String) As parameter

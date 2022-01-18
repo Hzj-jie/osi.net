@@ -51,7 +51,6 @@ Partial Public NotInheritable Class bstyle
 
             Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
                 assert(Not name.null_or_whitespace())
-                name = name.Trim()
                 Return s.find(name, type)
             End Function
         End Class
@@ -66,7 +65,6 @@ Partial Public NotInheritable Class bstyle
 
             Private Shared Function heap_name_of(ByVal name As String) As String
                 assert(Not name.null_or_whitespace())
-                name = name.Trim()
                 Return strcat(name, "@")
             End Function
 

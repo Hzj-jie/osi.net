@@ -14,7 +14,7 @@ Namespace logic
         Private ReadOnly size As UInt32
 
         Public Sub New(ByVal type As String, ByVal size As UInt32)
-            assert(Not type.null_or_empty())
+            assert(Not type.null_or_whitespace())
             Me.type = type
             Me.size = size
         End Sub

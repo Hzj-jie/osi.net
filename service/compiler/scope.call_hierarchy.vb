@@ -24,7 +24,7 @@ Partial Public Class scope(Of T As scope(Of T))
 
         Protected Sub New(ByVal main_name As String)
             assert(Not main_name.null_or_whitespace())
-            Me.main_name = main_name.Trim()
+            Me.main_name = main_name
         End Sub
 
         Protected Sub New()
@@ -37,8 +37,6 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(Not name.null_or_whitespace())
             Dim from As String = current_function_name().or_else(main_name)
             assert(Not from.null_or_whitespace())
-            name = name.Trim()
-            from = from.Trim()
             If Not name.Equals(from) Then
                 m(name).emplace_back(from)
             End If
@@ -47,7 +45,6 @@ Partial Public Class scope(Of T As scope(Of T))
         Default Public ReadOnly Property can_reach_root(ByVal f As String) As Boolean
             Get
                 assert(Not f.null_or_whitespace())
-                f = f.Trim()
                 If f.Equals(main_name) Then
                     Return True
                 End If
@@ -86,7 +83,7 @@ Partial Public Class scope(Of T As scope(Of T))
                 assert(Not f.null_or_whitespace())
                 assert(Not o Is Nothing)
                 Me.ch = ch
-                Me.f = f.Trim()
+                Me.f = f
                 Me.o = o
             End Sub
 
