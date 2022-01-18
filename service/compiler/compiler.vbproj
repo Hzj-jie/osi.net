@@ -58,6 +58,7 @@
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
     <Compile Include="b2style\rewriter\nodes\class.vb" />
+    <Compile Include="b2style\rewriter\nodes\defines.vb" />
     <Compile Include="b2style\rewriter\nodes\function.vb" />
     <Compile Include="b2style\rewriter\nodes\function_call.vb" />
     <Compile Include="b2style\rewriter\nodes\heap_struct_function_call.vb" />
@@ -69,6 +70,7 @@
     <Compile Include="b2style\rewriter\nodes\template.vb" />
     <Compile Include="b2style\rewriter\nodes\template_type_name.vb" />
     <Compile Include="b2style\scope.current_function.vb" />
+    <Compile Include="b2style\scope.define.vb" />
     <Compile Include="b2style\scope.namespace.vb" />
     <Compile Include="b2style\scope.template.vb" />
     <Compile Include="b2style\scope.variable.vb" />
@@ -84,6 +86,7 @@
     <Compile Include="bstyle\scope.value_target.vb" />
     <Compile Include="code_gen\code_gen.default.vb" />
     <Compile Include="code_gen\code_gens_registrar.vb" />
+    <Compile Include="code_gen\defines.vb" />
     <Compile Include="code_gen\includes.vb" />
     <Compile Include="bstyle\logic\nodes\defines.vb" />
     <Compile Include="bstyle\logic\nodes\heap_declaration.vb" />

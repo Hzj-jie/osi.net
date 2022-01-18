@@ -9,7 +9,7 @@ Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
         Inherits scope(Of scope)
 
-        Private ReadOnly d As defines_t
+        Private ReadOnly d As define_t
         Private ReadOnly ta As New type_alias_t()
         Private ReadOnly s As New struct_t()
         Private ReadOnly v As New variable_t()
@@ -27,7 +27,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Sub New()
             Me.New(Nothing)
-            d = New defines_t()
+            d = New define_t()
             f = New function_t()
             fc = New call_hierarchy_t()
         End Sub

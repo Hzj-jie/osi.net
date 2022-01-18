@@ -45,12 +45,11 @@ Namespace logic
         Public Shared Function name_of(ByVal array As String, ByVal index As String) As String
             assert(Not array.null_or_whitespace())
             assert(Not index.null_or_whitespace())
-            Return strcat(array.Trim(), character.left_mid_bracket, index.Trim(), character.right_mid_bracket)
+            Return strcat(array, character.left_mid_bracket, index, character.right_mid_bracket)
         End Function
 
         Public Shared Function is_heap_name(ByVal name As String) As Boolean
             assert(Not name.null_or_whitespace())
-            name = name.Trim()
             Dim index As Int32 = name.IndexOf(character.left_mid_bracket)
             If index <> npos Then
                 assert(name.EndsWith(character.right_mid_bracket))
@@ -64,7 +63,6 @@ Namespace logic
                                     ByVal v As vector(Of String),
                                     ByRef o As variable) As Boolean
             assert(Not name.null_or_whitespace())
-            name = name.Trim()
             Dim index_start As Int32 = name.IndexOf(character.left_mid_bracket)
             If index_start = npos Then
                 If name.IndexOf(character.right_mid_bracket) <> npos Then

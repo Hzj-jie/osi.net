@@ -86,6 +86,8 @@ Partial Public NotInheritable Class b2style
                                     scope.variable_proxy.define(), "value-definition")).
                            with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
                                     scope.variable_proxy.define(), "value-declaration")).
+                           with(Of ifndef_wrapped)().
+                           with(define.instance).
                            with_of_only_childs(
                                "base-root-type",
                                "root-type",
@@ -124,9 +126,6 @@ Partial Public NotInheritable Class b2style
                                "start-bracket",
                                "end-bracket",
                                "assignment",
-                               "kw-ifndef",
-                               "kw-define",
-                               "kw-endif",
                                "kw-typedef",
                                "kw-struct",
                                "kw-delegate").
@@ -156,8 +155,6 @@ Partial Public NotInheritable Class b2style
                                "value-list",
                                "value-with-comma",
                                "include",
-                               "ifndef-wrapped",
-                               "define",
                                "typedef-type-name",
                                "typedef-type-str",
                                "typedef",

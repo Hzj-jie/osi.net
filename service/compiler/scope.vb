@@ -41,6 +41,7 @@ Partial Public Class scope(Of T As scope(Of T))
     End Function
 
     Public Shared Function current() As T
+        assert(Not in_thread Is Nothing)
         Return in_thread
     End Function
 

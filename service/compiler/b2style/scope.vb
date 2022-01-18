@@ -14,6 +14,7 @@ Partial Public NotInheritable Class b2style
         Private f As String
         Private ReadOnly t As New template_t()
         Private ReadOnly v As New variable_t()
+        Private ReadOnly d As define_t
 
         <inject_constructor>
         Public Sub New(ByVal parent As scope)
@@ -23,6 +24,7 @@ Partial Public NotInheritable Class b2style
         Public Sub New()
             Me.New(Nothing)
             fc = New call_hierarchy_t()
+            d = New define_t()
         End Sub
 
         Public Shared Function wrap() As scope_wrapper
