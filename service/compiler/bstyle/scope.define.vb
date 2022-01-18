@@ -8,7 +8,7 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
-        Public NotInheritable Class defines_t
+        Public NotInheritable Class define_t
             Private ReadOnly d As New unordered_set(Of String)()
 
             Public Sub define(ByVal s As String)
@@ -20,7 +20,7 @@ Partial Public NotInheritable Class bstyle
             End Function
         End Class
 
-        Public Function defines() As defines_t
+        Public Function defines() As define_t
             If is_root() Then
                 assert(Not d Is Nothing)
                 Return d

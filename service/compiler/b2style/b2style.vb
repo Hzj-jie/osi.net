@@ -81,6 +81,8 @@ Partial Public NotInheritable Class b2style
                            with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).
                            with(code_gen.of_children_word_str(Of typed_node_writer)("type-param")).
                            with(code_gen.of_children_word_str(Of typed_node_writer)("reference")).
+                           with(Of ifndef_wrapped)().
+                           with(define.instance).
                            with_of_only_childs(
                                "base-root-type",
                                "root-type",
@@ -119,9 +121,6 @@ Partial Public NotInheritable Class b2style
                                "start-bracket",
                                "end-bracket",
                                "assignment",
-                               "kw-ifndef",
-                               "kw-define",
-                               "kw-endif",
                                "kw-typedef",
                                "kw-struct").
                            with_of_all_childrens(
@@ -152,8 +151,6 @@ Partial Public NotInheritable Class b2style
                                "value-list",
                                "value-with-comma",
                                "include",
-                               "ifndef-wrapped",
-                               "define",
                                "typedef-type-name",
                                "typedef-type-str",
                                "typedef",
