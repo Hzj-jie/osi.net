@@ -27,7 +27,6 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            ' TODO: Implementation
             Dim ps As vector(Of String) = Nothing
             If n.child_count() = 5 Then
                 ps = New vector(Of String)()

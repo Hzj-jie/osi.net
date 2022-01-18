@@ -122,17 +122,18 @@ Public NotInheritable Class code_gen
                                                End Function)
     End Function
 
-    Public Shared Function of_all_children_with_wrapper(Of T As IDisposable, WRITER As New) _
-                                                       (ByVal w As Func(Of typed_node, T),
-                                                        ByVal name As String) As Action(Of code_gens(Of WRITER))
+    Public Shared Function of_all_children_with_precondition(Of WRITER As New) _
+                                                            (ByVal w As Func(Of typed_node, Boolean),
+                                                             ByVal name As String) As Action(Of code_gens(Of WRITER))
         assert(Not w Is Nothing)
         Return code_gen_delegate(Of WRITER).of(name,
                                                Function(ByVal this As code_gens(Of WRITER),
                                                         ByVal n As typed_node,
                                                         ByVal o As WRITER) As Boolean
-                                                   Using w(n)
-                                                       Return this.of_all_children(n).build(o)
-                                                   End Using
+                                                   If Not w(n) Then
+                                                       Return False
+                                                   End If
+                                                   Return this.of_all_children(n).build(o)
                                                End Function)
     End Function
 

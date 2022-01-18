@@ -82,6 +82,10 @@ Partial Public NotInheritable Class b2style
                            with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).
                            with(code_gen.of_children_word_str(Of typed_node_writer)("type-param")).
                            with(code_gen.of_children_word_str(Of typed_node_writer)("reference")).
+                           with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
+                                    AddressOf scope.current().variables().define, "value-definition")).
+                           with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
+                                    AddressOf scope.current().variables().define, "value-declaration")).
                            with_of_only_childs(
                                "base-root-type",
                                "root-type",
@@ -134,8 +138,6 @@ Partial Public NotInheritable Class b2style
                                "sentence",
                                "base-sentence-with-semi-colon",
                                "b2style-sentence-with-semi-colon",
-                               "value-definition",
-                               "value-declaration",
                                "heap-declaration",
                                "value-clause",
                                "heap-name",

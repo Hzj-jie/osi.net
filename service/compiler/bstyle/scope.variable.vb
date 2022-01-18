@@ -119,7 +119,9 @@ Partial Public NotInheritable Class bstyle
                 Return True
             End Function
 
-            Public Function try_resolve(ByVal name As String, ByRef type As String) As Boolean
+            Public Function try_resolve(ByVal name As String,
+                                        ByRef type As String,
+                                        Optional ByVal is_delegate As ref(Of Boolean) = Nothing) As Boolean
                 ' logic_name.of_function_call requires type of the parameter to set function name.
                 If variable.is_heap_name(name) Then
                     name = heap_name_of(name.Substring(0, name.IndexOf(character.left_mid_bracket)))
@@ -127,16 +129,22 @@ Partial Public NotInheritable Class bstyle
 
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    If s.v.resolve(name, type) Then
-                        Return True
+                    If Not s.v.resolve(name, type) Then
+                        s = s.parent
+                        Continue While
                     End If
-                    s = s.parent
+                    If Not is_delegate Is Nothing Then
+                        is_delegate.set(s.delegates().is_defined(type)
+                    End If
+                    Return True
                 End While
                 Return False
             End Function
 
-            Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-                If try_resolve(name, type) Then
+            Public Function resolve(ByVal name As String,
+                                    ByRef type As String,
+                                    Optional ByVal is_delegate As ref(Of Boolean) = Nothing) As Boolean
+                If try_resolve(name, type, is_delegate) Then
                     Return True
                 End If
                 raise_error(error_type.user, "Variable ", name, " has not been defined.")
