@@ -69,7 +69,7 @@ Public NotInheritable Class bstyle
                            with(Of condition)().
                            with(Of for_loop)().
                            with(Of ufloat)().
-                           with(Of [function])().
+                           with(Of _function)().
                            with(Of function_call)().
                            with(Of ignore_result_function_call)().
                            with(Of [integer])().
@@ -78,7 +78,7 @@ Public NotInheritable Class bstyle
                            with(Of multi_sentence_paragraph)().
                            with(Of param)().
                            with(Of return_clause)().
-                           with(Of [string])().
+                           with(Of _string)().
                            with(Of value)().
                            with(Of value_clause)().
                            with(value_declaration.instance).

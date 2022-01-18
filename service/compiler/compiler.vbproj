@@ -71,6 +71,7 @@
     <Compile Include="b2style\scope.current_function.vb" />
     <Compile Include="b2style\scope.namespace.vb" />
     <Compile Include="b2style\scope.template.vb" />
+    <Compile Include="b2style\scope.variable.vb" />
     <Compile Include="b2style\scope.vb" />
     <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
