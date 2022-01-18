@@ -130,6 +130,10 @@ Public Class const_array(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function as_array() As T()
+        If empty() Then
+            Dim e(-1) As T
+            Return e
+        End If
         Dim r(CInt(size() - uint32_1)) As T
         arrays.copy(r, v)
         Return r

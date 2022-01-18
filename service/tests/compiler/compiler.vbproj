@@ -115,6 +115,7 @@
     <Content Include="b2style\codegen\errors\reinterpret_cast_without_type_id.txt" />
     <Content Include="b2style\codegen\errors\undefined-value-clause.txt" />
     <Content Include="b2style\codegen\function_ptr.txt" />
+    <Content Include="bstyle\codegen\delegate.txt" />
     <Content Include="bstyle\codegen\func_name_with_dot.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />
     <Content Include="b2style\codegen\lots-of-semi-colons.txt" />

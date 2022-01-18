@@ -151,6 +151,17 @@ Public NotInheritable Class bstyle_test
         assertion.equal(Convert.ToInt32(io.output()(1)), 2)
     End Sub
 
+    <test>
+    Private Shared Sub delegate_()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(bstyle.with_functions(New interrupts(+io)).
+                                 parse(_bstyle_test_data.[delegate].as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "fg")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
