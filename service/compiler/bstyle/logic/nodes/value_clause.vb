@@ -41,6 +41,7 @@ Partial Public NotInheritable Class bstyle
             If +is_delegate Then
                 If scope.current().functions().return_type_of(value.children_word_str(), Nothing) Then
                     ' Use address-of to copy a function address to the target.
+                    scope.current().call_hierarchy().to(value.children_word_str())
                     Return builders.of_address_of(name.children_word_str(), value.children_word_str()).to(o)
                 End If
                 Return builders.of_copy(name.children_word_str(), value.children_word_str()).to(o)

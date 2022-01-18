@@ -24,21 +24,22 @@ Partial Public NotInheritable Class b2style
             Me.l = b
         End Sub
 
-        Private Shared Function full_name(ByVal i As String) As String
+        Public Shared Function [of](ByVal i As String) As String
             Return with_namespace(scope.current().current_namespace().name(), i)
         End Function
 
         Public NotInheritable Class bstyle_format
             Public Shared Function [of](ByVal i As String) As String
                 assert(Not i.null_or_whitespace())
-                Return streams.of(full_name(i).Split("."c)).
+                Return streams.of(_namespace.of(i).Split("."c)).
                            map(Function(ByVal x As String) As String
                                    assert(Not x Is Nothing)
                                    If Not x.Contains(namespace_separator) Then
                                        Return x
                                    End If
-                                   Return full_name(x).Replace(namespace_separator, namespace_replacer).
-                                                       Substring(namespace_replacer.Length())
+                                   Return _namespace.of(x).
+                                                     Replace(namespace_separator, namespace_replacer).
+                                                     Substring(namespace_replacer.Length())
                                End Function).
                            collect_by(stream(Of String).collectors.to_str(".")).
                            ToString()
@@ -74,7 +75,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(n.child_count() >= 4)
             Using New scope_wrapper()
-                scope.current().current_namespace().define(full_name(n.child(1).word().str()))
+                scope.current().current_namespace().define([of](n.child(1).word().str()))
                 For i As UInt32 = 3 To n.child_count() - uint32_2
                     If Not l.of(n.child(i)).build(o) Then
                         Return False
