@@ -40,13 +40,13 @@ Partial Public NotInheritable Class bstyle
             Public Function define(ByVal return_type As String,
                                    ByVal name As String,
                                    ByVal parameters() As builders.parameter_type) As Boolean
-                Return s.de.define(name,
-                                   New function_signature(
-                                           name,
-                                           s.type_alias()(return_type),
-                                           streams.of(parameters).
-                                                   map(AddressOf s.type_alias().canonical_of).
-                                                   to_array()))
+                assert(Not parameters Is Nothing)
+                assert(return_type.Equals(s.type_alias()(return_type)))
+                For Each parameter As builders.parameter_type In parameters
+                    assert(Not parameter Is Nothing)
+                    assert(parameter.type.Equals(s.type_alias()(parameter.type)))
+                Next
+                Return s.de.define(name, New function_signature(name, return_type, parameters))
             End Function
 
             Public Function retrieve(ByVal name As String, ByRef o As function_signature) As Boolean
