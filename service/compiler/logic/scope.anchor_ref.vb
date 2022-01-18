@@ -10,35 +10,22 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     Partial Public NotInheritable Class scope
         Public Class anchor_ref
-            ' TODO: name may not be really necessary, the user should have the name to search from anchors.
-            Public ReadOnly name As String
-            Public ReadOnly return_type As String
-            ' TODO: name in the builders.parameter is not used at all.
-            Public ReadOnly parameters As const_array(Of builders.parameter_type)
+            Inherits function_signature
 
             Public Sub New(ByVal name As String,
-                            ByVal return_type As String,
-                            ByVal parameters() As builders.parameter_type)
-                Me.New(name, return_type, const_array.of(parameters))
+                           ByVal return_type As String,
+                           ByVal parameters() As builders.parameter_type)
+                MyBase.New(name, return_type, parameters)
             End Sub
 
             Public Sub New(ByVal name As String,
                            ByVal return_type As String,
                            ByVal parameters As const_array(Of builders.parameter_type))
-                assert(Not name.null_or_whitespace())
-                assert(Not return_type.null_or_whitespace())
-                assert(Not parameters Is Nothing)
-                Me.name = name
-                Me.return_type = return_type
-                Me.parameters = parameters
+                MyBase.New(name, return_type, parameters)
             End Sub
 
             Public Function with_begin(ByVal begin As Func(Of data_ref)) As anchor
                 Return New anchor(name, lazier.of(begin), return_type, parameters)
-            End Function
-
-            Public Overrides Function ToString() As String
-                Return strcat(return_type, " ", name, "(", parameters, ")")
             End Function
         End Class
 

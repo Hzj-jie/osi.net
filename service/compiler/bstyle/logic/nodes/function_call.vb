@@ -4,6 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
@@ -70,13 +72,15 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(n.child_count() >= 3)
             Dim b As Func(Of Func(Of String, String, vector(Of String), Boolean),
+                             _do_val_ref(Of String, String, Boolean),
                              Func(Of String, vector(Of String), Boolean)) =
-                Function(ByVal builder As Func(Of String, String, vector(Of String), Boolean)) _
+                Function(ByVal builder As Func(Of String, String, vector(Of String), Boolean),
+                         ByVal return_type_of As _do_val_ref(Of String, String, Boolean)) _
                         As Func(Of String, vector(Of String), Boolean)
                     assert(Not builder Is Nothing)
                     Return Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
                                Dim return_type As String = Nothing
-                               If Not scope.current().functions().return_type_of(name, return_type) Then
+                               If Not return_type_of(name, return_type) Then
                                    Return False
                                End If
                                If scope.current().structs().defined(return_type) Then
@@ -101,11 +105,32 @@ Partial Public NotInheritable Class bstyle
                                     ByVal result As String,
                                     ByVal parameters As vector(Of String)) As Boolean
                                Return builders.of_caller(name, result, parameters).to(o)
+                           End Function,
+                           Function(ByVal name As String, ByRef type As String) As Boolean
+                               Return scope.current().functions().return_type_of(name, type)
                            End Function),
                          b(Function(ByVal name As String,
                                     ByVal result As String,
                                     ByVal parameters As vector(Of String)) As Boolean
                                Return builders.of_caller_ref(name, result, parameters).to(o)
+                           End Function,
+                           Function(ByVal name As String, ByRef type As String) As Boolean
+                               Dim signature As New ref(Of function_signature)()
+                               Dim delegate_type As String = Nothing
+                               If Not scope.current().variables().resolve(name, delegate_type, signature) Then
+                                   Return False
+                               End If
+                               If Not signature Then
+                                   raise_error(error_type.user,
+                                               "Delegate type ",
+                                               delegate_type,
+                                               " for ",
+                                               name,
+                                               " is not defined.")
+                                   Return False
+                               End If
+                               type = signature.get().return_type
+                               Return True
                            End Function))
         End Function
     End Class

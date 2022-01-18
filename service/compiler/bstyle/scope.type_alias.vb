@@ -68,24 +68,29 @@ Partial Public NotInheritable Class bstyle
                 Return s.ta.define([alias], canonical)
             End Function
 
+            Public Function canonical_of(ByVal [alias] As String) As String
+                Dim s As scope = Me.s
+                While Not s Is Nothing
+                    [alias] = s.ta([alias])
+                    s = s.parent
+                End While
+                Return [alias]
+            End Function
+
             Default Public ReadOnly Property _D(ByVal [alias] As String) As String
                 Get
-                    Dim s As scope = Me.s
-                    While Not s Is Nothing
-                        [alias] = s.ta([alias])
-                        s = s.parent
-                    End While
-                    Return [alias]
+                    Return canonical_of([alias])
                 End Get
             End Property
 
+            Public Function canonical_of(ByVal p As builders.parameter_type) As builders.parameter_type
+                assert(Not p Is Nothing)
+                Return p.map_type(AddressOf canonical_of)
+            End Function
+
             Public Function canonical_of(ByVal p As builders.parameter) As builders.parameter
                 assert(Not p Is Nothing)
-                Dim r As New builders.parameter(Me(p.type), p.name)
-                If p.ref Then
-                    Return r.to_ref()
-                End If
-                Return r
+                Return p.map_type(AddressOf canonical_of)
             End Function
         End Structure
 

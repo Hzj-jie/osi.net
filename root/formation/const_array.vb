@@ -136,11 +136,16 @@ Public Class const_array(Of T)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Widening Operator CType(ByVal this As const_array(Of T)) As T()
+    Public Shared Operator +(ByVal this As const_array(Of T)) As T()
         If this Is Nothing Then
             Return Nothing
         End If
         Return this.as_array()
+    End Operator
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Widening Operator CType(ByVal this As const_array(Of T)) As T()
+        Return +this
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

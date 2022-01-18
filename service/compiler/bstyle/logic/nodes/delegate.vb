@@ -33,7 +33,9 @@ Partial Public NotInheritable Class bstyle
             Else
                 ps = l.of_all_children(n.child(4)).dump()
             End If
-            Return scope.current().delegates().define(n.child(2).children_word_str()) AndAlso
+            Return scope.current().delegates().define(n.child(1).children_word_str(),
+                                                      n.child(2).children_word_str(),
+                                                      builders.parameter_type.from(ps)) AndAlso
                    builders.of_callee_ref(n.child(2).children_word_str(),
                                           n.child(1).children_word_str(),
                                           ps).to(o)

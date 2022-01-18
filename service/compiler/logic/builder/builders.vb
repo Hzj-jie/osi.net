@@ -17,11 +17,24 @@ Namespace logic
             Public ReadOnly type As String
             Public ReadOnly ref As Boolean
 
-            Public Sub New(ByVal type As String)
+            Private Shared Function is_ref_type(ByVal type As String) As Boolean
                 assert(Not type.null_or_whitespace())
                 ' TODO: Try to avoid allowing only "&" as parameter type.
                 ' assert(Not type.Equals(type_ref_suffix))
-                Me.ref = type.EndsWith(type_ref_suffix) AndAlso Not type.Equals(type_ref_suffix)
+                Return type.EndsWith(type_ref_suffix) AndAlso Not type.Equals(type_ref_suffix)
+            End Function
+
+            <copy_constructor>
+            Protected Sub New(ByVal type As String, ByVal ref As Boolean)
+                assert(Not type.null_or_whitespace())
+                assert(Not is_ref_type(type))
+                Me.type = type
+                Me.ref = ref
+            End Sub
+
+            Public Sub New(ByVal type As String)
+                assert(Not type.null_or_whitespace())
+                Me.ref = is_ref_type(type)
                 If Me.ref Then
                     Me.type = type.Remove(type.Length() - 1)
                 Else
@@ -36,21 +49,24 @@ Namespace logic
                 Return type
             End Function
 
-            Protected Shared Function of_ref(ByVal type As String) As parameter_type
-                assert(Not type.null_or_whitespace())
-                Return New parameter_type(type + type_ref_suffix)
+            Public Function map_type(ByVal f As Func(Of String, String)) As parameter_type
+                assert(Not f Is Nothing)
+                Return New parameter_type(f(type), ref)
             End Function
 
-            Public Shared Function from_logic_callee_ref_input(ByVal parameters() As String) As parameter_type()
-                If parameters Is Nothing Then
-                    Return Nothing
-                End If
+            Public Shared Function from(ByVal ParamArray parameters() As String) As parameter_type()
+                assert(Not parameters Is Nothing)
                 Return streams.of(parameters).
                                map(Function(ByVal p As String) As parameter_type
                                        assert(Not p Is Nothing)
                                        Return New parameter_type(p)
                                    End Function).
                                to_array()
+            End Function
+
+            Public Shared Function from(ByVal parameters As vector(Of String)) As parameter_type()
+                assert(Not parameters Is Nothing)
+                Return from(+parameters)
             End Function
 
             Public Overrides Function ToString() As String
@@ -69,28 +85,30 @@ Namespace logic
                 Me.name = name
             End Sub
 
-            Public Shared Shadows Function of_ref(ByVal type As String, ByVal name As String) As parameter
-                assert(Not type.null_or_whitespace())
-                Return New parameter(parameter_type.of_ref(type).logic_type(), name)
+            <copy_constructor>
+            Private Sub New(ByVal type As String, ByVal ref As Boolean, ByVal name As String)
+                MyBase.New(type, ref)
+                assert(Not name.null_or_whitespace())
+                Me.name = name
+            End Sub
+
+            Public Shadows Function map_type(ByVal f As Func(Of String, String)) As parameter
+                assert(Not f Is Nothing)
+                Return New parameter(f(type), ref, name)
             End Function
 
             Public Shared Function to_ref(ByVal p As parameter) As parameter
                 assert(Not p Is Nothing)
-                Return p.to_ref()
-            End Function
-
-            Public Function to_ref() As parameter
-                Return of_ref(type, name)
+                assert(Not p.ref)
+                Return New parameter(p.type, True, p.name)
             End Function
 
             Public Overrides Function ToString() As String
                 Return name + ": " + MyBase.ToString()
             End Function
 
-            Public Shared Function from_logic_callee_input(ByVal parameters() As pair(Of String, String)) As parameter()
-                If parameters Is Nothing Then
-                    Return Nothing
-                End If
+            Public Shared Shadows Function from(ByVal parameters() As pair(Of String, String)) As parameter()
+                assert(Not parameters Is Nothing)
                 Return streams.of(parameters).
                                map(Function(ByVal p As pair(Of String, String)) As parameter
                                        assert(Not p Is Nothing)

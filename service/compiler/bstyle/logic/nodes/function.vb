@@ -45,7 +45,7 @@ Partial Public NotInheritable Class bstyle
                                             End Function,
                                             fo) AndAlso
                        o.append(scope.current().call_hierarchy().filter(
-                                    logic_name.of_function(function_name, params),
+                                    logic_name.of_function(function_name, +params),
                                     AddressOf fo.dump))
             End Using
         End Function

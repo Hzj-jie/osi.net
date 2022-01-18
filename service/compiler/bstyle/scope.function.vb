@@ -23,6 +23,10 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End Function
 
+            Public Function is_defined(ByVal name As String) As Boolean
+                Return s.find(name, Nothing)
+            End Function
+
             Public Function return_type_of(ByVal name As String, ByRef type As String) As Boolean
                 If s.find(name, type) Then
                     Return True

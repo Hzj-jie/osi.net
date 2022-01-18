@@ -21,6 +21,7 @@ Namespace logic
             Me.name = name
         End Sub
 
+        ' TODO: Check the consistency of both signatures.
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             Dim t As variable = Nothing
             If Not variable.of(target, o, t) OrElse

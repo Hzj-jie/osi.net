@@ -36,10 +36,11 @@ Namespace logic
         Public NotInheritable Class anchor_t
             Private ReadOnly m As New unordered_map(Of String, anchor)()
 
-            Public Function define(ByVal name As String,
+            Public Function define(Of T As builders.parameter_type) _
+                                  (ByVal name As String,
                                    ByVal o As vector(Of String),
                                    ByVal return_type As String,
-                                   ByVal parameters() As builders.parameter_type) As Boolean
+                                   ByVal parameters() As T) As Boolean
                 assert(Not name.null_or_whitespace())
                 assert(Not o Is Nothing)
                 assert(Not return_type.null_or_whitespace())

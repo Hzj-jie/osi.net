@@ -22,16 +22,17 @@ Partial Public NotInheritable Class bstyle
                           n.char_end())
         End Function
 
-        Public Shared Function of_function(ByVal raw_name As String,
-                                           ByVal params As vector(Of builders.parameter)) As String
+        Public Shared Function of_function(Of T As builders.parameter_type) _
+                                          (ByVal raw_name As String,
+                                           ByVal ParamArray params() As T) As String
             assert(Not params Is Nothing)
             Return build(raw_name,
-                         params.stream().
-                                map(Function(ByVal i As builders.parameter) As String
-                                        assert(Not i Is Nothing)
-                                        Return i.type
-                                    End Function).
-                              collect(Of vector(Of String))())
+                         streams.of(params).
+                                 map(Function(ByVal i As T) As String
+                                         assert(Not i Is Nothing)
+                                         Return i.type
+                                     End Function).
+                                 collect(Of vector(Of String))())
         End Function
 
         Public Shared Function of_callee(ByVal raw_name As String,
@@ -39,7 +40,7 @@ Partial Public NotInheritable Class bstyle
                                          ByVal parameters As vector(Of builders.parameter),
                                          ByVal paragraph As Func(Of writer, Boolean),
                                          ByVal o As writer) As Boolean
-            Dim name As String = of_function(raw_name, parameters)
+            Dim name As String = of_function(raw_name, +parameters)
             If Not scope.current().functions().define(return_type, name) Then
                 Return False
             End If
@@ -81,9 +82,10 @@ Partial Public NotInheritable Class bstyle
             assert(Not types Is Nothing)
             Dim s As New StringBuilder(raw_name)
             Dim i As UInt32 = 0
+            Dim ta As scope.type_alias_proxy = scope.current().type_alias()
             While i < types.size()
                 assert(Not types(i).contains_any(space_chars))
-                s.Append("&").Append(scope.current().type_alias()(types(i)))
+                s.Append("&").Append(ta(types(i)))
                 i += uint32_1
             End While
             Return Convert.ToString(s)
