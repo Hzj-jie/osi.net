@@ -45,7 +45,8 @@ Partial Public NotInheritable Class b2style
 
         Private Sub New(ByVal n As typed_node, ByVal types As vector(Of String))
             assert(Not n Is Nothing)
-            assert(n.type_name.Equals("class"))
+            assert(n.type_name.Equals("template-body"))
+            n = n.child()
             assert(Not types.null_or_empty())
             Me._extended_type_name = New extended_type_name_t(template_name(n.child(1), types.size()))
             Me.type_refs.resize(types.size(), New ref(Of String)())
@@ -91,7 +92,7 @@ Partial Public NotInheritable Class b2style
             If v.size() > v.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
                             "Template ",
-                            n.child(4).child(1).children_word_str(),
+                            n.child(4).child().child(1).children_word_str(),
                             " has duplicated template type parameters: ",
                             v)
                 Return False
