@@ -41,10 +41,7 @@ heap-struct-function-call heap-struct-name start-bracket [value-list]? end-brack
 class-body [struct-body, function]
 class kw-class type-name start-paragraph [class-body]* end-paragraph semi-colon
 
-template-type-param-list [template-type-param-with-comma]* template-type-param
-template-type-param-with-comma template-type-param comma
-template-type-param paramtype
-template-type-name raw-type-name less-than template-type-param-list greater-than
+template-type-name raw-type-name less-than paramtypelist greater-than
 type-param-list [type-param-with-comma]* type-param
 type-param-with-comma type-param comma
 type-param raw-name
