@@ -43,17 +43,18 @@ Partial Public NotInheritable Class b2style
             End Function
         End Class
 
-        Private Sub New(ByVal n As typed_node, ByVal types As vector(Of String))
+        Private Sub New(ByVal n As typed_node, ByVal name_node As typed_node, ByVal types As vector(Of String))
             assert(Not n Is Nothing)
+            assert(Not name_node Is Nothing)
             assert(n.type_name.Equals("template-body"))
             n = n.child()
             assert(Not types.null_or_empty())
-            Me._extended_type_name = New extended_type_name_t(template_name(n.child(1), types.size()))
+            Me._extended_type_name = New extended_type_name_t(template_name(name_node, types.size()))
             Me.type_refs.resize(types.size(), New ref(Of String)())
             n.dfs(Sub(ByVal node As typed_node, ByVal stop_navigating_sub_nodes As Action)
                       assert(Not node Is Nothing)
                       assert(Not stop_navigating_sub_nodes Is Nothing)
-                      If Object.ReferenceEquals(n.child(1), node) Then
+                      If Object.ReferenceEquals(name_node, node) Then
                           assert(w.append(_extended_type_name))
                           stop_navigating_sub_nodes()
                           Return
@@ -64,7 +65,7 @@ Partial Public NotInheritable Class b2style
 
                       For i As UInt32 = 0 To types.size() - uint32_1
                           If node.input().Equals(types(i)) Then
-                              assert(w.append(Me.type_refs(i)))
+                              assert(w.append(type_refs(i)))
                               stop_navigating_sub_nodes()
                               Return
                           End If
@@ -88,16 +89,24 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(n.type_name.Equals("template"))
             assert(n.child_count() = 5)
+            Dim name_node As typed_node = n.child(4).child()
+            If name_node.type_name.Equals("class") Then
+                name_node = name_node.child(1)
+            ElseIf name_node.type_name.Equals("delegate-with-semi-colon") Then
+                name_node = name_node.child(0).child(2)
+            Else
+                assert(False)
+            End If
             Dim v As vector(Of String) = l.of_all_children(n.child(2)).dump()
             If v.size() > v.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
                             "Template ",
-                            n.child(4).child().child(1).children_word_str(),
+                            name_node.children_word_str(),
                             " has duplicated template type parameters: ",
                             v)
                 Return False
             End If
-            o = New template_template(n.child(4), v)
+            o = New template_template(n.child(4), name_node, v)
             Return True
         End Function
 
