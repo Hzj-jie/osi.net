@@ -43,7 +43,7 @@ class kw-class type-name start-paragraph [class-body]* end-paragraph semi-colon
 
 template-type-param-list [template-type-param-with-comma]* template-type-param
 template-type-param-with-comma template-type-param comma
-template-type-param type-name
+template-type-param paramtype
 template-type-name raw-type-name less-than template-type-param-list greater-than
 type-param-list [type-param-with-comma]* type-param
 type-param-with-comma type-param comma

@@ -25,14 +25,22 @@ Partial Public NotInheritable Class b2style
             assert(Not o Is Nothing)
             ' By default raw-type-name has namespace prefixed, so child().child() cannot be directly forwarded to
             ' raw-Type-name.
-            If n.child().child().type_name.Equals("template-type-name") Then
+            If n.child().child(0).child().type_name.Equals("template-type-name") Then
                 Dim extended_type As String = Nothing
                 If Not l.of(n.child().child()).dump(extended_type) Then
                     Return False
                 End If
-                Return o.append(extended_type)
+                If Not o.append(extended_type) Then
+                    Return False
+                End If
+                If n.child().child_count() = 1 Then
+                    Return True
+                End If
+                assert(n.child().child_count() = 2)
+                assert(n.child().child(1).type_name.Equals("reference"))
+                Return o.append(n.child().child(1).children_word_str())
             End If
-            Return o.append(n.child().child().children_word_str())
+            Return o.append(n.children_word_str())
         End Function
     End Class
 End Class

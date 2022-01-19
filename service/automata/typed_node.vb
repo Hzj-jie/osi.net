@@ -129,13 +129,32 @@ Partial Public NotInheritable Class typed_node
     End Function
 
     Public Function only_descendant(ByRef o As typed_node) As Boolean
-        If leaf() Then
-            o = Me
-            Return True
-        End If
-        If child_count() = 1 Then
-            Return child().only_descendant(o)
-        End If
-        Return False
+        Dim n As typed_node = Me
+        While True
+            If n.leaf() Then
+                o = n
+                Return True
+            End If
+            If n.child_count() > 1 Then
+                Return False
+            End If
+            n = n.child()
+        End While
+        Return assert(False)
+    End Function
+
+    Public Function descentdant_of(ByVal name As String) As Boolean
+        Dim n As typed_node = Me
+        While True
+            If n.root() Then
+                Return False
+            End If
+            n = n.parent
+            assert(Not n Is Nothing)
+            If n.type_name.Equals(name) Then
+                Return True
+            End If
+        End While
+        Return assert(False)
     End Function
 End Class

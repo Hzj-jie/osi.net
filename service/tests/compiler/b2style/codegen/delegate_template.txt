@@ -23,10 +23,8 @@ void main() {
   function<void, string> f2 = write;
   f2("abc");
 
-  /* TODO: Make it work.
   function<void, int&> f3 = self_inc;
   int i = 0;
   f3(i);
   b2style::std_out(i);
-  */
 }
