@@ -33,6 +33,9 @@ Partial Public NotInheritable Class b2style
             If n.descentdant_of("template-type-name") Then
                 ' Require reparsing to take care of the namespaces.
                 o.append(n.children_word_str())
+            ElseIf n.type_name.equals("name") AndAlso n.descentdant_of("value-declaration", "struct-body") Then
+                ' Ignore namespace prefix for variables within the structure.
+                o.append(_namespace.bstyle_format.in_global_namespace(n.children_word_str()))
             Else
                 o.append(_namespace.bstyle_format.of(n.children_word_str()))
             End If

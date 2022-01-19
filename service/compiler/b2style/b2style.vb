@@ -59,9 +59,10 @@ Partial Public NotInheritable Class b2style
                            with(code_gen.of_all_children_with_wrapper _
                                     (Of scope_wrapper, typed_node_writer) _
                                     (AddressOf scope.wrap, "multi-sentence-paragraph")).
-                           with(code_gen.of_all_children_with_wrapper _
-                                    (Of scope_wrapper, typed_node_writer) _
-                                    (AddressOf scope.wrap, "for-loop")).
+                           with(code_gen.of_all_children_with_wrapper(Of scope_wrapper, typed_node_writer) _
+                                                                     (AddressOf scope.wrap, "for-loop")).
+                           with(code_gen.of_all_children_with_wrapper(Of scope_wrapper, typed_node_writer) _
+                                                                     (AddressOf scope.wrap, "struct")).
                            with(Of _namespace)().
                            with(heap_struct_name.instance).
                            with(Of self_value_clause)().
@@ -72,7 +73,6 @@ Partial Public NotInheritable Class b2style
                            with(Of heap_struct_function_call)().
                            with(include_with_string.instance).
                            with(include_with_file.instance).
-                           with(Of struct)().
                            with(_class.instance).
                            with(template.instance).
                            with(template_type_name.instance).
@@ -166,7 +166,8 @@ Partial Public NotInheritable Class b2style
                                "reinterpret-cast",
                                "delegate",
                                "paramtypelist",
-                               "paramtype").
+                               "paramtype",
+                               "struct-body").
                            with_of_names(
                                "add",
                                "minus",

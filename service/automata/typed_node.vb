@@ -143,16 +143,21 @@ Partial Public NotInheritable Class typed_node
         Return assert(False)
     End Function
 
-    Public Function descentdant_of(ByVal name As String) As Boolean
+    Public Function descentdant_of(ByVal ParamArray names() As String) As Boolean
+        assert(Not names.null_or_empty())
         Dim n As typed_node = Me
+        Dim i As Int32 = 0
         While True
             If n.root() Then
                 Return False
             End If
             n = n.parent
             assert(Not n Is Nothing)
-            If n.type_name.Equals(name) Then
-                Return True
+            If n.type_name.Equals(names(i)) Then
+                i += 1
+                If i = names.Length() Then
+                    Return True
+                End If
             End If
         End While
         Return assert(False)
