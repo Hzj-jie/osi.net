@@ -83,9 +83,13 @@ Partial Public NotInheritable Class b2style
                            with(code_gen.of_children_word_str(Of typed_node_writer)("type-param")).
                            with(code_gen.of_children_word_str(Of typed_node_writer)("reference")).
                            with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
-                                    scope.variable_proxy.define(), "value-definition")).
+                                     "value-definition",
+                                     scope.variable_proxy.define(),
+                                     scope.call_hierarchy_t.from_value_clause())).
                            with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
                                     scope.variable_proxy.define(), "value-declaration")).
+                           with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
+                                    scope.call_hierarchy_t.from_value_clause(), "value-clause")).
                            with(Of ifndef_wrapped)().
                            with(define.instance).
                            with_of_only_childs(
@@ -138,7 +142,6 @@ Partial Public NotInheritable Class b2style
                                "base-sentence-with-semi-colon",
                                "b2style-sentence-with-semi-colon",
                                "heap-declaration",
-                               "value-clause",
                                "heap-name",
                                "return-clause",
                                "logic",

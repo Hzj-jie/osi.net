@@ -127,4 +127,15 @@ Partial Public NotInheritable Class typed_node
     Public Function char_end() As UInt32
         Return word(word_count() - uint32_1).end
     End Function
+
+    Public Function only_descendant(ByRef o As typed_node) As Boolean
+        If leaf() Then
+            o = Me
+            Return True
+        End If
+        If child_count() = 1 Then
+            Return child().only_descendant(o)
+        End If
+        Return False
+    End Function
 End Class
