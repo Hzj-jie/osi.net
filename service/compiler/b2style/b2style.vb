@@ -81,8 +81,6 @@ Partial Public NotInheritable Class b2style
                            with(Of _function)().
                            with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).
                            with(code_gen.of_children_word_str(Of typed_node_writer)("type-param")).
-                           with(code_gen.of_first_child(Of typed_node_writer)("template-type-param-with-comma")).
-                           with(Of template_type_param)().
                            with(code_gen.of_children_word_str(Of typed_node_writer)("reference")).
                            with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
                                      "value-definition",
@@ -94,6 +92,7 @@ Partial Public NotInheritable Class b2style
                                     scope.call_hierarchy_t.from_value_clause(), "value-clause")).
                            with(Of ifndef_wrapped)().
                            with(define.instance).
+                           with(Of paramtype_with_comma)().
                            with_of_only_childs(
                                "base-root-type",
                                "root-type",
@@ -167,7 +166,6 @@ Partial Public NotInheritable Class b2style
                                "reinterpret-cast",
                                "delegate",
                                "paramtypelist",
-                               "paramtype-with-comma",
                                "paramtype").
                            with_of_names(
                                "add",

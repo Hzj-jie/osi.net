@@ -9,6 +9,7 @@ Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.automata
+Imports osi.service.compiler.logic
 Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
@@ -30,7 +31,12 @@ Partial Public NotInheritable Class b2style
             Public Sub apply(ByVal types As vector(Of String))
                 assert(Not types Is Nothing)
                 assert(Me.types Is Nothing)
-                Me.types = types
+                Me.types = types.stream().
+                                 map(Function(ByVal type As String) As String
+                                         ' Remove referneces in the name.
+                                         Return New builders.parameter_type(type).type
+                                     End Function).
+                                 collect(Of vector(Of String))()
             End Sub
 
             Public Overrides Function ToString() As String
