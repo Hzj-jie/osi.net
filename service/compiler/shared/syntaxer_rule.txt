@@ -3,7 +3,7 @@ IGNORE_TYPES blank, single-line-comment, multi-line-comment
 ROOT_TYPES root-type
 
 function type-name name start-bracket [paramlist]? end-bracket multi-sentence-paragraph
-param type-name [reference]? name
+param paramtype name
 paramlist [param-with-comma]* param
 param-with-comma param comma
 

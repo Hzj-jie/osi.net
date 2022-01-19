@@ -704,6 +704,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.delegate_template.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
+        ' assertion.equal(io.output(), "2abc1")
         assertion.equal(io.output(), "2abc")
     End Sub
 

@@ -12,10 +12,21 @@ void write(string s) {
   b2style::std_out(s);
 }
 
+void self_inc(int& i) {
+  i++;
+}
+
 void main() {
   function<int, int> f = inc;
   b2style::std_out(f(1));
 
   function<void, string> f2 = write;
   f2("abc");
+
+  /* TODO: Make it work.
+  function<void, int&> f3 = self_inc;
+  int i = 0;
+  f3(i);
+  b2style::std_out(i);
+  */
 }
