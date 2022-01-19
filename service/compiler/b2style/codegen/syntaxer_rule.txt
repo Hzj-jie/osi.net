@@ -48,4 +48,6 @@ template-type-name raw-type-name less-than template-type-param-list greater-than
 type-param-list [type-param-with-comma]* type-param
 type-param-with-comma type-param comma
 type-param raw-name
-template kw-template less-than type-param-list greater-than class
+delegate-with-semi-colon delegate semi-colon
+template-body [class, delegate-with-semi-colon]
+template kw-template less-than type-param-list greater-than template-body
