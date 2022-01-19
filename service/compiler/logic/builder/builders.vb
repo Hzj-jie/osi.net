@@ -17,7 +17,7 @@ Namespace logic
             Public ReadOnly type As String
             Public ReadOnly ref As Boolean
 
-            Private Shared Function is_ref_type(ByVal type As String) As Boolean
+            Public Shared Function is_ref_type(ByVal type As String) As Boolean
                 assert(Not type.null_or_whitespace())
                 ' TODO: Try to avoid allowing only "&" as parameter type.
                 ' assert(Not type.Equals(type_ref_suffix))

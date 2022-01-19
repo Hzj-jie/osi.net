@@ -16,6 +16,17 @@ Partial Public NotInheritable Class bstyle
             Public Function define(ByVal [alias] As String, ByVal canonical As String) As Boolean
                 assert(Not [alias].null_or_whitespace())
                 assert(Not canonical.null_or_whitespace())
+                If builders.parameter_type.is_ref_type([alias]) Then
+                    raise_error(error_type.user, "Reference type ", [alias], " is not allowed to be aliased. ")
+                    Return False
+                End If
+                If builders.parameter_type.is_ref_type(canonical) Then
+                    raise_error(error_type.user,
+                                "Reference type ",
+                                canonical,
+                                " is not allowed to be used as a canonical type. ")
+                    Return False
+                End If
                 If [alias].Equals(canonical) Then
                     raise_error(error_type.user,
                                 "Alias ",
@@ -68,13 +79,18 @@ Partial Public NotInheritable Class bstyle
                 Return s.ta.define([alias], canonical)
             End Function
 
-            Public Function canonical_of(ByVal [alias] As String) As String
+            Private Function retrieve(ByVal [alias] As String) As String
+                assert(Not builders.parameter_type.is_ref_type([alias]))
                 Dim s As scope = Me.s
                 While Not s Is Nothing
                     [alias] = s.ta([alias])
                     s = s.parent
                 End While
                 Return [alias]
+            End Function
+
+            Public Function canonical_of(ByVal [alias] As String) As String
+                Return canonical_of(New builders.parameter_type([alias])).logic_type()
             End Function
 
             Default Public ReadOnly Property _D(ByVal [alias] As String) As String
@@ -85,12 +101,12 @@ Partial Public NotInheritable Class bstyle
 
             Public Function canonical_of(ByVal p As builders.parameter_type) As builders.parameter_type
                 assert(Not p Is Nothing)
-                Return p.map_type(AddressOf canonical_of)
+                Return p.map_type(AddressOf retrieve)
             End Function
 
             Public Function canonical_of(ByVal p As builders.parameter) As builders.parameter
                 assert(Not p Is Nothing)
-                Return p.map_type(AddressOf canonical_of)
+                Return p.map_type(AddressOf retrieve)
             End Function
         End Structure
 
