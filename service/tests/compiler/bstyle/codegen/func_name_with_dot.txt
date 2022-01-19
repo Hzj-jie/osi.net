@@ -1,0 +1,11 @@
+﻿
+#include <bstyle.h>
+
+void f.f(int x) {
+  bstyle__putchar(x);
+}
+
+void main() {
+  f.f(1);
+  f.f(2);
+}

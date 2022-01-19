@@ -1,0 +1,20 @@
+﻿
+#include <bstyle.h>
+
+delegate void func();
+
+void f() {
+  bstyle__putchar(102);
+}
+
+void g() {
+  bstyle__putchar(103);
+}
+
+void main() {
+  func x;
+  x = f;
+  x();
+  x = g;
+  g();
+}

@@ -32,12 +32,25 @@ Partial Public NotInheritable Class bstyle
             assert(Not struct_copy Is Nothing)
             assert(Not single_data_slot_copy Is Nothing)
             assert(Not o Is Nothing)
-            If Not l.of(value).build(o) Then
+            Dim type As String = Nothing
+            Dim delegate_definition As New ref(Of function_signature)()
+            If Not scope.current().variables().resolve(name.children_word_str(), type, delegate_definition) Then
+                ' Emmmm, scope.variable should log the error already.
                 Return False
             End If
-            Dim type As String = Nothing
-            If Not scope.current().variables().resolve(name.children_word_str(), type) Then
-                ' Emmmm, scope.variable should log the error already.
+            If delegate_definition Then
+                ' TODO: Avoid copying.
+                Dim target_function_name As String = logic_name.of_function(value.children_word_str(),
+                                                                            +delegate_definition.get().parameters)
+                If scope.current().functions().is_defined(target_function_name) Then
+                    ' Use address-of to copy a function address to the target.
+                    ' TODO: Need to use logic_name here.
+                    scope.current().call_hierarchy().to(target_function_name)
+                    Return builders.of_address_of(name.children_word_str(), target_function_name).to(o)
+                End If
+                Return builders.of_copy(name.children_word_str(), value.children_word_str()).to(o)
+            End If
+            If Not l.of(value).build(o) Then
                 Return False
             End If
             If scope.current().structs().defined(type) Then
@@ -54,13 +67,12 @@ Partial Public NotInheritable Class bstyle
                     End If
                     Return struct_copy((+r).names)
                 End Using
-            Else
-                Using r As read_scoped(Of scope.value_target_t.target).ref(Of String) =
-                        bstyle.value.read_target_single_data_slot()
-                    ' The type check of single-data-slot-target will be handled by logic.
-                    Return single_data_slot_copy(+r)
-                End Using
             End If
+            Using r As read_scoped(Of scope.value_target_t.target).ref(Of String) =
+                           bstyle.value.read_target_single_data_slot()
+                ' The type check of single-data-slot-target will be handled by logic.
+                Return single_data_slot_copy(+r)
+            End Using
         End Function
 
         Public Function build(ByVal name As typed_node, ByVal value As typed_node, ByVal o As writer) As Boolean

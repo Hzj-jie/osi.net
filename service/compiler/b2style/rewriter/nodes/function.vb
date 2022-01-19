@@ -9,7 +9,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class [function]
+    Public NotInheritable Class _function
         Implements code_gen(Of typed_node_writer)
 
         Private ReadOnly l As code_gens(Of typed_node_writer)
@@ -25,7 +25,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             Using New scope_wrapper()
-                Dim function_name As String = namespace_.bstyle_format.of(n.child(1).children_word_str())
+                Dim function_name As String = _namespace.bstyle_format.of(n.child(1).children_word_str())
                 Dim fo As New typed_node_writer()
                 scope.current().current_function().define(function_name)
                 Return l.of_all_children(n).build(fo) AndAlso

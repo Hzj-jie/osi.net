@@ -25,7 +25,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
-            Dim function_name As String = namespace_.bstyle_format.operator_function_name(l.of(n.child(1)).dump())
+            Dim function_name As String = _namespace.bstyle_format.operator_function_name(l.of(n.child(1)).dump())
             scope.current().call_hierarchy().to(function_name)
             o.append(function_name)
             o.append("(")

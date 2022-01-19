@@ -56,7 +56,7 @@ Partial Public NotInheritable Class b2style
                 Return False
             End If
             ' Ignore namespace prefix for variables within the structure.
-            o.append(namespace_.bstyle_format.in_global_namespace(child.child(0).child(1).children_word_str()))
+            o.append(_namespace.bstyle_format.in_global_namespace(child.child(0).child(1).children_word_str()))
             If Not l.of(child.child(1)).build(o) Then
                 Return False
             End If

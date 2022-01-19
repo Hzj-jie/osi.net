@@ -122,6 +122,40 @@ Public NotInheritable Class code_gen
                                                End Function)
     End Function
 
+    Public Shared Function of_all_children_with_precondition(Of WRITER As New) _
+                                                            (ByVal w As Func(Of typed_node, Boolean),
+                                                             ByVal name As String) As Action(Of code_gens(Of WRITER))
+        assert(Not w Is Nothing)
+        Return code_gen_delegate(Of WRITER).of(name,
+                                               Function(ByVal this As code_gens(Of WRITER),
+                                                        ByVal n As typed_node,
+                                                        ByVal o As WRITER) As Boolean
+                                                   If Not w(n) Then
+                                                       Return False
+                                                   End If
+                                                   Return this.of_all_children(n).build(o)
+                                               End Function)
+    End Function
+
+    Public Shared Function of_all_children_with_precondition(Of WRITER As New) _
+                                                            (ByVal name As String,
+                                                             ByVal ParamArray ws() As Func(Of typed_node, Boolean)) _
+                                                            As Action(Of code_gens(Of WRITER))
+        assert(Not ws.null_or_empty())
+        Return code_gen_delegate(Of WRITER).of(name,
+                                               Function(ByVal this As code_gens(Of WRITER),
+                                                        ByVal n As typed_node,
+                                                        ByVal o As WRITER) As Boolean
+                                                   For Each w As Func(Of typed_node, Boolean) In ws
+                                                       assert(Not w Is Nothing)
+                                                       If Not w(n) Then
+                                                           Return False
+                                                       End If
+                                                   Next
+                                                   Return this.of_all_children(n).build(o)
+                                               End Function)
+    End Function
+
     Public Shared Function of_all_children_with_wrapper(Of T As IDisposable, WRITER As New) _
                                                        (ByVal w As Func(Of T),
                                                         ByVal name As String) As Action(Of code_gens(Of WRITER))

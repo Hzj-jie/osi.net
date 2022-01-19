@@ -28,9 +28,14 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
             assert(Not o Is Nothing)
+            If scope.current().variables().resolve(name, Nothing) Then
+                ' This should be a delegate function call.
+                Return l.of_all_children(n).build(o)
+            End If
+
             If Not name.Contains(".") Then
-                o.append(namespace_.bstyle_format.of(name))
-                scope.current().call_hierarchy().to(namespace_.bstyle_format.of(name))
+                o.append(_namespace.bstyle_format.of(name))
+                scope.current().call_hierarchy().to(_namespace.bstyle_format.of(name))
                 For i As UInt32 = 1 To n.child_count() - uint32_1
                     If Not l.of(n.child(i)).build(o) Then
                         Return False
@@ -42,11 +47,11 @@ Partial Public NotInheritable Class b2style
             Dim dot_pos As Int32 = name.LastIndexOf(".")
             ' dot is not allowed to be the first or last character.
             assert(dot_pos > 0 AndAlso dot_pos < name.Length() - 1)
-            Dim function_name As String = namespace_.bstyle_format.in_global_namespace(name.Substring(dot_pos + 1))
+            Dim function_name As String = _namespace.bstyle_format.in_global_namespace(name.Substring(dot_pos + 1))
             scope.current().call_hierarchy().to(function_name)
             o.append(function_name)
             o.append("(")
-            o.append(namespace_.bstyle_format.of(name.Substring(0, dot_pos)))
+            o.append(_namespace.bstyle_format.of(name.Substring(0, dot_pos)))
             If n.child_count() = 4 Then
                 o.append(", ")
                 If Not l.of(n.child(2)).build(o) Then

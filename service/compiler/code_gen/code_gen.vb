@@ -17,7 +17,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
     Private ReadOnly m As New unordered_map(Of String, code_gen(Of WRITER))()
 
     Private Shared Function code_gen_name(Of T As code_gen(Of WRITER))() As String
-        Return GetType(T).Name().Replace("_"c, "-"c)
+        Return GetType(T).Name().TrimStart("_"c).Replace("_"c, "-"c)
     End Function
 
     Public Sub register(ByVal s As String, ByVal b As code_gen(Of WRITER))
@@ -77,9 +77,13 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             Return b.build(n, o)
         End Function
 
+        Public Function build() As Boolean
+            Return build(Nothing)
+        End Function
+
         Public Function dump(ByRef o As String) As Boolean
             Dim w As New WRITER()
-            If Not b.build(n, w) Then
+            If Not build(w) Then
                 Return False
             End If
             o = w.ToString()

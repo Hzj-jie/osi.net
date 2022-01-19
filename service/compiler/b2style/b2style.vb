@@ -53,6 +53,7 @@ Partial Public NotInheritable Class b2style
     Public NotInheritable Class rewriter_gens_t
         Inherits __do(Of vector(Of Action(Of code_gens(Of typed_node_writer))))
 
+        ' TODO: May provide default behavior in rewrite-rule.
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of typed_node_writer)))
             Return New typed_node_writer_code_gens_registrar().
                            with(code_gen.of_all_children_with_wrapper _
@@ -61,7 +62,7 @@ Partial Public NotInheritable Class b2style
                            with(code_gen.of_all_children_with_wrapper _
                                     (Of scope_wrapper, typed_node_writer) _
                                     (AddressOf scope.wrap, "for-loop")).
-                           with(Of namespace_)().
+                           with(Of _namespace)().
                            with(heap_struct_name.instance).
                            with(Of self_value_clause)().
                            with(Of binary_operation_value)().
@@ -72,15 +73,23 @@ Partial Public NotInheritable Class b2style
                            with(include_with_string.instance).
                            with(include_with_file.instance).
                            with(Of struct)().
-                           with([class].instance).
+                           with(_class.instance).
                            with(template.instance).
                            with(Of template_type_name)().
                            with(Of name)().
                            with(name.of("raw-type-name")).
-                           with(Of [function])().
+                           with(Of _function)().
                            with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).
                            with(code_gen.of_children_word_str(Of typed_node_writer)("type-param")).
                            with(code_gen.of_children_word_str(Of typed_node_writer)("reference")).
+                           with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
+                                     "value-definition",
+                                     scope.variable_proxy.define(),
+                                     scope.call_hierarchy_t.from_value_clause())).
+                           with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
+                                    scope.variable_proxy.define(), "value-declaration")).
+                           with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
+                                    scope.call_hierarchy_t.from_value_clause(), "value-clause")).
                            with(Of ifndef_wrapped)().
                            with(define.instance).
                            with_of_only_childs(
@@ -122,7 +131,8 @@ Partial Public NotInheritable Class b2style
                                "end-bracket",
                                "assignment",
                                "kw-typedef",
-                               "kw-struct").
+                               "kw-struct",
+                               "kw-delegate").
                            with_of_all_childrens(
                                "root-type-with-semi-colon",
                                "paramlist",
@@ -131,10 +141,7 @@ Partial Public NotInheritable Class b2style
                                "sentence",
                                "base-sentence-with-semi-colon",
                                "b2style-sentence-with-semi-colon",
-                               "value-definition",
-                               "value-declaration",
                                "heap-declaration",
-                               "value-clause",
                                "heap-name",
                                "return-clause",
                                "logic",
@@ -155,7 +162,11 @@ Partial Public NotInheritable Class b2style
                                "typedef-type-str",
                                "typedef",
                                "type-param-list",
-                               "reinterpret-cast").
+                               "reinterpret-cast",
+                               "delegate",
+                               "paramtypelist",
+                               "paramtype-with-comma",
+                               "paramtype").
                            with_of_names(
                                "add",
                                "minus",

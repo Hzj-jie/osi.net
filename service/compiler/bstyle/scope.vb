@@ -18,6 +18,7 @@ Partial Public NotInheritable Class bstyle
         Private ReadOnly vt As New value_target_t()
         Private ReadOnly ps As New params_t()
         Private cf As current_function_t
+        Private ReadOnly de As New delegate_t()
 
         <inject_constructor>
         Public Sub New(ByVal parent As scope)

@@ -73,12 +73,15 @@
     <Compile Include="b2style\scope.define.vb" />
     <Compile Include="b2style\scope.namespace.vb" />
     <Compile Include="b2style\scope.template.vb" />
+    <Compile Include="b2style\scope.variable.vb" />
     <Compile Include="b2style\scope.vb" />
     <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
+    <Compile Include="bstyle\logic\nodes\delegate.vb" />
     <Compile Include="bstyle\logic\nodes\reinterpret_cast.vb" />
     <Compile Include="bstyle\logic\nodes\typedef_type_name.vb" />
     <Compile Include="bstyle\logic\nodes\typedef_type_str.vb" />
+    <Compile Include="bstyle\scope.delegate.vb" />
     <Compile Include="bstyle\scope.params.vb" />
     <Compile Include="bstyle\scope.value_target.vb" />
     <Compile Include="code_gen\code_gen.default.vb" />
@@ -90,7 +93,7 @@
     <Compile Include="bstyle\logic\nodes\heap_name.vb" />
     <Compile Include="bstyle\logic\nodes\includes.vb" />
     <Compile Include="b2style\rewriter\nodes\name.vb" />
-    <Compile Include="b2style\rewriter\nodes\namespace_.vb" />
+    <Compile Include="b2style\rewriter\nodes\namespace.vb" />
     <Compile Include="b2style\rewriter\nodes\post_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\pre_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\self_value_clause.vb" />
@@ -132,6 +135,7 @@
     <Compile Include="bstyle\single_data_slot_variable.vb" />
     <Compile Include="bstyle\struct_member.vb" />
     <Compile Include="code_gen\reparser.vb" />
+    <Compile Include="function_signature.vb" />
     <Compile Include="logic\address_of.vb" />
     <Compile Include="logic\anchor_caller.vb" />
     <Compile Include="logic\callee_ref.vb" />

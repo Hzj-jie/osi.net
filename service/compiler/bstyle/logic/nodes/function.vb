@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
@@ -12,7 +11,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class [function]
+    Public NotInheritable Class _function
         Implements code_gen(Of writer)
 
         Private Shared remove_unused_functions As argument(Of Boolean)
@@ -35,9 +34,10 @@ Partial Public NotInheritable Class bstyle
                         Return False
                     End If
                 End If
+                Dim function_name As String = n.child(1).children_word_str()
                 Dim params As vector(Of builders.parameter) = scope.current().params().unpack()
-                Return logic_name.of_callee(n.child(1).word().str(),
-                                            n.child(0).word().str(),
+                Return logic_name.of_callee(function_name,
+                                            n.child(0).children_word_str(),
                                             params,
                                             Function() As Boolean
                                                 Dim gi As UInt32 = CUInt(If(has_paramlist, 5, 4))
@@ -45,7 +45,7 @@ Partial Public NotInheritable Class bstyle
                                             End Function,
                                             fo) AndAlso
                        o.append(scope.current().call_hierarchy().filter(
-                                    logic_name.of_function(n.child(1).word().str(), params),
+                                    logic_name.of_function(function_name, +params),
                                     AddressOf fo.dump))
             End Using
         End Function

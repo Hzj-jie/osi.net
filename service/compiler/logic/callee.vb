@@ -33,7 +33,7 @@ Namespace logic
             assert(Not paragraph Is Nothing)
             Me.name = name
             Me.type = type
-            Me.parameters = builders.parameter.from_logic_callee_input(parameters)
+            Me.parameters = builders.parameter.from(parameters)
             Me.paragraph = paragraph
         End Sub
 
@@ -41,8 +41,7 @@ Namespace logic
             assert(Not o Is Nothing)
             Dim pos As UInt32 = o.size()
             o.emplace_back("")
-            If Not scope.current().anchors().define(
-                       name, o, type, direct_cast(Of builders.parameter_type())(parameters)) Then
+            If Not scope.current().anchors().define(name, o, type, parameters) Then
                 Return False
             End If
             ' No need to use scope_wrapper, as the pops are after the rest instruction and have no effect.

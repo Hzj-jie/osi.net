@@ -21,7 +21,7 @@ Namespace logic
             assert(Not String.IsNullOrEmpty(return_type))
             Me.name = name
             Me.return_type = return_type
-            Me.parameters = builders.parameter_type.from_logic_callee_ref_input(parameters)
+            Me.parameters = builders.parameter_type.from(parameters)
         End Sub
 
         Public Sub New(ByVal name As String,
