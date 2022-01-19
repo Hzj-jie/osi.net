@@ -40,9 +40,8 @@ Partial Public NotInheritable Class b2style
                     assert(Not n Is Nothing)
                     assert(n.child_count() = 4)
                     Dim name As String = template_type_name_name(n)
-                    Dim d As definition = Nothing
                     ' The definition should be searched already in resolve.
-                    assert(m.find(name, d))
+                    Dim d As definition = +m.find_opt(name)
                     assert(Not d Is Nothing)
                     Dim types As vector(Of String) = Nothing
                     If Not template_type_name_types(n, types) Then
@@ -68,33 +67,7 @@ Partial Public NotInheritable Class b2style
                                                              ByRef o As vector(Of String)) As Boolean
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
-                o.renew()
-                Dim v As vector(Of String) = o
-                Return streams.range(0, n.child(2).child_count()).
-                               map(Function(ByVal index As Int32) As typed_node
-                                       Return n.child(2).child(CUInt(index))
-                                   End Function).
-                               map(Function(ByVal tn As typed_node) As typed_node
-                                       If tn.type_name.Equals("template-type-param-with-comma") Then
-                                           Return tn.child(0)
-                                       End If
-                                       Return tn
-                                   End Function).
-                               map(Function(ByVal tn As typed_node) As Boolean
-                                       assert(tn.type_name.Equals("template-type-param"))
-                                       tn = tn.child().child()
-                                       If tn.type_name.Equals("raw-type-name") Then
-                                           v.emplace_back(tn.children_word_str())
-                                           Return True
-                                       End If
-                                       Dim r As String = Nothing
-                                       If Not scope.current().template().resolve(tn, r) Then
-                                           Return False
-                                       End If
-                                       v.emplace_back(r)
-                                       Return True
-                                   End Function).
-                               aggregate(bool_stream.aggregators.all_true)
+                Return b2style.code_builder.current().code_gens.of_all_children(n.child(2)).dump(o)
             End Function
 
             Public Function define(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
@@ -129,7 +102,7 @@ Partial Public NotInheritable Class b2style
                 If Not template_type_name_types(n, types) Then
                     Return False
                 End If
-                extended_class_name = d.template.extended_class_name(types)
+                extended_class_name = d.template.extended_type_name(types)
                 Return True
             End Function
         End Class
