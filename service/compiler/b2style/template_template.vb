@@ -104,6 +104,7 @@ Partial Public NotInheritable Class b2style
                 assert(False)
             End If
             Dim v As vector(Of String) = l.of_all_children(n.child(2)).dump()
+            assert(Not v.null_or_empty())
             If v.size() > v.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
                             "Template ",
