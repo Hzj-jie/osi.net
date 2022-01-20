@@ -42,9 +42,10 @@ class-body [struct-body, function]
 class kw-class type-name start-paragraph [class-body]* end-paragraph semi-colon
 
 template-type-name raw-type-name less-than paramtypelist greater-than
-type-param-list [type-param-with-comma]* type-param
+type-param-list [type-param-with-comma]* [type-var-param, type-param]
 type-param-with-comma type-param comma
 type-param raw-name
+type-var-param raw-name ellipsis
 delegate-with-semi-colon delegate semi-colon
 template-body [class, delegate-with-semi-colon]
 template kw-template less-than type-param-list greater-than template-body

@@ -36,10 +36,11 @@ Namespace logic
                 assert(Not type.null_or_whitespace())
                 Me.ref = is_ref_type(type)
                 If Me.ref Then
-                    Me.type = type.Remove(type.Length() - 1)
+                    type = type.Remove(type.Length() - 1)
                 Else
-                    Me.type = type
+                    type = type
                 End If
+                Me.type = type.Trim()
             End Sub
 
             Public Function logic_type() As String

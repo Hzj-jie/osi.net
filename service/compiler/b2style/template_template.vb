@@ -18,6 +18,7 @@ Partial Public NotInheritable Class b2style
         Private ReadOnly w As New template_writer()
         Private ReadOnly _extended_type_name As extended_type_name_t
         Private ReadOnly type_refs As New vector(Of ref(Of String))()
+        Private ReadOnly type_var As Boolean
 
         Private NotInheritable Class extended_type_name_t
             Public ReadOnly name As String
@@ -57,6 +58,11 @@ Partial Public NotInheritable Class b2style
             assert(Not types.null_or_empty())
             Me._extended_type_name = New extended_type_name_t(template_name(name_node, types.size()))
             Me.type_refs.resize(types.size(), New ref(Of String)())
+            assert(Not Me.type_refs.empty())
+            Me.type_var = types.back().EndsWith("...")
+            If Me.type_var Then
+                types(types.size() - uint32_1) = types.back().TrimEnd("."c)
+            End If
             n.dfs(Sub(ByVal node As typed_node, ByVal stop_navigating_sub_nodes As Action)
                       assert(Not node Is Nothing)
                       assert(Not stop_navigating_sub_nodes Is Nothing)
@@ -85,7 +91,9 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
             assert(Not n Is Nothing)
-            Return strcat(n.children_word_str(), "__", type_count)
+            ' Return strcat(n.children_word_str(), "__", type_count)
+            ' TODO: This change will break template <T> func() and template <T, T2> func().
+            Return n.children_word_str()
         End Function
 
         ' @VisibleForTesting
@@ -104,6 +112,13 @@ Partial Public NotInheritable Class b2style
                 assert(False)
             End If
             Dim v As vector(Of String) = l.of_all_children(n.child(2)).dump()
+            If v.empty() Then
+                raise_error(error_type.user,
+                            "Template ",
+                            name_node.children_word_str(),
+                            " has not template type parameters.")
+                Return False
+            End If
             If v.size() > v.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
                             "Template ",
@@ -131,7 +146,7 @@ Partial Public NotInheritable Class b2style
 
         Public Function apply(ByVal types As vector(Of String), ByRef impl As String) As Boolean
             assert(Not types Is Nothing)
-            If types.size() <> Me.type_refs.size() Then
+            If Not type_var AndAlso types.size() <> Me.type_refs.size() Then
                 raise_error(error_type.user,
                             "Template ",
                             _extended_type_name.name,
@@ -142,11 +157,31 @@ Partial Public NotInheritable Class b2style
                             "].")
                 Return False
             End If
+            If type_var AndAlso types.size() < Me.type_refs.size() Then
+                raise_error(error_type.user,
+                            "Template ",
+                            _extended_type_name.name,
+                            " expectes at least ",
+                            Me.type_refs.size(),
+                            " template types, but received [",
+                            types,
+                            "].")
+                Return False
+            End If
             assert(types.size() > 0)
             _extended_type_name.apply(types)
-            For i As UInt32 = 0 To types.size() - uint32_1
-                Me.type_refs(i).set(types(i))
-            Next
+            If type_var Then
+                Dim i As UInt32 = 0
+                While i < Me.type_refs.size() - uint32_1
+                    Me.type_refs(i).set(types(i))
+                    i += uint32_1
+                End While
+                Me.type_refs(i).set((+types).strjoin(",", CInt(i)))
+            Else
+                For i As UInt32 = 0 To types.size() - uint32_1
+                    Me.type_refs(i).set(types(i))
+                Next
+            End If
             impl = w.dump()
             Return True
         End Function
