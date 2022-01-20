@@ -114,6 +114,7 @@
     <Content Include="b2style\codegen\errors\reinterpret_cast_unknown_type.txt" />
     <Content Include="b2style\codegen\errors\reinterpret_cast_unknown_variable.txt" />
     <Content Include="b2style\codegen\errors\reinterpret_cast_without_type_id.txt" />
+    <Content Include="b2style\codegen\errors\template_without_type_parameter.txt" />
     <Content Include="b2style\codegen\errors\undefined-value-clause.txt" />
     <Content Include="b2style\codegen\function_ptr.txt" />
     <Content Include="b2style\codegen\var_delegate_template.txt" />
