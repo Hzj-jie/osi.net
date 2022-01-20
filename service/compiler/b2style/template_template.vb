@@ -92,7 +92,8 @@ Partial Public NotInheritable Class b2style
         Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
             assert(Not n Is Nothing)
             ' Return strcat(n.children_word_str(), "__", type_count)
-            ' TODO: This change will break template <T> func() and template <T, T2> func().
+            ' TODO: This change will break templates with same name but different template type count
+            ' E.g. template <T> func() And template <T, T2> func().
             Return n.children_word_str()
         End Function
 
