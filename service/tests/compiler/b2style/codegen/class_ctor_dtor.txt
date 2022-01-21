@@ -1,0 +1,33 @@
+﻿
+#include <b2style.h>
+
+int dtors = 0;
+
+class C {
+  int x;
+
+  void ctor() {
+    this.ctor(100);
+  }
+
+  void ctor(int x) {
+    this.x = x;
+  }
+
+  void dtor() {
+    dtors++;
+  }
+};
+
+void main() {
+  {
+    C c{};
+    b2style::std_out(c.x);
+  }
+  b2style::std_out(dtors);
+  {
+    C c{200};
+	b2style::std_out(c.x);
+  }
+  b2style::std_out(dtors);
+}
