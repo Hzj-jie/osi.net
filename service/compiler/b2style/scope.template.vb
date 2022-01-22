@@ -30,11 +30,17 @@ Partial Public NotInheritable Class b2style
                 Inherits code_gens(Of typed_node_writer).reparser(Of b2style.parser)
 
                 Private ReadOnly m As unordered_map(Of String, definition)
+                Private ReadOnly types As New one_off(Of vector(Of String))()
 
                 Public Sub New(ByVal m As unordered_map(Of String, definition))
                     assert(Not m Is Nothing)
                     Me.m = m
                 End Sub
+
+                Public Function with_types(ByVal types As vector(Of String)) As template_body_reparser
+                    assert(Me.types.set(types))
+                    Return Me
+                End Function
 
                 Protected Overrides Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
                     assert(Not n Is Nothing)
@@ -43,10 +49,7 @@ Partial Public NotInheritable Class b2style
                     ' The definition should be searched already in resolve.
                     Dim d As definition = +m.find_opt(name)
                     assert(Not d Is Nothing)
-                    Dim types As vector(Of String) = Nothing
-                    If Not template_types(n, types) Then
-                        Return False
-                    End If
+                    Dim types As vector(Of String) = Me.types.get()
                     ' TODO: Should resolve type-aliases.
                     If Not d.injected_types.emplace(types).second() Then
                         ' Injected already.
@@ -63,17 +66,22 @@ Partial Public NotInheritable Class b2style
                 Return template_template.template_name(n.child(0), n.child(2).child_count())
             End Function
 
-            Private Shared Function template_types(ByVal n As typed_node, ByRef o As vector(Of String)) As Boolean
+            Private Shared Function template_types(ByVal l As code_gens(Of typed_node_writer),
+                                                   ByVal n As typed_node,
+                                                   ByRef o As vector(Of String)) As Boolean
+                assert(Not l Is Nothing)
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
-                Return b2style.code_builder.current().code_gens.of_all_children(n.child(2)).dump(o)
+                Return l.of_all_children(n.child(2)).dump(o)
             End Function
 
-            Public Function define(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
+            Public Function define(ByVal l As code_gens(Of typed_node_writer),
+                                   ByVal n As typed_node,
+                                   ByVal o As typed_node_writer) As Boolean
                 assert(Not n Is Nothing)
                 assert(Not o Is Nothing)
                 Dim t As template_template = Nothing
-                If Not template_template.of(n, t) Then
+                If Not template_template.of(l, n, t) Then
                     Return False
                 End If
                 assert(Not t Is Nothing)
@@ -86,7 +94,9 @@ Partial Public NotInheritable Class b2style
                 Return True
             End Function
 
-            Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
+            Public Function resolve(ByVal l As code_gens(Of typed_node_writer),
+                                    ByVal n As typed_node,
+                                    ByRef extended_type_name As String) As Boolean
                 assert(Not n Is Nothing)
                 Dim name As String = template_name(n)
                 Dim d As definition = Nothing
@@ -94,11 +104,11 @@ Partial Public NotInheritable Class b2style
                     Return False
                 End If
                 assert(Not d Is Nothing)
-                If Not tbr.build(n, d.injector) Then
+                Dim types As vector(Of String) = Nothing
+                If Not template_types(l, n, types) Then
                     Return False
                 End If
-                Dim types As vector(Of String) = Nothing
-                If Not template_types(n, types) Then
+                If Not tbr.with_types(types).build(n, d.injector) Then
                     Return False
                 End If
                 extended_type_name = d.template.extended_type_name(types)
@@ -114,14 +124,18 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
-            Public Function define(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
-                Return s.t.define(n, o)
+            Public Function define(ByVal l As code_gens(Of typed_node_writer),
+                                   ByVal n As typed_node,
+                                   ByVal o As typed_node_writer) As Boolean
+                Return s.t.define(l, n, o)
             End Function
 
-            Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
+            Public Function resolve(ByVal l As code_gens(Of typed_node_writer),
+                                    ByVal n As typed_node,
+                                    ByRef extended_type_name As String) As Boolean
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    If s.t.resolve(n, extended_type_name) Then
+                    If s.t.resolve(l, n, extended_type_name) Then
                         Return True
                     End If
                     s = s.parent

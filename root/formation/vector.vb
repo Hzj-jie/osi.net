@@ -184,16 +184,17 @@ Public NotInheritable Class vector(Of T)
         v.reserve(n)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub resize(ByVal n As UInt32)
         v.resize(n)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub resize(ByVal n As UInt32, ByVal d As T)
-        Dim os As UInt32 = size()
-        v.resize(n)
-        For i As UInt32 = os To n - uint32_1
-            v.set(i, copy_no_error(d))
-        Next
+        resize(n,
+               Function() As T
+                   Return copy_no_error(d)
+               End Function)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -259,6 +260,16 @@ Public NotInheritable Class vector(Of T)
                               Optional ByVal n As UInt32 = max_uint32) As Boolean
         Return push_back(vs, start, n, True)
     End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Sub resize(ByVal n As UInt32, ByVal d As Func(Of T))
+        assert(Not d Is Nothing)
+        Dim os As UInt32 = size()
+        v.resize(n)
+        For i As UInt32 = os To n - uint32_1
+            v.set(i, d())
+        Next
+    End Sub
 
     '.net implementations
     <MethodImpl(method_impl_options.aggressive_inlining)>

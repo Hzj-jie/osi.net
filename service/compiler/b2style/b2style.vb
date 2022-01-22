@@ -74,8 +74,8 @@ Partial Public NotInheritable Class b2style
                            with(include_with_string.instance).
                            with(include_with_file.instance).
                            with(_class.instance).
-                           with(template.instance).
-                           with(template_type_name.instance).
+                           with(Of template).
+                           with(Of template_type_name).
                            with(Of name)().
                            with(name.of("raw-type-name")).
                            with(Of _function)().
