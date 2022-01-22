@@ -25,7 +25,7 @@ Namespace logic
                                                 ByVal right As String,
                                                 ByVal o As vector(Of String)) As Boolean
             ' binary_math_operator does not require size info of either parameters or result.
-            Return New _add(result, left, right).export(o)
+            Return New _add(result, left, right).build(o)
         End Function
     End Class
 

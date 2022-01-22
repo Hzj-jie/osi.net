@@ -57,11 +57,11 @@ Partial Public NotInheritable Class b2style
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of typed_node_writer)))
             Return New typed_node_writer_code_gens_registrar().
                            with(code_gen.of_all_children_with_wrapper _
-                                    (Of scope_wrapper, typed_node_writer) _
+                                    (Of scope, typed_node_writer) _
                                     (AddressOf scope.wrap, "multi-sentence-paragraph")).
-                           with(code_gen.of_all_children_with_wrapper(Of scope_wrapper, typed_node_writer) _
+                           with(code_gen.of_all_children_with_wrapper(Of scope, typed_node_writer) _
                                                                      (AddressOf scope.wrap, "for-loop")).
-                           with(code_gen.of_all_children_with_wrapper(Of scope_wrapper, typed_node_writer) _
+                           with(code_gen.of_all_children_with_wrapper(Of scope, typed_node_writer) _
                                                                      (AddressOf scope.wrap, "struct")).
                            with(Of _namespace)().
                            with(heap_struct_name.instance).

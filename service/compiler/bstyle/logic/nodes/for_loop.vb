@@ -61,7 +61,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             Return builders.start_scope(o).of(
                        Function() As Boolean
-                           Using New scope_wrapper()
+                           Using scope.current().start_scope()
                                Dim ref As New ref(n)
                                If Not ref.first Is Nothing AndAlso Not l.of(ref.first).build(o) Then
                                    Return False

@@ -45,7 +45,7 @@ public static class Program {
       wl("        Private Function parse_" + ss[0] + "_" + (keys.Count - 1).ToString() + "(");
       wl("                ByVal v As vector(Of String),");
       wl("                ByRef p As UInt32,");
-      wl("                ByRef o As exportable) As Boolean");
+      wl("                ByRef o As instruction_gen) As Boolean");
       wl("            assert(Not v Is Nothing)");
       wl("            assert(v.size() > p)");
       wl("            If Not v(p).Equals(\"" + ss[0] + "\") Then");
@@ -115,14 +115,14 @@ public static class Program {
         }
       }
       wl("            )");
-      wl("            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)");
+      wl("            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)");
       wl("            Return True");
       wl("        End Function");
       wl();
     }
     wl("        Private Function parse(ByVal v As vector(Of String),");
     wl("                               ByRef p As UInt32,");
-    wl("                               ByRef o As exportable) As Boolean");
+    wl("                               ByRef o As instruction_gen) As Boolean");
     wl("            If v Is Nothing OrElse v.size() <= p Then");
     wl("                Return False");
     wl("            End If");

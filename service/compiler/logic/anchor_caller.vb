@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public MustInherit Class anchor_caller
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly cmd As command
         Private ReadOnly result As [optional](Of String)
@@ -88,7 +88,7 @@ Namespace logic
             Return True
         End Function
 
-        ' Forward return-value from scope_wrapper.
+        ' Forward return-value from scope
         Private Function forward_to_result(ByVal anchor As scope.anchor, ByVal o As vector(Of String)) As Boolean
             assert(Not anchor Is Nothing)
             assert(Not o Is Nothing)
@@ -119,10 +119,10 @@ Namespace logic
             Return _move.export(result_var, return_value_var, o)
         End Function
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is for return value.
-            Using New scope_wrapper(o)
+            Using scope.current().start_scope()
                 Dim anchor As scope.anchor = Nothing
                 If Not retrieve_anchor(o, anchor) Then
                     Return False

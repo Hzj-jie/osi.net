@@ -10,7 +10,7 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     ' while(var) { do() }
     Public NotInheritable Class _while_then
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly v As String
         Private ReadOnly p As paragraph
@@ -22,14 +22,14 @@ Namespace logic
             Me.p = p
         End Sub
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             Dim var As variable = Nothing
             If Not variable.of(v, o, var) Then
                 Return False
             End If
             Dim po As New vector(Of String)()
-            If Not p.export(po) Then
+            If Not p.build(po) Then
                 Return False
             End If
 

@@ -8,7 +8,7 @@ Imports osi.root.formation
 
 Namespace logic
     Public NotInheritable Class _start_scope
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly p As paragraph
 
@@ -17,8 +17,8 @@ Namespace logic
             Me.p = p
         End Sub
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
-            Return p.export(o)
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+            Return p.build(o)
         End Function
     End Class
 End Namespace

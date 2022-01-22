@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class _interrupt
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly function_name As String
         Private ReadOnly parameter As String
@@ -26,7 +26,7 @@ Namespace logic
             Me.result = result
         End Sub
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             Dim function_id As UInt32 = 0
             If Not scope.current().functions().of(function_name, function_id) Then
@@ -35,7 +35,7 @@ Namespace logic
             End If
 
             Dim cpc As New _copy_const(result, New data_block(function_id))
-            If Not cpc.export(o) Then
+            If Not cpc.build(o) Then
                 Return False
             End If
 
