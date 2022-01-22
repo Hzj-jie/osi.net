@@ -7,7 +7,6 @@ Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.interpreter.primitive
 Imports osi.service.compiler.logic
-Imports exportable = osi.service.compiler.logic.exportable
 
 Namespace logic
     Public Class import_executor_case
@@ -16,8 +15,8 @@ Namespace logic
         Private ReadOnly functions As interrupts
 
         Private Shared Function build_case(ByVal str As String,
-                                           Optional ByVal functions As interrupts = Nothing) As exportable()
-            Dim es As New vector(Of exportable)()
+                                           Optional ByVal functions As interrupts = Nothing) As instruction_gen()
+            Dim es As New vector(Of instruction_gen)()
             If functions Is Nothing Then
                 assertion.is_true(New importer().import(str, es))
             Else
@@ -26,20 +25,20 @@ Namespace logic
             Return +es
         End Function
 
-        Private Sub New(ByVal es As Func(Of exportable()), ByVal functions As interrupts)
+        Private Sub New(ByVal es As Func(Of instruction_gen()), ByVal functions As interrupts)
             MyBase.New(es)
             Me.functions = functions
         End Sub
 
         Protected Sub New(ByVal str As String, ByVal functions As interrupts)
-            Me.New(Function() As exportable()
+            Me.New(Function() As instruction_gen()
                        Return build_case(str, functions)
                    End Function,
                    functions)
         End Sub
 
         Protected Sub New(ByVal str As String)
-            Me.New(Function() As exportable()
+            Me.New(Function() As instruction_gen()
                        Return build_case(str)
                    End Function,
                    Nothing)

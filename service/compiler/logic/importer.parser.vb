@@ -78,7 +78,7 @@ Namespace logic
                     Return True
                 End If
 
-                Dim e As exportable = Nothing
+                Dim e As instruction_gen = Nothing
                 If Not parse(v, p, e) Then
                     Return False
                 End If

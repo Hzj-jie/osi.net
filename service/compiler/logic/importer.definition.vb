@@ -16,7 +16,7 @@ Namespace logic
         Private Function parse_start_scope_0(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("start_scope") Then
@@ -36,14 +36,14 @@ Namespace logic
             o = New _start_scope(
                 p1
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_type_1(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("type") Then
@@ -68,14 +68,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_append_slice_2(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("append_slice") Then
@@ -97,14 +97,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_cut_slice_3(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("cut_slice") Then
@@ -132,14 +132,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_cut_4(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("cut") Then
@@ -167,14 +167,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_cut_len_5(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("cut_len") Then
@@ -208,14 +208,14 @@ Namespace logic
                 p3,
                 p4
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_clear_6(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("clear") Then
@@ -231,14 +231,14 @@ Namespace logic
             o = New _clear(
                 p1
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_add_7(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("add") Then
@@ -266,14 +266,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_subtract_8(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("subtract") Then
@@ -301,14 +301,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_multiply_9(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("multiply") Then
@@ -336,14 +336,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_divide_10(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("divide") Then
@@ -377,14 +377,14 @@ Namespace logic
                 p3,
                 p4
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_extract_11(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("extract") Then
@@ -418,14 +418,14 @@ Namespace logic
                 p3,
                 p4
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_power_12(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("power") Then
@@ -453,14 +453,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_and_13(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("and") Then
@@ -488,14 +488,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_or_14(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("or") Then
@@ -523,14 +523,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_callee_15(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("callee") Then
@@ -572,14 +572,14 @@ Namespace logic
                 p3,
                 p4
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_caller_16(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("caller") Then
@@ -611,14 +611,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_caller_17(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("caller") Then
@@ -644,14 +644,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_callee_ref_18(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("callee_ref") Then
@@ -683,14 +683,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_caller_ref_19(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("caller_ref") Then
@@ -722,14 +722,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_caller_ref_20(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("caller_ref") Then
@@ -755,14 +755,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_address_of_21(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("address_of") Then
@@ -784,14 +784,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_less_22(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("less") Then
@@ -819,14 +819,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_more_23(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("more") Then
@@ -854,14 +854,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_equal_24(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("equal") Then
@@ -889,14 +889,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_less_or_equal_25(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("less_or_equal") Then
@@ -924,14 +924,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_more_or_equal_26(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("more_or_equal") Then
@@ -959,14 +959,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_if_27(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("if") Then
@@ -1011,14 +1011,14 @@ Namespace logic
                 p3,
                 p4
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_if_28(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("if") Then
@@ -1044,14 +1044,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_copy_29(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("copy") Then
@@ -1073,14 +1073,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_copy_const_30(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("copy_const") Then
@@ -1107,14 +1107,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_define_31(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("define") Then
@@ -1136,14 +1136,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_define_heap_32(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("define_heap") Then
@@ -1171,14 +1171,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_do_until_33(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("do_until") Then
@@ -1204,14 +1204,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_do_while_34(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("do_while") Then
@@ -1237,14 +1237,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_interrupt_35(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("interrupt") Then
@@ -1272,14 +1272,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_move_36(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("move") Then
@@ -1301,14 +1301,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_return_37(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("return") Then
@@ -1333,14 +1333,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_return_38(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("return") Then
@@ -1362,14 +1362,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_append_39(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("append") Then
@@ -1391,14 +1391,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_not_40(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("not") Then
@@ -1420,14 +1420,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_sizeof_41(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("sizeof") Then
@@ -1449,14 +1449,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_empty_42(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("empty") Then
@@ -1478,14 +1478,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_while_then_43(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("while_then") Then
@@ -1511,14 +1511,14 @@ Namespace logic
                 p1,
                 p2
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_stop_44(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("stop") Then
@@ -1528,14 +1528,14 @@ Namespace logic
             p += uint32_1
             o = New _stop(
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_float_add_45(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_add") Then
@@ -1563,14 +1563,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_float_subtract_46(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_subtract") Then
@@ -1598,14 +1598,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_float_multiply_47(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_multiply") Then
@@ -1633,14 +1633,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_float_divide_48(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_divide") Then
@@ -1668,14 +1668,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_float_extract_49(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_extract") Then
@@ -1703,14 +1703,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_float_power_50(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_power") Then
@@ -1738,14 +1738,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_float_less_51(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_less") Then
@@ -1773,14 +1773,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_float_more_52(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_more") Then
@@ -1808,14 +1808,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_float_equal_53(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_equal") Then
@@ -1843,14 +1843,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_float_less_or_equal_54(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_less_or_equal") Then
@@ -1878,14 +1878,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_float_more_or_equal_55(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_more_or_equal") Then
@@ -1913,14 +1913,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_left_shift_56(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("left_shift") Then
@@ -1948,14 +1948,14 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse_right_shift_57(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
-                ByRef o As exportable) As Boolean
+                ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("right_shift") Then
@@ -1983,13 +1983,13 @@ Namespace logic
                 p2,
                 p3
             )
-            o = exportable_source_wrapper.maybe_wrap(v, start, p, o)
+            o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
             Return True
         End Function
 
         Private Function parse(ByVal v As vector(Of String),
                                ByRef p As UInt32,
-                               ByRef o As exportable) As Boolean
+                               ByRef o As instruction_gen) As Boolean
             If v Is Nothing OrElse v.size() <= p Then
                 Return False
             End If

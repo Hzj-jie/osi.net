@@ -52,7 +52,7 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of String),
             MyBase.New(functions)
         End Sub
 
-        Protected Overrides Function import(ByVal e As interpreter.primitive.exportable, ByVal o As writer) As Boolean
+        Protected Overrides Function import(ByVal e As exportable, ByVal o As writer) As Boolean
             Return New importer(functions).import(o.dump(), e)
         End Function
     End Class

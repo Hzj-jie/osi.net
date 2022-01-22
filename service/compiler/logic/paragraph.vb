@@ -9,19 +9,19 @@ Imports osi.root.formation
 
 Namespace logic
     Public NotInheritable Class paragraph
-        Implements exportable
+        Implements instruction_gen
 
-        Private ReadOnly s As New vector(Of exportable)()
+        Private ReadOnly s As New vector(Of instruction_gen)()
 
         Public Sub New()
         End Sub
 
         ' @VisibleForTesting
-        Public Sub New(ByVal ParamArray statements() As exportable)
+        Public Sub New(ByVal ParamArray statements() As instruction_gen)
             s.emplace_back(statements)
         End Sub
 
-        Public Function push(ByVal e As exportable) As Boolean
+        Public Function push(ByVal e As instruction_gen) As Boolean
             If e Is Nothing Then
                 Return False
             Else
@@ -30,13 +30,13 @@ Namespace logic
             End If
         End Function
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             Using scope.current().start_scope()
                 Dim i As UInt32 = 0
                 While i < s.size()
                     assert(Not s(i) Is Nothing)
-                    If Not s(i).export(o) Then
+                    If Not s(i).build(o) Then
                         Return False
                     End If
                     i += uint32_1

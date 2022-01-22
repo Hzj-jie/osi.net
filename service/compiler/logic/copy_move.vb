@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public MustInherit Class copy_move
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly target As String
         Private ReadOnly source As String
@@ -39,7 +39,7 @@ Namespace logic
             Return False
         End Function
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             Dim t As variable = Nothing
             Dim s As variable = Nothing
             Return variable.of(target, o, t) AndAlso

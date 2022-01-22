@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public MustInherit Class anchor_caller
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly cmd As command
         Private ReadOnly result As [optional](Of String)
@@ -119,7 +119,7 @@ Namespace logic
             Return _move.export(result_var, return_value_var, o)
         End Function
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is for return value.
             Using scope.current().start_scope()

@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class _callee
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly name As String
         Private ReadOnly type As String
@@ -37,7 +37,7 @@ Namespace logic
             Me.paragraph = paragraph
         End Sub
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             Dim pos As UInt32 = o.size()
             o.emplace_back("")
@@ -60,7 +60,7 @@ Namespace logic
                         Return False
                     End If
                 Next
-                If Not paragraph.export(o) Then
+                If Not paragraph.build(o) Then
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.rest))
