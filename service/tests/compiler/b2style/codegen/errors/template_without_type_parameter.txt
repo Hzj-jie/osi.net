@@ -1,4 +1,4 @@
-﻿﻿
+﻿
 #include <b2style.h>
 
 template<>

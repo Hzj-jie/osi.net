@@ -9,8 +9,7 @@ Imports osi.root.formation
 Namespace logic
     ' Shared between callee, caller and return.
     Public NotInheritable Class return_value
-        Public Shared Function define(ByVal name As String,
-                                      ByVal type As String) As Boolean
+        Public Shared Function define(ByVal name As String, ByVal type As String) As Boolean
             Return scope.current().variables().define_stack(variable_name(name), type)
         End Function
 

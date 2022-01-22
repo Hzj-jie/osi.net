@@ -39,6 +39,10 @@ Namespace logic
             End If
             o.emplace_back(command_str(command.push))
             o.emplace_back(instruction_builder.str(command.alloc, "rel0", size))
+            scope.current().when_end_scope(Sub()
+                                               o.emplace_back(instruction_builder.str(command.dealloc, "rel0"))
+                                               o.emplace_back(command_str(command.pop))
+                                           End Sub)
             Return True
         End Function
     End Class

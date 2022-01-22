@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 
-' TODO: Merge scope_wrapper into scope.
+' TODO: Remove
 Public Class scope_wrapper(Of T As scope(Of T))
     Implements IDisposable
 
