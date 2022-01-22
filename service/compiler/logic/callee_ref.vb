@@ -8,7 +8,7 @@ Imports osi.root.formation
 
 Namespace logic
     Public NotInheritable Class _callee_ref
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly name As String
         Private ReadOnly return_type As String
@@ -30,7 +30,7 @@ Namespace logic
             Me.New(name, return_type, +parameters)
         End Sub
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             Return scope.current().anchor_refs().decl(name, return_type, parameters)
         End Function
     End Class

@@ -35,19 +35,19 @@ Namespace logic
             Me.New(New interrupts())
         End Sub
 
-        Public Function import(ByVal s As vector(Of String), ByVal o As vector(Of exportable)) As Boolean
+        Public Function import(ByVal s As vector(Of String), ByVal o As vector(Of instruction_gen)) As Boolean
             If s Is Nothing OrElse o Is Nothing Then
                 Return False
             End If
             Dim p As UInt32 = 0
-            Dim e As exportable = Nothing
+            Dim e As instruction_gen = Nothing
             While parse(s, p, e)
                 o.emplace_back(e)
             End While
             Return p = s.size()
         End Function
 
-        Public Function import(ByVal s As String, ByVal o As vector(Of exportable)) As Boolean
+        Public Function import(ByVal s As String, ByVal o As vector(Of instruction_gen)) As Boolean
             s.kick_between(comment_start, comment_end, recursive:=False)
             Dim v As vector(Of String) = Nothing
             Return strsplit(s, separators, surround_strs, v) AndAlso
@@ -56,28 +56,28 @@ Namespace logic
         End Function
 
         Private Function import_proxy(Of T)(ByVal i As T,
-                                            ByVal f As Func(Of T, vector(Of exportable), Boolean),
-                                            ByVal e As interpreter.primitive.exportable) As Boolean
+                                            ByVal f As Func(Of T, vector(Of instruction_gen), Boolean),
+                                            ByVal e As exportable) As Boolean
             assert(Not f Is Nothing)
             If e Is Nothing Then
                 Return False
             End If
 
-            Dim o As New vector(Of exportable)()
+            Dim o As New vector(Of instruction_gen)()
             Return f(i, o) AndAlso e.import(+o)
         End Function
 
-        Public Function import(ByVal s As vector(Of String), ByVal e As interpreter.primitive.exportable) As Boolean
+        Public Function import(ByVal s As vector(Of String), ByVal e As exportable) As Boolean
             Return import_proxy(s, AddressOf import, e)
         End Function
 
-        Public Function import(ByVal s As String, ByVal e As interpreter.primitive.exportable) As Boolean
+        Public Function import(ByVal s As String, ByVal e As exportable) As Boolean
             Return import_proxy(s, AddressOf import, e)
         End Function
 
         Public Function import(ByVal s As String, ByRef o As executor) As Boolean
             o = New simulator(functions)
-            If import(s, direct_cast(Of interpreter.primitive.exportable)(o)) Then
+            If import(s, direct_cast(Of exportable)(o)) Then
                 Return True
             End If
             o = Nothing

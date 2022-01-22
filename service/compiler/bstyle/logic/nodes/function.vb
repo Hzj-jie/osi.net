@@ -26,7 +26,7 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Using New scope_wrapper()
+            Using new_scope As scope = scope.current().start_scope()
                 Dim fo As New writer()
                 Dim has_paramlist As Boolean = strsame(n.child(3).type_name, "paramlist")
                 If has_paramlist Then
@@ -35,7 +35,7 @@ Partial Public NotInheritable Class bstyle
                     End If
                 End If
                 Dim function_name As String = n.child(1).children_word_str()
-                Dim params As vector(Of builders.parameter) = scope.current().params().unpack()
+                Dim params As vector(Of builders.parameter) = new_scope.params().unpack()
                 Return logic_name.of_callee(function_name,
                                             n.child(0).children_word_str(),
                                             params,
@@ -44,7 +44,7 @@ Partial Public NotInheritable Class bstyle
                                                 Return l.of(n.child(gi)).build(fo)
                                             End Function,
                                             fo) AndAlso
-                       o.append(scope.current().call_hierarchy().filter(
+                       o.append(new_scope.call_hierarchy().filter(
                                     logic_name.of_function(function_name, +params),
                                     AddressOf fo.dump))
             End Using

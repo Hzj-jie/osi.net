@@ -75,16 +75,6 @@ Namespace logic
                 End Sub
             End Class
 
-            Public Function heap() As unordered_set(Of String)
-                Return stack.stream().
-                             filter(Function(ByVal p As first_const_pair(Of String, ref)) As Boolean
-                                        assert(Not p Is Nothing)
-                                        Return p.second.ref_type
-                                    End Function).
-                             map(stack.first_selector).
-                             collect(Of unordered_set(Of String))()
-            End Function
-
             Public Function unique_name() As String
                 Return strcat("@scope_", GetHashCode(), "_unique_name_", size() + uint32_1)
             End Function
@@ -100,16 +90,15 @@ Namespace logic
             End Function
 
             Private Function define(ByVal name As String,
-                                ByVal type As String,
-                                ByVal f As Func(Of UInt32, String, ref)) As Boolean
+                                    ByVal type As String,
+                                    ByVal f As Func(Of UInt32, String, ref)) As Boolean
                 assert(Not name.null_or_whitespace())
                 assert(Not type.null_or_whitespace())
                 assert(Not f Is Nothing)
                 If find_duplication(name, type) Then
                     Return False
                 End If
-                stack.emplace(name, f(size() + uint32_1, type))
-                Return True
+                Return assert(stack.emplace(name, f(size() + uint32_1, type)).second())
             End Function
 
             Public Function define_stack(ByVal name As String, ByVal type As String) As Boolean

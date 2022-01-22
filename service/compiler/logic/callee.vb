@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class _callee
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly name As String
         Private ReadOnly type As String
@@ -37,18 +37,14 @@ Namespace logic
             Me.paragraph = paragraph
         End Sub
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             Dim pos As UInt32 = o.size()
             o.emplace_back("")
             If Not scope.current().anchors().define(name, o, type, parameters) Then
                 Return False
             End If
-            ' No need to use scope_wrapper, as the pops are after the rest instruction and have no effect.
-            ' Meanwhile return-value and parameters are defined within the scope, but are not pushed, so they should not
-            ' be popped.
-            scope.current().start_scope()
-            Using defer.to(AddressOf scope.current().end_scope)
+            Using scope.current().start_scope()
                 ' caller should setup the stack.
                 ' Note, variables are using reverse order to match the stack, and here the logic "define" without
                 ' "push"ing to use variables from the caller side.
@@ -60,7 +56,7 @@ Namespace logic
                         Return False
                     End If
                 Next
-                If Not paragraph.export(o) Then
+                If Not paragraph.build(o) Then
                     Return False
                 End If
                 o.emplace_back(instruction_builder.str(command.rest))

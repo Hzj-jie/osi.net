@@ -15,7 +15,7 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of String),
                                       _prefixes As __do(Of vector(Of Action(Of statements))),
                                       _suffixes As __do(Of vector(Of Action(Of statements))),
                                       _rewriter_gens As __do(Of vector(Of Action(Of code_gens(Of typed_node_writer)))),
-                                       SCOPE_T As scope(Of SCOPE_T))
+                                       SCOPE_T As {scope(Of SCOPE_T), New})
     Inherits code_gen_rule_wrapper(Of typed_node_writer,
                                       _nlexer_rule,
                                       _syntaxer_rule,

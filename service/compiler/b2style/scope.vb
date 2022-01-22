@@ -27,16 +27,8 @@ Partial Public NotInheritable Class b2style
             d = New define_t()
         End Sub
 
-        Public Shared Function wrap() As scope_wrapper
-            Return New scope_wrapper()
+        Public Shared Function wrap() As scope
+            Return current().start_scope()
         End Function
-    End Class
-
-    Public NotInheritable Class scope_wrapper
-        Inherits scope_wrapper(Of scope)
-
-        Public Sub New()
-            MyBase.New(b2style.scope.current())
-        End Sub
     End Class
 End Class

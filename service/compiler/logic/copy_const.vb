@@ -10,7 +10,7 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     ' Copy (instead of moving) a @data to @target
     Public NotInheritable Class _copy_const
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly target As String
         Private ReadOnly data As data_block
@@ -22,7 +22,7 @@ Namespace logic
             Me.data = data
         End Sub
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             Dim t As variable = Nothing
             If variable.of(target, o, t) AndAlso
                t.is_assignable_from(data.value_bytes_size()) Then

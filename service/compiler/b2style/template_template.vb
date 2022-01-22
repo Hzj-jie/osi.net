@@ -17,12 +17,13 @@ Partial Public NotInheritable Class b2style
         Private Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("template", "template", "dump"))
         Private ReadOnly w As New template_writer()
         Private ReadOnly _extended_type_name As extended_type_name_t
+        ' One template type can be used multiple times in the generated code.
         Private ReadOnly type_refs As New vector(Of ref(Of String))()
         Private ReadOnly type_var As Boolean
 
         Private NotInheritable Class extended_type_name_t
             Public ReadOnly name As String
-            Private types As vector(Of String)
+            Private ReadOnly types As New one_off(Of vector(Of String))()
 
             Public Sub New(ByVal name As String)
                 assert(Not name.null_or_whitespace())
@@ -30,23 +31,16 @@ Partial Public NotInheritable Class b2style
             End Sub
 
             Public Sub apply(ByVal types As vector(Of String))
-                assert(Not types Is Nothing)
-                assert(Me.types Is Nothing)
-                Me.types = types.stream().
-                                 map(Function(ByVal type As String) As String
-                                         ' Remove referneces in the name.
-                                         Return New builders.parameter_type(type).type
-                                     End Function).
-                                 collect(Of vector(Of String))()
+                assert(Me.types.set(types.stream().
+                                          map(Function(ByVal type As String) As String
+                                                  ' Remove referneces in the name.
+                                                  Return New builders.parameter_type(type).type
+                                              End Function).
+                                          collect(Of vector(Of String))()))
             End Sub
 
             Public Overrides Function ToString() As String
-                assert(Not types Is Nothing)
-                Using defer.to(Sub()
-                                   types = Nothing
-                               End Sub)
-                    Return strcat(name, "__", types.str("__"))
-                End Using
+                Return strcat(name, "__", types.get().str("__"))
             End Function
         End Class
 
@@ -57,7 +51,10 @@ Partial Public NotInheritable Class b2style
             n = n.child()
             assert(Not types.null_or_empty())
             Me._extended_type_name = New extended_type_name_t(template_name(name_node, types.size()))
-            Me.type_refs.resize(types.size(), New ref(Of String)())
+            Me.type_refs.resize(types.size(),
+                                Function() As ref(Of String)
+                                    Return New ref(Of String)()
+                                End Function)
             assert(Not Me.type_refs.empty())
             Me.type_var = types.back().EndsWith("...")
             If Me.type_var Then
@@ -97,7 +94,6 @@ Partial Public NotInheritable Class b2style
             Return n.children_word_str()
         End Function
 
-        ' @VisibleForTesting
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
                                     ByVal n As typed_node,
                                     ByRef o As template_template) As Boolean
@@ -124,10 +120,6 @@ Partial Public NotInheritable Class b2style
             End If
             o = New template_template(n.child(4), name_node, v)
             Return True
-        End Function
-
-        Public Shared Function [of](ByVal n As typed_node, ByRef o As template_template) As Boolean
-            Return [of](b2style.code_builder.current().code_gens, n, o)
         End Function
 
         Public Function name() As String
@@ -165,6 +157,7 @@ Partial Public NotInheritable Class b2style
             End If
             assert(types.size() > 0)
             _extended_type_name.apply(types)
+<<<<<<< HEAD
             If type_var Then
                 Dim i As UInt32 = 0
                 While i < Me.type_refs.size() - uint32_1
@@ -177,7 +170,16 @@ Partial Public NotInheritable Class b2style
                     Me.type_refs(i).set(types(i))
                 Next
             End If
+=======
+            For i As UInt32 = 0 To types.size() - uint32_1
+                assert(Not Me.type_refs(i))
+                Me.type_refs(i).set(types(i))
+            Next
+>>>>>>> master
             impl = w.dump()
+            For i As UInt32 = 0 To types.size() - uint32_1
+                Me.type_refs(i).set(Nothing)
+            Next
             Return True
         End Function
 

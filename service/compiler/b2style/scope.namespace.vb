@@ -16,11 +16,12 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
-            Public Sub define(ByVal name As String)
+            Public Function define(ByVal name As String) As scope
                 assert(s.cn Is Nothing)
                 assert(Not name.null_or_whitespace())
                 s.cn = name
-            End Sub
+                Return s
+            End Function
 
             Public Function name() As String
                 Dim s As scope = Me.s

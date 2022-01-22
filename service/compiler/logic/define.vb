@@ -10,7 +10,7 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     ' Define a variable with @name.
     Public NotInheritable Class _define
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly name As String
         Private ReadOnly type As String
@@ -31,13 +31,13 @@ Namespace logic
         Public Shared Function export(ByVal name As String,
                                       ByVal type As String,
                                       ByVal o As vector(Of String)) As Boolean
-            Return New _define(name, type).export(o)
+            Return New _define(name, type).build(o)
         End Function
 
         Public Shared Function forward(ByVal name As String,
                                        ByVal type As String,
                                        ByVal o As vector(Of String)) As Boolean
-            Return New _define(name, type, False).export(o)
+            Return New _define(name, type, False).build(o)
         End Function
 
         Private Function define_variable(ByVal type As String, ByVal o As vector(Of String)) As Boolean
@@ -50,6 +50,9 @@ Namespace logic
             End If
             If push Then
                 o.emplace_back(command_str(command.push))
+                scope.current().when_end_scope(Sub()
+                                                   o.emplace_back(command_str(command.pop))
+                                               End Sub)
             End If
             Return True
         End Function
@@ -59,7 +62,7 @@ Namespace logic
                    scope.current().anchor_refs().define(type, name)
         End Function
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             If define_variable(type, o) OrElse define_callee_ref(o) Then
                 Return True
             End If
