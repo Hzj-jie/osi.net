@@ -36,7 +36,7 @@ Namespace logic
                                           ByVal start As UInt32,
                                           ByVal [end] As UInt32,
                                           ByVal e As instruction_gen) As instruction_gen
-            If debug_logic_exportable OrElse isdebugmode() Then
+            If debug_logic_instruction OrElse isdebugmode() Then
                 Return New instruction_gen_wrapper(v, start, [end], e)
             End If
             Return e
