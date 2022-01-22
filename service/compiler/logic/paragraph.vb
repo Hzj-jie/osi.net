@@ -32,7 +32,7 @@ Namespace logic
 
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
-            Using New scope_wrapper(o)
+            Using scope.current().start_scope()
                 Dim i As UInt32 = 0
                 While i < s.size()
                     assert(Not s(i) Is Nothing)

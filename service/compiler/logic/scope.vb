@@ -47,16 +47,4 @@ Namespace logic
             Return (+root).functions()
         End Function
     End Class
-
-    Public NotInheritable Class scope_wrapper
-        Inherits scope_wrapper(Of scope)
-
-        Private ReadOnly o As vector(Of String)
-
-        Public Sub New(ByVal o As vector(Of String))
-            MyBase.New(logic.scope.current())
-            assert(Not o Is Nothing)
-            Me.o = o
-        End Sub
-    End Class
 End Namespace

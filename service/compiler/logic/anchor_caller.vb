@@ -88,7 +88,7 @@ Namespace logic
             Return True
         End Function
 
-        ' Forward return-value from scope_wrapper.
+        ' Forward return-value from scope
         Private Function forward_to_result(ByVal anchor As scope.anchor, ByVal o As vector(Of String)) As Boolean
             assert(Not anchor Is Nothing)
             assert(Not o Is Nothing)
@@ -122,7 +122,7 @@ Namespace logic
         Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
             assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is for return value.
-            Using New scope_wrapper(o)
+            Using scope.current().start_scope()
                 Dim anchor As scope.anchor = Nothing
                 If Not retrieve_anchor(o, anchor) Then
                     Return False

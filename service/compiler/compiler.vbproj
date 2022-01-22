@@ -187,7 +187,6 @@
     <Compile Include="scope.vb" />
     <Compile Include="logic\move.vb" />
     <Compile Include="logic\array_operators.vb" />
-    <Compile Include="scope_wrapper.vb" />
     <Compile Include="logic\stop.vb" />
     <Compile Include="logic\ternary_operator.vb" />
     <Compile Include="logic\type.vb" />
