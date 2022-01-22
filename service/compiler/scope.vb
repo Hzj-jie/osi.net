@@ -38,26 +38,24 @@ Partial Public Class scope(Of T As scope(Of T))
         ds.emplace_back(a)
     End Sub
 
-    Public Function end_scope() As T
-        assert(object_compare(in_thread, Me) = 0)
-        If Not parent Is Nothing Then
-            ' Do not run the end_scope operations if currently it's in the root scope, the interpreter/primitive will be
-            ' freed anyway.
-            Dim i As Int64 = ds.size() - 1
-            While i >= 0
-                ds(CUInt(i))()
-                i -= 1
-            End While
+    Public Function without_end_scope() As IDisposable
+        Return defer.to(Sub()
+                            in_thread = Nothing
+                        End Sub)
+    End Function
 
+    Public Sub Dispose() Implements IDisposable.Dispose
+        assert(object_compare(in_thread, Me) = 0)
+        Dim i As Int64 = ds.size() - 1
+        While i >= 0
+            ds(CUInt(i))()
+            i -= 1
+        End While
+        If Not parent Is Nothing Then
             assert(object_compare(parent.child, Me) = 0)
             parent.child = Nothing
         End If
         in_thread = parent
-        Return parent
-    End Function
-
-    Public Sub Dispose() Implements IDisposable.Dispose
-        end_scope()
     End Sub
 
     Public Shared Function current() As T

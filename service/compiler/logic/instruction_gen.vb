@@ -21,9 +21,10 @@ Namespace logic
 
         ' @VisibleForTesting
         <Extension()> Public Function import(ByVal e As simulator, ByVal es() As instruction_gen) As Boolean
-            Dim s As New scope(e.interrupts())
+            ' Do not run the end_scope operations if currently it's in the root scope, the interpreter/primitive will be
+            ' freed anyway.
             Dim o As New vector(Of String)()
-            Using defer.to(AddressOf s.end_scope)
+            Using New scope(e.interrupts()).without_end_scope()
                 For i As Int32 = 0 To es.Length() - 1
                     If es(i) Is Nothing Then
                         Return False

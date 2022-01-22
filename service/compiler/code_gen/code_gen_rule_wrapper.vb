@@ -16,7 +16,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
                                       _prefixes As __do(Of vector(Of Action(Of statements(Of WRITER)))),
                                       _suffixes As __do(Of vector(Of Action(Of statements(Of WRITER)))),
                                       _code_gens As __do(Of vector(Of Action(Of code_gens(Of WRITER)))),
-                                       SCOPE_T As scope(Of SCOPE_T))
+                                       SCOPE_T As {scope(Of SCOPE_T), New})
     Inherits rule_wrapper(Of _nlexer_rule, _syntaxer_rule)
 
     ' @VisibleForTesting
@@ -87,13 +87,15 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
 
         Public Function build(ByVal input As String, ByVal o As WRITER) As Boolean
             assert(Not o Is Nothing)
-            Dim scope As SCOPE_T = alloc(Of SCOPE_T)()
-            p.export(o)
-            If Not cb.build(input, o) Then
-                Return False
-            End If
-            s.export(o)
-            scope.end_scope()
+            ' Do not run the end_scope operations if currently it's in the root scope, the interpreter/primitive will be
+            ' freed anyway.
+            Using New SCOPE_T().without_end_scope()
+                p.export(o)
+                If Not cb.build(input, o) Then
+                    Return False
+                End If
+                s.export(o)
+            End Using
             Return True
         End Function
 
@@ -141,7 +143,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
 
         Public Function parse(ByVal input As String, ByVal e As exportable) As Boolean
             assert(Not e Is Nothing)
-            Dim o As WRITER = alloc(Of WRITER)()
+            Dim o As New WRITER()
             Return code_gen_rule_wrapper(Of WRITER,
                                             _nlexer_rule,
                                             _syntaxer_rule,
