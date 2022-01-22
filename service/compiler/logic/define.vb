@@ -50,6 +50,9 @@ Namespace logic
             End If
             If push Then
                 o.emplace_back(command_str(command.push))
+                scope.current().when_end_scope(Sub()
+                                                   o.emplace_back(command_str(command.pop))
+                                               End Sub)
             End If
             Return True
         End Function

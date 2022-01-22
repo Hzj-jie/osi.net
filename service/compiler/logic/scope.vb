@@ -58,22 +58,5 @@ Namespace logic
             assert(Not o Is Nothing)
             Me.o = o
         End Sub
-
-        Protected Overrides Sub when_dispose()
-            new_scope.variables().
-                      heap().
-                      stream().
-                      foreach(Sub(ByVal name As String)
-                                  Dim v As String = Nothing
-                                  assert(new_scope.variables().export(name).data_ref.export(v))
-                                  o.emplace_back(instruction_builder.str(command.dealloc, v))
-                              End Sub)
-            Dim i As UInt32 = 0
-            While i < new_scope.variables().size()
-                o.emplace_back(instruction_builder.str(command.pop))
-                i += uint32_1
-            End While
-            MyBase.when_dispose()
-        End Sub
     End Class
 End Namespace
