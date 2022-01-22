@@ -21,12 +21,12 @@ class C {
 
 void main() {
   {
-    C c{};
+    C c();
     b2style::std_out(c.x);
   }
   b2style::std_out(dtors);
   {
-    C c{200};
+    C c(200);
 	b2style::std_out(c.x);
   }
   b2style::std_out(dtors);
