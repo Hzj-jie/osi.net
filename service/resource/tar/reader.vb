@@ -45,6 +45,10 @@ Partial Public NotInheritable Class tar
             Return unzip(assert_which.of(files).is_not_null().absolute())
         End Function
 
+        Public Shared Function in_mem(ByVal input As MemoryStream) As reader
+            Return New reader(New in_mem_fs(input), vector.of(in_mem_fs.file))
+        End Function
+
         Public Sub reset()
             i = 0
             m.clear()

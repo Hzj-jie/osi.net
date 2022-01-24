@@ -26,6 +26,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Private Shared Function include_file(ByVal p As String,
                                              ByVal s As String,
                                              ByRef o As String) As Boolean
+            'Dim f As String = Path.Combine(p, s).Replace("/"c, Path.PathSeparator).Replace("\"c, Path.PathSeparator)
             Dim f As String = Path.Combine(p, s)
             If File.Exists(f) Then
                 o = File.ReadAllText(f)
