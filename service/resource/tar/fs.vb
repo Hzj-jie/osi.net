@@ -195,7 +195,7 @@ Partial Public NotInheritable Class tar
         Implements fs
 
         Public Const file As String = "in_mem_fs_file"
-        Private Const exp_file As String = file + "0"
+        Public Const exp_file As String = file + "0"
         Private ReadOnly m As MemoryStream
 
         Public Sub New(ByVal m As MemoryStream)

@@ -24,11 +24,24 @@ Partial Public NotInheritable Class tar
             reader.in_mem(input).foreach(Sub(ByVal file As String, ByVal m As MemoryStream)
                                              assert(Not file Is Nothing)
                                              assert(Not m Is Nothing)
+                                             Try
+                                                 Directory.GetParent(Path.Combine(root, file)).Create()
+                                             Catch ex As Exception
+                                                 assert(False, ex)
+                                             End Try
                                              IO.File.WriteAllBytes(Path.Combine(root, file), m.bytes())
                                          End Sub)
         End Sub
 
         Public Shared Sub dump(ByVal input As MemoryStream)
+            dump(input, Environment.CurrentDirectory())
+        End Sub
+
+        Public Shared Sub dump(ByVal input() As Byte, ByVal root As String)
+            dump(memory_stream.of(input), root)
+        End Sub
+
+        Public Shared Sub dump(ByVal input() As Byte)
             dump(input, Environment.CurrentDirectory())
         End Sub
 
