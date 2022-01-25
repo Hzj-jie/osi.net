@@ -9,6 +9,10 @@ Public Module _unordered_set
     <Extension()> Public Function stream(Of T)(ByVal this As unordered_set(Of T)) As stream(Of T)
         Return New stream(Of T).container(Of unordered_set(Of T))(this)
     End Function
+
+    <Extension()> Public Function null_or_empty(Of T)(ByVal this As unordered_set(Of T)) As Boolean
+        Return this Is Nothing OrElse this.empty()
+    End Function
 End Module
 
 Public NotInheritable Class unordered_set
