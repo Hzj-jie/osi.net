@@ -16,7 +16,7 @@ Namespace rewriters
 
         Public Overloads Function append(ByVal t As typed_node) As Boolean
             assert(Not t Is Nothing)
-            Return append(lazier.of(AddressOf t.input_without_spacing))
+            Return append(lazier.of(AddressOf t.input))
         End Function
     End Class
 
