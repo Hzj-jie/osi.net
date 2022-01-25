@@ -61,26 +61,13 @@ Partial Public NotInheritable Class syntaxer
             Return create(default_type, s, collection, o)
         End Function
 
-        Public Sub New(ByVal c As syntax_collection,
-                       ByVal type As UInt32,
-                       ByVal ParamArray ms()() As UInt32)
-            Me.New(c, type, matching_creator.create_matchings(c, ms))
-        End Sub
-
-        Public Sub New(ByVal c As syntax_collection,
-                       ByVal ParamArray ms()() As UInt32)
-            Me.New(c, default_type, ms)
-        End Sub
-
-        Public Sub New(ByVal c As syntax_collection,
-                       ByVal type As UInt32,
-                       ByVal ParamArray ms() As UInt32)
-            Me.New(c, type, matching_creator.create_matchings(c, ms))
+        Public Sub New(ByVal c As syntax_collection, ByVal ParamArray ms()() As UInt32)
+            Me.New(c, matching_creator.create_matchings(c, ms))
         End Sub
 
         Public Sub New(ByVal c As syntax_collection,
                        ByVal ParamArray ms() As UInt32)
-            Me.New(c, default_type, ms)
+            Me.New(c, matching_creator.create_matchings(c, ms))
         End Sub
 
         Public Overrides Function match(ByVal v As vector(Of typed_word),
