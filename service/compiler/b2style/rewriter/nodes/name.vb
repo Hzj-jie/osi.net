@@ -32,12 +32,12 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             If n.descentdant_of("template-type-name") Then
                 ' Require reparsing to take care of the namespaces.
-                o.append(n.input_without_spacing())
-            ElseIf n.type_name.equals("name") AndAlso n.descentdant_of("value-declaration", "struct-body") Then
+                o.append(n.input_without_ignored())
+            ElseIf n.type_name.Equals("name") AndAlso n.descentdant_of("value-declaration", "struct-body") Then
                 ' Ignore namespace prefix for variables within the structure.
-                o.append(_namespace.bstyle_format.in_global_namespace(n.input_without_spacing()))
+                o.append(_namespace.bstyle_format.in_global_namespace(n.input_without_ignored()))
             Else
-                o.append(_namespace.bstyle_format.of(n.input_without_spacing()))
+                o.append(_namespace.bstyle_format.of(n.input_without_ignored()))
             End If
             Return True
         End Function

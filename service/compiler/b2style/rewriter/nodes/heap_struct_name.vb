@@ -29,7 +29,7 @@ Partial Public NotInheritable Class b2style
                               n.child(0).child(3)).
                            map(Function(ByVal x As typed_node) As String
                                    assert(Not x Is Nothing)
-                                   Return x.input_without_spacing()
+                                   Return x.input_without_ignored()
                                End Function).
                            collect_by(stream(Of String).collectors.to_str("")).
                            ToString()

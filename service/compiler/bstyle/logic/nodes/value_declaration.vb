@@ -27,8 +27,8 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function build(ByVal type As typed_node, ByVal name As typed_node, ByVal o As writer) As Boolean
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
-            Dim t As String = type.input_without_spacing()
-            Dim n As String = name.input_without_spacing()
+            Dim t As String = type.input_without_ignored()
+            Dim n As String = name.input_without_ignored()
             Return struct.define_in_stack(t, n, o) OrElse
                    declare_single_data_slot(t, n, o)
         End Function

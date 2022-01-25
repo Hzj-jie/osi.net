@@ -17,15 +17,15 @@ Partial Public NotInheritable Class b2style
             Public Function define(ByVal n As typed_node) As Boolean
                 assert(Not n Is Nothing)
                 assert(n.child_count() >= 2)
-                If m.emplace(_namespace.of(n.child(1).input_without_spacing()),
-                             _namespace.of(n.child(0).input_without_spacing())).second() Then
+                If m.emplace(_namespace.of(n.child(1).input_without_ignored()),
+                             _namespace.of(n.child(0).input_without_ignored())).second() Then
                     Return True
                 End If
                 raise_error(error_type.user,
                             "Variable ",
-                            _namespace.of(n.child(1).input_without_spacing()),
+                            _namespace.of(n.child(1).input_without_ignored()),
                             " has been defined already as ",
-                            _namespace.of(n.child(0).input_without_spacing()))
+                            _namespace.of(n.child(0).input_without_ignored()))
                 Return False
             End Function
 

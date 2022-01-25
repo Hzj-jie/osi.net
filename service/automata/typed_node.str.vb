@@ -80,7 +80,7 @@ Partial Public NotInheritable Class typed_node
 
     ' In most of the cases, using this function is not right. Instead input() should be used.
     ' TODO: restrict the use of this function.
-    Public Function input_without_spacing() As String
+    Public Function input_without_ignored() As String
         Return input("")
     End Function
 

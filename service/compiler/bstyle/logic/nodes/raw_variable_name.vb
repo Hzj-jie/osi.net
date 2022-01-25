@@ -31,14 +31,14 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
 
             Dim type As String = Nothing
-            If Not scope.current().variables().resolve(n.input_without_spacing(), type) Then
+            If Not scope.current().variables().resolve(n.input_without_ignored(), type) Then
                 Return False
             End If
             Dim ps As struct_def = Nothing
-            If scope.current().structs().resolve(type, n.input_without_spacing(), ps) Then
+            If scope.current().structs().resolve(type, n.input_without_ignored(), ps) Then
                 Return struct_handle(type, ps.expanded)
             End If
-            Return single_data_slot_handle(type, n.input_without_spacing())
+            Return single_data_slot_handle(type, n.input_without_ignored())
         End Function
 
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build

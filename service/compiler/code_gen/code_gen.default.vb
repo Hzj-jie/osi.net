@@ -212,14 +212,14 @@ Public NotInheritable Class code_gen
                    End Function)
     End Function
 
-    Public Shared Function of_input_without_spacing(Of WRITER As {object_list_writer, New}) _
+    Public Shared Function of_input_without_ignored(Of WRITER As {object_list_writer, New}) _
                                                    (ByVal name As String) As Action(Of code_gens(Of WRITER))
         Return code_gen_delegate(Of WRITER).of(
                    name,
                    Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
                        assert(Not n Is Nothing)
                        assert(Not o Is Nothing)
-                       Return o.append(n.input_without_spacing())
+                       Return o.append(n.input_without_ignored())
                    End Function)
     End Function
 
