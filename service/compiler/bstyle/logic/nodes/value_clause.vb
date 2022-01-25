@@ -34,21 +34,21 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             Dim type As String = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
-            If Not scope.current().variables().resolve(name.children_word_str(), type, delegate_definition) Then
+            If Not scope.current().variables().resolve(name.input_without_spacing(), type, delegate_definition) Then
                 ' Emmmm, scope.variable should log the error already.
                 Return False
             End If
             If delegate_definition Then
                 ' TODO: Avoid copying.
-                Dim target_function_name As String = logic_name.of_function(value.children_word_str(),
+                Dim target_function_name As String = logic_name.of_function(value.input_without_spacing(),
                                                                             +delegate_definition.get().parameters)
                 If scope.current().functions().is_defined(target_function_name) Then
                     ' Use address-of to copy a function address to the target.
                     ' TODO: Need to use logic_name here.
                     scope.current().call_hierarchy().to(target_function_name)
-                    Return builders.of_address_of(name.children_word_str(), target_function_name).to(o)
+                    Return builders.of_address_of(name.input_without_spacing(), target_function_name).to(o)
                 End If
-                Return builders.of_copy(name.children_word_str(), value.children_word_str()).to(o)
+                Return builders.of_copy(name.input_without_spacing(), value.input_without_spacing()).to(o)
             End If
             If Not l.of(value).build(o) Then
                 Return False
@@ -60,7 +60,7 @@ Partial Public NotInheritable Class bstyle
                                     "Type ",
                                     type,
                                     " of ",
-                                    name.children_word_str(),
+                                    name.input_without_spacing(),
                                     " does not match the rvalue ",
                                     (+r).type)
                         Return False
@@ -81,10 +81,10 @@ Partial Public NotInheritable Class bstyle
             Return build(name,
                          value,
                          Function(ByVal r As vector(Of String)) As Boolean
-                             Return struct.copy(r, name.children_word_str(), o)
+                             Return struct.copy(r, name.input_without_spacing(), o)
                          End Function,
                          Function(ByVal r As String) As Boolean
-                             Return builders.of_copy(name.children_word_str(), r).to(o)
+                             Return builders.of_copy(name.input_without_spacing(), r).to(o)
                          End Function,
                          o)
         End Function
@@ -104,13 +104,13 @@ Partial Public NotInheritable Class bstyle
                                         n.child(2),
                                         Function(ByVal r As vector(Of String)) As Boolean
                                             Return struct.copy(r,
-                                                               n.child(0).child().child(0).children_word_str(),
+                                                               n.child(0).child().child(0).input_without_spacing(),
                                                                indexstr,
                                                                o)
                                         End Function,
                                         Function(ByVal r As String) As Boolean
                                             Return builders.of_copy(
-                                                       variable.name_of(n.child(0).child().child(0).children_word_str(),
+                                                       variable.name_of(n.child(0).child().child(0).input_without_spacing(),
                                                                         indexstr),
                                                    r).to(o)
                                         End Function,

@@ -45,29 +45,28 @@ Partial Public NotInheritable Class typed_node
         Return Convert.ToString(debug_str(New StringBuilder()))
     End Function
 
+    ' TODO: The space character should be defined by ignore-types.
     Public Function input() As String
+        Return input(" ")
+    End Function
+
+    Private Function input(ByVal space As String) As String
         Dim s As New StringBuilder()
         Dim i As UInt32 = 0
         While i < word_count()
             s.Append(word(i).str())
             i += uint32_1
             If i < word_count() Then
-                ' TODO: The space character should be defined by ignore-types.
-                s.Append(" ")
+                s.Append(space)
             End If
         End While
         Return s.ToString()
     End Function
 
-    ' TODO: Remove
-    Public Function children_word_str() As String
-        Dim s As New StringBuilder()
-        Dim i As UInt32 = 0
-        While i < word_count()
-            s.Append(word(i).str())
-            i += uint32_1
-        End While
-        Return s.ToString()
+    ' In most of the cases, using this function is not right. Instead input() should be used.
+    ' TODO: restrict the use of this function.
+    Public Function input_without_spacing() As String
+        Return input("")
     End Function
 
     Private Function self_debug_str(ByVal s As StringBuilder) As StringBuilder

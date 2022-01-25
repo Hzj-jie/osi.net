@@ -34,14 +34,14 @@ Partial Public NotInheritable Class bstyle
                 ps = l.of_all_children(n.child(4)).dump()
             End If
             Dim ta As scope.type_alias_proxy = scope.current().type_alias()
-            Dim return_type As String = ta(n.child(1).children_word_str())
+            Dim return_type As String = ta(n.child(1).input_without_spacing())
             ps = ps.stream().
                     map(AddressOf ta.canonical_of).
                     collect(Of vector(Of String))()
             Return scope.current().delegates().define(return_type,
-                                                      n.child(2).children_word_str(),
+                                                      n.child(2).input_without_spacing(),
                                                       builders.parameter_type.from(ps)) AndAlso
-                   builders.of_callee_ref(n.child(2).children_word_str(), return_type, ps).to(o)
+                   builders.of_callee_ref(n.child(2).input_without_spacing(), return_type, ps).to(o)
         End Function
     End Class
 End Class

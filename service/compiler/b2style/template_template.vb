@@ -82,7 +82,7 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
             assert(Not n Is Nothing)
-            Return strcat(n.children_word_str(), "__", type_count)
+            Return strcat(n.input_without_spacing(), "__", type_count)
         End Function
 
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
@@ -104,7 +104,7 @@ Partial Public NotInheritable Class b2style
             If v.size() > v.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
                             "Template ",
-                            name_node.children_word_str(),
+                            name_node.input_without_spacing(),
                             " has duplicated template type parameters: ",
                             v)
                 Return False
