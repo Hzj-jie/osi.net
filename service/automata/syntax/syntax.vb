@@ -13,14 +13,14 @@ Partial Public NotInheritable Class syntaxer
         Implements IComparable(Of syntax)
 
         Private Const default_type As UInt32 = uint32_0
-        Private Shared ReadOnly default_ignore_types As [set](Of UInt32) = Nothing
+        Private Shared ReadOnly default_ignore_types As unordered_set(Of UInt32) = Nothing
         Public ReadOnly type As UInt32
         Private ReadOnly ms() As matching
-        Private ReadOnly ignore_types As [set](Of UInt32)
+        Private ReadOnly ignore_types As unordered_set(Of UInt32)
 
         Public Sub New(ByVal c As syntax_collection,
                        ByVal type As UInt32,
-                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ignore_types As unordered_set(Of UInt32),
                        ByVal ParamArray ms() As matching)
             MyBase.New(c)
             Me.type = type
@@ -30,7 +30,7 @@ Partial Public NotInheritable Class syntaxer
         End Sub
 
         Public Shared Function create(ByVal type As UInt32,
-                                      ByVal ignore_types As [set](Of UInt32),
+                                      ByVal ignore_types As unordered_set(Of UInt32),
                                       ByVal s As String,
                                       ByVal collection As syntax_collection,
                                       Optional ByRef o As syntax = Nothing) As Boolean
@@ -48,7 +48,7 @@ Partial Public NotInheritable Class syntaxer
         End Function
 
         Public Shared Function create(ByVal type As String,
-                                      ByVal ignore_types As [set](Of UInt32),
+                                      ByVal ignore_types As unordered_set(Of UInt32),
                                       ByVal s As String,
                                       ByVal collection As syntax_collection,
                                       Optional ByRef o As syntax = Nothing) As Boolean
@@ -58,12 +58,12 @@ Partial Public NotInheritable Class syntaxer
         End Function
 
         Public Sub New(ByVal c As syntax_collection,
-                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ignore_types As unordered_set(Of UInt32),
                        ByVal ParamArray ms() As matching)
             Me.New(c, default_type, ignore_types, ms)
         End Sub
 
-        Public Shared Function create(ByVal ignore_types As [set](Of UInt32),
+        Public Shared Function create(ByVal ignore_types As unordered_set(Of UInt32),
                                       ByVal s As String,
                                       ByVal collection As syntax_collection,
                                       Optional ByRef o As syntax = Nothing) As Boolean
@@ -93,13 +93,13 @@ Partial Public NotInheritable Class syntaxer
 
         Public Sub New(ByVal c As syntax_collection,
                        ByVal type As UInt32,
-                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ignore_types As unordered_set(Of UInt32),
                        ByVal ParamArray ms()() As UInt32)
             Me.New(c, type, ignore_types, matching_creator.create_matchings(c, ms))
         End Sub
 
         Public Sub New(ByVal c As syntax_collection,
-                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ignore_types As unordered_set(Of UInt32),
                        ByVal ParamArray ms()() As UInt32)
             Me.New(c, default_type, ignore_types, ms)
         End Sub
@@ -117,13 +117,13 @@ Partial Public NotInheritable Class syntaxer
 
         Public Sub New(ByVal c As syntax_collection,
                        ByVal type As UInt32,
-                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ignore_types As unordered_set(Of UInt32),
                        ByVal ParamArray ms() As UInt32)
             Me.New(c, type, ignore_types, matching_creator.create_matchings(c, ms))
         End Sub
 
         Public Sub New(ByVal c As syntax_collection,
-                       ByVal ignore_types As [set](Of UInt32),
+                       ByVal ignore_types As unordered_set(Of UInt32),
                        ByVal ParamArray ms() As UInt32)
             Me.New(c, default_type, ignore_types, ms)
         End Sub

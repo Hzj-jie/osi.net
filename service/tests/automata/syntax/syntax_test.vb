@@ -10,10 +10,9 @@ Namespace syntaxer
     Public NotInheritable Class syntax_test
         Inherits matching_test
 
-        Private Shared ReadOnly ignore_types As [set](Of UInt32)
+        Private Shared ReadOnly ignore_types As New unordered_set(Of UInt32)()
 
         Shared Sub New()
-            ignore_types = New [set](Of UInt32)()
             ignore_types.emplace(0)
         End Sub
 

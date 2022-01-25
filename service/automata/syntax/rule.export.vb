@@ -14,7 +14,7 @@ Partial Public NotInheritable Class syntaxer
 
         Partial Public Class exporter
             Public ReadOnly syntaxer As syntaxer
-            Public ReadOnly ignore_types As [set](Of UInt32)
+            Public ReadOnly ignore_types As unordered_set(Of UInt32)
             Public ReadOnly root_types As vector(Of UInt32)
             Public ReadOnly collection As syntax_collection
 
