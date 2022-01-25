@@ -52,13 +52,24 @@ Namespace syntaxer
             value_with_comma
         End Enum
 
-        Private ReadOnly c As New syntax_collection()
+        Private Shared ReadOnly ignore_types As New unordered_set(Of UInt32)()
+
+        Shared Sub New()
+            ignore_types.emplace(types.blank)
+        End Sub
+
+        Private ReadOnly c As syntax_collection
+
+        Public Sub New()
+            c = New syntax_collection()
+        End Sub
 
         Private Function build_syntax() As syntax
             c.clear()
             Dim [function] As syntax = Nothing
             [function] = New syntax(c,
                                     types.function,
+                                    ignore_types,
                                     matching_creator.create(c, types.name),
                                     matching_creator.create(c, types.name),
                                     matching_creator.create(c, types.start_bracket),
@@ -70,31 +81,38 @@ Namespace syntaxer
             assert(c.set([function]))
             assert(c.set(New syntax(c,
                                     types.paramlist,
+                                    ignore_types,
                                     New multi_matching_group(c, New matching_delegate(c, types.param_with_comma)),
                                     New matching_delegate(c, types.param))))
             assert(c.set(New syntax(c,
                                     types.empty_paramlist,
+                                    ignore_types,
                                     matching_creator.create(c))))
             assert(c.set(New syntax(c,
                                     types.param_with_comma,
+                                    ignore_types,
                                     New matching_delegate(c, types.param),
                                     matching_creator.create(c, types.comma))))
             assert(c.set(New syntax(c,
                                     types.param,
+                                    ignore_types,
                                     matching_creator.create(c, types.name),
                                     matching_creator.create(c, types.name))))
             assert(c.set(New syntax(c,
                                     types.paragraph,
+                                    ignore_types,
                                     New matching_group(c,
                                                        New matching_delegate(c, types.sentence),
                                                        New matching_delegate(c, types.multi_sentence_paragraph)))))
             assert(c.set(New syntax(c,
                                     types.multi_sentence_paragraph,
+                                    ignore_types,
                                     matching_creator.create(c, types.start_paragraph),
                                     New multi_matching_group(c, New matching_delegate(c, types.sentence)),
                                     matching_creator.create(c, types.end_paragraph))))
             assert(c.set(New syntax(c,
                                     types.sentence,
+                                    ignore_types,
                                     New matching_group(c,
                                                        New matching_delegate(c, types.value_definition),
                                                        New matching_delegate(c, types.value_clause),
@@ -102,15 +120,18 @@ Namespace syntaxer
                                     matching_creator.create(c, types.semi_colon))))
             assert(c.set(New syntax(c,
                                     types.value_definition,
+                                    ignore_types,
                                     matching_creator.create(c, types.name),
                                     matching_creator.create(c, types.name))))
             assert(c.set(New syntax(c,
                                     types.value_clause,
+                                    ignore_types,
                                     New matching_delegate(c, types.value),
                                     matching_creator.create(c, types.assignment),
                                     New matching_delegate(c, types.value))))
             assert(c.set(New syntax(c,
                                     types.condition,
+                                    ignore_types,
                                     matching_creator.create(c, types.KW_if),
                                     matching_creator.create(c, types.start_bracket),
                                     New matching_delegate(c, types.value),
@@ -119,16 +140,19 @@ Namespace syntaxer
                                     New optional_matching_group(c, New matching_delegate(c, types.else_condition)))))
             assert(c.set(New syntax(c,
                                     types.else_condition,
+                                    ignore_types,
                                     matching_creator.create(c, types.KW_else),
                                     New matching_delegate(c, types.paragraph))))
             assert(c.set(New syntax(c,
                                     types.value,
+                                    ignore_types,
                                     New matching_group(c,
                                                        matching_creator.create(c, types.name),
                                                        New matching_delegate(c, types.comparasion),
                                                        New matching_delegate(c, types.function_call)))))
             assert(c.set(New syntax(c,
                                     types.comparasion,
+                                    ignore_types,
                                     New matching_delegate(c, types.value_without_comparasion),
                                     matching_creator.create(c,
                                                             types.less_than,
@@ -139,11 +163,13 @@ Namespace syntaxer
                                     New matching_delegate(c, types.value))))
             assert(c.set(New syntax(c,
                                     types.value_without_comparasion,
+                                    ignore_types,
                                     New matching_group(c,
                                                        matching_creator.create(c, types.name),
                                                        New matching_delegate(c, types.function_call)))))
             assert(c.set(New syntax(c,
                                     types.function_call,
+                                    ignore_types,
                                     matching_creator.create(c, types.name),
                                     matching_creator.create(c, types.start_bracket),
                                     New matching_group(c,
@@ -152,13 +178,16 @@ Namespace syntaxer
                                     matching_creator.create(c, types.end_bracket))))
             assert(c.set(New syntax(c,
                                     types.valuelist,
+                                    ignore_types,
                                     New multi_matching_group(c, New matching_delegate(c, types.value_with_comma)),
                                     New matching_delegate(c, types.value))))
             assert(c.set(New syntax(c,
                                     types.empty_valuelist,
+                                    ignore_types,
                                     matching_creator.create(c))))
             assert(c.set(New syntax(c,
                                     types.value_with_comma,
+                                    ignore_types,
                                     New matching_delegate(c, types.value),
                                     matching_creator.create(c, types.comma))))
             Return [function]

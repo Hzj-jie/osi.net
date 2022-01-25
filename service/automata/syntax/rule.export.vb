@@ -23,7 +23,7 @@ Partial Public NotInheritable Class syntaxer
                 Me.ignore_types = i.ignores
                 Me.root_types = i.roots
                 Me.collection = i.collection
-                Me.syntaxer = New syntaxer(collection, ignore_types, root_types)
+                Me.syntaxer = New syntaxer(collection, root_types)
             End Sub
         End Class
     End Class
