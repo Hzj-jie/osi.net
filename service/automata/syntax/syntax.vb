@@ -16,6 +16,7 @@ Partial Public NotInheritable Class syntaxer
         Public ReadOnly type As UInt32
         Private ReadOnly ms() As matching
 
+        '@VisibleForTesting
         Public Sub New(ByVal c As syntax_collection,
                        ByVal type As UInt32,
                        ByVal ParamArray ms() As matching)
@@ -25,10 +26,10 @@ Partial Public NotInheritable Class syntaxer
             Me.ms = ms
         End Sub
 
-        Public Shared Function create(ByVal type As UInt32,
-                                      ByVal s As String,
-                                      ByVal collection As syntax_collection,
-                                      Optional ByRef o As syntax = Nothing) As Boolean
+        Private Shared Function create(ByVal type As UInt32,
+                                       ByVal s As String,
+                                       ByVal collection As syntax_collection,
+                                       Optional ByRef o As syntax = Nothing) As Boolean
             Dim ms As New vector(Of matching)()
             Dim m As matching = Nothing
             Dim pos As UInt32 = 0
@@ -51,23 +52,22 @@ Partial Public NotInheritable Class syntaxer
                    create(i, s, collection, o)
         End Function
 
-        Public Sub New(ByVal c As syntax_collection, ByVal ParamArray ms() As matching)
-            Me.New(c, default_type, ms)
-        End Sub
-
+        '@VisibleForTesting
         Public Shared Function create(ByVal s As String,
                                       ByVal collection As syntax_collection,
                                       Optional ByRef o As syntax = Nothing) As Boolean
             Return create(default_type, s, collection, o)
         End Function
 
+        '@VisibleForTesting
         Public Sub New(ByVal c As syntax_collection, ByVal ParamArray ms()() As UInt32)
-            Me.New(c, matching_creator.create_matchings(c, ms))
+            Me.New(c, default_type, matching_creator.create_matchings(c, ms))
         End Sub
 
+        '@VisibleForTesting
         Public Sub New(ByVal c As syntax_collection,
                        ByVal ParamArray ms() As UInt32)
-            Me.New(c, matching_creator.create_matchings(c, ms))
+            Me.New(c, default_type, matching_creator.create_matchings(c, ms))
         End Sub
 
         Public Overrides Function match(ByVal v As vector(Of typed_word),
