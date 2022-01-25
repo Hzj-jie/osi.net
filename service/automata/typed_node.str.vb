@@ -51,18 +51,20 @@ Partial Public NotInheritable Class typed_node
         While i < word_count()
             s.Append(word(i).str())
             i += uint32_1
+            If i < word_count() Then
+                ' TODO: The space character should be defined by ignore-types.
+                s.Append(" ")
+            End If
         End While
         Return s.ToString()
     End Function
 
+    ' TODO: Remove
     Public Function children_word_str() As String
-        If leaf() Then
-            Return word().str()
-        End If
         Dim s As New StringBuilder()
         Dim i As UInt32 = 0
-        While i < child_count()
-            s.Append(child(i).children_word_str())
+        While i < word_count()
+            s.Append(word(i).str())
             i += uint32_1
         End While
         Return s.ToString()

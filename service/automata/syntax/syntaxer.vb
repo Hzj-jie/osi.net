@@ -27,14 +27,19 @@ Partial Public NotInheritable Class syntaxer
 
     Private ReadOnly collection As syntax_collection
     Private ReadOnly root_types As vector(Of UInt32)
+    Private ReadOnly ignore_types As unordered_set(Of UInt32)
     Private ReadOnly mg As matching_group
 
-    Public Sub New(ByVal collection As syntax_collection, ByVal root_types As vector(Of UInt32))
+    Public Sub New(ByVal collection As syntax_collection,
+                   ByVal ignore_types As unordered_set(Of UInt32),
+                   ByVal root_types As vector(Of UInt32))
         assert(Not collection Is Nothing)
         assert(collection.complete())
         assert(Not root_types.null_or_empty())
+        assert(Not ignore_types Is Nothing)
         Me.collection = collection
         Me.root_types = root_types
+        Me.ignore_types = ignore_types
         Me.mg = New matching_group(collection, arrays.type_erasure(Of matching, syntax)(+collection.get(+root_types)))
     End Sub
 
@@ -86,6 +91,12 @@ Partial Public NotInheritable Class syntaxer
         If v.null_or_empty() Then
             Return [optional].empty(Of typed_node)()
         End If
+        v = v.stream().
+              filter(Function(ByVal t As typed_word) As Boolean
+                         assert(Not t Is Nothing)
+                         Return ignore_types.find(t.type) = ignore_types.end()
+                     End Function).
+              collect(Of vector(Of typed_word))()
         Dim root As typed_node = typed_node.of_root(v)
         Dim p As UInt32 = 0
         While p < v.size()

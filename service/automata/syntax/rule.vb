@@ -42,7 +42,7 @@ Partial Public NotInheritable Class syntaxer
         End Function
 
         Protected Overrides Function [default](ByVal s As String, ByVal f As String) As Boolean
-            Return syntax.create(f, ignores, s, collection)
+            Return syntax.create(f, s, collection)
         End Function
 
         Protected Overrides Function finish() As Boolean
