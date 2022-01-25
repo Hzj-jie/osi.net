@@ -14,7 +14,7 @@ Partial Public NotInheritable Class syntaxer
 
         Partial Public Class exporter
             Public ReadOnly syntaxer As syntaxer
-            Public ReadOnly ignore_types As unordered_set(Of UInt32)
+            Public ReadOnly ignore_types As [set](Of UInt32)
             Public ReadOnly root_types As vector(Of UInt32)
             Public ReadOnly collection As syntax_collection
 
@@ -23,7 +23,7 @@ Partial Public NotInheritable Class syntaxer
                 Me.ignore_types = i.ignores
                 Me.root_types = i.roots
                 Me.collection = i.collection
-                Me.syntaxer = New syntaxer(collection, ignore_types, root_types)
+                Me.syntaxer = New syntaxer(collection, root_types)
             End Sub
         End Class
     End Class

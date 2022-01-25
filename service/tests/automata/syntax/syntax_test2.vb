@@ -52,9 +52,10 @@ Namespace syntaxer
             value_with_comma
         End Enum
 
-        Private Shared ReadOnly ignore_types As New unordered_set(Of UInt32)()
+        Private Shared ReadOnly ignore_types As [set](Of UInt32)
 
         Shared Sub New()
+            ignore_types = New [set](Of UInt32)()
             ignore_types.emplace(types.blank)
         End Sub
 
@@ -155,7 +156,6 @@ Namespace syntaxer
                                     ignore_types,
                                     New matching_delegate(c, types.value_without_comparasion),
                                     matching_creator.create(c,
-                                                            ignore_types,
                                                             types.less_than,
                                                             types.great_than,
                                                             types.less_or_equal,

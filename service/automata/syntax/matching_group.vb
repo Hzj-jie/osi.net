@@ -18,28 +18,15 @@ Partial Public NotInheritable Class syntaxer
 
         Private ReadOnly ms() As matching
 
-        Public Sub New(ByVal c As syntax_collection,
-                       ByVal ignore_types As unordered_set(Of UInt32),
-                       ByVal ParamArray ms() As matching)
-            MyBase.New(c, ignore_types)
+        Public Sub New(ByVal c As syntax_collection, ByVal ParamArray ms() As matching)
+            MyBase.New(c)
             assert(Not isemptyarray(ms))
             Me.ms = ms
             ' TODO: find a way to sort the matchings to avoid manual sorting in syntaxer rule file.
         End Sub
 
-        '@VisibleForTesting
-        Public Sub New(ByVal c As syntax_collection, ByVal ParamArray ms() As matching)
-            Me.New(c, Nothing, ms)
-        End Sub
-
-        Public Sub New(ByVal c As syntax_collection,
-                       ByVal ignore_types As unordered_set(Of UInt32),
-                       ByVal ParamArray ms() As UInt32)
-            Me.New(c, ignore_types, matching_creator.create_matchings(c, ms))
-        End Sub
-
         Public Sub New(ByVal c As syntax_collection, ByVal ParamArray ms() As UInt32)
-            Me.New(c, Nothing, matching_creator.create_matchings(c, ms))
+            Me.New(c, matching_creator.create_matchings(c, ms))
         End Sub
 
         Private NotInheritable Class best_match_result
@@ -58,7 +45,6 @@ Partial Public NotInheritable Class syntaxer
             Dim max_failure As UInt32 = 0
             For i As Int32 = 0 To array_size_i(ms) - 1
                 assert(Not ms(i) Is Nothing)
-                jump_over_ignore_types(v, p)
                 Dim r As one_of(Of result, failure) = ms(i).match(v, p)
                 If r.is_first() Then
                     Return one_of(Of best_match_result, failure).of_first(New best_match_result(CUInt(i), r.first()))
@@ -76,7 +62,6 @@ Partial Public NotInheritable Class syntaxer
             Dim max_failure As UInt32 = 0
             For i As Int32 = 0 To array_size_i(ms) - 1
                 assert(Not ms(i) Is Nothing)
-                jump_over_ignore_types(v, p)
                 Dim r As one_of(Of result, failure) = ms(i).match(v, p)
                 If r.is_second() Then
                     If max_failure < r.second().pos Then

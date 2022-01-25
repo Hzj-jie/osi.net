@@ -17,15 +17,18 @@ Partial Public NotInheritable Class syntaxer
         Public Const ignore_types_separator As Char = character.comma
         Public Shared ReadOnly ignore_types_separators() As String = {Convert.ToString(character.comma)}
         Private Shared ReadOnly empty_surround_strs() As String = Nothing
-        Private ReadOnly m As New map(Of String, Func(Of String, Boolean))()
-        Private ReadOnly ignores As New unordered_set(Of UInt32)()
-        Private ReadOnly roots As New vector(Of UInt32)()
+        Private ReadOnly m As map(Of String, Func(Of String, Boolean))
+        Private ReadOnly ignores As [set](Of UInt32)
+        Private ReadOnly roots As vector(Of UInt32)
         Private ReadOnly collection As syntax_collection
 
         Public Sub New(ByVal collection As syntax_collection)
             assert(Not collection Is Nothing)
+            m = New map(Of String, Func(Of String, Boolean))()
             m.emplace(command_ignore_types, AddressOf ignore_types)
             m.emplace(command_root_types, AddressOf root_types)
+            ignores = New [set](Of UInt32)()
+            roots = New vector(Of UInt32)()
             Me.collection = collection
         End Sub
 
@@ -71,7 +74,7 @@ Partial Public NotInheritable Class syntaxer
             For i As UInt32 = 0 To v.size() - uint32_1
                 Dim j As UInt32 = 0
                 If collection.token_type(v(i), j) Then
-                    Dim p As tuple(Of unordered_set(Of UInt32).iterator, Boolean) = Nothing
+                    Dim p As tuple(Of [set](Of UInt32).iterator, Boolean) = Nothing
                     p = ignores.emplace(j)
                     If Not p.second Then
                         raise_error(error_type.user, "failed to add type ", j)

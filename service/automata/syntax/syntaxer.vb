@@ -29,17 +29,13 @@ Partial Public NotInheritable Class syntaxer
     Private ReadOnly root_types As vector(Of UInt32)
     Private ReadOnly mg As matching_group
 
-    Public Sub New(ByVal collection As syntax_collection,
-                   ByVal ignore_types As unordered_set(Of UInt32),
-                   ByVal root_types As vector(Of UInt32))
+    Public Sub New(ByVal collection As syntax_collection, ByVal root_types As vector(Of UInt32))
         assert(Not collection Is Nothing)
         assert(collection.complete())
         assert(Not root_types.null_or_empty())
         Me.collection = collection
         Me.root_types = root_types
-        Me.mg = New matching_group(collection,
-                                   ignore_types,
-                                   arrays.type_erasure(Of matching, syntax)(+collection.get(+root_types)))
+        Me.mg = New matching_group(collection, arrays.type_erasure(Of matching, syntax)(+collection.get(+root_types)))
     End Sub
 
     ' @VisibleForTesting
