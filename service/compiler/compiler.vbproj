@@ -262,6 +262,9 @@
     <Content Include="b2style\lib\b2style_stdio.h" />
     <Content Include="b2style\lib\b2style_types.h" />
     <Content Include="b2style\lib\b2style_ufloat.h" />
+    <Content Include="b2style\lib\testing\assert.h" />
+    <Content Include="b2style\lib\testing.h" />
+    <Content Include="b2style\lib\testing\types.h" />
     <Content Include="bstyle\lib\bstyle.h" />
     <Content Include="bstyle\lib\bstyle_constants.h" />
     <Content Include="bstyle\lib\bstyle_types.h" />

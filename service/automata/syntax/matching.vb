@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
-Imports envs = osi.root.envs
 
 Partial Public NotInheritable Class syntaxer
     Public MustInherit Class matching
@@ -67,6 +66,7 @@ Partial Public NotInheritable Class syntaxer
             End Function
         End Class
 
+        ' TODO: Return tuple(Of result, failure), so the longest match from any_matching_group can be preserved.
         Public MustOverride Function match(ByVal v As vector(Of typed_word),
                                            ByVal p As UInt32) As one_of(Of result, failure)
 

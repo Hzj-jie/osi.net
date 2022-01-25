@@ -96,23 +96,23 @@ Partial Public NotInheritable Class b2style
 
             Public Function resolve(ByVal l As code_gens(Of typed_node_writer),
                                     ByVal n As typed_node,
-                                    ByRef extended_type_name As String) As Boolean
+                                    ByRef extended_type_name As String) As [optional](Of Boolean)
                 assert(Not n Is Nothing)
                 Dim name As String = template_name(n)
                 Dim d As definition = Nothing
                 If Not m.find(name, d) Then
-                    Return False
+                    Return [optional].empty(Of Boolean)()
                 End If
                 assert(Not d Is Nothing)
                 Dim types As vector(Of String) = Nothing
                 If Not template_types(l, n, types) Then
-                    Return False
+                    Return [optional].of(False)
                 End If
                 If Not tbr.with_types(types).build(n, d.injector) Then
-                    Return False
+                    Return [optional].of(False)
                 End If
                 extended_type_name = d.template.extended_type_name(types)
-                Return True
+                Return [optional].of(True)
             End Function
         End Class
 
@@ -135,8 +135,9 @@ Partial Public NotInheritable Class b2style
                                     ByRef extended_type_name As String) As Boolean
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    If s.t.resolve(l, n, extended_type_name) Then
-                        Return True
+                    Dim r As [optional](Of Boolean) = s.t.resolve(l, n, extended_type_name)
+                    If r Then
+                        Return +r
                     End If
                     s = s.parent
                 End While
