@@ -80,8 +80,8 @@ Partial Public NotInheritable Class b2style
                            with(name.of("raw-type-name")).
                            with(Of _function)().
                            with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).
-                           with(code_gen.of_input_without_spacing(Of typed_node_writer)("type-param")).
-                           with(code_gen.of_input_without_spacing(Of typed_node_writer)("reference")).
+                           with(code_gen.of_only_descendant_str(Of typed_node_writer)("type-param")).
+                           with(code_gen.of_only_descendant_str(Of typed_node_writer)("reference")).
                            with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
                                      "value-definition",
                                      scope.variable_proxy.define(),

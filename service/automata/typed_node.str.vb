@@ -45,6 +45,21 @@ Partial Public NotInheritable Class typed_node
         Return Convert.ToString(debug_str(New StringBuilder()))
     End Function
 
+    Public Function only_descendant_str(ByRef o As String) As Boolean
+        Dim n As typed_node = Nothing
+        If Not only_descendant(n) Then
+            Return False
+        End If
+        o = n.word().str()
+        Return True
+    End Function
+
+    Public Function only_descendant_str() As String
+        Dim r As String = Nothing
+        assert(only_descendant_str(r))
+        Return r
+    End Function
+
     ' TODO: The space character should be defined by ignore-types.
     Public Function input() As String
         Return input(" ")

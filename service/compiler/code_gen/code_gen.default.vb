@@ -190,8 +190,30 @@ Public NotInheritable Class code_gen
                    End Function)
     End Function
 
+    Public Shared Function of_only_descendant_str(Of WRITER As {object_list_writer, New}) _
+                                                 (ByVal name As String) As Action(Of code_gens(Of WRITER))
+        Return code_gen_delegate(Of WRITER).of(
+                   name,
+                   Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
+                       assert(Not n Is Nothing)
+                       assert(Not o Is Nothing)
+                       Return o.append(n.only_descendant_str())
+                   End Function)
+    End Function
+
+    Public Shared Function of_input(Of WRITER As {object_list_writer, New}) _
+                                   (ByVal name As String) As Action(Of code_gens(Of WRITER))
+        Return code_gen_delegate(Of WRITER).of(
+                   name,
+                   Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
+                       assert(Not n Is Nothing)
+                       assert(Not o Is Nothing)
+                       Return o.append(n.input())
+                   End Function)
+    End Function
+
     Public Shared Function of_input_without_spacing(Of WRITER As {object_list_writer, New}) _
-                                               (ByVal name As String) As Action(Of code_gens(Of WRITER))
+                                                   (ByVal name As String) As Action(Of code_gens(Of WRITER))
         Return code_gen_delegate(Of WRITER).of(
                    name,
                    Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
