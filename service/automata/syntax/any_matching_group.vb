@@ -14,10 +14,12 @@ Partial Public NotInheritable Class syntaxer
             MyBase.New(c, m)
         End Sub
 
+        ' @VisibleForTesting
         Public Sub New(ByVal c As syntax_collection, ByVal m As UInt32)
             MyBase.New(c, m)
         End Sub
 
+        ' @VisibleForTesting
         Public Sub New(ByVal c As syntax_collection, ByVal ms() As UInt32)
             MyBase.New(c, ms)
         End Sub

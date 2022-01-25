@@ -14,10 +14,17 @@ Partial Public NotInheritable Class syntaxer
 
         <ThreadStatic> Private Shared s As map(Of UInt32, UInt32)
         Protected ReadOnly c As syntax_collection
+        Private ReadOnly ignore_types As unordered_set(Of UInt32)
 
-        Protected Sub New(ByVal c As syntax_collection)
+        Protected Sub New(ByVal c As syntax_collection,
+                          ByVal ignore_types As unordered_set(Of UInt32))
             assert(Not c Is Nothing)
             Me.c = c
+            Me.ignore_types = ignore_types
+        End Sub
+
+        Protected Sub New(ByVal c As syntax_collection)
+            Me.New(c, Nothing)
         End Sub
 
         Public NotInheritable Class result
@@ -147,6 +154,25 @@ Partial Public NotInheritable Class syntaxer
             End If
         End Sub
 
+        Private Function ignore_type(ByVal w As typed_word) As Boolean
+            assert(Not w Is Nothing)
+            assert(Not ignore_types Is Nothing)
+            Return ignore_types.find(w.type) <> ignore_types.end()
+        End Function
+
+        Protected Sub jump_over_ignore_types(ByVal v As vector(Of typed_word), ByRef p As UInt32)
+            If ignore_types.null_or_empty() Then
+                Return
+            End If
+            While v.size() > p
+                assert(Not v(p) Is Nothing)
+                If Not ignore_type(v(p)) Then
+                    Exit While
+                End If
+                p += uint32_1
+            End While
+        End Sub
+
         Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
             Return CompareTo(cast(Of matching)(obj, False))
         End Function
@@ -167,14 +193,17 @@ Partial Public NotInheritable Class syntaxer
             Return New single_matching(c, m)
         End Function
 
-        Public Shared Function create(ByVal c As syntax_collection, ByVal ms() As UInt32) As matching
+        Public Shared Function create(ByVal c As syntax_collection,
+                                      ByVal ignore_types As unordered_set(Of UInt32),
+                                      ByVal ms() As UInt32) As matching
             If isemptyarray(ms) Then
                 Return create(c)
             End If
-            Return New matching_group(c, create_matchings(c, ms))
+            Return New matching_group(c, ignore_types, create_matchings(c, ms))
         End Function
 
         Public Shared Function create(ByVal c As syntax_collection,
+                                      ByVal ignore_types As unordered_set(Of UInt32),
                                       ByVal m1 As UInt32,
                                       ByVal m2 As UInt32,
                                       ByVal ParamArray ms() As UInt32) As matching
@@ -187,7 +216,7 @@ Partial Public NotInheritable Class syntaxer
                     m(i + 2) = ms(i)
                 Next
             End If
-            Return create(c, m)
+            Return create(c, ignore_types, m)
         End Function
 
         Private Shared Function create_matchings(Of T) _
@@ -212,8 +241,13 @@ Partial Public NotInheritable Class syntaxer
         End Function
 
         Public Shared Function create_matchings(ByVal c As syntax_collection,
+                                                ByVal ignore_types As unordered_set(Of UInt32),
                                                 ByVal ParamArray ms()() As UInt32) As matching()
-            Return create_matchings(c, ms, AddressOf create)
+            Return create_matchings(c,
+                                    ms,
+                                    Function(ByVal x As syntax_collection, ByVal y() As UInt32) As matching
+                                        Return create(x, ignore_types, y)
+                                    End Function)
         End Function
 
         Private Shared Function create_matching(ByVal s As String,
@@ -245,6 +279,7 @@ Partial Public NotInheritable Class syntaxer
 
         Private Shared Function create_without_space_chars(ByVal i As String,
                                                            ByVal collection As syntax_collection,
+                                                           ByVal ignore_types As unordered_set(Of UInt32),
                                                            ByRef pos As UInt32,
                                                            ByRef o As matching) As Boolean
             If strlen(i) <= pos Then
@@ -274,7 +309,7 @@ Partial Public NotInheritable Class syntaxer
                         Return False
                     End If
                 Next
-                o = New matching_group(collection, ms)
+                o = New matching_group(collection, ignore_types, ms)
                 pos = CUInt(e + 1)
                 While pos < strlen(i)
                     If i(CInt(pos)) = characters.optional_matching Then
@@ -305,10 +340,11 @@ Partial Public NotInheritable Class syntaxer
 
         Public Shared Function create(ByVal i As String,
                                       ByVal collection As syntax_collection,
+                                      ByVal ignore_types As unordered_set(Of UInt32),
                                       ByRef pos As UInt32,
                                       ByRef o As matching) As Boolean
             consume_space_chars(i, pos)
-            If create_without_space_chars(i, collection, pos, o) Then
+            If create_without_space_chars(i, collection, ignore_types, pos, o) Then
                 consume_space_chars(i, pos)
                 Return True
             End If
