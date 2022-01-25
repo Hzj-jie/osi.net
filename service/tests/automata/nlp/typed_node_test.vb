@@ -17,7 +17,7 @@ Public NotInheritable Class typed_node_test
         assertion.is_true(nlp.of(nlp_test_rules.nlexer_rule.as_text(),
                                  nlp_test_rules.syntaxer_rule.as_text(),
                                  r))
-        Const code As String = "string main() { return ""\""""; }"
+        Const code As String = "string main ( ) { return ""\"""" ; }"
         Dim n As typed_node = Nothing
         assertion.is_true(r.parse(code, root:=n))
         assertion.equal(code, n.input())
@@ -32,25 +32,20 @@ Public NotInheritable Class typed_node_test
         Const code As String = "string main() { return ""\""""; }"
         Dim n As typed_node = Nothing
         assertion.is_true(r.parse(code, root:=n))
-        assertion.equal(n.word_count(), CUInt(14))
+        assertion.equal(n.word_count(), CUInt(9))
         assertion.array_equal(streams.range(0, n.word_count()).
                                       map(Function(ByVal id As Int32) As String
                                               Return n.word(CUInt(id)).type_name
                                           End Function).
                                       to_array(), {
                                   "name",
-                                  "blank",
                                   "name",
                                   "start-bracket",
                                   "end-bracket",
-                                  "blank",
                                   "start-paragraph",
-                                  "blank",
                                   "KW-return",
-                                  "blank",
                                   "string",
                                   "semi-colon",
-                                  "blank",
                                   "end-paragraph"
                               })
     End Sub

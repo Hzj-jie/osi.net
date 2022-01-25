@@ -183,24 +183,17 @@ Namespace syntaxer
             Return assert_node(n, id, type, start, start + uint32_1)
         End Function
 
-        Public Overrides Function run() As Boolean
+        Private Function successful_case() As Boolean
             Dim s As syntax = build_syntax()
             Dim v As vector(Of typed_word) = typed_word.fakes(types.name,
-                                                              types.blank,
-                                                              types.blank,
                                                               types.name,
                                                               types.start_bracket,
-                                                              types.blank,
                                                               types.name,
-                                                              types.blank,
                                                               types.name,
                                                               types.comma,
-                                                              types.blank,
-                                                              types.blank,
                                                               types.name,
                                                               types.name,
                                                               types.end_bracket,
-                                                              types.blank,
                                                               types.start_paragraph,
                                                               types.name,
                                                               types.assignment,
@@ -214,67 +207,69 @@ Namespace syntaxer
             assertion.equal(r.first().pos, v.size())
             Dim n As typed_node = typed_node.of_root(v)
             n.attach(r.first().nodes)
-            If assert_node(n, 0, types.function, 0, 22) Then
-                n = n.subnodes(0)
-                If assert_node(n, 0, types.name, 0) AndAlso
-                   assert_node(n, 1, types.name, 3) AndAlso
-                   assert_node(n, 2, types.start_bracket, 4) AndAlso
-                   assert_node(n, 3, types.paramlist, 6, 14) AndAlso
-                   assert_node(n, 4, types.end_bracket, 14) AndAlso
-                   assert_node(n, 5, types.multi_sentence_paragraph, 16, 22) Then
-                    If assert_node(n.subnodes(3), 0, types.param_with_comma, 6, 10) AndAlso
-                       assert_node(n.subnodes(3), 1, types.param, 12, 14) Then
-                        If assert_node(n.subnodes(3).subnodes(0), 0, types.param, 6, 9) AndAlso
-                           assert_node(n.subnodes(3).subnodes(0), 1, types.comma, 9) Then
-                            assert_node(n.subnodes(3).subnodes(0).subnodes(0), 0, types.name, 6)
-                            assert_node(n.subnodes(3).subnodes(0).subnodes(0), 1, types.name, 8)
-                        End If
-                        assert_node(n.subnodes(3).subnodes(1), 0, types.name, 12)
-                        assert_node(n.subnodes(3).subnodes(1), 1, types.name, 13)
+            If Not assert_node(n, 0, types.function, 0, 15) Then
+                Return False
+            End If
+            n = n.subnodes(0)
+            If assert_node(n, 0, types.name, 0) AndAlso
+               assert_node(n, 1, types.name, 1) AndAlso
+               assert_node(n, 2, types.start_bracket, 2) AndAlso
+               assert_node(n, 3, types.paramlist, 3, 8) AndAlso
+               assert_node(n, 4, types.end_bracket, 8) AndAlso
+               assert_node(n, 5, types.multi_sentence_paragraph, 9, 15) Then
+                If assert_node(n.subnodes(3), 0, types.param_with_comma, 3, 6) AndAlso
+                   assert_node(n.subnodes(3), 1, types.param, 6, 8) Then
+                    If assert_node(n.subnodes(3).subnodes(0), 0, types.param, 3, 5) AndAlso
+                       assert_node(n.subnodes(3).subnodes(0), 1, types.comma, 5) Then
+                        assert_node(n.subnodes(3).subnodes(0).subnodes(0), 0, types.name, 3)
+                        assert_node(n.subnodes(3).subnodes(0).subnodes(0), 1, types.name, 4)
                     End If
-                    n = n.subnodes(5)
-                    If assert_node(n, 0, types.start_paragraph, 16) AndAlso
-                       assert_node(n, 1, types.sentence, 17, 21) AndAlso
-                       assert_node(n, 2, types.end_paragraph, 21) Then
-                        n = n.subnodes(1)
-                        If assert_node(n, 0, types.value_clause, 17, 20) AndAlso
-                           assert_node(n, 1, types.semi_colon, 20) Then
-                            n = n.subnodes(0)
-                            If assert_node(n, 0, types.value, 17) AndAlso
-                               assert_node(n, 1, types.assignment, 18) AndAlso
-                               assert_node(n, 2, types.value, 19) Then
-                                assert_node(n.subnodes(0), 0, types.name, 17)
-                                assert_node(n.subnodes(2), 0, types.name, 19)
-                            End If
+                    assert_node(n.subnodes(3).subnodes(1), 0, types.name, 6)
+                    assert_node(n.subnodes(3).subnodes(1), 1, types.name, 7)
+                End If
+                n = n.subnodes(5)
+                If assert_node(n, 0, types.start_paragraph, 9) AndAlso
+                   assert_node(n, 1, types.sentence, 10, 14) AndAlso
+                   assert_node(n, 2, types.end_paragraph, 14) Then
+                    n = n.subnodes(1)
+                    If assert_node(n, 0, types.value_clause, 10, 13) AndAlso
+                       assert_node(n, 1, types.semi_colon, 13) Then
+                        n = n.subnodes(0)
+                        If assert_node(n, 0, types.value, 10) AndAlso
+                           assert_node(n, 1, types.assignment, 11) AndAlso
+                           assert_node(n, 2, types.value, 12) Then
+                            assert_node(n.subnodes(0), 0, types.name, 10)
+                            assert_node(n.subnodes(2), 0, types.name, 12)
                         End If
                     End If
                 End If
             End If
+            Return True
+        End Function
 
-            v = typed_word.fakes(types.name,
-                                 types.blank,
-                                 types.blank,
-                                 types.name,
-                                 types.start_bracket,
-                                 types.blank,
-                                 types.name,
-                                 types.blank,
-                                 types.name,
-                                 types.comma,
-                                 types.blank,
-                                 types.blank,
-                                 types.name,
-                                 types.name,
-                                 types.end_bracket,
-                                 types.blank,
-                                 types.start_paragraph,
-                                 types.name,
-                                 types.equal,
-                                 types.name,
-                                 types.semi_colon,
-                                 types.end_paragraph)
+        Private Function failed_case() As Boolean
+            Dim s As syntax = build_syntax()
+            Dim v As vector(Of typed_word) = typed_word.fakes(types.name,
+                                                              types.name,
+                                                              types.start_bracket,
+                                                              types.name,
+                                                              types.name,
+                                                              types.comma,
+                                                              types.name,
+                                                              types.name,
+                                                              types.end_bracket,
+                                                              types.start_paragraph,
+                                                              types.name,
+                                                              types.equal,
+                                                              types.name,
+                                                              types.semi_colon,
+                                                              types.end_paragraph)
             assertion.is_false(s.match(v, 0).is_first())
             Return True
+        End Function
+
+        Public Overrides Function run() As Boolean
+            Return successful_case() AndAlso failed_case()
         End Function
     End Class
 End Namespace
