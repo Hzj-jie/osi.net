@@ -28,5 +28,17 @@ Partial Public Class checks(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Public Function equal(ByVal other As T) As Boolean
             Return check(Of IS_TRUE_FUNC).equal(i, other)
         End Function
+
+        Public Function not_equal(ByVal other As T) As Boolean
+            Return check(Of IS_TRUE_FUNC).not_equal(i, other)
+        End Function
+
+        Public Function is_null() As Boolean
+            Return check(Of IS_TRUE_FUNC).is_null(i)
+        End Function
+
+        Public Function is_not_null() As Boolean
+            Return check(Of IS_TRUE_FUNC).is_not_null(i)
+        End Function
     End Class
 End Class

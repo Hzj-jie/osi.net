@@ -38,11 +38,13 @@ Partial Public NotInheritable Class syntaxer
         Me.mg = New matching_group(collection, arrays.type_erasure(Of matching, syntax)(+collection.get(+root_types)))
     End Sub
 
+    ' @VisibleForTesting
     Public Shared Function debug_str(ByVal input As String, ByVal type_name As String) As String
         Return strcat(input, "(", strlen(input), ")", ":[", type_name, "]")
     End Function
 
     Private Function debug_str(ByVal v As vector(Of typed_word), ByVal p As UInt32) As String
+        assert(Not v Is Nothing)
         Dim start As UInt32 = CUInt(max(0, p - 6))
         Dim [end] As UInt32 = CUInt(min(start + 13, v.size()))
         Dim r As New StringBuilder()
@@ -61,6 +63,24 @@ Partial Public NotInheritable Class syntaxer
         Return Convert.ToString(r)
     End Function
 
+    Private Sub log_unmatched(ByVal v As vector(Of typed_word), ByVal p As UInt32, ByVal f As matching.failure)
+        assert(Not v Is Nothing)
+        Dim l As Func(Of UInt32, String()) = Function(ByVal pos As UInt32) As String()
+                                                 Return {
+                                                             If(pos < v.size(), v(pos).str(), "{END-OF-INPUT}"),
+                                                             " @ ",
+                                                             Convert.ToString(pos),
+                                                             " - ",
+                                                             debug_str(v, pos)
+                                                         }
+                                             End Function
+        raise_error(error_type.user,
+                    "[syntaxer] Cannot match token ",
+                    l(p),
+                    ". Longest match ",
+                    l(f.pos))
+    End Sub
+
     Public Function match(ByVal v As vector(Of typed_word)) As [optional](Of typed_node)
         assert(Not root_types.null_or_empty())
         If v.null_or_empty() Then
@@ -71,20 +91,7 @@ Partial Public NotInheritable Class syntaxer
         While p < v.size()
             Dim m As one_of(Of matching.result, matching.failure) = mg.match(v, p)
             If m.is_second() Then
-                Dim l As Func(Of UInt32, String()) = Function(ByVal pos As UInt32) As String()
-                                                         Return {
-                                                             If(pos < v.size(), v(pos).str(), "{END-OF-INPUT}"),
-                                                             " @ ",
-                                                             Convert.ToString(pos),
-                                                             " - ",
-                                                             debug_str(v, pos)
-                                                         }
-                                                     End Function
-                raise_error(error_type.user,
-                            "[syntaxer] Cannot match token ",
-                            l(p),
-                            ". Longest match ",
-                            l(m.second().pos))
+                log_unmatched(v, p, m.second())
                 Return [optional].empty(Of typed_node)()
             End If
             assert(Not m.first() Is Nothing)

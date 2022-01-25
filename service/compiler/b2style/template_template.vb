@@ -156,9 +156,7 @@ Partial Public NotInheritable Class b2style
 
                 Public Overrides Sub at(ByRef r As String)
                     If debug_dump Then
-                        raise_error(error_type.user,
-                                    "Debug dump of template_template ",
-                                    r.Replace(";", ";" + newline.incode()).Replace("}", "}" + newline.incode()))
+                        raise_error(error_type.user, "Debug dump of template_template ", r)
                     End If
                 End Sub
             End Class

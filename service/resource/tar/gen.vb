@@ -20,17 +20,25 @@ Partial Public NotInheritable Class tar
             Return o
         End Function
 
+        Public Shared Function reader_of(ByVal input As MemoryStream) As reader
+            Return reader.in_mem(input)
+        End Function
+
+        Public Shared Function reader_of(ByVal input() As Byte) As reader
+            Return reader_of(memory_stream.of(input))
+        End Function
+
         Public Shared Sub dump(ByVal input As MemoryStream, ByVal root As String)
-            reader.in_mem(input).foreach(Sub(ByVal file As String, ByVal m As MemoryStream)
-                                             assert(Not file Is Nothing)
-                                             assert(Not m Is Nothing)
-                                             Try
-                                                 Directory.GetParent(Path.Combine(root, file)).Create()
-                                             Catch ex As Exception
-                                                 assert(False, ex)
-                                             End Try
-                                             IO.File.WriteAllBytes(Path.Combine(root, file), m.bytes())
-                                         End Sub)
+            reader_of(input).foreach(Sub(ByVal file As String, ByVal m As MemoryStream)
+                                         assert(Not file Is Nothing)
+                                         assert(Not m Is Nothing)
+                                         Try
+                                             Directory.GetParent(Path.Combine(root, file)).Create()
+                                         Catch ex As Exception
+                                             assert(False, ex)
+                                         End Try
+                                         IO.File.WriteAllBytes(Path.Combine(root, file), m.bytes())
+                                     End Sub)
         End Sub
 
         Public Shared Sub dump(ByVal input As MemoryStream)
