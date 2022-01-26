@@ -3,6 +3,7 @@ INCLUDE ../shared/syntaxer_rule.txt
 
 root-type [base-root-type, namespace, class, template]
 
+right-shift greater-than greater-than
 raw-name-with-dot raw-name dot
 # Support a.N::b function call and a.::N::b.
 # Otherwise it should be name [double-colon]? [raw-name-with-double-colon]* [raw-name-with-dot]* raw-name

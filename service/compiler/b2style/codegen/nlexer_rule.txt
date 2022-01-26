@@ -28,7 +28,8 @@ not !
 self-inc \+\+
 self-dec --
 left-shift <<
-right-shift >>
+# right-shift is conflict with template <T<T2>>
+# right-shift >>
 
 self-add \+=
 self-minus -=
