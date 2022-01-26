@@ -22,10 +22,6 @@ Public NotInheritable Class b2style_self_test
     Public Const success As String = "Success: "
     Public Const no_extra_inforamtion As String = "no extra information."
     Private Shared filter As argument(Of String)
-    Private Shared ReadOnly ignored_tests() As String = {
-        "class-function-call-with-spaces.txt",
-        "template_class_with_ref.txt"
-    }
 
     <test>
     Private Shared Sub run()
@@ -43,10 +39,6 @@ Public NotInheritable Class b2style_self_test
         If Not name.match_pattern(filter Or "*") AndAlso
            Not name.match_pattern((filter Or "*") + ".txt") Then
             raise_error(error_type.user, "Ignore test case ", name)
-            Return
-        End If
-        If ignored_tests.index_of(name) <> npos Then
-            raise_error(error_type.warning, "Ignore known bad test case ", name)
             Return
         End If
         raise_error(error_type.user, "Execute test case ", name)

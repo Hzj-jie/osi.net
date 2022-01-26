@@ -14,19 +14,14 @@ Partial Public NotInheritable Class syntaxer
             MyBase.New(c, m)
         End Sub
 
+        '@VisibleForTesting
         Public Sub New(ByVal c As syntax_collection, ByVal m As UInt32)
             MyBase.New(c, m)
         End Sub
 
+        '@VisibleForTesting
         Public Sub New(ByVal c As syntax_collection, ByVal ms() As UInt32)
             MyBase.New(c, ms)
-        End Sub
-
-        Public Sub New(ByVal c As syntax_collection,
-                       ByVal m1 As UInt32,
-                       ByVal m2 As UInt32,
-                       ByVal ParamArray ms() As UInt32)
-            MyBase.New(c, m1, m2, ms)
         End Sub
 
         Public Overrides Function match(ByVal v As vector(Of typed_word),
