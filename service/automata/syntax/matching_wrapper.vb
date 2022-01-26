@@ -13,25 +13,20 @@ Partial Public NotInheritable Class syntaxer
 
         Private ReadOnly m As matching
 
-        Public Sub New(ByVal c As syntax_collection, ByVal m As matching)
+        Protected Sub New(ByVal c As syntax_collection, ByVal m As matching)
             MyBase.New(c)
             assert(Not m Is Nothing)
             Me.m = m
         End Sub
 
-        Public Sub New(ByVal c As syntax_collection, ByVal m As UInt32)
+        '@VisibleForTesting
+        Protected Sub New(ByVal c As syntax_collection, ByVal m As UInt32)
             Me.New(c, matching_creator.create(c, m))
         End Sub
 
-        Public Sub New(ByVal c As syntax_collection, ByVal ms() As UInt32)
+        '@VisibleForTesting
+        Protected Sub New(ByVal c As syntax_collection, ByVal ms() As UInt32)
             Me.New(c, matching_creator.create(c, ms))
-        End Sub
-
-        Public Sub New(ByVal c As syntax_collection,
-                       ByVal m1 As UInt32,
-                       ByVal m2 As UInt32,
-                       ByVal ParamArray ms() As UInt32)
-            Me.New(c, matching_creator.create(c, m1, m2, ms))
         End Sub
 
         Public Overrides Function match(ByVal v As vector(Of typed_word),

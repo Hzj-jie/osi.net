@@ -167,27 +167,11 @@ Partial Public NotInheritable Class syntaxer
             Return New single_matching(c, m)
         End Function
 
-        Public Shared Function create(ByVal c As syntax_collection, ByVal ms() As UInt32) As matching
+        Public Shared Function create(ByVal c As syntax_collection, ByVal ParamArray ms() As UInt32) As matching
             If isemptyarray(ms) Then
                 Return create(c)
             End If
             Return New matching_group(c, create_matchings(c, ms))
-        End Function
-
-        Public Shared Function create(ByVal c As syntax_collection,
-                                      ByVal m1 As UInt32,
-                                      ByVal m2 As UInt32,
-                                      ByVal ParamArray ms() As UInt32) As matching
-            Dim m() As UInt32 = Nothing
-            ReDim m(2 + array_size_i(ms) - 1)
-            m(0) = m1
-            m(1) = m2
-            If Not isemptyarray(ms) Then
-                For i As Int32 = 0 To array_size_i(ms) - 1
-                    m(i + 2) = ms(i)
-                Next
-            End If
-            Return create(c, m)
         End Function
 
         Private Shared Function create_matchings(Of T) _
