@@ -8,11 +8,14 @@ Imports osi.root.formation
 Imports osi.service.constructor
 
 Partial Public Class scope(Of T As scope(Of T))
+    Implements IDisposable
+
     <ThreadStatic> Private Shared in_thread As T
     Protected ReadOnly parent As T
     ' This variable has no functionality, but only ensures the start_scope() won't be executed multiple times.
     Private child As T = Nothing
     Public ReadOnly root As lazier(Of T) = lazier.of(AddressOf get_root)
+    Private ReadOnly ds As New vector(Of Action)()
 
     Protected Sub New(ByVal parent As T)
         Me.parent = parent
@@ -30,15 +33,30 @@ Partial Public Class scope(Of T As scope(Of T))
         Return child
     End Function
 
-    Public Function end_scope() As T
+    Public Sub when_end_scope(ByVal a As Action)
+        assert(Not a Is Nothing)
+        ds.emplace_back(a)
+    End Sub
+
+    Public Function without_end_scope() As IDisposable
+        Return defer.to(Sub()
+                            in_thread = Nothing
+                        End Sub)
+    End Function
+
+    Public Sub Dispose() Implements IDisposable.Dispose
         assert(object_compare(in_thread, Me) = 0)
+        Dim i As Int64 = ds.size() - 1
+        While i >= 0
+            ds(CUInt(i))()
+            i -= 1
+        End While
         If Not parent Is Nothing Then
             assert(object_compare(parent.child, Me) = 0)
             parent.child = Nothing
         End If
         in_thread = parent
-        Return parent
-    End Function
+    End Sub
 
     Public Shared Function current() As T
         assert(Not in_thread Is Nothing)
@@ -53,7 +71,7 @@ Partial Public Class scope(Of T As scope(Of T))
         Return s
     End Function
 
-    Public Function this() As T
+    Private Function this() As T
         Return direct_cast(Of T)(Me)
     End Function
 

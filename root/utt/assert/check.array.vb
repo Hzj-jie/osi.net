@@ -5,7 +5,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.root.template
 
 Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))

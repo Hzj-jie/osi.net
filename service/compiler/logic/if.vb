@@ -10,7 +10,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class _if
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly v As String
         Private ReadOnly true_path As paragraph
@@ -36,7 +36,7 @@ Namespace logic
             Me.false_path = false_path
         End Sub
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             Dim var As variable = Nothing
             If Not variable.of(v, o, var) Then
@@ -44,12 +44,12 @@ Namespace logic
             End If
 
             Dim true_o As New vector(Of String)()
-            If Not true_path.export(true_o) Then
+            If Not true_path.build(true_o) Then
                 Return False
             End If
 
             Dim false_o As New vector(Of String)()
-            If Not false_path Is Nothing AndAlso Not false_path.export(false_o) Then
+            If Not false_path Is Nothing AndAlso Not false_path.build(false_o) Then
                 Return False
             End If
             false_o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(true_o.size() + uint32_1)))

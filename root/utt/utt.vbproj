@@ -58,7 +58,8 @@
     <Compile Include="app.vb" />
     <Compile Include="assert\assertion.vb" />
     <Compile Include="assert\assertions.vb" />
-    <Compile Include="assert\checks.vector.vb" />
+    <Compile Include="assert\checks_of.vector.vb" />
+    <Compile Include="assert\checks_of.array.vb" />
     <Compile Include="assert\checks_of.double.vb" />
     <Compile Include="assert\checks_of.optional.vb" />
     <Compile Include="assert\check.array.vb" />

@@ -14,8 +14,7 @@ Namespace logic
     Public NotInheritable Class variable_test
         <test>
         Private Shared Sub primitive()
-            Dim s As New scope()
-            Using defer.to(AddressOf s.end_scope)
+            Using s As New scope()
                 assertion.is_true(s.variables().define_stack("abc", scope.type_t.variable_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
@@ -31,8 +30,7 @@ Namespace logic
 
         <test>
         Private Shared Sub heap_ptr()
-            Dim s As New scope()
-            Using defer.to(AddressOf s.end_scope)
+            Using s As New scope()
                 assertion.is_true(s.variables().define_heap("abc", scope.type_t.variable_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
@@ -48,8 +46,7 @@ Namespace logic
 
         <test>
         Private Shared Sub heap()
-            Dim s As New scope()
-            Using defer.to(AddressOf s.end_scope)
+            Using s As New scope()
                 assertion.is_true(s.variables().define_heap("abc", scope.type_t.variable_type))
                 assertion.is_true(s.variables().define_stack("i", scope.type_t.ptr_type))
                 Dim v As New vector(Of String)()
@@ -73,8 +70,7 @@ Namespace logic
 
         <test>
         Private Shared Sub nested_heap()
-            Dim s As New scope()
-            Using defer.to(AddressOf s.end_scope)
+            Using s As New scope()
                 assertion.is_true(s.variables().define_heap("abc", scope.type_t.variable_type))
                 assertion.is_true(s.variables().define_heap("def", scope.type_t.variable_type))
                 assertion.is_true(s.variables().define_stack("i", scope.type_t.ptr_type))

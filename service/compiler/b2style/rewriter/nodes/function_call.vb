@@ -67,7 +67,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
-            Return build(n.child(0).children_word_str(), n, o)
+            Return build(n.child(0).input_without_ignored(), n, o)
         End Function
     End Class
 End Class

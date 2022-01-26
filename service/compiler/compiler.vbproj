@@ -166,9 +166,9 @@
     <Compile Include="logic\do_until.vb" />
     <Compile Include="logic\do_while.vb" />
     <Compile Include="logic\errors.vb" />
-    <Compile Include="logic\exportable.vb" />
+    <Compile Include="logic\instruction_gen.vb" />
     <Compile Include="logic\compares.vb" />
-    <Compile Include="logic\exportable_source_wrapper.vb" />
+    <Compile Include="logic\instruction_gen_wrapper.vb" />
     <Compile Include="bstyle\logic\nodes\for_loop.vb" />
     <Compile Include="logic\interrupt.vb" />
     <Compile Include="logic\copy_const.vb" />
@@ -187,7 +187,6 @@
     <Compile Include="scope.vb" />
     <Compile Include="logic\move.vb" />
     <Compile Include="logic\array_operators.vb" />
-    <Compile Include="scope_wrapper.vb" />
     <Compile Include="logic\stop.vb" />
     <Compile Include="logic\ternary_operator.vb" />
     <Compile Include="logic\type.vb" />
@@ -263,6 +262,9 @@
     <Content Include="b2style\lib\b2style_stdio.h" />
     <Content Include="b2style\lib\b2style_types.h" />
     <Content Include="b2style\lib\b2style_ufloat.h" />
+    <Content Include="b2style\lib\testing\assert.h" />
+    <Content Include="b2style\lib\testing.h" />
+    <Content Include="b2style\lib\testing\types.h" />
     <Content Include="bstyle\lib\bstyle.h" />
     <Content Include="bstyle\lib\bstyle_constants.h" />
     <Content Include="bstyle\lib\bstyle_types.h" />

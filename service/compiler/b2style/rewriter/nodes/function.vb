@@ -24,10 +24,9 @@ Partial Public NotInheritable Class b2style
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Using New scope_wrapper()
-                Dim function_name As String = _namespace.bstyle_format.of(n.child(1).children_word_str())
+            Dim function_name As String = _namespace.bstyle_format.of(n.child(1).input_without_ignored())
+            Using scope.current().start_scope().current_function().define(function_name)
                 Dim fo As New typed_node_writer()
-                scope.current().current_function().define(function_name)
                 Return l.of_all_children(n).build(fo) AndAlso
                        o.append(scope.current().call_hierarchy().filter(function_name, AddressOf fo.dump))
             End Using

@@ -740,6 +740,21 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), "10012002")
     End Sub
 
+    <test>
+    Private Shared Sub test_assert()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.test_assert.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertions.of(io.output().Split(character.newline)).equal(
+            b2style_self_test.failure + b2style_self_test.no_extra_inforamtion,
+            b2style_self_test.success + b2style_self_test.no_extra_inforamtion,
+            b2style_self_test.total_assertions + "2",
+            "")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

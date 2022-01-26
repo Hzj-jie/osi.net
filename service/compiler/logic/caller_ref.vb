@@ -10,7 +10,7 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     Public NotInheritable Class _caller_ref
         Inherits anchor_caller
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly name As String
 

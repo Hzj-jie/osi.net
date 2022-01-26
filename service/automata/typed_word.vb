@@ -16,7 +16,6 @@ Public NotInheritable Class typed_word
     Public ReadOnly len As UInt32
     ' Used by syntax to match the node type without using string comparison.
     Public ReadOnly type As UInt32
-    ' TODO: Remove
     Public ReadOnly type_name As String
 
     Public Sub New(ByVal ref As String,
@@ -72,7 +71,7 @@ Public NotInheritable Class typed_word
     End Function
 
     Public Function debug_str() As String
-        Return strcat("[", type, "]: ", str(), "@", start, "-", [end])
+        Return strcat("[", type_name, "]: ", str(), "@", start, "-", [end])
     End Function
 
     Public Overrides Function ToString() As String

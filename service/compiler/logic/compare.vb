@@ -26,7 +26,7 @@ Namespace logic
     End Class
 
     Public MustInherit Class compare_or_equal
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly result As String
         Private ReadOnly left As String
@@ -43,7 +43,7 @@ Namespace logic
 
         Protected MustOverride Function compare() As command
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             Dim result_var As variable = Nothing
             If Not variable.of(result, o, result_var) OrElse
                Not result_var.is_assignable_from_bool() Then

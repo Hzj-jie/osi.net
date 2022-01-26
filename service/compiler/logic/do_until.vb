@@ -10,7 +10,7 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     ' do { do() } until(var)
     Public NotInheritable Class _do_until
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly v As String
         Private ReadOnly p As paragraph
@@ -22,11 +22,11 @@ Namespace logic
             Me.p = p
         End Sub
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             Dim start As UInt32 = o.size()
 
-            If Not p.export(o) Then
+            If Not p.build(o) Then
                 Return False
             End If
 

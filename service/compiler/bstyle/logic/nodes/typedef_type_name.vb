@@ -19,7 +19,7 @@ Partial Public NotInheritable Class bstyle
         Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Return assert(o.append(n.children_word_str()))
+            Return assert(o.append(n.input_without_ignored()))
         End Function
     End Class
 End Class

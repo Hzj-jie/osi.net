@@ -35,8 +35,8 @@ Partial Public NotInheritable Class bstyle
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
             assert(Not length Is Nothing)
-            Dim t As String = type.children_word_str()
-            Dim n As String = name.children_word_str()
+            Dim t As String = type.input_without_ignored()
+            Dim n As String = name.input_without_ignored()
             Return l.typed(Of struct).define_in_heap(t, n, length, o) OrElse
                    l.typed(Of heap_name).build(
                        length,

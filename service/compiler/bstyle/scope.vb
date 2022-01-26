@@ -32,12 +32,4 @@ Partial Public NotInheritable Class bstyle
             fc = New call_hierarchy_t()
         End Sub
     End Class
-
-    Public NotInheritable Class scope_wrapper
-        Inherits scope_wrapper(Of scope)
-
-        Public Sub New()
-            MyBase.New(bstyle.scope.current())
-        End Sub
-    End Class
 End Class

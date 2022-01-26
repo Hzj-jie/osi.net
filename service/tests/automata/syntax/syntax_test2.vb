@@ -52,25 +52,13 @@ Namespace syntaxer
             value_with_comma
         End Enum
 
-        Private Shared ReadOnly ignore_types As [set](Of UInt32)
-
-        Shared Sub New()
-            ignore_types = New [set](Of UInt32)()
-            ignore_types.emplace(types.blank)
-        End Sub
-
-        Private ReadOnly c As syntax_collection
-
-        Public Sub New()
-            c = New syntax_collection()
-        End Sub
+        Private ReadOnly c As New syntax_collection()
 
         Private Function build_syntax() As syntax
             c.clear()
             Dim [function] As syntax = Nothing
             [function] = New syntax(c,
                                     types.function,
-                                    ignore_types,
                                     matching_creator.create(c, types.name),
                                     matching_creator.create(c, types.name),
                                     matching_creator.create(c, types.start_bracket),
@@ -82,38 +70,31 @@ Namespace syntaxer
             assert(c.set([function]))
             assert(c.set(New syntax(c,
                                     types.paramlist,
-                                    ignore_types,
                                     New multi_matching_group(c, New matching_delegate(c, types.param_with_comma)),
                                     New matching_delegate(c, types.param))))
             assert(c.set(New syntax(c,
                                     types.empty_paramlist,
-                                    ignore_types,
                                     matching_creator.create(c))))
             assert(c.set(New syntax(c,
                                     types.param_with_comma,
-                                    ignore_types,
                                     New matching_delegate(c, types.param),
                                     matching_creator.create(c, types.comma))))
             assert(c.set(New syntax(c,
                                     types.param,
-                                    ignore_types,
                                     matching_creator.create(c, types.name),
                                     matching_creator.create(c, types.name))))
             assert(c.set(New syntax(c,
                                     types.paragraph,
-                                    ignore_types,
                                     New matching_group(c,
                                                        New matching_delegate(c, types.sentence),
                                                        New matching_delegate(c, types.multi_sentence_paragraph)))))
             assert(c.set(New syntax(c,
                                     types.multi_sentence_paragraph,
-                                    ignore_types,
                                     matching_creator.create(c, types.start_paragraph),
                                     New multi_matching_group(c, New matching_delegate(c, types.sentence)),
                                     matching_creator.create(c, types.end_paragraph))))
             assert(c.set(New syntax(c,
                                     types.sentence,
-                                    ignore_types,
                                     New matching_group(c,
                                                        New matching_delegate(c, types.value_definition),
                                                        New matching_delegate(c, types.value_clause),
@@ -121,18 +102,15 @@ Namespace syntaxer
                                     matching_creator.create(c, types.semi_colon))))
             assert(c.set(New syntax(c,
                                     types.value_definition,
-                                    ignore_types,
                                     matching_creator.create(c, types.name),
                                     matching_creator.create(c, types.name))))
             assert(c.set(New syntax(c,
                                     types.value_clause,
-                                    ignore_types,
                                     New matching_delegate(c, types.value),
                                     matching_creator.create(c, types.assignment),
                                     New matching_delegate(c, types.value))))
             assert(c.set(New syntax(c,
                                     types.condition,
-                                    ignore_types,
                                     matching_creator.create(c, types.KW_if),
                                     matching_creator.create(c, types.start_bracket),
                                     New matching_delegate(c, types.value),
@@ -141,19 +119,16 @@ Namespace syntaxer
                                     New optional_matching_group(c, New matching_delegate(c, types.else_condition)))))
             assert(c.set(New syntax(c,
                                     types.else_condition,
-                                    ignore_types,
                                     matching_creator.create(c, types.KW_else),
                                     New matching_delegate(c, types.paragraph))))
             assert(c.set(New syntax(c,
                                     types.value,
-                                    ignore_types,
                                     New matching_group(c,
                                                        matching_creator.create(c, types.name),
                                                        New matching_delegate(c, types.comparasion),
                                                        New matching_delegate(c, types.function_call)))))
             assert(c.set(New syntax(c,
                                     types.comparasion,
-                                    ignore_types,
                                     New matching_delegate(c, types.value_without_comparasion),
                                     matching_creator.create(c,
                                                             types.less_than,
@@ -164,13 +139,11 @@ Namespace syntaxer
                                     New matching_delegate(c, types.value))))
             assert(c.set(New syntax(c,
                                     types.value_without_comparasion,
-                                    ignore_types,
                                     New matching_group(c,
                                                        matching_creator.create(c, types.name),
                                                        New matching_delegate(c, types.function_call)))))
             assert(c.set(New syntax(c,
                                     types.function_call,
-                                    ignore_types,
                                     matching_creator.create(c, types.name),
                                     matching_creator.create(c, types.start_bracket),
                                     New matching_group(c,
@@ -179,16 +152,13 @@ Namespace syntaxer
                                     matching_creator.create(c, types.end_bracket))))
             assert(c.set(New syntax(c,
                                     types.valuelist,
-                                    ignore_types,
                                     New multi_matching_group(c, New matching_delegate(c, types.value_with_comma)),
                                     New matching_delegate(c, types.value))))
             assert(c.set(New syntax(c,
                                     types.empty_valuelist,
-                                    ignore_types,
                                     matching_creator.create(c))))
             assert(c.set(New syntax(c,
                                     types.value_with_comma,
-                                    ignore_types,
                                     New matching_delegate(c, types.value),
                                     matching_creator.create(c, types.comma))))
             Return [function]
@@ -213,98 +183,93 @@ Namespace syntaxer
             Return assert_node(n, id, type, start, start + uint32_1)
         End Function
 
-        Public Overrides Function run() As Boolean
+        Private Function successful_case() As Boolean
             Dim s As syntax = build_syntax()
             Dim v As vector(Of typed_word) = typed_word.fakes(types.name,
-                                                              types.blank,
-                                                              types.blank,
                                                               types.name,
                                                               types.start_bracket,
-                                                              types.blank,
                                                               types.name,
-                                                              types.blank,
                                                               types.name,
                                                               types.comma,
-                                                              types.blank,
-                                                              types.blank,
                                                               types.name,
                                                               types.name,
                                                               types.end_bracket,
-                                                              types.blank,
                                                               types.start_paragraph,
                                                               types.name,
                                                               types.assignment,
                                                               types.name,
                                                               types.semi_colon,
                                                               types.end_paragraph)
-            Dim r As one_of(Of matching.result, matching.failure) = s.match(v, 0)
-            If Not assertion.is_true(r.is_first()) Then
+            Dim r As matching.result = s.match(v, 0)
+            If Not assertion.is_true(r.succeeded()) Then
                 Return False
             End If
-            assertion.equal(r.first().pos, v.size())
+            assertion.equal(r.suc.pos, v.size())
             Dim n As typed_node = typed_node.of_root(v)
-            n.attach(r.first().nodes)
-            If assert_node(n, 0, types.function, 0, 22) Then
-                n = n.subnodes(0)
-                If assert_node(n, 0, types.name, 0) AndAlso
-                   assert_node(n, 1, types.name, 3) AndAlso
-                   assert_node(n, 2, types.start_bracket, 4) AndAlso
-                   assert_node(n, 3, types.paramlist, 6, 14) AndAlso
-                   assert_node(n, 4, types.end_bracket, 14) AndAlso
-                   assert_node(n, 5, types.multi_sentence_paragraph, 16, 22) Then
-                    If assert_node(n.subnodes(3), 0, types.param_with_comma, 6, 10) AndAlso
-                       assert_node(n.subnodes(3), 1, types.param, 12, 14) Then
-                        If assert_node(n.subnodes(3).subnodes(0), 0, types.param, 6, 9) AndAlso
-                           assert_node(n.subnodes(3).subnodes(0), 1, types.comma, 9) Then
-                            assert_node(n.subnodes(3).subnodes(0).subnodes(0), 0, types.name, 6)
-                            assert_node(n.subnodes(3).subnodes(0).subnodes(0), 1, types.name, 8)
-                        End If
-                        assert_node(n.subnodes(3).subnodes(1), 0, types.name, 12)
-                        assert_node(n.subnodes(3).subnodes(1), 1, types.name, 13)
+            n.attach(r.suc.nodes)
+            If Not assert_node(n, 0, types.function, 0, 15) Then
+                Return False
+            End If
+            n = n.subnodes(0)
+            If assert_node(n, 0, types.name, 0) AndAlso
+               assert_node(n, 1, types.name, 1) AndAlso
+               assert_node(n, 2, types.start_bracket, 2) AndAlso
+               assert_node(n, 3, types.paramlist, 3, 8) AndAlso
+               assert_node(n, 4, types.end_bracket, 8) AndAlso
+               assert_node(n, 5, types.multi_sentence_paragraph, 9, 15) Then
+                If assert_node(n.subnodes(3), 0, types.param_with_comma, 3, 6) AndAlso
+                   assert_node(n.subnodes(3), 1, types.param, 6, 8) Then
+                    If assert_node(n.subnodes(3).subnodes(0), 0, types.param, 3, 5) AndAlso
+                       assert_node(n.subnodes(3).subnodes(0), 1, types.comma, 5) Then
+                        assert_node(n.subnodes(3).subnodes(0).subnodes(0), 0, types.name, 3)
+                        assert_node(n.subnodes(3).subnodes(0).subnodes(0), 1, types.name, 4)
                     End If
-                    n = n.subnodes(5)
-                    If assert_node(n, 0, types.start_paragraph, 16) AndAlso
-                       assert_node(n, 1, types.sentence, 17, 21) AndAlso
-                       assert_node(n, 2, types.end_paragraph, 21) Then
-                        n = n.subnodes(1)
-                        If assert_node(n, 0, types.value_clause, 17, 20) AndAlso
-                           assert_node(n, 1, types.semi_colon, 20) Then
-                            n = n.subnodes(0)
-                            If assert_node(n, 0, types.value, 17) AndAlso
-                               assert_node(n, 1, types.assignment, 18) AndAlso
-                               assert_node(n, 2, types.value, 19) Then
-                                assert_node(n.subnodes(0), 0, types.name, 17)
-                                assert_node(n.subnodes(2), 0, types.name, 19)
-                            End If
+                    assert_node(n.subnodes(3).subnodes(1), 0, types.name, 6)
+                    assert_node(n.subnodes(3).subnodes(1), 1, types.name, 7)
+                End If
+                n = n.subnodes(5)
+                If assert_node(n, 0, types.start_paragraph, 9) AndAlso
+                   assert_node(n, 1, types.sentence, 10, 14) AndAlso
+                   assert_node(n, 2, types.end_paragraph, 14) Then
+                    n = n.subnodes(1)
+                    If assert_node(n, 0, types.value_clause, 10, 13) AndAlso
+                       assert_node(n, 1, types.semi_colon, 13) Then
+                        n = n.subnodes(0)
+                        If assert_node(n, 0, types.value, 10) AndAlso
+                           assert_node(n, 1, types.assignment, 11) AndAlso
+                           assert_node(n, 2, types.value, 12) Then
+                            assert_node(n.subnodes(0), 0, types.name, 10)
+                            assert_node(n.subnodes(2), 0, types.name, 12)
                         End If
                     End If
                 End If
             End If
-
-            v = typed_word.fakes(types.name,
-                                 types.blank,
-                                 types.blank,
-                                 types.name,
-                                 types.start_bracket,
-                                 types.blank,
-                                 types.name,
-                                 types.blank,
-                                 types.name,
-                                 types.comma,
-                                 types.blank,
-                                 types.blank,
-                                 types.name,
-                                 types.name,
-                                 types.end_bracket,
-                                 types.blank,
-                                 types.start_paragraph,
-                                 types.name,
-                                 types.equal,
-                                 types.name,
-                                 types.semi_colon,
-                                 types.end_paragraph)
-            assertion.is_false(s.match(v, 0).is_first())
             Return True
+        End Function
+
+        Private Function failed_case() As Boolean
+            Dim s As syntax = build_syntax()
+            Dim v As vector(Of typed_word) = typed_word.fakes(types.name,
+                                                              types.name,
+                                                              types.start_bracket,
+                                                              types.name,
+                                                              types.name,
+                                                              types.comma,
+                                                              types.name,
+                                                              types.name,
+                                                              types.end_bracket,
+                                                              types.start_paragraph,
+                                                              types.name,
+                                                              types.equal,
+                                                              types.name,
+                                                              types.semi_colon,
+                                                              types.end_paragraph)
+            assertion.is_false(s.match(v, 0).succeeded())
+            Return True
+        End Function
+
+        Public Overrides Function run() As Boolean
+            Return successful_case() AndAlso failed_case()
         End Function
     End Class
 End Namespace

@@ -21,8 +21,7 @@ Namespace logic
 
         Private Shared Function make_case(ByVal ParamArray lines() As String) As String
             assert(Not isemptyarray(lines))
-            Dim v As vector(Of String) = Nothing
-            v = New vector(Of String)()
+            Dim v As New vector(Of String)()
             assert(v.emplace_back(lines))
             Return v.str(newline.incode())
         End Function

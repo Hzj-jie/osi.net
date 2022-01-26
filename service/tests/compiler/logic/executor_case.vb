@@ -8,22 +8,21 @@ Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
-Imports exportable = osi.service.compiler.logic.exportable
 
 Namespace logic
     Public Class executor_case
         Inherits [case]
 
-        Private ReadOnly es As Func(Of exportable())
+        Private ReadOnly es As Func(Of instruction_gen())
 
-        Protected Sub New(ByVal ParamArray es() As exportable)
+        Protected Sub New(ByVal ParamArray es() As instruction_gen)
             assert(Not es.null_or_empty())
-            Me.es = Function() As exportable()
+            Me.es = Function() As instruction_gen()
                         Return es
                     End Function
         End Sub
 
-        Protected Sub New(ByVal es As Func(Of exportable()))
+        Protected Sub New(ByVal es As Func(Of instruction_gen()))
             assert(Not es Is Nothing)
             Me.es = es
         End Sub

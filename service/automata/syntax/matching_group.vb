@@ -34,67 +34,53 @@ Partial Public NotInheritable Class syntaxer
             Public ReadOnly result As result
 
             Public Sub New(ByVal id As UInt32, ByVal result As result)
-                assert(Not result Is Nothing)
                 Me.id = id
                 Me.result = result
             End Sub
         End Class
 
-        Private Function first_match(ByVal v As vector(Of typed_word),
-                                     ByVal p As UInt32) As one_of(Of best_match_result, failure)
-            Dim max_failure As UInt32 = 0
+        Private Function first_match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As best_match_result
+            Dim r As result = result.failure(p)
             For i As Int32 = 0 To array_size_i(ms) - 1
                 assert(Not ms(i) Is Nothing)
-                Dim r As one_of(Of result, failure) = ms(i).match(v, p)
-                If r.is_first() Then
-                    Return one_of(Of best_match_result, failure).of_first(New best_match_result(CUInt(i), r.first()))
-                End If
-                If max_failure < r.second().pos Then
-                    max_failure = r.second().pos
+                Dim c As result = ms(i).match(v, p)
+                r = r Or c
+                If r.succeeded() Then
+                    Return New best_match_result(CUInt(i), r)
                 End If
             Next
-            Return failure.of(Of best_match_result)(max_failure)
+            Return New best_match_result(0, r)
         End Function
 
-        Private Function best_match(ByVal v As vector(Of typed_word),
-                                    ByVal p As UInt32) As one_of(Of best_match_result, failure)
-            Dim max As best_match_result = Nothing
-            Dim max_failure As UInt32 = 0
-            For i As Int32 = 0 To array_size_i(ms) - 1
+        Private Function best_match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As best_match_result
+            Dim r As result = result.failure(p)
+            Dim best_id As Int32 = -1
+            For i As Int32 = 0 To ms.array_size_i() - 1
                 assert(Not ms(i) Is Nothing)
-                Dim r As one_of(Of result, failure) = ms(i).match(v, p)
-                If r.is_second() Then
-                    If max_failure < r.second().pos Then
-                        max_failure = r.second().pos
-                    End If
-                Else
-                    If max Is Nothing OrElse max.result.pos < r.first().pos Then
-                        max = New best_match_result(CUInt(i), r.first())
-                    End If
+                Dim c As result = ms(i).match(v, p)
+                If c.succeeded() AndAlso (r.failed() OrElse c.suc.pos > r.suc.pos) Then
+                    best_id = i
                 End If
+                r = r Or c
             Next
-            If max Is Nothing Then
-                Return failure.of(Of best_match_result)(max_failure)
+            If r.succeeded() Then
+                assert(best_id >= 0 AndAlso best_id < ms.array_size_i())
+                Return New best_match_result(CUInt(best_id), r)
             End If
-            Return one_of(Of best_match_result, failure).of_first(max)
+            Return New best_match_result(0, r)
         End Function
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByVal p As UInt32) As one_of(Of result, failure)
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As result
             If v Is Nothing OrElse v.size() <= p Then
-                Return failure.of(p)
+                Return result.failure(p)
             End If
-            Dim r As one_of(Of best_match_result, failure) =
-                If(prefer_best_match Or False, best_match(v, p), first_match(v, p))
-            If r.is_second() Then
-                log_unmatched(v, r.second().pos, Me)
-                Return r.of_second(Of result)()
+            Dim r As best_match_result = If(prefer_best_match Or False, best_match(v, p), first_match(v, p))
+            If r.result.failed() Then
+                log_unmatched(v, r.result.fal.pos, Me)
+            Else
+                log_matching(v, p, r.result.suc.pos, strcat(ms(CInt(r.id)), "@", r.id))
             End If
-            log_matching(v, p, r.first().result.pos, strcat(ms(CInt(r.first().id)), "@", r.first().id))
-            Return r.map_first(Function(ByVal x As best_match_result) As result
-                                   assert(Not x Is Nothing)
-                                   Return x.result
-                               End Function)
+            Return r.result
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32

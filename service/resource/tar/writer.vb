@@ -78,14 +78,26 @@ Partial Public NotInheritable Class tar
             Return zip(max_size, output_base, assert_which.of(files).is_not_null().relative())
         End Function
 
+        Public Shared Function in_mem(ByVal max_size As UInt32,
+                                      ByVal files As vector(Of String),
+                                      ByVal output As MemoryStream) As writer
+            Return New writer(New fs_wrapper(default_fs.instance, New in_mem_fs(output)),
+                              max_size,
+                              in_mem_fs.file,
+                              files)
+        End Function
+
+        Public Shared Function in_mem(ByVal max_size As UInt32,
+                                      ByVal files As selector,
+                                      ByVal output As MemoryStream) As writer
+            Return in_mem(max_size, assert_which.of(files).is_not_null().relative(), output)
+        End Function
+
         Private Function dump(ByVal write_index As UInt32) As Boolean
-            Dim m As MemoryStream = Nothing
-            m = New MemoryStream()
-            Dim it As vector(Of String).iterator = Nothing
-            it = v.begin()
+            Dim m As New MemoryStream()
+            Dim it As vector(Of String).iterator = v.begin()
             While it <> v.end()
-                Dim c As MemoryStream = Nothing
-                c = New MemoryStream()
+                Dim c As New MemoryStream()
                 If Not fs.read(+it, c) Then
                     Return False
                 End If

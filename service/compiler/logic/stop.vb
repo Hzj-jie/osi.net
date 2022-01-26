@@ -9,9 +9,9 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class _stop
-        Implements exportable
+        Implements instruction_gen
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             o.emplace_back(instruction_builder.str(command.stop))
             Return True

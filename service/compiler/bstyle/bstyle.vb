@@ -118,7 +118,7 @@ Public NotInheritable Class bstyle
                            with(code_gen.of_first_child(Of writer)("value-with-comma")).
                            with(code_gen.of_all_children(Of writer)("paramlist")).
                            with(code_gen.of_ignore_last_child(Of writer)("base-sentence-with-semi-colon")).
-                           with(code_gen.of_children_word_str(Of writer)("paramtype")).
+                           with(code_gen.of_input_without_ignored(Of writer)("paramtype")).
                            with_of_all_childrens("paramtypelist").
                            with(code_gen.of_first_child(Of writer)("paramtype-with-comma"))
         End Function

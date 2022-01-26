@@ -18,8 +18,7 @@ Partial Public NotInheritable Class syntaxer
             Me.type = type
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByVal p As UInt32) As one_of(Of result, failure)
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As result
             Return syntax().match(v, p)
         End Function
 

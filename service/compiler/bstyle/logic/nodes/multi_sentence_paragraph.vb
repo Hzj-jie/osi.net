@@ -26,7 +26,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             Return builders.start_scope(o).of(
                        Function() As Boolean
-                           Using New scope_wrapper()
+                           Using scope.current().start_scope()
                                Dim i As UInt32 = 1
                                While i < n.child_count() - uint32_1
                                    If Not l.of(n.child(i)).build(o) Then

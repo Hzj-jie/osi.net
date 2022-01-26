@@ -10,7 +10,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class _return
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly name As String
         Private ReadOnly return_value As [optional](Of String)
@@ -26,7 +26,7 @@ Namespace logic
             Me.New(name, [default](Of String).null)
         End Sub
 
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             Dim r As variable = Nothing
             If Not logic.return_value.retrieve(name, o, r) Then

@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class _address_of
-        Implements exportable
+        Implements instruction_gen
 
         Private ReadOnly target As String
         Private ReadOnly name As String
@@ -22,7 +22,7 @@ Namespace logic
         End Sub
 
         ' TODO: Check the consistency of both signatures.
-        Public Function export(ByVal o As vector(Of String)) As Boolean Implements exportable.export
+        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             Dim t As variable = Nothing
             If Not variable.of(target, o, t) OrElse
                Not t.is_assignable_from_uint32() Then

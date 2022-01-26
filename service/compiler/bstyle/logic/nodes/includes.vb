@@ -26,16 +26,13 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class default_includes
-        Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "bstyle-inc")
+        Private Shared ReadOnly folder As String = create_inc_folder()
 
-        Shared Sub New()
-            assert(Not Directory.CreateDirectory(folder) Is Nothing)
-            assert(bstyle_lib.stdio_h.sync_export(Path.Combine(folder, "stdio.h"), True))
-            assert(bstyle_lib.cstdio.sync_export(Path.Combine(folder, "cstdio"), True))
-            assert(bstyle_lib.bstyle_h.sync_export(Path.Combine(folder, "bstyle.h"), True))
-            assert(bstyle_lib.bstyle_types_h.sync_export(Path.Combine(folder, "bstyle_types.h"), True))
-            assert(bstyle_lib.bstyle_constants_h.sync_export(Path.Combine(folder, "bstyle_constants.h"), True))
-        End Sub
+        Private Shared Function create_inc_folder() As String
+            Dim folder As String = Path.Combine(temp_folder, "bstyle-inc")
+            tar.gen.dump(bstyle_lib.data, folder)
+            Return folder
+        End Function
 
         Public NotInheritable Class folders
             Inherits __do(Of vector(Of String))
