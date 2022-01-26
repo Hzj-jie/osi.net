@@ -58,10 +58,10 @@ Namespace syntaxer
             For i As Int32 = 0 To array_size_i(ms) - 1
                 Dim m As matching_case = ms(i)
                 assert(Not m Is Nothing)
-                Dim r As one_of(Of matching.result, matching.failure) = m.m.match(m.v, m.start)
-                assertion.equal(r.is_first(), m.exp, i)
-                If r.is_first() Then
-                    assertion.equal(r.first().pos, m.end, i)
+                Dim r As matching.result = m.m.match(m.v, m.start)
+                assertion.equal(r.succeeded(), m.exp, i)
+                If r.succeeded() Then
+                    assertion.equal(r.suc.pos, m.end, i)
                 End If
             Next
             Return True

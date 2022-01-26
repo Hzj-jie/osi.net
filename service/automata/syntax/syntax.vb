@@ -70,31 +70,30 @@ Partial Public NotInheritable Class syntaxer
             Me.New(c, default_type, matching_creator.create_matchings(c, ms))
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByVal p As UInt32) As one_of(Of result, failure)
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As result
             If v Is Nothing OrElse v.size() <= p Then
                 log_end_of_tokens(v, p, Me)
-                Return failure.of(p)
+                Return result.failure(p)
             End If
 
             Return disallow_cycle_dependency(type,
                                              p,
-                                             Function() As one_of(Of result, failure)
+                                             Function() As result
                                                  Dim nodes As New vector(Of typed_node)()
                                                  Dim op As UInt32 = p
                                                  For i As Int32 = 0 To array_size_i(ms) - 1
-                                                     Dim r As one_of(Of result, failure) = ms(i).match(v, p)
-                                                     If r.is_second() Then
+                                                     Dim r As result = ms(i).match(v, p)
+                                                     If r.failed() Then
                                                          log_unmatched(v, p, ms(i))
                                                          Return r
                                                      End If
-                                                     p = r.first().pos
-                                                     nodes.emplace_back(r.first().nodes)
+                                                     p = r.suc.pos
+                                                     nodes.emplace_back(r.suc.nodes)
                                                  Next
                                                  Dim root As typed_node = create_node(v, type, op, p)
                                                  root.attach(nodes)
                                                  log_matching(v, op, p, Me)
-                                                 Return result.of(p, root)
+                                                 Return result.success(p, root)
                                              End Function)
         End Function
 
