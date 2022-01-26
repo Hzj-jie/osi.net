@@ -122,10 +122,10 @@
     <Content Include="b2style\codegen\function_ptr.txt" />
     <Content Include="b2style\codegen\test_assert.txt" />
     <Content Include="b2style\self-test\class-function-call-with-spaces.txt" />
-    <Content Include="b2style\self-test\more-right-shifts.txt" />
+    <Content Include="b2style\self-test\more-closing-angle-brackets.txt" />
     <Content Include="b2style\self-test\self-health.txt" />
     <Content Include="b2style\self-test\template_class_with_ref.txt" />
-    <Content Include="b2style\self-test\two-right-shifts.txt" />
+    <Content Include="b2style\self-test\two-closing-angle-brackets.txt" />
     <Content Include="bstyle\codegen\delegate.txt" />
     <Content Include="bstyle\codegen\func_name_with_dot.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />
