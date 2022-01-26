@@ -68,8 +68,9 @@ Partial Public NotInheritable Class syntaxer
         Return Convert.ToString(r)
     End Function
 
-    Private Sub log_unmatched(ByVal v As vector(Of typed_word), ByVal p As UInt32, ByVal f As matching.failure)
+    Private Sub log_unmatched(ByVal v As vector(Of typed_word), ByVal p As UInt32, ByVal f As matching.result)
         assert(Not v Is Nothing)
+        assert(f.failed())
         Dim l As Func(Of UInt32, String()) = Function(ByVal pos As UInt32) As String()
                                                  Return {
                                                              If(pos < v.size(), v(pos).str(), "{END-OF-INPUT}"),
@@ -83,7 +84,7 @@ Partial Public NotInheritable Class syntaxer
                     "[syntaxer] Cannot match token ",
                     l(p),
                     ". Longest match ",
-                    l(f.pos))
+                    l(f.fal.pos))
     End Sub
 
     Public Function match(ByVal v As vector(Of typed_word)) As [optional](Of typed_node)
@@ -100,13 +101,12 @@ Partial Public NotInheritable Class syntaxer
         Dim root As typed_node = typed_node.of_root(v)
         Dim p As UInt32 = 0
         While p < v.size()
-            Dim m As one_of(Of matching.result, matching.failure) = mg.match(v, p)
-            If m.is_second() Then
-                log_unmatched(v, p, m.second())
+            Dim m As matching.result = mg.match(v, p)
+            If m.failed() Then
+                log_unmatched(v, p, m)
                 Return [optional].empty(Of typed_node)()
             End If
-            assert(Not m.first() Is Nothing)
-            Dim r As matching.result = m.first()
+            Dim r As matching.result.suc_t = m.suc
             assert(Not r Is Nothing)
             If p = r.pos Then
                 Return [optional].empty(Of typed_node)()

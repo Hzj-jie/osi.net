@@ -15,12 +15,11 @@ Partial Public NotInheritable Class syntaxer
             MyBase.New(c)
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByVal p As UInt32) As one_of(Of result, failure)
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As result
             If Not v Is Nothing AndAlso v.size() > p Then
-                Return result.of(p)
+                Return result.success(p)
             End If
-            Return failure.of(p)
+            Return result.failure(p)
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32

@@ -20,55 +20,90 @@ Partial Public NotInheritable Class syntaxer
             Me.c = c
         End Sub
 
-        Public NotInheritable Class result
-            Public ReadOnly pos As UInt32
-            Public ReadOnly nodes As vector(Of typed_node)
+        Public Structure result
+            Public NotInheritable Class suc_t
+                Public ReadOnly pos As UInt32
+                Public ReadOnly nodes As vector(Of typed_node)
 
-            Private Sub New(ByVal pos As UInt32, ByVal nodes As vector(Of typed_node))
-                assert(Not nodes Is Nothing)
-                Me.pos = pos
-                Me.nodes = nodes
+                Public Sub New(ByVal pos As UInt32, ByVal nodes As vector(Of typed_node))
+                    assert(Not nodes Is Nothing)
+                    Me.pos = pos
+                    Me.nodes = nodes
+                End Sub
+
+                Public Shared Operator Or(ByVal this As suc_t, ByVal that As suc_t) As suc_t
+                    assert(Not this Is Nothing)
+                    assert(Not that Is Nothing)
+                    If this.pos >= that.pos Then
+                        Return this
+                    End If
+                    Return that
+                End Operator
+            End Class
+
+            ' Not null
+            Public Structure fal_t
+                Public ReadOnly pos As UInt32
+
+                Public Sub New(ByVal pos As UInt32)
+                    Me.pos = pos
+                End Sub
+
+                Public Shared Operator Or(ByVal this As fal_t, ByVal that As fal_t) As fal_t
+                    If this.pos >= that.pos Then
+                        Return this
+                    End If
+                    Return that
+                End Operator
+            End Structure
+
+            Public ReadOnly suc As suc_t
+            Public ReadOnly fal As fal_t
+
+            Private Sub New(ByVal suc As suc_t, ByVal fal As fal_t)
+                Me.suc = suc
+                Me.fal = fal
             End Sub
 
-            Public Shared Function [of](ByVal pos As UInt32,
-                                        ByVal nodes As vector(Of typed_node)) As one_of(Of result, failure)
-                Return one_of(Of result, failure).of_first(New result(pos, nodes))
+            Public Function succeeded() As Boolean
+                Return Not suc Is Nothing
             End Function
 
-            Public Shared Function [of](ByVal pos As UInt32,
-                                        ByVal node As typed_node) As one_of(Of result, failure)
-                Return [of](pos, vector.of(node))
+            Public Function failed() As Boolean
+                Return Not succeeded()
             End Function
 
-            Public Shared Function [of](ByVal pos As UInt32) As one_of(Of result, failure)
-                Return [of](pos, New vector(Of typed_node)())
+            Public Shared Function failure(ByVal p As UInt32) As result
+                Return New result(Nothing, New fal_t(p))
             End Function
 
-            Public Function node() As typed_node
-                assert(nodes.size() = uint32_1)
-                Return nodes(0)
-            End Function
-        End Class
-
-        Public NotInheritable Class failure
-            Public ReadOnly pos As UInt32
-
-            Private Sub New(ByVal pos As UInt32)
-                Me.pos = pos
-            End Sub
-
-            Public Shared Function [of](ByVal pos As UInt32) As one_of(Of result, failure)
-                Return [of](Of result)(pos)
+            Public Shared Function success(ByVal p As UInt32, ByVal nodes As vector(Of typed_node)) As result
+                Return New result(New suc_t(p, nodes), New fal_t(0))
             End Function
 
-            Public Shared Function [of](Of FIRST)(ByVal pos As UInt32) As one_of(Of FIRST, failure)
-                Return one_of(Of FIRST, failure).of_second(New failure(pos))
+            Public Shared Function success(ByVal p As UInt32, ByVal node As typed_node) As result
+                Return success(p, vector.of(node))
             End Function
-        End Class
 
-        ' TODO: Return tuple(Of result, failure), so the longest match from any_matching_group can be preserved.
-        Public MustOverride Function match(ByVal v As vector(Of typed_word),
-                                           ByVal p As UInt32) As one_of(Of result, failure)
+            Public Shared Function success(ByVal p As UInt32) As result
+                Return success(p, New vector(Of typed_node)())
+            End Function
+
+            Public Shared Operator Or(ByVal this As result, ByVal that As result) As result
+                If this.suc Is Nothing AndAlso that.suc Is Nothing Then
+                    Return New result(Nothing, this.fal Or that.fal)
+                End If
+                If this.suc Is Nothing Then
+                    Return New result(that.suc, this.fal Or that.fal)
+                End If
+                If that.suc Is Nothing Then
+                    Return New result(this.suc, this.fal Or that.fal)
+                End If
+                Return New result(this.suc Or that.suc, this.fal Or that.fal)
+            End Operator
+        End Structure
+
+        Public MustOverride Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As result
 
         Protected Function create_node(ByVal v As vector(Of typed_word),
                                        ByVal type As UInt32,
@@ -80,7 +115,7 @@ Partial Public NotInheritable Class syntaxer
         Protected Function disallow_cycle_dependency(
                                ByVal type As UInt32,
                                ByVal pos As UInt32,
-                               ByVal f As Func(Of one_of(Of result, failure))) As one_of(Of result, failure)
+                               ByVal f As Func(Of result)) As result
             assert(Not f Is Nothing)
             If s Is Nothing Then
                 s = New map(Of UInt32, UInt32)()
@@ -90,7 +125,7 @@ Partial Public NotInheritable Class syntaxer
                 assert((+previous) <= pos)
                 If (+previous) = pos Then
                     raise_error(error_type.user, "Cycle dependency found at ", c.type_name(type))
-                    Return failure.of(pos)
+                    Return result.failure(pos)
                 End If
             End If
             s(type) = pos

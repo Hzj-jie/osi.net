@@ -200,13 +200,13 @@ Namespace syntaxer
                                                               types.name,
                                                               types.semi_colon,
                                                               types.end_paragraph)
-            Dim r As one_of(Of matching.result, matching.failure) = s.match(v, 0)
-            If Not assertion.is_true(r.is_first()) Then
+            Dim r As matching.result = s.match(v, 0)
+            If Not assertion.is_true(r.succeeded()) Then
                 Return False
             End If
-            assertion.equal(r.first().pos, v.size())
+            assertion.equal(r.suc.pos, v.size())
             Dim n As typed_node = typed_node.of_root(v)
-            n.attach(r.first().nodes)
+            n.attach(r.suc.nodes)
             If Not assert_node(n, 0, types.function, 0, 15) Then
                 Return False
             End If
@@ -264,7 +264,7 @@ Namespace syntaxer
                                                               types.name,
                                                               types.semi_colon,
                                                               types.end_paragraph)
-            assertion.is_false(s.match(v, 0).is_first())
+            assertion.is_false(s.match(v, 0).succeeded())
             Return True
         End Function
 
