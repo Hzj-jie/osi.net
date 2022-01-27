@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Partial Public NotInheritable Class scope
-        Public Class anchor_ref
+        Public NotInheritable Class anchor_ref
             Inherits function_signature
 
             Public Sub New(ByVal name As String,
