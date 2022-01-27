@@ -28,8 +28,7 @@ Namespace logic
             Me.New(name, Nothing, +parameters)
         End Sub
 
-        Protected Overrides Function retrieve_anchor(ByVal o As vector(Of String),
-                                                     ByRef anchor As scope.anchor) As Boolean
+        Protected Overrides Function retrieve_anchor(ByRef anchor As scope.anchor) As Boolean
             If scope.current().anchors().of(name, anchor) Then
                 Return True
             End If

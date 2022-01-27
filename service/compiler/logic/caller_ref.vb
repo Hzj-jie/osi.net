@@ -33,8 +33,7 @@ Namespace logic
             Me.New(name, Nothing, +parameters)
         End Sub
 
-        Protected Overrides Function retrieve_anchor(ByVal o As vector(Of String),
-                                                     ByRef anchor As scope.anchor) As Boolean
+        Protected Overrides Function retrieve_anchor(ByRef anchor As scope.anchor) As Boolean
             Dim f As Func(Of scope.variable_t.exported_ref) =
                 Function() As scope.variable_t.exported_ref
                     Dim d As scope.variable_t.exported_ref = Nothing
