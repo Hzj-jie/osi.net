@@ -36,10 +36,5 @@ Partial Public Class checks(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
             Return check(Of IS_TRUE_FUNC).is_not_null(i, msg) AndAlso
                    check(Of IS_TRUE_FUNC).not_equal(i.size(), uint32_0, msg, ", vector [", i, "]")
         End Function
-
-        Public Function vector_not_empty(ByVal ParamArray msg() As Object) As Boolean
-            Return check(Of IS_TRUE_FUNC).is_not_null(i, msg) AndAlso
-                   check(Of IS_TRUE_FUNC).not_equal(i.size(), uint32_0, msg)
-        End Function
     End Class
 End Class
