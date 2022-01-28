@@ -58,7 +58,7 @@ Partial Public NotInheritable Class b2style
             assert(Not Me.type_refs.empty())
             Me.type_var = types.back().EndsWith("...")
             If Me.type_var Then
-                types(types.size() - uint32_1) = types.back().TrimEnd("."c)
+                types(types.size() - uint32_1) = types.back().TrimEnd("."c).Trim()
             End If
             n.dfs(Sub(ByVal node As typed_node, ByVal stop_navigating_sub_nodes As Action)
                       assert(Not node Is Nothing)
