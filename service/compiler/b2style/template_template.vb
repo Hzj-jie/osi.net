@@ -88,14 +88,10 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
             assert(Not n Is Nothing)
-<<<<<<< HEAD
             ' Return strcat(n.children_word_str(), "__", type_count)
             ' TODO: This change will break templates with same name but different template type count
             ' E.g. template <T> func() And template <T, T2> func().
-            Return n.children_word_str()
-=======
-            Return strcat(n.input_without_ignored(), "__", type_count)
->>>>>>> master
+            Return n.input_without_ignored()
         End Function
 
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
@@ -161,25 +157,20 @@ Partial Public NotInheritable Class b2style
             End If
             assert(types.size() > 0)
             _extended_type_name.apply(types)
-<<<<<<< HEAD
             If type_var Then
                 Dim i As UInt32 = 0
                 While i < Me.type_refs.size() - uint32_1
+                    assert(Not Me.type_refs(i))
                     Me.type_refs(i).set(types(i))
                     i += uint32_1
                 End While
                 Me.type_refs(i).set((+types).strjoin(",", CInt(i)))
             Else
                 For i As UInt32 = 0 To types.size() - uint32_1
+                    assert(Not Me.type_refs(i))
                     Me.type_refs(i).set(types(i))
                 Next
             End If
-=======
-            For i As UInt32 = 0 To types.size() - uint32_1
-                assert(Not Me.type_refs(i))
-                Me.type_refs(i).set(types(i))
-            Next
->>>>>>> master
             impl = w.dump()
             For i As UInt32 = 0 To types.size() - uint32_1
                 Me.type_refs(i).set(Nothing)
