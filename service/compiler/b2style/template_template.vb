@@ -172,7 +172,7 @@ Partial Public NotInheritable Class b2style
                 Next
             End If
             impl = w.dump()
-            For i As UInt32 = 0 To types.size() - uint32_1
+            For i As UInt32 = 0 To Me.type_refs.size() - uint32_1
                 Me.type_refs(i).set(Nothing)
             Next
             Return True
