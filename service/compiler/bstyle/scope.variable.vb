@@ -117,9 +117,13 @@ Partial Public NotInheritable Class bstyle
                 Return True
             End Function
 
-            Public Function try_resolve(ByVal name As String,
-                                        ByRef type As String,
-                                        Optional ByVal signature As ref(Of function_signature) = Nothing) As Boolean
+            Public Function try_resolve(ByVal name As String, ByRef type As String) As Boolean
+                Return try_resolve(name, type, Nothing)
+            End Function
+
+            Private Function try_resolve(ByVal name As String,
+                                         ByRef type As String,
+                                         ByVal signature As ref(Of function_signature)) As Boolean
                 ' logic_name.of_function_call requires type of the parameter to set function name.
                 If variable.is_heap_name(name) Then
                     name = heap_name_of(name.Substring(0, name.IndexOf(character.left_mid_bracket)))
@@ -143,9 +147,13 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End Function
 
+            Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
+                Return resolve(name, type, Nothing)
+            End Function
+
             Public Function resolve(ByVal name As String,
                                     ByRef type As String,
-                                    Optional ByVal signature As ref(Of function_signature) = Nothing) As Boolean
+                                    ByVal signature As ref(Of function_signature)) As Boolean
                 If try_resolve(name, type, signature) Then
                     Return True
                 End If
