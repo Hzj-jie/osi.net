@@ -15,7 +15,8 @@ Namespace syntaxer
         Private ReadOnly get_type As Func(Of matching_delegate, UInt32)
 
         Sub New()
-            Dim f As FieldInfo = GetType(matching_delegate).GetField("type", BindingFlags.NonPublic Or BindingFlags.Instance)
+            Dim f As FieldInfo =
+                GetType(matching_delegate).GetField("type", BindingFlags.NonPublic Or BindingFlags.Instance)
             assert(Not f Is Nothing)
             get_type = Function(this As matching_delegate) As UInt32
                            assert(Not this Is Nothing)
@@ -39,10 +40,9 @@ Namespace syntaxer
             Me.type = type
         End Sub
 
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByVal p As UInt32) As one_of(Of result, failure)
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As result
             assert(False)
-            Return failure.of(p)
+            Return result.failure(p)
         End Function
 
         Public Overrides Function CompareTo(ByVal other As matching) As Int32

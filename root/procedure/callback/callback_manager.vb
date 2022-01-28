@@ -57,9 +57,9 @@ Partial Public NotInheritable Class callback_manager
            current_pending_timeout() Then
             Return False
         Else
-            thread_pool().push(Sub()
-                                   work(action)
-                               End Sub)
+            thread_pool.push(Sub()
+                                 work(action)
+                             End Sub)
             Return True
         End If
     End Function

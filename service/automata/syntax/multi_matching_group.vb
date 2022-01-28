@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public NotInheritable Class syntaxer
@@ -14,39 +15,33 @@ Partial Public NotInheritable Class syntaxer
             MyBase.New(c, m)
         End Sub
 
+        '@VisibleForTesting
         Public Sub New(ByVal c As syntax_collection, ByVal m As UInt32)
             MyBase.New(c, m)
         End Sub
 
+        '@VisibleForTesting
         Public Sub New(ByVal c As syntax_collection, ByVal ms() As UInt32)
             MyBase.New(c, ms)
         End Sub
 
-        Public Sub New(ByVal c As syntax_collection,
-                       ByVal m1 As UInt32,
-                       ByVal m2 As UInt32,
-                       ByVal ParamArray ms() As UInt32)
-            MyBase.New(c, m1, m2, ms)
-        End Sub
-
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByVal p As UInt32) As one_of(Of result, failure)
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As result
             Dim nodes As New vector(Of typed_node)()
-            Dim max_failure As UInt32 = 0
+            Dim r As result = result.failure(p)
             While True
-                Dim r As one_of(Of result, failure) = MyBase.match(v, p)
-                If r.is_first() Then
-                    p = r.first().pos
-                    nodes.emplace_back(r.first().node())
-                Else
-                    max_failure = r.second().pos
+                Dim c As result = MyBase.match(v, p)
+                r = r Or c
+                If c.failed() Then
                     Exit While
                 End If
+                p = c.suc.pos
+                nodes.emplace_back(c.suc.nodes)
             End While
             If nodes.empty() Then
-                Return failure.of(max_failure)
+                assert(r.failed())
+                Return r
             End If
-            Return result.of(p, nodes)
+            Return result.success(p, nodes) Or r
         End Function
 
         Public Overloads Function CompareTo(ByVal other As multi_matching_group) As Int32 _

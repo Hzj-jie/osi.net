@@ -45,6 +45,10 @@ Partial Public NotInheritable Class tar
             Return unzip(assert_which.of(files).is_not_null().absolute())
         End Function
 
+        Public Shared Function in_mem(ByVal input As MemoryStream) As reader
+            Return New reader(New in_mem_fs(input), vector.of(in_mem_fs.exp_file))
+        End Function
+
         Public Sub reset()
             i = 0
             m.clear()
@@ -94,8 +98,7 @@ Partial Public NotInheritable Class tar
         End Sub
 
         Public Function dump() As vector(Of tuple(Of String, MemoryStream))
-            Dim v As vector(Of tuple(Of String, MemoryStream)) = Nothing
-            v = New vector(Of tuple(Of String, MemoryStream))()
+            Dim v As New vector(Of tuple(Of String, MemoryStream))()
             Dim s As String = Nothing
             Dim m As MemoryStream = Nothing
             While [next](s, m)
@@ -105,8 +108,7 @@ Partial Public NotInheritable Class tar
         End Function
 
         Public Function index() As vector(Of tuple(Of String, UInt32))
-            Dim v As vector(Of tuple(Of String, UInt32)) = Nothing
-            v = New vector(Of tuple(Of String, UInt32))()
+            Dim v As New vector(Of tuple(Of String, UInt32))()
             Dim s As String = Nothing
             Dim m As MemoryStream = Nothing
             While [next](s, m)

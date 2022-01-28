@@ -190,4 +190,73 @@ Partial Public NotInheritable Class tar
             Return contains(file, memory_stream.of(file))
         End Function
     End Class
+
+    Public NotInheritable Class in_mem_fs
+        Implements fs
+
+        Public Const file As String = "in_mem_fs_file"
+        Public Const exp_file As String = file + "0"
+        Private ReadOnly m As MemoryStream
+
+        Public Sub New(ByVal m As MemoryStream)
+            assert(Not m Is Nothing)
+            Me.m = m
+        End Sub
+
+        Public Function exists(ByVal file As String) As Boolean Implements fs.exists
+            assert(Not file Is Nothing)
+            Return exp_file.Equals(file)
+        End Function
+
+        Public Function read(ByVal file As String, ByVal o As MemoryStream) As Boolean Implements fs.read
+            assert(Not file Is Nothing)
+            assert(Not o Is Nothing)
+            If Not exp_file.Equals(file) Then
+                Return False
+            End If
+            m.WriteTo(o)
+            Return True
+        End Function
+
+        Public Function write(ByVal file As String, ByVal i As MemoryStream) As Boolean Implements fs.write
+            assert(Not file Is Nothing)
+            assert(Not i Is Nothing)
+            ' Allow writing only once.
+            assert(m.Length() = 0)
+            If Not exp_file.Equals(file) Then
+                Return False
+            End If
+            i.WriteTo(m)
+            Return True
+        End Function
+    End Class
+
+    Public NotInheritable Class fs_wrapper
+        Implements fs
+
+        Private ReadOnly read_fs As fs
+        Private ReadOnly write_fs As fs
+
+        Public Sub New(ByVal read_fs As fs, ByVal write_fs As fs)
+            assert(Not read_fs Is Nothing)
+            assert(Not write_fs Is Nothing)
+            Me.read_fs = read_fs
+            Me.write_fs = write_fs
+        End Sub
+
+        Public Function exists(ByVal file As String) As Boolean Implements fs.exists
+            Return read_fs.exists(file)
+        End Function
+
+        Public Function read(ByVal file As String, ByVal o As MemoryStream) As Boolean Implements fs.read
+            Return read_fs.read(file, o)
+        End Function
+
+        Public Function write(ByVal file As String, ByVal i As MemoryStream) As Boolean Implements fs.write
+            Return write_fs.write(file, i)
+        End Function
+    End Class
+
+    Private Sub New()
+    End Sub
 End Class

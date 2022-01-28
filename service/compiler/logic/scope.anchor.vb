@@ -10,7 +10,7 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     Partial Public NotInheritable Class scope
         Public NotInheritable Class anchor
-            Inherits anchor_ref
+            Inherits function_signature
             Public ReadOnly begin As lazier(Of data_ref)
 
             Public Sub New(ByVal name As String,

@@ -8,13 +8,13 @@ Imports osi.root.constants
 Imports osi.root.lock
 
 <global_init(global_init_level.foundamental)>
-Public Class control_c_trace
+Public NotInheritable Class control_c_trace
     Private Shared enabled As singleentry
 
     Public Shared Function enable_control_c_trace() As Boolean
         If enabled.mark_in_use() Then
             AddHandler control_c.press,
-                       AddressOf control_c_trace_handle
+                       AddressOf handle
             Return True
         End If
         Return False
@@ -22,14 +22,13 @@ Public Class control_c_trace
 
     Public Shared Sub disable_control_c_trace()
         enabled.mark_not_in_use()
-        RemoveHandler control_c.press,
-                      AddressOf control_c_trace_handle
+        RemoveHandler control_c.press, AddressOf handle
     End Sub
 
-    Public Shared Sub control_c_trace_handle(ByRef canceled As Boolean)
-        suspend_all_current_process_threads()
+    Public Shared Sub handle(ByRef canceled As Boolean)
+        all_process_threads.suspend()
         pause()
-        resume_all_current_process_threads()
+        all_process_threads.resume()
         canceled = True
     End Sub
 

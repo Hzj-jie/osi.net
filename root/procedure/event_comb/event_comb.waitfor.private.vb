@@ -135,9 +135,9 @@ Partial Public Class event_comb
                    If se.mark_in_use() Then
                        '1, put it back to selected threadpool
                        '2, no matter how the _wait() called, it would be safe
-                       thread_pool().push(Sub()
-                                              [resume](Me)
-                                          End Sub)
+                       thread_pool.push(Sub()
+                                            [resume](Me)
+                                        End Sub)
                    End If
                End Sub
     End Function
@@ -149,9 +149,9 @@ Partial Public Class event_comb
         Return Sub()
                    '1, put it back to selected threadpool
                    '2, no matter how the _wait() called, it would be safe
-                   thread_pool().push(Sub()
-                                          [resume](Me)
-                                      End Sub)
+                   thread_pool.push(Sub()
+                                        [resume](Me)
+                                    End Sub)
                End Sub
     End Function
 
@@ -159,13 +159,13 @@ Partial Public Class event_comb
     Private Shared Sub _waitfor(ByVal d As Action, ByVal cb As Action)
         assert(Not d Is Nothing)
         assert(Not cb Is Nothing)
-        queue_in_managed_threadpool(Sub()
-                                        Try
-                                            d()
-                                        Finally
-                                            cb()
-                                        End Try
-                                    End Sub)
+        managed_thread_pool.push(Sub()
+                                     Try
+                                         d()
+                                     Finally
+                                         cb()
+                                     End Try
+                                 End Sub)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

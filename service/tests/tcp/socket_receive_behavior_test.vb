@@ -66,18 +66,14 @@ Public MustInherit Class socket_receive_behavior_test(Of IMPL)
     End Sub
 
     Public Overrides Function run() As Boolean
-        Dim received As atomic_int = Nothing
-        received = New atomic_int()
-        Dim ready As AutoResetEvent = Nothing
-        ready = New AutoResetEvent(False)
-        Dim l As TcpListener = Nothing
-        l = New TcpListener(IPAddress.Loopback, port)
+        Dim received As New atomic_int()
+        Dim ready As New AutoResetEvent(False)
+        Dim l As New TcpListener(IPAddress.Loopback, port)
         l.Start()
-        queue_in_managed_threadpool(Sub()
-                                        client_thread(received, ready)
-                                    End Sub)
-        Dim r As TcpClient = Nothing
-        r = l.AcceptTcpClient()
+        managed_thread_pool.push(Sub()
+                                     client_thread(received, ready)
+                                 End Sub)
+        Dim r As TcpClient = l.AcceptTcpClient()
         For i As Int32 = 0 To repeat_size - 1
             assertion.is_true(ready.Set())
             assert(receive_size <= max_size)

@@ -53,38 +53,36 @@ Partial Public NotInheritable Class queue_runner
 
     Private Shared Sub start()
         For i As UInt32 = 0 To thread_count - uint32_1
-            Dim id As UInt32 = 0
-            id = i
-            queue_in_managed_threadpool(Sub()
-                                            assert(processor_affinity = npos OrElse
-                                                   (processor_affinity >= 0 AndAlso
-                                                    processor_affinity < Environment.ProcessorCount()))
-                                            If processor_affinity <> npos Then
-                                                loop_set_thread_affinity(CUInt(processor_affinity) + id)
-                                            End If
-                                            envs._thread.current_thread().Name() = "QUEUE_RUNNER_WORKTHREAD"
-                                            current_thread = True
-                                            While application_lifetime.running()
-                                                Dim size As UInt32 = 0
-                                                size = q.size()
-                                                counter.increase(LENGTH, size)
-                                                If thread_count > 1 Then
-                                                    size = CUInt(Math.Ceiling(size / thread_count))
-                                                End If
-                                                counter.record_time_begin()
-                                                Dim e As Func(Of Boolean) = Nothing
-                                                While size > 0 AndAlso q.pop(e)
-                                                    check_push(e)
-                                                    size -= uint32_1
-                                                End While
-                                                counter.record_time_ticks(USED)
-                                                counter.record_time_begin()
-                                                If Not are Is Nothing Then
-                                                    yield_wait(are, queue_runner_interval_ms)
-                                                End If
-                                                counter.record_time_ticks(INTERVAL)
-                                            End While
-                                        End Sub)
+            Dim id As UInt32 = i
+            managed_thread_pool.push(Sub()
+                                         assert(processor_affinity = npos OrElse
+                                                (processor_affinity >= 0 AndAlso
+                                                 processor_affinity < Environment.ProcessorCount()))
+                                         If processor_affinity <> npos Then
+                                             loop_set_thread_affinity(CUInt(processor_affinity) + id)
+                                         End If
+                                         envs._thread.current_thread().Name() = "QUEUE_RUNNER_WORKTHREAD"
+                                         current_thread = True
+                                         While application_lifetime.running()
+                                             Dim size As UInt32 = q.size()
+                                             counter.increase(LENGTH, size)
+                                             If thread_count > 1 Then
+                                                 size = CUInt(Math.Ceiling(size / thread_count))
+                                             End If
+                                             counter.record_time_begin()
+                                             Dim e As Func(Of Boolean) = Nothing
+                                             While size > 0 AndAlso q.pop(e)
+                                                 check_push(e)
+                                                 size -= uint32_1
+                                             End While
+                                             counter.record_time_ticks(USED)
+                                             counter.record_time_begin()
+                                             If Not are Is Nothing Then
+                                                 yield_wait(are, queue_runner_interval_ms)
+                                             End If
+                                             counter.record_time_ticks(INTERVAL)
+                                         End While
+                                     End Sub)
         Next
     End Sub
 

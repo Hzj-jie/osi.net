@@ -88,10 +88,14 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
             assert(Not n Is Nothing)
+<<<<<<< HEAD
             ' Return strcat(n.children_word_str(), "__", type_count)
             ' TODO: This change will break templates with same name but different template type count
             ' E.g. template <T> func() And template <T, T2> func().
             Return n.children_word_str()
+=======
+            Return strcat(n.input_without_ignored(), "__", type_count)
+>>>>>>> master
         End Function
 
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
@@ -113,7 +117,7 @@ Partial Public NotInheritable Class b2style
             If v.size() > v.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
                             "Template ",
-                            name_node.children_word_str(),
+                            name_node.input_without_ignored(),
                             " has duplicated template type parameters: ",
                             v)
                 Return False
@@ -191,9 +195,7 @@ Partial Public NotInheritable Class b2style
 
                 Public Overrides Sub at(ByRef r As String)
                     If debug_dump Then
-                        raise_error(error_type.user,
-                                    "Debug dump of template_template ",
-                                    r.Replace(";", ";" + newline.incode()).Replace("}", "}" + newline.incode()))
+                        raise_error(error_type.user, "Debug dump of template_template ", r)
                     End If
                 End Sub
             End Class

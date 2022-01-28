@@ -143,6 +143,12 @@ Partial Public NotInheritable Class typed_node
         Return assert(False)
     End Function
 
+    Public Function only_descendant() As typed_node
+        Dim r As typed_node = Nothing
+        assert(only_descendant(r))
+        Return r
+    End Function
+
     Public Function descentdant_of(ByVal ParamArray names() As String) As Boolean
         assert(Not names.null_or_empty())
         Dim n As typed_node = Me

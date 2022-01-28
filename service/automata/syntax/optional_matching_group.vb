@@ -14,28 +14,22 @@ Partial Public NotInheritable Class syntaxer
             MyBase.New(c, m)
         End Sub
 
+        ' @VisibleForTesting
         Public Sub New(ByVal c As syntax_collection, ByVal m As UInt32)
             MyBase.New(c, m)
         End Sub
 
+        '@VisibleForTesting
         Public Sub New(ByVal c As syntax_collection, ByVal ms() As UInt32)
             MyBase.New(c, ms)
         End Sub
 
-        Public Sub New(ByVal c As syntax_collection,
-                       ByVal m1 As UInt32,
-                       ByVal m2 As UInt32,
-                       ByVal ParamArray ms() As UInt32)
-            MyBase.New(c, m1, m2, ms)
-        End Sub
-
-        Public Overrides Function match(ByVal v As vector(Of typed_word),
-                                        ByVal p As UInt32) As one_of(Of result, failure)
-            Dim r As one_of(Of result, failure) = MyBase.match(v, p)
-            If r.is_first() Then
+        Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As result
+            Dim r As result = MyBase.match(v, p)
+            If r.succeeded() Then
                 Return r
             End If
-            Return result.of(p)
+            Return result.success(p) Or r
         End Function
 
         Public Overloads Function CompareTo(ByVal other As optional_matching_group) As Int32 _

@@ -13,19 +13,12 @@ Imports osi.root.utt
 Public NotInheritable Class one_off_test
     Inherits [case]
 
-    Private ReadOnly x As one_off(Of Object)
-    Private ReadOnly mre As ManualResetEvent
-    Private ReadOnly suc_times As atomic_int
-    Private ReadOnly read_thread_count As atomic_int
+    Private ReadOnly x As New one_off(Of Object)()
+    Private ReadOnly mre As New ManualResetEvent(False)
+    Private ReadOnly suc_times As New atomic_int()
+    Private ReadOnly read_thread_count As New atomic_int()
     Private running As Boolean
     Private is_get As Boolean
-
-    Public Sub New()
-        x = New one_off(Of Object)()
-        mre = New ManualResetEvent(False)
-        suc_times = New atomic_int()
-        read_thread_count = New atomic_int()
-    End Sub
 
     Private Sub read_thread()
         read_thread_count.increment()
@@ -48,7 +41,8 @@ Public NotInheritable Class one_off_test
         Const thread_count As Int32 = 8
         running = True
         For i As Int32 = 0 To thread_count - 1
-            start_thread(AddressOf read_thread)
+            Dim t As New Thread(AddressOf read_thread)
+            t.Start()
         Next
         assertion.is_true(timeslice_sleep_wait_until(Function() As Boolean
                                                          Return (+read_thread_count) > 1

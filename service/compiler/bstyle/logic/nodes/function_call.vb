@@ -33,12 +33,12 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() >= 3)
             Dim bc As Func(Of vector(Of String), Boolean) =
                 Function(ByVal parameters As vector(Of String)) As Boolean
-                    If scope.current().variables().try_resolve(n.child(0).children_word_str(), Nothing, Nothing) Then
-                        Return build_caller_ref(n.child(0).children_word_str(), parameters)
+                    If scope.current().variables().try_resolve(n.child(0).input_without_ignored(), Nothing) Then
+                        Return build_caller_ref(n.child(0).input_without_ignored(), parameters)
                     End If
 
                     Dim name As String = Nothing
-                    If Not logic_name.of_function_call(n.child(0).children_word_str(), parameters, name) Then
+                    If Not logic_name.of_function_call(n.child(0).input_without_ignored(), parameters, name) Then
                         Return False
                     End If
                     scope.current().call_hierarchy().to(name)

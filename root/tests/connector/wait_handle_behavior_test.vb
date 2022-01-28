@@ -14,20 +14,17 @@ Public NotInheritable Class wait_handle_behavior_test
 
     Private Shared Function multiple_closes_in_multiple_threads(ByVal e As EventWaitHandle) As Boolean
         Const thread_count As Int32 = 100
-        Dim mre As ManualResetEvent = Nothing
-        mre = New ManualResetEvent(False)
-        Dim are As AutoResetEvent = Nothing
-        are = New AutoResetEvent(False)
-        Dim finished As atomic_int = Nothing
-        finished = New atomic_int()
+        Dim mre As New ManualResetEvent(False)
+        Dim are As New AutoResetEvent(False)
+        Dim finished As New atomic_int()
         For i As Int32 = 0 To thread_count - 1
-            queue_in_managed_threadpool(Sub()
-                                            assert(mre.wait())
-                                            e.Close()
-                                            If finished.increment() = thread_count Then
-                                                assert(are.force_set())
-                                            End If
-                                        End Sub)
+            managed_thread_pool.push(Sub()
+                                         assert(mre.wait())
+                                         e.Close()
+                                         If finished.increment() = thread_count Then
+                                             assert(are.force_set())
+                                         End If
+                                     End Sub)
         Next
         assert(mre.force_set())
         assert(are.wait())

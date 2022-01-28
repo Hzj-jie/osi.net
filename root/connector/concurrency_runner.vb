@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.template
 
 Public NotInheritable Class concurrency_runner
-    Public Shared ReadOnly instance As concurrency_runner(Of _NPOS) = New concurrency_runner(Of _NPOS)()
+    Public Shared ReadOnly instance As New concurrency_runner(Of _NPOS)()
 
     Public Shared Sub execute(ByVal ParamArray v() As Action)
         instance.execute(v)
@@ -30,8 +30,7 @@ Public NotInheritable Class concurrency_runner(Of _SIZE As _int64)
 
     Private Shared Function calculate_size() As UInt32
         Dim size As UInt32 = 0
-        Dim c As Int64 = 0
-        c = +(alloc(Of _SIZE)())
+        Dim c As Int64 = +(alloc(Of _SIZE)())
         If c = npos Then
             size = CUInt(Environment.ProcessorCount())
         ElseIf c >= max_uint32 Then
@@ -69,11 +68,11 @@ Public NotInheritable Class concurrency_runner(Of _SIZE As _int64)
                 Dim a As Action = Nothing
                 a = v(i)
                 If Interlocked.Increment(r) <= size Then
-                    queue_in_managed_threadpool(Sub()
-                                                    e(a)
-                                                    assert(Interlocked.Decrement(r) >= 0)
-                                                    assert(w.disposed_or_set())
-                                                End Sub)
+                    managed_thread_pool.push(Sub()
+                                                 e(a)
+                                                 assert(Interlocked.Decrement(r) >= 0)
+                                                 assert(w.disposed_or_set())
+                                             End Sub)
                 Else
                     assert(Interlocked.Decrement(r) >= 0)
                     assert(w.WaitOne())
@@ -91,11 +90,9 @@ Public NotInheritable Class concurrency_runner(Of _SIZE As _int64)
         If isemptyarray(c) Then
             Return
         End If
-        Dim a() As Action = Nothing
-        ReDim a(array_size_i(c) - 1)
+        Dim a(array_size_i(c) - 1) As Action
         For i As Int32 = 0 To array_size_i(c) - 1
-            Dim n As T = Nothing
-            n = c(i)
+            Dim n As T = c(i)
             a(i) = Sub()
                        v(n)
                    End Sub

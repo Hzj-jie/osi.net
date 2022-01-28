@@ -104,7 +104,6 @@
     <Compile Include="invoker\valuer.vb" />
     <Compile Include="ipendpoint.vb" />
     <Compile Include="lifetime_binder\scoped.vb" />
-    <Compile Include="lifetime_binder\global_instance.vb" />
     <Compile Include="manual_gc.vb" />
     <Compile Include="global_init.vb" />
     <Compile Include="invoker\invoker.vb" />
@@ -163,7 +162,7 @@
     <Compile Include="strsplit.vb" />
     <Compile Include="suppress.vb" />
     <Compile Include="text_reader.vb" />
-    <Compile Include="threadpool.vb" />
+    <Compile Include="all_process_threads.vb" />
     <Compile Include="timing_counter\hires_ticks_timing_counter.vb" />
     <Compile Include="timing_counter\loops_timing_counter.vb" />
     <Compile Include="timing_counter\ms_timing_counter.vb" />

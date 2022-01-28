@@ -41,25 +41,23 @@ Public Class suspend_all_process_threads_test
             End Sub
 
             Public Overrides Function run() As Boolean
-                Dim p As ref(Of UInt32) = Nothing
-                Dim stopping As ref(Of Boolean) = Nothing
-                p = New ref(Of UInt32)()
-                stopping = New ref(Of Boolean)()
-                queue_in_managed_threadpool(Sub()
-                                                exec(p, stopping)
-                                            End Sub)
+                Dim p As New ref(Of UInt32)()
+                Dim stopping As New ref(Of Boolean)()
+                managed_thread_pool.push(Sub()
+                                             exec(p, stopping)
+                                         End Sub)
                 assertion.is_true(timeslice_sleep_wait_when(Function()
                                                                 Return (+p) = 0
                                                             End Function,
                                                       seconds_to_milliseconds(1)))
-                assertion.is_true(suspend_all_current_process_threads())
+                assertion.is_true(all_process_threads.suspend())
                 Dim c As UInt32 = 0
                 c = (+p)
                 assertion.is_false(timeslice_sleep_wait_when(Function()
                                                                  Return (+p) = c
                                                              End Function,
                                                        seconds_to_milliseconds(10)))
-                assertion.is_true(resume_all_current_process_threads())
+                assertion.is_true(all_process_threads.resume())
                 c = (+p)
                 assertion.is_true(timeslice_sleep_wait_when(Function()
                                                                 Return (+p) = c

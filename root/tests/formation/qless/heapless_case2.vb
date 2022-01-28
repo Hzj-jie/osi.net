@@ -61,10 +61,9 @@ Friend Class heapless_case2
     End Function
 
     Public Overrides Function run() As Boolean
-        Dim finished As ref(Of singleentry) = Nothing
-        finished = New ref(Of singleentry)()
-        queue_in_managed_threadpool(Sub() push_thread(finished))
-        queue_in_managed_threadpool(Sub() pop_thread(finished))
+        Dim finished As New ref(Of singleentry)()
+        managed_thread_pool.push(Sub() push_thread(finished))
+        managed_thread_pool.push(Sub() pop_thread(finished))
         While Not finished.in_use()
             Const max_checked As Int32 = 2000
             Dim s As Int64 = 0

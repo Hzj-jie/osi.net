@@ -51,7 +51,7 @@ Public Module _app
         expectation.less_or_equal(this_process.ref.Threads().Count(),
                                   15 +
                                   Environment.ProcessorCount() +
-                                  thread_pool().thread_count() +
+                                  thread_pool.thread_count() +
                                   queue_runner.thread_count +
                                   5)
         assertion.less_or_equal(envs.gc_total_memory(), 128 * 1024 * 1024)
