@@ -60,7 +60,7 @@ Public NotInheritable Class slimheapless_threadpool_test
     End Sub
 
     Public Overrides Function reserved_processors() As Int16
-        Return CShort(osi.root.threadpool.threadpool.default_thread_count)
+        Return CShort(osi.root.threadpool.thread_pool.default_thread_count)
     End Function
 
     Public Overrides Function prepare() As Boolean

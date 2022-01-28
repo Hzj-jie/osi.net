@@ -25,14 +25,18 @@ Public NotInheritable Class b2style_self_test
 
     <test>
     Private Shared Sub run()
-        Dim c As UInt32 = 0
-        tar.gen.reader_of(b2style_self_test_cases.data).foreach(Sub(ByVal name As String,
-                                                                    ByVal enc_precision As Double,
-                                                                    ByVal content As StreamReader)
-                                                                    execute(name, content.ReadToEnd())
-                                                                    c += uint32_1
-                                                                End Sub)
-        assertion.more(c, uint32_0)
+        Dim a As New vector(Of Action)()
+        tar.gen.reader_of(b2style_self_test_cases.data).foreach(
+            Sub(ByVal name As String,
+                ByVal enc_precision As Double,
+                ByVal content As StreamReader)
+                Dim text As String = content.ReadToEnd()
+                a.emplace_back(Sub()
+                                   execute(name, text)
+                               End Sub)
+            End Sub)
+        assertions.of(a).not_empty()
+        concurrency_runner.execute(+a)
     End Sub
 
     Private Shared Sub execute(ByVal name As String, ByVal content As String)

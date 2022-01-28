@@ -113,7 +113,6 @@
     <Compile Include="lifetime_control\lifetime_binder.vb" />
     <Compile Include="lifetime_control\manual_disposer.vb" />
     <Compile Include="lifetime_control\ref_instance.vb" />
-    <Compile Include="lifetime_control\ref_map.vb" />
     <Compile Include="lifetime_control\ref_ptr.vb" />
     <Compile Include="lifetime_control\weak_disposer_T.vb" />
     <Compile Include="lifetime_control\weak_dispose_ptr.vb" />

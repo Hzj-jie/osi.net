@@ -66,17 +66,15 @@ Public NotInheritable Class rwlock_test
 
     <test>
     Private Shared Sub multiple_reads_can_happen_at_same_time()
-        Dim t As test_class = Nothing
-        t = New test_class()
-        Dim zre As zero_reset_event = Nothing
-        zre = New zero_reset_event(101)
+        Dim t As New test_class()
+        Dim zre As New zero_reset_event(101)
         For i As Int32 = 0 To 100
-            queue_in_managed_threadpool(Sub()
-                                            For j As Int32 = 0 To 100
-                                                t.read()
-                                            Next
-                                            zre.decrease()
-                                        End Sub)
+            managed_thread_pool.push(Sub()
+                                         For j As Int32 = 0 To 100
+                                             t.read()
+                                         Next
+                                         zre.decrease()
+                                     End Sub)
         Next
         zre.wait_and_dispose()
         assertion.more(t.max_concurrent_read(), uint32_1)
@@ -84,18 +82,16 @@ Public NotInheritable Class rwlock_test
 
     <test>
     Private Shared Sub multiple_writes_can_not_happen_in_parallel()
-        Dim t As test_class = Nothing
-        t = New test_class()
-        Dim zre As zero_reset_event = Nothing
-        zre = New zero_reset_event(101)
+        Dim t As New test_class()
+        Dim zre As New zero_reset_event(101)
         For i As Int32 = 0 To 100
-            queue_in_managed_threadpool(Sub()
-                                            For j As Int32 = 0 To 100
-                                                t.write()
-                                                t.read()
-                                            Next
-                                            zre.decrease()
-                                        End Sub)
+            managed_thread_pool.push(Sub()
+                                         For j As Int32 = 0 To 100
+                                             t.write()
+                                             t.read()
+                                         Next
+                                         zre.decrease()
+                                     End Sub)
         Next
         zre.wait_and_dispose()
         assertion.more(t.max_concurrent_read(), uint32_1)
