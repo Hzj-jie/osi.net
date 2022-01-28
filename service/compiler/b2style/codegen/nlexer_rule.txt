@@ -48,4 +48,6 @@ double-colon ::
 # "void :: f" is not allowed, it should be "void ::f", otherwise it's conflict with "void::f".
 raw-name-with-double-colon [\w,_][\w,\d,_]*::
 
+ellipsis ...
+
 INCLUDE ../shared/nlexer_rule2.txt

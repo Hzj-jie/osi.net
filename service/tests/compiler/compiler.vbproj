@@ -120,6 +120,7 @@
     <Content Include="b2style\codegen\errors\template_without_type_parameter.txt" />
     <Content Include="b2style\codegen\errors\undefined-value-clause.txt" />
     <Content Include="b2style\codegen\function_ptr.txt" />
+    <Content Include="b2style\codegen\var_delegate_template.txt" />
     <Content Include="b2style\codegen\test_assert.txt" />
     <Content Include="b2style\self-test\class-function-call-with-spaces.txt" />
     <Content Include="b2style\self-test\copy-function-ptr.txt" />

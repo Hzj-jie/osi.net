@@ -708,6 +708,16 @@ Public NotInheritable Class b2style_test
     End Sub
 
     <test>
+    Private Shared Sub var_delegate_template()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.var_delegate_template.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "2abc6")
+    End Sub
+
     Private Shared Sub function_ptr()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing

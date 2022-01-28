@@ -19,6 +19,7 @@ Partial Public NotInheritable Class b2style
         Private ReadOnly _extended_type_name As extended_type_name_t
         ' One template type can be used multiple times in the generated code.
         Private ReadOnly type_refs As New vector(Of ref(Of String))()
+        Private ReadOnly type_var As Boolean
 
         Private NotInheritable Class extended_type_name_t
             Public ReadOnly name As String
@@ -54,6 +55,11 @@ Partial Public NotInheritable Class b2style
                                 Function() As ref(Of String)
                                     Return New ref(Of String)()
                                 End Function)
+            assert(Not Me.type_refs.empty())
+            Me.type_var = types.back().EndsWith("...")
+            If Me.type_var Then
+                types(types.size() - uint32_1) = types.back().TrimEnd("."c).Trim()
+            End If
             n.dfs(Sub(ByVal node As typed_node, ByVal stop_navigating_sub_nodes As Action)
                       assert(Not node Is Nothing)
                       assert(Not stop_navigating_sub_nodes Is Nothing)
@@ -82,7 +88,10 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
             assert(Not n Is Nothing)
-            Return strcat(n.input_without_ignored(), "__", type_count)
+            ' Return strcat(n.children_word_str(), "__", type_count)
+            ' TODO: This change will break templates with same name but different template type count
+            ' E.g. template <T> func() And template <T, T2> func().
+            Return n.input_without_ignored()
         End Function
 
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
@@ -124,7 +133,7 @@ Partial Public NotInheritable Class b2style
 
         Public Function apply(ByVal types As vector(Of String), ByRef impl As String) As Boolean
             assert(Not types Is Nothing)
-            If types.size() <> Me.type_refs.size() Then
+            If Not type_var AndAlso types.size() <> Me.type_refs.size() Then
                 raise_error(error_type.user,
                             "Template ",
                             _extended_type_name.name,
@@ -135,14 +144,35 @@ Partial Public NotInheritable Class b2style
                             "].")
                 Return False
             End If
+            If type_var AndAlso types.size() < Me.type_refs.size() Then
+                raise_error(error_type.user,
+                            "Template ",
+                            _extended_type_name.name,
+                            " expectes at least ",
+                            Me.type_refs.size(),
+                            " template types, but received [",
+                            types,
+                            "].")
+                Return False
+            End If
             assert(types.size() > 0)
             _extended_type_name.apply(types)
-            For i As UInt32 = 0 To types.size() - uint32_1
-                assert(Not Me.type_refs(i))
-                Me.type_refs(i).set(types(i))
-            Next
+            If type_var Then
+                Dim i As UInt32 = 0
+                While i < Me.type_refs.size() - uint32_1
+                    assert(Not Me.type_refs(i))
+                    Me.type_refs(i).set(types(i))
+                    i += uint32_1
+                End While
+                Me.type_refs(i).set((+types).strjoin(",", CInt(i)))
+            Else
+                For i As UInt32 = 0 To types.size() - uint32_1
+                    assert(Not Me.type_refs(i))
+                    Me.type_refs(i).set(types(i))
+                Next
+            End If
             impl = w.dump()
-            For i As UInt32 = 0 To types.size() - uint32_1
+            For i As UInt32 = 0 To Me.type_refs.size() - uint32_1
                 Me.type_refs(i).set(Nothing)
             Next
             Return True

@@ -1,5 +1,5 @@
 ' This file is created by genall with
-' C:\Users\Hzj_j\git\osi.net\service\resource\gen\gen.exe
+' C:\Users\Hzj_jie\git\osi\service\resource\gen\gen.exe
 ' shared_rules "[nlexer_rule]" "nlexer_rule.txt" "[nlexer_rule2]" "nlexer_rule2.txt" "[syntaxer_rule]" "syntaxer_rule.txt"
 
 Option Explicit On
