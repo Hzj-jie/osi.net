@@ -56,9 +56,9 @@ Public Module _process
         If p Is Nothing Then
             Return False
         End If
-        queue_in_managed_threadpool(Sub()
-                                        eva(quit_result, quit(p, wait_ms))
-                                    End Sub)
+        managed_thread_pool.push(Sub()
+                                     eva(quit_result, quit(p, wait_ms))
+                                 End Sub)
         Return True
     End Function
 End Module

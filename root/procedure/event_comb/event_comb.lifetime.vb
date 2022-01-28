@@ -82,7 +82,7 @@ Partial Public Class event_comb
             ' flip_events.timeout may immediately execute the callback, which breaks event_comb, as it uses
             ' reenterable_locked(). Eventually reenterable_locked() should be avoided, but before that, this is a short
             ' term fix.
-            thread_pool().push(AddressOf e.timeout)
+            thread_pool.push(AddressOf e.timeout)
         End Sub
     End Class
 End Class

@@ -13,17 +13,12 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 
 Public NotInheritable Class slimqless2_threadpool
-    Implements IDisposable
-
-    Private ReadOnly q As waitable_slimqless2(Of Action)
-    Private ReadOnly rs() As slimqless2_runner
+    Private ReadOnly q As New waitable_slimqless2(Of Action)()
+    Private ReadOnly rs(CInt(thread_pool.default_thread_count - uint32_1)) As slimqless2_runner
 
     Public Sub New()
-        q = New waitable_slimqless2(Of Action)()
-        ReDim rs(CInt(threadpool.default_thread_count - uint32_1))
         For i As Int32 = 0 To array_size_i(rs) - 1
             rs(i) = New slimqless2_runner(q)
         Next
@@ -36,7 +31,7 @@ Public NotInheritable Class slimqless2_threadpool
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function running_in_current_thread() As Boolean
-        For i As Int32 = 0 To array_size_i(rs) - 1
+        For i As Int32 = 0 To rs.array_size_i() - 1
             If rs(i).running_in_current_thread() Then
                 Return True
             End If
@@ -46,12 +41,12 @@ Public NotInheritable Class slimqless2_threadpool
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function thread_count() As UInt32
-        Return threadpool.default_thread_count
+        Return thread_pool.default_thread_count
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function stopping() As Boolean
-        For i As Int32 = 0 To array_size_i(rs) - 1
+        For i As Int32 = 0 To rs.array_size_i() - 1
             If rs(i).stopping() Then
                 Return True
             End If
@@ -61,11 +56,7 @@ Public NotInheritable Class slimqless2_threadpool
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [stop]() As Boolean
-        If object_compare(Me, newable_global_instance(Of slimqless2_threadpool).ref()) = 0 Then
-            Return False
-        End If
-        Dim r As Boolean = False
-        r = True
+        Dim r As Boolean = True
         For i As Int32 = 0 To array_size_i(rs) - 1
             If Not rs(i).stop() Then
                 r = False
@@ -102,7 +93,7 @@ Public NotInheritable Class slimqless2_threadpool
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function join(ByVal ms As Int64) As Boolean
-        For i As Int32 = 0 To array_size_i(rs) - 1
+        For i As Int32 = 0 To rs.array_size_i() - 1
             If Not rs(i).join(ms) Then
                 Return False
             End If
@@ -115,10 +106,6 @@ Public NotInheritable Class slimqless2_threadpool
         For i As Int32 = 0 To array_size_i(rs) - 1
             rs(i).join()
         Next
-    End Sub
-
-    Public Sub Dispose() Implements IDisposable.Dispose
-        [stop]()
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

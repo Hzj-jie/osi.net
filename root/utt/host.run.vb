@@ -52,10 +52,8 @@ Partial Friend NotInheritable Class host
             End If
         End If
 
-        Dim startms As Int64 = 0
-        startms = nowadays.milliseconds()
-        Dim proc_ms As Int64 = 0
-        proc_ms = envs.total_processor_time_ms()
+        Dim startms As Int64 = nowadays.milliseconds()
+        Dim proc_ms As Int64 = envs.total_processor_time_ms()
         execute_case(c)
         Interlocked.Add(using_threads, -c.case.reserved_processors())
 
@@ -90,19 +88,16 @@ Partial Friend NotInheritable Class host
                             ", gc total memory ",
                             envs.gc_total_memory())
             End If
-            Dim ms As Int64 = 0
-            ms = nowadays.milliseconds() - startms
-            Dim pms As Int64 = 0
-            pms = envs.total_processor_time_ms() - proc_ms
-            Dim msg() As Object = Nothing
-            msg = {"finish running ",
-                   c.full_name(),
-                   ", total time in milliseconds ",
-                   ms,
-                   ", processor usage milliseconds ",
-                   pms,
-                   ", processor usage percentage ",
-                   pms * 100 / ms}
+            Dim ms As Int64 = nowadays.milliseconds() - startms
+            Dim pms As Int64 = envs.total_processor_time_ms() - proc_ms
+            Dim msg() As Object = {"finish running ",
+                                   c.full_name(),
+                                   ", total time in milliseconds ",
+                                   ms,
+                                   ", processor usage milliseconds ",
+                                   pms,
+                                   ", processor usage percentage ",
+                                   pms * 100 / ms}
             If env_vars.utt_report_case_name Then
                 utt_raise_error(msg)
             Else
@@ -132,8 +127,7 @@ Partial Friend NotInheritable Class host
             If cases(i).finished Then
                 Continue For
             End If
-            Dim c As case_info = Nothing
-            c = cases(i)
+            Dim c As case_info = cases(i)
             rtn = True
             If (c.case.reserved_processors() >= 0 AndAlso
                 c.case.reserved_processors() + using_threads <= utt_concurrency()) OrElse
@@ -141,7 +135,9 @@ Partial Friend NotInheritable Class host
                 new_case_started = True
                 Interlocked.Increment(running_cases)
                 Interlocked.Add(using_threads, c.case.reserved_processors())
-                start_thread(Nothing, Sub() run(c, finished))
+                managed_thread_pool.push(Sub()
+                                             run(c, finished)
+                                         End Sub)
                 c.finished = True
             End If
         Next
@@ -187,8 +183,7 @@ Partial Friend NotInheritable Class host
     Public Shared Sub run()
         expected_end_ms = nowadays.milliseconds()
         expected_end_ms += expected_running_time_ms()
-        Dim finished As AutoResetEvent = Nothing
-        finished = New AutoResetEvent(False)
+        Dim finished As New AutoResetEvent(False)
         While go_through_all(finished)
             wait_finish(finished)
         End While

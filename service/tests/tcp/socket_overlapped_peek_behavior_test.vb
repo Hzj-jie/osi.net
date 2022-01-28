@@ -46,22 +46,17 @@ Public Class socket_overlapped_peek_behavior_test
     End Sub
 
     Public Overrides Function run() As Boolean
-        Dim ready As AutoResetEvent = Nothing
-        ready = New AutoResetEvent(False)
-        Dim l As TcpListener = Nothing
-        l = New TcpListener(IPAddress.Loopback, port)
+        Dim ready As New AutoResetEvent(False)
+        Dim l As New TcpListener(IPAddress.Loopback, port)
         l.Start()
-        queue_in_managed_threadpool(Sub()
-                                        client_thread(ready)
-                                    End Sub)
-        Dim r As TcpClient = Nothing
-        r = l.AcceptTcpClient()
+        managed_thread_pool.push(Sub()
+                                     client_thread(ready)
+                                 End Sub)
+        Dim r As TcpClient = l.AcceptTcpClient()
         For i As Int32 = 0 To repeat_size - 1
             assertion.is_true(ready.Set())
-            Dim buffs As vector(Of Byte()) = Nothing
-            buffs = New vector(Of Byte())()
-            Dim whs As vector(Of WaitHandle) = Nothing
-            whs = New vector(Of WaitHandle)()
+            Dim buffs As New vector(Of Byte())()
+            Dim whs As New vector(Of WaitHandle)()
             Dim buff() As Byte = Nothing
             For j As Int32 = 0 To overlapped_size - 1
                 ReDim buff(data_size - 1)

@@ -31,10 +31,10 @@ Public Module _async_sync
                                         assert(w.Set())
                                         Return goto_end()
                                     End Function))
-        If threadpool.threadpool.in_restricted_threadpool_thread() Then
+        If thread_pool.in_restricted_threadpool_thread() Then
             While Not w.WaitOne(0)
-                If Not thread_pool().execute() Then
-                    thread_pool().wait(2 * envs.timeslice_length_ms)
+                If Not thread_pool.execute() Then
+                    thread_pool.wait(2 * envs.timeslice_length_ms)
                 End If
             End While
         Else

@@ -144,7 +144,7 @@ Partial Public NotInheritable Class server
     End Sub
 
     Private Sub listen()
-        For i As Int32 = 0 To min(CInt(thread_pool().thread_count()), Environment.ProcessorCount()) - 1
+        For i As Int32 = 0 To min(CInt(thread_pool.thread_count()), Environment.ProcessorCount()) - 1
             Dim ctx As ref(Of HttpListenerContext) = Nothing
             Dim ec As event_comb = Nothing
             assert_begin(New event_comb(Function() As Boolean
