@@ -4,39 +4,36 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
+Imports osi.root.formation
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
-        Public Structure current_namespace_proxy
-            Private ReadOnly s As scope
+        Public NotInheritable Class current_namespace_t
+            Private ReadOnly s As New stack(Of String)()
 
-            Public Sub New(ByVal s As scope)
-                assert(Not s Is Nothing)
-                Me.s = s
-            End Sub
-
-            Public Function define(ByVal name As String) As scope
-                assert(s.cn Is Nothing)
+            Public Function define(ByVal name As String) As IDisposable
                 assert(Not name.null_or_whitespace())
-                s.cn = name
-                Return s
+                s.emplace(name)
+                Return defer.to(Sub()
+                                    assert(Not s.empty())
+                                    s.pop()
+                                End Sub)
             End Function
 
             Public Function name() As String
-                Dim s As scope = Me.s
-                While s.cn Is Nothing
-                    s = s.parent
-                    If s Is Nothing Then
-                        Return ""
-                    End If
-                End While
-                Return s.cn
+                If s.empty() Then
+                    Return ""
+                End If
+                Return s.back()
             End Function
-        End Structure
+        End Class
 
-        Public Function current_namespace() As current_namespace_proxy
-            Return New current_namespace_proxy(Me)
+        Public Function current_namespace() As current_namespace_t
+            If is_root() Then
+                assert(Not cn Is Nothing)
+                Return cn
+            End If
+            Return (+root).current_namespace()
         End Function
     End Class
 End Class

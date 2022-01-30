@@ -122,9 +122,13 @@
     <Content Include="b2style\codegen\errors\undefined-value-clause.txt" />
     <Content Include="b2style\codegen\function_ptr.txt" />
     <Content Include="b2style\codegen\test_assert.txt" />
+    <Content Include="b2style\self-test\assert-equal.txt" />
     <Content Include="b2style\self-test\class-function-call-with-spaces.txt" />
+    <Content Include="b2style\self-test\copy-function-ptr.txt" />
+    <Content Include="b2style\self-test\function-template.txt" />
     <Content Include="b2style\self-test\more-closing-angle-brackets.txt" />
     <Content Include="b2style\self-test\self-health.txt" />
+    <Content Include="b2style\self-test\template-in-namespace.txt" />
     <Content Include="b2style\self-test\template_class_with_ref.txt" />
     <Content Include="b2style\self-test\two-closing-angle-brackets.txt" />
     <Content Include="bstyle\codegen\delegate.txt" />

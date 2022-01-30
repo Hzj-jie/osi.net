@@ -76,6 +76,7 @@ Partial Public NotInheritable Class b2style
                            with(_class.instance).
                            with(Of template).
                            with(Of template_type_name).
+                           with(Of function_call_with_template).
                            with(Of name)().
                            with(name.of("raw-type-name")).
                            with(Of _function)().
@@ -100,6 +101,7 @@ Partial Public NotInheritable Class b2style
                                "sentence-with-semi-colon",
                                "ignore-result-function-call",
                                "ignore-result-heap-struct-function-call",
+                               "ignore-result-function-call-with-template",
                                "for-increase",
                                "base-for-increase",
                                "base-value-without-bracket",

@@ -10,7 +10,7 @@ Imports osi.root.lock
 Imports osi.root.procedure
 Imports osi.root.threadpool
 Imports osi.root.utt
-Imports tp = osi.root.threadpool.threadpool
+Imports tp = osi.root.threadpool.thread_pool
 
 Public NotInheritable Class async_sync_test
     Inherits [case]
@@ -19,7 +19,7 @@ Public NotInheritable Class async_sync_test
         Dim count As Int32 = 0
         ' A very large count may trigger stack overflow, as the following event_comb instances will only execute an
         ' async_sync.
-        count = CInt(thread_pool().thread_count() << 1)
+        count = CInt(thread_pool.thread_count() << 1)
         Dim c As atomic_int = Nothing
         c = New atomic_int()
         Dim w As AutoResetEvent = Nothing

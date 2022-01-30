@@ -119,6 +119,7 @@
     <Compile Include="functor\string_serializer\uri_serializer.vb" />
     <Compile Include="garbage_collector.vb" />
     <Compile Include="GlobalSuppressions.vb" />
+    <Compile Include="managed_thread_pool.vb" />
     <Compile Include="mono.vb" />
     <Compile Include="ref\array_ref.vb" />
     <Compile Include="ref\ref.vb" />
@@ -336,7 +337,6 @@
     <Compile Include="string_utils\upper_lower.vb" />
     <Compile Include="swap.vb" />
     <Compile Include="text_writer.vb" />
-    <Compile Include="threadpool.vb" />
     <Compile Include="thread_timing\thread_boost.vb" />
     <Compile Include="thread_timing\thread_timing.vb" />
     <Compile Include="time\time.vb" />

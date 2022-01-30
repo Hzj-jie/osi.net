@@ -66,8 +66,6 @@
     <None Include="codegen\slimqless2_runner_test.vbp" />
     <None Include="codegen\slimqless2_threadpool_test.vbp" />
     <None Include="codegen\threadpool_test.vbp" />
-    <None Include="codegen\managed_threadpool_test.vbp" />
-    <Compile Include="managed_threadpool_test.vb" />
     <Compile Include="qless_runner_synchronize_invoke_test.vb" />
     <Compile Include="qless_runner_test.vb" />
     <Compile Include="qless_threadpool_test.vb" />

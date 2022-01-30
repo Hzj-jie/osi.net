@@ -55,7 +55,6 @@
     <Import Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="managed_threadpool.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -74,14 +73,13 @@
     <Compile Include="qless_runner.vb" />
     <Compile Include="qless_runner_synchronize_invoke.vb" />
     <Compile Include="qless_threadpool.vb" />
-    <Compile Include="registry.vb" />
     <Compile Include="slimheapless_runner.vb" />
     <Compile Include="slimheapless_runner_synchronize_invoke.vb" />
     <Compile Include="slimheapless_threadpool.vb" />
     <Compile Include="slimqless2_runner.vb" />
     <Compile Include="slimqless2_runner_synchronize_invoke.vb" />
     <Compile Include="slimqless2_threadpool.vb" />
-    <Compile Include="threadpool.vb" />
+    <Compile Include="thread_pool.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

@@ -30,8 +30,7 @@ Namespace logic
             Me.New(cmd, Nothing, parameters)
         End Sub
 
-        Protected MustOverride Function retrieve_anchor(ByVal o As vector(Of String),
-                                                        ByRef a As scope.anchor) As Boolean
+        Protected MustOverride Function retrieve_anchor(ByRef a As scope.anchor) As Boolean
 
         ' Forward return-value to scope_wrapper.
         Private Shared Function define_return_value(ByVal anchor As scope.anchor,
@@ -124,7 +123,7 @@ Namespace logic
             ' rel(array_size(parameters)) is for return value.
             Using scope.current().start_scope()
                 Dim anchor As scope.anchor = Nothing
-                If Not retrieve_anchor(o, anchor) Then
+                If Not retrieve_anchor(anchor) Then
                     Return False
                 End If
                 assert(Not anchor Is Nothing)

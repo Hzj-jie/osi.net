@@ -43,30 +43,29 @@ Public NotInheritable Class priority_activity_test
     Public Overrides Function run() As Boolean
         enum_def(Of ProcessPriorityClass).foreach(
             Sub(ByVal ppc As ProcessPriorityClass, ByVal s As String)
-                Using p As shell_less_process = New shell_less_process()
+                Using p As New shell_less_process()
                     p.start_info().FileName() = priority_activity_exe_full_path
                     p.start_info().Arguments() = s
                     If Not assertion.is_true(p.start()) Then
                         Return
                     End If
-                    assertion.is_true(execute_in_managed_threadpool(
-                                          Sub()
-                                              While True
-                                                  Dim l As String = p.stdout().ReadLine()
-                                                  If strsame(l, expected_output) Then
-                                                      Exit While
-                                                  End If
-                                              End While
-                                              assertion.happening(Function() As Boolean
-                                                                      Return (+p).PriorityClass() = ppc
-                                                                  End Function)
-                                              p.stdin().WriteLine()
-                                              If Not assertion.is_true(p.wait_for_exit(
+                    managed_thread_pool.with_timeout(Sub()
+                                                         While True
+                                                             Dim l As String = p.stdout().ReadLine()
+                                                             If strsame(l, expected_output) Then
+                                                                 Exit While
+                                                             End If
+                                                         End While
+                                                         assertion.happening(Function() As Boolean
+                                                                                 Return (+p).PriorityClass() = ppc
+                                                                             End Function)
+                                                         p.stdin().WriteLine()
+                                                         If Not assertion.is_true(p.wait_for_exit(
                                                                 seconds_to_milliseconds(10))) Then
-                                                  p.quit()
-                                              End If
-                                          End Sub,
-                                          seconds_to_milliseconds(20)))
+                                                             p.quit()
+                                                         End If
+                                                     End Sub,
+                                                     seconds_to_milliseconds(20))
                 End Using
             End Sub)
         Return True

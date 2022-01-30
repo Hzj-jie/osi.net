@@ -32,26 +32,31 @@ Partial Public NotInheritable Class b2style
             Public Shared Function [of](ByVal i As String) As String
                 assert(Not i.null_or_whitespace())
                 Return streams.of(_namespace.of(i).Split("."c)).
-                           map(Function(ByVal x As String) As String
-                                   assert(Not x Is Nothing)
-                                   If Not x.Contains(namespace_separator) Then
-                                       Return x
-                                   End If
-                                   Return _namespace.of(x).
+                               map(Function(ByVal x As String) As String
+                                       assert(Not x Is Nothing)
+                                       If Not x.Contains(namespace_separator) Then
+                                           Return x
+                                       End If
+                                       Return _namespace.of(x).
                                                      Replace(namespace_separator, namespace_replacer).
                                                      Substring(namespace_replacer.Length())
-                               End Function).
-                           collect_by(stream(Of String).collectors.to_str(".")).
-                           ToString()
+                                   End Function).
+                               collect_by(stream(Of String).collectors.to_str(".")).
+                               ToString()
+            End Function
+
+            Public Shared Function with_namespace(ByVal ns As String, ByVal i As String) As String
+                Return [of](_namespace.with_namespace(ns, i))
             End Function
 
             Public Shared Function in_global_namespace(ByVal i As String) As String
-                Return [of](with_namespace("", i))
+                Return [of](_namespace.with_namespace("", i))
             End Function
 
             Public Shared Function operator_function_name(ByVal operator_name As String) As String
                 assert(Not operator_name.null_or_whitespace())
-                Return [of](with_namespace("", with_namespace("b2style", operator_name.Replace("-"c, "_"c))))
+                Return [of](_namespace.with_namespace("",
+                            _namespace.with_namespace("b2style", operator_name.Replace("-"c, "_"c))))
             End Function
 
             Private Sub New()
@@ -74,7 +79,7 @@ Partial Public NotInheritable Class b2style
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() >= 4)
-            Using scope.current().start_scope().current_namespace().define([of](n.child(1).word().str()))
+            Using scope.current().current_namespace().define([of](n.child(1).word().str()))
                 For i As UInt32 = 3 To n.child_count() - uint32_2
                     If Not l.of(n.child(i)).build(o) Then
                         Return False

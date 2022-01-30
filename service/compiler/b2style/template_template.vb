@@ -92,7 +92,7 @@ Partial Public NotInheritable Class b2style
             assert(n.type_name.Equals("template"))
             assert(n.child_count() = 5)
             Dim name_node As typed_node = n.child(4).child()
-            If name_node.type_name.Equals("class") Then
+            If name_node.type_name.Equals("class") OrElse name_node.type_name.Equals("function") Then
                 name_node = name_node.child(1)
             ElseIf name_node.type_name.Equals("delegate-with-semi-colon") Then
                 name_node = name_node.child(0).child(2)

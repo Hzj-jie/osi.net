@@ -1,36 +1,38 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.event
 Imports osi.root.utt
 
-Public Class managed_threadpool_behavior_test
+Public NotInheritable Class managed_threadpool_behavior_test
     Inherits [case]
 
     Private Shared Function queue_in_background_io_thread_case() As Boolean
         Const size As Int32 = 1024
-        Dim finished As count_down_event = Nothing
-        finished = New count_down_event(size)
+        Dim finished As New count_down_event(size)
         For i As Int32 = 0 To size - 1
-            queue_in_managed_threadpool(Sub()
-                                            assertion.is_true(Thread.CurrentThread().IsThreadPoolThread())
-                                            assertion.is_true(Thread.CurrentThread().IsBackground())
-                                            finished.set()
-                                        End Sub)
+            managed_thread_pool.push(Sub()
+                                         assertion.is_true(Thread.CurrentThread().IsThreadPoolThread())
+                                         assertion.is_true(Thread.CurrentThread().IsBackground())
+                                         finished.set()
+                                     End Sub)
         Next
         finished.wait()
         Return True
     End Function
 
     Private Shared Function new_in_worker_thread_case() As Boolean
-        Dim finished As AutoResetEvent = Nothing
-        finished = New AutoResetEvent(False)
+        Dim finished As New AutoResetEvent(False)
         For i As Int32 = 0 To 1024 - 1
-            assert(start_thread(Nothing,
-                                Sub()
+            Dim t As New Thread(Sub()
                                     assertion.is_false(Thread.CurrentThread().IsBackground())
                                     assert(finished.force_set())
-                                End Sub))
+                                End Sub)
+            t.Start()
             assert(finished.wait())
         Next
         finished.Close()
