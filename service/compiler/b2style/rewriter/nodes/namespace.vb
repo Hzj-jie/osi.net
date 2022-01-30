@@ -45,13 +45,18 @@ Partial Public NotInheritable Class b2style
                                ToString()
             End Function
 
+            Public Shared Function with_namespace(ByVal ns As String, ByVal i As String) As String
+                Return [of](_namespace.with_namespace(ns, i))
+            End Function
+
             Public Shared Function in_global_namespace(ByVal i As String) As String
-                Return [of](with_namespace("", i))
+                Return [of](_namespace.with_namespace("", i))
             End Function
 
             Public Shared Function operator_function_name(ByVal operator_name As String) As String
                 assert(Not operator_name.null_or_whitespace())
-                Return [of](with_namespace("", with_namespace("b2style", operator_name.Replace("-"c, "_"c))))
+                Return [of](_namespace.with_namespace("",
+                            _namespace.with_namespace("b2style", operator_name.Replace("-"c, "_"c))))
             End Function
 
             Private Sub New()

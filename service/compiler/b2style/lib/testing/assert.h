@@ -37,9 +37,7 @@ void assert_equal(T t, T2 t2, string msg) {
 
 template <T, T2>
 void assert_equal(T t, T2 t2) {
-  // TODO: The function call should need no full namespace, currently the template_template won't include namespace
-  // information.
-  ::b2style::testing::assert_true(t == t2);
+  assert_true(t == t2);
 }
 
 }  // namespace testing
