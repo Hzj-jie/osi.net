@@ -16,7 +16,9 @@ reference bit-and
 
 namespace kw-namespace name start-paragraph [root-type]* end-paragraph
 
-function-call-with-template name less-than paramtypelist greater-than start-bracket [value-list]? end-bracket
+# Can easily share logic with existing code.
+function-name-with-template name less-than paramtypelist greater-than
+function-call-with-template function-name-with-template start-bracket [value-list]? end-bracket
 ignore-result-function-call-with-template function-call-with-template
 b2style-sentence-with-semi-colon [ignore-result-heap-struct-function-call, ignore-result-function-call-with-template, self-value-clause, pre-operation-value, post-operation-value]? semi-colon
 sentence-with-semi-colon [b2style-sentence-with-semi-colon, base-sentence-with-semi-colon]
