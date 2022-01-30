@@ -82,7 +82,7 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
             assert(Not n Is Nothing)
-            Return strcat(n.input_without_ignored(), "__", type_count)
+            Return strcat(_namespace.bstyle_format.of(n.input_without_ignored()), "__", type_count)
         End Function
 
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),

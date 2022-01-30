@@ -25,7 +25,8 @@ Partial Public NotInheritable Class b2style
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            If n.descentdant_of("template-type-name") Then
+            If n.descentdant_of("template-type-name") OrElse
+               n.descentdant_of("function-name-with-template") Then
                 ' Expect to dump only the type name.
                 Return l.of(n.child(0)).build(o)
             End If

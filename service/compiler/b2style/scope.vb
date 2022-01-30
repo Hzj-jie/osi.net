@@ -10,7 +10,7 @@ Partial Public NotInheritable Class b2style
         Inherits scope(Of scope)
 
         Private ReadOnly fc As call_hierarchy_t
-        Private cn As String
+        Private ReadOnly cn As current_namespace_t
         Private f As String
         Private ReadOnly t As New template_t()
         Private ReadOnly v As New variable_t()
@@ -24,6 +24,7 @@ Partial Public NotInheritable Class b2style
         Public Sub New()
             Me.New(Nothing)
             fc = New call_hierarchy_t()
+            cn = New current_namespace_t()
             d = New define_t()
         End Sub
 
