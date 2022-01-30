@@ -62,7 +62,7 @@
     <Compile Include="b2style\b2style_self_test_cases.vb" />
     <Compile Include="b2style\b2style_test.vb" />
     <Compile Include="b2style\b2style_test_data.vb" />
-    <Content Include="b2style\codegen\class_ctor_dtor.txt" />
+    <Content Include="b2style\codegen\class-constructor.txt" />
     <Content Include="b2style\codegen\delegate.txt" />
     <Compile Include="b2style\template_template_test.vb" />
     <Compile Include="bstyle\bstyle_compiler_error_test.vb" />

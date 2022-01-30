@@ -1,21 +1,21 @@
 ﻿
 #include <b2style.h>
 
-int dtors = 0;
+int destructs = 0;
 
 class C {
   int x;
 
-  void ctor() {
+  void construct() {
     this.ctor(100);
   }
 
-  void ctor(int x) {
+  void construct(int x) {
     this.x = x;
   }
 
-  void dtor() {
-    dtors++;
+  void destruct() {
+    destructs++;
   }
 };
 
