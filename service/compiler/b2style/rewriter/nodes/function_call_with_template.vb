@@ -5,12 +5,11 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.service.automata
-Imports osi.service.compiler
 Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class paramtype_with_comma
+    Public NotInheritable Class function_call_with_template
         Implements code_gen(Of typed_node_writer)
 
         Private ReadOnly l As code_gens(Of typed_node_writer)
@@ -21,16 +20,14 @@ Partial Public NotInheritable Class b2style
             Me.l = b
         End Sub
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+        Public Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
+                Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
-            If n.descentdant_of("template-type-name") OrElse
-               n.descentdant_of("function-name-with-template") Then
-                ' Expect to dump only the type name.
-                Return l.of(n.child(0)).build(o)
+            Dim extended_type As String = Nothing
+            If Not scope.current().template().resolve(l, n.child(0), extended_type) Then
+                Return False
             End If
-            Return l.of_all_children(n).build(o)
+            Return l.typed(Of function_call).build(_namespace.bstyle_format.of(extended_type), n, o)
         End Function
     End Class
 End Class

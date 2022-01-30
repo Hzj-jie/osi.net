@@ -22,6 +22,19 @@ namespace b2style {
     return true;
   }
 
+  // TODO: Use a better way to compare strings, treating them as big_uints is not accurate or efficient.
+  bool equal(string i, string j) {
+    bool result;
+    logic "equal b2style__result b2style__i b2style__j";
+    return result;
+  }
+
+  bool not_equal(string i, string j) {
+    bool result;
+    logic "equal b2style__result b2style__i b2style__j";
+    return not(result);
+  }
+
   bool equal(biguint i, biguint j) {
     bool result;
     logic "equal b2style__result b2style__i b2style__j";

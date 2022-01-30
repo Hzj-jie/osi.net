@@ -82,7 +82,7 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
             assert(Not n Is Nothing)
-            Return strcat(n.input_without_ignored(), "__", type_count)
+            Return strcat(_namespace.bstyle_format.of(n.input_without_ignored()), "__", type_count)
         End Function
 
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
@@ -92,7 +92,7 @@ Partial Public NotInheritable Class b2style
             assert(n.type_name.Equals("template"))
             assert(n.child_count() = 5)
             Dim name_node As typed_node = n.child(4).child()
-            If name_node.type_name.Equals("class") Then
+            If name_node.type_name.Equals("class") OrElse name_node.type_name.Equals("function") Then
                 name_node = name_node.child(1)
             ElseIf name_node.type_name.Equals("delegate-with-semi-colon") Then
                 name_node = name_node.child(0).child(2)

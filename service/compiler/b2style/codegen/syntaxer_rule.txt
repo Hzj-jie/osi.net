@@ -16,7 +16,11 @@ reference bit-and
 
 namespace kw-namespace name start-paragraph [root-type]* end-paragraph
 
-b2style-sentence-with-semi-colon [ignore-result-heap-struct-function-call, self-value-clause, pre-operation-value, post-operation-value]? semi-colon
+# Can easily share logic with existing code.
+function-name-with-template name less-than paramtypelist greater-than
+function-call-with-template function-name-with-template start-bracket [value-list]? end-bracket
+ignore-result-function-call-with-template function-call-with-template
+b2style-sentence-with-semi-colon [ignore-result-heap-struct-function-call, ignore-result-function-call-with-template, self-value-clause, pre-operation-value, post-operation-value]? semi-colon
 sentence-with-semi-colon [b2style-sentence-with-semi-colon, base-sentence-with-semi-colon]
 
 self-operator [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or, self-left-shift, self-right-shift]
@@ -24,7 +28,7 @@ self-value-clause variable-name self-operator value
 
 for-increase [self-value-clause, ignore-result-heap-struct-function-call, pre-operation-value, post-operation-value, base-for-increase]
 
-raw-value [heap-struct-function-call, base-value-without-bracket]
+raw-value [heap-struct-function-call, function-call-with-template, base-value-without-bracket]
 value-without-bracket [value-with-operation, raw-value]
 value-with-operation [unary-operation-value, binary-operation-value]
 unary-operation-value [pre-operation-value, post-operation-value]
@@ -47,5 +51,5 @@ type-param-list [type-param-with-comma]* type-param
 type-param-with-comma type-param comma
 type-param raw-name
 delegate-with-semi-colon delegate semi-colon
-template-body [class, delegate-with-semi-colon]
+template-body [class, delegate-with-semi-colon, function]
 template kw-template less-than type-param-list greater-than template-body
