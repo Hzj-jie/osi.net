@@ -16,6 +16,7 @@ Imports osi.service.resource
 Public NotInheritable Class tar_gen
     Private Shared output As argument(Of String)
 
+    <command_line_specified>
     <test>
     Public Shared Sub run()
         Dim s As MemoryStream = tar.gen.read()
