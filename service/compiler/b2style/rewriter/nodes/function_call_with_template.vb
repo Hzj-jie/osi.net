@@ -27,7 +27,7 @@ Partial Public NotInheritable Class b2style
             If Not scope.current().template().resolve(l, n.child(0), extended_type) Then
                 Return False
             End If
-            Return l.typed(Of function_call).build(_namespace.bstyle_format.of(extended_type), n, o)
+            Return l.typed(Of function_call).build(extended_type, n, o)
         End Function
     End Class
 End Class

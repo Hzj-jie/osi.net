@@ -4,6 +4,8 @@
 
 namespace N {
 
+typedef ::void void;
+
 template <T>
 class C {
   void f() {
