@@ -1,57 +1,57 @@
 ﻿
 ' Plan-Old-Data-Wrapper for vb.net.
-#DEFAULT IS_CLASS False
+##DEFAULT IS_CLASS False
 #If ##IS_CLASS## Then
 Partial Public NotInheritable Class ##TYPE_NAME##
 #Else
 Partial Public Structure ##TYPE_NAME##
 #End If
-	Implements IComparable,
-			   IComparable(Of ##TYPE_NAME##),
-			   ICloneable,
-			   ICloneable(Of ##TYPE_NAME##),
-			   IEquatable(Of ##TYPE_NAME##)
+    Implements IComparable,
+               IComparable(Of ##TYPE_NAME##),
+               ICloneable,
+               ICloneable(Of ##TYPE_NAME##),
+               IEquatable(Of ##TYPE_NAME##)
 
-	Private ReadOnly t As ##INNER_TYPE##
+    Private ReadOnly t As ##INNER_TYPE##
 
-	<copy_constructor>
-	Private Sub New(ByVal t As ##INNER_TYPE##)
-		Me.t = t
-	End Sub
+    <copy_constructor>
+    Private Sub New(ByVal t As ##INNER_TYPE##)
+        Me.t = t
+    End Sub
 
-	Public Overrides Function Equals(ByVal obj As Object) As Boolean
-		Return CompareTo(obj) = 0
-	End Function
+    Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Return CompareTo(obj) = 0
+    End Function
 
-	Public Function EqualsT(ByVal other As ##TYPE_NAME##) As Boolean _
-						   Implements IEquatable(Of ##TYPE_NAME##).Equals
-		Return CompareTo(other) = 0
-	End Function
+    Public Function EqualsT(ByVal other As ##TYPE_NAME##) As Boolean _
+                           Implements IEquatable(Of ##TYPE_NAME##).Equals
+        Return CompareTo(other) = 0
+    End Function
 
-	Public Overrides Function GetHashCode() As Int32
-		Return t.GetHashCode()
-	End Function
+    Public Overrides Function GetHashCode() As Int32
+        Return t.GetHashCode()
+    End Function
 
-	Public Overrides Function ToString() As String
-		Return t.ToString()
-	End Function
+    Public Overrides Function ToString() As String
+        Return t.ToString()
+    End Function
 
-	Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-		Return CompareTo(cast(Of ##TYPE_NAME##)().from(obj, False))
-	End Function
+    Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+        Return CompareTo(direct_cast(Of ##TYPE_NAME##)(obj, False))
+    End Function
 
-	Public Function CompareToT(ByVal other As ##TYPE_NAME##) As Int32 _
-							  Implements IComparable(Of ##TYPE_NAME##).CompareTo
-		Return t.CompareTo(other.t)
-	End Function
+    Public Function CompareTo(ByVal other As ##TYPE_NAME##) As Int32 _
+                             Implements IComparable(Of ##TYPE_NAME##).CompareTo
+        Return t.CompareTo(other.t)
+    End Function
 
-	Public Function Clone() As Object Implements ICloneable.Clone
-		Return CloneT()
-	End Function
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
 
-	Private Function CloneT() As ##TYPE_NAME## Implements ICloneable(Of ##TYPE_NAME##).Clone
-		Return New ##TYPE_NAME##(t.CloneT())
-	End Function
+    Private Function CloneT() As ##TYPE_NAME## Implements ICloneable(Of ##TYPE_NAME##).Clone
+        Return New ##TYPE_NAME##(t.CloneT())
+    End Function
 #If ##IS_CLASS## Then
 End Class
 #Else

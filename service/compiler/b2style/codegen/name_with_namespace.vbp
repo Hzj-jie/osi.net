@@ -1,1 +1,26 @@
 ﻿
+Imports osi.root.connector
+Imports osi.root.formation
+
+Partial Public NotInheritable Class b2style
+
+##DEFINE TYPE_NAME name_with_namespace
+##DEFINE INNER_TYPE tuple(Of String, String)
+##INCLUDE ..\..\..\..\root\codegen\podw.vbp
+
+Partial Public Structure name_with_namespace
+    Public Sub New(ByVal [namespace] As String, ByVal name As String)
+        assert(Not name.null_or_whitespace())
+        t = tuple.of([namespace], name)
+    End Sub
+
+    Public Function [namespace]() As String
+        Return t._1()
+    End Function
+
+    Public Function name() As String
+        Return t._2()
+    End Function
+End Structure
+
+End Class
