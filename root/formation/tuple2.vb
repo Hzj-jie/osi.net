@@ -22,8 +22,11 @@ Imports osi.root.constants
 
 ' To reduce complexity, tuple is always const, use ref if the fields are required to be muttable.
 Partial Public Structure tuple(Of T1, T2)
-    Implements ICloneable, ICloneable(Of tuple(Of T1, T2)),
-               IComparable, IComparable(Of tuple(Of T1, T2))
+    Implements ICloneable,
+               ICloneable(Of tuple(Of T1, T2)),
+               IComparable,
+               IComparable(Of tuple(Of T1, T2)),
+               IEquatable(Of tuple(Of T1, T2))
 
     Private __1 As T1
 
@@ -309,25 +312,25 @@ Partial Public Structure tuple(Of T1, T2)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As tuple(Of T1, T2),
                              ByVal that As tuple(Of T1, T2)) As Boolean
-        Return compare(this, that) = 0
+        Return this.CompareTo(that) = 0
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As tuple(Of T1, T2),
                              ByVal that As Object) As Boolean
-        Return compare(this, that) = 0
+        Return this.CompareTo(that) = 0
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As tuple(Of T1, T2),
                               ByVal that As tuple(Of T1, T2)) As Boolean
-        Return compare(this, that) <> 0
+        Return this.CompareTo(that) <> 0
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As tuple(Of T1, T2),
                               ByVal that As Object) As Boolean
-        Return compare(this, that) <> 0
+        Return this.CompareTo(that) <> 0
     End Operator
 
     Public Overrides Function ToString() As String
@@ -389,7 +392,12 @@ Partial Public Structure tuple(Of T1, T2)
     End Function
 
     Public Overrides Function Equals(ByVal obj As Object) As Boolean
-        Return compare(Me, obj) = 0
+        Return CompareTo(obj) = 0
+    End Function
+
+    Public Function EqualsT(ByVal that As tuple(Of T1, T2)) As Boolean _
+                           Implements IEquatable(Of tuple(Of T1, T2)).EqualTo
+        Return CompareTo(that) = 0
     End Function
 End Structure
 'finish tuple.vbp --------
