@@ -80,10 +80,9 @@ End Structure
 'finish ..\..\..\..\root\codegen\podw.vbp --------
 
 Partial Public Structure name_with_namespace
-    Public Sub New(ByVal [namespace] As String, ByVal name As String)
-        assert(Not name.null_or_whitespace())
-        t = tuple.of([namespace], name)
-    End Sub
+    Public Shared Function [of](ByVal i As String) As name_with_namespace
+        Return New name_with_namespace(_namespace.of_namespace_and_name(i))
+    End Function
 
     Public Function [namespace]() As String
         Return t._1()

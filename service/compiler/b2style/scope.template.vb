@@ -71,8 +71,7 @@ Partial Public NotInheritable Class b2style
             Public Shared Function template_name(ByVal n As typed_node) As name_with_namespace
                 assert(Not n Is Nothing)
                 assert(n.child_count() >= 4)
-                Return _namespace.of_name_with_namespace(
-                           template_template.template_name(n.child(0), n.child(2).child_count()))
+                Return name_with_namespace.of(template_template.template_name(n.child(0), n.child(2).child_count()))
             End Function
 
             Private Shared Function template_types(ByVal l As code_gens(Of typed_node_writer),
@@ -95,8 +94,11 @@ Partial Public NotInheritable Class b2style
                 End If
                 assert(Not t Is Nothing)
                 Dim d As New definition(t)
-                If Not m.emplace(_namespace.of_name_with_namespace(t.name()), d).second() Then
-                    raise_error(error_type.user, "Template [", t.name(), "] has been defined already.")
+                If Not m.emplace(name_with_namespace.of(t.name()), d).second() Then
+                    raise_error(error_type.user,
+                                "Template [",
+                                name_with_namespace.of(t.name()),
+                                "] has been defined already.")
                     Return False
                 End If
                 o.append(d.injector)
