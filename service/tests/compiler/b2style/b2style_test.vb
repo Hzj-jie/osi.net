@@ -730,7 +730,7 @@ Public NotInheritable Class b2style_test
     End Sub
 
     <test>
-    Private Shared Sub class_ctor_dtor()
+    Private Shared Sub class_constructor()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).
