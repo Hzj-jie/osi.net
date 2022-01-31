@@ -233,6 +233,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="b2style\codegen\name_with_namespace.vbp" />
     <None Include="b2style\codegen\run.cmd" />
     <None Include="b2style\lib\run.cmd" />
     <Compile Include="b2style\scope.call_hierarchy.vb" />

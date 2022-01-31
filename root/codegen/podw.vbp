@@ -1,4 +1,5 @@
 ﻿
+' Plan-Old-Data-Wrapper for vb.net.
 #DEFAULT IS_CLASS False
 #If ##IS_CLASS## Then
 Partial Public NotInheritable Class ##TYPE_NAME##
