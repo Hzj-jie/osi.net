@@ -6,12 +6,12 @@ int destructs = 0;
 class C {
   int x;
 
-  void construct() {
-    this.ctor(100);
-  }
-
   void construct(int x) {
     this.x = x;
+  }
+
+  void construct() {
+    this.construct(100);
   }
 
   void destruct() {

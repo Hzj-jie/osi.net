@@ -42,8 +42,11 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
-            o.Append("struct ")
             Dim class_name As String = n.child(1).input()
+            If Not scope.current().classes().define(class_name) Then
+                Return False
+            End If
+            o.Append("struct ")
             o.Append(class_name).Append("{")
             ' Append struct-body back into the structure.
             Dim class_body As Func(Of Int32, typed_node) =
@@ -69,9 +72,9 @@ Partial Public NotInheritable Class b2style
                                 assert(Not node Is Nothing)
                                 assert(node.child_count() = 5 OrElse node.child_count() = 6)
                                 ' No namespace is necessary, the first parameter contains namespace.
-                                If node.child(0).input().Equals("construct") Then
+                                If node.child(1).input().Equals("construct") Then
                                     has_constructor = True
-                                ElseIf node.child(0).input().Equals("destruct") Then
+                                ElseIf node.child(1).input().Equals("destruct") Then
                                     has_destructor = True
                                 End If
                                 o.Append(node.child(0).input()).

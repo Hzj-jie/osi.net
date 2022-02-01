@@ -45,6 +45,7 @@ Partial Public NotInheritable Class b2style
                     End If
                     s = s.parent
                 End While
+                raise_error(error_type.user, "Class ", name, " has not been defined.")
                 Return False
             End Function
         End Structure

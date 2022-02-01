@@ -89,8 +89,9 @@ Namespace logic
 
         Public Overrides Function run() As Boolean
             Dim stack As New vector(Of pair(Of String, String))()
-            Dim scope As New scope()
-            execute(scope, stack, 0)
+            Using scope As New scope()
+                execute(scope, stack, 0)
+            End Using
             Return True
         End Function
     End Class
