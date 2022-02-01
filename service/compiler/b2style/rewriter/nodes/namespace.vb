@@ -28,6 +28,16 @@ Partial Public NotInheritable Class b2style
             Return with_namespace(scope.current().current_namespace().name(), i)
         End Function
 
+        Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)
+            Dim f As String = [of](i)
+            Dim index As Int32 = f.LastIndexOf(namespace_separator)
+            If index = npos Then
+                Return tuple.of("", f)
+            End If
+            Dim ns As String = f.Substring(0, index)
+            Return tuple.of(ns, f.Substring(index + namespace_separator.Length()))
+        End Function
+
         Public NotInheritable Class bstyle_format
             Public Shared Function [of](ByVal i As String) As String
                 assert(Not i.null_or_whitespace())

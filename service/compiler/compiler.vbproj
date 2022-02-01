@@ -57,7 +57,9 @@
   <ItemGroup>
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
+    <Compile Include="b2style\name_with_namespace.vb" />
     <Compile Include="b2style\rewriter\nodes\class.vb" />
+    <Compile Include="b2style\rewriter\nodes\class_initializer.vb" />
     <Compile Include="b2style\rewriter\nodes\defines.vb" />
     <Compile Include="b2style\rewriter\nodes\function.vb" />
     <Compile Include="b2style\rewriter\nodes\function_call.vb" />
@@ -67,9 +69,11 @@
     <Compile Include="b2style\rewriter\nodes\includes.vb" />
     <Compile Include="b2style\b2style_rules.vb" />
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
+    <Compile Include="b2style\rewriter\nodes\multi_sentence_paragraph.vb" />
     <Compile Include="b2style\rewriter\nodes\paramtype_with_comma.vb" />
     <Compile Include="b2style\rewriter\nodes\template.vb" />
     <Compile Include="b2style\rewriter\nodes\template_type_name.vb" />
+    <Compile Include="b2style\scope.class.vb" />
     <Compile Include="b2style\scope.current_function.vb" />
     <Compile Include="b2style\scope.define.vb" />
     <Compile Include="b2style\scope.namespace.vb" />
@@ -231,6 +235,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="b2style\codegen\name_with_namespace.vbp" />
     <None Include="b2style\codegen\run.cmd" />
     <None Include="b2style\lib\run.cmd" />
     <Compile Include="b2style\scope.call_hierarchy.vb" />

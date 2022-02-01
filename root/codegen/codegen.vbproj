@@ -15,6 +15,7 @@
     <None Include="buildcpp.cmd" />
     <None Include="gitver\gitver.cmd" />
     <None Include="pack.cmd" />
+    <None Include="podw.vbp" />
     <None Include="precompile\precompile.sample1" />
     <None Include="precompile\precompile.sample2" />
     <None Include="run.cmd" />

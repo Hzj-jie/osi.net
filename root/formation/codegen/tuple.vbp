@@ -10,8 +10,11 @@ Imports osi.root.constants
 
 ' To reduce complexity, tuple is always const, use ref if the fields are required to be muttable.
 Partial Public Structure ##TYPE_NAME##(Of ##TEMPLATE_LIST##)
-    Implements ICloneable, ICloneable(Of ##TYPE_NAME##(Of ##TEMPLATE_LIST##)),
-               IComparable, IComparable(Of ##TYPE_NAME##(Of ##TEMPLATE_LIST##))
+    Implements ICloneable,
+               ICloneable(Of ##TYPE_NAME##(Of ##TEMPLATE_LIST##)),
+               IComparable,
+               IComparable(Of ##TYPE_NAME##(Of ##TEMPLATE_LIST##)),
+               IEquatable(Of ##TYPE_NAME##(Of ##TEMPLATE_LIST##))
 
     Private __1 As T1
 
@@ -225,25 +228,25 @@ Partial Public Structure ##TYPE_NAME##(Of ##TEMPLATE_LIST##)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As ##TYPE_NAME##(Of ##TEMPLATE_LIST##),
                              ByVal that As ##TYPE_NAME##(Of ##TEMPLATE_LIST##)) As Boolean
-        Return compare(this, that) = 0
+        Return this.CompareTo(that) = 0
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator =(ByVal this As ##TYPE_NAME##(Of ##TEMPLATE_LIST##),
                              ByVal that As Object) As Boolean
-        Return compare(this, that) = 0
+        Return this.CompareTo(that) = 0
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As ##TYPE_NAME##(Of ##TEMPLATE_LIST##),
                               ByVal that As ##TYPE_NAME##(Of ##TEMPLATE_LIST##)) As Boolean
-        Return compare(this, that) <> 0
+        Return this.CompareTo(that) <> 0
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator <>(ByVal this As ##TYPE_NAME##(Of ##TEMPLATE_LIST##),
                               ByVal that As Object) As Boolean
-        Return compare(this, that) <> 0
+        Return this.CompareTo(that) <> 0
     End Operator
 
     Public Overrides Function ToString() As String
@@ -305,6 +308,11 @@ Partial Public Structure ##TYPE_NAME##(Of ##TEMPLATE_LIST##)
     End Function
 
     Public Overrides Function Equals(ByVal obj As Object) As Boolean
-        Return compare(Me, obj) = 0
+        Return CompareTo(obj) = 0
+    End Function
+
+    Public Function EqualsT(ByVal that As ##TYPE_NAME##(Of ##TEMPLATE_LIST##)) As Boolean _
+                           Implements IEquatable(Of ##TYPE_NAME##(Of ##TEMPLATE_LIST##)).EqualTo
+        Return CompareTo(that) = 0
     End Function
 End Structure
