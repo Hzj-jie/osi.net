@@ -396,7 +396,7 @@ Partial Public Structure tuple(Of T1, T2, T3)
     End Function
 
     Public Function EqualsT(ByVal that As tuple(Of T1, T2, T3)) As Boolean _
-                           Implements IEquatable(Of tuple(Of T1, T2, T3)).EqualTo
+                           Implements IEquatable(Of tuple(Of T1, T2, T3)).Equals
         Return CompareTo(that) = 0
     End Function
 End Structure

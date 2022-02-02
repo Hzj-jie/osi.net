@@ -312,7 +312,7 @@ Partial Public Structure ##TYPE_NAME##(Of ##TEMPLATE_LIST##)
     End Function
 
     Public Function EqualsT(ByVal that As ##TYPE_NAME##(Of ##TEMPLATE_LIST##)) As Boolean _
-                           Implements IEquatable(Of ##TYPE_NAME##(Of ##TEMPLATE_LIST##)).EqualTo
+                           Implements IEquatable(Of ##TYPE_NAME##(Of ##TEMPLATE_LIST##)).Equals
         Return CompareTo(that) = 0
     End Function
 End Structure
