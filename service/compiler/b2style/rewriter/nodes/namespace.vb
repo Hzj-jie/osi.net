@@ -34,8 +34,7 @@ Partial Public NotInheritable Class b2style
             If index = npos Then
                 Return tuple.of("", f)
             End If
-            Dim ns As String = f.Substring(0, index)
-            Return tuple.of(ns, f.Substring(index + namespace_separator.Length()))
+            Return tuple.of(f.Substring(0, index), f.Substring(index + namespace_separator.Length()))
         End Function
 
         Public NotInheritable Class bstyle_format
