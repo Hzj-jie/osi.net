@@ -139,8 +139,8 @@ Friend Module _b2style_test_data
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpkZWxlZ2F0ZSBpbnQgZnVuYyhpbnQpOw0KDQppbnQgZihpbnQgeCkgew0KICByZXR1cm4geCArIDE7DQp9DQoNCmludCBnKGludCB4KSB7DQogIHJldHVybiB4IC0gMTsNCn0NCg0Kdm9pZCBtYWluKCkgew0KICBmdW5jIGEgPSBmOw0KICBiMnN0eWxlOjpzdGRfb3V0KGEoMikpOw0KICBhID0gZzsNCiAgYjJzdHlsZTo6c3RkX291dChhKDIpKTsNCn0NCg=="))
         [empty_struct] = Convert.FromBase64String(strcat_hint(CUInt(340), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpzdHJ1Y3QgUyB7fTsNCg0Kdm9pZCBmKFMgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmIik7DQp9DQoNCnZvaWQgZjIoUyYgcykgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmMiIpOw0KfQ0KDQpTIGYzKCkgew0KICBiMnN0eWxlOjpzdGRfb3V0KCJmMyIpOw0KICBTIHM7DQogIHJldHVybiBzOw0KfQ0KDQp2b2lkIG1haW4oKSB7DQogIFMgcyA9IGYzKCk7DQogIGYocyk7DQogIGYyKHMpOw0KfQ=="))
-        [errors_class_initializer_for_non_class] = Convert.FromBase64String(strcat_hint(CUInt(164), _
-        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQp0eXBlZGVmIGludCBvb29wc190aGlzX2lzX25vdF9hX2NsYXNzOw0KDQp2b2lkIG1haW4oKSB7DQogIG9vb3BzX3RoaXNfaXNfbm90X2FfY2xhc3MgaSgxMCk7DQp9"))
+        [errors_class_initializer_for_non_class] = Convert.FromBase64String(strcat_hint(CUInt(208), _
+        "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpsb2dpYyAidHlwZSBvb29wc190aGlzX2lzX25vdF9hX2NsYXNzIDEiOw0KDQp2b2lkIG1haW4oKSB7DQogIG9vb3BzX3RoaXNfaXNfbm90X2FfY2xhc3Mgb29vcHNfdGhpc19pc19ub3RfYV9jbGFzc192YWx1ZSgxMCk7DQp9"))
         [errors_cycle_typedef] = Convert.FromBase64String(strcat_hint(CUInt(236), _
         "77u/DQojaW5jbHVkZSA8YjJzdHlsZS5oPg0KDQpuYW1lc3BhY2UgQ1lDTEVfVFlQRURFRiB7DQogIHR5cGVkZWYgQSBCOw0KICB0eXBlZGVmIEIgQzsNCiAgdHlwZWRlZiBDIEE7DQp9ICAvLyBuYW1lc3BhY2UgQ1lDTEVfVFlQRURFRg0KDQp2b2lkIG1haW4oKSB7DQogIENZQ0xFX1RZUEVERUY6OkEgYTsNCn0="))
         [errors_dollar_in_number] = Convert.FromBase64String(strcat_hint(CUInt(52), _

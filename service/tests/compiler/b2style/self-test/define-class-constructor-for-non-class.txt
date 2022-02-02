@@ -1,0 +1,22 @@
+﻿
+#include <b2style.h>
+#include <testing.h>
+
+void construct(int& this, int v) {
+  this = v + 1;
+}
+
+void construct(int& this) {
+  this.construct(1);
+}
+
+void destruct(int& this) {}
+
+void main() {
+  int x(100);
+  int y();
+  // TODO: Why b2style::testing::assert_equal<int>(x, 101) does not work?
+  b2style::testing::assert_equal<int, int>(x, 101);
+  b2style::testing::assert_equal<int, int>(y, 2);
+  b2style::testing::finished();
+}

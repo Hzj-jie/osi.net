@@ -26,9 +26,6 @@ Partial Public NotInheritable Class b2style
             assert(Not o Is Nothing)
             assert(n.child_count() = 4 OrElse n.child_count() = 5)
             Dim class_name As String = n.child(0).input()
-            If Not scope.current().classes().resolve(class_name) Then
-                Return False
-            End If
             If Not (o.append(n.child(0)) AndAlso
                     o.append(n.child(1)) AndAlso
                     o.append(";") AndAlso

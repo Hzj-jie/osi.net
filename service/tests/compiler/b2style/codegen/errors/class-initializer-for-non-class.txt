@@ -1,8 +1,8 @@
 ﻿
 #include <b2style.h>
 
-typedef int ooops_this_is_not_a_class;
+logic "type ooops_this_is_not_a_class 1";
 
 void main() {
-  ooops_this_is_not_a_class i(10);
+  ooops_this_is_not_a_class ooops_this_is_not_a_class_value(10);
 }

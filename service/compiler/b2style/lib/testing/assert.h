@@ -40,6 +40,11 @@ void assert_equal(T t, T2 t2) {
   assert_true(t == t2);
 }
 
+template <T>
+void assert_equal(T t, T t2) {
+  assert_equal<T, T>(t, t2);
+}
+
 }  // namespace testing
 }  // namespace b2style
 
