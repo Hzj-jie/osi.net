@@ -168,6 +168,16 @@ Public NotInheritable Class b2style_compile_error_test
             End Sub)).contains("ThisTemplateHasNoTypeParameter")
     End Sub
 
+    <test>
+    Private Shared Sub class_initializer_for_non_class()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(b2style.
+                    with_default_functions.
+                    parse(_b2style_test_data.errors_class_initializer_for_non_class.as_text(), Nothing))
+            End Sub)).contains("ooops_this_is_not_a_class")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

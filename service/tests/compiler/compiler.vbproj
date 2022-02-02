@@ -112,6 +112,7 @@
     <Content Include="b2style\codegen\delegate2.txt" />
     <Content Include="b2style\codegen\delegate_ref.txt" />
     <Content Include="b2style\codegen\delegate_template.txt" />
+    <Content Include="b2style\codegen\errors\class-initializer-for-non-class.txt" />
     <Content Include="b2style\codegen\errors\duplicate_template_type_parameters.txt" />
     <Content Include="b2style\codegen\errors\missing-ending-quota.txt" />
     <Content Include="b2style\codegen\errors\reinterpret_cast_heap_with_index.txt" />
