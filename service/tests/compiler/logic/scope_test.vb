@@ -78,11 +78,9 @@ Namespace logic
             Next
 
             If depth < 100 Then
-                Dim new_scope As scope = s.start_scope()
-                execute(new_scope, stack, depth + 1)
-#If 0 Then
-                assertion.reference_equal(new_scope.end_scope(), s)
-#End If
+                Using new_scope As scope = s.start_scope()
+                    execute(new_scope, stack, depth + 1)
+                End Using
             End If
             stack.resize(stack.size() - CUInt(c))
         End Sub

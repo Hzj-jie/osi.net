@@ -70,7 +70,7 @@ Partial Public NotInheritable Class b2style
 
             Public Shared Function template_name(ByVal n As typed_node) As name_with_namespace
                 assert(Not n Is Nothing)
-                assert(n.child_count() >= 4)
+                assert(n.child_count() = 4)
                 Return name_with_namespace.of(template_template.template_name(n.child(0), n.child(2).child_count()))
             End Function
 
@@ -79,7 +79,7 @@ Partial Public NotInheritable Class b2style
                                                    ByRef o As vector(Of String)) As Boolean
                 assert(Not l Is Nothing)
                 assert(Not n Is Nothing)
-                assert(n.child_count() >= 4)
+                assert(n.child_count() = 4)
                 Return l.of_all_children(n.child(2)).dump(o)
             End Function
 
