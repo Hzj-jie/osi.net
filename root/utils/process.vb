@@ -19,12 +19,15 @@ Public Module _process
             If p.HasExited() Then
                 Return True
             End If
+        Catch ex As InvalidOperationException
+            raise_error(error_type.information, "Process associated with ", p.Id(), " has been exited already.")
+            Return True
         Catch ex As Exception
             raise_error(error_type.warning,
-                            "failed to retrieve process information of ",
-                            p.StartInfo().FileName(),
-                            ", ex ",
-                            ex.Message())
+                        "failed to retrieve process information of ",
+                        p.StartInfo().FileName(),
+                        ", ex ",
+                        ex)
             Return False
         End Try
 
@@ -41,10 +44,10 @@ Public Module _process
             End If
         Catch ex As Exception
             raise_error(error_type.warning,
-                            "failed to send quit commands to process of ",
-                            p.StartInfo().FileName(),
-                            ", ex ",
-                            ex.Message())
+                        "failed to send quit commands to process of ",
+                        p.StartInfo().FileName(),
+                        ", ex ",
+                        ex)
             Return False
         End Try
         Return True
