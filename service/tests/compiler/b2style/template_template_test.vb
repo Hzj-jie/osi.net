@@ -30,7 +30,7 @@ Public NotInheritable Class template_template_test
         End Using
     End Sub
 
-    <test>
+    ' <test> This becomes an invalid scenario after naming the templates with the number of type parameters.
     Private Shared Sub mismatch_type_count()
         Dim n As typed_node = Nothing
         assertion.is_true(b2style.nlp().parse(_b2style_test_data.template_template_case1.as_text(), root:=n))
@@ -56,7 +56,7 @@ Public NotInheritable Class template_template_test
                                                                                               Nothing))
                                                   End Using
                                               End Sub)).
-                      contains(vector.of("T", "T").ToString())
+                      contains("T, T")
     End Sub
 
     <test>

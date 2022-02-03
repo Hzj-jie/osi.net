@@ -58,8 +58,11 @@
     <Compile Include="b2style\b2stylec_main.vb" />
     <Compile Include="b2style\b2style_compile_error_test.vb" />
     <Compile Include="b2style\b2style_main.vb" />
+    <Compile Include="b2style\b2style_self_compile_error_cases.vb" />
+    <Compile Include="b2style\b2style_self_compile_error_test.vb" />
     <Compile Include="b2style\b2style_self_test.vb" />
     <Compile Include="b2style\b2style_self_test_cases.vb" />
+    <Compile Include="b2style\b2style_self_test_runner.vb" />
     <Compile Include="b2style\b2style_test.vb" />
     <Compile Include="b2style\b2style_test_data.vb" />
     <Content Include="b2style\codegen\class-constructor.txt" />
@@ -123,6 +126,8 @@
     <Content Include="b2style\codegen\errors\undefined-value-clause.txt" />
     <Content Include="b2style\codegen\function_ptr.txt" />
     <Content Include="b2style\codegen\test_assert.txt" />
+    <Content Include="b2style\self-compile-error-test\templates-with-same-name.txt" />
+    <Content Include="b2style\self-compile-error-test\type-parameters-with-same-name.txt" />
     <Content Include="b2style\self-test\assert-equal.txt" />
     <Content Include="b2style\self-test\class-function-call-with-spaces.txt" />
     <Content Include="b2style\self-test\copy-function-ptr.txt" />
@@ -139,6 +144,7 @@
     <Content Include="b2style\codegen\lots-of-semi-colons.txt" />
     <Content Include="b2style\codegen\nested_heap_access.txt" />
     <None Include="b2style\codegen\run.cmd" />
+    <None Include="b2style\self-compile-error-test\run.cmd" />
     <None Include="b2style\self-test\run.cmd" />
     <None Include="bstyle\codegen\run.cmd" />
     <None Include="dotnet\codegen\run.cmd" />

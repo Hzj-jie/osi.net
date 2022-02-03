@@ -34,7 +34,7 @@ Partial Public NotInheritable Class b2style
                     o.append("(") AndAlso
                     o.append(n.child(1)) AndAlso
                     If(n.child_count() = 5, o.append(",") AndAlso o.append(n.child(3)), True) AndAlso
-                    o.append(");")) Then
+                    o.append(")")) Then
                 Return False
             End If
             scope.current().when_end_scope(

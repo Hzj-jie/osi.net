@@ -106,8 +106,9 @@ Partial Public NotInheritable Class b2style
                 raise_error(error_type.user,
                             "Template ",
                             name_node.input_without_ignored(),
-                            " has duplicated template type parameters: ",
-                            v)
+                            " has duplicated template type parameters: [",
+                            v.str(", "),
+                            "]")
                 Return False
             End If
             o = New template_template(n.child(4), name_node, v)
@@ -125,17 +126,7 @@ Partial Public NotInheritable Class b2style
 
         Public Function apply(ByVal types As vector(Of String), ByRef impl As String) As Boolean
             assert(Not types Is Nothing)
-            If types.size() <> Me.type_refs.size() Then
-                raise_error(error_type.user,
-                            "Template ",
-                            _extended_type_name.name,
-                            " expectes ",
-                            Me.type_refs.size(),
-                            " template types, but received [",
-                            types,
-                            "].")
-                Return False
-            End If
+            assert(types.size() = Me.type_refs.size())
             assert(types.size() > 0)
             _extended_type_name.apply(types)
             For i As UInt32 = 0 To types.size() - uint32_1

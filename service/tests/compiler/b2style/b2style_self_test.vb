@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.delegates
@@ -13,39 +12,27 @@ Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
-Imports osi.service.resource
 
 <test>
 Public NotInheritable Class b2style_self_test
+    Inherits b2style_self_test_runner
+
     Public Const total_assertions As String = "Total assertions: "
     Public Const failure As String = "Failure: "
     Public Const success As String = "Success: "
     Public Const no_extra_inforamtion As String = "no extra information."
     Private Shared filter As argument(Of String)
 
-    <test>
-    Private Shared Sub run()
-        Dim a As New vector(Of Action)()
-        tar.gen.reader_of(b2style_self_test_cases.data).foreach(
-            Sub(ByVal name As String,
-                ByVal enc_precision As Double,
-                ByVal content As StreamReader)
-                Dim text As String = content.ReadToEnd()
-                a.emplace_back(Sub()
-                                   execute(name, text)
-                               End Sub)
-            End Sub)
-        assertions.of(a).not_empty()
-        concurrency_runner.execute(+a)
+    Public Sub New()
+        MyBase.New(filter Or "*", b2style_self_test_cases.data)
     End Sub
 
-    Private Shared Sub execute(ByVal name As String, ByVal content As String)
-        If Not name.match_pattern(filter Or "*") AndAlso
-           Not name.match_pattern((filter Or "*") + ".txt") Then
-            raise_error(error_type.user, "Ignore test case ", name)
-            Return
-        End If
-        raise_error(error_type.user, "Execute test case ", name)
+    <test>
+    Private Shadows Sub run()
+        MyBase.run()
+    End Sub
+
+    Protected Overrides Sub execute(ByVal name As String, ByVal content As String)
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(content, e))

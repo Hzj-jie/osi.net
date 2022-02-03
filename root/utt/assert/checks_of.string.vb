@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.template
+Imports osi.root.utils
 
 Partial Public Class checks(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
     Public Shared Function [of](ByVal i As String) As string_subject
@@ -27,7 +28,14 @@ Partial Public Class checks(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
 
         Public Function starts_with(ByVal exp As String, ByVal ParamArray msg() As String) As Boolean
             Return is_not_null() AndAlso
-                   check(Of IS_TRUE_FUNC).is_true(i.StartsWith(exp), "Expect ", i, " starting with ", exp, ". ", msg)
+                   check(Of IS_TRUE_FUNC).is_true(i.StartsWith(exp),
+                                                  "Expect ", i, " starting with ", exp, ". ", msg)
+        End Function
+
+        Public Function match_pattern(ByVal pattern As String, ByVal ParamArray msg() As String) As Boolean
+            Return is_not_null() AndAlso
+                   check(Of IS_TRUE_FUNC).is_true(i.match_pattern(pattern, True),
+                                                  "Expect ", i, " matching ", pattern, ". ", msg)
         End Function
     End Class
 End Class

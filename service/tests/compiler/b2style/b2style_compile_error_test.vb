@@ -178,6 +178,16 @@ Public NotInheritable Class b2style_compile_error_test
             End Sub)).contains("ooops_this_is_not_a_class")
     End Sub
 
+    <test>
+    Private Shared Sub duplicate_template_type_paramters()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(b2style.
+                    with_default_functions.
+                    parse(_b2style_test_data.errors_duplicate_template_type_parameters.as_text(), Nothing))
+            End Sub)).contains("T, T")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

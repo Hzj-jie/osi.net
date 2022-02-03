@@ -28,14 +28,14 @@ Partial Public Structure tuple(Of T1, T2, T3, T4, T5)
                IComparable(Of tuple(Of T1, T2, T3, T4, T5)),
                IEquatable(Of tuple(Of T1, T2, T3, T4, T5))
 
-    Private __1 As T1
+    Private ReadOnly __1 As T1
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _1() As T1
         Return __1
     End Function
 
-    Private __2 As T2
+    Private ReadOnly __2 As T2
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _2() As T2
@@ -43,7 +43,7 @@ Partial Public Structure tuple(Of T1, T2, T3, T4, T5)
     End Function
 
 #If 5 > 2 Then
-    Private __3 As T3
+    Private ReadOnly __3 As T3
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _3() As T3
@@ -52,7 +52,7 @@ Partial Public Structure tuple(Of T1, T2, T3, T4, T5)
 #End If
 
 #If 5 > 3 Then
-    Private __4 As T4
+    Private ReadOnly __4 As T4
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _4() As T4
@@ -61,7 +61,7 @@ Partial Public Structure tuple(Of T1, T2, T3, T4, T5)
 #End If
 
 #If 5 > 4 Then
-    Private __5 As T5
+    Private ReadOnly __5 As T5
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _5() As T5
@@ -70,7 +70,7 @@ Partial Public Structure tuple(Of T1, T2, T3, T4, T5)
 #End If
 
 #If 5 > 5 Then
-    Private __6 As T6
+    Private ReadOnly __6 As T6
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _6() As T6
@@ -79,7 +79,7 @@ Partial Public Structure tuple(Of T1, T2, T3, T4, T5)
 #End If
 
 #If 5 > 6 Then
-    Private __7 As T7
+    Private ReadOnly __7 As T7
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _7() As T7
@@ -88,7 +88,7 @@ Partial Public Structure tuple(Of T1, T2, T3, T4, T5)
 #End If
 
 #If 5 > 7 Then
-    Private __8 As T8
+    Private ReadOnly __8 As T8
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function _8() As T8
@@ -334,34 +334,33 @@ Partial Public Structure tuple(Of T1, T2, T3, T4, T5)
     End Operator
 
     Public Overrides Function ToString() As String
-        Dim r As StringBuilder = Nothing
-        r = New StringBuilder()
-        r.Append(Convert.ToString(__1))
+        Dim r As New StringBuilder()
+        r.Append(If(__1 Is Nothing, "", __1.ToString()))
         r.Append(", ")
-        r.Append(Convert.ToString(__2))
+        r.Append(If(__2 Is Nothing, "", __2.ToString()))
 #If 5 > 2 Then
         r.Append(", ")
-        r.Append(Convert.ToString(__3))
+        r.Append(If(__3 Is Nothing, "", __3.ToString()))
 #End If
 #If 5 > 3 Then
         r.Append(", ")
-        r.Append(Convert.ToString(__4))
+        r.Append(If(__4 Is Nothing, "", __4.ToString()))
 #End If
 #If 5 > 4 Then
         r.Append(", ")
-        r.Append(Convert.ToString(__5))
+        r.Append(If(__5 Is Nothing, "", __5.ToString()))
 #End If
 #If 5 > 5 Then
         r.Append(", ")
-        r.Append(Convert.ToString(__6))
+        r.Append(If(__6 Is Nothing, "", __6.ToString()))
 #End If
 #If 5 > 6 Then
         r.Append(", ")
-        r.Append(Convert.ToString(__7))
+        r.Append(If(__7 Is Nothing, "", __7.ToString()))
 #End If
 #If 5 > 7 Then
         r.Append(", ")
-        r.Append(Convert.ToString(__8))
+        r.Append(If(__8 Is Nothing, "", __8.ToString()))
 #End If
         Return Convert.ToString(r)
     End Function

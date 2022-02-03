@@ -1,0 +1,7 @@
+﻿
+// ERROR: Template f has duplicated template type parameters: [T, T]
+
+template <T, T>
+delegate void f();
+
+void main() {}
