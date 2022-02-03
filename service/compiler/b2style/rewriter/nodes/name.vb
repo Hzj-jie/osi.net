@@ -30,12 +30,14 @@ Partial Public NotInheritable Class b2style
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
-            If n.descentdant_of("template-type-name") Then
-                ' Require reparsing to take care of the namespaces.
-                o.append(n.input_without_ignored())
-            ElseIf n.type_name.Equals("name") AndAlso n.descentdant_of("value-declaration", "struct-body") Then
+            If n.type_name.Equals("name") AndAlso n.descentdant_of("value-declaration", "struct-body") Then
                 ' Ignore namespace prefix for variables within the structure.
                 o.append(_namespace.bstyle_format.in_global_namespace(n.input_without_ignored()))
+            ElseIf n.type_name.Equals("raw-type-name") AndAlso
+                   n.descentdant_of("paramtype") AndAlso
+                   (n.descentdant_of("template-type-name") OrElse n.descentdant_of("function-name-with-template")) Then
+                ' Local type name should be used when expanding templates.
+                o.append(_namespace.with_global_namespace(_namespace.of(n.input_without_ignored())))
             Else
                 o.append(_namespace.bstyle_format.of(n.input_without_ignored()))
             End If

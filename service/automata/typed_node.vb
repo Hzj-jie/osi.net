@@ -149,6 +149,21 @@ Partial Public NotInheritable Class typed_node
         Return r
     End Function
 
+    Public Function immediate_descentdant_of(ByVal ParamArray names() As String) As Boolean
+        assert(Not names.null_or_empty())
+        Dim n As typed_node = Me
+        For i As Int32 = 0 To names.Length() - 1
+            n = n.parent
+            If n Is Nothing Then
+                Return False
+            End If
+            If Not n.type_name.Equals(names(i)) Then
+                Return False
+            End If
+        Next
+        Return True
+    End Function
+
     Public Function descentdant_of(ByVal ParamArray names() As String) As Boolean
         assert(Not names.null_or_empty())
         Dim n As typed_node = Me

@@ -26,22 +26,26 @@ Partial Public NotInheritable Class b2style
             assert(Not o Is Nothing)
             assert(n.child_count() = 4 OrElse n.child_count() = 5)
             Dim class_name As String = n.child(0).input()
+            ' construct and destruct are always in global namespace.
             If Not (o.append(n.child(0)) AndAlso
                     o.append(n.child(1)) AndAlso
                     o.append(";") AndAlso
-                    o.append("construct(") AndAlso
+                    o.append(_namespace.bstyle_format.in_global_namespace("construct")) AndAlso
+                    o.append("(") AndAlso
                     o.append(n.child(1)) AndAlso
                     If(n.child_count() = 5, o.append(",") AndAlso o.append(n.child(3)), True) AndAlso
                     o.append(");")) Then
                 Return False
             End If
-            scope.current().when_end_scope(Sub()
-                                               assert(o.append("destruct(") AndAlso
-                                                      o.append(n.child(1)) AndAlso
-                                                      o.append(");"))
-                                           End Sub)
-            scope.current().call_hierarchy().to("construct")
-            scope.current().call_hierarchy().to("destruct")
+            scope.current().when_end_scope(
+                Sub()
+                    assert(o.append(_namespace.bstyle_format.in_global_namespace("destruct")) AndAlso
+                           o.append("(") AndAlso
+                           o.append(n.child(1)) AndAlso
+                           o.append(");"))
+                End Sub)
+            scope.current().call_hierarchy().to(_namespace.with_global_namespace("construct"))
+            scope.current().call_hierarchy().to(_namespace.with_global_namespace("destruct"))
             Return True
         End Function
     End Class

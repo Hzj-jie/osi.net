@@ -26,7 +26,7 @@ Partial Public NotInheritable Class b2style
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
             Dim function_name As String = _namespace.bstyle_format.operator_function_name(l.of(n.child(1)).dump())
-            scope.current().call_hierarchy().to(function_name)
+            scope.current().call_hierarchy().to_bstyle_function(function_name)
             o.append(function_name)
             o.append("(")
             If Not l.of(n.child(0)).build(o) Then

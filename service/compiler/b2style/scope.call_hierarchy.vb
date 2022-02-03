@@ -29,6 +29,14 @@ Partial Public NotInheritable Class b2style
                            Return True
                        End Function
             End Function
+
+            Public Shadows Sub [to](ByVal name As String)
+                to_bstyle_function(_namespace.bstyle_format.of(name))
+            End Sub
+
+            Public Sub to_bstyle_function(ByVal name As String)
+                MyBase.to(name)
+            End Sub
         End Class
 
         Public Shadows Function call_hierarchy() As call_hierarchy_t

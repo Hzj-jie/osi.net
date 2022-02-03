@@ -25,7 +25,7 @@ Partial Public NotInheritable Class b2style
             assert(n.child_count() = 2)
             Dim function_name As String =
                     _namespace.bstyle_format.operator_function_name(l.of(n.child(0)).dump()) + "_pre"
-            scope.current().call_hierarchy().to(function_name)
+            scope.current().call_hierarchy().to_bstyle_function(function_name)
             o.append(function_name)
             o.append("(")
             If Not l.of(n.child(1)).build(o) Then

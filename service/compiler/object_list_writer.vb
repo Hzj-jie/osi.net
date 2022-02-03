@@ -46,13 +46,14 @@ Public Class object_list_writer(Of DEBUG_DUMP_T As __void(Of String))
     Private Shared ReadOnly debug_dump As Action(Of String) = AddressOf alloc(Of DEBUG_DUMP_T)().invoke
 
     Public Function dump() As String
-        Dim r As String = v.str(character.blank)
+        Dim r As String = ToString()
         debug_dump(r)
         Return r
     End Function
 
-    ' Allows an object_list_writer to be injected into another object_list_writer.
+    ' Allows an object_list_writer to be injected into another object_list_writer. Note, the debug_dump_t won't work for
+    ' this function, since the outer object_list_writer should take care of it.
     Public NotOverridable Overrides Function ToString() As String
-        Return dump()
+        Return v.str(character.blank)
     End Function
 End Class

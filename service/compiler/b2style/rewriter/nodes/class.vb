@@ -71,12 +71,12 @@ Partial Public NotInheritable Class b2style
                     foreach(Sub(ByVal node As typed_node)
                                 assert(Not node Is Nothing)
                                 assert(node.child_count() = 5 OrElse node.child_count() = 6)
-                                ' No namespace is necessary, the first parameter contains namespace.
                                 If node.child(1).input().Equals("construct") Then
                                     has_constructor = True
                                 ElseIf node.child(1).input().Equals("destruct") Then
                                     has_destructor = True
                                 End If
+                                ' No namespace is necessary, the first parameter contains namespace.
                                 o.Append(node.child(0).input()).
                                   Append(" ").
                                   Append(_namespace.with_global_namespace(node.child(1).input())).
@@ -93,10 +93,18 @@ Partial Public NotInheritable Class b2style
                                   AppendLine() ' beautiful output.
                             End Sub)
             If Not has_constructor Then
-                o.Append("void construct(").Append(class_name).Append("& this){}")
+                o.Append("void ").
+                  Append(_namespace.with_global_namespace("construct")).
+                  Append("(").
+                  Append(class_name).
+                  Append("& this){}")
             End If
             If Not has_destructor Then
-                o.Append("void destruct(").Append(class_name).Append("& this){}")
+                o.Append("void ").
+                  Append(_namespace.with_global_namespace("destruct")).
+                  Append("(").
+                  Append(class_name).
+                  Append("& this){}")
             End If
             s = o.ToString()
             Return True

@@ -15,8 +15,7 @@ void destruct(int& this) {}
 void main() {
   int x(100);
   int y();
-  // TODO: Why b2style::testing::assert_equal<int>(x, 101) does not work?
-  b2style::testing::assert_equal<int, int>(x, 101);
-  b2style::testing::assert_equal<int, int>(y, 2);
+  b2style::testing::assert_equal<int>(x, 101);
+  b2style::testing::assert_equal<int>(y, 2);
   b2style::testing::finished();
 }

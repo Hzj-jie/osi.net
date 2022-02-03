@@ -30,12 +30,13 @@ Partial Public NotInheritable Class b2style
             End Sub
 
             Public Sub apply(ByVal types As vector(Of String))
-                assert(Me.types.set(types.stream().
-                                          map(Function(ByVal type As String) As String
-                                                  ' Remove referneces in the name.
-                                                  Return New builders.parameter_type(type).type
-                                              End Function).
-                                          collect(Of vector(Of String))()))
+                assert(Me.types.set(
+                    types.stream().
+                          map(Function(ByVal type As String) As String
+                                  ' Remove referneces in the name.
+                                  Return _namespace.bstyle_format.of(New builders.parameter_type(type).type)
+                              End Function).
+                          collect(Of vector(Of String))()))
             End Sub
 
             Public Overrides Function ToString() As String

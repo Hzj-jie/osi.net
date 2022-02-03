@@ -31,7 +31,7 @@ Partial Public NotInheritable Class b2style
             assert(function_name.StartsWith(self_prefix))
             function_name = _namespace.bstyle_format.operator_function_name(
                                 function_name.Substring(self_prefix.Length()))
-            scope.current().call_hierarchy().to(function_name)
+            scope.current().call_hierarchy().to_bstyle_function(function_name)
             o.append("=")
             o.append(function_name)
             o.append("(")

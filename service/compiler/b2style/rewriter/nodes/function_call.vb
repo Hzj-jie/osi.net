@@ -35,7 +35,7 @@ Partial Public NotInheritable Class b2style
 
             If Not name.Contains(".") Then
                 o.append(_namespace.bstyle_format.of(name))
-                scope.current().call_hierarchy().to(_namespace.bstyle_format.of(name))
+                scope.current().call_hierarchy().to(name)
                 For i As UInt32 = 1 To n.child_count() - uint32_1
                     If Not l.of(n.child(i)).build(o) Then
                         Return False
@@ -48,7 +48,7 @@ Partial Public NotInheritable Class b2style
             ' dot is not allowed to be the first or last character.
             assert(dot_pos > 0 AndAlso dot_pos < name.Length() - 1)
             Dim function_name As String = _namespace.bstyle_format.in_global_namespace(name.Substring(dot_pos + 1))
-            scope.current().call_hierarchy().to(function_name)
+            scope.current().call_hierarchy().to_bstyle_function(function_name)
             o.append(function_name)
             o.append("(")
             o.append(_namespace.bstyle_format.of(name.Substring(0, dot_pos)))
