@@ -177,13 +177,20 @@ Partial Public NotInheritable Class bstyle
                        End Function)
         End Function
 
+        Public Shared Function create_id(ByVal name As String) As builders.parameter
+            assert(Not name.null_or_whitespace())
+            Dim r As New builders.parameter(name + "__struct__type__id__type", name + "__struct__type__id")
+            assert(Not r.ref)
+            Return r
+        End Function
+
         Public Function build(ByVal n As typed_node,
                               ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
-            Dim id_type As String = strcat(n.child(1).word().str(), "__struct__type__id__type")
-            assert(builders.of_type(id_type, uint32_1).to(o))
+            Dim id As builders.parameter = create_id(n.child(1).word().str())
+            assert(builders.of_type(id.type, uint32_1).to(o))
             Return scope.current().
                          structs().
                          define(n.child(1).word().str(),
@@ -208,9 +215,7 @@ Partial Public NotInheritable Class bstyle
                                                 Return New struct_member(c.child(0).word().str(),
                                                                          c.child(1).word().str())
                                             End Function).
-                                        concat(New struct_member(
-                                                       id_type,
-                                                       strcat(n.child(1).word().str(), "__struct__type__id"))).
+                                        concat(struct_member.from_builders_parameter(id)).
                                         collect(Of vector(Of struct_member))())
         End Function
     End Class

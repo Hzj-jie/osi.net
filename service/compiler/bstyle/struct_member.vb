@@ -5,8 +5,10 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
+    ' TODO: Remove, in favor of builders.parameter.
     Public NotInheritable Class struct_member
         Public ReadOnly type As String
         Public ReadOnly name As String
@@ -19,6 +21,12 @@ Partial Public NotInheritable Class bstyle
             Me.type = type
             Me.name = name
         End Sub
+
+        Public Shared Function from_builders_parameter(ByVal p As builders.parameter) As struct_member
+            assert(Not p Is Nothing)
+            assert(Not p.ref)
+            Return New struct_member(p.type, p.name)
+        End Function
     End Class
 
     Public NotInheritable Class struct_def

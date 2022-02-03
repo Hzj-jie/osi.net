@@ -12,6 +12,8 @@ Namespace logic
     Partial Public NotInheritable Class builders
         Public Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("compiler", "debug", "dump"))
 
+        ' Stores a type in logic with type(string) and ref(boolean). It's also widely used in bstyle and b2style since
+        ' the same & mark is used for reference types.
         Public Class parameter_type
             Private Const type_ref_suffix As Char = character.and_mark
             Public ReadOnly type As String
