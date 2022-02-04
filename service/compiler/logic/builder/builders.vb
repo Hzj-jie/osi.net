@@ -34,6 +34,10 @@ Namespace logic
                 Me.ref = ref
             End Sub
 
+            Public Shared Function remove_ref(ByVal type As String) As String
+                Return New parameter_type(type).type
+            End Function
+
             Public Sub New(ByVal type As String)
                 assert(Not type.null_or_whitespace())
                 Me.ref = is_ref_type(type)
@@ -82,7 +86,7 @@ Namespace logic
 
             Public ReadOnly name As String
 
-            Public Sub New(ByVal type As String, ByVal name As String)
+            Private Sub New(ByVal type As String, ByVal name As String)
                 MyBase.New(type)
                 assert(Not name.null_or_whitespace())
                 Me.name = name
@@ -94,6 +98,12 @@ Namespace logic
                 assert(Not name.null_or_whitespace())
                 Me.name = name
             End Sub
+
+            Public Shared Function no_ref(ByVal type As String, ByVal name As String) As parameter
+                Dim r As New parameter(type, name)
+                assert(Not r.ref)
+                Return r
+            End Function
 
             Public Shadows Function map_type(ByVal f As Func(Of String, String)) As parameter
                 assert(Not f Is Nothing)

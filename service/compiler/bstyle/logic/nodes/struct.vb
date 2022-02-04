@@ -181,9 +181,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function create_id(ByVal name As String) As builders.parameter
             assert(Not name.null_or_whitespace())
-            Dim r As New builders.parameter(name + "__struct__type__id__type", name + "__struct__type__id")
-            assert(Not r.ref)
-            Return r
+            Return builders.parameter.no_ref(name + "__struct__type__id__type", name + "__struct__type__id")
         End Function
 
         Public Function build(ByVal n As typed_node,
@@ -214,8 +212,8 @@ Partial Public NotInheritable Class bstyle
                                                 assert(Not c Is Nothing)
                                                 assert(c.type_name.Equals("value-declaration"))
                                                 assert(c.child_count() = 2)
-                                                Return New builders.parameter(c.child(0).input_without_ignored(),
-                                                                              c.child(1).input_without_ignored())
+                                                Return struct_def.nested_struct(c.child(0).input_without_ignored(),
+                                                                                c.child(1).input_without_ignored())
                                             End Function).
                                         concat(id).
                                         collect(Of vector(Of builders.parameter))())

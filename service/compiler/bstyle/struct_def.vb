@@ -40,9 +40,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Shared Function nested_struct(ByVal type As String, ByVal name As String) As builders.parameter
-            Dim r As New builders.parameter(scope.current().type_alias()(type), name)
-            assert(Not r.ref)
-            Return r
+            Return builders.parameter.no_ref(scope.current().type_alias()(type), name)
         End Function
 
         Public Function append_prefix(ByVal name As String) As struct_def

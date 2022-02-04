@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
+    ' TODO: Remove in favor of builders.parameter.
     Public NotInheritable Class single_data_slot_variable
         Public ReadOnly type As String
         Public ReadOnly name As String
@@ -27,7 +28,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function to_builders_parameter(ByVal this As single_data_slot_variable) As builders.parameter
             assert(Not this Is Nothing)
-            Return New builders.parameter(this.type, this.name)
+            Return builders.parameter.no_ref(this.type, this.name)
         End Function
 
         Public Shared Function from_builders_parameter(ByVal this As builders.parameter) As single_data_slot_variable
