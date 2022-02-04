@@ -1,6 +1,8 @@
 ﻿
 // ERROR: Template f has duplicated template type parameters: [T, T]
 
+#include <b2style.h>
+
 template <T, T>
 delegate void f();
 

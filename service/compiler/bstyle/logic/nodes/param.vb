@@ -28,7 +28,7 @@ Partial Public NotInheritable Class bstyle
             struct.forward_in_stack(type_node.child(0).word().str(),
                                     n.last_child().word().str())
             Dim params As struct_def = Nothing
-            If Not scope.current().structs().resolve(type_node.child(0).word().str(),
+            If Not scope.current().structs().resolve(type_node.child(0).input_without_ignored(),
                                                      n.last_child().word().str(),
                                                      params) Then
                 params = struct_def.of_single_data_slot_variable(

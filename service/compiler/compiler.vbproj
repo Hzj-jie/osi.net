@@ -138,7 +138,7 @@
     <Compile Include="bstyle\scope.variable.vb" />
     <Compile Include="bstyle\scope.vb" />
     <Compile Include="bstyle\single_data_slot_variable.vb" />
-    <Compile Include="bstyle\struct_member.vb" />
+    <Compile Include="bstyle\struct_def.vb" />
     <Compile Include="code_gen\reparser.vb" />
     <Compile Include="function_signature.vb" />
     <Compile Include="logic\address_of.vb" />

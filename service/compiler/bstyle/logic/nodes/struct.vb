@@ -122,10 +122,11 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return streams.of(New struct_member(type, name)).
+            Return streams.of(struct_def.nested_struct(type, name)).
                            concat(v.nested_structs.stream()).
-                           map(Function(ByVal s As struct_member) As Boolean
+                           map(Function(ByVal s As builders.parameter) As Boolean
                                    assert(Not s Is Nothing)
+                                   assert(Not s.ref)
                                    Return scope.current().variables().define(s.type, s.name)
                                End Function).
                            aggregate(bool_stream.aggregators.all_true)
@@ -171,7 +172,8 @@ Partial Public NotInheritable Class bstyle
                                     stream().
                                     map(Function(ByVal m As single_data_slot_variable) As Boolean
                                             assert(Not m Is Nothing)
-                                            Return heap_declaration.declare_single_data_slot(m.type, m.name, len_name, o)
+                                            Return heap_declaration.declare_single_data_slot(
+                                                       m.type, m.name, len_name, o)
                                         End Function).
                                     aggregate(bool_stream.aggregators.all_true)
                        End Function)
@@ -207,16 +209,16 @@ Partial Public NotInheritable Class bstyle
                                         map(Function(ByVal c As typed_node) As typed_node
                                                 Return c.child(0)
                                             End Function).
-                                        map(Function(ByVal c As typed_node) As struct_member
+                                        map(Function(ByVal c As typed_node) As builders.parameter
                                                 ' TODO: Support value_definition.str_bytes_val
                                                 assert(Not c Is Nothing)
                                                 assert(c.type_name.Equals("value-declaration"))
                                                 assert(c.child_count() = 2)
-                                                Return New struct_member(c.child(0).word().str(),
-                                                                         c.child(1).word().str())
+                                                Return New builders.parameter(c.child(0).input_without_ignored(),
+                                                                              c.child(1).input_without_ignored())
                                             End Function).
-                                        concat(struct_member.from_builders_parameter(id)).
-                                        collect(Of vector(Of struct_member))())
+                                        concat(id).
+                                        collect(Of vector(Of builders.parameter))())
         End Function
     End Class
 End Class

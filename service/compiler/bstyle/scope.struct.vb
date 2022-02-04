@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
@@ -26,19 +27,20 @@ Partial Public NotInheritable Class bstyle
                     Return True
                 End If
                 assert(Not sub_type Is Nothing)
-                d.nested_structs.emplace_back(New struct_member(type, name))
+                d.with_nested_structs(type, name)
                 d.append(sub_type.append_prefix(name))
                 Return True
             End Function
 
-            Public Function define(ByVal type As String,
-                                   ByVal members As vector(Of struct_member)) As Boolean
+            Public Function define(ByVal type As String, ByVal members As vector(Of builders.parameter)) As Boolean
                 assert(Not type.null_or_whitespace())
                 assert(Not members.null_or_empty())
+                assert(Not New builders.parameter_type(type).ref)
                 Dim d As New struct_def()
                 Dim i As UInt32 = 0
                 While i < members.size()
                     assert(Not members(i) Is Nothing)
+                    assert(Not members(i).ref)
                     If Not resolve_type(members(i).type, members(i).name, d) Then
                         Return False
                     End If
@@ -80,7 +82,7 @@ Partial Public NotInheritable Class bstyle
                 Me.s = s
             End Sub
 
-            Public Function define(ByVal type As String, ByVal members As vector(Of struct_member)) As Boolean
+            Public Function define(ByVal type As String, ByVal members As vector(Of builders.parameter)) As Boolean
                 Return s.s.define(type, members)
             End Function
 

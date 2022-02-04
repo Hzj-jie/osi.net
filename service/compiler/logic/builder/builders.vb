@@ -100,6 +100,11 @@ Namespace logic
                 Return New parameter(f(type), ref, name)
             End Function
 
+            Public Function map_name(ByVal f As Func(Of String, String)) As parameter
+                assert(Not f Is Nothing)
+                Return New parameter(type, ref, f(name))
+            End Function
+
             Public Shared Function to_ref(ByVal p As parameter) As parameter
                 assert(Not p Is Nothing)
                 assert(Not p.ref)
