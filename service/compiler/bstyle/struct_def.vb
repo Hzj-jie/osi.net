@@ -58,11 +58,6 @@ Partial Public NotInheritable Class bstyle
             Return builders.parameter.no_ref(type, name)
         End Function
 
-        Public Shared Function is_primitive(ByVal p As builders.parameter) As Boolean
-            assert(Not p Is Nothing)
-            Return Not scope.current().structs().defined(p.type)
-        End Function
-
         Private Shared Function append_prefix(ByVal v As vector(Of builders.parameter),
                                               ByVal name As String) As vector(Of builders.parameter)
             assert(Not v Is Nothing)
