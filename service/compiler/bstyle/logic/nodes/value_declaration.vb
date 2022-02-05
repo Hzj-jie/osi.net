@@ -4,9 +4,9 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class value_declaration
@@ -37,11 +37,21 @@ Partial Public NotInheritable Class bstyle
                                                         ByVal name As String,
                                                         ByVal o As writer) As Boolean
             assert(Not o Is Nothing)
-            Return Not scope.current().structs().defined(type) AndAlso
-                   scope.current().variables().define(type, name) AndAlso
-                   builders.of_define(name,
-                                      scope.current().type_alias()(type)).
-                            to(o)
+
+            If Not scope.current().structs().defined(type) AndAlso
+               scope.current().variables().define(type, name) AndAlso
+               builders.of_define(name,
+                                  scope.current().type_alias()(type)).
+                        to(o) Then
+                Return True
+            End If
+            raise_error(error_type.user,
+                        "Failed to declare ",
+                        type,
+                        " with name ",
+                        name,
+                        " as a primitive type variable.")
+            Return False
         End Function
     End Class
 End Class

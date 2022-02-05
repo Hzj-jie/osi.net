@@ -22,7 +22,7 @@ Partial Public NotInheritable Class bstyle
         End Sub
 
         Public Shared Function build(ByVal n As typed_node,
-                                     ByVal struct_handle As Func(Of String, vector(Of single_data_slot_variable), Boolean),
+                                     ByVal struct_handle As Func(Of String, vector(Of builders.parameter), Boolean),
                                      ByVal single_data_slot_handle As Func(Of String, String, Boolean),
                                      ByVal o As writer) As Boolean
             assert(Not n Is Nothing)
@@ -36,7 +36,7 @@ Partial Public NotInheritable Class bstyle
             End If
             Dim ps As struct_def = Nothing
             If scope.current().structs().resolve(type, n.input_without_ignored(), ps) Then
-                Return struct_handle(type, ps.expanded)
+                Return struct_handle(type, ps.expandeds)
             End If
             Return single_data_slot_handle(type, n.input_without_ignored())
         End Function
@@ -45,7 +45,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(n.child_count() = 1)
             Return build(n.child(),
-                         Function(ByVal type As String, ByVal ps As vector(Of single_data_slot_variable)) As Boolean
+                         Function(ByVal type As String, ByVal ps As vector(Of builders.parameter)) As Boolean
                              value.with_target(type, ps)
                              Return True
                          End Function,

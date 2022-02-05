@@ -103,7 +103,7 @@ Partial Public NotInheritable Class bstyle
                        define(type, heap_name_of(name))
             End Function
 
-            Public Function define(ByVal vs As vector(Of single_data_slot_variable)) As Boolean
+            Public Function define(ByVal vs As vector(Of builders.parameter)) As Boolean
                 assert(Not vs Is Nothing)
                 Dim i As UInt32 = 0
                 While i < vs.size()

@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not vs Is Nothing)
-            If vs.expanded.size() <> sources.size() Then
+            If vs.expandeds.size() <> sources.size() Then
                 raise_error(error_type.user,
                             "Sources ",
                             sources,
@@ -45,8 +45,8 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Dim i As UInt32 = 0
-            While i < vs.expanded.size()
-                If Not builders.of_copy(target_naming(vs.expanded(i).name), sources(i)).to(o) Then
+            While i < vs.expandeds.size()
+                If Not builders.of_copy(target_naming(vs.expandeds(i).name), sources(i)).to(o) Then
                     Return False
                 End If
                 i += uint32_1
@@ -122,8 +122,8 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return streams.of(struct_def.nested_struct(type, name)).
-                           concat(v.nested_structs.stream()).
+            Return streams.of(struct_def.nested(type, name)).
+                           concat(v.nesteds.stream()).
                            map(Function(ByVal s As builders.parameter) As Boolean
                                    assert(Not s Is Nothing)
                                    assert(Not s.ref)
@@ -144,9 +144,9 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return v.expanded.
+            Return v.expandeds.
                      stream().
-                     map(Function(ByVal m As single_data_slot_variable) As Boolean
+                     map(Function(ByVal m As builders.parameter) As Boolean
                              assert(Not m Is Nothing)
                              Return value_declaration.declare_single_data_slot(m.type, m.name, o)
                          End Function).
@@ -168,9 +168,9 @@ Partial Public NotInheritable Class bstyle
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean
-                           Return v.expanded.
+                           Return v.expandeds.
                                     stream().
-                                    map(Function(ByVal m As single_data_slot_variable) As Boolean
+                                    map(Function(ByVal m As builders.parameter) As Boolean
                                             assert(Not m Is Nothing)
                                             Return heap_declaration.declare_single_data_slot(
                                                        m.type, m.name, len_name, o)
@@ -212,7 +212,7 @@ Partial Public NotInheritable Class bstyle
                                                 assert(Not c Is Nothing)
                                                 assert(c.type_name.Equals("value-declaration"))
                                                 assert(c.child_count() = 2)
-                                                Return struct_def.nested_struct(c.child(0).input_without_ignored(),
+                                                Return struct_def.nested(c.child(0).input_without_ignored(),
                                                                                 c.child(1).input_without_ignored())
                                             End Function).
                                         concat(id).

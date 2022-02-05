@@ -23,11 +23,11 @@ Partial Public NotInheritable Class bstyle
                 type = scope.current().type_alias()(type)
                 Dim sub_type As struct_def = Nothing
                 If Not s.find(type, sub_type) Then
-                    d.expanded.emplace_back(New single_data_slot_variable(type, name))
+                    d.expandeds.emplace_back(struct_def.expanded(type, name))
                     Return True
                 End If
                 assert(Not sub_type Is Nothing)
-                d.with_nested_structs(type, name)
+                d.with_nested(type, name)
                 d.append(sub_type.append_prefix(name))
                 Return True
             End Function
@@ -47,14 +47,16 @@ Partial Public NotInheritable Class bstyle
                     i += uint32_1
                 End While
                 If s.emplace(type, d).second() Then
+                    scope.current().type_alias().remove(type)
                     Return True
                 End If
                 raise_error(error_type.user, "Struct type ", type, " has been defined already as: ", s(type))
                 Return False
             End Function
 
+            ' TODO: Only aliases after the definition of the structure should be used.
             Public Function defined(ByVal type As String) As Boolean
-                Return s.find(type) <> s.end()
+                Return s.find(scope.current().type_alias()(type)) <> s.end()
             End Function
 
             Public Function resolve(ByVal type As String,

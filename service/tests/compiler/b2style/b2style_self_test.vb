@@ -35,14 +35,11 @@ Public NotInheritable Class b2style_self_test
     Protected Overrides Sub execute(ByVal name As String, ByVal content As String)
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(content, e))
-        assertion.is_not_null(e)
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(content, e), name)
+        assertion.is_not_null(e, name)
         e.assert_execute_without_errors()
-        Dim v As vector(Of String) = Nothing
-        If Not assertion.is_true(io.output().strsplit(New String() {character.newline}, New String() {}, v), name) Then
-            Return
-        End If
-        assert(Not v Is Nothing)
+        Dim v As vector(Of String) = streams.of(io.output().Trim().Split(character.newline)).
+                                             collect(Of vector(Of String))()
         If Not assertions.of(v).not_empty(name) Then
             Return
         End If

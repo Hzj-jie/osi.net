@@ -45,10 +45,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             scope.current().current_function().define(name, return_type, parameters)
-            If Not scope.current().variables().define(
-                    parameters.stream().
-                               map(AddressOf single_data_slot_variable.from_builders_parameter).
-                               collect(Of vector(Of single_data_slot_variable))()) Then
+            If Not scope.current().variables().define(parameters) Then
                 Return False
             End If
             Dim ta As scope.type_alias_proxy = scope.current().type_alias()
