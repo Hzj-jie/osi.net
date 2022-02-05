@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not vs Is Nothing)
-            If vs.expandeds.size() <> sources.size() Then
+            If vs.primitives.size() <> sources.size() Then
                 raise_error(error_type.user,
                             "Sources ",
                             sources,
@@ -45,8 +45,8 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Dim i As UInt32 = 0
-            While i < vs.expandeds.size()
-                If Not builders.of_copy(target_naming(vs.expandeds(i).name), sources(i)).to(o) Then
+            While i < vs.primitives.size()
+                If Not builders.of_copy(target_naming(vs.primitives(i).name), sources(i)).to(o) Then
                     Return False
                 End If
                 i += uint32_1
@@ -144,7 +144,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return v.expandeds.
+            Return v.primitives.
                      stream().
                      map(Function(ByVal m As builders.parameter) As Boolean
                              assert(Not m Is Nothing)
@@ -168,7 +168,7 @@ Partial Public NotInheritable Class bstyle
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean
-                           Return v.expandeds.
+                           Return v.primitives.
                                     stream().
                                     map(Function(ByVal m As builders.parameter) As Boolean
                                             assert(Not m Is Nothing)

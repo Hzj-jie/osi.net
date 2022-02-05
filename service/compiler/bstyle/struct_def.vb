@@ -10,25 +10,25 @@ Imports osi.service.compiler.logic
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class struct_def
         Public ReadOnly nesteds As vector(Of builders.parameter)
-        Public ReadOnly expandeds As vector(Of builders.parameter)
+        Public ReadOnly primitives As vector(Of builders.parameter)
 
         Public Sub New()
             Me.New(New vector(Of builders.parameter)(), New vector(Of builders.parameter)())
         End Sub
 
         Public Sub New(ByVal nesteds As vector(Of builders.parameter),
-                       ByVal expandeds As vector(Of builders.parameter))
+                       ByVal primitives As vector(Of builders.parameter))
             assert(Not nesteds Is Nothing)
-            assert(Not expandeds Is Nothing)
+            assert(Not primitives Is Nothing)
             Me.nesteds = nesteds
-            Me.expandeds = expandeds
+            Me.primitives = primitives
             Me.nesteds.
                stream().
                foreach(Sub(ByVal p As builders.parameter)
                            assert(Not p Is Nothing)
                            assert(Not p.ref)
                        End Sub)
-            Me.expandeds.
+            Me.primitives.
                stream().
                foreach(Sub(ByVal p As builders.parameter)
                            assert(Not p Is Nothing)
@@ -37,8 +37,8 @@ Partial Public NotInheritable Class bstyle
                        End Sub)
         End Sub
 
-        Public Shared Function of_expanded(ByVal type As String, ByVal name As String) As struct_def
-            Return New struct_def(New vector(Of builders.parameter)(), vector.emplace_of(expanded(type, name)))
+        Public Shared Function of_primitive(ByVal type As String, ByVal name As String) As struct_def
+            Return New struct_def(New vector(Of builders.parameter)(), vector.emplace_of(primitive(type, name)))
         End Function
 
         Public Function with_nested(ByVal type As String, ByVal name As String) As struct_def
@@ -52,14 +52,13 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         ' It must be a primitive.
-        Public Shared Function expanded(ByVal type As String, ByVal name As String) As builders.parameter
+        Public Shared Function primitive(ByVal type As String, ByVal name As String) As builders.parameter
             type = scope.current().type_alias()(type)
             assert(Not scope.current().structs().defined(type))
             Return builders.parameter.no_ref(type, name)
         End Function
 
-        ' TODO: Rename expanded to primitive.
-        Public Shared Function is_expanded(ByVal p As builders.parameter) As Boolean
+        Public Shared Function is_primitive(ByVal p As builders.parameter) As Boolean
             assert(Not p Is Nothing)
             Return Not scope.current().structs().defined(p.type)
         End Function
@@ -79,13 +78,13 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Function append_prefix(ByVal name As String) As struct_def
-            Return New struct_def(append_prefix(nesteds, name), append_prefix(expandeds, name))
+            Return New struct_def(append_prefix(nesteds, name), append_prefix(primitives, name))
         End Function
 
         Public Sub append(ByVal r As struct_def)
             assert(Not r Is Nothing)
             nesteds.emplace_back(r.nesteds)
-            expandeds.emplace_back(r.expandeds)
+            primitives.emplace_back(r.primitives)
         End Sub
     End Class
 End Class

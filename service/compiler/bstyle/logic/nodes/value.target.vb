@@ -61,13 +61,13 @@ Partial Public NotInheritable Class bstyle
             Dim params As struct_def = Nothing
             assert(scope.current().structs().resolve(type, logic_name.temp_variable(n), params))
             assert(Not params Is Nothing)
-            params.expandeds.
+            params.primitives.
                    stream().
                    foreach(Sub(ByVal p As builders.parameter)
                                assert(Not p Is Nothing)
                                define_single_data_slot_temp_target(p.type, p.name, o)
                            End Sub)
-            Return with_target(type, params.expandeds)
+            Return with_target(type, params.primitives)
         End Function
 
         Public Shared Function with_target(ByVal type As String,

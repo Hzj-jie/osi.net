@@ -36,7 +36,7 @@ Partial Public NotInheritable Class bstyle
             End If
             Dim ps As struct_def = Nothing
             If scope.current().structs().resolve(type, n.input_without_ignored(), ps) Then
-                Return struct_handle(type, ps.expandeds)
+                Return struct_handle(type, ps.primitives)
             End If
             Return single_data_slot_handle(type, n.input_without_ignored())
         End Function
