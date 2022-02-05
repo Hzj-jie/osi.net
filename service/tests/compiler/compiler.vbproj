@@ -126,6 +126,10 @@
     <Content Include="b2style\codegen\errors\undefined-value-clause.txt" />
     <Content Include="b2style\codegen\function_ptr.txt" />
     <Content Include="b2style\codegen\test_assert.txt" />
+    <Content Include="b2style\self-test\struct-and-primitive-type-with-same-name.txt" />
+    <Content Include="b2style\self-test\redefine-struct-member-type.txt" />
+    <Content Include="b2style\self-compile-error-test\struct-reference-member.txt" />
+    <Content Include="b2style\self-compile-error-test\struct-reference-name.txt" />
     <Content Include="b2style\self-compile-error-test\templates-with-same-name.txt" />
     <Content Include="b2style\self-compile-error-test\type-parameters-with-same-name.txt" />
     <Content Include="b2style\self-test\assert-equal.txt" />
@@ -135,6 +139,7 @@
     <Content Include="b2style\self-test\function-template.txt" />
     <Content Include="b2style\self-test\more-closing-angle-brackets.txt" />
     <Content Include="b2style\self-test\self-health.txt" />
+    <Content Include="b2style\self-test\struct_member_type_with_namespace.txt" />
     <Content Include="b2style\self-test\template-in-namespace.txt" />
     <Content Include="b2style\self-test\template_class_with_ref.txt" />
     <Content Include="b2style\self-test\two-closing-angle-brackets.txt" />

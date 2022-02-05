@@ -42,19 +42,8 @@ Partial Public NotInheritable Class bstyle
                                 canonical)
                     Return False
                 End If
-                canonical = Me(canonical)
-                If m.emplace([alias], canonical).second OrElse m([alias]).Equals(canonical) Then
-                    Return True
-                End If
-                raise_error(error_type.user,
-                            "Alias ",
-                            [alias],
-                            " of canonical type ",
-                            canonical,
-                            " has been defined already as ",
-                            m([alias]),
-                            ".")
-                Return False
+                m([alias]) = Me(canonical)
+                Return True
             End Function
 
             Default Public ReadOnly Property _D(ByVal [alias] As String) As String
@@ -65,6 +54,10 @@ Partial Public NotInheritable Class bstyle
                     Return [alias]
                 End Get
             End Property
+
+            Public Sub remove(ByVal [alias] As String)
+                m.erase([alias])
+            End Sub
         End Class
 
         Public Structure type_alias_proxy
@@ -108,6 +101,10 @@ Partial Public NotInheritable Class bstyle
                 assert(Not p Is Nothing)
                 Return p.map_type(AddressOf retrieve)
             End Function
+
+            Public Sub remove(ByVal [alias] As String)
+                s.ta.remove([alias])
+            End Sub
         End Structure
 
         Public Function type_alias() As type_alias_proxy

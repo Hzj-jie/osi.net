@@ -10,7 +10,6 @@ Partial Public NotInheritable Class b2style
     Public NotInheritable Class ifndef_wrapped
         Inherits ifndef_wrapped(Of typed_node_writer)
 
-        ' TODO: Use b2style.code_builder.current().code_gens
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
             MyBase.New(b, Function(ByVal s As String) As Boolean

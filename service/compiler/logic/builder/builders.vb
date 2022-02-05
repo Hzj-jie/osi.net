@@ -12,6 +12,8 @@ Namespace logic
     Partial Public NotInheritable Class builders
         Public Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("compiler", "debug", "dump"))
 
+        ' Stores a type in logic with type(string) and ref(boolean). It's also widely used in bstyle and b2style since
+        ' the same & mark is used for reference types.
         Public Class parameter_type
             Private Const type_ref_suffix As Char = character.and_mark
             Public ReadOnly type As String
@@ -31,6 +33,10 @@ Namespace logic
                 Me.type = type
                 Me.ref = ref
             End Sub
+
+            Public Shared Function remove_ref(ByVal type As String) As String
+                Return New parameter_type(type).type
+            End Function
 
             Public Sub New(ByVal type As String)
                 assert(Not type.null_or_whitespace())
@@ -80,7 +86,7 @@ Namespace logic
 
             Public ReadOnly name As String
 
-            Public Sub New(ByVal type As String, ByVal name As String)
+            Private Sub New(ByVal type As String, ByVal name As String)
                 MyBase.New(type)
                 assert(Not name.null_or_whitespace())
                 Me.name = name
@@ -93,9 +99,20 @@ Namespace logic
                 Me.name = name
             End Sub
 
+            Public Shared Function no_ref(ByVal type As String, ByVal name As String) As parameter
+                Dim r As New parameter(type, name)
+                assert(Not r.ref)
+                Return r
+            End Function
+
             Public Shadows Function map_type(ByVal f As Func(Of String, String)) As parameter
                 assert(Not f Is Nothing)
                 Return New parameter(f(type), ref, name)
+            End Function
+
+            Public Function map_name(ByVal f As Func(Of String, String)) As parameter
+                assert(Not f Is Nothing)
+                Return New parameter(type, ref, f(name))
             End Function
 
             Public Shared Function to_ref(ByVal p As parameter) As parameter

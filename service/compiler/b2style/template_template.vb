@@ -34,7 +34,7 @@ Partial Public NotInheritable Class b2style
                     types.stream().
                           map(Function(ByVal type As String) As String
                                   ' Remove referneces in the name.
-                                  Return _namespace.bstyle_format.of(New builders.parameter_type(type).type)
+                                  Return _namespace.bstyle_format.of(builders.parameter_type.remove_ref(type))
                               End Function).
                           collect(Of vector(Of String))()))
             End Sub

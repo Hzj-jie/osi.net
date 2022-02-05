@@ -28,18 +28,12 @@ Partial Public NotInheritable Class bstyle
             struct.forward_in_stack(type_node.child(0).word().str(),
                                     n.last_child().word().str())
             Dim params As struct_def = Nothing
-            If Not scope.current().structs().resolve(type_node.child(0).word().str(),
+            If Not scope.current().structs().resolve(type_node.child(0).input_without_ignored(),
                                                      n.last_child().word().str(),
                                                      params) Then
-                params = struct_def.of_single_data_slot_variable(
-                             New single_data_slot_variable(type_node.child(0).word().str(),
-                                                           n.last_child().word().str()))
+                params = struct_def.of_primitive(type_node.child(0).word().str(), n.last_child().word().str())
             End If
-            Dim ps As vector(Of builders.parameter) =
-                    params.expanded.
-                           stream().
-                           map(AddressOf single_data_slot_variable.to_builders_parameter).
-                           collect(Of vector(Of builders.parameter))()
+            Dim ps As vector(Of builders.parameter) = params.primitives
             If type_node.child_count() = 2 Then
                 assert(type_node.child(1).leaf())
                 assert(type_node.child(1).type_name.Equals("reference"))

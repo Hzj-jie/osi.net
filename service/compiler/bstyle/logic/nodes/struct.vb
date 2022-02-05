@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not vs Is Nothing)
-            If vs.expanded.size() <> sources.size() Then
+            If vs.primitives.size() <> sources.size() Then
                 raise_error(error_type.user,
                             "Sources ",
                             sources,
@@ -45,8 +45,8 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Dim i As UInt32 = 0
-            While i < vs.expanded.size()
-                If Not builders.of_copy(target_naming(vs.expanded(i).name), sources(i)).to(o) Then
+            While i < vs.primitives.size()
+                If Not builders.of_copy(target_naming(vs.primitives(i).name), sources(i)).to(o) Then
                     Return False
                 End If
                 i += uint32_1
@@ -122,10 +122,11 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return streams.of(New struct_member(type, name)).
-                           concat(v.nested_structs.stream()).
-                           map(Function(ByVal s As struct_member) As Boolean
+            Return streams.of(struct_def.nested(type, name)).
+                           concat(v.nesteds.stream()).
+                           map(Function(ByVal s As builders.parameter) As Boolean
                                    assert(Not s Is Nothing)
+                                   assert(Not s.ref)
                                    Return scope.current().variables().define(s.type, s.name)
                                End Function).
                            aggregate(bool_stream.aggregators.all_true)
@@ -143,9 +144,9 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return v.expanded.
+            Return v.primitives.
                      stream().
-                     map(Function(ByVal m As single_data_slot_variable) As Boolean
+                     map(Function(ByVal m As builders.parameter) As Boolean
                              assert(Not m Is Nothing)
                              Return value_declaration.declare_single_data_slot(m.type, m.name, o)
                          End Function).
@@ -167,14 +168,20 @@ Partial Public NotInheritable Class bstyle
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean
-                           Return v.expanded.
+                           Return v.primitives.
                                     stream().
-                                    map(Function(ByVal m As single_data_slot_variable) As Boolean
+                                    map(Function(ByVal m As builders.parameter) As Boolean
                                             assert(Not m Is Nothing)
-                                            Return heap_declaration.declare_single_data_slot(m.type, m.name, len_name, o)
+                                            Return heap_declaration.declare_single_data_slot(
+                                                       m.type, m.name, len_name, o)
                                         End Function).
                                     aggregate(bool_stream.aggregators.all_true)
                        End Function)
+        End Function
+
+        Public Shared Function create_id(ByVal name As String) As builders.parameter
+            assert(Not name.null_or_whitespace())
+            Return builders.parameter.no_ref(name + "__struct__type__id__type", name + "__struct__type__id")
         End Function
 
         Public Function build(ByVal n As typed_node,
@@ -182,8 +189,8 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
-            Dim id_type As String = strcat(n.child(1).word().str(), "__struct__type__id__type")
-            assert(builders.of_type(id_type, uint32_1).to(o))
+            Dim id As builders.parameter = create_id(n.child(1).word().str())
+            assert(builders.of_type(id.type, uint32_1).to(o))
             Return scope.current().
                          structs().
                          define(n.child(1).word().str(),
@@ -200,18 +207,16 @@ Partial Public NotInheritable Class bstyle
                                         map(Function(ByVal c As typed_node) As typed_node
                                                 Return c.child(0)
                                             End Function).
-                                        map(Function(ByVal c As typed_node) As struct_member
+                                        map(Function(ByVal c As typed_node) As builders.parameter
                                                 ' TODO: Support value_definition.str_bytes_val
                                                 assert(Not c Is Nothing)
                                                 assert(c.type_name.Equals("value-declaration"))
                                                 assert(c.child_count() = 2)
-                                                Return New struct_member(c.child(0).word().str(),
-                                                                         c.child(1).word().str())
+                                                Return struct_def.nested(c.child(0).input_without_ignored(),
+                                                                                c.child(1).input_without_ignored())
                                             End Function).
-                                        concat(New struct_member(
-                                                       id_type,
-                                                       strcat(n.child(1).word().str(), "__struct__type__id"))).
-                                        collect(Of vector(Of struct_member))())
+                                        concat(id).
+                                        collect(Of vector(Of builders.parameter))())
         End Function
     End Class
 End Class

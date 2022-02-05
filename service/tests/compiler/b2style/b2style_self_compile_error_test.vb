@@ -31,7 +31,8 @@ Public NotInheritable Class b2style_self_compile_error_test
         Dim err As String = error_event.capture_log(error_type.user,
                                                     Sub()
                                                         assertion.is_false(b2style.with_default_functions.
-                                                                                   parse(content, Nothing))
+                                                                                   parse(content, Nothing),
+                                                                           name)
                                                     End Sub)
         streams.of(content.Split(character.newline)).
                 map(Function(ByVal s As String) As String
