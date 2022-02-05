@@ -15,6 +15,7 @@ Partial Public Class unordered_set(Of
     Inherits hasharray(Of T, _true, _HASHER, _EQUALER)
     Implements ICloneable, ICloneable(Of unordered_set(Of T, _HASHER, _EQUALER))
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
         MyBase.New()
     End Sub
@@ -68,6 +69,7 @@ Partial Public NotInheritable Class unordered_set(Of T)
     Inherits unordered_set(Of T, fast_to_uint32(Of T), default_equaler(Of T))
     Implements ICloneable, ICloneable(Of unordered_set(Of T)), IEquatable(Of unordered_set(Of T))
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
         MyBase.New()
     End Sub

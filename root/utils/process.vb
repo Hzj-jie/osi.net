@@ -20,7 +20,7 @@ Public Module _process
                 Return True
             End If
         Catch ex As InvalidOperationException
-            raise_error(error_type.information, "Process associated with ", p.Id(), " has been exited already.")
+            raise_error(error_type.information, "Process has been exited already.")
             Return True
         Catch ex As Exception
             raise_error(error_type.warning,
