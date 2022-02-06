@@ -54,25 +54,20 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End Function
 
-            Private Function find(ByVal type As String, ByRef o As struct_def) As Boolean
-                Return s.find(scope.current().type_alias()(type), o)
-            End Function
-
-            Public Function defined(ByVal type As String) As Boolean
-                Return find(type, Nothing)
-            End Function
-
             Public Function resolve(ByVal type As String,
                                     ByVal name As String,
                                     ByRef o As struct_def) As Boolean
                 assert(Not type.null_or_whitespace())
-                assert(Not name.null_or_whitespace())
-                If Not find(type, o) Then
+                If Not s.find(scope.current().type_alias()(type), o) Then
                     ' Do not log, value_declaration and value_definition always check if a struct is defined before
                     ' forwarding the defintion directly to the logic.
                     Return False
                 End If
-                o = o.append_prefix(name)
+                ' name can be null to check the availability of a struct definition.
+                If Not name Is Nothing Then
+                    assert(Not name.null_or_whitespace())
+                    o = o.append_prefix(name)
+                End If
                 Return True
             End Function
         End Class
@@ -89,17 +84,6 @@ Partial Public NotInheritable Class bstyle
                 Return s.s.define(type, members)
             End Function
 
-            Public Function defined(ByVal type As String) As Boolean
-                Dim s As scope = Me.s
-                While Not s Is Nothing
-                    If s.s.defined(type) Then
-                        Return True
-                    End If
-                    s = s.parent
-                End While
-                Return False
-            End Function
-
             Public Function resolve(ByVal type As String,
                                     ByVal name As String,
                                     ByRef o As struct_def) As Boolean
@@ -111,6 +95,10 @@ Partial Public NotInheritable Class bstyle
                     s = s.parent
                 End While
                 Return False
+            End Function
+
+            Public Function defined(ByVal type As String) As Boolean
+                Return resolve(type, Nothing, Nothing)
             End Function
 
             Public Function resolve(ByVal name As String, ByRef o As struct_def) As Boolean
