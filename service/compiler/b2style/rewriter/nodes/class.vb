@@ -47,8 +47,9 @@ Partial Public NotInheritable Class b2style
                 Return False
             End If
             ' Append struct-body back into the structure.
-            o.Append("struct ")
-            o.Append(class_name).Append("{")
+            o.Append("struct ").
+              Append(class_name).
+              Append("{")
             n.children_of("class-body").
               stream().
               map(AddressOf typed_node.child).
@@ -74,19 +75,19 @@ Partial Public NotInheritable Class b2style
                           End If
                           ' No namespace is necessary, the first parameter contains namespace.
                           o.Append(node.child(0).input()).
-                          Append(" ").
-                          Append(_namespace.with_global_namespace(node.child(1).input())).
-                          Append("(").
-                          Append(class_name).
-                          Append("& this")
+                            Append(" ").
+                            Append(_namespace.with_global_namespace(node.child(1).input())).
+                            Append("(").
+                            Append(class_name).
+                            Append("& this")
                           ' With parameter list.
                           If node.child_count() = 6 Then
                               o.Append(", ").
                               Append(node.child(3).input())
                           End If
                           o.Append(")").
-                          Append(node.last_child().input()).
-                          AppendLine() ' beautiful output.
+                            Append(node.last_child().input()).
+                            AppendLine() ' beautiful output.
                       End Sub)
             If Not has_constructor Then
                 o.Append("void ").
