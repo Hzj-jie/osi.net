@@ -9,20 +9,21 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class struct_def
-        Public ReadOnly nesteds As vector(Of builders.parameter)
+        Private ReadOnly _nesteds As vector(Of builders.parameter)
+        ' TODO: Make primitives private.
         Public ReadOnly primitives As vector(Of builders.parameter)
 
         Public Sub New()
             Me.New(New vector(Of builders.parameter)(), New vector(Of builders.parameter)())
         End Sub
 
-        Public Sub New(ByVal nesteds As vector(Of builders.parameter),
-                       ByVal primitives As vector(Of builders.parameter))
+        Private Sub New(ByVal nesteds As vector(Of builders.parameter),
+                        ByVal primitives As vector(Of builders.parameter))
             assert(Not nesteds Is Nothing)
             assert(Not primitives Is Nothing)
-            Me.nesteds = nesteds
+            Me._nesteds = nesteds
             Me.primitives = primitives
-            Me.nesteds.
+            Me._nesteds.
                stream().
                foreach(Sub(ByVal p As builders.parameter)
                            assert(Not p Is Nothing)
@@ -37,12 +38,16 @@ Partial Public NotInheritable Class bstyle
                        End Sub)
         End Sub
 
+        Public Function nesteds() As stream(Of builders.parameter)
+            Return _nesteds.stream()
+        End Function
+
         Public Shared Function of_primitive(ByVal type As String, ByVal name As String) As struct_def
-            Return New struct_def(New vector(Of builders.parameter)(), vector.emplace_of(primitive(type, name)))
+            Return New struct_def().with_primitive(type, name)
         End Function
 
         Public Function with_nested(ByVal type As String, ByVal name As String) As struct_def
-            nesteds.emplace_back(nested(type, name))
+            _nesteds.emplace_back(nested(type, name))
             Return Me
         End Function
 
@@ -52,10 +57,11 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         ' It must be a primitive.
-        Public Shared Function primitive(ByVal type As String, ByVal name As String) As builders.parameter
-            type = scope.current().type_alias()(type)
-            assert(Not scope.current().structs().defined(type))
-            Return builders.parameter.no_ref(type, name)
+        Public Function with_primitive(ByVal type As String, ByVal name As String) As struct_def
+            Dim r As builders.parameter = nested(type, name)
+            assert(Not scope.current().structs().defined(r.type))
+            primitives.emplace_back(r)
+            Return Me
         End Function
 
         Private Shared Function append_prefix(ByVal v As vector(Of builders.parameter),
@@ -73,12 +79,12 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Function append_prefix(ByVal name As String) As struct_def
-            Return New struct_def(append_prefix(nesteds, name), append_prefix(primitives, name))
+            Return New struct_def(append_prefix(_nesteds, name), append_prefix(primitives, name))
         End Function
 
         Public Sub append(ByVal r As struct_def)
             assert(Not r Is Nothing)
-            nesteds.emplace_back(r.nesteds)
+            _nesteds.emplace_back(r._nesteds)
             primitives.emplace_back(r.primitives)
         End Sub
     End Class

@@ -23,7 +23,7 @@ Partial Public NotInheritable Class bstyle
                 type = scope.current().type_alias()(type)
                 Dim sub_type As struct_def = Nothing
                 If Not s.find(type, sub_type) Then
-                    d.primitives.emplace_back(struct_def.primitive(type, name))
+                    d.with_primitive(type, name)
                     Return True
                 End If
                 assert(Not sub_type Is Nothing)

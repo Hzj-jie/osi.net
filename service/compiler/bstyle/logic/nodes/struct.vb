@@ -123,7 +123,7 @@ Partial Public NotInheritable Class bstyle
             End If
             assert(Not v Is Nothing)
             Return streams.of(struct_def.nested(type, name)).
-                           concat(v.nesteds.stream()).
+                           concat(v.nesteds()).
                            map(Function(ByVal s As builders.parameter) As Boolean
                                    assert(Not s Is Nothing)
                                    assert(Not s.ref)
@@ -213,7 +213,7 @@ Partial Public NotInheritable Class bstyle
                                                 assert(c.type_name.Equals("value-declaration"))
                                                 assert(c.child_count() = 2)
                                                 Return struct_def.nested(c.child(0).input_without_ignored(),
-                                                                                c.child(1).input_without_ignored())
+                                                                         c.child(1).input_without_ignored())
                                             End Function).
                                         concat(id).
                                         collect(Of vector(Of builders.parameter))())
