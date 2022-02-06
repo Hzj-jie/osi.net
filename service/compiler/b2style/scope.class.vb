@@ -10,18 +10,19 @@ Imports osi.root.formation
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
         Private NotInheritable Class class_t
-            Private ReadOnly m As New unordered_set(Of name_with_namespace)()
+            Private ReadOnly m As New unordered_map(Of name_with_namespace, class_def)()
 
-            Public Function define(ByVal name As String) As Boolean
-                If m.emplace(name_with_namespace.of(name)).second() Then
+            Public Function define(ByVal name As name_with_namespace, ByVal def As class_def) As Boolean
+                assert(Not def Is Nothing)
+                If m.emplace(name, def).second() Then
                     Return True
                 End If
-                raise_error(error_type.user, "Class ", name_with_namespace.of(name), " has been defined already.")
+                raise_error(error_type.user, "Class ", name, " has been defined already.")
                 Return False
             End Function
 
-            Public Function resolve(ByVal name As String) As Boolean
-                Return m.find(name_with_namespace.of(name)) <> m.end()
+            Public Function resolve(ByVal name As String, ByRef o As class_def) As Boolean
+                Return m.find(name_with_namespace.of(name), o)
             End Function
         End Class
 
@@ -33,14 +34,14 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
-            Public Function define(ByVal name As String) As Boolean
-                Return s.c.define(name)
+            Public Function define(ByVal name As String, ByVal def As class_def) As Boolean
+                Return s.c.define(name_with_namespace.of(name), def)
             End Function
 
-            Public Function resolve(ByVal name As String) As Boolean
+            Public Function resolve(ByVal name As String, ByRef o As class_def) As Boolean
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    If s.c.resolve(name) Then
+                    If s.c.resolve(name, o) Then
                         Return True
                     End If
                     s = s.parent

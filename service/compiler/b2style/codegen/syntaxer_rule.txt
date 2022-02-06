@@ -45,7 +45,8 @@ heap-struct-function-call heap-struct-name start-bracket [value-list]? end-brack
 
 # TODO: Support static function
 class-body [struct-body, function]
-class kw-class type-name start-paragraph [class-body]* end-paragraph semi-colon
+class-inheritance colon [type-name]+
+class kw-class type-name [class-inheritance]? start-paragraph [class-body]* end-paragraph semi-colon
 
 template-type-name raw-type-name less-than paramtypelist greater-than
 type-param-list [type-param-with-comma]* type-param

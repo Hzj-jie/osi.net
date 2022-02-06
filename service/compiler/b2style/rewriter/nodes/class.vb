@@ -43,55 +43,51 @@ Partial Public NotInheritable Class b2style
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             Dim class_name As String = n.child(1).input()
-            If Not scope.current().classes().define(class_name) Then
+            If Not scope.current().classes().define(class_name, New class_def(class_name)) Then
                 Return False
             End If
+            ' Append struct-body back into the structure.
             o.Append("struct ")
             o.Append(class_name).Append("{")
-            ' Append struct-body back into the structure.
-            Dim class_body As Func(Of Int32, typed_node) =
-                    Function(ByVal i As Int32) As typed_node
-                        Dim c As typed_node = n.child(CUInt(i))
-                        assert(c.type_name.Equals("class-body"))
-                        Return c.child()
-                    End Function
-            streams.range(3, n.child_count() - uint32_2).
-                    map(class_body).
-                    filter(AddressOf is_struct_body).
-                    foreach(Sub(ByVal node As typed_node)
-                                o.Append(node.input())
-                            End Sub)
+            n.children_of("class-body").
+              stream().
+              map(AddressOf typed_node.child).
+              filter(AddressOf is_struct_body).
+              foreach(Sub(ByVal node As typed_node)
+                          o.Append(node.input())
+                      End Sub)
             o.Append("};")
             ' Append functions after the structure.
             Dim has_constructor As Boolean = False
             Dim has_destructor As Boolean = False
-            streams.range(3, n.child_count() - uint32_2).
-                    map(class_body).
-                    filter(AddressOf is_function).
-                    foreach(Sub(ByVal node As typed_node)
-                                assert(Not node Is Nothing)
-                                assert(node.child_count() = 5 OrElse node.child_count() = 6)
-                                If node.child(1).input().Equals("construct") Then
-                                    has_constructor = True
-                                ElseIf node.child(1).input().Equals("destruct") Then
-                                    has_destructor = True
-                                End If
-                                ' No namespace is necessary, the first parameter contains namespace.
-                                o.Append(node.child(0).input()).
-                                  Append(" ").
-                                  Append(_namespace.with_global_namespace(node.child(1).input())).
-                                  Append("(").
-                                  Append(class_name).
-                                  Append("& this")
-                                ' With parameter list.
-                                If node.child_count() = 6 Then
-                                    o.Append(", ").
-                                      Append(node.child(3).input())
-                                End If
-                                o.Append(")").
-                                  Append(node.last_child().input()).
-                                  AppendLine() ' beautiful output.
-                            End Sub)
+            n.children_of("class-body").
+              stream().
+              map(AddressOf typed_node.child).
+              filter(AddressOf is_function).
+              foreach(Sub(ByVal node As typed_node)
+                          assert(Not node Is Nothing)
+                          assert(node.child_count() = 5 OrElse node.child_count() = 6)
+                          If node.child(1).input().Equals("construct") Then
+                              has_constructor = True
+                          ElseIf node.child(1).input().Equals("destruct") Then
+                              has_destructor = True
+                          End If
+                          ' No namespace is necessary, the first parameter contains namespace.
+                          o.Append(node.child(0).input()).
+                          Append(" ").
+                          Append(_namespace.with_global_namespace(node.child(1).input())).
+                          Append("(").
+                          Append(class_name).
+                          Append("& this")
+                          ' With parameter list.
+                          If node.child_count() = 6 Then
+                              o.Append(", ").
+                              Append(node.child(3).input())
+                          End If
+                          o.Append(")").
+                          Append(node.last_child().input()).
+                          AppendLine() ' beautiful output.
+                      End Sub)
             If Not has_constructor Then
                 o.Append("void ").
                   Append(_namespace.with_global_namespace("construct")).

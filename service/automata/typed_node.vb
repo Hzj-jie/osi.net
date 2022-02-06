@@ -93,6 +93,11 @@ Partial Public NotInheritable Class typed_node
         Return child(0)
     End Function
 
+    Public Shared Function child(ByVal n As typed_node) As typed_node
+        assert(Not n Is Nothing)
+        Return n.child()
+    End Function
+
     Public Function last_child() As typed_node
         assert(child_count() > 0, type_name)
         Return child(child_count() - uint32_1)
@@ -100,6 +105,18 @@ Partial Public NotInheritable Class typed_node
 
     Public Function child_count() As UInt32
         Return subnodes.size()
+    End Function
+
+    Public Function children_of(ByVal type_name As String) As vector(Of typed_node)
+        assert(Not leaf())
+        assert(Not type_name.null_or_whitespace())
+        Dim r As New vector(Of typed_node)()
+        For i As UInt32 = 0 To child_count() - uint32_1
+            If child(i).type_name.Equals(type_name) Then
+                r.emplace_back(child(i))
+            End If
+        Next
+        Return r
     End Function
 
     Public Function leaf() As Boolean
