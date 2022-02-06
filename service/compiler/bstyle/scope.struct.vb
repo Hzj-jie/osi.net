@@ -54,19 +54,20 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End Function
 
-            ' TODO: Only aliases after the definition of the structure should be used.
+            Private Function find(ByVal type As String, ByRef o As struct_def) As Boolean
+                Return s.find(scope.current().type_alias()(type), o)
+            End Function
+
             Public Function defined(ByVal type As String) As Boolean
-                Return s.find(scope.current().type_alias()(type)) <> s.end()
+                Return find(type, Nothing)
             End Function
 
             Public Function resolve(ByVal type As String,
                                     ByVal name As String,
                                     ByRef o As struct_def) As Boolean
                 assert(Not type.null_or_whitespace())
-                ' name can be null or whitespace to check the availability of a struct definition.
-                type = scope.current().type_alias()(type)
-                If Not s.find(type, o) Then
-                    ' raise_error(error_type.user, "Struct type ", type, " has not been defined.")
+                assert(Not name.null_or_whitespace())
+                If Not find(type, o) Then
                     ' Do not log, value_declaration and value_definition always check if a struct is defined before
                     ' forwarding the defintion directly to the logic.
                     Return False
