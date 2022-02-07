@@ -70,7 +70,7 @@ Partial Public Class stream(Of T)
         Public Shared Function with_index() As Action(Of vector(Of tuple(Of UInt32, T)), T)
             Return Sub(ByVal r As vector(Of tuple(Of UInt32, T)), ByVal v As T)
                        assert(Not r Is Nothing)
-                       r.emplace_back(tuple.emplace_of(r.size() - uint32_1, v))
+                       r.emplace_back(tuple.emplace_of(r.size(), v))
                    End Sub
         End Function
 

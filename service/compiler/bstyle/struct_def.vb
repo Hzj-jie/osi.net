@@ -10,8 +10,7 @@ Imports osi.service.compiler.logic
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class struct_def
         Private ReadOnly _nesteds As vector(Of builders.parameter)
-        ' TODO: Make primitives private.
-        Public ReadOnly primitives As vector(Of builders.parameter)
+        Private ReadOnly _primitives As vector(Of builders.parameter)
 
         Public Sub New()
             Me.New(New vector(Of builders.parameter)(), New vector(Of builders.parameter)())
@@ -22,14 +21,14 @@ Partial Public NotInheritable Class bstyle
             assert(Not nesteds Is Nothing)
             assert(Not primitives Is Nothing)
             Me._nesteds = nesteds
-            Me.primitives = primitives
+            Me._primitives = primitives
             Me._nesteds.
                stream().
                foreach(Sub(ByVal p As builders.parameter)
                            assert(Not p Is Nothing)
                            assert(Not p.ref)
                        End Sub)
-            Me.primitives.
+            Me._primitives.
                stream().
                foreach(Sub(ByVal p As builders.parameter)
                            assert(Not p Is Nothing)
@@ -40,6 +39,14 @@ Partial Public NotInheritable Class bstyle
 
         Public Function nesteds() As stream(Of builders.parameter)
             Return _nesteds.stream()
+        End Function
+
+        Public Function primitives() As stream(Of builders.parameter)
+            Return _primitives.stream()
+        End Function
+
+        Public Function primitive_count() As UInt32
+            Return _primitives.size()
         End Function
 
         Public Shared Function of_primitive(ByVal type As String, ByVal name As String) As struct_def
@@ -60,7 +67,7 @@ Partial Public NotInheritable Class bstyle
         Public Function with_primitive(ByVal type As String, ByVal name As String) As struct_def
             Dim r As builders.parameter = nested(type, name)
             assert(Not scope.current().structs().defined(r.type))
-            primitives.emplace_back(r)
+            _primitives.emplace_back(r)
             Return Me
         End Function
 
@@ -85,7 +92,7 @@ Partial Public NotInheritable Class bstyle
         Public Sub append(ByVal r As struct_def)
             assert(Not r Is Nothing)
             _nesteds.emplace_back(r._nesteds)
-            primitives.emplace_back(r.primitives)
+            _primitives.emplace_back(r._primitives)
         End Sub
     End Class
 End Class

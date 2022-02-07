@@ -53,17 +53,15 @@ Partial Public NotInheritable Class bstyle
                              Return raw_variable_name.build(
                                         n.child(0),
                                         Function(ByVal type As String,
-                                                 ByVal ps As vector(Of builders.parameter)) As Boolean
+                                                 ByVal ps As stream(Of builders.parameter)) As Boolean
                                             value.with_target(
                                                 type,
-                                                ps.stream().
-                                                   map(Function(ByVal d As builders.parameter) As builders.parameter
+                                                ps.map(Function(ByVal d As builders.parameter) As builders.parameter
                                                            assert(Not d Is Nothing)
                                                            Return d.map_name(Function(ByVal name As String) As String
                                                                                  Return variable.name_of(name, indexstr)
                                                                              End Function)
-                                                       End Function).
-                                                   collect(Of vector(Of builders.parameter))())
+                                                       End Function))
                                             Return True
                                         End Function,
                                         Function(ByVal type As String, ByVal source As String) As Boolean

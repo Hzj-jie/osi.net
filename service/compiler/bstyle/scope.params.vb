@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.compiler.logic
 
@@ -11,8 +12,9 @@ Partial Public NotInheritable Class bstyle
         Public NotInheritable Class params_t
             Private ReadOnly v As New vector(Of builders.parameter)()
 
-            Public Sub pack(ByVal n As vector(Of builders.parameter))
-                v.emplace_back(n)
+            Public Sub pack(ByVal n As stream(Of builders.parameter))
+                assert(Not n Is Nothing)
+                v.emplace_back(n.to_array())
             End Sub
 
             Public Function unpack() As vector(Of builders.parameter)

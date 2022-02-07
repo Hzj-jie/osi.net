@@ -33,13 +33,11 @@ Partial Public NotInheritable Class bstyle
                                                      params) Then
                 params = struct_def.of_primitive(type_node.child(0).word().str(), n.last_child().word().str())
             End If
-            Dim ps As vector(Of builders.parameter) = params.primitives
+            Dim ps As stream(Of builders.parameter) = params.primitives()
             If type_node.child_count() = 2 Then
                 assert(type_node.child(1).leaf())
                 assert(type_node.child(1).type_name.Equals("reference"))
-                ps = ps.stream().
-                        map(AddressOf builders.parameter.to_ref).
-                        collect(Of vector(Of builders.parameter))()
+                ps = ps.map(AddressOf builders.parameter.to_ref)
             End If
             scope.current().params().pack(ps)
             Return True

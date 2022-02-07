@@ -62,19 +62,17 @@ Partial Public NotInheritable Class bstyle
             assert(scope.current().structs().resolve(type, logic_name.temp_variable(n), params))
             assert(Not params Is Nothing)
             params.primitives.
-                   stream().
                    foreach(Sub(ByVal p As builders.parameter)
                                assert(Not p Is Nothing)
                                define_single_data_slot_temp_target(p.type, p.name, o)
                            End Sub)
-            Return with_target(type, params.primitives)
+            Return with_target(type, params.primitives())
         End Function
 
         Public Shared Function with_target(ByVal type As String,
-                                           ByVal ps As vector(Of builders.parameter)) As vector(Of String)
+                                           ByVal ps As stream(Of builders.parameter)) As vector(Of String)
             assert(Not ps Is Nothing)
-            Dim vs As vector(Of String) = ps.stream().
-                                             map(Function(ByVal p As builders.parameter) As String
+            Dim vs As vector(Of String) = ps.map(Function(ByVal p As builders.parameter) As String
                                                      assert(Not p Is Nothing)
                                                      assert(Not p.name.null_or_whitespace())
                                                      Return p.name
