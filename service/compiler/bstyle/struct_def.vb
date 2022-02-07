@@ -86,7 +86,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Function append_prefix(ByVal name As String) As struct_def
-            Return New struct_def(append_prefix(_nesteds, name), append_prefix(primitives, name))
+            Return New struct_def(append_prefix(_nesteds, name), append_prefix(_primitives, name))
         End Function
 
         Public Sub append(ByVal r As struct_def)
