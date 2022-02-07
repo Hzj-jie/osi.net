@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not vs Is Nothing)
-            If vs.primitives.size() <> sources.size() Then
+            If vs.primitive_count() <> sources.size() Then
                 raise_error(error_type.user,
                             "Sources ",
                             sources,
@@ -44,14 +44,12 @@ Partial Public NotInheritable Class bstyle
                             vs)
                 Return False
             End If
-            Dim i As UInt32 = 0
-            While i < vs.primitives.size()
-                If Not builders.of_copy(target_naming(vs.primitives(i).name), sources(i)).to(o) Then
-                    Return False
-                End If
-                i += uint32_1
-            End While
-            Return True
+            Return vs.primitives().
+                      with_index().
+                      map(Function(ByVal t As tuple(Of UInt32, builders.parameter)) As Boolean
+                              Return builders.of_copy(target_naming(t.second().name), sources(t.first())).to(o)
+                          End Function).
+                      aggregate(bool_stream.aggregators.all_true)
         End Function
 
         Public Shared Function copy(ByVal sources As vector(Of String),
@@ -144,8 +142,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return v.primitives.
-                     stream().
+            Return v.primitives().
                      map(Function(ByVal m As builders.parameter) As Boolean
                              assert(Not m Is Nothing)
                              Return value_declaration.declare_single_data_slot(m.type, m.name, o)
@@ -168,8 +165,7 @@ Partial Public NotInheritable Class bstyle
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean
-                           Return v.primitives.
-                                    stream().
+                           Return v.primitives().
                                     map(Function(ByVal m As builders.parameter) As Boolean
                                             assert(Not m Is Nothing)
                                             Return heap_declaration.declare_single_data_slot(
