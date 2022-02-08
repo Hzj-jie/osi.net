@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{F50B84DD-2DFD-40FA-9A9B-D680E8EAB315}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>osi.root.tests.constants</RootNamespace>
-    <AssemblyName>osi.root.tests.constants</AssemblyName>
+    <RootNamespace>osi.tests.root.constants</RootNamespace>
+    <AssemblyName>osi.tests.root.constants</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>

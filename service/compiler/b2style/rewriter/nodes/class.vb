@@ -5,37 +5,24 @@ Option Strict On
 
 Imports System.Text
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
+Imports osi.service.compiler.logic
 Imports osi.service.compiler.rewriters
+Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class _class
         Inherits code_gens(Of typed_node_writer).reparser(Of b2style.parser)
         Implements code_gen(Of typed_node_writer)
 
-        Public Shared ReadOnly instance As New _class()
+        Private ReadOnly l As code_gens(Of typed_node_writer)
 
-        Private Sub New()
+        <inject_constructor>
+        Public Sub New(ByVal b As code_gens(Of typed_node_writer))
+            assert(Not b Is Nothing)
+            Me.l = b
         End Sub
-
-        Private Shared Sub ensure_subnode_type(ByVal n As typed_node)
-            assert(Not n Is Nothing)
-            assert(n.type_name.Equals("struct-body") OrElse
-                   n.type_name.Equals("function"),
-                   n.type_name)
-        End Sub
-
-        Private Shared Function is_struct_body(ByVal n As typed_node) As Boolean
-            ensure_subnode_type(n)
-            Return n.type_name.Equals("struct-body")
-        End Function
-
-        Private Shared Function is_function(ByVal n As typed_node) As Boolean
-            ensure_subnode_type(n)
-            Return n.type_name.Equals("function")
-        End Function
 
         Protected Overrides Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
             Dim o As New StringBuilder()
@@ -43,28 +30,51 @@ Partial Public NotInheritable Class b2style
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             Dim class_name As String = n.child(1).input()
-            If Not scope.current().classes().define(class_name, New class_def(class_name)) Then
+            Dim cd As New class_def(class_name)
+            bstyle.struct.parse_struct_body(n).foreach(AddressOf cd.with_var)
+            Dim classes As scope.class_proxy = scope.current().classes()
+            If n.child(2).type_name.Equals("class-inheritance") AndAlso
+               Not l.of_all_children(n.child(2)).
+                     dump().
+                     stream().
+                     with_index().
+                     map(Function(ByVal t As tuple(Of UInt32, String)) As Boolean
+                             If t.first() = 0 Then
+                                 ' Ignore the "colon"
+                                 ' TODO: Find a better solution.
+                                 Return True
+                             End If
+                             Dim bcd As class_def = Nothing
+                             If Not classes.resolve(t.second(), bcd) Then
+                                 Return False
+                             End If
+                             cd.append(bcd).
+                                with_var(bstyle.struct.create_id(t.second()))
+                             Return True
+                         End Function).
+                     aggregate(bool_stream.aggregators.all_true) Then
+                Return False
+            End If
+            If Not scope.current().classes().define(class_name, cd) Then
                 Return False
             End If
             ' Append struct-body back into the structure.
             o.Append("struct ").
               Append(class_name).
               Append("{")
-            n.children_of("class-body").
-              stream().
-              map(AddressOf typed_node.child).
-              filter(AddressOf is_struct_body).
-              foreach(Sub(ByVal node As typed_node)
-                          o.Append(node.input())
-                      End Sub)
+            cd.vars().
+               foreach(Sub(ByVal var As builders.parameter)
+                           o.Append(var.type).
+                             Append(" ").
+                             Append(var.name).
+                             Append(";")
+                       End Sub)
             o.Append("};")
             ' Append functions after the structure.
             Dim has_constructor As Boolean = False
             Dim has_destructor As Boolean = False
-            n.children_of("class-body").
+            n.children_of("function").
               stream().
-              map(AddressOf typed_node.child).
-              filter(AddressOf is_function).
               foreach(Sub(ByVal node As typed_node)
                           assert(Not node Is Nothing)
                           assert(node.child_count() = 5 OrElse node.child_count() = 6)

@@ -180,6 +180,27 @@ Partial Public NotInheritable Class bstyle
             Return builders.parameter.no_ref(name + "__struct__type__id__type", name + "__struct__type__id")
         End Function
 
+        Public Shared Function parse_struct_body(ByVal n As typed_node) As stream(Of builders.parameter)
+            Return n.children_of("struct-body").
+                     stream().
+                     filter(Function(ByVal c As typed_node) As Boolean
+                                assert(Not c Is Nothing)
+                                assert(c.child_count() <= 2)
+                                Return c.child_count() = 2
+                            End Function).
+                     map(Function(ByVal c As typed_node) As typed_node
+                             Return c.child(0)
+                         End Function).
+                     map(Function(ByVal c As typed_node) As builders.parameter
+                             ' TODO: Support value_definition.str_bytes_val
+                             assert(Not c Is Nothing)
+                             assert(c.type_name.Equals("value-declaration"))
+                             assert(c.child_count() = 2)
+                             Return builders.parameter.no_ref(c.child(0).input_without_ignored(),
+                                                              c.child(1).input_without_ignored())
+                         End Function)
+        End Function
+
         Public Function build(ByVal n As typed_node,
                               ByVal o As writer) As Boolean Implements code_gen(Of writer).build
             assert(Not n Is Nothing)
@@ -187,32 +208,11 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() >= 5)
             Dim id As builders.parameter = create_id(n.child(1).word().str())
             assert(builders.of_type(id.type, uint32_1).to(o))
-            Return scope.current().
-                         structs().
-                         define(n.child(1).word().str(),
-                                streams.range_closed(CUInt(3), n.child_count() - CUInt(3)).
-                                        map(Function(ByVal index As Int32) As typed_node
-                                                Return n.child(CUInt(index))
-                                            End Function).
-                                        filter(Function(ByVal c As typed_node) As Boolean
-                                                   assert(Not c Is Nothing)
-                                                   assert(c.type_name.Equals("struct-body"))
-                                                   assert(c.child_count() <= 2)
-                                                   Return c.child_count() = 2
-                                               End Function).
-                                        map(Function(ByVal c As typed_node) As typed_node
-                                                Return c.child(0)
-                                            End Function).
-                                        map(Function(ByVal c As typed_node) As builders.parameter
-                                                ' TODO: Support value_definition.str_bytes_val
-                                                assert(Not c Is Nothing)
-                                                assert(c.type_name.Equals("value-declaration"))
-                                                assert(c.child_count() = 2)
-                                                Return struct_def.nested(c.child(0).input_without_ignored(),
-                                                                         c.child(1).input_without_ignored())
-                                            End Function).
-                                        concat(id).
-                                        collect(Of vector(Of builders.parameter))())
+            Return scope.current().structs().define(
+                       n.child(1).word().str(),
+                       parse_struct_body(n).map(AddressOf struct_def.nested).
+                                            collect(Of vector(Of builders.parameter))() +
+                                            id)
         End Function
     End Class
 End Class

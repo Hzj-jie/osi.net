@@ -10,7 +10,6 @@ Imports osi.service.compiler.logic
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class struct_def
         Private ReadOnly _nesteds As vector(Of builders.parameter)
-        ' TODO: Make primitives private.
         Private ReadOnly _primitives As vector(Of builders.parameter)
 
         Public Sub New()
@@ -62,6 +61,12 @@ Partial Public NotInheritable Class bstyle
         ' It can be a struct or just a primitive.
         Public Shared Function nested(ByVal type As String, ByVal name As String) As builders.parameter
             Return builders.parameter.no_ref(scope.current().type_alias()(type), name)
+        End Function
+
+        Public Shared Function nested(ByVal p As builders.parameter) As builders.parameter
+            assert(Not p Is Nothing)
+            assert(Not p.ref)
+            Return nested(p.type, p.name)
         End Function
 
         ' It must be a primitive.

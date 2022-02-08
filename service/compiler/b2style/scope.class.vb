@@ -14,6 +14,9 @@ Partial Public NotInheritable Class b2style
 
             Public Function define(ByVal name As name_with_namespace, ByVal def As class_def) As Boolean
                 assert(Not def Is Nothing)
+                If Not def.check_duplications() Then
+                    Return False
+                End If
                 If m.emplace(name, def).second() Then
                     Return True
                 End If
