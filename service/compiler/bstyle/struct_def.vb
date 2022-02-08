@@ -63,6 +63,12 @@ Partial Public NotInheritable Class bstyle
             Return builders.parameter.no_ref(scope.current().type_alias()(type), name)
         End Function
 
+        Public Shared Function nested(ByVal p As builders.parameter) As builders.parameter
+            assert(Not p Is Nothing)
+            assert(Not p.ref)
+            Return nested(p.type, p.name)
+        End Function
+
         ' It must be a primitive.
         Public Function with_primitive(ByVal type As String, ByVal name As String) As struct_def
             Dim r As builders.parameter = nested(type, name)

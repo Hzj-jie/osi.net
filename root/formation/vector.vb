@@ -316,6 +316,13 @@ Public NotInheritable Class vector(Of T)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Operator +(ByVal this As vector(Of T), ByVal that As T) As vector(Of T)
+        assert(Not this Is Nothing)
+        this.push_back(that)
+        Return this
+    End Operator
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub replace(ByVal i As UInt32, ByVal value As T)
         assert(i < size())
         If object_compare(v.get(i), value) <> 0 Then

@@ -71,7 +71,7 @@ Partial Public NotInheritable Class b2style
                            with(Of heap_struct_function_call)().
                            with(include_with_string.instance).
                            with(include_with_file.instance).
-                           with(_class.instance).
+                           with(Of _class)().
                            with(Of template).
                            with(Of template_type_name).
                            with(Of function_call_with_template).
@@ -79,6 +79,7 @@ Partial Public NotInheritable Class b2style
                            with(name.of("raw-type-name")).
                            with(Of _function)().
                            with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).
+                           with(code_gen.of_first_child(Of typed_node_writer)("type-name-with-comma")).
                            with(code_gen.of_only_descendant_str(Of typed_node_writer)("type-param")).
                            with(code_gen.of_only_descendant_str(Of typed_node_writer)("reference")).
                            with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
@@ -93,6 +94,7 @@ Partial Public NotInheritable Class b2style
                            with(define.instance).
                            with(Of paramtype_with_comma)().
                            with(Of class_initializer)().
+                           with(code_gen.of_ignore(Of typed_node_writer)("colon")).
                            with_of_only_childs(
                                "base-root-type",
                                "root-type",
