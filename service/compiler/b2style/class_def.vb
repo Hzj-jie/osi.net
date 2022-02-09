@@ -47,6 +47,7 @@ Partial Public NotInheritable Class b2style
                                  assert(t.second() <= 2 AndAlso t.second() > 0)
                                  Return t.second() > 1
                              End Function).
+                      map(AddressOf tuple.to_first_const_pair).
                       collect(Of unordered_map(Of String, UInt32))()
             If Not c.empty() Then
                 raise_error(error_type.user, "Duplicate variable in ", name, ": ", c)

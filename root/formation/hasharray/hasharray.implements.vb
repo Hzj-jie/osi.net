@@ -12,7 +12,11 @@ Partial Public Class hasharray(Of T,
                                   _UNIQUE As _boolean,
                                   _HASHER As _to_uint32(Of T),
                                   _EQUALER As _equaler(Of T))
-    Implements ICloneable, ICloneable(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER))
+    Implements ICloneable,
+               ICloneable(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)),
+               IComparable,
+               IComparable(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)),
+               IEquatable(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER))
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
@@ -57,5 +61,48 @@ Partial Public Class hasharray(Of T,
         _swap.swap(this.s, that.s)
         _swap.swap(this.c, that.c)
         Return True
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Overrides Function ToString() As String
+        Return v.ToString()
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function from_obj_or_null(ByVal obj As Object) As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)
+        Return direct_cast(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER))(obj, False)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Overrides Function Equals(ByVal other As Object) As Boolean
+        Return Equals(from_obj_or_null(other))
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Overrides Function GetHashCode() As Int32
+        Return v.GetHashCode()
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Overloads Function Equals(ByVal other As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)) As Boolean _
+                                    Implements IEquatable(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)).Equals
+        If other Is Nothing Then
+            Return False
+        End If
+        Return v.Equals(other.v)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+        Return CompareTo(from_obj_or_null(obj))
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function CompareTo(ByVal other As hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)) As Int32 _
+                             Implements IComparable(Of hasharray(Of T, _UNIQUE, _HASHER, _EQUALER)).CompareTo
+        If other Is Nothing Then
+            Return 1
+        End If
+        Return v.CompareTo(other.v)
     End Function
 End Class

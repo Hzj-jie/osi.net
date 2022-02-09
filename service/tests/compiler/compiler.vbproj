@@ -126,6 +126,7 @@
     <Content Include="b2style\codegen\errors\undefined-value-clause.txt" />
     <Content Include="b2style\codegen\function_ptr.txt" />
     <Content Include="b2style\codegen\test_assert.txt" />
+    <Content Include="b2style\self-compile-error-test\duplicate-var-name-in-inherited-class.txt" />
     <Content Include="b2style\self-test\class-inheritance-base-variables.txt" />
     <Content Include="b2style\self-test\class-inheritance-compile-only.txt" />
     <Content Include="b2style\self-test\class-inheritance-template-variables.txt" />

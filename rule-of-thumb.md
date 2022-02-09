@@ -35,3 +35,6 @@ Rule of Thumb
 
 1. Do not use empty init() function to trigger shared ctor, it won't cover
    shared variable, see shared\_ctor\_behavior\_test and BeforeFieldInit.
+
+1. Do not use Convert.ToString against enum types, it returns integers rather
+   than the meaningful tag names.

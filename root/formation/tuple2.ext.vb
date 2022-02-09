@@ -4,8 +4,13 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.root.template
+
+Partial Public NotInheritable Class tuple
+    Public Shared Function to_first_const_pair(Of T1, T2)(ByVal this As tuple(Of T1, T2)) As first_const_pair(Of T1, T2)
+        Return this.to_first_const_pair()
+    End Function
+End Class
 
 Partial Public Structure tuple(Of T1, T2)
     Public Function first() As T1
