@@ -10,13 +10,8 @@ Imports osi.root.constants
 Public NotInheritable Class waitable_##TYPE##(Of T)
     Implements IDisposable
 
-    Private ReadOnly q As ##TYPE##(Of T)
-    Private ReadOnly are As AutoResetEvent
-
-    Public Sub New()
-        q = New ##TYPE##(Of T)()
-        are = New AutoResetEvent(False)
-    End Sub
+    Private ReadOnly q As New ##TYPE##(Of T)()
+    Private ReadOnly are As New AutoResetEvent(False)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub push(ByVal v As T)

@@ -18,13 +18,8 @@ Imports osi.root.constants
 Public NotInheritable Class waitable_slimqless2(Of T)
     Implements IDisposable
 
-    Private ReadOnly q As slimqless2(Of T)
-    Private ReadOnly are As AutoResetEvent
-
-    Public Sub New()
-        q = New slimqless2(Of T)()
-        are = New AutoResetEvent(False)
-    End Sub
+    Private ReadOnly q As New slimqless2(Of T)()
+    Private ReadOnly are As New AutoResetEvent(False)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub push(ByVal v As T)

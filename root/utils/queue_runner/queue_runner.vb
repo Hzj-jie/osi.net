@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
@@ -38,12 +39,14 @@ Partial Public NotInheritable Class queue_runner
                         max(1, Environment.ProcessorCount() >> 4)))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub trigger()
         If Not are Is Nothing Then
             are.Set()
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub check_push(ByVal e As Func(Of Boolean))
         assert(Not e Is Nothing)
         If do_(e, False) Then
@@ -51,6 +54,7 @@ Partial Public NotInheritable Class queue_runner
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub start()
         For i As UInt32 = 0 To thread_count - uint32_1
             Dim id As UInt32 = i
@@ -86,10 +90,12 @@ Partial Public NotInheritable Class queue_runner
         Next
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function running_in_current_thread() As Boolean
         Return current_thread
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function push(ByVal p As Action(Of Func(Of Boolean)), ByVal d As Func(Of Boolean)) As Boolean
         assert(Not p Is Nothing)
         If d Is Nothing Then
@@ -99,14 +105,17 @@ Partial Public NotInheritable Class queue_runner
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function push(ByVal d As Func(Of Boolean)) As Boolean
         Return push(AddressOf check_push, d)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function push_only(ByVal d As Func(Of Boolean)) As Boolean
         Return push(AddressOf q.emplace, d)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function size() As UInt32
         Return q.size()
     End Function

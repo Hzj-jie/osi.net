@@ -24,13 +24,8 @@ Imports osi.root.constants
 Public NotInheritable Class waitable_slimheapless(Of T)
     Implements IDisposable
 
-    Private ReadOnly q As slimheapless(Of T)
-    Private ReadOnly are As AutoResetEvent
-
-    Public Sub New()
-        q = New slimheapless(Of T)()
-        are = New AutoResetEvent(False)
-    End Sub
+    Private ReadOnly q As New slimheapless(Of T)()
+    Private ReadOnly are As New AutoResetEvent(False)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub push(ByVal v As T)
