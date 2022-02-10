@@ -16,7 +16,7 @@ Partial Public NotInheritable Class queue_runner
     Private Shared ReadOnly LENGTH As Int64 = counter.register_average_and_last_average("QUEUE_RUNNER_LENGTH")
     Private Shared ReadOnly INTERVAL As Int64 = counter.register_average_and_last_average("QUEUE_RUNNER_INTERVAL_TICKS")
     Private Shared ReadOnly USED As Int64 = counter.register_average_and_last_average("QUEUE_RUNNER_USED_TICKS")
-    Private Shared ReadOnly q As qless2(Of Func(Of Boolean)) = New qless2(Of Func(Of Boolean))()
+    Private Shared ReadOnly q As New qless2(Of Func(Of Boolean))()
     Private Shared ReadOnly are As AutoResetEvent = If(busy_wait, Nothing, New AutoResetEvent(False))
     <ThreadStatic()> Private Shared current_thread As Boolean
 
@@ -35,7 +35,7 @@ Partial Public NotInheritable Class queue_runner
                queue_runner_thread_count = npos)
         Return CUInt(If(queue_runner_thread_count <> npos,
                         queue_runner_thread_count,
-                        max(1, Environment.ProcessorCount() >> 2)))
+                        max(1, Environment.ProcessorCount() >> 4)))
     End Function
 
     Public Shared Sub trigger()

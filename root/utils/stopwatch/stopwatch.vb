@@ -6,9 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 
-Partial Public Class stopwatch
-    Private Shared ReadOnly DELAY As Int64 = counter.register_average_and_last_average("STOPWATCH_DELAY_MS")
-
+Partial Public NotInheritable Class stopwatch
     Private Shared Function push(ByVal p As Func(Of Func(Of Boolean), Boolean), ByVal e As [event]) As Boolean
         assert(Not p Is Nothing)
         If e Is Nothing OrElse e.canceled() Then
