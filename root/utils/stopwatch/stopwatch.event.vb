@@ -6,9 +6,9 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 
-Partial Public Class stopwatch
-    Public Class [event]
-        Private ReadOnly waitms As uint32
+Partial Public NotInheritable Class stopwatch
+    Public NotInheritable Class [event]
+        Private ReadOnly waitms As UInt32
         Private ReadOnly d As Action
         Private _canceled As Boolean
         Private ms As Int64
