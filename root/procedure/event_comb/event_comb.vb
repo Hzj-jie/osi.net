@@ -37,6 +37,7 @@ Partial Public Class event_comb
     Private _l As lock_t
 #End If
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Property current() As event_comb
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
