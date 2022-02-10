@@ -47,14 +47,8 @@ Public NotInheritable Class slimqless2(Of T)
         Public vs As value_status
     End Class
 
-    Private ReadOnly f As node
-    Private e As node
-
-    Public Sub New()
-        f = New node()
-        e = New node()
-        f.next = e
-    End Sub
+    Private e As New node()
+    Private ReadOnly f As New node() With {.[next] = e}
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub clear()
@@ -90,11 +84,9 @@ Public NotInheritable Class slimqless2(Of T)
     End Sub
 
     Public Sub emplace(ByVal v As T)
-        Dim ne As node = Nothing
-        ne = New node()
+        Dim ne As New node()
         wait_mark_writting()
-        Dim n As node = Nothing
-        n = e
+        Dim n As node = e
         atomic.eva(n.next, ne)
         atomic.eva(e, ne)
         n.v = v
@@ -125,8 +117,7 @@ Public NotInheritable Class slimqless2(Of T)
     End Sub
 
     Public Function pop(ByRef o As T) As Boolean
-        Dim nf As node = Nothing
-        nf = f.next
+        Dim nf As node = f.next
         While True
             assert(Not nf Is Nothing)
             If nf Is e Then
@@ -154,8 +145,7 @@ Public NotInheritable Class slimqless2(Of T)
     End Function
 
     Public Function pick(ByRef o As T) As Boolean
-        Dim nf As node = Nothing
-        nf = f.next
+        Dim nf As node = f.next
         If nf Is e Then
             Return False
         End If
