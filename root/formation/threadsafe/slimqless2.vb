@@ -107,7 +107,7 @@ Public NotInheritable Class slimqless2(Of T)
                 Return False
             End If
             assert(Not nf.next Is Nothing)
-            If Interlocked.CompareExchange(f.next, nf.next, nf) Is nf Then
+            If atomic.compare_exchange(f.next, nf.next, nf) Then
                 assert(nf.vs.not_no_value())
                 wait_when(wait_written_d.instance, nf.vs)
                 o = nf.v

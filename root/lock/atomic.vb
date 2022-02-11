@@ -174,6 +174,15 @@ Public NotInheritable Class atomic
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Function compare_exchange(Of T As Class)(ByRef i As T, ByVal v As T, ByVal cmp As T) As Boolean
+        Thread.MemoryBarrier()
+        If Object.ReferenceEquals(i, cmp) Then
+            Return Object.ReferenceEquals(Interlocked.CompareExchange(i, v, cmp), cmp)
+        End If
+        Return False
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function clear_if_not_nothing(Of T As Class)(ByRef i As T, Optional ByRef o As T = Nothing) As Boolean
         If i Is Nothing Then
             Return False
