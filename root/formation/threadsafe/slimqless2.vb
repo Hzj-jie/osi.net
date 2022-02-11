@@ -100,8 +100,8 @@ Public NotInheritable Class slimqless2(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function pop(ByRef o As T) As Boolean
-        Dim nf As node = f.next
         While True
+            Dim nf As node = f.next
             assert(Not nf Is Nothing)
             If nf Is e Then
                 Return False
@@ -113,7 +113,6 @@ Public NotInheritable Class slimqless2(Of T)
                 o = nf.v
                 Return True
             End If
-            nf = f.next
         End While
         Return assert(False)
     End Function
