@@ -98,16 +98,30 @@ Public Module spinwait
         End If
     End Sub
 
+    Private Structure ifunc_delegate(Of T)
+        Implements ifunc(Of T, Boolean)
+
+        Private ReadOnly f As _do(Of T, Boolean)
+
+        Public Sub New(ByVal f As _do(Of T, Boolean))
+            assert(Not f Is Nothing)
+            Me.f = f
+        End Sub
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function run(ByRef i As T) As Boolean Implements ifunc(Of T, Boolean).run
+            Return f(i)
+        End Function
+    End Structure
+
+    ' Use structure and stack allocation to ensure the performance. 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub wait_when(Of T)(ByVal d As _do(Of T, Boolean), ByRef o As T)
+    Public Sub wait_when(Of T, DT As {ifunc(Of T, Boolean), Structure})(ByVal f As DT, ByRef o As T)
         If should_yield() Then
-            lazy_wait_when(d, o)
+            lazy_wait_when(f, o)
         Else
-#If DEBUG Then
-            assert(Not d Is Nothing)
-#End If
             Dim i As Int32 = 0
-            While d(o)
+            While f.run(o)
                 i += 1
                 If i > loops_per_yield Then
                     If force_yield() Then
@@ -121,13 +135,21 @@ Public Module spinwait
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub lazy_wait_when(Of T)(ByVal d As _do(Of T, Boolean), ByRef o As T)
-#If DEBUG Then
-        assert(Not d Is Nothing)
-#End If
-        While d(o)
+    Public Sub wait_when(Of T)(ByVal d As _do(Of T, Boolean), ByRef o As T)
+        wait_when(New ifunc_delegate(Of T)(d), o)
+    End Sub
+
+    ' Use structure and stack allocation to ensure the performance. 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Sub lazy_wait_when(Of T, DT As {ifunc(Of T, Boolean), Structure})(ByVal f As DT, ByRef o As T)
+        While f.run(o)
             force_yield()
         End While
+    End Sub
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Sub lazy_wait_when(Of T)(ByVal d As _do(Of T, Boolean), ByRef o As T)
+        lazy_wait_when(New ifunc_delegate(Of T)(d), o)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

@@ -7,7 +7,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.envs
+Imports osi.root.delegates
 Imports osi.root.lock
 
 Public NotInheritable Class slimqless2(Of T)
@@ -56,36 +56,26 @@ Public NotInheritable Class slimqless2(Of T)
         End While
     End Sub
 
-    Private Sub wait_mark_writting()
-        'wait_when(Function() Not e.vs.mark_value_writting())
-        'almost copy from spinwait, since it will give a better performance
-        If should_yield() Then
-            While Not e.vs.mark_value_writting()
-                yield()
-            End While
-        Else
-            Dim i As Int32 = 0
-            While Not e.vs.mark_value_writting()
-                i += 1
-                If i > loops_per_yield Then
-                    If yield() Then
-                        i = 0
-                    Else
-                        i = loops_per_yield
-                    End If
-                End If
-            End While
-        End If
-    End Sub
-
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub push(ByVal v As T)
         emplace(copy_no_error(v))
     End Sub
 
+    Private Structure mark_value_writting_d
+        Implements ifunc(Of node, Boolean)
+
+        Public Function run(ByRef e As node) As Boolean Implements ifunc(Of node, Boolean).run
+#If DEBUG Then
+            assert(Not e Is Nothing)
+#End If
+            Return Not e.vs.mark_value_writting()
+        End Function
+    End Structure
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub emplace(ByVal v As T)
         Dim ne As New node()
-        wait_mark_writting()
+        wait_when(New mark_value_writting_d(), e)
         Dim n As node = e
         atomic.eva(n.next, ne)
         atomic.eva(e, ne)
@@ -93,29 +83,21 @@ Public NotInheritable Class slimqless2(Of T)
         n.vs.mark_value_written()
     End Sub
 
+    Private Structure wait_written_d
+        Implements ifunc(Of node, Boolean)
+
+        Public Function run(ByRef n As node) As Boolean Implements ifunc(Of node, Boolean).run
+            Return Not n.vs.value_written()
+        End Function
+    End Structure
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub wait_written(ByVal nf As node)
         assert(Not nf Is Nothing)
-        'wait_when(Function() Not nf.vs.value_written())
-        'almost copy from spinwait, since it will give a better performance
-        If should_yield() Then
-            While Not nf.vs.value_written()
-                yield()
-            End While
-        Else
-            Dim i As Int32 = 0
-            While Not nf.vs.value_written()
-                i += 1
-                If i > loops_per_yield Then
-                    If yield() Then
-                        i = 0
-                    Else
-                        i = loops_per_yield
-                    End If
-                End If
-            End While
-        End If
+        wait_when(New wait_written_d(), nf)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function pop(ByRef o As T) As Boolean
         Dim nf As node = f.next
         While True
@@ -144,6 +126,7 @@ Public NotInheritable Class slimqless2(Of T)
         Return Nothing
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function pick(ByRef o As T) As Boolean
         Dim nf As node = f.next
         If nf Is e Then
