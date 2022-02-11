@@ -93,7 +93,7 @@ Public NotInheritable Class slimqless2(Of T)
         n.vs.mark_value_written()
     End Sub
 
-    Private Sub wait_written(ByVal nf As node)
+    Private Shared Sub wait_written(ByVal nf As node)
         assert(Not nf Is Nothing)
         'wait_when(Function() Not nf.vs.value_written())
         'almost copy from spinwait, since it will give a better performance
