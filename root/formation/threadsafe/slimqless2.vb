@@ -66,6 +66,7 @@ Public NotInheritable Class slimqless2(Of T)
 
         Public Shared ReadOnly instance As New mark_value_writting_d()
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function run(ByRef e As slimqless2(Of T)) As Boolean Implements ifunc(Of slimqless2(Of T), Boolean).run
 #If DEBUG Then
             assert(Not e Is Nothing)
@@ -91,16 +92,11 @@ Public NotInheritable Class slimqless2(Of T)
 
         Public Shared ReadOnly instance As New wait_written_d()
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function run(ByRef n As value_status) As Boolean Implements ifunc(Of value_status, Boolean).run
             Return Not n.value_written()
         End Function
     End Structure
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Shared Sub wait_written(ByVal nf As node)
-        assert(Not nf Is Nothing)
-        wait_when(wait_written_d.instance, nf.vs)
-    End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function pop(ByRef o As T) As Boolean
@@ -113,7 +109,7 @@ Public NotInheritable Class slimqless2(Of T)
             assert(Not nf.next Is Nothing)
             If Interlocked.CompareExchange(f.next, nf.next, nf) Is nf Then
                 assert(nf.vs.not_no_value())
-                wait_written(nf)
+                wait_when(wait_written_d.instance, nf.vs)
                 o = nf.v
                 Return True
             End If
@@ -137,7 +133,7 @@ Public NotInheritable Class slimqless2(Of T)
         If nf Is e Then
             Return False
         End If
-        wait_written(nf)
+        wait_when(wait_written_d.instance, nf.vs)
         o = nf.v
         Return True
     End Function
