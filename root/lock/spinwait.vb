@@ -47,8 +47,7 @@ Public Module spinwait
         If Not force AndAlso Not should_yield() Then
             Return False
         End If
-        Dim start_ms As Int64 = 0
-        start_ms = environment_milliseconds()
+        Dim start_ms As Int64 = environment_milliseconds()
         If mono Then
             sleep(1)
         Else
@@ -70,10 +69,8 @@ Public Module spinwait
         End If
         wait_rounds = 0
         yield_times = 0
-        Dim startMs As Int64 = 0
-        startMs = environment_milliseconds()
-        Dim rtn As Boolean = False
-        rtn = d()
+        Dim startMs As Int64 = environment_milliseconds()
+        Dim rtn As Boolean = d()
         While (environment_milliseconds() - startMs) < ms AndAlso rtn
             If not_force_yield() Then
                 yield_times.self_unchecked_inc()
