@@ -10,6 +10,7 @@ Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.envs
 #Const USE_MEASURE_YIELD_WAIT = False
+#Const USE_BUILT_IN_YIELD = True
 
 Public Module spinwait
     <global_init(global_init_level.runtime_checkers)>
@@ -47,6 +48,9 @@ Public Module spinwait
         If Not force AndAlso Not should_yield() Then
             Return False
         End If
+#If USE_BUILT_IN_YIELD Then
+        Return Thread.Yield()
+#Else
         Dim start_ms As Int64 = environment_milliseconds()
         If mono Then
             sleep(1)
@@ -54,6 +58,7 @@ Public Module spinwait
             sleep(0)
         End If
         Return (environment_milliseconds() - start_ms) >= 8 * timeslice_length_ms
+#End If
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
