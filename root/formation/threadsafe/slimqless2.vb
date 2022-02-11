@@ -61,22 +61,24 @@ Public NotInheritable Class slimqless2(Of T)
         emplace(copy_no_error(v))
     End Sub
 
-    ' TODO: Why using value_status does not work?
     Private Structure mark_value_writting_d
-        Implements ifunc(Of node, Boolean)
+        Implements ifunc(Of slimqless2(Of T), Boolean)
 
-        Public Function run(ByRef e As node) As Boolean Implements ifunc(Of node, Boolean).run
+        Public Shared ReadOnly instance As New mark_value_writting_d()
+
+        Public Function run(ByRef e As slimqless2(Of T)) As Boolean Implements ifunc(Of slimqless2(Of T), Boolean).run
 #If DEBUG Then
             assert(Not e Is Nothing)
+            assert(Not e.e Is Nothing)
 #End If
-            Return Not e.vs.mark_value_writting()
+            Return Not e.e.vs.mark_value_writting()
         End Function
     End Structure
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub emplace(ByVal v As T)
         Dim ne As New node()
-        wait_when(New mark_value_writting_d(), e)
+        wait_when(mark_value_writting_d.instance, Me)
         Dim n As node = e
         atomic.eva(n.next, ne)
         atomic.eva(e, ne)
@@ -85,20 +87,19 @@ Public NotInheritable Class slimqless2(Of T)
     End Sub
 
     Private Structure wait_written_d
-        Implements ifunc(Of node, Boolean)
+        Implements ifunc(Of value_status, Boolean)
 
-        Public Function run(ByRef n As node) As Boolean Implements ifunc(Of node, Boolean).run
-#If DEBUG Then
-            assert(Not n Is Nothing)
-#End If
-            Return Not n.vs.value_written()
+        Public Shared ReadOnly instance As New wait_written_d()
+
+        Public Function run(ByRef n As value_status) As Boolean Implements ifunc(Of value_status, Boolean).run
+            Return Not n.value_written()
         End Function
     End Structure
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub wait_written(ByVal nf As node)
         assert(Not nf Is Nothing)
-        wait_when(New wait_written_d(), nf)
+        wait_when(wait_written_d.instance, nf.vs)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

@@ -116,7 +116,7 @@ Public Module spinwait
 
     ' Use structure and stack allocation to ensure the performance. 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub wait_when(Of T, DT As {ifunc(Of T, Boolean), Structure})(ByVal f As DT, ByRef o As T)
+    Public Sub wait_when(Of T, DT As {ifunc(Of T, Boolean), Structure})(ByRef f As DT, ByRef o As T)
         If should_yield() Then
             lazy_wait_when(f, o)
         Else
@@ -141,7 +141,7 @@ Public Module spinwait
 
     ' Use structure and stack allocation to ensure the performance. 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub lazy_wait_when(Of T, DT As {ifunc(Of T, Boolean), Structure})(ByVal f As DT, ByRef o As T)
+    Public Sub lazy_wait_when(Of T, DT As {ifunc(Of T, Boolean), Structure})(ByRef f As DT, ByRef o As T)
         While f.run(o)
             force_yield()
         End While
