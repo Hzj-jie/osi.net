@@ -61,6 +61,7 @@ Public NotInheritable Class slimqless2(Of T)
         emplace(copy_no_error(v))
     End Sub
 
+    ' TODO: Why using value_status does not work?
     Private Structure mark_value_writting_d
         Implements ifunc(Of node, Boolean)
 
@@ -87,6 +88,9 @@ Public NotInheritable Class slimqless2(Of T)
         Implements ifunc(Of node, Boolean)
 
         Public Function run(ByRef n As node) As Boolean Implements ifunc(Of node, Boolean).run
+#If DEBUG Then
+            assert(Not n Is Nothing)
+#End If
             Return Not n.vs.value_written()
         End Function
     End Structure
