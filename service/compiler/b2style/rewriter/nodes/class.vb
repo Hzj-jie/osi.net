@@ -34,16 +34,11 @@ Partial Public NotInheritable Class b2style
             bstyle.struct.parse_struct_body(n).foreach(AddressOf cd.with_var)
             Dim classes As scope.class_proxy = scope.current().classes()
             If n.child(2).type_name.Equals("class-inheritance") AndAlso
-               Not l.of_all_children(n.child(2)).
+               Not l.of_all_children(n.child(2).child(1)).
                      dump().
                      stream().
                      with_index().
                      map(Function(ByVal t As tuple(Of UInt32, String)) As Boolean
-                             If t.first() = 0 Then
-                                 ' Ignore the "colon"
-                                 ' TODO: Find a better solution.
-                                 Return True
-                             End If
                              Dim bcd As class_def = Nothing
                              If Not classes.resolve(t.second(), bcd) Then
                                  Return False
