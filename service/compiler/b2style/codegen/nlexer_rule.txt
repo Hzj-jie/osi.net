@@ -4,6 +4,8 @@ INCLUDE ../shared/nlexer_rule.txt
 kw-namespace namespace
 kw-class class
 kw-template template
+kw-overridable overridable
+kw-override override
 
 # Comparison
 less-or-equal <=

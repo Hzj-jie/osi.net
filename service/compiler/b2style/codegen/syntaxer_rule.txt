@@ -46,7 +46,9 @@ heap-struct-function-call heap-struct-name start-bracket [value-list]? end-brack
 # TODO: Support static function
 type-name-with-comma type-name comma
 class-inheritance colon [type-name-with-comma]* type-name
-class kw-class type-name [class-inheritance]? start-paragraph [struct-body, function]* end-paragraph semi-colon
+virtual-function kw-overridable function
+override-function kw-override function
+class kw-class type-name [class-inheritance]? start-paragraph [struct-body, virtual-function, override-function, function]* end-paragraph semi-colon
 
 template-type-name raw-type-name less-than paramtypelist greater-than
 type-param-list [type-param-with-comma]* type-param
