@@ -43,7 +43,7 @@ Partial Public NotInheritable Class b2style
                              If Not classes.resolve(t.second(), bcd) Then
                                  Return False
                              End If
-                             cd.append(bcd).
+                             cd.inherit_from(bcd).
                                 with_var(bstyle.struct.create_id(t.second()))
                              Return True
                          End Function).
@@ -68,8 +68,17 @@ Partial Public NotInheritable Class b2style
             ' Append functions after the structure.
             Dim has_constructor As Boolean = False
             Dim has_destructor As Boolean = False
-            n.children_of("function").
+            n.children_of("class-function").
               stream().
+              map(Function(ByVal node As typed_node) As typed_node
+                      assert(Not node Is Nothing)
+                      node = node.child()
+                      If node.type_name.Equals("virtual-function") OrElse
+                         node.type_name.Equals("override-function") Then
+                          Return node.child(1)
+                      End If
+                      Return node
+                  End Function).
               foreach(Sub(ByVal node As typed_node)
                           assert(Not node Is Nothing)
                           assert(node.child_count() = 5 OrElse node.child_count() = 6)

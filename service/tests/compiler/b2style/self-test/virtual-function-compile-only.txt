@@ -14,10 +14,8 @@ void main() {
   C c;
   D d;
 
-  /* Need support in class.
   c.f();
   d.f();
-  */
 
   b2style::testing::finished();
 }

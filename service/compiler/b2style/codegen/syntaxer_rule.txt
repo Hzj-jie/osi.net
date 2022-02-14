@@ -49,7 +49,8 @@ inherited-types [type-name-with-comma]* type-name
 class-inheritance colon inherited-types
 virtual-function kw-overridable function
 override-function kw-override function
-class kw-class type-name [class-inheritance]? start-paragraph [struct-body, virtual-function, override-function, function]* end-paragraph semi-colon
+class-function [virtual-function, override-function, function]
+class kw-class type-name [class-inheritance]? start-paragraph [struct-body, class-function]* end-paragraph semi-colon
 
 template-type-name raw-type-name less-than paramtypelist greater-than
 type-param-list [type-param-with-comma]* type-param
