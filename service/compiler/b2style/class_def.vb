@@ -87,7 +87,44 @@ Partial Public NotInheritable Class b2style
                           o.Append(")").
                             Append(node.last_child().input()).
                             AppendLine() ' beautiful output.
+                          Dim signature As New vector(Of name_with_namespace)()
+                          signature.emplace_back(name_with_namespace.of(node.child(0).input_without_ignored()))
+                          signature.emplace_back(name_with_namespace.of_global_namespace(node.child(1).input()))
+                          If node.child_count() = 6 Then
+                              For i As UInt32 = 0 To node.child(3).child_count() - uint32_1
+                                  Dim p As typed_node = node.child(3).child(i)
+                                  If i < node.child(3).child_count() - uint32_1 Then
+                                      p = p.child(0)
+                                  End If
+                                  assert(p.type_name.Equals("param"))
+                                  signature.emplace_back(name_with_namespace.of(p.child(0).input_without_ignored()))
+                              Next
+                          End If
+                          ' TODO: Support virtual and override functions.
+                          with_func(New function_def(signature, function_def.type_t.pure, o.ToString()))
                       End Sub)
+            If Not has_constructor Then
+                with_func(New function_def(vector.of(
+                                               name_with_namespace.of("void"),
+                                               name_with_namespace.of_global_namespace("construct")),
+                                           function_def.type_t.pure,
+                                           New StringBuilder().Append("void ").
+                                                               Append(_namespace.with_global_namespace("construct")).
+                                                               Append("(").
+                                                               Append(name.name()).
+                                                               Append("& this){}").ToString()))
+            End If
+            If Not has_destructor Then
+                with_func(New function_def(vector.of(
+                                               name_with_namespace.of("void"),
+                                               name_with_namespace.of_global_namespace("destruct")),
+                                           function_def.type_t.pure,
+                                           New StringBuilder().Append("void ").
+                                                               Append(_namespace.with_global_namespace("destruct")).
+                                                               Append("(").
+                                                               Append(name.name()).
+                                                               Append("& this){}").ToString()))
+            End If
             Return Me
         End Function
 
