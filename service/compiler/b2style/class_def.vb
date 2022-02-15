@@ -132,18 +132,17 @@ Partial Public NotInheritable Class b2style
 
         Private Function check_vars_duplicate() As Boolean
             Dim c As unordered_map(Of String, UInt32) =
-                _vars.stream().
-                      map(Function(ByVal p As builders.parameter) As String
-                              assert(Not p Is Nothing)
-                              Return p.name
-                          End Function).
-                      count().
-                      filter(Function(ByVal t As tuple(Of String, UInt32)) As Boolean
-                                 assert(t.second() <= 2 AndAlso t.second() > 0)
-                                 Return t.second() > 1
-                             End Function).
-                      map(AddressOf tuple.to_first_const_pair).
-                      collect(Of unordered_map(Of String, UInt32))()
+                vars().map(Function(ByVal p As builders.parameter) As String
+                               assert(Not p Is Nothing)
+                               Return p.name
+                           End Function).
+                       count().
+                       filter(Function(ByVal t As tuple(Of String, UInt32)) As Boolean
+                                  assert(t.second() <= 2 AndAlso t.second() > 0)
+                                  Return t.second() > 1
+                              End Function).
+                       map(AddressOf tuple.to_first_const_pair).
+                       collect(Of unordered_map(Of String, UInt32))()
             If Not c.empty() Then
                 raise_error(error_type.user, "Duplicate variable in ", name, ": ", c)
                 Return False
@@ -151,8 +150,28 @@ Partial Public NotInheritable Class b2style
             Return True
         End Function
 
+        Private Function check_funcs_duplicate() As Boolean
+            Dim c As unordered_map(Of vector(Of name_with_namespace), UInt32) =
+                funcs().map(Function(ByVal p As function_def) As vector(Of name_with_namespace)
+                                assert(Not p Is Nothing)
+                                Return p.signature
+                            End Function).
+                        count().
+                        filter(Function(ByVal t As tuple(Of vector(Of name_with_namespace), UInt32)) As Boolean
+                                   assert(t.second() <= 2 AndAlso t.second() > 0)
+                                   Return t.second() > 1
+                               End Function).
+                        map(AddressOf tuple.to_first_const_pair).
+                        collect(Of unordered_map(Of vector(Of name_with_namespace), UInt32))()
+            If Not c.empty() Then
+                raise_error(error_type.user, "Duplicate function in ", name, ": ", c)
+                Return False
+            End If
+            Return True
+        End Function
+
         Public Function check() As Boolean
-            Return check_vars_duplicate()
+            Return check_vars_duplicate() AndAlso check_funcs_duplicate()
         End Function
 
         Public NotInheritable Class function_def
