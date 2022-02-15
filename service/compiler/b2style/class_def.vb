@@ -54,16 +54,19 @@ Partial Public NotInheritable Class b2style
             Dim has_destructor As Boolean = False
             n.children_of("class-function").
               stream().
-              map(Function(ByVal node As typed_node) As typed_node
+              map(Function(ByVal node As typed_node) As tuple(Of typed_node, function_def.type_t)
                       assert(Not node Is Nothing)
                       node = node.child()
-                      If node.type_name.Equals("virtual-function") OrElse
-                         node.type_name.Equals("override-function") Then
-                          Return node.child(1)
+                      If node.type_name.Equals("virtual-function") Then
+                          Return tuple.of(node.child(1), function_def.type_t.virtual)
                       End If
-                      Return node
+                      If node.type_name.Equals("override-function") Then
+                          Return tuple.of(node.child(1), function_def.type_t.override)
+                      End If
+                      Return tuple.of(node, function_def.type_t.pure)
                   End Function).
-              foreach(Sub(ByVal node As typed_node)
+              foreach(Sub(ByVal t As tuple(Of typed_node, function_def.type_t))
+                          Dim node As typed_node = t.first()
                           assert(Not node Is Nothing)
                           assert(node.child_count() = 5 OrElse node.child_count() = 6)
                           If node.child(1).input().Equals("construct") Then
@@ -72,7 +75,7 @@ Partial Public NotInheritable Class b2style
                               has_destructor = True
                           End If
                           ' No namespace is necessary, the first parameter contains namespace.
-                          Dim o As New stringbuilder()
+                          Dim o As New StringBuilder()
                           o.Append(node.child(0).input()).
                             Append(" ").
                             Append(_namespace.with_global_namespace(node.child(1).input())).
@@ -100,8 +103,7 @@ Partial Public NotInheritable Class b2style
                                   signature.emplace_back(name_with_namespace.of(p.child(0).input_without_ignored()))
                               Next
                           End If
-                          ' TODO: Support virtual and override functions.
-                          with_func(New function_def(signature, function_def.type_t.pure, o.ToString()))
+                          with_func(New function_def(signature, t.second(), o.ToString()))
                       End Sub)
             If Not has_constructor Then
                 with_func(New function_def(vector.of(
