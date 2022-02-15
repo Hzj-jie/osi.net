@@ -33,4 +33,11 @@ Public Module _char_detection
 #End If
         Return null_or_whitespace(s)
     End Function
+
+    <Extension()> Public Function is_empty(ByVal s As String) As Boolean
+#If Not NO_REFERENCE Then
+        assert(Not s Is Nothing)
+#End If
+        Return s.Length() = 0
+    End Function
 End Module

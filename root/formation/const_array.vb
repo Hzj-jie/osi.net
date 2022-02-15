@@ -205,6 +205,6 @@ Public Class const_array(Of T)
     End Function
 
     Public NotOverridable Overrides Function ToString() As String
-        Return v.to_string(size())
+        Return "["c + v.to_string(size()) + "]"c
     End Function
 End Class

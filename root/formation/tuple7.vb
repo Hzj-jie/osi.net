@@ -334,7 +334,7 @@ Partial Public Structure tuple(Of T1, T2, T3, T4, T5, T6, T7)
     End Operator
 
     Public Overrides Function ToString() As String
-        Dim r As New StringBuilder()
+        Dim r As New StringBuilder("{")
         r.Append(If(__1 Is Nothing, "", __1.ToString()))
         r.Append(", ")
         r.Append(If(__2 Is Nothing, "", __2.ToString()))
@@ -362,6 +362,7 @@ Partial Public Structure tuple(Of T1, T2, T3, T4, T5, T6, T7)
         r.Append(", ")
         r.Append(If(__8 Is Nothing, "", __8.ToString()))
 #End If
+        r.Append("}"c)
         Return Convert.ToString(r)
     End Function
 

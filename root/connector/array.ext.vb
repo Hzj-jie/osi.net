@@ -89,8 +89,7 @@ Public Module _array_ext
         If isemptyarray(this) OrElse limited_length = 0 Then
             Return Nothing
         End If
-        Dim s As StringBuilder = Nothing
-        s = New StringBuilder()
+        Dim s As New StringBuilder()
         Dim i As Int32 = 0
         For i = 0 To min(array_size_i(this), CInt(limited_length)) - 1
             If i > 0 AndAlso Not String.IsNullOrEmpty(separator) Then
