@@ -65,7 +65,9 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overrides Function ToString() As String
-        Return v.ToString()
+        ' TODO: Slightly hacky.
+        Dim r As String = v.ToString().Replace("[], ", "").Replace(", []", "").Replace("[]", "").Replace("], [", "")
+        Return r.Substring(1, r.Length() - 2)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

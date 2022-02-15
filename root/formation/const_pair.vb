@@ -301,7 +301,7 @@ Public NotInheritable Class const_pair(Of FT, ST)
     End Function
 
     Public Overrides Function ToString() As String
-        Return Convert.ToString(first) + ", " + Convert.ToString(second)
+        Return "{"c + Convert.ToString(first) + ", " + Convert.ToString(second) + "}"c
     End Function
 
     Public Overrides Function GetHashCode() As Int32
