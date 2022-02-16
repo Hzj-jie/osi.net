@@ -18,9 +18,9 @@ Partial Public NotInheritable Class bstyle
     Private Shared ignore_default_include As argument(Of Boolean)
 
     Public NotInheritable Class parser
-        Inherits __do(Of String, writer, Boolean)
+        Inherits __do(Of String, logic_writer, Boolean)
 
-        Public Overrides Function at(ByRef i As String, ByRef j As writer) As Boolean
+        Public Overrides Function at(ByRef i As String, ByRef j As logic_writer) As Boolean
             Return code_builder.current().build(i, j)
         End Function
     End Class
@@ -63,7 +63,7 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class include_with_string
-        Inherits code_gens(Of writer).include_with_string(Of parser,
+        Inherits code_gens(Of logic_writer).include_with_string(Of parser,
                                                              default_includes.folders,
                                                              default_includes.ignore_default_folder,
                                                              default_includes.default_folder,
@@ -75,7 +75,7 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class include_with_file
-        Inherits code_gens(Of writer).include_with_file(Of parser,
+        Inherits code_gens(Of logic_writer).include_with_file(Of parser,
                                                            default_includes.folders,
                                                            default_includes.ignore_default_folder,
                                                            default_includes.default_folder,

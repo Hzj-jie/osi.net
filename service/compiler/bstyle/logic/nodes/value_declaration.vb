@@ -10,21 +10,21 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class value_declaration
-        Implements code_gen(Of writer)
+        Implements code_gen(Of logic_writer)
 
         Public Shared ReadOnly instance As New value_declaration()
 
         Private Sub New()
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
+        Public Function build(ByVal n As typed_node, ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 2)
             Return build(n.child(0), n.child(1), o)
         End Function
 
-        Public Shared Function build(ByVal type As typed_node, ByVal name As typed_node, ByVal o As writer) As Boolean
+        Public Shared Function build(ByVal type As typed_node, ByVal name As typed_node, ByVal o As logic_writer) As Boolean
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
             Dim t As String = type.input_without_ignored()
@@ -35,7 +35,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function declare_single_data_slot(ByVal type As String,
                                                         ByVal name As String,
-                                                        ByVal o As writer) As Boolean
+                                                        ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
 
             If Not scope.current().structs().defined(type) AndAlso

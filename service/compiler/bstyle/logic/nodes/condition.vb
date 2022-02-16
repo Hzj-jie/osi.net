@@ -11,17 +11,17 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class condition
-        Implements code_gen(Of writer)
+        Implements code_gen(Of logic_writer)
 
-        Private ReadOnly l As code_gens(Of writer)
+        Private ReadOnly l As code_gens(Of logic_writer)
 
         <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of writer))
+        Public Sub New(ByVal b As code_gens(Of logic_writer))
             assert(Not b Is Nothing)
             Me.l = b
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
+        Public Function build(ByVal n As typed_node, ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
@@ -36,13 +36,13 @@ Partial Public NotInheritable Class bstyle
                     raise_error(error_type.user, "Condition of if cannot be a struct.")
                     Return False
                 End If
-                Dim satisfied_paragraph As Func(Of writer, Boolean) = Function(ByVal oo As writer) As Boolean
+                Dim satisfied_paragraph As Func(Of logic_writer, Boolean) = Function(ByVal oo As logic_writer) As Boolean
                                                                           Return l.[of](n.child(4)).build(oo)
                                                                       End Function
                 If n.child_count() = 5 Then
                     Return builders.of_if(condition, satisfied_paragraph).to(o)
                 End If
-                Dim unsatisfied_paragraph As Func(Of writer, Boolean) = Function(ByVal oo As writer) As Boolean
+                Dim unsatisfied_paragraph As Func(Of logic_writer, Boolean) = Function(ByVal oo As logic_writer) As Boolean
                                                                             Return l.[of](n.child(5)).build(oo)
                                                                         End Function
                 Return builders.of_if(condition, satisfied_paragraph, unsatisfied_paragraph).to(o)

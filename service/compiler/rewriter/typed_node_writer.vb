@@ -12,7 +12,7 @@ Imports osi.service.automata
 
 Namespace rewriters
     Public Class typed_node_writer(Of DEBUG_DUMP As __void(Of String))
-        Inherits object_list_writer(Of DEBUG_DUMP)
+        Inherits lazy_list_writer(Of DEBUG_DUMP)
 
         Public Overloads Function append(ByVal t As typed_node) As Boolean
             assert(Not t Is Nothing)

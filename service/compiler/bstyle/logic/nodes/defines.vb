@@ -8,10 +8,10 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class ifndef_wrapped
-        Inherits ifndef_wrapped(Of writer)
+        Inherits ifndef_wrapped(Of logic_writer)
 
         <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of writer))
+        Public Sub New(ByVal b As code_gens(Of logic_writer))
             MyBase.New(b, Function(ByVal s As String) As Boolean
                               Return scope.current().defines().is_defined(s)
                           End Function)
@@ -19,7 +19,7 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class define
-        Inherits define(Of writer)
+        Inherits define(Of logic_writer)
 
         Public Shared ReadOnly instance As New define()
 

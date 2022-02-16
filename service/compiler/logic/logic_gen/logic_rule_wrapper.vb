@@ -7,15 +7,15 @@ Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
-Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.writer)
+Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.logic_writer)
 
 Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of String),
                                    _syntaxer_rule As __do(Of String),
                                    _prefixes As __do(Of vector(Of Action(Of statements))),
                                    _suffixes As __do(Of vector(Of Action(Of statements))),
-                                   _logic_gens As __do(Of vector(Of Action(Of code_gens(Of writer)))),
+                                   _logic_gens As __do(Of vector(Of Action(Of code_gens(Of logic_writer)))),
                                     SCOPE_T As {scope(Of SCOPE_T), New})
-    Inherits code_gen_rule_wrapper(Of writer,
+    Inherits code_gen_rule_wrapper(Of logic_writer,
                                       _nlexer_rule,
                                       _syntaxer_rule,
                                       _prefixes,
@@ -24,7 +24,7 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of String),
                                       SCOPE_T)
 
     Public Overloads Shared Function parse(ByVal input As String, ByRef o As String) As Boolean
-        Dim w As New writer()
+        Dim w As New logic_writer()
         If Not parse(input, w) Then
             Return False
         End If
@@ -41,7 +41,7 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of String),
     End Function
 
     Public NotInheritable Shadows Class parse_wrapper
-        Inherits code_gen_rule_wrapper(Of writer,
+        Inherits code_gen_rule_wrapper(Of logic_writer,
                                           _nlexer_rule,
                                           _syntaxer_rule,
                                           _prefixes,
@@ -52,7 +52,7 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of String),
             MyBase.New(functions)
         End Sub
 
-        Protected Overrides Function import(ByVal e As exportable, ByVal o As writer) As Boolean
+        Protected Overrides Function import(ByVal e As exportable, ByVal o As logic_writer) As Boolean
             Return New importer(functions).import(o.dump(), e)
         End Function
     End Class

@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.compiler.logic
 Imports osi.service.resource
-Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.writer)
+Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.logic_writer)
 
 Public NotInheritable Class bstyle
     Inherits logic_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, logic_gens_t, scope)
@@ -61,10 +61,10 @@ Public NotInheritable Class bstyle
     End Class
 
     Public NotInheritable Class logic_gens_t
-        Inherits __do(Of vector(Of Action(Of code_gens(Of writer))))
+        Inherits __do(Of vector(Of Action(Of code_gens(Of logic_writer))))
 
-        Protected Overrides Function at() As vector(Of Action(Of code_gens(Of writer)))
-            Return New code_gens_registrar(Of writer)().
+        Protected Overrides Function at() As vector(Of Action(Of code_gens(Of logic_writer)))
+            Return New code_gens_registrar(Of logic_writer)().
                            with(Of bool)().
                            with(Of condition)().
                            with(Of for_loop)().
@@ -111,16 +111,16 @@ Public NotInheritable Class bstyle
                                "base-value-without-bracket",
                                "include",
                                "typedef-type").
-                           with(code_gen.of_ignore_last_child(Of writer)("root-type-with-semi-colon")).
-                           with(code_gen.of_children(Of writer)("else-condition", 1)).
-                           with(code_gen.of_first_child(Of writer)("param-with-comma")).
-                           with(code_gen.of_children(Of writer)("value-with-bracket", 1)).
-                           with(code_gen.of_first_child(Of writer)("value-with-comma")).
-                           with(code_gen.of_all_children(Of writer)("paramlist")).
-                           with(code_gen.of_ignore_last_child(Of writer)("base-sentence-with-semi-colon")).
-                           with(code_gen.of_input_without_ignored(Of writer)("paramtype")).
+                           with(code_gen.of_ignore_last_child(Of logic_writer)("root-type-with-semi-colon")).
+                           with(code_gen.of_children(Of logic_writer)("else-condition", 1)).
+                           with(code_gen.of_first_child(Of logic_writer)("param-with-comma")).
+                           with(code_gen.of_children(Of logic_writer)("value-with-bracket", 1)).
+                           with(code_gen.of_first_child(Of logic_writer)("value-with-comma")).
+                           with(code_gen.of_all_children(Of logic_writer)("paramlist")).
+                           with(code_gen.of_ignore_last_child(Of logic_writer)("base-sentence-with-semi-colon")).
+                           with(code_gen.of_input_without_ignored(Of logic_writer)("paramtype")).
                            with_of_all_childrens("paramtypelist").
-                           with(code_gen.of_first_child(Of writer)("paramtype-with-comma"))
+                           with(code_gen.of_first_child(Of logic_writer)("paramtype-with-comma"))
         End Function
     End Class
 

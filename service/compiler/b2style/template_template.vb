@@ -39,7 +39,7 @@ Partial Public NotInheritable Class b2style
                           collect(Of vector(Of String))()))
             End Sub
 
-            Public Overrides Function ToString() As String
+            Public Function str() As String
                 Return strcat(name, "__", types.get().str("__"))
             End Function
         End Class
@@ -59,7 +59,7 @@ Partial Public NotInheritable Class b2style
                       assert(Not node Is Nothing)
                       assert(Not stop_navigating_sub_nodes Is Nothing)
                       If Object.ReferenceEquals(name_node, node) Then
-                          assert(w.append(_extended_type_name))
+                          assert(w.append(AddressOf _extended_type_name.str))
                           stop_navigating_sub_nodes()
                           Return
                       End If

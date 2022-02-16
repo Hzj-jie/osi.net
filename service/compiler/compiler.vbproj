@@ -147,7 +147,7 @@
     <Compile Include="logic\caller_ref.vb" />
     <Compile Include="logic\scope.anchor_ref.vb" />
     <Compile Include="logic\scope.variable.vb" />
-    <Compile Include="object_list_writer.vb" />
+    <Compile Include="lazy_list_writer.vb" />
     <Compile Include="scope.call_hierarchy.vb" />
     <Compile Include="logic\define_heap.vb" />
     <Compile Include="logic\logic_gen\read_scoped.vb" />

@@ -28,7 +28,7 @@ Partial Public NotInheritable Class b2style
             Using scope.current().start_scope().current_function().define(function_name)
                 Dim fo As New typed_node_writer()
                 Return l.of_all_children(n).build(fo) AndAlso
-                       o.append(scope.current().call_hierarchy().filter(function_name, AddressOf fo.ToString))
+                       o.append(scope.current().call_hierarchy().filter(function_name, AddressOf fo.str))
             End Using
         End Function
     End Class
