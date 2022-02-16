@@ -12,12 +12,12 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class for_loop
-        Implements code_gen(Of writer)
+        Implements code_gen(Of logic_writer)
 
-        Private ReadOnly l As code_gens(Of writer)
+        Private ReadOnly l As code_gens(Of logic_writer)
 
         <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of writer))
+        Public Sub New(ByVal b As code_gens(Of logic_writer))
             assert(Not b Is Nothing)
             Me.l = b
         End Sub
@@ -53,11 +53,12 @@ Partial Public NotInheritable Class bstyle
             End Sub
         End Class
 
-        Private Function condition_value(ByVal n As ref, ByVal o As writer) As Boolean
+        Private Function condition_value(ByVal n As ref, ByVal o As logic_writer) As Boolean
             Return n.second Is Nothing OrElse l.of(n.second).build(o)
         End Function
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
+        Public Function build(ByVal n As typed_node,
+                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not o Is Nothing)
             Return builders.start_scope(o).of(
                        Function() As Boolean

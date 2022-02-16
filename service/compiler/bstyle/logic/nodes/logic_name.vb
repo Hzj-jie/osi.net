@@ -38,8 +38,8 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function of_callee(ByVal raw_name As String,
                                          ByVal return_type As String,
                                          ByVal parameters As vector(Of builders.parameter),
-                                         ByVal paragraph As Func(Of writer, Boolean),
-                                         ByVal o As writer) As Boolean
+                                         ByVal paragraph As Func(Of logic_writer, Boolean),
+                                         ByVal o As logic_writer) As Boolean
             Dim name As String = of_function(raw_name, +parameters)
             If Not scope.current().functions().define(return_type, name) Then
                 Return False
@@ -83,6 +83,7 @@ Partial Public NotInheritable Class bstyle
             Dim ta As scope.type_alias_proxy = scope.current().type_alias()
             While i < types.size()
                 assert(Not types(i).contains_any(space_chars))
+                assert(Not builders.parameter_type.is_ref_type(types(i)))
                 s.Append("&").Append(ta(types(i)))
                 i += uint32_1
             End While

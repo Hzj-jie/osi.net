@@ -1,5 +1,5 @@
 ﻿
-// ERROR: Template [, ATemplate__1] has been defined already.
+// ERROR: Template [{, ATemplate__1}] has been defined already.
 
 #include <b2style.h>
 

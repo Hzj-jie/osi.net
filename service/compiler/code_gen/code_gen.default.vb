@@ -190,7 +190,7 @@ Public NotInheritable Class code_gen
                    End Function)
     End Function
 
-    Public Shared Function of_only_descendant_str(Of WRITER As {object_list_writer, New}) _
+    Public Shared Function of_only_descendant_str(Of WRITER As {lazy_list_writer, New}) _
                                                  (ByVal name As String) As Action(Of code_gens(Of WRITER))
         Return code_gen_delegate(Of WRITER).of(
                    name,
@@ -201,7 +201,7 @@ Public NotInheritable Class code_gen
                    End Function)
     End Function
 
-    Public Shared Function of_input(Of WRITER As {object_list_writer, New}) _
+    Public Shared Function of_input(Of WRITER As {lazy_list_writer, New}) _
                                    (ByVal name As String) As Action(Of code_gens(Of WRITER))
         Return code_gen_delegate(Of WRITER).of(
                    name,
@@ -212,7 +212,7 @@ Public NotInheritable Class code_gen
                    End Function)
     End Function
 
-    Public Shared Function of_input_without_ignored(Of WRITER As {object_list_writer, New}) _
+    Public Shared Function of_input_without_ignored(Of WRITER As {lazy_list_writer, New}) _
                                                    (ByVal name As String) As Action(Of code_gens(Of WRITER))
         Return code_gen_delegate(Of WRITER).of(
                    name,
@@ -224,7 +224,7 @@ Public NotInheritable Class code_gen
     End Function
 
     ' TODO: Use in b2style.operations.
-    Public Shared Function of_name(Of WRITER As {object_list_writer, New}) _
+    Public Shared Function of_name(Of WRITER As {lazy_list_writer, New}) _
                                   (ByVal name As String) As Action(Of code_gens(Of WRITER))
         Return code_gen_delegate(Of WRITER).of(
                    name,

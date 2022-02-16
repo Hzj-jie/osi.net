@@ -31,15 +31,15 @@ Partial Public NotInheritable Class b2style
 
             Public Sub apply(ByVal types As vector(Of String))
                 assert(Me.types.set(
-                    types.stream().
-                          map(Function(ByVal type As String) As String
-                                  ' Remove referneces in the name.
-                                  Return _namespace.bstyle_format.of(builders.parameter_type.remove_ref(type))
-                              End Function).
-                          collect(Of vector(Of String))()))
+                       types.stream().
+                             map(Function(ByVal type As String) As String
+                                     ' Remove referneces in the name.
+                                     Return _namespace.bstyle_format.of(builders.parameter_type.remove_ref(type))
+                                 End Function).
+                             collect(Of vector(Of String))()))
             End Sub
 
-            Public Overrides Function ToString() As String
+            Public Function str() As String
                 Return strcat(name, "__", types.get().str("__"))
             End Function
         End Class
@@ -59,7 +59,7 @@ Partial Public NotInheritable Class b2style
                       assert(Not node Is Nothing)
                       assert(Not stop_navigating_sub_nodes Is Nothing)
                       If Object.ReferenceEquals(name_node, node) Then
-                          assert(w.append(_extended_type_name))
+                          assert(w.append(AddressOf _extended_type_name.str))
                           stop_navigating_sub_nodes()
                           Return
                       End If
@@ -121,7 +121,7 @@ Partial Public NotInheritable Class b2style
 
         Public Function extended_type_name(ByVal types As vector(Of String)) As String
             _extended_type_name.apply(types)
-            Return _extended_type_name.ToString()
+            Return _extended_type_name.str()
         End Function
 
         Public Function apply(ByVal types As vector(Of String), ByRef impl As String) As Boolean

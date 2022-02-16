@@ -12,12 +12,12 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class struct
-        Implements code_gen(Of writer)
+        Implements code_gen(Of logic_writer)
 
-        Private ReadOnly l As code_gens(Of writer)
+        Private ReadOnly l As code_gens(Of logic_writer)
 
         <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of writer))
+        Public Sub New(ByVal b As code_gens(Of logic_writer))
             assert(Not b Is Nothing)
             Me.l = b
         End Sub
@@ -25,7 +25,7 @@ Partial Public NotInheritable Class bstyle
         Private Shared Function copy(ByVal sources As vector(Of String),
                                      ByVal target As String,
                                      ByVal target_naming As Func(Of String, String),
-                                     ByVal o As writer) As Boolean
+                                     ByVal o As logic_writer) As Boolean
             assert(Not sources Is Nothing)
             assert(Not target.null_or_whitespace())
             assert(Not target_naming Is Nothing)
@@ -54,7 +54,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function copy(ByVal sources As vector(Of String),
                                     ByVal target As String,
-                                    ByVal o As writer) As Boolean
+                                    ByVal o As logic_writer) As Boolean
             Return copy(sources,
                         target,
                         Function(ByVal n As String) As String
@@ -66,7 +66,7 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function copy(ByVal sources As vector(Of String),
                                     ByVal target As String,
                                     ByVal indexstr As String,
-                                    ByVal o As writer) As Boolean
+                                    ByVal o As logic_writer) As Boolean
             Return copy(sources,
                         target,
                         Function(ByVal n As String) As String
@@ -77,7 +77,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function pack(ByVal sources As vector(Of String),
                                     ByVal target As String,
-                                    ByVal o As writer) As Boolean
+                                    ByVal o As logic_writer) As Boolean
             assert(Not sources Is Nothing)
             assert(Not target.null_or_whitespace())
             If sources.empty() Then
@@ -93,7 +93,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function unpack(ByVal source As String,
                                       ByVal targets As vector(Of String),
-                                      ByVal o As writer) As Boolean
+                                      ByVal o As logic_writer) As Boolean
             assert(Not source.null_or_whitespace())
             assert(Not targets Is Nothing)
             If targets.empty() Then
@@ -135,7 +135,7 @@ Partial Public NotInheritable Class bstyle
             resolve(type, name, Nothing)
         End Sub
 
-        Public Shared Function define_in_stack(ByVal type As String, ByVal name As String, ByVal o As writer) As Boolean
+        Public Shared Function define_in_stack(ByVal type As String, ByVal name As String, ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
             Dim v As struct_def = Nothing
             If Not resolve(type, name, v) Then
@@ -153,7 +153,7 @@ Partial Public NotInheritable Class bstyle
         Public Function define_in_heap(ByVal type As String,
                                        ByVal name As String,
                                        ByVal length As typed_node,
-                                       ByVal o As writer) As Boolean
+                                       ByVal o As logic_writer) As Boolean
             assert(Not length Is Nothing)
             assert(Not o Is Nothing)
             Dim v As struct_def = Nothing
@@ -202,7 +202,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Function build(ByVal n As typed_node,
-                              ByVal o As writer) As Boolean Implements code_gen(Of writer).build
+                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)

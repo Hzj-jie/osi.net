@@ -19,6 +19,7 @@ Partial Public NotInheritable Class bstyle
                 ' Types are always resolved during the define / build stage, so scope.current() equals to the scope
                 ' where the variable_t instance Is being defined.
                 type = scope.current().type_alias()(type)
+                assert(Not builders.parameter_type.is_ref_type(type))
                 ' The name should not be an array with index.
                 assert(Not variable.is_heap_name(name))
                 If s.emplace(name, type).second() Then
@@ -40,6 +41,7 @@ Partial Public NotInheritable Class bstyle
                 ' Types are always resolved during the define / build stage, so scope.current() equals to the scope
                 ' where the variable_t instance Is being defined.
                 type = scope.current().type_alias()(type)
+                assert(Not builders.parameter_type.is_ref_type(type))
                 ' The name should not be an array with index.
                 assert(Not variable.is_heap_name(name))
                 If s.find(name) = s.end() Then

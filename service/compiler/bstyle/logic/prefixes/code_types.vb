@@ -8,8 +8,8 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.compiler.logic
 Imports logic_builder = osi.service.compiler.logic.builders
-Imports statement = osi.service.compiler.statement(Of osi.service.compiler.logic.writer)
-Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.writer)
+Imports statement = osi.service.compiler.statement(Of osi.service.compiler.logic.logic_writer)
+Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.logic_writer)
 
 Partial Public NotInheritable Class bstyle
     ' Must supported types used in logic/nodes code generation.
@@ -49,7 +49,7 @@ Partial Public NotInheritable Class bstyle
             p.register(instance)
         End Sub
 
-        Public Sub export(ByVal o As writer) Implements statement.export
+        Public Sub export(ByVal o As logic_writer) Implements statement.export
             Dim i As UInt32 = 0
             While i < v.size()
                 assert(v(i).second >= 0)

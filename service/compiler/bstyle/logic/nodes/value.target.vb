@@ -11,7 +11,7 @@ Imports target = osi.service.compiler.bstyle.scope.value_target_t.target
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value
-        Implements code_gen(Of writer)
+        Implements code_gen(Of logic_writer)
 
         ' Type of the single data slot is handled by logic.
         Public Shared Function read_target_single_data_slot() As read_scoped(Of target).ref(Of String)
@@ -31,7 +31,7 @@ Partial Public NotInheritable Class bstyle
 
         Private Shared Sub define_single_data_slot_temp_target(ByVal type As String,
                                                                ByVal name As String,
-                                                               ByVal o As writer)
+                                                               ByVal o As logic_writer)
             assert(Not o Is Nothing)
             type = scope.current().type_alias()(type)
             assert(Not scope.current().structs().defined(type))
@@ -46,7 +46,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function with_single_data_slot_temp_target(ByVal type As String,
                                                                  ByVal n As typed_node,
-                                                                 ByVal o As writer) As String
+                                                                 ByVal o As logic_writer) As String
             Dim value_name As String = logic_name.temp_variable(n)
             define_single_data_slot_temp_target(type, value_name, o)
             with_single_data_slot_target(type, value_name)
@@ -55,7 +55,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function with_temp_target(ByVal type As String,
                                                 ByVal n As typed_node,
-                                                ByVal o As writer) As vector(Of String)
+                                                ByVal o As logic_writer) As vector(Of String)
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             Dim params As struct_def = Nothing

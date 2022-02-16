@@ -11,12 +11,12 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class raw_variable_name
-        Implements code_gen(Of writer)
+        Implements code_gen(Of logic_writer)
 
-        Private ReadOnly l As code_gens(Of writer)
+        Private ReadOnly l As code_gens(Of logic_writer)
 
         <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of writer))
+        Public Sub New(ByVal b As code_gens(Of logic_writer))
             assert(Not b Is Nothing)
             Me.l = b
         End Sub
@@ -24,7 +24,7 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function build(ByVal n As typed_node,
                                      ByVal struct_handle As Func(Of String, stream(Of builders.parameter), Boolean),
                                      ByVal single_data_slot_handle As Func(Of String, String, Boolean),
-                                     ByVal o As writer) As Boolean
+                                     ByVal o As logic_writer) As Boolean
             assert(Not n Is Nothing)
             assert(Not struct_handle Is Nothing)
             assert(Not single_data_slot_handle Is Nothing)
@@ -41,7 +41,8 @@ Partial Public NotInheritable Class bstyle
             Return single_data_slot_handle(type, n.input_without_ignored())
         End Function
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
+        Public Function build(ByVal n As typed_node,
+                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() = 1)
             Return build(n.child(),

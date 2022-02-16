@@ -12,12 +12,12 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class value_clause
-        Implements code_gen(Of writer)
+        Implements code_gen(Of logic_writer)
 
-        Private ReadOnly l As code_gens(Of writer)
+        Private ReadOnly l As code_gens(Of logic_writer)
 
         <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of writer))
+        Public Sub New(ByVal b As code_gens(Of logic_writer))
             assert(Not b Is Nothing)
             Me.l = b
         End Sub
@@ -26,7 +26,7 @@ Partial Public NotInheritable Class bstyle
                                ByVal value As typed_node,
                                ByVal struct_copy As Func(Of vector(Of String), Boolean),
                                ByVal single_data_slot_copy As Func(Of String, Boolean),
-                               ByVal o As writer) As Boolean
+                               ByVal o As logic_writer) As Boolean
             assert(Not name Is Nothing)
             assert(Not value Is Nothing)
             assert(Not struct_copy Is Nothing)
@@ -75,7 +75,7 @@ Partial Public NotInheritable Class bstyle
             End Using
         End Function
 
-        Public Function build(ByVal name As typed_node, ByVal value As typed_node, ByVal o As writer) As Boolean
+        Public Function build(ByVal name As typed_node, ByVal value As typed_node, ByVal o As logic_writer) As Boolean
             assert(Not name Is Nothing)
             ' TODO: If the value on the right is a temporary value (rvalue), move can be used to reduce memory copy.
             Return build(name,
@@ -89,7 +89,8 @@ Partial Public NotInheritable Class bstyle
                          o)
         End Function
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
+        Public Function build(ByVal n As typed_node,
+                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
