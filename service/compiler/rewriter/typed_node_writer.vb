@@ -6,7 +6,6 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
-Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.automata
 
@@ -16,7 +15,7 @@ Namespace rewriters
 
         Public Overloads Function append(ByVal t As typed_node) As Boolean
             assert(Not t Is Nothing)
-            Return append(lazier.of(AddressOf t.input))
+            Return append(AddressOf t.input)
         End Function
     End Class
 

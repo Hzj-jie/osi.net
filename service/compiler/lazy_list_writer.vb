@@ -10,12 +10,14 @@ Imports osi.root.template
 Imports osi.service.interpreter.primitive
 
 Public Class lazy_list_writer
-    Protected ReadOnly v As New vector(Of lazier(Of String))()
+    Protected ReadOnly v As New vector(Of Func(Of String))()
 
     Public Function append(ByVal s As String) As Boolean
         ' Allow appending newline characters.
         assert(Not s.null_or_empty())
-        Return append(lazier.value_of(s))
+        Return append(Function() As String
+                          Return s
+                      End Function)
     End Function
 
     Public Function append(ByVal v As UInt32) As Boolean
@@ -50,15 +52,10 @@ Public Class lazy_list_writer
         Return a(direct_cast(Of WRITER)(Me))
     End Function
 
-    Public Function append(ByVal l As lazier(Of String)) As Boolean
-        assert(Not l Is Nothing)
-        v.emplace_back(l)
-        Return True
-    End Function
-
     Public Function append(ByVal f As Func(Of String)) As Boolean
         assert(Not f Is Nothing)
-        Return append(lazier.of(f))
+        v.emplace_back(f)
+        Return True
     End Function
 
     Public Function append(ByVal w As lazy_list_writer) As Boolean
@@ -74,7 +71,11 @@ Public Class lazy_list_writer
     ' Allows a lazy_list_writer to be injected into another lazy_list_writer. Note, the debug_dump_t won't work for
     ' this function, the outer lazy_list_writer should take care of it.
     Public Function str() As String
-        Return v.str(character.blank)
+        Return v.str(Function(ByVal x As Func(Of String)) As String
+                         assert(Not x Is Nothing)
+                         Return x()
+                     End Function,
+                     character.blank)
     End Function
 
     ' Used by code_gen.dump.

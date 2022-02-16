@@ -31,12 +31,12 @@ Partial Public NotInheritable Class b2style
 
             Public Sub apply(ByVal types As vector(Of String))
                 assert(Me.types.set(
-                    types.stream().
-                          map(Function(ByVal type As String) As String
-                                  ' Remove referneces in the name.
-                                  Return _namespace.bstyle_format.of(builders.parameter_type.remove_ref(type))
-                              End Function).
-                          collect(Of vector(Of String))()))
+                       types.stream().
+                             map(Function(ByVal type As String) As String
+                                     ' Remove referneces in the name.
+                                     Return _namespace.bstyle_format.of(builders.parameter_type.remove_ref(type))
+                                 End Function).
+                             collect(Of vector(Of String))()))
             End Sub
 
             Public Function str() As String
@@ -121,7 +121,7 @@ Partial Public NotInheritable Class b2style
 
         Public Function extended_type_name(ByVal types As vector(Of String)) As String
             _extended_type_name.apply(types)
-            Return _extended_type_name.ToString()
+            Return _extended_type_name.str()
         End Function
 
         Public Function apply(ByVal types As vector(Of String), ByRef impl As String) As Boolean

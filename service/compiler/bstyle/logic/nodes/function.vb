@@ -46,7 +46,7 @@ Partial Public NotInheritable Class bstyle
                                             fo) AndAlso
                        o.append(new_scope.call_hierarchy().filter(
                                     logic_name.of_function(function_name, +params),
-                                    AddressOf fo.ToString))
+                                    AddressOf fo.str))
             End Using
         End Function
     End Class
