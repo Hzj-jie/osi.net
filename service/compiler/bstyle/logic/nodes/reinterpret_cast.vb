@@ -8,14 +8,14 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class reinterpret_cast
-        Implements code_gen(Of writer)
+        Implements code_gen(Of logic_writer)
 
         Public Shared ReadOnly instance As New reinterpret_cast()
 
         Private Sub New()
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As writer) As Boolean Implements code_gen(Of writer).build
+        Public Function build(ByVal n As typed_node, ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             Return scope.current().variables().redefine(n.child(4).input_without_ignored(),
                                                         n.child(2).input_without_ignored())
         End Function

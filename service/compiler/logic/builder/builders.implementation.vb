@@ -14,20 +14,20 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     Partial Public NotInheritable Class builders
 
-        Public Shared Function of_start_scope(ByVal paragraph_1 As Func(Of writer, Boolean)) As start_scope_builder_1
+        Public Shared Function of_start_scope(ByVal paragraph_1 As Func(Of logic_writer, Boolean)) As start_scope_builder_1
             Return New start_scope_builder_1(paragraph_1)
         End Function
 
         Public NotInheritable Class start_scope_builder_1
 
-            Private ReadOnly paragraph_1 As Func(Of writer, Boolean)
+            Private ReadOnly paragraph_1 As Func(Of logic_writer, Boolean)
 
-            Public Sub New(ByVal paragraph_1 As Func(Of writer, Boolean))
+            Public Sub New(ByVal paragraph_1 As Func(Of logic_writer, Boolean))
                 assert(Not paragraph_1 Is Nothing)
                 Me.paragraph_1 = paragraph_1
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("start_scope") AndAlso
                     o.append("{") AndAlso
@@ -52,7 +52,7 @@ Namespace logic
                 Me.uint_2 = uint_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("type") AndAlso
                     o.append(string_1) AndAlso
@@ -77,7 +77,7 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("append_slice") AndAlso
                     o.append(string_1) AndAlso
@@ -105,7 +105,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("cut_slice") AndAlso
                     o.append(string_1) AndAlso
@@ -134,7 +134,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("cut") AndAlso
                     o.append(string_1) AndAlso
@@ -166,7 +166,7 @@ Namespace logic
                 Me.string_4 = string_4
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("cut_len") AndAlso
                     o.append(string_1) AndAlso
@@ -190,7 +190,7 @@ Namespace logic
                 Me.string_1 = string_1
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("clear") AndAlso
                     o.append(string_1) AndAlso
@@ -217,7 +217,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("add") AndAlso
                     o.append(string_1) AndAlso
@@ -246,7 +246,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("subtract") AndAlso
                     o.append(string_1) AndAlso
@@ -275,7 +275,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("multiply") AndAlso
                     o.append(string_1) AndAlso
@@ -307,7 +307,7 @@ Namespace logic
                 Me.string_4 = string_4
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("divide") AndAlso
                     o.append(string_1) AndAlso
@@ -340,7 +340,7 @@ Namespace logic
                 Me.string_4 = string_4
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("extract") AndAlso
                     o.append(string_1) AndAlso
@@ -370,7 +370,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("power") AndAlso
                     o.append(string_1) AndAlso
@@ -399,7 +399,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("and") AndAlso
                     o.append(string_1) AndAlso
@@ -428,7 +428,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("or") AndAlso
                     o.append(string_1) AndAlso
@@ -438,7 +438,7 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_callee(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of writer, Boolean)) As callee_builder_16
+        Public Shared Function of_callee(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of logic_writer, Boolean)) As callee_builder_16
             Return New callee_builder_16(string_1, string_2, typed_parameters_3, paragraph_4)
         End Function
 
@@ -447,9 +447,9 @@ Namespace logic
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
             Private ReadOnly typed_parameters_3 As vector(Of pair(Of String, String))
-            Private ReadOnly paragraph_4 As Func(Of writer, Boolean)
+            Private ReadOnly paragraph_4 As Func(Of logic_writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of writer, Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal string_2 As String, ByVal typed_parameters_3 As vector(Of pair(Of String, String)), ByVal paragraph_4 As Func(Of logic_writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not string_2.null_or_whitespace())
@@ -460,7 +460,7 @@ Namespace logic
                 Me.paragraph_4 = paragraph_4
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("callee") AndAlso
                     o.append(string_1) AndAlso
@@ -494,7 +494,7 @@ Namespace logic
                 Me.parameters_3 = parameters_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("caller") AndAlso
                     o.append(string_1) AndAlso
@@ -522,7 +522,7 @@ Namespace logic
                 Me.parameters_2 = parameters_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("caller") AndAlso
                     o.append(string_1) AndAlso
@@ -552,7 +552,7 @@ Namespace logic
                 Me.parameters_3 = parameters_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("callee_ref") AndAlso
                     o.append(string_1) AndAlso
@@ -583,7 +583,7 @@ Namespace logic
                 Me.parameters_3 = parameters_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("caller_ref") AndAlso
                     o.append(string_1) AndAlso
@@ -611,7 +611,7 @@ Namespace logic
                 Me.parameters_2 = parameters_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("caller_ref") AndAlso
                     o.append(string_1) AndAlso
@@ -638,7 +638,7 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("address_of") AndAlso
                     o.append(string_1) AndAlso
@@ -666,7 +666,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("less") AndAlso
                     o.append(string_1) AndAlso
@@ -695,7 +695,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("more") AndAlso
                     o.append(string_1) AndAlso
@@ -724,7 +724,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("equal") AndAlso
                     o.append(string_1) AndAlso
@@ -753,7 +753,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("less_or_equal") AndAlso
                     o.append(string_1) AndAlso
@@ -782,7 +782,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("more_or_equal") AndAlso
                     o.append(string_1) AndAlso
@@ -792,17 +792,17 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean), ByVal paragraph_4 As Func(Of writer, Boolean)) As if_builder_28
+        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean), ByVal paragraph_4 As Func(Of logic_writer, Boolean)) As if_builder_28
             Return New if_builder_28(string_1, paragraph_2, paragraph_4)
         End Function
 
         Public NotInheritable Class if_builder_28
 
             Private ReadOnly string_1 As String
-            Private ReadOnly paragraph_2 As Func(Of writer, Boolean)
-            Private ReadOnly paragraph_4 As Func(Of writer, Boolean)
+            Private ReadOnly paragraph_2 As Func(Of logic_writer, Boolean)
+            Private ReadOnly paragraph_4 As Func(Of logic_writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean), ByVal paragraph_4 As Func(Of writer, Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean), ByVal paragraph_4 As Func(Of logic_writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not paragraph_2 Is Nothing)
@@ -811,7 +811,7 @@ Namespace logic
                 Me.paragraph_4 = paragraph_4
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("if") AndAlso
                     o.append(string_1) AndAlso
@@ -826,23 +826,23 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean)) As if_builder_29
+        Public Shared Function of_if(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean)) As if_builder_29
             Return New if_builder_29(string_1, paragraph_2)
         End Function
 
         Public NotInheritable Class if_builder_29
 
             Private ReadOnly string_1 As String
-            Private ReadOnly paragraph_2 As Func(Of writer, Boolean)
+            Private ReadOnly paragraph_2 As Func(Of logic_writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not paragraph_2 Is Nothing)
                 Me.paragraph_2 = paragraph_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("if") AndAlso
                     o.append(string_1) AndAlso
@@ -869,7 +869,7 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("copy") AndAlso
                     o.append(string_1) AndAlso
@@ -894,7 +894,7 @@ Namespace logic
                 Me.data_block_2 = data_block_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("copy_const") AndAlso
                     o.append(string_1) AndAlso
@@ -919,7 +919,7 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("define") AndAlso
                     o.append(string_1) AndAlso
@@ -947,7 +947,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("define_heap") AndAlso
                     o.append(string_1) AndAlso
@@ -957,23 +957,23 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_do_until(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean)) As do_until_builder_34
+        Public Shared Function of_do_until(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean)) As do_until_builder_34
             Return New do_until_builder_34(string_1, paragraph_2)
         End Function
 
         Public NotInheritable Class do_until_builder_34
 
             Private ReadOnly string_1 As String
-            Private ReadOnly paragraph_2 As Func(Of writer, Boolean)
+            Private ReadOnly paragraph_2 As Func(Of logic_writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not paragraph_2 Is Nothing)
                 Me.paragraph_2 = paragraph_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("do_until") AndAlso
                     o.append(string_1) AndAlso
@@ -984,23 +984,23 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_do_while(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean)) As do_while_builder_35
+        Public Shared Function of_do_while(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean)) As do_while_builder_35
             Return New do_while_builder_35(string_1, paragraph_2)
         End Function
 
         Public NotInheritable Class do_while_builder_35
 
             Private ReadOnly string_1 As String
-            Private ReadOnly paragraph_2 As Func(Of writer, Boolean)
+            Private ReadOnly paragraph_2 As Func(Of logic_writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not paragraph_2 Is Nothing)
                 Me.paragraph_2 = paragraph_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("do_while") AndAlso
                     o.append(string_1) AndAlso
@@ -1030,7 +1030,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("interrupt") AndAlso
                     o.append(string_1) AndAlso
@@ -1056,7 +1056,7 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("move") AndAlso
                     o.append(string_1) AndAlso
@@ -1078,7 +1078,7 @@ Namespace logic
                 Me.string_1 = string_1
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("return") AndAlso
                     o.append(string_1) AndAlso
@@ -1103,7 +1103,7 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("return") AndAlso
                     o.append(string_1) AndAlso
@@ -1128,7 +1128,7 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("append") AndAlso
                     o.append(string_1) AndAlso
@@ -1153,7 +1153,7 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("not") AndAlso
                     o.append(string_1) AndAlso
@@ -1178,7 +1178,7 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("sizeof") AndAlso
                     o.append(string_1) AndAlso
@@ -1203,7 +1203,7 @@ Namespace logic
                 Me.string_2 = string_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("empty") AndAlso
                     o.append(string_1) AndAlso
@@ -1212,23 +1212,23 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_while_then(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean)) As while_then_builder_44
+        Public Shared Function of_while_then(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean)) As while_then_builder_44
             Return New while_then_builder_44(string_1, paragraph_2)
         End Function
 
         Public NotInheritable Class while_then_builder_44
 
             Private ReadOnly string_1 As String
-            Private ReadOnly paragraph_2 As Func(Of writer, Boolean)
+            Private ReadOnly paragraph_2 As Func(Of logic_writer, Boolean)
 
-            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of writer, Boolean))
+            Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
                 assert(Not paragraph_2 Is Nothing)
                 Me.paragraph_2 = paragraph_2
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("while_then") AndAlso
                     o.append(string_1) AndAlso
@@ -1245,7 +1245,7 @@ Namespace logic
 
         Public NotInheritable Class stop_builder_45
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("stop") AndAlso
                     o.append(newline.incode())
@@ -1271,7 +1271,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("float_add") AndAlso
                     o.append(string_1) AndAlso
@@ -1300,7 +1300,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("float_subtract") AndAlso
                     o.append(string_1) AndAlso
@@ -1329,7 +1329,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("float_multiply") AndAlso
                     o.append(string_1) AndAlso
@@ -1358,7 +1358,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("float_divide") AndAlso
                     o.append(string_1) AndAlso
@@ -1387,7 +1387,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("float_extract") AndAlso
                     o.append(string_1) AndAlso
@@ -1416,7 +1416,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("float_power") AndAlso
                     o.append(string_1) AndAlso
@@ -1445,7 +1445,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("float_less") AndAlso
                     o.append(string_1) AndAlso
@@ -1474,7 +1474,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("float_more") AndAlso
                     o.append(string_1) AndAlso
@@ -1503,7 +1503,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("float_equal") AndAlso
                     o.append(string_1) AndAlso
@@ -1532,7 +1532,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("float_less_or_equal") AndAlso
                     o.append(string_1) AndAlso
@@ -1561,7 +1561,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("float_more_or_equal") AndAlso
                     o.append(string_1) AndAlso
@@ -1590,7 +1590,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("left_shift") AndAlso
                     o.append(string_1) AndAlso
@@ -1619,7 +1619,7 @@ Namespace logic
                 Me.string_3 = string_3
             End Sub
 
-            Public Function [to](ByVal o As writer) As Boolean
+            Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
                     o.append("right_shift") AndAlso
                     o.append(string_1) AndAlso

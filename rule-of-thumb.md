@@ -38,3 +38,7 @@ Rule of Thumb
 
 1. Do not use Convert.ToString against enum types, it returns integers rather
    than the meaningful tag names.
+
+1. Never rely on the format of ToString(), it should be used for debugging
+   purpose only. If a certain format is required, use a different function
+   with more meaningful name.

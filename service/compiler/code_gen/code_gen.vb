@@ -81,6 +81,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             Return build(Nothing)
         End Function
 
+        ' TODO: Consider to avoid using ToString(), use lazy_list_writer.str() instead.
         Public Function dump(ByRef o As String) As Boolean
             Dim w As New WRITER()
             If Not build(w) Then

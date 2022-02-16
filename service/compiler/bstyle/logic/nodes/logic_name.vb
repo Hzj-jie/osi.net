@@ -38,8 +38,8 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function of_callee(ByVal raw_name As String,
                                          ByVal return_type As String,
                                          ByVal parameters As vector(Of builders.parameter),
-                                         ByVal paragraph As Func(Of writer, Boolean),
-                                         ByVal o As writer) As Boolean
+                                         ByVal paragraph As Func(Of logic_writer, Boolean),
+                                         ByVal o As logic_writer) As Boolean
             Dim name As String = of_function(raw_name, +parameters)
             If Not scope.current().functions().define(return_type, name) Then
                 Return False

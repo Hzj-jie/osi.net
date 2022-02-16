@@ -8,8 +8,8 @@ Imports osi.root.constants
 Imports osi.root.template
 
 Namespace logic
-    Public NotInheritable Class writer
-        Inherits object_list_writer(Of debug_dump)
+    Public NotInheritable Class logic_writer
+        Inherits lazy_list_writer(Of debug_dump)
 
         Public NotInheritable Class debug_dump
             Inherits __void(Of String)

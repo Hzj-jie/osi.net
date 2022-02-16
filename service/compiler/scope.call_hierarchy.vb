@@ -69,8 +69,8 @@ Partial Public Class scope(Of T As scope(Of T))
             End Get
         End Property
 
-        Public Function filter(ByVal f As String, ByVal o As Func(Of String)) As Object
-            Return New filtered_writer(Me, f, o)
+        Public Function filter(ByVal f As String, ByVal o As Func(Of String)) As Func(Of String)
+            Return AddressOf New filtered_writer(Me, f, o).str
         End Function
 
         Private NotInheritable Class filtered_writer
@@ -87,7 +87,7 @@ Partial Public Class scope(Of T As scope(Of T))
                 Me.o = o
             End Sub
 
-            Public Overrides Function ToString() As String
+            Public Function str() As String
                 If (scope_arguments.remove_unused_functions Or True) AndAlso Not ch(f) Then
                     Return ""
                 End If
