@@ -83,6 +83,7 @@ Partial Public NotInheritable Class bstyle
             Dim ta As scope.type_alias_proxy = scope.current().type_alias()
             While i < types.size()
                 assert(Not types(i).contains_any(space_chars))
+                assert(Not builders.parameter_type.is_ref_type(types(i)))
                 s.Append("&").Append(ta(types(i)))
                 i += uint32_1
             End While
