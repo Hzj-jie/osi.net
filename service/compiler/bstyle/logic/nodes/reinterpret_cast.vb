@@ -15,9 +15,11 @@ Partial Public NotInheritable Class bstyle
         Private Sub New()
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            Return scope.current().variables().redefine(n.child(4).input_without_ignored(),
-                                                        n.child(2).input_without_ignored())
+        Public Function build(ByVal n As typed_node,
+                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+            Return scope.current().variables().redefine(
+                       builders.parameter_type.remove_ref(n.child(4).input_without_ignored()),
+                       n.child(2).input_without_ignored())
         End Function
     End Class
 End Class

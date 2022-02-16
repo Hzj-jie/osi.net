@@ -21,7 +21,8 @@ Partial Public NotInheritable Class bstyle
             Me.l = b
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+        Public Function build(ByVal n As typed_node,
+                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
@@ -37,14 +38,14 @@ Partial Public NotInheritable Class bstyle
                     Return False
                 End If
                 Dim satisfied_paragraph As Func(Of logic_writer, Boolean) = Function(ByVal oo As logic_writer) As Boolean
-                                                                          Return l.[of](n.child(4)).build(oo)
-                                                                      End Function
+                                                                                Return l.[of](n.child(4)).build(oo)
+                                                                            End Function
                 If n.child_count() = 5 Then
                     Return builders.of_if(condition, satisfied_paragraph).to(o)
                 End If
                 Dim unsatisfied_paragraph As Func(Of logic_writer, Boolean) = Function(ByVal oo As logic_writer) As Boolean
-                                                                            Return l.[of](n.child(5)).build(oo)
-                                                                        End Function
+                                                                                  Return l.[of](n.child(5)).build(oo)
+                                                                              End Function
                 Return builders.of_if(condition, satisfied_paragraph, unsatisfied_paragraph).to(o)
             End Using
         End Function

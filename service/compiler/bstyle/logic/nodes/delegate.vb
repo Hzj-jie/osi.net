@@ -10,7 +10,6 @@ Imports osi.service.automata
 Imports osi.service.compiler
 Imports osi.service.compiler.logic
 Imports osi.service.constructor
-Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class _delegate
@@ -24,7 +23,8 @@ Partial Public NotInheritable Class bstyle
             Me.l = b
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+        Public Function build(ByVal n As typed_node,
+                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             Dim ps As vector(Of String) = Nothing
