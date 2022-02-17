@@ -47,7 +47,10 @@ heap-struct-function-call heap-struct-name start-bracket [value-list]? end-brack
 type-name-with-comma type-name comma
 inherited-types [type-name-with-comma]* type-name
 class-inheritance colon inherited-types
-class kw-class type-name [class-inheritance]? start-paragraph [struct-body, function]* end-paragraph semi-colon
+virtual-function kw-overridable function
+override-function kw-override function
+class-function [virtual-function, override-function, function]
+class kw-class type-name [class-inheritance]? start-paragraph [struct-body, class-function]* end-paragraph semi-colon
 
 template-type-name raw-type-name less-than paramtypelist greater-than
 type-param-list [type-param-with-comma]* type-param

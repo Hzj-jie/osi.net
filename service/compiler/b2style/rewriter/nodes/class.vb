@@ -32,6 +32,7 @@ Partial Public NotInheritable Class b2style
             Dim class_name As String = n.child(1).input()
             Dim cd As New class_def(class_name)
             bstyle.struct.parse_struct_body(n).foreach(AddressOf cd.with_var)
+            cd.with_funcs(n)
             Dim classes As scope.class_proxy = scope.current().classes()
             If n.child(2).type_name.Equals("class-inheritance") AndAlso
                Not l.of_all_children(n.child(2).child(1)).
@@ -43,7 +44,7 @@ Partial Public NotInheritable Class b2style
                              If Not classes.resolve(t.second(), bcd) Then
                                  Return False
                              End If
-                             cd.append(bcd).
+                             cd.inherit_from(bcd).
                                 with_var(bstyle.struct.create_id(t.second()))
                              Return True
                          End Function).
@@ -59,55 +60,18 @@ Partial Public NotInheritable Class b2style
               Append("{")
             cd.vars().
                foreach(Sub(ByVal var As builders.parameter)
+                           assert(Not var Is Nothing)
                            o.Append(var.type).
                              Append(" ").
                              Append(var.name).
                              Append(";")
                        End Sub)
             o.Append("};")
-            ' Append functions after the structure.
-            Dim has_constructor As Boolean = False
-            Dim has_destructor As Boolean = False
-            n.children_of("function").
-              stream().
-              foreach(Sub(ByVal node As typed_node)
-                          assert(Not node Is Nothing)
-                          assert(node.child_count() = 5 OrElse node.child_count() = 6)
-                          If node.child(1).input().Equals("construct") Then
-                              has_constructor = True
-                          ElseIf node.child(1).input().Equals("destruct") Then
-                              has_destructor = True
-                          End If
-                          ' No namespace is necessary, the first parameter contains namespace.
-                          o.Append(node.child(0).input()).
-                            Append(" ").
-                            Append(_namespace.with_global_namespace(node.child(1).input())).
-                            Append("(").
-                            Append(class_name).
-                            Append("& this")
-                          ' With parameter list.
-                          If node.child_count() = 6 Then
-                              o.Append(", ").
-                              Append(node.child(3).input())
-                          End If
-                          o.Append(")").
-                            Append(node.last_child().input()).
-                            AppendLine() ' beautiful output.
-                      End Sub)
-            If Not has_constructor Then
-                o.Append("void ").
-                  Append(_namespace.with_global_namespace("construct")).
-                  Append("(").
-                  Append(class_name).
-                  Append("& this){}")
-            End If
-            If Not has_destructor Then
-                o.Append("void ").
-                  Append(_namespace.with_global_namespace("destruct")).
-                  Append("(").
-                  Append(class_name).
-                  Append("& this){}")
-            End If
+            cd.funcs().
+               foreach(Sub(ByVal f As class_def.function_def)
+                           assert(Not f Is Nothing)
+                           o.Append(f.content)
+                       End Sub)
             s = o.ToString()
             Return True
         End Function

@@ -1,0 +1,11 @@
+﻿
+// ERROR: Duplicate function in {, B}: [{[{, void} {, f} {, int}], 2}],
+
+#include <b2style.h>
+
+class B {
+  void f(int x) {}
+  void f(int y) {}
+};
+
+void main() {}
