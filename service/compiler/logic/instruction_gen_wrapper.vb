@@ -49,7 +49,7 @@ Namespace logic
                 Return False
             End If
             If o.size() > start Then
-                Dim comment As String = v.str(character.blank)
+                Dim comment As String = v.str()
                 ' The size of o cannot be changed.
                 o(start) = strcat(o(start), character.tab, comment_builder.str(">>>", comment))
                 If o.size() - uint32_1 > start Then

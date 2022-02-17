@@ -222,7 +222,7 @@ Public Module vector_extension
                    Function(ByVal x As T) As String
                        Return x.ToString()
                    End Function,
-                   Nothing)
+                   character.blank)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

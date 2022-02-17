@@ -32,7 +32,7 @@ Public Class lazy_list_writer
     Public Function append(ByVal v As vector(Of String)) As Boolean
         assert(Not v Is Nothing)
         Return append(Function() As String
-                          Return v.str(character.blank)
+                          Return v.str()
                       End Function)
     End Function
 

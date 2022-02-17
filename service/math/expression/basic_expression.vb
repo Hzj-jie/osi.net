@@ -83,7 +83,7 @@ Public Class basic_expression(Of T)
         assert(Not o Is Nothing)
         assert(Not v Is Nothing)
         If Not v.empty() Then
-            o.emplace_back(v.str())
+            o.emplace_back(v.str(""))
             v.clear()
         End If
     End Sub
