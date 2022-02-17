@@ -85,7 +85,7 @@ Partial Public NotInheritable Class b2style
                           ' With parameter list.
                           If node.child_count() = 6 Then
                               o.Append(", ").
-                              Append(node.child(3).input())
+                                Append(node.child(3).input())
                           End If
                           o.Append(")").
                             Append(node.last_child().input()).
