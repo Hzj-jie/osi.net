@@ -298,7 +298,7 @@ Public NotInheritable Class vector(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Overrides Function ToString() As String
-        Return "["c + str(character.blank) + "]"c
+        Return "["c + str() + "]"c
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
