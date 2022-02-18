@@ -30,11 +30,41 @@ Partial Public NotInheritable Class b2style
 
         Private Sub inherit_non_existing_funcs(ByVal other As class_def)
             assert(Not other Is Nothing)
-            other.funcs().
-                  except(funcs()).
-                  foreach(Sub(ByVal f As function_def)
-                              assert(Not f Is Nothing)
-                          End Sub)
+            _funcs.emplace_back(other.funcs().
+                                      except(funcs()).
+                                      map(Function(ByVal f As function_def) As function_def
+                                              assert(Not f Is Nothing)
+                                              Dim content As New StringBuilder()
+                                              content.Append(f.return_type.bstyle_format()).
+                                                      Append(" ").
+                                                      Append(f.name().bstyle_format()).
+                                                      Append("(").
+                                                      Append(name.bstyle_format()).
+                                                      Append("& this")
+                                              For i As Int32 = 2 To CInt(f.signature.size()) - 1
+                                                  content.Append(",").
+                                                          Append(f.signature(CUInt(i)).bstyle_format()).
+                                                          Append("i").
+                                                          Append(i - 2)
+                                              Next
+                                              content.Append("){reinterpret_cast(this,").
+                                                      Append(other.name.bstyle_format()).
+                                                      Append(");")
+                                              ' TODO: A better way to check the return type.
+                                              If Not f.return_type.name().Equals("void") Then
+                                                  content.Append("return ")
+                                              End If
+                                              content.Append(f.name().bstyle_format()).
+                                                      Append("(this")
+                                              For i As Int32 = 2 To CInt(f.signature.size()) - 1
+                                                  content.Append(",").
+                                                          Append("i").
+                                                          Append(i - 2)
+                                              Next
+                                              content.Append(");}")
+                                              Return f.with_content(content.ToString())
+                                          End Function).
+                                      collect(Of vector(Of function_def))())
         End Sub
 
         Public Function vars() As stream(Of builders.parameter)
@@ -101,8 +131,7 @@ Partial Public NotInheritable Class b2style
                             Append(node.last_child().input()).
                             AppendLine() ' beautiful output.
                           Dim signature As New vector(Of name_with_namespace)()
-                          signature.emplace_back(name_with_namespace.of(node.child(0).input_without_ignored()))
-                          signature.emplace_back(name_with_namespace.of_global_namespace(node.child(1).input()))
+                          signature.emplace_back(function_def.name_of(node.child(1).input()))
                           If node.child_count() = 6 Then
                               For i As UInt32 = 0 To node.child(3).child_count() - uint32_1
                                   Dim p As typed_node = node.child(3).child(i)
@@ -110,15 +139,17 @@ Partial Public NotInheritable Class b2style
                                       p = p.child(0)
                                   End If
                                   assert(p.type_name.Equals("param"))
-                                  signature.emplace_back(name_with_namespace.of(p.child(0).input_without_ignored()))
+                                  signature.emplace_back(function_def.type_of(p.child(0).input_without_ignored()))
                               Next
                           End If
-                          with_func(New function_def(signature, t.second(), o.ToString()))
+                          with_func(New function_def(function_def.type_of(node.child(0).input_without_ignored()),
+                                                     signature,
+                                                     t.second(),
+                                                     o.ToString()))
                       End Sub)
             If Not has_constructor Then
-                with_func(New function_def(vector.of(
-                                               name_with_namespace.of("void"),
-                                               name_with_namespace.of_global_namespace("construct")),
+                with_func(New function_def(function_def.type_of("void"),
+                                           function_def.name_of("construct"),
                                            function_def.type_t.pure,
                                            New StringBuilder().Append("void ").
                                                                Append(_namespace.with_global_namespace("construct")).
@@ -127,9 +158,8 @@ Partial Public NotInheritable Class b2style
                                                                Append("& this){}").ToString()))
             End If
             If Not has_destructor Then
-                with_func(New function_def(vector.of(
-                                               name_with_namespace.of("void"),
-                                               name_with_namespace.of_global_namespace("destruct")),
+                with_func(New function_def(function_def.type_of("void"),
+                                           function_def.name_of("destruct"),
                                            function_def.type_t.pure,
                                            New StringBuilder().Append("void ").
                                                                Append(_namespace.with_global_namespace("destruct")).
@@ -161,18 +191,14 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Private Function check_funcs_duplicate() As Boolean
-            Dim c As unordered_map(Of vector(Of name_with_namespace), UInt32) =
-                funcs().map(Function(ByVal p As function_def) As vector(Of name_with_namespace)
-                                assert(Not p Is Nothing)
-                                Return p.signature
-                            End Function).
-                        count().
-                        filter(Function(ByVal t As tuple(Of vector(Of name_with_namespace), UInt32)) As Boolean
+            Dim c As unordered_map(Of function_def, UInt32) =
+                funcs().count().
+                        filter(Function(ByVal t As tuple(Of function_def, UInt32)) As Boolean
                                    assert(t.second() <= 2 AndAlso t.second() > 0)
                                    Return t.second() > 1
                                End Function).
                         map(AddressOf tuple.to_first_const_pair).
-                        collect(Of unordered_map(Of vector(Of name_with_namespace), UInt32))()
+                        collect(Of unordered_map(Of function_def, UInt32))()
             If Not c.empty() Then
                 raise_error(error_type.user, "Duplicate function in ", name, ": ", c)
                 Return False
@@ -185,25 +211,73 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Public NotInheritable Class function_def
+            Implements IEquatable(Of function_def)
+
             Public Enum type_t
                 pure
                 virtual
                 override
             End Enum
 
+            Public ReadOnly return_type As name_with_namespace
             Public ReadOnly signature As vector(Of name_with_namespace)
             Public ReadOnly type As type_t
             Public ReadOnly content As String
 
-            Public Sub New(ByVal signature As vector(Of name_with_namespace),
+            Public Function name() As name_with_namespace
+                Return signature(0)
+            End Function
+
+            Public Shared Function name_of(ByVal name As String) As name_with_namespace
+                Return name_with_namespace.of_global_namespace(name)
+            End Function
+
+            Public Shared Function type_of(ByVal type As String) As name_with_namespace
+                Return name_with_namespace.of(type)
+            End Function
+
+            Public Sub New(ByVal return_type As name_with_namespace,
+                           ByVal signature As vector(Of name_with_namespace),
                            ByVal type As type_t,
                            ByVal content As String)
                 assert(Not signature.null_or_empty())
                 assert(Not content.null_or_whitespace())
+                Me.return_type = return_type
                 Me.signature = signature
                 Me.type = type
                 Me.content = content
             End Sub
+
+            Public Sub New(ByVal return_type As name_with_namespace,
+                           ByVal name As name_with_namespace,
+                           ByVal type As type_t,
+                           ByVal content As String)
+                Me.New(return_type, vector.emplace_of(name), type, content)
+            End Sub
+
+            Public Function with_content(ByVal content As String) As function_def
+                Return New function_def(return_type, signature, type, content)
+            End Function
+
+            Public Overrides Function Equals(ByVal obj As Object) As Boolean
+                Return Equals(direct_cast(Of function_def)(obj, False))
+            End Function
+
+            Public Overloads Function Equals(ByVal other As function_def) As Boolean _
+                                            Implements IEquatable(Of function_def).Equals
+                If other Is Nothing Then
+                    Return False
+                End If
+                Return signature.Equals(other.signature)
+            End Function
+
+            Public Overrides Function GetHashCode() As Int32
+                Return signature.GetHashCode()
+            End Function
+
+            Public Overrides Function ToString() As String
+                Return strcat("{", signature, ": ", return_type, "}")
+            End Function
         End Class
     End Class
 End Class

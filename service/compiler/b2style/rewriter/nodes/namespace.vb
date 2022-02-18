@@ -35,10 +35,6 @@ Partial Public NotInheritable Class b2style
             Return tuple.of(f.Substring(0, index), f.Substring(index + namespace_separator.Length()))
         End Function
 
-        Public Shared Function in_global_namespace(ByVal n As name_with_namespace) As String
-            Return with_global_namespace(with_namespace(n.namespace(), n.name()))
-        End Function
-
         Public NotInheritable Class bstyle_format
             Public Shared Function [of](ByVal i As String) As String
                 assert(Not i.null_or_whitespace())
@@ -54,6 +50,10 @@ Partial Public NotInheritable Class b2style
                                    End Function).
                                collect_by(stream(Of String).collectors.to_str(".")).
                                ToString()
+            End Function
+
+            Public Shared Function [of](ByVal n As name_with_namespace) As String
+                Return with_namespace(n.namespace(), n.name())
             End Function
 
             Public Shared Function with_namespace(ByVal ns As String, ByVal i As String) As String

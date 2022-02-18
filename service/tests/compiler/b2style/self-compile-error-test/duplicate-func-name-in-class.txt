@@ -1,5 +1,5 @@
 ﻿
-// ERROR: Duplicate function in {, B}: [{[{, void} {, f} {, int}], 2}],
+// ERROR: Duplicate function in {, B}: [{{[{, f} {, int}]: {, void}}, 2}],
 
 #include <b2style.h>
 
