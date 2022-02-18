@@ -158,4 +158,20 @@ Partial Public Class stream(Of T)
     Public Function concat(ByVal ParamArray others() As T) As stream(Of T)
         Return concat(streams.enumerators.from_array(others))
     End Function
+
+    Public Function intersect(ByVal other As stream(Of T)) As stream(Of T)
+        assert(Not other Is Nothing)
+        Dim s As unordered_set(Of T) = other.collect(Of unordered_set(Of T))()
+        Return filter(Function(ByVal x As T) As Boolean
+                          Return s.find(x) <> s.end()
+                      End Function)
+    End Function
+
+    Public Function except(ByVal other As stream(Of T)) As stream(Of T)
+        assert(Not other Is Nothing)
+        Dim s As unordered_set(Of T) = other.collect(Of unordered_set(Of T))()
+        Return filter(Function(ByVal x As T) As Boolean
+                          Return s.find(x) = s.end()
+                      End Function)
+    End Function
 End Class

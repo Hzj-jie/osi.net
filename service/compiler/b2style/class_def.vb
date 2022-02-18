@@ -24,8 +24,18 @@ Partial Public NotInheritable Class b2style
         Public Function inherit_from(ByVal other As class_def) As class_def
             assert(Not other Is Nothing)
             _vars.emplace_back(other._vars)
+            inherit_non_existing_funcs(other)
             Return Me
         End Function
+
+        Private Sub inherit_non_existing_funcs(ByVal other As class_def)
+            assert(Not other Is Nothing)
+            other.funcs().
+                  except(funcs()).
+                  foreach(Sub(ByVal f As function_def)
+                              assert(Not f Is Nothing)
+                          End Sub)
+        End Sub
 
         Public Function vars() As stream(Of builders.parameter)
             Return _vars.stream()
