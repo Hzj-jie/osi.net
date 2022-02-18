@@ -8,7 +8,11 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Public NotInheritable Class vector(Of T)
-    Implements ICloneable(Of vector(Of T)), ICloneable, IComparable(Of vector(Of T)), IComparable
+    Implements ICloneable(Of vector(Of T)),
+               ICloneable,
+               IComparable(Of vector(Of T)),
+               IComparable,
+               IEquatable(Of vector(Of T))
 
     Private ReadOnly v As adaptive_array_t
 
@@ -284,7 +288,7 @@ Public NotInheritable Class vector(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-        Return CompareTo(cast(Of vector(Of T))(obj, False))
+        Return CompareTo(direct_cast(Of vector(Of T))(obj, False))
     End Function
 
     Public Function CompareTo(ByVal other As vector(Of T)) As Int32 Implements IComparable(Of vector(Of T)).CompareTo
@@ -329,4 +333,13 @@ Public NotInheritable Class vector(Of T)
             v.set(i, value)
         End If
     End Sub
+
+    Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Return CompareTo(obj) = 0
+    End Function
+
+    Public Overloads Function Equals(ByVal other As vector(Of T)) As Boolean _
+                                    Implements IEquatable(Of vector(Of T)).Equals
+        Return CompareTo(other) = 0
+    End Function
 End Class
