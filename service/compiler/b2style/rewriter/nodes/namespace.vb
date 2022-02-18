@@ -31,10 +31,12 @@ Partial Public NotInheritable Class b2style
         Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)
             Dim f As String = [of](i)
             Dim index As Int32 = f.LastIndexOf(namespace_separator)
-            If index = npos Then
-                Return tuple.of("", f)
-            End If
+            assert(index <> npos)
             Return tuple.of(f.Substring(0, index), f.Substring(index + namespace_separator.Length()))
+        End Function
+
+        Public Shared Function in_global_namespace(ByVal n As name_with_namespace) As String
+            Return with_global_namespace(with_namespace(n.namespace(), n.name()))
         End Function
 
         Public NotInheritable Class bstyle_format
