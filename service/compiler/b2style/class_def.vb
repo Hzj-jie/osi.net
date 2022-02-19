@@ -35,26 +35,26 @@ Partial Public NotInheritable Class b2style
                                       map(Function(ByVal f As function_def) As function_def
                                               assert(Not f Is Nothing)
                                               Dim content As New StringBuilder()
-                                              content.Append(f.return_type.bstyle_format()).
+                                              content.Append(f.return_type.in_global_namespace()).
                                                       Append(" ").
-                                                      Append(f.name().bstyle_format()).
+                                                      Append(f.name().in_global_namespace()).
                                                       Append("(").
-                                                      Append(name.bstyle_format()).
+                                                      Append(name.in_global_namespace()).
                                                       Append("& this")
                                               For i As Int32 = 2 To CInt(f.signature.size()) - 1
                                                   content.Append(",").
-                                                          Append(f.signature(CUInt(i)).bstyle_format()).
+                                                          Append(f.signature(CUInt(i)).in_global_namespace()).
                                                           Append("i").
                                                           Append(i - 2)
                                               Next
                                               content.Append("){reinterpret_cast(this,").
-                                                      Append(other.name.bstyle_format()).
+                                                      Append(other.name.in_global_namespace()).
                                                       Append(");")
                                               ' TODO: A better way to check the return type.
                                               If Not f.return_type.name().Equals("void") Then
                                                   content.Append("return ")
                                               End If
-                                              content.Append(f.name().bstyle_format()).
+                                              content.Append(f.name().in_global_namespace()).
                                                       Append("(this")
                                               For i As Int32 = 2 To CInt(f.signature.size()) - 1
                                                   content.Append(",").

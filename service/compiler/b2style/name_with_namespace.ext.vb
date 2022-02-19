@@ -25,8 +25,8 @@ Partial Public NotInheritable Class b2style
             Return t._2()
         End Function
 
-        Public Function bstyle_format() As String
-            Return _namespace.bstyle_format.of(Me)
+        Public Function in_global_namespace() As String
+            Return _namespace.in_global_namespace(Me)
         End Function
     End Structure
 End Class

@@ -52,10 +52,6 @@ Partial Public NotInheritable Class b2style
                                ToString()
             End Function
 
-            Public Shared Function [of](ByVal n As name_with_namespace) As String
-                Return with_namespace(n.namespace(), n.name())
-            End Function
-
             Public Shared Function with_namespace(ByVal ns As String, ByVal i As String) As String
                 Return [of](_namespace.with_namespace(ns, i))
             End Function
@@ -76,6 +72,10 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Function with_global_namespace(ByVal n As String) As String
             Return with_namespace("", n)
+        End Function
+
+        Public Shared Function in_global_namespace(ByVal n As name_with_namespace) As String
+            Return with_global_namespace(with_namespace(n.namespace(), n.name()))
         End Function
 
         Private Shared Function with_namespace(ByVal n As String, ByVal i As String) As String
