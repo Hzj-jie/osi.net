@@ -58,6 +58,7 @@
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
     <Compile Include="b2style\class_def.vb" />
+    <Compile Include="b2style\function_def.vb" />
     <Compile Include="b2style\name_with_namespace.ext.vb" />
     <Compile Include="b2style\name_with_namespace.vb" />
     <Compile Include="b2style\rewriter\nodes\class.vb" />

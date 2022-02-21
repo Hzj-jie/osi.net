@@ -1,0 +1,22 @@
+﻿
+#include <b2style.h>
+#include <testing.h>
+
+class B {
+  overridable int f() {
+    return 1;
+  }
+};
+
+class C : B {
+  override int f() {
+    return 2;
+  }
+};
+
+void main() {
+  C c;
+  c.b2style_init();
+
+  b2style::testing::finished();
+}
