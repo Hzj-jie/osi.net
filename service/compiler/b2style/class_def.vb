@@ -28,7 +28,7 @@ Partial Public NotInheritable Class b2style
             Return Me
         End Function
 
-        Private Function forward_to_body(ByVal other As class_def, ByVal f As function_def) As String
+        Private Function forward_to(ByVal other As class_def, ByVal f As function_def) As String
             assert(Not other Is Nothing)
             assert(Not f Is Nothing)
             Dim content As New StringBuilder()
@@ -50,34 +50,29 @@ Partial Public NotInheritable Class b2style
             Return content.ToString()
         End Function
 
-        Private Function forward_to(ByVal other As class_def, ByVal f As function_def) As function_def
-            assert(Not other Is Nothing)
-            assert(Not f Is Nothing)
-            Dim content As New StringBuilder()
-            content.Append(f.return_type.in_global_namespace()).
-                    Append(" ").
-                    Append(f.name().in_global_namespace()).
-                    Append("(").
-                    Append(name.in_global_namespace()).
-                    Append("& this")
-            For i As Int32 = 2 To CInt(f.signature.size()) - 1
-                content.Append(",").
-                        Append(f.signature(CUInt(i)).in_global_namespace()).
-                        Append("i").
-                        Append(i - 2)
-            Next
-            content.Append("){").
-                    Append(forward_to_body(other, f)).
-                    Append("}")
-            Return f.with_content(content.ToString())
-        End Function
-
         Private Sub inherit_non_existing_funcs(ByVal other As class_def)
             assert(Not other Is Nothing)
             _funcs.emplace_back(other.funcs().
                                       except(funcs()).
                                       map(Function(ByVal f As function_def) As function_def
-                                              Return forward_to(other, f)
+                                              assert(Not f Is Nothing)
+                                              Dim content As New StringBuilder()
+                                              content.Append(f.return_type.in_global_namespace()).
+                                                      Append(" ").
+                                                      Append(f.name().in_global_namespace()).
+                                                      Append("(").
+                                                      Append(name.in_global_namespace()).
+                                                      Append("& this")
+                                              For i As Int32 = 2 To CInt(f.signature.size()) - 1
+                                                  content.Append(",").
+                                                          Append(f.signature(CUInt(i)).in_global_namespace()).
+                                                          Append("i").
+                                                          Append(i - 2)
+                                              Next
+                                              content.Append("){").
+                                                      Append(forward_to(other, f)).
+                                                      Append("}")
+                                              Return f.with_content(content.ToString())
                                           End Function).
                                       collect(Of vector(Of function_def))())
         End Sub
