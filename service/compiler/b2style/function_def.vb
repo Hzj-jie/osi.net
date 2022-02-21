@@ -88,7 +88,9 @@ Partial Public NotInheritable Class b2style
                 Return content.ToString()
             End Function
 
+            ' TODO: Add parameter names to avoid duplicating with class_def.
             Public Function declaration() As String
+                ' No namespace is necessary, the first parameter contains namespace.
                 Dim content As New StringBuilder()
                 content.Append(return_type.in_global_namespace()).
                         Append(" ").

@@ -111,6 +111,7 @@ Partial Public NotInheritable Class b2style
                               has_destructor = True
                           End If
                           ' No namespace is necessary, the first parameter contains namespace.
+                          ' Emmm, unfortunately, the parameter-name is not part of function_def.
                           Dim o As New StringBuilder()
                           o.Append(node.child(0).input()).
                             Append(" ").
