@@ -28,6 +28,28 @@ Partial Public NotInheritable Class b2style
             Return Me
         End Function
 
+        Private Function forward_to_body(ByVal other As class_def, ByVal f As function_def) As String
+            assert(Not other Is Nothing)
+            assert(Not f Is Nothing)
+            Dim content As New StringBuilder()
+            content.Append("reinterpret_cast(this,").
+                    Append(other.name.in_global_namespace()).
+                    Append(");")
+            ' TODO: A better way to check the return type.
+            If Not f.return_type.name().Equals("void") Then
+                content.Append("return ")
+            End If
+            content.Append(f.name().in_global_namespace()).
+                    Append("(this")
+            For i As Int32 = 2 To CInt(f.signature.size()) - 1
+                content.Append(",").
+                        Append("i").
+                        Append(i - 2)
+            Next
+            content.Append(");")
+            Return content.ToString()
+        End Function
+
         Private Function forward_to(ByVal other As class_def, ByVal f As function_def) As function_def
             assert(Not other Is Nothing)
             assert(Not f Is Nothing)
@@ -44,21 +66,9 @@ Partial Public NotInheritable Class b2style
                         Append("i").
                         Append(i - 2)
             Next
-            content.Append("){reinterpret_cast(this,").
-                    Append(other.name.in_global_namespace()).
-                    Append(");")
-            ' TODO: A better way to check the return type.
-            If Not f.return_type.name().Equals("void") Then
-                content.Append("return ")
-            End If
-            content.Append(f.name().in_global_namespace()).
-                    Append("(this")
-            For i As Int32 = 2 To CInt(f.signature.size()) - 1
-                content.Append(",").
-                        Append("i").
-                        Append(i - 2)
-            Next
-            content.Append(");}")
+            content.Append("){").
+                    Append(forward_to_body(other, f)).
+                    Append("}")
             Return f.with_content(content.ToString())
         End Function
 
