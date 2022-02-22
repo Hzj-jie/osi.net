@@ -26,15 +26,30 @@ Partial Public NotInheritable Class b2style
             assert(Not o Is Nothing)
             assert(n.child_count() = 4 OrElse n.child_count() = 5)
             Dim class_name As String = n.child(0).input()
-            ' construct and destruct are always in global namespace.
+            ' Call b2style_init before the constructor, so constructor can use virtual functions as well and provide
+            ' more consistent behavior. See https://www.onlinegdb.com/edit/DcMt-31ikb.
             If Not (o.append(n.child(0)) AndAlso
                     o.append(n.child(1)) AndAlso
-                    o.append(";") AndAlso
-                    o.append(_namespace.bstyle_format.in_global_namespace("construct")) AndAlso
+                    o.append(";")) Then
+                Return False
+            End If
+            ' Functions are always in global namespace.
+            If scope.current().classes().resolve(n.child(0).input_without_ignored(), Nothing) Then
+                ' This is a class, call its init_func.
+                If Not (o.append(_namespace.bstyle_format.in_global_namespace(class_def.init_func_name)) AndAlso
+                        o.append("(") AndAlso
+                        o.append(n.child(1)) AndAlso
+                        o.append(");")) Then
+                    Return False
+                End If
+            End If
+            ' The last semi-colon is haniled by class_initializer_with_semi_colon.
+            ' But add another one to avoid potential risk.
+            If Not (o.append(_namespace.bstyle_format.in_global_namespace("construct")) AndAlso
                     o.append("(") AndAlso
                     o.append(n.child(1)) AndAlso
                     If(n.child_count() = 5, o.append(",") AndAlso o.append(n.child(3)), True) AndAlso
-                    o.append(")")) Then
+                    o.append(");")) Then
                 Return False
             End If
             scope.current().when_end_scope(
@@ -44,6 +59,7 @@ Partial Public NotInheritable Class b2style
                            o.append(n.child(1)) AndAlso
                            o.append(");"))
                 End Sub)
+            scope.current().call_hierarchy().to(_namespace.with_global_namespace(class_def.init_func_name))
             scope.current().call_hierarchy().to(_namespace.with_global_namespace("construct"))
             scope.current().call_hierarchy().to(_namespace.with_global_namespace("destruct"))
             Return True

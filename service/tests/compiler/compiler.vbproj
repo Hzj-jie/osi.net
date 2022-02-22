@@ -131,6 +131,7 @@
     <Content Include="b2style\self-test\class-inheritance-base-variables.txt" />
     <Content Include="b2style\self-test\class-inheritance-compile-only.txt" />
     <Content Include="b2style\self-test\class-inheritance-template-variables.txt" />
+    <Content Include="b2style\self-test\manually-call-b2style-init.txt" />
     <Content Include="b2style\self-test\reinterpret_cast_ref.txt" />
     <Content Include="b2style\self-test\struct-and-primitive-type-with-same-name.txt" />
     <Content Include="b2style\self-test\redefine-struct-member-type.txt" />
