@@ -135,11 +135,11 @@ Partial Public NotInheritable Class b2style
                           Else
                               If t.second() = function_def.type_t.overridable Then
                                   with_var(builders.parameter.no_ref(f.delegate_type(), f.delegate_name()))
-                                  with_func(f.as_virtual())
                               Else
                                   assert(t.second() = function_def.type_t.override)
-                                  with_func(f.as_virtual()) ' derived_virtual_function
+                                  ' NVM, the one with base& this will be added during inherit_from.
                               End If
+                              with_func(f.as_virtual())
                               init_func.vfuncs.Append(f.delegate_name() + "=" + f.name().in_global_namespace() + ";")
                           End If
                       End Sub)

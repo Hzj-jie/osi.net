@@ -52,17 +52,24 @@ Partial Public NotInheritable Class b2style
                                ToString()
             End Function
 
+            ' TODO: The use case of this function is not valid, may consider to remove it.
             Public Shared Function with_namespace(ByVal ns As String, ByVal i As String) As String
                 Return [of](_namespace.with_namespace(ns, i))
             End Function
 
+            ' TODO: This function should return the same string as the input "i" and is quite confusing, may consider to
+            ' remove it.
             Public Shared Function in_global_namespace(ByVal i As String) As String
                 Return [of](_namespace.with_global_namespace(i))
             End Function
 
             Public Shared Function operator_function_name(ByVal operator_name As String) As String
                 assert(Not operator_name.null_or_whitespace())
-                Return [of](_namespace.in_b2style_namespace(operator_name.Replace("-"c, "_"c))))
+                Return [of](_namespace.in_b2style_namespace(operator_name.Replace("-"c, "_"c)))
+            End Function
+
+            Public Shared Function [of](ByVal n As name_with_namespace) As String
+                Return [of](_namespace.in_global_namespace(n))
             End Function
 
             Private Sub New()

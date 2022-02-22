@@ -103,7 +103,14 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public Function delegate_name() As String
-                Return "_virtual_" + name.name()
+                Return "_virtual_" + signature.stream().
+                                               map(Function(ByVal n As name_with_namespace) As String
+                                                       ' Note, the :: is not allowed to be part of the variable name, so
+                                                       ' use the bstyle-format.
+                                                       Return "_" + n.bstyle_format()
+                                                   End Function).
+                                               collect_by(stream(Of String).collectors.to_str()).
+                                               ToString()
             End Function
 
             Public Function forward_to(ByVal other As class_def) As String

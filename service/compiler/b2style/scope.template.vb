@@ -122,6 +122,7 @@ Partial Public NotInheritable Class b2style
                 If Not tbr.with_types(types).build(n, d.injector) Then
                     Return [optional].of(False)
                 End If
+                ' TODO: Should return b2style name with namespace rather than bstyle.
                 extended_type_name = _namespace.bstyle_format.with_namespace(
                                          name.namespace(),
                                          d.template.extended_type_name(types))

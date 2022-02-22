@@ -56,6 +56,7 @@ Partial Public Class stream(Of T)
                        c)
     End Function
 
+    ' TODO: Rename to collect_to.
     Public Function collect(Of CT)() As CT
         Return collect_to(alloc(Of CT)())
     End Function
