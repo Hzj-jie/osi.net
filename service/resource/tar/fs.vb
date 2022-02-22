@@ -129,7 +129,7 @@ Partial Public NotInheritable Class tar
                                    map(Function(ByVal i As Int32) As String
                                            Return strcat(mem_stream_prefix, i)
                                        End Function).
-                                   collect(Of vector(Of String))())
+                                   collect_to(Of vector(Of String))())
         End Function
 
         Public Function [erase](ByVal v As vector(Of String)) As testing_fs
@@ -155,7 +155,7 @@ Partial Public NotInheritable Class tar
         Public Function list_files() As vector(Of String)
             Return m.stream().
                      map(m.first_selector).
-                     collect(Of vector(Of String))()
+                     collect_to(Of vector(Of String))()
         End Function
 
         Public Function exists(ByVal file As String) As Boolean Implements fs.exists

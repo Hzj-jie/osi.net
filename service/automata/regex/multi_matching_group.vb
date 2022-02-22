@@ -35,7 +35,7 @@ Partial Public Class rlexer
                     Next
                 End If
             End While
-            Return r.stream().collect(Of vector(Of UInt32))()
+            Return r.stream().collect_to(Of vector(Of UInt32))()
         End Function
     End Class
 End Class

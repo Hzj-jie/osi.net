@@ -97,7 +97,7 @@ Partial Public NotInheritable Class syntaxer
                          assert(Not t Is Nothing)
                          Return ignore_types.find(t.type) = ignore_types.end()
                      End Function).
-              collect(Of vector(Of typed_word))()
+              collect_to(Of vector(Of typed_word))()
         Dim root As typed_node = typed_node.of_root(v)
         Dim p As UInt32 = 0
         While p < v.size()

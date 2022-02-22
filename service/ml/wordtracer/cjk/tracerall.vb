@@ -137,11 +137,11 @@ Partial Public NotInheritable Class wordtracer
                                     e.second.
                                       stream().
                                       map(AddressOf tuple(Of Char, UInt32).from_first_const_pair).
-                                      collect(Of vector(Of tuple(Of Char, UInt32)))()
+                                      collect_to(Of vector(Of tuple(Of Char, UInt32)))()
                                 Return first_const_pair.of(e.first,
                                                            s.stream().
                                                              filter(ml.percentile.descent.filter(s, percentile)).
-                                                             collect(Of vector(Of tuple(Of Char, UInt32)))())
+                                                             collect_to(Of vector(Of tuple(Of Char, UInt32)))())
                             End Function).
                         foreach(Sub(ByVal e As first_const_pair(Of String, vector(Of tuple(Of Char, UInt32))))
                                     e.second.

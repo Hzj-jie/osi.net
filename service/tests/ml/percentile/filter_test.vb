@@ -19,7 +19,7 @@ Namespace percentile
                            map(Function(ByVal i As Int32) As tuple(Of String, UInt32)
                                    Return tuple.of(strcat("""", i.ToString(), """"), CUInt(i))
                                End Function).
-                           collect(Of vector(Of tuple(Of String, UInt32)))()
+                           collect_to(Of vector(Of tuple(Of String, UInt32)))()
         End Function
 
         Private Shared Function samples() As vector(Of tuple(Of String, UInt32))
@@ -29,14 +29,14 @@ Namespace percentile
         <test>
         Private Shared Sub ascent()
             Dim v As vector(Of tuple(Of String, UInt32)) = samples()
-            assertion.equal(v.stream().filter(p.ascent.filter(v, 0.1)).collect(Of vector(Of tuple(Of String, UInt32))),
+            assertion.equal(v.stream().filter(p.ascent.filter(v, 0.1)).collect_to(Of vector(Of tuple(Of String, UInt32))),
                             samples(0, 11))
         End Sub
 
         <test>
         Private Shared Sub desent()
             Dim v As vector(Of tuple(Of String, UInt32)) = samples()
-            assertion.equal(v.stream().filter(p.descent.filter(v, 0.1)).collect(Of vector(Of tuple(Of String, UInt32))),
+            assertion.equal(v.stream().filter(p.descent.filter(v, 0.1)).collect_to(Of vector(Of tuple(Of String, UInt32))),
                             samples(89, 100))
         End Sub
 
@@ -45,7 +45,7 @@ Namespace percentile
             Dim v As vector(Of tuple(Of String, UInt32)) = vector.of(tuple.of("1", uint32_1), tuple.of("1", uint32_1))
             assertion.equal(v.stream().
                               filter(p.descent.filter(v, 0.95)).
-                              collect(Of vector(Of tuple(Of String, UInt32))),
+                              collect_to(Of vector(Of tuple(Of String, UInt32))),
                             v)
         End Sub
 
@@ -54,7 +54,7 @@ Namespace percentile
             Dim v As vector(Of tuple(Of String, UInt32)) = vector.of(tuple.of("1", uint32_1), tuple.of("1", uint32_1))
             assertion.equal(v.stream().
                               filter(p.descent.filter(v, 0.1)).
-                              collect(Of vector(Of tuple(Of String, UInt32))),
+                              collect_to(Of vector(Of tuple(Of String, UInt32))),
                             v)
         End Sub
 
@@ -63,7 +63,7 @@ Namespace percentile
             Dim v As vector(Of tuple(Of String, UInt32)) = vector.of(tuple.of("1", uint32_1))
             assertion.equal(v.stream().
                               filter(p.descent.filter(v, 0.95)).
-                              collect(Of vector(Of tuple(Of String, UInt32))),
+                              collect_to(Of vector(Of tuple(Of String, UInt32))),
                             v)
         End Sub
 
@@ -72,7 +72,7 @@ Namespace percentile
             Dim v As vector(Of tuple(Of String, UInt32)) = vector.of(tuple.of("1", uint32_1))
             assertion.equal(v.stream().
                               filter(p.descent.filter(v, 0.1)).
-                              collect(Of vector(Of tuple(Of String, UInt32))),
+                              collect_to(Of vector(Of tuple(Of String, UInt32))),
                             v)
         End Sub
 

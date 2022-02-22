@@ -32,7 +32,7 @@ Partial Public NotInheritable Class bstyle
                                          assert(Not i Is Nothing)
                                          Return i.type
                                      End Function).
-                                 collect(Of vector(Of String))())
+                                 collect_to(Of vector(Of String))())
         End Function
 
         Public Shared Function of_callee(ByVal raw_name As String,
@@ -55,7 +55,7 @@ Partial Public NotInheritable Class bstyle
                                          scope.current().type_alias()(return_type)),
                                       parameters.stream().
                                                  map(AddressOf ta.canonical_of).
-                                                 collect(Of vector(Of builders.parameter))(),
+                                                 collect_to(Of vector(Of builders.parameter))(),
                                       paragraph).to(o)
         End Function
 

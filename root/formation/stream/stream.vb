@@ -56,7 +56,7 @@ Partial Public Class stream(Of T)
                        c)
     End Function
 
-    Public Function collect(Of CT)() As CT
+    Public Function collect_to(Of CT)() As CT
         Return collect_to(alloc(Of CT)())
     End Function
 
@@ -91,7 +91,7 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function to_array() As T()
-        Return +collect(Of vector(Of T))()
+        Return +collect_to(Of vector(Of T))()
     End Function
 
     Public Function flat_map(Of R)(ByVal f As Func(Of T, stream(Of R))) As stream(Of R)
@@ -161,7 +161,7 @@ Partial Public Class stream(Of T)
 
     Public Function intersect(ByVal other As stream(Of T)) As stream(Of T)
         assert(Not other Is Nothing)
-        Dim s As unordered_set(Of T) = other.collect(Of unordered_set(Of T))()
+        Dim s As unordered_set(Of T) = other.collect_to(Of unordered_set(Of T))()
         Return filter(Function(ByVal x As T) As Boolean
                           Return s.find(x) <> s.end()
                       End Function)
@@ -169,7 +169,7 @@ Partial Public Class stream(Of T)
 
     Public Function except(ByVal other As stream(Of T)) As stream(Of T)
         assert(Not other Is Nothing)
-        Dim s As unordered_set(Of T) = other.collect(Of unordered_set(Of T))()
+        Dim s As unordered_set(Of T) = other.collect_to(Of unordered_set(Of T))()
         Return filter(Function(ByVal x As T) As Boolean
                           Return s.find(x) = s.end()
                       End Function)

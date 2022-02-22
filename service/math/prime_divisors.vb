@@ -69,6 +69,6 @@ Public Module _prime_divisors
                          assert(Not x Is Nothing)
                          Return x.first
                      End Function).
-                 collect(Of vector(Of UInt32))()
+                 collect_to(Of vector(Of UInt32))()
     End Function
 End Module

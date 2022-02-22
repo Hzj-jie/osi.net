@@ -147,7 +147,7 @@ Namespace logic
                                                 assert(Not i Is Nothing)
                                                 Return pair.emplace_of(i.name, i.logic_type())
                                             End Function).
-                                        collect(Of vector(Of pair(Of String, String)))(),
+                                        collect_to(Of vector(Of pair(Of String, String)))(),
                              paragraph)
         End Function
 

@@ -12,7 +12,7 @@ Public NotInheritable Class golden_words
                                                filter(Function(ByVal i As String) As Boolean
                                                           Return i.strlen() > 1
                                                       End Function).
-                                               collect(Of unordered_set(Of String))()
+                                               collect_to(Of unordered_set(Of String))()
     End Function
 
     Private Sub New()

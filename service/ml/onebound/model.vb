@@ -167,9 +167,9 @@ Partial Public NotInheritable Class onebound(Of K)
                                                                     Function(ByVal v As Double) As Boolean
                                                                         Return v >= lower_bound
                                                                     End Function)).
-                                                                collect(Of unordered_map(Of K, Double))()
+                                                                collect_to(Of unordered_map(Of K, Double))()
                                                    End Function)).
-                               collect(Of unordered_map(Of K, unordered_map(Of K, Double)))())
+                               collect_to(Of unordered_map(Of K, unordered_map(Of K, Double)))())
         End Function
 
         Public Function flat_map() As stream(Of first_const_pair(Of const_pair(Of K, K), Double))
@@ -189,7 +189,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Function flat_to_str() As String
-            Return json_serializer.to_str(flat_map().collect(Of vector(Of const_pair(Of K, K)))())
+            Return json_serializer.to_str(flat_map().collect_to(Of vector(Of const_pair(Of K, K)))())
         End Function
 
         Public Function map(Of R)(ByVal f As Func(Of K, R)) As onebound(Of R).model
@@ -203,9 +203,9 @@ Partial Public NotInheritable Class onebound(Of K)
                                                                           f(k),
                                                                           v.stream().
                                                                             map(v.first_mapper(f)).
-                                                                            collect(Of unordered_map(Of R, Double))())
+                                                                            collect_to(Of unordered_map(Of R, Double))())
                                                            End Function)).
-                                              collect(Of unordered_map(Of R, unordered_map(Of R, Double)))())
+                                              collect_to(Of unordered_map(Of R, unordered_map(Of R, Double)))())
         End Function
 
         Public Function map(ByVal f As Func(Of K, K, Double, Double)) As onebound(Of K).model
@@ -223,16 +223,16 @@ Partial Public NotInheritable Class onebound(Of K)
                                                                Function(ByVal x As K, ByVal y As Double) As Double
                                                                    Return f(k, x, y)
                                                                End Function)).
-                                                       collect(Of unordered_map(Of K, Double))())
+                                                       collect_to(Of unordered_map(Of K, Double))())
                                       End Function)).
-                                      collect(Of unordered_map(Of K, unordered_map(Of K, Double)))())
+                                      collect_to(Of unordered_map(Of K, unordered_map(Of K, Double)))())
         End Function
 
         Public Function map_each(Of R)(ByVal f As Func(Of unordered_map(Of K, Double), R)) As unordered_map(Of K, R)
             assert(Not f Is Nothing)
             Return m.stream().
                      map(m.second_mapper(f)).
-                     collect(Of unordered_map(Of K, R))()
+                     collect_to(Of unordered_map(Of K, R))()
         End Function
 
         Public Function to_map(Of K2)() As unordered_map(Of K2, Double)
@@ -244,7 +244,7 @@ Partial Public NotInheritable Class onebound(Of K)
             Return flat_map().map(Function(ByVal v As first_const_pair(Of const_pair(Of K, K), Double)) As first_const_pair(Of K2, Double)
                                       Return first_const_pair.emplace_of(f(v.first.first, v.first.second), v.second)
                                   End Function).
-                              collect(Of unordered_map(Of K2, Double))()
+                              collect_to(Of unordered_map(Of K2, Double))()
         End Function
 
         Public Sub to_console()

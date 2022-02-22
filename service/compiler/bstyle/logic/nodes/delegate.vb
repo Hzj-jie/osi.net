@@ -37,7 +37,7 @@ Partial Public NotInheritable Class bstyle
             Dim return_type As String = ta(n.child(1).input_without_ignored())
             ps = ps.stream().
                     map(AddressOf ta.canonical_of).
-                    collect(Of vector(Of String))()
+                    collect_to(Of vector(Of String))()
             Return scope.current().delegates().define(return_type,
                                                       n.child(2).input_without_ignored(),
                                                       builders.parameter_type.from(ps)) AndAlso

@@ -88,7 +88,7 @@ Partial Public NotInheritable Class bstyle
                                                    Return name + "." + nname
                                                End Function)
                          End Function).
-                     collect(Of vector(Of builders.parameter))()
+                     collect_to(Of vector(Of builders.parameter))()
         End Function
 
         Public Function append_prefix(ByVal name As String) As struct_def

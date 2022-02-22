@@ -30,7 +30,7 @@ Partial Public NotInheritable Class onebound(Of K)
                                                      filter(x.second_filter(Function(ByVal y As Double) As Boolean
                                                                                 Return y >= p
                                                                             End Function)).
-                                                     collect(Of unordered_map(Of K, Double))()
+                                                     collect_to(Of unordered_map(Of K, Double))()
                                         End Function))
         End Function
 
