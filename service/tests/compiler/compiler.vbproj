@@ -67,6 +67,7 @@
     <Compile Include="b2style\b2style_test_data.vb" />
     <Content Include="b2style\codegen\class-constructor.txt" />
     <Content Include="b2style\codegen\delegate.txt" />
+    <Content Include="b2style\self-test\delegate-functions-with-same-name.txt" />
     <Compile Include="b2style\template_template_test.vb" />
     <Compile Include="bstyle\bstyle_compiler_error_test.vb" />
     <Compile Include="bstyle\bstyle_test.vb" />
