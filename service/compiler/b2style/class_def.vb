@@ -110,25 +110,9 @@ Partial Public NotInheritable Class b2style
                           ElseIf node.child(1).input().Equals("destruct") Then
                               has_destructor = True
                           End If
-                          ' No namespace is necessary, the first parameter contains namespace.
-                          ' Emmm, unfortunately, the parameter-name is not part of function_def.
-                          Dim o As New StringBuilder()
-                          o.Append(node.child(0).input()).
-                            Append(" ").
-                            Append(_namespace.with_global_namespace(node.child(1).input())).
-                            Append("(").
-                            Append(name.name()).
-                            Append("& this")
-                          ' With parameter list.
-                          If node.child_count() = 6 Then
-                              o.Append(", ").
-                                Append(node.child(3).input())
-                          End If
-                          o.Append(")").
-                            Append(node.last_child().input()).
-                            AppendLine() ' beautiful output.
                           Dim signature As New vector(Of name_with_namespace)()
                           signature.emplace_back(function_def.name_of(node.child(1).input()))
+                          Dim param_names As New vector(Of String)()
                           If node.child_count() = 6 Then
                               For i As UInt32 = 0 To node.child(3).child_count() - uint32_1
                                   Dim p As typed_node = node.child(3).child(i)
@@ -137,13 +121,15 @@ Partial Public NotInheritable Class b2style
                                   End If
                                   assert(p.type_name.Equals("param"))
                                   signature.emplace_back(function_def.type_of(p.child(0).input_without_ignored()))
+                                  param_names.emplace_back(p.child(1).input())
                               Next
                           End If
-                          with_func(New function_def(Me,
-                                                     function_def.type_of(node.child(0).input_without_ignored()),
-                                                     signature,
-                                                     t.second(),
-                                                     o.ToString()))
+                          Dim f As New function_def(Me,
+                                                    function_def.type_of(node.child(0).input_without_ignored()),
+                                                    signature,
+                                                    t.second(),
+                                                    "// This content should never be used.")
+                          with_func(f.with_content(f.declaration(param_names) + node.last_child().input()))
                       End Sub)
             If Not has_constructor Then
                 with_func(New function_def(Me,

@@ -111,7 +111,8 @@ Partial Public NotInheritable Class b2style
                 For i As Int32 = 1 To CInt(signature.size()) - 1
                     content.Append(",").
                             Append(signature(CUInt(i)).in_global_namespace()).
-                            Append(param_nameS(CUInt(i - 1)))
+                            Append(" ").
+                            Append(param_names(CUInt(i - 1)))
                 Next
                 content.Append(")")
                 Return content.ToString()
