@@ -21,10 +21,12 @@ Partial Public NotInheritable Class b2style
 
             Private ReadOnly c As class_def
             Private ReadOnly return_type As name_with_namespace
+            ' TODO: Move name out of signature
             Private ReadOnly signature As vector(Of name_with_namespace)
             Private ReadOnly type As type_t
             Public ReadOnly content As String
 
+            ' TODO: Using names with global_namespace does not provide extra benefit, may consider to use string.
             Public Function name() As name_with_namespace
                 Return signature(0)
             End Function
@@ -68,33 +70,50 @@ Partial Public NotInheritable Class b2style
                 Return New function_def(c, return_type, signature, type, content)
             End Function
 
-            Public Function forward_to(ByVal other As class_def) As String
-                assert(Not other Is Nothing)
+            Public Function with_name(ByVal name As String) As function_def
+                Dim signature As vector(Of name_with_namespace) = Me.signature.CloneT()
+                signature(0) = name_of(name)
+                Return New function_def(c, return_type, signature, type, content)
+            End Function
+
+            Private Function default_param_names() As vector(Of String)
+                Return streams.range(0, signature.size() - uint32_1).
+                               map(Function(ByVal index As Int32) As String
+                                       Return "i" + index.ToString()
+                                   End Function).
+                               collect(Of vector(Of String))()
+            End Function
+
+            Public Function invoke(ByVal param_names As vector(Of String)) As String
+                assert(Not param_names Is Nothing)
+                assert(param_names.size() = signature.size() - uint32_1)
                 Dim content As New StringBuilder()
-                content.Append("reinterpret_cast(this,").
-                        Append(other.name.in_global_namespace()).
-                        Append(");")
                 ' TODO: A better way to check the return type.
                 If Not return_type.name().Equals("void") Then
                     content.Append("return ")
                 End If
                 content.Append(name().in_global_namespace()).
-                    Append("(this")
-                For i As Int32 = 1 To CInt(signature.size()) - 1
+                        Append("(this")
+                Dim i As UInt32 = 0
+                While i < param_names.size()
                     content.Append(",").
-                            Append("i").
-                            Append(i - 1)
-                Next
+                            Append(param_names(i))
+                    i += uint32_1
+                End While
                 content.Append(");")
                 Return content.ToString()
             End Function
 
+            Public Function forward_to(ByVal other As class_def) As String
+                assert(Not other Is Nothing)
+                Return "reinterpret_cast(this," +
+                       other.name.in_global_namespace() +
+                       ");" +
+                       invoke(default_param_names())
+            End Function
+
             Public Function declaration() As String
-                Return declaration(streams.range(0, signature.size() - uint32_1).
-                                           map(Function(ByVal index As Int32) As String
-                                                   Return "i" + index.ToString()
-                                               End Function).
-                                           collect(Of vector(Of String))())
+                Return declaration(default_param_names())
             End Function
 
             Public Function declaration(ByVal param_names As vector(Of String)) As String
