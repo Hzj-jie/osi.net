@@ -93,8 +93,8 @@ Partial Public NotInheritable Class b2style
               map(Function(ByVal node As typed_node) As tuple(Of typed_node, function_def.type_t)
                       assert(Not node Is Nothing)
                       node = node.child()
-                      If node.type_name.Equals("virtual-function") Then
-                          Return tuple.of(node.child(1), function_def.type_t.virtual)
+                      If node.type_name.Equals("overridable-function") Then
+                          Return tuple.of(node.child(1), function_def.type_t._overridable)
                       End If
                       If node.type_name.Equals("override-function") Then
                           Return tuple.of(node.child(1), function_def.type_t.override)

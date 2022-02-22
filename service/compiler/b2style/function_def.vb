@@ -15,7 +15,7 @@ Partial Public NotInheritable Class b2style
 
             Public Enum type_t
                 pure
-                virtual
+                _overridable
                 override
             End Enum
 
