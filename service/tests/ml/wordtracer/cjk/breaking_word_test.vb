@@ -62,7 +62,7 @@ Namespace wordtracer.cjk
                                assert(Not j Is Nothing)
                                Return i.second.lambda.CompareTo(j.second.lambda)
                            End Function).
-                      collect(Of vector(Of first_const_pair(Of Char, ed)))()))
+                      collect_to(Of vector(Of first_const_pair(Of Char, ed)))()))
             End Using
         End Sub
 

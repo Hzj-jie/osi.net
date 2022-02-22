@@ -77,7 +77,7 @@ Partial Public NotInheritable Class bstyle
                                                      assert(Not p.name.null_or_whitespace())
                                                      Return p.name
                                                  End Function).
-                                             collect(Of vector(Of String))()
+                                             collect_to(Of vector(Of String))()
             scope.current().value_target().with_value(type, vs)
             Return vs
         End Function

@@ -60,7 +60,7 @@ Partial Public NotInheritable Class b2style
                                                                                         Append(f.forward_to(other)).
                                                                                         Append("}").ToString())
                                           End Function).
-                                      collect(Of vector(Of function_def))())
+                                      collect_to(Of vector(Of function_def))())
         End Sub
 
         Public Function vars() As stream(Of builders.parameter)
@@ -180,7 +180,7 @@ Partial Public NotInheritable Class b2style
                                   Return t.second() > 1
                               End Function).
                        map(AddressOf tuple.to_first_const_pair).
-                       collect(Of unordered_map(Of String, UInt32))()
+                       collect_to(Of unordered_map(Of String, UInt32))()
             If Not c.empty() Then
                 raise_error(error_type.user, "Duplicate variable in ", name, ": ", c)
                 Return False
@@ -196,7 +196,7 @@ Partial Public NotInheritable Class b2style
                                    Return t.second() > 1
                                End Function).
                         map(AddressOf tuple.to_first_const_pair).
-                        collect(Of unordered_map(Of function_def, UInt32))()
+                        collect_to(Of unordered_map(Of function_def, UInt32))()
             If Not c.empty() Then
                 raise_error(error_type.user, "Duplicate function in ", name, ": ", c)
                 Return False

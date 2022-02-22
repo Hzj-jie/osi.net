@@ -52,7 +52,7 @@ Partial Friend NotInheritable Class host
                                          Return New case_info(i.full_name, i)
                                      End Using
                                  End Function).
-                             collect(Of vector(Of case_info))()
+                             collect_to(Of vector(Of case_info))()
             End If
             Return New vector(Of case_info)()
         End Function

@@ -42,7 +42,7 @@ Partial Public NotInheritable Class boolaffinity(Of K)
             Return New model(m.stream().
                                map(m.second_mapper(Function(ByVal t As trend) As model.affinity
                                                    End Function)).
-                               collect(Of unordered_map(Of K, model.affinity))())
+                               collect_to(Of unordered_map(Of K, model.affinity))())
         End Function
     End Class
 End Class

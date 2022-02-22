@@ -37,7 +37,7 @@ Public NotInheritable Class tar_test
                                    assertion.equal(fs.stream_of(t.first()).unread_compare_to(t.second()), 0)
                                    Return t.first()
                                End Function).
-                           collect(Of vector(Of String))())
+                           collect_to(Of vector(Of String))())
     End Sub
 
     <test>
@@ -54,7 +54,7 @@ Public NotInheritable Class tar_test
                                    assertion.equal(fs.stream_of(t.first()).unread_compare_to(t.second()), 0)
                                    Return t.first()
                                End Function).
-                           collect(Of vector(Of String))())
+                           collect_to(Of vector(Of String))())
     End Sub
 
     <test>
@@ -93,12 +93,12 @@ Public NotInheritable Class tar_test
                                   assertion.equal(fs.stream_of(t.first()).unread_compare_to(t.second()), 0)
                                   Return t.first()
                               End Function).
-                          collect(Of vector(Of String))(),
+                          collect_to(Of vector(Of String))(),
                         streams.of(v1, v2, v3, v4, v5, v6, v7).
                                 flat_map(Function(ByVal x As vector(Of String)) As stream(Of String)
                                              Return x.stream()
                                          End Function).
-                                collect(Of vector(Of String))())
+                                collect_to(Of vector(Of String))())
     End Sub
 
     Private Sub New()

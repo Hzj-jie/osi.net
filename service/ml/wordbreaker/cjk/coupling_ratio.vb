@@ -60,12 +60,12 @@ Public NotInheritable Class coupling_ratio
                 percentile.ascent.ranking_samples(
                     i.flat_map().
                       map(first_const_pair(Of const_pair(Of T, T), Double).second_getter).
-                      collect(Of vector(Of Double))())
+                      collect_to(Of vector(Of Double))())
             Dim prefixes As unordered_map(Of T, percentile.ranking_samples(Of Double)) =
                 i.map_each(Function(ByVal x As unordered_map(Of T, Double)) As percentile.ranking_samples(Of Double)
                                Return percentile.ascent.ranking_samples(x.stream().
                                                                           map(x.second_selector).
-                                                                          collect(Of vector(Of Double))())
+                                                                          collect_to(Of vector(Of Double))())
                            End Function)
             Return i.map(calculate_mean(Function(ByVal c As Double) As Double
                                             Return all(c)
@@ -84,7 +84,7 @@ Public NotInheritable Class coupling_ratio
                                        Return first_const_pair.emplace_of(x.first,
                                                                           New exponential_distribution(x.second))
                                    End Function).
-                               collect(Of unordered_map(Of T, exponential_distribution))()
+                               collect_to(Of unordered_map(Of T, exponential_distribution))()
             Return i.map(calculate_mean(Function(ByVal c As Double) As Double
                                             Return all.cumulative_distribute(c)
                                         End Function,

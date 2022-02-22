@@ -26,7 +26,7 @@ Partial Public NotInheritable Class tar
                               map(Function(ByVal s As String) As String
                                       Return pather.default.relative_path(root, s)
                                   End Function).
-                              collect(Of vector(Of String))()
+                              collect_to(Of vector(Of String))()
         End Function
     End Class
 End Class

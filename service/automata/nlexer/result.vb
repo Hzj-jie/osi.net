@@ -46,7 +46,7 @@ Partial Public NotInheritable Class nlexer
                      map(Function(ByVal r As result) As typed_word
                              Return New typed_word(str, r.start, r.end, r.rule_index, c.type_name(r.rule_index))
                          End Function).
-                     collect(Of vector(Of typed_word))()
+                     collect_to(Of vector(Of typed_word))()
         End Function
     End Class
 
@@ -80,7 +80,7 @@ Partial Public NotInheritable Class nlexer
                              assert(r.end > r.start)
                              Return New str_result(strmid(raw, r.start, r.end - r.start), r.name)
                          End Function).
-                     collect(Of vector(Of str_result))()
+                     collect_to(Of vector(Of str_result))()
         End Function
 
         Public Shared Function map_from_str(ByVal raw As String) As Func(Of vector(Of result), vector(Of str_result))

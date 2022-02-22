@@ -115,7 +115,7 @@ Partial Public NotInheritable Class onebound(Of K)
                     r.emplace_back(v.stream().
                                      skip(skip).
                                      limit(If(i = er.splitters.size(), v.size(), er.splitters(i) + uint32_1) - skip).
-                                     collect(Of vector(Of K))())
+                                     collect_to(Of vector(Of K))())
                 Next
                 Return r
             End Get

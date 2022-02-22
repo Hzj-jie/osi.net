@@ -37,7 +37,7 @@ Partial Public Class rlexer
                 c = gs(index).match(i, poses(j))
                 assert(c Is Nothing OrElse o.emplace(c))
             Next
-            Return o.stream().collect(Of vector(Of UInt32))()
+            Return o.stream().collect_to(Of vector(Of UInt32))()
         End Function
 
         Public Function match(ByVal i As String,

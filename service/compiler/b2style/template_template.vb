@@ -36,7 +36,7 @@ Partial Public NotInheritable Class b2style
                                      ' Remove referneces in the name.
                                      Return _namespace.bstyle_format.of(builders.parameter_type.remove_ref(type))
                                  End Function).
-                             collect(Of vector(Of String))()))
+                             collect_to(Of vector(Of String))()))
             End Sub
 
             Public Function str() As String

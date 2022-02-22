@@ -211,7 +211,7 @@ Partial Public NotInheritable Class bstyle
             Return scope.current().structs().define(
                        n.child(1).word().str(),
                        parse_struct_body(n).map(AddressOf struct_def.nested).
-                                            collect(Of vector(Of builders.parameter))() +
+                                            collect_to(Of vector(Of builders.parameter))() +
                                             id)
         End Function
     End Class

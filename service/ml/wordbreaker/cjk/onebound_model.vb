@@ -23,7 +23,7 @@ Public NotInheritable Class onebound_model
                               As first_const_pair(Of String, Double)
                               Return first_const_pair.emplace_of(strcat(p.first.first, p.first.second), p.second)
                           End Function).
-                      collect(Of unordered_map(Of String, Double))()
+                      collect_to(Of unordered_map(Of String, Double))()
         Dim it As unordered_map(Of String, Double).iterator = m.begin()
         While it <> m.end()
             Dim s As String = (+it).first

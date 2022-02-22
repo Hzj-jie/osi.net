@@ -37,7 +37,7 @@ Public NotInheritable Class confidence
             Dim v As vector(Of tuple(Of Double, UInt32)) = Nothing
             v = streams.of(samples).
                         sort(tuple(Of Double, UInt32).first_comparer).
-                        collect(Of vector(Of tuple(Of Double, UInt32)))()
+                        collect_to(Of vector(Of tuple(Of Double, UInt32)))()
             Dim i As UInt32 = 0
             While i < v.size()
                 Dim p As Double = 0

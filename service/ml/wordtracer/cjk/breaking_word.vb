@@ -25,7 +25,7 @@ Partial Public NotInheritable Class wordtracer
                          map(r.second_mapper(Function(ByVal v As vector(Of Double)) As normal_distribution
                                                  Return normal_distribution.estimator.estimate(+v)
                                              End Function)).
-                         collect(Of unordered_map(Of Char, normal_distribution))()
+                         collect_to(Of unordered_map(Of Char, normal_distribution))()
             End Function
 
             Public Shared Function expo_distribute(ByVal m As onebound(Of Char).model) _
@@ -44,7 +44,7 @@ Partial Public NotInheritable Class wordtracer
                          map(r.second_mapper(Function(ByVal v As vector(Of Double)) As exponential_distribution
                                                  Return exponential_distribution.estimator.estimate(+v)
                                              End Function)).
-                         collect(Of unordered_map(Of Char, exponential_distribution))()
+                         collect_to(Of unordered_map(Of Char, exponential_distribution))()
             End Function
 
             Private Shared Function expo_map(ByVal f As Func(Of exponential_distribution, Double, Double),
@@ -60,7 +60,7 @@ Partial Public NotInheritable Class wordtracer
                                                 As first_const_pair(Of Char, Double)
                                                 Return first_const_pair.of(i.first, 1.0)
                                             End Function).
-                                        collect(Of unordered_map(Of Char, Double))()
+                                        collect_to(Of unordered_map(Of Char, Double))()
                            End If
                            Dim e As exponential_distribution = Nothing
                            e = exponential_distribution.
@@ -78,7 +78,7 @@ Partial Public NotInheritable Class wordtracer
                                         filter(Function(ByVal p As first_const_pair(Of Char, Double)) As Boolean
                                                    Return p.second >= threshold
                                                End Function).
-                                    collect(Of unordered_map(Of Char, Double))()
+                                    collect_to(Of unordered_map(Of Char, Double))()
                        End Function
             End Function
 
@@ -102,7 +102,7 @@ Partial Public NotInheritable Class wordtracer
                                      End Sub)
                 Return r.stream().
                          map(r.second_mapper(expo_map(f))).
-                         collect(Of unordered_map(Of Char, unordered_map(Of Char, Double)))()
+                         collect_to(Of unordered_map(Of Char, unordered_map(Of Char, Double)))()
             End Function
 
             Public Shared Function cumulative_distributes(ByVal m As onebound(Of Char).model) _
@@ -148,7 +148,7 @@ Partial Public NotInheritable Class wordtracer
                                                           )
                                                       )
                                            End Function).
-                                       collect(Of unordered_map(Of String, exponential_distribution))()
+                                       collect_to(Of unordered_map(Of String, exponential_distribution))()
                                  Return i.stream().
                                           map(Function(ByVal x As first_const_pair(Of String, UInt32)) _
                                                   As first_const_pair(Of String, Double)
@@ -163,9 +163,9 @@ Partial Public NotInheritable Class wordtracer
                                                                 As first_const_pair(Of String, Double)
                                                             Return first_const_pair.emplace_of(p.first, p.second.lambda)
                                                         End Function)).
-                                          collect(Of unordered_map(Of String, Double))()
+                                          collect_to(Of unordered_map(Of String, Double))()
                              End Function).
-                         collect(Of vector(Of unordered_map(Of String, Double)))()
+                         collect_to(Of vector(Of unordered_map(Of String, Double)))()
             End Function
 
             Public Shared Function bi_directional_expo_cumulative(ByVal m As onebound(Of Char).model) _
@@ -180,11 +180,11 @@ Partial Public NotInheritable Class wordtracer
                 Dim fm As unordered_map(Of Char, unordered_map(Of Char, Double)) =
                     f.stream().
                       map(f.second_mapper(expo_cumulative_map(0.5))).
-                      collect(Of unordered_map(Of Char, unordered_map(Of Char, Double)))()
+                      collect_to(Of unordered_map(Of Char, unordered_map(Of Char, Double)))()
                 Dim bm As unordered_map(Of Char, unordered_map(Of Char, Double)) =
                     b.stream().
                       map(b.second_mapper(expo_cumulative_map(0.5))).
-                      collect(Of unordered_map(Of Char, unordered_map(Of Char, Double)))()
+                      collect_to(Of unordered_map(Of Char, unordered_map(Of Char, Double)))()
                 Return fm.stream().
                           map(Function(ByVal p As first_const_pair(Of Char, unordered_map(Of Char, Double))) _
                                   As first_const_pair(Of Char, unordered_map(Of Char, Double))
@@ -201,12 +201,12 @@ Partial Public NotInheritable Class wordtracer
                                                filter(p.second.second_filter(Function(ByVal d As Double) As Boolean
                                                                                  Return d > 0
                                                                              End Function)).
-                                               collect(Of unordered_map(Of Char, Double))())
+                                               collect_to(Of unordered_map(Of Char, Double))())
                               End Function).
                           filter(fm.second_filter(Function(ByVal m2 As unordered_map(Of Char, Double)) As Boolean
                                                       Return Not m2.empty()
                                                   End Function)).
-                          collect(Of unordered_map(Of Char, unordered_map(Of Char, Double)))()
+                          collect_to(Of unordered_map(Of Char, unordered_map(Of Char, Double)))()
             End Function
 
             Private Sub New()
