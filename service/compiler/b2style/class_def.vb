@@ -94,7 +94,7 @@ Partial Public NotInheritable Class b2style
                       assert(Not node Is Nothing)
                       node = node.child()
                       If node.type_name.Equals("overridable-function") Then
-                          Return tuple.of(node.child(1), function_def.type_t._overridable)
+                          Return tuple.of(node.child(1), function_def.type_t.overridable)
                       End If
                       If node.type_name.Equals("override-function") Then
                           Return tuple.of(node.child(1), function_def.type_t.override)
@@ -129,7 +129,19 @@ Partial Public NotInheritable Class b2style
                                                     signature,
                                                     t.second(),
                                                     "// This content should never be used.")
-                          with_func(f.with_content(f.declaration(param_names) + node.last_child().input()))
+                          f = f.with_content(f.declaration(param_names) + node.last_child().input())
+                          If t.second() = function_def.type_t.pure Then
+                              with_func(f)
+                          Else
+                              If t.second() = function_def.type_t.overridable Then
+                                  with_var(builders.parameter.no_ref(f.delegate_type(), f.delegate_name()))
+                                  with_func(f.as_virtual())
+                              Else
+                                  assert(t.second() = function_def.type_t.override)
+                                  with_func(f.as_virtual()) ' derived_virtual_function
+                              End If
+                              init_func.vfuncs.Append(f.delegate_name() + "=" + f.name().in_global_namespace() + ";")
+                          End If
                       End Sub)
             If Not has_constructor Then
                 with_func(New function_def(Me,

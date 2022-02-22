@@ -15,7 +15,7 @@ Partial Public NotInheritable Class b2style
 
             Public Enum type_t
                 pure
-                _overridable
+                [overridable]
                 override
             End Enum
 
@@ -77,8 +77,13 @@ Partial Public NotInheritable Class b2style
                 Return New function_def(c, return_type, signature, type, content)
             End Function
 
+            Public Function as_virtual(ByVal other As class_def) As function_def
+                assert(Not other Is Nothing)
+                Return with_name(other.name.in_global_namespace() + delegate_name())
+            End Function
+
             Public Function as_virtual() As function_def
-                Return with_name("_virtual_" + name.name())
+                Return as_virtual(c)
             End Function
 
             Public Function delegate_type() As String
@@ -95,6 +100,10 @@ Partial Public NotInheritable Class b2style
                         Append(return_type.in_global_namespace()).
                         Append(">")
                 Return content.ToString()
+            End Function
+
+            Public Function delegate_name() As String
+                Return "_virtual_" + name.name()
             End Function
 
             Public Function forward_to(ByVal other As class_def) As String
