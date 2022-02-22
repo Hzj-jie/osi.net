@@ -21,10 +21,13 @@ Partial Public NotInheritable Class b2style
 
             Private ReadOnly c As class_def
             Private ReadOnly return_type As name_with_namespace
+            ' TODO: Move name out of signature
             Private ReadOnly signature As vector(Of name_with_namespace)
             Private ReadOnly type As type_t
             Public ReadOnly content As String
 
+            ' TODO: Using names with global namespace does not provide extra benefit, may consider to use string and
+            ' always prefix with global namespace.
             Public Function name() As name_with_namespace
                 Return signature(0)
             End Function
@@ -68,6 +71,32 @@ Partial Public NotInheritable Class b2style
                 Return New function_def(c, return_type, signature, type, content)
             End Function
 
+            Public Function with_name(ByVal name As String) As function_def
+                Dim signature As vector(Of name_with_namespace) = Me.signature.CloneT()
+                signature(0) = name_of(name)
+                Return New function_def(c, return_type, signature, type, content)
+            End Function
+
+            Public Function as_virtual() As function_def
+                Return with_name("_virtual_" + name.name())
+            End Function
+
+            Public Function delegate_type() As String
+                Dim content As New StringBuilder()
+                content.Append(_namespace.in_b2style_namespace("function")).
+                        Append("<").
+                        Append(c.name.in_global_namespace())
+                Dim i As UInt32 = 1
+                While i < signature.size()
+                    content.Append(",").
+                            Append(signature(i).in_global_namespace())
+                End While
+                content.Append(",").
+                        Append(return_type.in_global_namespace()).
+                        Append(">")
+                Return content.ToString()
+            End Function
+
             Public Function forward_to(ByVal other As class_def) As String
                 assert(Not other Is Nothing)
                 Dim content As New StringBuilder()
@@ -79,12 +108,14 @@ Partial Public NotInheritable Class b2style
                     content.Append("return ")
                 End If
                 content.Append(name().in_global_namespace()).
-                    Append("(this")
-                For i As Int32 = 1 To CInt(signature.size()) - 1
+                        Append("(this")
+                Dim i As UInt32 = 1
+                While i < signature.size()
                     content.Append(",").
                             Append("i").
                             Append(i - 1)
-                Next
+                    i += uint32_1
+                End While
                 content.Append(");")
                 Return content.ToString()
             End Function
@@ -108,12 +139,14 @@ Partial Public NotInheritable Class b2style
                         Append("(").
                         Append(c.name.in_global_namespace()).
                         Append("& this")
-                For i As Int32 = 1 To CInt(signature.size()) - 1
+                Dim i As UInt32 = 1
+                While i < signature.size()
                     content.Append(",").
-                            Append(signature(CUInt(i)).in_global_namespace()).
+                            Append(signature(i).in_global_namespace()).
                             Append(" ").
-                            Append(param_names(CUInt(i - 1)))
-                Next
+                            Append(param_names(i - uint32_1))
+                    i += uint32_1
+                End While
                 content.Append(")")
                 Return content.ToString()
             End Function
