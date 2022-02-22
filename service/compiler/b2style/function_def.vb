@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Text
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class b2style
@@ -79,17 +80,26 @@ Partial Public NotInheritable Class b2style
                 End If
                 content.Append(name().in_global_namespace()).
                     Append("(this")
-                For i As Int32 = 2 To CInt(signature.size()) - 1
+                For i As Int32 = 1 To CInt(signature.size()) - 1
                     content.Append(",").
                             Append("i").
-                            Append(i - 2)
+                            Append(i - 1)
                 Next
                 content.Append(");")
                 Return content.ToString()
             End Function
 
-            ' TODO: Add parameter names to avoid duplicating with class_def.
             Public Function declaration() As String
+                Return declaration(streams.range(0, signature.size() - uint32_1).
+                                           map(Function(ByVal index As Int32) As String
+                                                   Return "i" + index.ToString()
+                                               End Function).
+                                           collect(Of vector(Of String))())
+            End Function
+
+            Public Function declaration(ByVal param_names As vector(Of String)) As String
+                assert(Not param_names Is Nothing)
+                assert(param_names.size() = signature.size() - uint32_1)
                 ' No namespace is necessary, the first parameter contains namespace.
                 Dim content As New StringBuilder()
                 content.Append(return_type.in_global_namespace()).
@@ -98,11 +108,10 @@ Partial Public NotInheritable Class b2style
                         Append("(").
                         Append(c.name.in_global_namespace()).
                         Append("& this")
-                For i As Int32 = 2 To CInt(signature.size()) - 1
+                For i As Int32 = 1 To CInt(signature.size()) - 1
                     content.Append(",").
                             Append(signature(CUInt(i)).in_global_namespace()).
-                            Append("i").
-                            Append(i - 2)
+                            Append(param_nameS(CUInt(i - 1)))
                 Next
                 content.Append(")")
                 Return content.ToString()
