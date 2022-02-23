@@ -35,7 +35,7 @@ Partial Public NotInheritable Class b2style
             Public Function with_vfunc(ByVal f As function_def, ByVal class_def As class_def) As init_func_t
                 assert(Not f Is Nothing)
                 vfuncs.Append(
-                    "this." + f.delegate_name() + "=" + f.virtual_name(class_def) + ";")
+                    "this." + f.delegate_name() + "=" + f.with_class(class_def).virtual_name() + ";")
                 Return Me
             End Function
         End Class
@@ -62,8 +62,12 @@ Partial Public NotInheritable Class b2style
                          End Function).
                   intersect(funcs()).
                   foreach(Sub(ByVal f As function_def)
-                              with_func(f.with_class(Me).
-                                          with_content(f.virtual_declaration(Me) + "{" + f.forward_to(Me) + "}"))
+                              f = f.with_class(Me)
+                              with_func(f.with_name(f.virtual_name()).
+                                          with_content(f.virtual_declaration(other) +
+                                                       "{" +
+                                                       f.with_name(f.virtual_name()).forward_to(Me) +
+                                                       "}"))
                               init_func.with_vfunc(f, Me)
                           End Sub)
         End Sub
@@ -164,7 +168,7 @@ Partial Public NotInheritable Class b2style
                                   assert(t.second() = function_def.type_t.override)
                                   ' NVM, the one with base& this will be added during inherit_from.
                               End If
-                              scope.current().call_hierarchy().to(f.name().in_global_namespace())
+                              scope.current().call_hierarchy().to(f.virtual_name())
                               with_func(f.with_content(f.virtual_declaration(param_names) + node.last_child().input()))
                           End If
                       End Sub)

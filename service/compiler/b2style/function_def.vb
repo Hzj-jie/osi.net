@@ -77,21 +77,15 @@ Partial Public NotInheritable Class b2style
                 Return New function_def(class_def, return_type, signature, type, content)
             End Function
 
-            Private Function virtual_declaration(ByVal class_def As class_def,
-                                                 ByVal param_names As vector(Of String)) As String
-                Return declaration(virtual_name(class_def), class_def, param_names)
-            End Function
-
             Public Function virtual_declaration(ByVal param_names As vector(Of String)) As String
-                Return virtual_declaration(class_def, param_names)
+                Return declaration(virtual_name(), class_def, param_names)
             End Function
 
             Public Function virtual_declaration(ByVal class_def As class_def) As String
-                Return virtual_declaration(class_def, default_param_names())
+                Return declaration(virtual_name(), class_def, default_param_names())
             End Function
 
-            Public Function virtual_name(ByVal class_def As class_def) As String
-                assert(Not class_def Is Nothing)
+            Public Function virtual_name() As String
                 Return class_def.name.in_global_namespace() + delegate_name()
             End Function
 
@@ -145,14 +139,14 @@ Partial Public NotInheritable Class b2style
                     content.Append("return ")
                 End If
                 content.Append(name().in_global_namespace()).
-                        Append("(this,").
-                        Append(default_param_names().str(","))
+                        Append("(this").
+                        Append(default_param_names().stream().
+                                                     map(Function(ByVal s As String) As String
+                                                             Return "," + s
+                                                         End Function).
+                                                     collect_by(stream(Of String).collectors.to_str()))
                 content.Append(");")
                 Return content.ToString()
-            End Function
-
-            Public Function declaration() As String
-                Return declaration(default_param_names())
             End Function
 
             Private Function declaration(ByVal func_name As String,
@@ -184,6 +178,10 @@ Partial Public NotInheritable Class b2style
 
             Public Function declaration(ByVal param_names As vector(Of String)) As String
                 Return declaration(name().in_global_namespace(), class_def, param_names)
+            End Function
+
+            Public Function declaration() As String
+                Return declaration(default_param_names())
             End Function
 
             Public Overrides Function Equals(ByVal obj As Object) As Boolean
