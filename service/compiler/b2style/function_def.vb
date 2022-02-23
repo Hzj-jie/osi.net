@@ -153,8 +153,8 @@ Partial Public NotInheritable Class b2style
                                          ByVal class_def As class_def,
                                          ByVal param_names As vector(Of String)) As String
                 assert(Not func_name.null_or_whitespace())
-                assert(Not class_def Is Nothing)
-                assert(Not param_names Is Nothing)
+                assert(class_def IsNot Nothing)
+                assert(param_names IsNot Nothing)
                 assert(param_names.size() = signature.size() - uint32_1)
                 ' No namespace is necessary, the first parameter contains namespace.
                 Dim content As New StringBuilder()

@@ -33,7 +33,7 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public Function with_vfunc(ByVal f As function_def, ByVal class_def As class_def) As init_func_t
-                assert(Not f Is Nothing)
+                assert(f IsNot Nothing)
                 vfuncs.Append(
                     "this." + f.delegate_name() + "=" + f.with_class(class_def).virtual_name() + ";")
                 Return Me
@@ -54,10 +54,10 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Private Sub inherit_overrides(ByVal other As class_def)
-            assert(Not other Is Nothing)
+            assert(other IsNot Nothing)
             other.funcs().
                   filter(Function(ByVal f As function_def) As Boolean
-                             assert(Not f Is Nothing)
+                             assert(f IsNot Nothing)
                              Return f.is_virtual()
                          End Function).
                   intersect(funcs()).
@@ -77,7 +77,7 @@ Partial Public NotInheritable Class b2style
             _funcs.emplace_back(other.funcs().
                                       except(funcs()).
                                       filter(Function(ByVal f As function_def) As Boolean
-                                                 assert(Not f Is Nothing)
+                                                 assert(f IsNot Nothing)
                                                  Return Not f.name().name().Equals(init_func_name)
                                              End Function).
                                       map(Function(ByVal f As function_def) As function_def
