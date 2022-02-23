@@ -183,7 +183,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                 If retrieve_type_id(type_name_id, (+it2).first, v) AndAlso
                    retrieve_status_id(status_name_id, (+it2).second.first, t) AndAlso
                    retrieve_action(method_type, (+it2).second.second, a) Then
-                    If If(a IsNot Nothing,
+                    If Not If(a Is Nothing,
                               p.define(f, CUInt(v), t),
                               p.define(f, CUInt(v), t, a)) Then
                         Return False
