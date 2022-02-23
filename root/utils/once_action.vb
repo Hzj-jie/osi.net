@@ -20,12 +20,12 @@ Public NotInheritable Class once_action
     End Function
 
     Public Sub New(ByVal v As Action)
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         Me.v = one_off.[New](v)
     End Sub
 
     Public Shared Widening Operator CType(ByVal this As once_action) As Boolean
-        Return Not this Is Nothing AndAlso this.has()
+        Return this IsNot Nothing AndAlso this.has()
     End Operator
 
     Public Shared Operator Not(ByVal this As once_action) As Boolean
@@ -51,12 +51,12 @@ Public NotInheritable Class once_action(Of T)
     Private ReadOnly v As one_off(Of void(Of T))
 
     Public Sub New(ByVal v As void(Of T))
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         Me.v = one_off.[New](v)
     End Sub
 
     Public Shared Widening Operator CType(ByVal this As once_action(Of T)) As Boolean
-        Return Not this Is Nothing AndAlso this.has()
+        Return this IsNot Nothing AndAlso this.has()
     End Operator
 
     Public Shared Operator Not(ByVal this As once_action(Of T)) As Boolean

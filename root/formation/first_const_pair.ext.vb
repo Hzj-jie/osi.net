@@ -16,8 +16,8 @@ Partial Public NotInheritable Class first_const_pair
         If object_compare(this, that, c) Then
             Return c
         End If
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
+        assert(this IsNot Nothing)
+        assert(that IsNot Nothing)
         Return compare(this.first, that.first)
     End Function
 
@@ -27,7 +27,7 @@ Partial Public NotInheritable Class first_const_pair
         Private Shared ReadOnly hasher As _HASHER = alloc(Of _HASHER)()
 
         Public Overrides Function at(ByRef k As first_const_pair(Of T1, T2)) As UInt32
-            assert(Not k Is Nothing)
+            assert(k IsNot Nothing)
             Return hasher(k.first)
         End Function
 
@@ -48,8 +48,8 @@ Partial Public NotInheritable Class first_const_pair
             If object_compare(i, j, c) Then
                 Return c = 0
             End If
-            assert(Not i Is Nothing)
-            assert(Not j Is Nothing)
+            assert(i IsNot Nothing)
+            assert(j IsNot Nothing)
             Return equaler(i.first, j.first)
         End Function
     End Class
@@ -65,8 +65,8 @@ Partial Public NotInheritable Class first_const_pair
             If object_compare(i, j, c) Then
                 Return c
             End If
-            assert(Not i Is Nothing)
-            assert(Not j Is Nothing)
+            assert(i IsNot Nothing)
+            assert(j IsNot Nothing)
             Return comparer(i.first, j.first)
         End Function
     End Class

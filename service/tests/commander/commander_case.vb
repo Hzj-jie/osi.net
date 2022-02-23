@@ -219,7 +219,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
         End Function
 
         Protected Overrides Function create_case() As event_comb
-            assert(Not +opp Is Nothing OrElse Not enable_tcp)
+            assert(+opp IsNot Nothing OrElse Not enable_tcp)
             If enable_tcp AndAlso tcp_q Is Nothing Then
                 tcp_q = New questioner(+opp)
             End If
@@ -280,13 +280,13 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                                           Case Else
                                               assert(False)
                                       End Select
-                                      assert(Not ec Is Nothing)
+                                      assert(ec IsNot Nothing)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
                                   End Function,
                                   Function() As Boolean
                                       If ec.end_result() AndAlso
-                                         Not (+r) Is Nothing AndAlso
+                                         (+r) IsNot Nothing AndAlso
                                          (+r).action(Of Int32)() = answer_command AndAlso
                                          (+r).parameter(Of Int32, Int32)(answer_para) = para + 1 Then
                                           Select Case choice

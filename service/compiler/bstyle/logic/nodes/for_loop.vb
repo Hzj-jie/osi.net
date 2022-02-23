@@ -18,7 +18,7 @@ Partial Public NotInheritable Class bstyle
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
+            assert(b IsNot Nothing)
             Me.l = b
         End Sub
 
@@ -29,7 +29,7 @@ Partial Public NotInheritable Class bstyle
             Public ReadOnly paragraph As typed_node
 
             Public Sub New(ByVal n As typed_node)
-                assert(Not n Is Nothing)
+                assert(n IsNot Nothing)
                 assert(n.child_count() >= 6)
                 assert(n.child_count() <= 9)
                 Dim m As vector(Of typed_node) = n.named_children().nodes("semi-colon")
@@ -59,12 +59,12 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Return builders.start_scope(o).of(
                        Function() As Boolean
                            Using scope.current().start_scope()
                                Dim ref As New ref(n)
-                               If Not ref.first Is Nothing AndAlso Not l.of(ref.first).build(o) Then
+                               If ref.first IsNot Nothing AndAlso Not l.of(ref.first).build(o) Then
                                    Return False
                                End If
                                If Not condition_value(ref, o) Then

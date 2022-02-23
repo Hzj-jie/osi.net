@@ -29,8 +29,8 @@ Partial Public NotInheritable Class big_udec
     End Class
 
     Private Shared Function fast_reduce_fraction(ByVal n As big_uint, ByVal d As big_uint) As Boolean
-        assert(Not n Is Nothing)
-        assert(Not d Is Nothing)
+        assert(n IsNot Nothing)
+        assert(d IsNot Nothing)
 
         If n.is_zero() Then
             d.set_one()

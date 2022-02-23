@@ -10,7 +10,7 @@ Partial Public Class stream(Of T)
     Private ReadOnly e As container_operator(Of T).enumerator
 
     Public Sub New(ByVal e As container_operator(Of T).enumerator)
-        assert(Not e Is Nothing)
+        assert(e IsNot Nothing)
         Me.e = e
     End Sub
 
@@ -20,7 +20,7 @@ Partial Public Class stream(Of T)
 
     ' A + A + ... => A
     Public Function aggregate(ByVal f As Func(Of T, T, T), ByVal r As T) As T
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         While Not e.end()
             r = f(r, e.current())
             e.next()
@@ -37,7 +37,7 @@ Partial Public Class stream(Of T)
 
     ' A + A + ... => B
     Public Function collect(Of CT)(ByVal f As Action(Of CT, T), ByVal c As CT) As CT
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         While Not e.end()
             f(c, e.current())
             e.next()
@@ -74,7 +74,7 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Sub foreach(ByVal f As Action(Of T))
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         While Not e.end()
             Try
                 f(e.current())
@@ -122,7 +122,7 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function sort(ByVal cmp As Func(Of T, T, Int32)) As stream(Of T)
-        assert(Not cmp Is Nothing)
+        assert(cmp IsNot Nothing)
         Return map(Function(ByVal i As T) As compare_node
                        Return New compare_node(i, cmp)
                    End Function).
@@ -151,7 +151,7 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function concat(ByVal s As stream(Of T)) As stream(Of T)
-        assert(Not s Is Nothing)
+        assert(s IsNot Nothing)
         Return concat(s.e)
     End Function
 
@@ -160,7 +160,7 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function intersect(ByVal other As stream(Of T)) As stream(Of T)
-        assert(Not other Is Nothing)
+        assert(other IsNot Nothing)
         Dim s As unordered_set(Of T) = other.collect_to(Of unordered_set(Of T))()
         Return filter(Function(ByVal x As T) As Boolean
                           Return s.find(x) <> s.end()
@@ -168,7 +168,7 @@ Partial Public Class stream(Of T)
     End Function
 
     Public Function except(ByVal other As stream(Of T)) As stream(Of T)
-        assert(Not other Is Nothing)
+        assert(other IsNot Nothing)
         Dim s As unordered_set(Of T) = other.collect_to(Of unordered_set(Of T))()
         Return filter(Function(ByVal x As T) As Boolean
                           Return s.find(x) = s.end()

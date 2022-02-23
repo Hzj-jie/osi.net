@@ -15,7 +15,7 @@ Partial Friend NotInheritable Class host
     ' Use a standalone class to avoid executing host.cctor().
     Public NotInheritable Class case_type_restriction
         Public Shared Function accepted_case_type(ByVal j As Type) As Boolean
-            assert(Not j Is Nothing)
+            assert(j IsNot Nothing)
             Return Not j.IsAbstract() AndAlso
                    Not j.IsGenericType() AndAlso
                    (j.IsPublic() OrElse j.IsNestedPublic()) AndAlso
@@ -24,7 +24,7 @@ Partial Friend NotInheritable Class host
         End Function
 
         Public Shared Function accepted_case2_type(ByVal j As Type) As Boolean
-            assert(Not j Is Nothing)
+            assert(j IsNot Nothing)
             ' Other requirements are in the case2 implementation.
             Return j.IsPublic() OrElse j.IsNestedPublic()
         End Function
@@ -60,7 +60,7 @@ Partial Friend NotInheritable Class host
         ' This function cannot be placed in host class. It depends on functions of host, which will trigger a deadlock.
         Public Shared Sub load(ByVal cases As vector(Of case_info))
             ' Cannot use event_comb, allocators of some cases may use async_sync.
-            assert(Not cases Is Nothing)
+            assert(cases IsNot Nothing)
             concurrency_runner.execute(Sub(ByVal i As Assembly)
                                            Try
                                                For Each j As Type In i.GetTypes()
@@ -109,7 +109,7 @@ Partial Friend NotInheritable Class host
         If selector Is Nothing OrElse selector.empty() Then
             Return True
         End If
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Dim has_fit_true As Boolean = False
         Dim r As Byte = 0
         r = fit_patterns(c.name(), selector)

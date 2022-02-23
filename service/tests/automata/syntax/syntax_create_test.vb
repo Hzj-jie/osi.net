@@ -72,7 +72,7 @@ Namespace syntaxer
         Private Shared Sub merge_str_type(ByVal tokens() As String,
                                           ByVal result As map(Of String, UInt32),
                                           ByRef next_type As UInt32)
-            assert(Not result Is Nothing)
+            assert(result IsNot Nothing)
             If Not isemptyarray(tokens) Then
                 For j As Int32 = 0 To array_size_i(tokens) - 1
                     assert(result.find(tokens(j)) = result.end())
@@ -85,7 +85,7 @@ Namespace syntaxer
         Public Overrides Function run() As Boolean
             assert(Not isemptyarray(cases))
             For i As Int32 = 0 To array_size_i(cases) - 1
-                assert(Not cases(i) Is Nothing)
+                assert(cases(i) IsNot Nothing)
                 If cases(i).result Then
                     Dim collection As syntax_collection = Nothing
                     collection = New syntax_collection(cases(i).tokens, cases(i).syntaxes)

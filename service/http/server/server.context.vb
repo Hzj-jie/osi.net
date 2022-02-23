@@ -43,10 +43,10 @@ Partial Public NotInheritable Class server
                        ByVal context As HttpListenerContext,
                        ByVal ls As link_status,
                        ByVal encoder As Encoding)
-            assert(Not server Is Nothing)
-            assert(Not context Is Nothing)
-            assert(Not ls Is Nothing)
-            assert(Not encoder Is Nothing)
+            assert(server IsNot Nothing)
+            assert(context IsNot Nothing)
+            assert(ls IsNot Nothing)
+            assert(encoder IsNot Nothing)
             Me.server = server
             Me.context = context
             Me.ls = ls
@@ -58,7 +58,7 @@ Partial Public NotInheritable Class server
                                    Sub()
                                        f.run()
                                    End Sub)
-            assert(Not se Is Nothing)
+            assert(se IsNot Nothing)
         End Sub
 
         Public Sub finish()
@@ -152,7 +152,7 @@ Partial Public NotInheritable Class server
                                               Return False
                                           End Try
                                       End If
-                                      assert(Not b Is Nothing)
+                                      assert(b IsNot Nothing)
                                       ec = respond(b)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

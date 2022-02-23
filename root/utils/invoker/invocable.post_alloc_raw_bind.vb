@@ -38,7 +38,7 @@ Public Module _invocable_post_alloc_raw_bind
         If Not post_alloc_raw_bind(invoker, r) Then
             Return False
         End If
-        assert(Not invoker Is Nothing)
+        assert(invoker IsNot Nothing)
         If Not GetType(T).[is](invoker.method_info().ReturnType()) Then
             Return False
         End If
@@ -85,7 +85,7 @@ Public Module _invocable_post_alloc_raw_bind
         If Not pre_or_post_alloc_raw_bind(invoker, r) Then
             Return False
         End If
-        assert(Not invoker Is Nothing)
+        assert(invoker IsNot Nothing)
         If Not GetType(T).[is](invoker.method_info().ReturnType()) Then
             Return False
         End If

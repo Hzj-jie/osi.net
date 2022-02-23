@@ -17,7 +17,7 @@ Namespace dotnet
         End Enum
 
         Private Sub New(ByVal result As Assembly)
-            assert(Not result Is Nothing)
+            assert(result IsNot Nothing)
             Me.result = result
         End Sub
 

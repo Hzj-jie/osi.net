@@ -93,7 +93,7 @@ Public Module _compare
 
         Private Shared Function always_succeed(ByVal i As Func(Of T, T2, Int32)) _
                                               As _do_val_val_ref(Of T, T2, Int32, Boolean)
-            assert(Not i Is Nothing)
+            assert(i IsNot Nothing)
             Return Function(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
                        o = i(this, that)
                        Return True
@@ -160,7 +160,7 @@ Public Module _compare
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function comparable() As Boolean
-            Return Not c Is Nothing
+            Return c IsNot Nothing
         End Function
     End Class
 
@@ -260,8 +260,8 @@ Public Module _compare
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_this_compare(Of T)(ByVal this As Object, ByVal that As T, ByRef o As Int32) As Boolean
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
+        assert(this IsNot Nothing)
+        assert(that IsNot Nothing)
         Return type_comparer.compare(this.GetType(), GetType(T), this, that, o) OrElse
                runtime_this_to_t2(this, that, o) OrElse
                runtime_this_to_object(this, that, o)
@@ -269,8 +269,8 @@ Public Module _compare
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_that_compare(Of T)(ByVal this As T, ByVal that As Object, ByRef o As Int32) As Boolean
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
+        assert(this IsNot Nothing)
+        assert(that IsNot Nothing)
         Return type_comparer.compare(GetType(T), that.GetType(), this, that, o) OrElse
                runtime_that_to_t(this, that, o) OrElse
                runtime_that_to_object(this, that, o)
@@ -278,8 +278,8 @@ Public Module _compare
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_object_compare(ByVal this As Object, ByVal that As Object, ByRef o As Int32) As Boolean
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
+        assert(this IsNot Nothing)
+        assert(that IsNot Nothing)
         Return type_comparer.compare(this.GetType(), that.GetType(), this, that, o) OrElse
                runtime_this_to_object(this, that, o) OrElse
                runtime_that_to_object(this, that, o)
@@ -303,8 +303,8 @@ Public Module _compare
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function runtime_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
+        assert(this IsNot Nothing)
+        assert(that IsNot Nothing)
         Return type_comparer.compare(GetType(T), GetType(T2), this, that, o) OrElse
                runtime_this_to_t2(this, that, o) OrElse
                runtime_that_to_t(this, that, o) OrElse

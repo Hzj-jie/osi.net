@@ -52,7 +52,7 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
         Protected Overridable Function create_receiver(ByVal dev As ref_instance(Of COMPONENT_T),
                                                        ByRef o As shared_receiver) As Boolean
             o = create_receiver(dev)
-            Return Not o Is Nothing
+            Return o IsNot Nothing
         End Function
 
         Protected Overridable Function create_receiver(ByVal p As PARAMETER_T,

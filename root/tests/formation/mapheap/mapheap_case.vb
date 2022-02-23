@@ -41,7 +41,7 @@ Friend NotInheritable Class mapheap_case
 
     Private Function validation() As Boolean
         assert((m Is Nothing) = (c Is Nothing))
-        Return Not m Is Nothing
+        Return m IsNot Nothing
     End Function
 
     Private Shared Function rnd_key() As String
@@ -189,7 +189,7 @@ Friend NotInheritable Class mapheap_case
         If Not validation() Then
             Return
         End If
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         assertion.equal(m.size(), i.size())
         Dim it As map(Of String, Int64).iterator = Nothing
         it = m.begin()

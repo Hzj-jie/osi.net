@@ -20,7 +20,7 @@ Partial Public NotInheritable Class nlexer
         End Sub
 
         Public Shared Sub register(ByVal c As Char, ByVal f As Func(Of matcher, matcher))
-            assert(Not f Is Nothing)
+            assert(f IsNot Nothing)
             m.emplace(c, f)
         End Sub
 
@@ -42,7 +42,7 @@ Partial Public NotInheritable Class nlexer
                     group_end += 1
                 End If
             End If
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             i = CUInt(group_end)
             Return True
         End Function

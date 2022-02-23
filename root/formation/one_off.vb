@@ -34,11 +34,11 @@ Public NotInheritable Class one_off(Of T As Class)
     End Function
 
     Public Shared Widening Operator CType(ByVal this As one_off(Of T)) As Boolean
-        Return Not this Is Nothing AndAlso this.has()
+        Return this IsNot Nothing AndAlso this.has()
     End Operator
 
     Public Function has() As Boolean
-        Return Not i Is Nothing
+        Return i IsNot Nothing
     End Function
 
     Public Function [get](ByRef i As T) As Boolean

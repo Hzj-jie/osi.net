@@ -13,7 +13,7 @@ Partial Public NotInheritable Class bstyle
             Private ReadOnly v As New vector(Of builders.parameter)()
 
             Public Sub pack(ByVal n As stream(Of builders.parameter))
-                assert(Not n Is Nothing)
+                assert(n IsNot Nothing)
                 v.emplace_back(n.to_array())
             End Sub
 

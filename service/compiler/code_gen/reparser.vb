@@ -15,8 +15,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Private Shared ReadOnly parser As _PARSER = alloc(Of _PARSER)()
 
         Public Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
+            assert(n IsNot Nothing)
+            assert(o IsNot Nothing)
             Dim s As String = Nothing
             If Not dump(n, s) Then
                 If handle_not_dumpable(n, o) Then

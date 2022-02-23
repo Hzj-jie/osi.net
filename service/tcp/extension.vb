@@ -51,7 +51,7 @@ Public Module _extension
 
     <Extension()> Public Sub shutdown(ByVal client As TcpClient)
         On Error Resume Next
-        If Not client Is Nothing Then
+        If client IsNot Nothing Then
             client.GetStream().Close()
             client.GetStream().Dispose()
             client.Client().Shutdown(SocketShutdown.Both)
@@ -114,9 +114,9 @@ Public Module _extension
 
 #If 0 Then
     Private Function acceptable_socket_exception(ByVal ex As SocketException) As Boolean
-        Return assert(Not ex Is Nothing) AndAlso
+        Return assert(ex IsNot Nothing) AndAlso
                ex.SocketErrorCode() = SocketError.WouldBlock
-        Return assert(Not ex Is Nothing) AndAlso
+        Return assert(ex IsNot Nothing) AndAlso
                (ex.SocketErrorCode() = SocketError.WouldBlock OrElse
                 ex.SocketErrorCode() = SocketError.TimedOut)
     End Function

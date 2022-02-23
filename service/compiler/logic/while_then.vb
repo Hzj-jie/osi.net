@@ -17,13 +17,13 @@ Namespace logic
 
         Public Sub New(ByVal v As String, ByVal p As paragraph)
             assert(Not String.IsNullOrEmpty(v))
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             Me.v = v
             Me.p = p
         End Sub
 
         Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Dim var As variable = Nothing
             If Not variable.of(v, o, var) Then
                 Return False

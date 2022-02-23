@@ -12,7 +12,7 @@ Namespace logic
         Implements instruction_gen
 
         Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             o.emplace_back(instruction_builder.str(command.stop))
             Return True
         End Function

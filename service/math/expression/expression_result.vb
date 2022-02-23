@@ -38,14 +38,14 @@ Public Class expression_result(Of T)
         Me.lex_error = lex_error
         Me.parse_error = parse_error
         Me.rs = New lazier(Of String)(Function() As String
-                                          If Not err Is Nothing Then
+                                          If err IsNot Nothing Then
                                               Return err.str()
                                           ElseIf lex_error Then
                                               Return "expression lexing error"
                                           ElseIf parse_error Then
                                               Return "expression parsing error"
                                           Else
-                                              assert(Not o Is Nothing)
+                                              assert(o IsNot Nothing)
                                               Return o.output(r, base)
                                           End If
                                       End Function)
@@ -59,7 +59,7 @@ Public Class expression_result(Of T)
 
     Public Function has_result() As Boolean
         Return Not has_error() AndAlso
-               assert(Not r Is Nothing)
+               assert(r IsNot Nothing)
     End Function
 
     Public Function str() As String

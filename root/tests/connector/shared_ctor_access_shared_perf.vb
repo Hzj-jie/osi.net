@@ -38,7 +38,7 @@ Public NotInheritable Class shared_ctor_access_shared_perf
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Return assert(Not no_cctor.instance Is Nothing)
+            Return assert(no_cctor.instance IsNot Nothing)
         End Function
     End Class
 
@@ -46,7 +46,7 @@ Public NotInheritable Class shared_ctor_access_shared_perf
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Return assert(Not cctor.instance Is Nothing)
+            Return assert(cctor.instance IsNot Nothing)
         End Function
     End Class
 End Class

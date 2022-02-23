@@ -16,8 +16,8 @@ Imports responder = osi.service.tcp.responder
 
 Public Class server
     Private Shared Function create_input_iosys(ByVal pp As powerpoint, ByVal c As TcpClient) As input
-        assert(Not pp Is Nothing)
-        assert(Not c Is Nothing)
+        assert(pp IsNot Nothing)
+        assert(c IsNot Nothing)
         Dim bytes_ragent As bytes_ragent(Of input_case) = Nothing
         bytes_ragent = New bytes_ragent(Of input_case)(Function(r As pointer(Of Byte())) As event_comb
                                                            Return pp.as_block(c).receive(r)

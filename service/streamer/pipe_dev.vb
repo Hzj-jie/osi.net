@@ -17,7 +17,7 @@ Public Class pipe_dev(Of T)
         Public ReadOnly pipe As pipe(Of T)
 
         Public Sub New(ByVal pipe As pipe(Of T))
-            assert(Not pipe Is Nothing)
+            assert(pipe IsNot Nothing)
             Me.pipe = pipe
         End Sub
 
@@ -30,7 +30,7 @@ Public Class pipe_dev(Of T)
     Private ReadOnly sensor As sensor
 
     Public Sub New(ByVal pipe As pipe(Of T))
-        assert(Not pipe Is Nothing)
+        assert(pipe IsNot Nothing)
         Me.pipe = pipe
         Me.sensor = New indicator_sensor_adapter(New pipe_indicator(pipe))
     End Sub

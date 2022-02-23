@@ -12,8 +12,8 @@ Imports osi.root.constants
 Friend Module _comparer_registry
     Sub New()
         comparer.register(Function(ByVal i As IPAddress, ByVal j As IPAddress) As Int32
-                              assert(Not i Is Nothing)
-                              assert(Not j Is Nothing)
+                              assert(i IsNot Nothing)
+                              assert(j IsNot Nothing)
                               If i.AddressFamily() = j.AddressFamily() Then
                                   Return memcmp(i.GetAddressBytes(), j.GetAddressBytes())
                               Else

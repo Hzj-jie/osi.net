@@ -87,7 +87,7 @@ Public Class client_dev
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
                                          result.status() = HttpStatusCode.OK AndAlso
-                                         Not result.headers() Is Nothing AndAlso
+                                         result.headers() IsNot Nothing AndAlso
                                          strsame(result.headers()(HttpResponseHeader.ContentType),
                                                  constants.commander_content_type,
                                                  strlen(constants.commander_content_type),
@@ -97,7 +97,7 @@ Public Class client_dev
     End Function
 
     Protected Shared Function identity(ByVal c As client_dev) As String
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Return c.id
     End Function
 

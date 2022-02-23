@@ -14,12 +14,12 @@ Public Class lifetime_binder(Of T As Class)
     End Sub
 
     Public Sub insert(ByVal i As T)
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         assert(s.insert(i))
     End Sub
 
     Public Sub [erase](ByVal i As T)
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         assert(s.erase(i))
     End Sub
 

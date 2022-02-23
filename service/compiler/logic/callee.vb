@@ -30,7 +30,7 @@ Namespace logic
                        ByVal ParamArray parameters() As pair(Of String, String))
             assert(Not String.IsNullOrEmpty(name))
             assert(Not String.IsNullOrEmpty(type))
-            assert(Not paragraph Is Nothing)
+            assert(paragraph IsNot Nothing)
             Me.name = name
             Me.type = type
             Me.parameters = builders.parameter.from(parameters)
@@ -38,7 +38,7 @@ Namespace logic
         End Sub
 
         Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Dim pos As UInt32 = o.size()
             o.emplace_back("")
             If Not scope.current().anchors().define(name, o, type, parameters) Then

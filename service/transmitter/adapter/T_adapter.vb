@@ -9,8 +9,8 @@ Public Class T_adapter(Of T)
     Private ReadOnly attr As type_attribute
 
     Public Sub New(ByVal d As T, ByVal attr As type_attribute)
-        assert(Not d Is Nothing)
-        assert(Not attr Is Nothing)
+        assert(d IsNot Nothing)
+        assert(attr IsNot Nothing)
         Me.underlying_device = d
         Me.attr = attr
     End Sub

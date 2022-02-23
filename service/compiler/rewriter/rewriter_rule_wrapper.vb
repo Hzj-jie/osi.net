@@ -47,7 +47,7 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of String),
 
         Protected NotOverridable Overrides Function import(ByVal e As exportable,
                                                            ByVal o As typed_node_writer) As Boolean
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Return text_import(o.dump(), e)
         End Function
 

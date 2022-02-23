@@ -14,7 +14,7 @@ Friend Module _registry
     Private Sub parse_http_patameters(ByVal v As var, ByRef host As String, ByRef port As UInt16)
         Const p_host As String = "host"
         Const p_port As String = "port"
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         v.bind(p_host, p_port)
         host = v(p_host)
         port = v(p_port).to(Of UInt16)()

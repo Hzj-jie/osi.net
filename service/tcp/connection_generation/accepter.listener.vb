@@ -26,7 +26,7 @@ Partial Public Class accepter
             MyBase.New()
             assert(port >= IPEndPoint.MinPort AndAlso port <= IPEndPoint.MaxPort)
             l = create_listener(address, port)
-            valid = (Not l Is Nothing)
+            valid = (l IsNot Nothing)
         End Sub
 
         Public Function port() As UInt16
@@ -58,7 +58,7 @@ Partial Public Class accepter
                                   End Function,
                                   Function() As Boolean
                                       If ec.end_result() AndAlso
-                                         Not +c Is Nothing Then
+                                         +c IsNot Nothing Then
                                           RaiseEvent accepted(+c)
                                           Return goto_end()
                                       Else

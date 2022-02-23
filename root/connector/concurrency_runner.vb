@@ -86,7 +86,7 @@ Public NotInheritable Class concurrency_runner(Of _SIZE As _int64)
     End Sub
 
     Public Sub execute(Of T)(ByVal v As Action(Of T), ByVal ParamArray c() As T)
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         If isemptyarray(c) Then
             Return
         End If

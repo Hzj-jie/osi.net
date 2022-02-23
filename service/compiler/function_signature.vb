@@ -23,7 +23,7 @@ Public Class function_signature
                    ByVal parameters As const_array(Of builders.parameter_type))
         assert(Not name.null_or_whitespace())
         assert(Not return_type.null_or_whitespace())
-        assert(Not parameters Is Nothing)
+        assert(parameters IsNot Nothing)
         Me.name = name
         Me.return_type = return_type
         Me.parameters = parameters

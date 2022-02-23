@@ -36,7 +36,7 @@ Public Module _sharedtransmitter_collection
                                         ByRef component As ref_instance(Of COMPONENT_T),
                                         ByRef dispenser As dispenser(Of DATA_T, const_pair(Of ADDRESS_T, PORT_T))) _
                                        As Boolean
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Dim local_port As PORT_T = Nothing
         Return this.[New](p, local_port, component) AndAlso
                this.[New](p, local_port, component, dispenser)

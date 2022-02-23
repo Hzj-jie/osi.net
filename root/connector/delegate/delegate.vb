@@ -50,7 +50,7 @@ Public Module _delegate
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function nothrow(Of RT) _
                     (ByVal d As Func(Of RT)) As RT
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             Return d()
         Catch ex As Exception
@@ -63,7 +63,7 @@ Public Module _delegate
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub nothrow _
                     (ByVal d As Action)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             d()
         Catch ex As Exception
@@ -114,7 +114,7 @@ Public Module _delegate
     Public Function nothrow(Of T0, RT) _
                     (ByVal d As _do(Of T0, RT),
                      ByRef i0 As T0) As RT
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             Return d(i0)
         Catch ex As Exception
@@ -128,7 +128,7 @@ Public Module _delegate
     Public Sub nothrow(Of T0) _
                     (ByVal d As void(Of T0),
                      ByRef i0 As T0)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             d(i0)
         Catch ex As Exception
@@ -179,7 +179,7 @@ Public Module _delegate
     Public Function nothrow(Of T0, RT) _
                     (ByVal d As Func(Of T0, RT),
                      ByRef i0 As T0) As RT
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             Return d(i0)
         Catch ex As Exception
@@ -193,7 +193,7 @@ Public Module _delegate
     Public Sub nothrow(Of T0) _
                     (ByVal d As Action(Of T0),
                      ByRef i0 As T0)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             d(i0)
         Catch ex As Exception
@@ -247,7 +247,7 @@ Public Module _delegate
                     (ByVal d As _do(Of T0, T1, RT),
                      ByRef i0 As T0,
                      ByRef i1 As T1) As RT
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             Return d(i0, i1)
         Catch ex As Exception
@@ -262,7 +262,7 @@ Public Module _delegate
                     (ByVal d As void(Of T0, T1),
                      ByRef i0 As T0,
                      ByRef i1 As T1)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             d(i0, i1)
         Catch ex As Exception
@@ -316,7 +316,7 @@ Public Module _delegate
                     (ByVal d As Func(Of T0, T1, RT),
                      ByRef i0 As T0,
                      ByRef i1 As T1) As RT
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             Return d(i0, i1)
         Catch ex As Exception
@@ -331,7 +331,7 @@ Public Module _delegate
                     (ByVal d As Action(Of T0, T1),
                      ByRef i0 As T0,
                      ByRef i1 As T1)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             d(i0, i1)
         Catch ex As Exception
@@ -388,7 +388,7 @@ Public Module _delegate
                      ByRef i0 As T0,
                      ByRef i1 As T1,
                      ByRef i2 As T2) As RT
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             Return d(i0, i1, i2)
         Catch ex As Exception
@@ -404,7 +404,7 @@ Public Module _delegate
                      ByRef i0 As T0,
                      ByRef i1 As T1,
                      ByRef i2 As T2)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             d(i0, i1, i2)
         Catch ex As Exception
@@ -461,7 +461,7 @@ Public Module _delegate
                      ByRef i0 As T0,
                      ByRef i1 As T1,
                      ByRef i2 As T2) As RT
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             Return d(i0, i1, i2)
         Catch ex As Exception
@@ -477,7 +477,7 @@ Public Module _delegate
                      ByRef i0 As T0,
                      ByRef i1 As T1,
                      ByRef i2 As T2)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             d(i0, i1, i2)
         Catch ex As Exception
@@ -537,7 +537,7 @@ Public Module _delegate
                      ByRef i1 As T1,
                      ByRef i2 As T2,
                      ByRef i3 As T3) As RT
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             Return d(i0, i1, i2, i3)
         Catch ex As Exception
@@ -554,7 +554,7 @@ Public Module _delegate
                      ByRef i1 As T1,
                      ByRef i2 As T2,
                      ByRef i3 As T3)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             d(i0, i1, i2, i3)
         Catch ex As Exception
@@ -614,7 +614,7 @@ Public Module _delegate
                      ByRef i1 As T1,
                      ByRef i2 As T2,
                      ByRef i3 As T3) As RT
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             Return d(i0, i1, i2, i3)
         Catch ex As Exception
@@ -631,7 +631,7 @@ Public Module _delegate
                      ByRef i1 As T1,
                      ByRef i2 As T2,
                      ByRef i3 As T3)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             d(i0, i1, i2, i3)
         Catch ex As Exception
@@ -694,7 +694,7 @@ Public Module _delegate
                      ByRef i2 As T2,
                      ByRef i3 As T3,
                      ByRef i4 As T4) As RT
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             Return d(i0, i1, i2, i3, i4)
         Catch ex As Exception
@@ -712,7 +712,7 @@ Public Module _delegate
                      ByRef i2 As T2,
                      ByRef i3 As T3,
                      ByRef i4 As T4)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Try
             d(i0, i1, i2, i3, i4)
         Catch ex As Exception

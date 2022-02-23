@@ -25,8 +25,8 @@ Partial Public NotInheritable Class var
         If c <> object_compare_undetermined Then
             Return c
         End If
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
+        assert(this IsNot Nothing)
+        assert(that IsNot Nothing)
         c = cc.compare(this.raw, that.raw)
         If c <> 0 Then
             Return c

@@ -20,7 +20,7 @@ Partial Public Class redundance_distributor
     Private ReadOnly sq As syncqueue
 
     Private Sub New(ByVal c As istrkeyvt_container, ByVal verify_rate As Int32)
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Me.container = c
         Me.verify_rate = verify_rate
         Me.exp = New ref(Of singleentry)()
@@ -88,7 +88,7 @@ Partial Public Class redundance_distributor
                                    ByVal init_value As Int64,
                                    ByVal choose As Func(Of Int64, Int64, Boolean),
                                    ByVal result As ref(Of Int64)) As event_comb
-        assert(Not choose Is Nothing)
+        assert(choose IsNot Nothing)
         Return distribute(container,
                           d,
                           result,
@@ -272,7 +272,7 @@ Partial Public Class redundance_distributor
                                   tecs = New vector(Of event_comb)()
                                   ss = New vector(Of stringtrie(Of Boolean))()
                                   For i As Int32 = 0 To array_size(ecs) - 1
-                                      If ecs(i).end_result() AndAlso Not (+(nr(i))) Is Nothing Then
+                                      If ecs(i).end_result() AndAlso (+(nr(i))) IsNot Nothing Then
                                           Dim j As Int32 = 0
                                           j = i
                                           ss.emplace_back(New stringtrie(Of Boolean)())

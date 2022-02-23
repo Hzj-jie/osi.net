@@ -42,7 +42,7 @@ Partial Public Class listener
 
     Private Sub New(ByVal p As powerpoint, ByVal r As receiver)
         MyBase.New(r)
-        assert(Not p Is Nothing)
+        assert(p IsNot Nothing)
         Me.p = p
         If p.accept_new_connection Then
             AddHandler MyBase.unaccepted, Sub(buff() As Byte, remote As IPEndPoint)

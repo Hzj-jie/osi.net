@@ -50,14 +50,14 @@ Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of 
     End Function
 
     Public Function [with](ByVal a As Action(Of code_gens(Of WRITER))) As RT
-        assert(Not a Is Nothing)
+        assert(a IsNot Nothing)
         v.emplace_back(a)
         Return this()
     End Function
 
     Public Function [with](Of T As code_gen(Of WRITER))(ByVal instance As T) As RT
         v.emplace_back(Sub(ByVal b As code_gens(Of WRITER))
-                           assert(Not b Is Nothing)
+                           assert(b IsNot Nothing)
                            b.register(instance)
                        End Sub)
         Return this()
@@ -65,7 +65,7 @@ Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of 
 
     Public Function [with](Of T As code_gen(Of WRITER))() As RT
         v.emplace_back(Sub(ByVal b As code_gens(Of WRITER))
-                           assert(Not b Is Nothing)
+                           assert(b IsNot Nothing)
                            b.register(Of T)()
                        End Sub)
         Return this()
@@ -91,7 +91,7 @@ Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of 
 
     Public Shared Widening Operator CType(ByVal this As code_gens_registrar(Of WRITER, RT)) _
                                          As vector(Of Action(Of code_gens(Of WRITER)))
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Return this.v
     End Operator
 End Class

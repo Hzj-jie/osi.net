@@ -34,7 +34,7 @@ Public NotInheritable Class gc_behavior_test
         Private ReadOnly f As cc
 
         Public Sub New(ByVal e As atomic_int)
-            assert(Not e Is Nothing)
+            assert(e IsNot Nothing)
             Me.a = gc_behavior_test.a
             Me.b = direct_cast(Of String)(gc_behavior_test.b.Clone())
             Me.c = New Object()

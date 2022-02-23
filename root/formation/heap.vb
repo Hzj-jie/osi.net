@@ -154,7 +154,7 @@ Public Class heap(Of T As IComparable(Of T))
 
     <copy_constructor>
     Protected Sub New(ByVal d As vector(Of T))
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Me.d = d
     End Sub
 
@@ -217,7 +217,7 @@ Public Class heap(Of T As IComparable(Of T))
         If cmp <> object_compare_undetermined Then
             Return cmp
         End If
-        assert(Not other Is Nothing)
+        assert(other IsNot Nothing)
         If size() <> other.size() Then
             Return CInt(size()) - CInt(other.size())
         End If

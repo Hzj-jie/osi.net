@@ -13,7 +13,7 @@ Public Module _strsep
                              ByVal sep As String,
                              ByVal indexof As Func(Of String, String, Boolean, Int64),
                              ByVal case_sensitive As Boolean) As Boolean
-        assert(Not indexof Is Nothing)
+        assert(indexof IsNot Nothing)
         Dim i As Int64 = 0
         i = indexof(input, sep, case_sensitive)
         If i = npos Then
@@ -48,8 +48,8 @@ Public Module _strsep
     <Extension()> Public Sub strsep(ByVal s As String,
                                     ByVal sep As Func(Of Char, Boolean),
                                     ByVal f As Action(Of UInt32, UInt32))
-        assert(Not sep Is Nothing)
-        assert(Not f Is Nothing)
+        assert(sep IsNot Nothing)
+        assert(f IsNot Nothing)
         If s.null_or_empty() Then
             Return
         End If

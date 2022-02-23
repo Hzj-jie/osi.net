@@ -59,8 +59,8 @@ Public NotInheritable Class constructor(Of T)
                                   End If
                                   Dim allocator As Func(Of var, ref(Of T), event_comb) = Nothing
                                   If lt.get(v("type"), allocator) OrElse
-                                     (Not l Is Nothing AndAlso eva(allocator, l)) Then
-                                      assert(Not allocator Is Nothing)
+                                     (l IsNot Nothing AndAlso eva(allocator, l)) Then
+                                      assert(allocator IsNot Nothing)
                                       o.renew()
                                       ec = allocator(v, o)
                                       Return waitfor(ec) AndAlso

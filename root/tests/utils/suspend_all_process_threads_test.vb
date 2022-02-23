@@ -32,8 +32,8 @@ Public Class suspend_all_process_threads_test
             End Function
 
             Private Sub exec(ByVal p As ref(Of UInt32), ByVal stopping As ref(Of Boolean))
-                assert(Not p Is Nothing)
-                assert(Not stopping Is Nothing)
+                assert(p IsNot Nothing)
+                assert(stopping IsNot Nothing)
                 While Not +stopping
                     eva(p, (+p) + uint32_1)
                     sleep(100)

@@ -121,7 +121,7 @@ Public Class datagram_trait
     End Function
 
     Public Shared Shadows Function [New](ByVal t As trait) As datagram_trait
-        assert(Not t Is Nothing)
+        assert(t IsNot Nothing)
         Return datagram_trait.[New]().
                    with_concurrent_operation(t.concurrent_operation()).
                    with_transmit_mode(t.transmit_mode()).

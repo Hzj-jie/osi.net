@@ -36,7 +36,7 @@ Friend NotInheritable Class bytes_serializer_registry2
                                                 Return array_size(i)
                                             End Function,
                                             Function(ByVal i() As Byte, ByVal o As MemoryStream) As Boolean
-                                                assert(Not o Is Nothing)
+                                                assert(o IsNot Nothing)
                                                 If isemptyarray(i) Then
                                                     Return True
                                                 End If
@@ -52,7 +52,7 @@ Friend NotInheritable Class bytes_serializer_registry2
                                                 Return i.read(o)
                                             End Function)
         bytes_serializer.fixed.register(Function(ByVal i As Decimal, ByVal o As MemoryStream) As Boolean
-                                            assert(Not o Is Nothing)
+                                            assert(o IsNot Nothing)
                                             Dim b() As Int32 = Nothing
                                             b = Decimal.GetBits(i)
                                             assert(array_size(b) = 4)
@@ -68,7 +68,7 @@ Friend NotInheritable Class bytes_serializer_registry2
                                             Return True
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As Decimal) As Boolean
-                                            assert(Not i Is Nothing)
+                                            assert(i IsNot Nothing)
                                             Dim b() As Int32 = Nothing
                                             ReDim b(4 - 1)
                                             For j As Int32 = 0 To array_size_i(b) - 1
@@ -84,12 +84,12 @@ Friend NotInheritable Class bytes_serializer_registry2
                                             End Try
                                         End Function)
         bytes_serializer.byte_size.register(Function(ByVal i As MemoryStream) As UInt32
-                                                assert(Not i Is Nothing)
+                                                assert(i IsNot Nothing)
                                                 assert(i.Length() <= max_uint32)
                                                 Return CUInt(i.Length())
                                             End Function,
                                             Function(ByVal i As MemoryStream, ByVal o As MemoryStream) As Boolean
-                                                assert(Not i Is Nothing)
+                                                assert(i IsNot Nothing)
                                                 i.CopyTo(o)
                                                 Return True
                                             End Function,

@@ -18,9 +18,9 @@ Public MustInherit Class itoken_challenger(Of COLLECTION, CONNECTION)
     Protected ReadOnly c As CONNECTION
 
     Protected Sub New(ByVal info As token_info(Of COLLECTION, CONNECTION), ByVal p As COLLECTION, ByVal c As CONNECTION)
-        assert(Not info Is Nothing)
-        assert(Not p Is Nothing)
-        assert(Not c Is Nothing)
+        assert(info IsNot Nothing)
+        assert(p IsNot Nothing)
+        assert(c IsNot Nothing)
         Me.info = info
         Me.p = p
         Me.c = c

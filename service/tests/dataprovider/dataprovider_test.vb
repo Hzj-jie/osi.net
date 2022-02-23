@@ -19,7 +19,7 @@ Public Class dataprovider_test
                                               "forth text"}
 
     Private Overloads Shared Function run(ByVal ctor As Func(Of idataprovider)) As Boolean
-        assert(Not ctor Is Nothing)
+        assert(ctor IsNot Nothing)
         File.Delete(filename)
         Dim sz As Int64 = 0
         sz = collection.dataprovider_count()

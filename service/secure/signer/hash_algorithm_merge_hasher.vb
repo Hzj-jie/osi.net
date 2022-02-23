@@ -20,7 +20,7 @@ Namespace sign
 
         Shared Sub New()
             create = -alloc(Of T)()
-            assert(Not create Is Nothing)
+            assert(create IsNot Nothing)
         End Sub
 
         Protected Sub New(ByVal m As merge_method)
@@ -31,7 +31,7 @@ Namespace sign
             If h Is Nothing Then
                 h = create()
             End If
-            assert(Not h Is Nothing)
+            assert(h IsNot Nothing)
             Return h.ComputeHash(i)
         End Function
     End Class

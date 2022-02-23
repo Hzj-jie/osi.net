@@ -72,7 +72,7 @@ Partial Public NotInheritable Class valuer
                                                          ByRef o As VT) As Boolean
         Dim v As valuer(Of VT) = Nothing
         Return create_recursively(obj, bindingflags, name, v) AndAlso
-               assert(Not v Is Nothing) AndAlso
+               assert(v IsNot Nothing) AndAlso
                v.try_get(o)
     End Function
 
@@ -90,7 +90,7 @@ Partial Public NotInheritable Class valuer
                                                          ByVal i As VT) As Boolean
         Dim v As valuer(Of VT) = Nothing
         Return create_recursively(obj, bindingflags, name, v) AndAlso
-               assert(Not v Is Nothing) AndAlso
+               assert(v IsNot Nothing) AndAlso
                v.try_set(i)
     End Function
 
@@ -128,7 +128,7 @@ Partial Public NotInheritable Class valuer
                                                          ByRef o As VT) As Boolean
         Dim v As valuer(Of VT) = Nothing
         Return create_recursively(Of T, VT)(bindingflags, name, v) AndAlso
-               assert(Not v Is Nothing) AndAlso
+               assert(v IsNot Nothing) AndAlso
                v.try_get(o)
     End Function
 
@@ -143,7 +143,7 @@ Partial Public NotInheritable Class valuer
                                                          ByVal i As VT) As Boolean
         Dim v As valuer(Of VT) = Nothing
         Return create_recursively(Of T, VT)(bindingflags, name, v) AndAlso
-               assert(Not v Is Nothing) AndAlso
+               assert(v IsNot Nothing) AndAlso
                v.try_set(i)
     End Function
 

@@ -30,8 +30,8 @@ Public Class direct_flower(Of T)
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         MyBase.New()
-        assert(Not input Is Nothing)
-        assert(Not output Is Nothing)
+        assert(input IsNot Nothing)
+        assert(output IsNot Nothing)
         Me.input = input
         Me.output = output
         If sense_timeout_ms < 0 Then
@@ -153,7 +153,7 @@ Public Class direct_flower(Of T)
                                   End If
                               End Function,
                               Function() As Boolean
-                                  If Not result Is Nothing Then
+                                  If result IsNot Nothing Then
                                       result.add(1)
                                   End If
                                   Return ec.end_result() AndAlso

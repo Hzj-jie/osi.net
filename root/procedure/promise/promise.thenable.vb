@@ -30,13 +30,13 @@ Partial Public NotInheritable Class promise
         End Function
 
         Public Sub resolve(ByVal result As thenable)
-            assert(Not result Is Nothing)
+            assert(result IsNot Nothing)
             result.then(AddressOf resolve, AddressOf reject)
         End Sub
 
         Public Sub resolve(ByVal result As Object)
             Dim p As promise = Nothing
-            If Not result Is Nothing AndAlso direct_cast(result, p) Then
+            If result IsNot Nothing AndAlso direct_cast(result, p) Then
                 p.then(AddressOf resolve, AddressOf reject)
                 Return
             End If
@@ -65,8 +65,8 @@ Partial Public NotInheritable Class promise
 
         Public Sub [then](ByVal on_resolve As Action(Of Object), ByVal on_reject As Action(Of Object))
             SyncLock Me
-                assert(Not on_resolve Is Nothing)
-                assert(Not on_reject Is Nothing)
+                assert(on_resolve IsNot Nothing)
+                assert(on_reject IsNot Nothing)
                 assert(Me.next Is Nothing)
                 [next] = const_pair.emplace_of(on_resolve, on_reject)
                 execute_next()

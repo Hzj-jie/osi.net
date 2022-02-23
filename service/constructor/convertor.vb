@@ -76,7 +76,7 @@ Public NotInheritable Class convertor
     Private Shared Function allocate(Of T, T2)(ByVal f As Func(Of var, T, ref(Of T2), event_comb),
                                                ByVal T_type_filter As String) _
                                               As Func(Of var, ref(Of T2), event_comb)
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         T_type_filter = strcat(T_type_filter, character.dot)
         Return Function(ByVal v As var, ByVal o As ref(Of T2)) As event_comb
                    Dim ec As event_comb = Nothing

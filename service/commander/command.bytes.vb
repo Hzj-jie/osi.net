@@ -17,7 +17,7 @@ Partial Public Class command
         bytes_serializer(Of constants.parameter).forward_registration.from(Of SByte)()
 
         bytes_serializer.fixed.register(Function(ByVal i As command, ByVal o As MemoryStream) As Boolean
-                                            assert(Not i Is Nothing)
+                                            assert(i IsNot Nothing)
                                             Return bytes_serializer.append_to(i.a, o) AndAlso
                                                    bytes_serializer.append_to(i.ps, o)
                                         End Function,

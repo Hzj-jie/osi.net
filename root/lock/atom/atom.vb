@@ -60,8 +60,8 @@ Partial Public Class atom(Of T, LOCK_T As {islimlock, Structure})
     End Sub
 
     Public Sub modify(ByVal d As void(Of T))
-        assert(Not d Is Nothing)
-        If Not d Is Nothing Then
+        assert(d IsNot Nothing)
+        If d IsNot Nothing Then
             l.locked(Sub() d(p))
         End If
     End Sub

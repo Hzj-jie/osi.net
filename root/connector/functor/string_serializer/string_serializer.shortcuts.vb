@@ -23,7 +23,7 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
 
     ' Usually to_str should not fail, so providing this shortcut.
     Public Shared Sub register(ByVal to_str As Action(Of T, StringWriter))
-        assert(Not to_str Is Nothing)
+        assert(to_str IsNot Nothing)
         register(Function(ByVal i As T, ByVal o As StringWriter) As Boolean
                      to_str(i, o)
                      Return True

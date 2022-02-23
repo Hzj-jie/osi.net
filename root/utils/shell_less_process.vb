@@ -41,7 +41,7 @@ Public NotInheritable Class shell_less_process
         p = make_disposer(New Process(),
                           disposer:=Sub(p As Process)
                                         trace("disposer")
-                                        assert(Not p Is Nothing)
+                                        assert(p IsNot Nothing)
                                         If Not enable_raise_event Then
                                             ignore_exceptions(AddressOf p.StandardOutput().Close)
                                             ignore_exceptions(AddressOf p.StandardOutput().Dispose)

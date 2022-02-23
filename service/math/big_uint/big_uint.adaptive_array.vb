@@ -194,7 +194,7 @@ Private NotInheritable Class adaptive_array_uint32
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub copy_from(ByVal i As adaptive_array_uint32)
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
 #If "UInt32" = "UInt32" Then
         ReDim d(array_size_i(i.d) - 1)
         arrays.copy(d, i.d, i.s)
@@ -217,8 +217,8 @@ Private NotInheritable Class adaptive_array_uint32
         If c <> object_compare_undetermined Then
             Return c
         End If
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
+        assert(this IsNot Nothing)
+        assert(that IsNot Nothing)
         If this.size() < that.size() Then
             Return -1
         End If

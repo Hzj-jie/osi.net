@@ -25,7 +25,7 @@ Partial Public Class type_attribute
             Return False
         Else
             o = i.attribute()
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Return True
         End If
     End Function
@@ -39,7 +39,7 @@ Partial Public Class type_attribute
                 Return store.exist(t)
             Else
                 o.s = store.get(t)
-                assert(Not o.s Is Nothing)
+                assert(o.s IsNot Nothing)
                 Return True
             End If
         Else

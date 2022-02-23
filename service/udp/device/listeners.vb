@@ -16,7 +16,7 @@ Public NotInheritable Class listeners
     End Class
 
     Public Shared Sub listen(ByVal p As powerpoint)
-        assert(Not p Is Nothing)
+        assert(p IsNot Nothing)
         assert(p.local_defined() AndAlso Not p.remote_defined())
         Dim l As listener = Nothing
         If [New](p, p.local_port, l) Then

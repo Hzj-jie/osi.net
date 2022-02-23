@@ -71,17 +71,17 @@ Public Class basic_expression(Of T)
     Public Sub New(ByVal c As calculator(Of T),
                    ByVal n As iparser(Of T),
                    ByVal o As ioutputter(Of T))
-        assert(Not c Is Nothing)
-        assert(Not n Is Nothing)
-        assert(Not o Is Nothing)
+        assert(c IsNot Nothing)
+        assert(n IsNot Nothing)
+        assert(o IsNot Nothing)
         Me.c = c
         Me.n = n
         Me.o = o
     End Sub
 
     Private Shared Sub emplace_clear(ByVal o As vector(Of String), ByVal v As vector(Of Char))
-        assert(Not o Is Nothing)
-        assert(Not v Is Nothing)
+        assert(o IsNot Nothing)
+        assert(v IsNot Nothing)
         If Not v.empty() Then
             o.emplace_back(v.str(""))
             v.clear()

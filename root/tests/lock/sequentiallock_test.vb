@@ -6,7 +6,7 @@ Public Class sequentiallock
     End Sub
 
     Private Shared Sub amuthread()
-        assert(Not lock Is Nothing, "lock is nothing before amuthread.")
+        assert(lock IsNot Nothing, "lock is nothing before amuthread.")
 
         'too waste time, so change testsize to 1024
         Dim testsize As Int64 = 1024
@@ -51,7 +51,7 @@ Public Class sequentiallock
         Next
 
         For i = 0 To threadcount - 1
-            assert(Not threads(i) Is Nothing, "thread(" + Convert.ToString(i) + ") is nothing.")
+            assert(threads(i) IsNot Nothing, "thread(" + Convert.ToString(i) + ") is nothing.")
             threads(i).Join()
         Next
         raiseError("******* finish sequentialLock Automatical Unittest *******", errorHandle.errorType.application)

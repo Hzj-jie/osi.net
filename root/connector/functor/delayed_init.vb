@@ -11,7 +11,7 @@ Public NotInheritable Class delayed_init(Of PROTECTOR)
     Private NotInheritable Class once
         Shared Sub New()
             Dim f As Action = global_resolver(Of Action, delayed_init(Of PROTECTOR)).resolve_or_null()
-            If Not f Is Nothing Then
+            If f IsNot Nothing Then
                 f()
             End If
         End Sub

@@ -14,7 +14,7 @@ Public Module _webrequest
     <Extension()> Public Function get_response(ByVal w As WebRequest,
                                                ByVal r As ref(Of WebResponse)) As event_comb
         Return create(Function() As Boolean
-                          Return Not w Is Nothing AndAlso Not r Is Nothing
+                          Return w IsNot Nothing AndAlso r IsNot Nothing
                       End Function,
                       Function() As event_comb
                           Return event_comb_async_operation.ctor(
@@ -64,7 +64,7 @@ Public Module _webrequest
     <Extension()> Public Function get_request_stream(ByVal w As WebRequest,
                                                      ByVal r As ref(Of Stream)) As event_comb
         Return create(Function() As Boolean
-                          Return Not w Is Nothing AndAlso Not r Is Nothing
+                          Return w IsNot Nothing AndAlso r IsNot Nothing
                       End Function,
                       Function() As event_comb
                           Return event_comb_async_operation.ctor(

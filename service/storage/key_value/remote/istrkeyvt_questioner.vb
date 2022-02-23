@@ -20,7 +20,7 @@ Partial Public Class istrkeyvt_questioner
     Private ReadOnly q As target_questioner
 
     Private Sub New(ByVal q As target_questioner)
-        assert(Not q Is Nothing)
+        assert(q IsNot Nothing)
         Me.q = q
     End Sub
 
@@ -29,7 +29,7 @@ Partial Public Class istrkeyvt_questioner
     End Sub
 
     Public Shared Function ctor(ByVal q As target_questioner, ByRef o As istrkeyvt_questioner) As Boolean
-        Return Not q Is Nothing AndAlso eva(o, New istrkeyvt_questioner(q))
+        Return q IsNot Nothing AndAlso eva(o, New istrkeyvt_questioner(q))
     End Function
 
     Public Shared Function ctor(ByVal q As target_questioner, ByRef o As istrkeyvt) As Boolean
@@ -41,7 +41,7 @@ Partial Public Class istrkeyvt_questioner
                                 ByVal q As questioner,
                                 ByRef o As istrkeyvt_questioner) As Boolean
         Return Not String.IsNullOrEmpty(name) AndAlso
-               Not q Is Nothing AndAlso
+               q IsNot Nothing AndAlso
                eva(o, New istrkeyvt_questioner(name, q))
     End Function
 
@@ -138,7 +138,7 @@ Partial Public Class istrkeyvt_questioner
                          ByVal ts As ref(Of Int64)) As event_comb Implements istrkeyvt.read
         Return q(request(action.istrkeyvt_read, key),
                  Function(c As command) As Boolean
-                     Return Not c Is Nothing AndAlso
+                     Return c IsNot Nothing AndAlso
                             c.parameter(Of parameter)(parameter.buff, result) AndAlso
                             c.parameter(Of parameter, Int64)(parameter.timestamp, ts)
                  End Function)

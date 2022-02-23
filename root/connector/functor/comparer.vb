@@ -30,7 +30,7 @@ End Class
 ' Implementations can assume i and j are not null. Users should not use this class directly except for the registration.
 Public NotInheritable Class comparer(Of T, T2)
     Public Shared Sub register(ByVal c As Func(Of T, T2, Int32))
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         register(Of T, T2)(c)
         If Not type_info(Of T, type_info_operators.is, T2).v Then
             register(Of T2, T)(Function(i As T2, j As T) As Int32

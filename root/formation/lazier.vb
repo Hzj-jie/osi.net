@@ -38,7 +38,7 @@ Public NotInheritable Class lazier(Of T)
     End Function
 
     Public Function map(Of R)(ByVal f As Func(Of T, R)) As lazier(Of R)
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return lazier.of(Function() As R
                              Return f(+Me)
                          End Function)
@@ -56,7 +56,7 @@ Public NotInheritable Class lazier(Of T)
     Public Shared Operator +(ByVal this As lazier(Of T)) As T
         Dim x As Func(Of T) = Nothing
         x = this.d
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             this.v = x()
             this.d = Nothing
         End If

@@ -15,7 +15,7 @@ Public Structure monitorlock
     Private in_use As Int32
 
     Public Sub New(ByVal i As Object)
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Me.obj = i
     End Sub
 

@@ -21,7 +21,7 @@ Public Class hash_based(Of KEY_T As IComparable(Of KEY_T), _HASH_SIZE As _int64,
     Private ReadOnly cc() As CT
 
     Protected Sub New(ByVal d As Func(Of CT))
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         ReDim cc(hs - 1)
         For i As Int32 = 0 To hs - 1
             cc(i) = d()

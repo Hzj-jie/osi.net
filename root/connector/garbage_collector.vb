@@ -27,7 +27,7 @@ Public NotInheritable Class garbage_collector
 
     Public Shared Function waitfor_collect_until(ByVal check As Func(Of Boolean),
                                                  Optional ByVal round As UInt32 = 1000) As Boolean
-        assert(Not check Is Nothing)
+        assert(check IsNot Nothing)
         While round > 0
             round -= uint32_1
             If check() Then
@@ -40,7 +40,7 @@ Public NotInheritable Class garbage_collector
 
     Public Shared Function waitfor_collect_when(ByVal check As Func(Of Boolean),
                                                 Optional ByVal round As UInt32 = 1000) As Boolean
-        assert(Not check Is Nothing)
+        assert(check IsNot Nothing)
         Return waitfor_collect_until(Function() As Boolean
                                          Return Not check()
                                      End Function,

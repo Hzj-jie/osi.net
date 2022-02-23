@@ -12,7 +12,7 @@ Partial Public NotInheritable Class typed_node
         Private ReadOnly m As map(Of String, vector(Of typed_node))
 
         Public Sub New(ByVal n As typed_node)
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
             m = New map(Of String, vector(Of typed_node))()
             Dim i As UInt32 = 0
             While i < n.child_count()
@@ -36,7 +36,7 @@ Partial Public NotInheritable Class typed_node
             If Not nodes(name, v) Then
                 Return False
             End If
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             If v.size() <> 1 Then
                 Return False
             End If

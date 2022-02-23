@@ -16,20 +16,20 @@ Partial Public NotInheritable Class b2style
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
+            assert(b IsNot Nothing)
             Me.l = b
         End Sub
 
         Public Shared Function [of](ByVal name As String) As Action(Of code_gens(Of typed_node_writer))
             Return Sub(ByVal b As code_gens(Of typed_node_writer))
-                       assert(Not b Is Nothing)
+                       assert(b IsNot Nothing)
                        b.register(Of name)(name)
                    End Sub
         End Function
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
             If n.type_name.Equals("name") AndAlso n.descentdant_of("value-declaration", "struct-body") Then
                 ' Ignore namespace prefix for variables within the structure.
                 o.append(_namespace.bstyle_format.in_global_namespace(n.input_without_ignored()))

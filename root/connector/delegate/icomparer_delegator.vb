@@ -11,7 +11,7 @@ Public NotInheritable Class icomparer_delegator(Of T)
     Private ReadOnly f As Func(Of T, T, Int32)
 
     Public Sub New(ByVal f As Func(Of T, T, Int32))
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Me.f = f
     End Sub
 

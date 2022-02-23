@@ -26,7 +26,7 @@ Public NotInheritable Class thread_safe_resolver(Of T As Class)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function registered() As Boolean
-        Return Not cached Is Nothing OrElse Not f Is Nothing
+        Return cached IsNot Nothing OrElse f IsNot Nothing
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -66,13 +66,13 @@ Public NotInheritable Class thread_safe_resolver(Of T As Class)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub assert_first_register(ByVal i As T)
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         register(Nothing, i, False, True)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub assert_first_register(ByVal i As Func(Of T))
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         register(i, Nothing, False, True)
     End Sub
 
@@ -97,7 +97,7 @@ Public NotInheritable Class thread_safe_resolver(Of T As Class)
             End SyncLock
 #End If
         End If
-        assert(Not cached Is Nothing)
+        assert(cached IsNot Nothing)
         o = cached
         Return True
     End Function

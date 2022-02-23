@@ -18,7 +18,7 @@ Partial Public NotInheritable Class bstyle
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
+            assert(b IsNot Nothing)
             Me.l = b
         End Sub
 
@@ -26,14 +26,14 @@ Partial Public NotInheritable Class bstyle
                                      ByVal target As String,
                                      ByVal target_naming As Func(Of String, String),
                                      ByVal o As logic_writer) As Boolean
-            assert(Not sources Is Nothing)
+            assert(sources IsNot Nothing)
             assert(Not target.null_or_whitespace())
-            assert(Not target_naming Is Nothing)
+            assert(target_naming IsNot Nothing)
             Dim vs As struct_def = Nothing
             If Not scope.current().structs().resolve(target, vs) Then
                 Return False
             End If
-            assert(Not vs Is Nothing)
+            assert(vs IsNot Nothing)
             If vs.primitive_count() <> sources.size() Then
                 raise_error(error_type.user,
                             "Sources ",
@@ -78,7 +78,7 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function pack(ByVal sources As vector(Of String),
                                     ByVal target As String,
                                     ByVal o As logic_writer) As Boolean
-            assert(Not sources Is Nothing)
+            assert(sources IsNot Nothing)
             assert(Not target.null_or_whitespace())
             If sources.empty() Then
                 Return True
@@ -95,7 +95,7 @@ Partial Public NotInheritable Class bstyle
                                       ByVal targets As vector(Of String),
                                       ByVal o As logic_writer) As Boolean
             assert(Not source.null_or_whitespace())
-            assert(Not targets Is Nothing)
+            assert(targets IsNot Nothing)
             If targets.empty() Then
                 Return True
             End If
@@ -119,11 +119,11 @@ Partial Public NotInheritable Class bstyle
             If Not scope.current().structs().resolve(type, name, v) Then
                 Return False
             End If
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             Return streams.of(struct_def.nested(type, name)).
                            concat(v.nesteds()).
                            map(Function(ByVal s As builders.parameter) As Boolean
-                                   assert(Not s Is Nothing)
+                                   assert(s IsNot Nothing)
                                    assert(Not s.ref)
                                    Return scope.current().variables().define(s.type, s.name)
                                End Function).
@@ -136,15 +136,15 @@ Partial Public NotInheritable Class bstyle
         End Sub
 
         Public Shared Function define_in_stack(ByVal type As String, ByVal name As String, ByVal o As logic_writer) As Boolean
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Dim v As struct_def = Nothing
             If Not resolve(type, name, v) Then
                 Return False
             End If
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             Return v.primitives().
                      map(Function(ByVal m As builders.parameter) As Boolean
-                             assert(Not m Is Nothing)
+                             assert(m IsNot Nothing)
                              Return value_declaration.declare_single_data_slot(m.type, m.name, o)
                          End Function).
                      aggregate(bool_stream.aggregators.all_true, True)
@@ -154,20 +154,20 @@ Partial Public NotInheritable Class bstyle
                                        ByVal name As String,
                                        ByVal length As typed_node,
                                        ByVal o As logic_writer) As Boolean
-            assert(Not length Is Nothing)
-            assert(Not o Is Nothing)
+            assert(length IsNot Nothing)
+            assert(o IsNot Nothing)
             Dim v As struct_def = Nothing
             If Not resolve(type, name, v) Then
                 Return False
             End If
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             Return l.typed(Of heap_name).build(
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean
                            Return v.primitives().
                                     map(Function(ByVal m As builders.parameter) As Boolean
-                                            assert(Not m Is Nothing)
+                                            assert(m IsNot Nothing)
                                             Return heap_declaration.declare_single_data_slot(
                                                        m.type, m.name, len_name, o)
                                         End Function).
@@ -184,7 +184,7 @@ Partial Public NotInheritable Class bstyle
             Return n.children_of("struct-body").
                      stream().
                      filter(Function(ByVal c As typed_node) As Boolean
-                                assert(Not c Is Nothing)
+                                assert(c IsNot Nothing)
                                 assert(c.child_count() <= 2)
                                 Return c.child_count() = 2
                             End Function).
@@ -193,7 +193,7 @@ Partial Public NotInheritable Class bstyle
                          End Function).
                      map(Function(ByVal c As typed_node) As builders.parameter
                              ' TODO: Support value_definition.str_bytes_val
-                             assert(Not c Is Nothing)
+                             assert(c IsNot Nothing)
                              assert(c.type_name.Equals("value-declaration"))
                              assert(c.child_count() = 2)
                              Return builders.parameter.no_ref(c.child(0).input_without_ignored(),
@@ -203,8 +203,8 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
+            assert(n IsNot Nothing)
+            assert(o IsNot Nothing)
             assert(n.child_count() >= 5)
             Dim id As builders.parameter = create_id(n.child(1).word().str())
             assert(builders.of_type(id.type, uint32_1).to(o))

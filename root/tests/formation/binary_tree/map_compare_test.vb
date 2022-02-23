@@ -18,7 +18,7 @@ Public Class map_compare_test
         Inherits [case]
 
         Private Shared Function create_map(ByVal v As vector(Of pair(Of String, String))) As map(Of String, String)
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             assert(Not v.empty())
             Dim r As map(Of String, String) = Nothing
             r = New map(Of String, String)()

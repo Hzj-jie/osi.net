@@ -17,7 +17,7 @@ Partial Public NotInheritable Class wordtracer
                                         ByVal [end] As UInt32,
                                         ByVal trainer As onebound(Of Char).trainer)
                 assert([end] >= start)
-                assert(Not trainer Is Nothing)
+                assert(trainer IsNot Nothing)
                 If [end] = start Then
                     Return
                 End If
@@ -50,7 +50,7 @@ Partial Public NotInheritable Class wordtracer
             End Function
 
             Public Shared Function train(ByVal reader As tar.reader) As onebound(Of Char).model
-                assert(Not reader Is Nothing)
+                assert(reader IsNot Nothing)
                 Dim t As New onebound(Of Char).trainer()
                 reader.foreach(Sub(ByVal name As String, ByVal p As Double, ByVal r As StreamReader)
                                    If p < 0.8 Then
@@ -62,7 +62,7 @@ Partial Public NotInheritable Class wordtracer
                                        Return
                                    End If
                                    Dim line As String = r.ReadLine()
-                                   While Not line Is Nothing
+                                   While line IsNot Nothing
                                        one_str(line, t)
                                        line = r.ReadLine()
                                    End While

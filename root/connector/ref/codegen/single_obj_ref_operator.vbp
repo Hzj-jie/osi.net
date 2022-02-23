@@ -11,12 +11,12 @@
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function hash(ByVal i As T) As Int32
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Return i.GetHashCode()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function str(ByVal i As T) As String
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Return i.ToString()
     End Function

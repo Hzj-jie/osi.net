@@ -14,7 +14,7 @@ Partial Public NotInheritable Class callback_manager
     End Function
 
     Private Sub action_end(ByVal action As callback_action)
-        assert(Not action Is Nothing)
+        assert(action IsNot Nothing)
         action.action_end()
         assert(action.finished())
         trigger_check()
@@ -68,7 +68,7 @@ Partial Public NotInheritable Class callback_manager
         If Not begin(action) Then
             Return False
         End If
-        assert(Not action Is Nothing)
+        assert(action IsNot Nothing)
         If timeout_ms >= 0 Then
             action.set_timeout_ms(timeout_ms)
         End If

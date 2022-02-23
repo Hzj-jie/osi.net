@@ -107,7 +107,7 @@ Public Class udp_sharedtransmitter_test
                                   Else
                                       data = random_data()
                                   End If
-                                  assert(Not data Is Nothing)
+                                  assert(data IsNot Nothing)
                                   ec = sc.sender.send(data)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -133,7 +133,7 @@ Public Class udp_sharedtransmitter_test
     End Function
 
     Private Sub echo(ByVal c As sharedtransmitter(Of UInt16, String, UdpClient, Byte(), powerpoint))
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Dim p As ref(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
         assert_begin(New event_comb(Function() As Boolean

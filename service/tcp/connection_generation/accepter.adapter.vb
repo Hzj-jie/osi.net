@@ -13,7 +13,7 @@ Partial Public Class accepter
         Private ReadOnly v6 As listener
 
         Public Sub New(ByVal p As powerpoint)
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             d = powerpoint.defender.[New](p)
             v4 = New listener(IPAddress.Any, p.port)
             v6 = New listener(IPAddress.IPv6Any, p.port)
@@ -22,7 +22,7 @@ Partial Public Class accepter
         End Sub
 
         Public Sub attach(ByVal p As powerpoint)
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             assert(Not p.is_outgoing)
             assert(Not v4.valid OrElse p.port = v4.port())
             assert(Not v6.valid OrElse p.port = v6.port())
@@ -43,7 +43,7 @@ Partial Public Class accepter
         End Function
 
         Private Sub accept(ByVal c As TcpClient)
-            assert(Not c Is Nothing)
+            assert(c IsNot Nothing)
             Dim tp As ref(Of powerpoint) = Nothing
             Dim ec As event_comb = Nothing
             assert_begin(New event_comb(Function() As Boolean

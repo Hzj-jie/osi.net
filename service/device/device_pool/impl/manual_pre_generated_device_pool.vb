@@ -34,7 +34,7 @@ Public NotInheritable Class manual_pre_generated_device_pool(Of T)
 
     Public Sub New(ByVal i As imanual_device_exporter(Of T), ByVal max_count As UInt32, ByVal identity As String)
         MyBase.New(i, max_count, identity)
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Me.i = i
     End Sub
 

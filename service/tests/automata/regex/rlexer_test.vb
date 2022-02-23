@@ -39,14 +39,14 @@ Namespace rlexer
 
         Private Shared Function run_case(ByVal r As rule) As Boolean
             assert(Not isemptyarray(cases))
-            assert(Not r Is Nothing)
+            assert(r IsNot Nothing)
             Dim e As rule.exporter = Nothing
             If assertion.is_true(r.export(e)) AndAlso assertion.is_not_null(e) Then
                 Dim l As lexer = Nothing
                 l = e.rlexer
                 If assertion.is_not_null(l) Then
                     For i As UInt32 = 0 To array_size(cases) - uint32_1
-                        assert(Not cases(i) Is Nothing)
+                        assert(cases(i) IsNot Nothing)
                         Dim v As vector(Of typed_word) = Nothing
                         Dim o As vector(Of String) = Nothing
                         If assertion.is_true(l.match(cases(i).first, v)) AndAlso

@@ -38,7 +38,7 @@ Public Class flip_event
     Public Event cancelled()
 
     Protected Sub New(ByVal e As events)
-        assert(Not e Is Nothing)
+        assert(e IsNot Nothing)
         Me.to_high = e.to_high
         Me.to_low = e.to_low
     End Sub
@@ -52,7 +52,7 @@ Public Class flip_event
     End Sub
 
     Private Shared Sub raise(ByVal v As Action)
-        If Not v Is Nothing Then
+        If v IsNot Nothing Then
             v()
         End If
     End Sub

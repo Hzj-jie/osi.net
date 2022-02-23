@@ -65,7 +65,7 @@ Namespace logic
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
-                assert(Not s Is Nothing)
+                assert(s IsNot Nothing)
                 Me.s = s
             End Sub
 
@@ -78,7 +78,7 @@ Namespace logic
             Public Function define(ByVal type As String, ByVal name As String) As Boolean
                 Dim anchor As anchor_ref = Nothing
                 Dim s As scope = Me.s
-                While Not s Is Nothing
+                While s IsNot Nothing
                     If s.ar.find_decl(type, anchor) Then
                         Me.s.ar.define(name, anchor)
                         Return True
@@ -90,7 +90,7 @@ Namespace logic
 
             Public Function [of](ByVal name As String, ByRef o As anchor_ref) As Boolean
                 Dim s As scope = Me.s
-                While Not s Is Nothing
+                While s IsNot Nothing
                     If s.ar.of(name, o) Then
                         Return True
                     End If

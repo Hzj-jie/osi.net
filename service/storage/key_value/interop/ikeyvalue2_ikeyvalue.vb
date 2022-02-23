@@ -11,15 +11,15 @@ Public Class ikeyvalue2_ikeyvalue(Of SEEK_RESULT)
     Private ReadOnly impl As ikeyvalue2(Of SEEK_RESULT)
 
     Public Sub New(ByVal impl As ikeyvalue2(Of SEEK_RESULT))
-        assert(Not impl Is Nothing)
+        assert(impl IsNot Nothing)
         Me.impl = impl
     End Sub
 
     Private Function if_existing(ByVal key() As Byte,
                                  ByVal existing_do As Func(Of SEEK_RESULT, event_comb),
                                  ByVal not_existing_do As Func(Of event_comb)) As event_comb
-        assert(Not existing_do Is Nothing)
-        assert(Not not_existing_do Is Nothing)
+        assert(existing_do IsNot Nothing)
+        assert(not_existing_do IsNot Nothing)
         Dim ec As event_comb = Nothing
         Dim sr As ref(Of SEEK_RESULT) = Nothing
         Dim r As ref(Of Boolean) = Nothing

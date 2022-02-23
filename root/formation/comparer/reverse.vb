@@ -71,7 +71,7 @@ Public NotInheritable Class reverse(Of T)
     End Function
 
     Public Overrides Function GetHashCode() As Int32
-        Return Not If(v Is Nothing, 0, v.GetHashCode())
+        Return If(v IsNot Nothing, 0, v.GetHashCode())
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone

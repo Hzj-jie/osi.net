@@ -21,8 +21,8 @@ Partial Public Class client_flow_adapter
         Private ReadOnly timeout As transceive_timeout
 
         Public Sub New(ByVal c As TcpClient, ByVal p As powerpoint)
-            assert(Not c Is Nothing)
-            assert(Not p Is Nothing)
+            assert(c IsNot Nothing)
+            assert(p IsNot Nothing)
             Me.c = c
             Me.sensor = client_sensor.socket_sensor(c, p)
             Me.single_send_size = c.send_buff_size()

@@ -21,8 +21,8 @@ Partial Public NotInheritable Class nlexer
         End Sub
 
         Public Shared Sub register(ByVal s As String, ByVal f As Func(Of matcher))
-            assert(Not s Is Nothing)
-            assert(Not f Is Nothing)
+            assert(s IsNot Nothing)
+            assert(f IsNot Nothing)
             assert(m.find(s) = m.end())
             m.emplace(s, f)
         End Sub
@@ -49,7 +49,7 @@ Partial Public NotInheritable Class nlexer
 
         ' Process a,b,c
         Public Shared Function [of](ByVal i As String) As matcher
-            assert(Not i Is Nothing)
+            assert(i IsNot Nothing)
             Dim vs As vector(Of String) = Nothing
             vs = vector.emplace_of(i.Split(characters.matcher_separator))
             If vs.empty() Then

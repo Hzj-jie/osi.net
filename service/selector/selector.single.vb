@@ -72,7 +72,7 @@ Public Class selector(Of T,
     End Sub
 
     Public Sub New(ByVal alloc As allocator(Of T, PARA_T))
-        assert(Not alloc Is Nothing)
+        assert(alloc IsNot Nothing)
         Me.alloc = alloc
         Me.m = New unique_strong_map(Of PARA_T, CONTAINER_T)()
     End Sub
@@ -96,7 +96,7 @@ Public Class selector(Of T,
     Public Function [select](ByVal p As PARA_T, ByRef o As T) As Boolean
         Dim s As CONTAINER_T = Nothing
         s = m.generate(p, Function() container_allocator(alloc, p))
-        assert(Not s Is Nothing)
+        assert(s IsNot Nothing)
         Return container_invoker.at(s, o)
     End Function
 End Class

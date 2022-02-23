@@ -16,7 +16,7 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
         Private ReadOnly c As ref_instance(Of COMPONENT_T)
 
         Public Sub New(ByVal c As ref_instance(Of COMPONENT_T))
-            assert(Not c Is Nothing)
+            assert(c IsNot Nothing)
             Me.c = c
         End Sub
 

@@ -24,7 +24,7 @@ Partial Public NotInheritable Class queue_runner
     Private Shared Sub init()
         start()
         application_lifetime.stopping_handle(Sub()
-                                                 If Not are Is Nothing Then
+                                                 If are IsNot Nothing Then
                                                      are.Close()
                                                  End If
                                              End Sub)
@@ -41,14 +41,14 @@ Partial Public NotInheritable Class queue_runner
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub trigger()
-        If Not are Is Nothing Then
+        If are IsNot Nothing Then
             are.Set()
         End If
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub check_push(ByVal e As Func(Of Boolean))
-        assert(Not e Is Nothing)
+        assert(e IsNot Nothing)
         If do_(e, False) Then
             q.emplace(e)
         End If
@@ -81,7 +81,7 @@ Partial Public NotInheritable Class queue_runner
                                              End While
                                              counter.record_time_ticks(USED)
                                              counter.record_time_begin()
-                                             If Not are Is Nothing Then
+                                             If are IsNot Nothing Then
                                                  yield_wait(are, queue_runner_interval_ms)
                                              End If
                                              counter.record_time_ticks(INTERVAL)
@@ -97,7 +97,7 @@ Partial Public NotInheritable Class queue_runner
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function push(ByVal p As Action(Of Func(Of Boolean)), ByVal d As Func(Of Boolean)) As Boolean
-        assert(Not p Is Nothing)
+        assert(p IsNot Nothing)
         If d Is Nothing Then
             Return False
         End If

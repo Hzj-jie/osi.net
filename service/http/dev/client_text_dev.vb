@@ -70,7 +70,7 @@ Public MustInherit Class client_text_dev
 
     Public Function receive(ByVal result As ref(Of String)) As event_comb Implements text_pump.receive
         Return question(Function(ByVal r As client.string_response) As event_comb
-                            assert(Not r Is Nothing)
+                            assert(r IsNot Nothing)
                             Dim ec As event_comb = Nothing
                             Return New event_comb(Function() As Boolean
                                                       ec = issue_request(r)

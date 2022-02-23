@@ -27,17 +27,17 @@ Partial Public Class delegator_datagram_adapter
     Private last_target As IPEndPoint
 
     Public Sub New(ByVal c As delegator)
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Me.c = c
         Me.s = New indicator_sensor_adapter(New delegator_indicator(c))
-        If Not c.p Is Nothing Then
+        If c.p IsNot Nothing Then
             Me.timeout = c.p.transceive_timeout()
         End If
     End Sub
 
     Private Shared Function connect_client(ByVal c As UdpClient, ByVal target As IPEndPoint) As UdpClient
-        assert(Not c Is Nothing)
-        If Not target Is Nothing Then
+        assert(c IsNot Nothing)
+        If target IsNot Nothing Then
             c.Connect(target)
         End If
         Return c

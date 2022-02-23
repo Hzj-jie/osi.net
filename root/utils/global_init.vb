@@ -22,12 +22,12 @@ Public NotInheritable Class global_init
     End Function
 
     Private Shared Function is_global_init_type(ByVal t As Type, ByRef gi As global_init_attribute) As Boolean
-        assert(Not t Is Nothing)
+        assert(t IsNot Nothing)
         Return t.custom_attribute(gi)
     End Function
 
     Private Shared Sub execute_init(ByVal t As Type)
-        assert(Not t Is Nothing)
+        assert(t IsNot Nothing)
         assert(Not t.is_unspecified_generic_type(), t)
         Dim m As invoker(Of Action) = Nothing
         invoker.of(m).
@@ -37,7 +37,7 @@ Public NotInheritable Class global_init
             with_suppress_error(True).
             build(m)
         Dim v As Action = Nothing
-        If Not m Is Nothing AndAlso m.pre_bind(v) Then
+        If m IsNot Nothing AndAlso m.pre_bind(v) Then
             Try
                 v()
             Catch ex As Exception
@@ -82,12 +82,12 @@ Public NotInheritable Class global_init
         times.increment()
         Dim its(level) As vector(Of Type)
         For Each i As Assembly In AppDomain.CurrentDomain().GetAssemblies()
-            assert(Not i Is Nothing)
+            assert(i IsNot Nothing)
             Try
                 For Each j As Type In i.GetTypes()
                     Dim gi As global_init_attribute = Nothing
                     If is_global_init_type(j, gi) AndAlso
-                       assert(Not gi Is Nothing) AndAlso
+                       assert(gi IsNot Nothing) AndAlso
                        gi.level <= level AndAlso
                        (Not gi.init_once OrElse
                         not_initialized(j)) Then

@@ -9,8 +9,8 @@ Imports osi.root.constants
 
 Public Module _unhandled_exception
     Private Sub export(ByVal ex As Exception, ByVal r As StringBuilder)
-        assert(Not ex Is Nothing)
-        assert(Not r Is Nothing)
+        assert(ex IsNot Nothing)
+        assert(r IsNot Nothing)
         r.Append(ex.GetType().full_name()) _
          .Append(": source ") _
          .Append(ex.Source()) _
@@ -19,7 +19,7 @@ Public Module _unhandled_exception
          .Append(", stacktrace ") _
          .Append(newline.incode()) _
          .Append(ex.StackTrace())
-        If Not ex.InnerException() Is Nothing Then
+        If ex.InnerException() IsNot Nothing Then
             r.Append(", inner exception: ") _
              .Append(newline.incode())
             export(ex.InnerException(), r)
@@ -38,7 +38,7 @@ Public Module _unhandled_exception
     End Function
 
     Public Sub log_unhandled_exception(ByVal prefix As String, ByVal ex As Exception)
-        If Not ex Is Nothing Then
+        If ex IsNot Nothing Then
             raise_error(error_type.critical, prefix, ex.details())
         End If
     End Sub

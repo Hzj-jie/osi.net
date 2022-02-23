@@ -25,8 +25,8 @@ Public Class executor_wrapper
                     Dim ec As event_comb = Nothing
                     Dim p As ref(Of Byte()) = Nothing
                     Return New event_comb(Function() As Boolean
-                                              assert(Not i Is Nothing)
-                                              assert(Not o Is Nothing)
+                                              assert(i IsNot Nothing)
+                                              assert(o IsNot Nothing)
                                               p = New ref(Of Byte())()
                                               ec = a(i.action(), p)
                                               Return waitfor(ec) AndAlso
@@ -52,8 +52,8 @@ Public Class executor_wrapper
                     Dim ec As event_comb = Nothing
                     Dim p As ref(Of String) = Nothing
                     Return New event_comb(Function() As Boolean
-                                              assert(Not i Is Nothing)
-                                              assert(Not o Is Nothing)
+                                              assert(i IsNot Nothing)
+                                              assert(o IsNot Nothing)
                                               p = New ref(Of String)()
                                               ec = a(bytes_str(i.action()), p)
                                               Return waitfor(ec) AndAlso

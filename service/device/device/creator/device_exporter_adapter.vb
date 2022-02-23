@@ -23,8 +23,8 @@ Public Class device_exporter_adapter(Of IT, OT)
     Private ReadOnly c As Func(Of IT, OT)
 
     Public Sub New(ByVal i As idevice_exporter(Of IT), ByVal c As Func(Of IT, OT))
-        assert(Not i Is Nothing)
-        assert(Not c Is Nothing)
+        assert(i IsNot Nothing)
+        assert(c IsNot Nothing)
         Me.i = i
         Me.c = c
         AddHandler i.after_start, Sub()

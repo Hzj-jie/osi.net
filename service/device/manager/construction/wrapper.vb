@@ -136,13 +136,13 @@ Public Class wrapper(Of T)
                                  ByVal v As var,
                                  ByVal i As T,
                                  ByRef o As T) As Boolean
-        assert(Not vs Is Nothing)
+        assert(vs IsNot Nothing)
         o = i
         Dim j As UInt32 = uint32_0
         While j < vs.pool_size()
             Dim x As _do_val_val_ref(Of var, T, T, Boolean) = Nothing
             x = vs(j)
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 If x(v, i, o) Then
                     i = o
                 Else
@@ -159,7 +159,7 @@ Public Class wrapper(Of T)
             Return False
         Else
             If Not registry(Of T).bypass Then
-                If Not type_key Is Nothing Then
+                If type_key IsNot Nothing Then
                     type_key = strcat(type_key, "_")
                 End If
                 type_key = strcat(type_key, "wrapper")

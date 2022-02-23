@@ -26,7 +26,7 @@ Public MustInherit Class invocable(Of delegate_t)
     End Function
 
     Public Shared Operator +(ByVal this As invocable(Of delegate_t)) As delegate_t
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Return this.pre_bind()
     End Operator
 
@@ -37,7 +37,7 @@ Public MustInherit Class invocable(Of delegate_t)
     End Function
 
     Public Shared Operator +(ByVal this As invocable(Of delegate_t), ByVal obj As Object) As delegate_t
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Return this(obj)
     End Operator
 
@@ -54,7 +54,7 @@ Public MustInherit Class invocable(Of delegate_t)
     Public Function identity() As String
         Dim d As delegate_t = Nothing
         If pre_bind(d) Then
-            assert(Not d Is Nothing)
+            assert(d IsNot Nothing)
             Return direct_cast(Of [Delegate])(d).method_identity()
         End If
 

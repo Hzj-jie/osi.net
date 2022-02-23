@@ -7,7 +7,7 @@ Imports osi.root.utt
 'moved from connector, they are slow
 Friend Module _is_nothing_func
     <Extension()> Public Function is_nothing(Of T)(ByVal i As T) As Boolean
-        Return Not TypeOf i Is ValueType AndAlso i Is Nothing
+        Return TypeOf i Is ValueType AndAlso i IsNot Nothing
     End Function
 
     <Extension()> Public Function is_valuetype_or_nothing(Of T)(ByVal i As T) As Boolean
@@ -65,14 +65,14 @@ Public MustInherit Class type_check_perf
     Protected Shared Function object_is_nothing(ByVal i As Object) As Boolean
         Dim b As Boolean = False
         b = i Is Nothing
-        b = Not i Is Nothing
+        b = i IsNot Nothing
         Return True
     End Function
 
     Protected Shared Function generic_is_nothing(Of T)(ByVal i As T) As Boolean
         Dim b As Boolean = False
         b = i Is Nothing
-        b = Not i Is Nothing
+        b = i IsNot Nothing
         Return True
     End Function
 
@@ -85,15 +85,15 @@ Public MustInherit Class type_check_perf
 
     Protected Shared Function object_is_nothing_logic(ByVal i As Object) As Boolean
         Dim b As Boolean = False
-        b = Not TypeOf i Is ValueType AndAlso i Is Nothing
-        b = TypeOf i Is ValueType OrElse Not i Is Nothing
+        b = TypeOf i Is ValueType AndAlso i IsNot Nothing
+        b = TypeOf i Is ValueType OrElse i IsNot Nothing
         Return True
     End Function
 
     Protected Shared Function generic_is_nothing_logic(Of T)(ByVal i As T) As Boolean
         Dim b As Boolean = False
-        b = Not TypeOf i Is ValueType AndAlso i Is Nothing
-        b = TypeOf i Is ValueType OrElse Not i Is Nothing
+        b = TypeOf i Is ValueType AndAlso i IsNot Nothing
+        b = TypeOf i Is ValueType OrElse i IsNot Nothing
         Return True
     End Function
 

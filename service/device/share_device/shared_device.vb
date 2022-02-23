@@ -11,7 +11,7 @@ Partial Public Class shared_device(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PA
     ' A shared_device is always created by shared_device.creator, shared_device.auto_exporter or
     ' shared_device.manual_exporter.
     Private Sub New(ByVal sc As sharedtransmitter(Of PORT_T, ADDRESS_T, idevice(Of COMPONENT_T), DATA_T, PARAMETER_T))
-        assert(Not sc Is Nothing)
+        assert(sc IsNot Nothing)
         Me.sc = sc
     End Sub
 

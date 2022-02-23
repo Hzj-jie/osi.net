@@ -32,7 +32,7 @@ Public Class async_preparer(Of T)
     Private v As T
 
     Public Sub New(ByVal d As Func(Of ref(Of T), event_comb))
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Me.finish_get = New signal_event()
         Me.d = d
         Me.inited = New ManualResetEvent(False)
@@ -46,13 +46,13 @@ Public Class async_preparer(Of T)
     End Function
 
     Protected Overridable Function prepare(ByVal p As ref(Of T)) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Return d(p)
     End Function
 
     Private Sub start_prepare()
         assert(state.unknown_())
-        assert(Not finish_get Is Nothing)
+        assert(finish_get IsNot Nothing)
         assert(v Is Nothing OrElse type_info(Of T).is_valuetype)
         Dim ec As event_comb = Nothing
         Dim r As ref(Of T) = Nothing
@@ -93,7 +93,7 @@ Public Class async_preparer(Of T)
                                              eva(r, v) AndAlso
                                              goto_end()
                                   Else
-                                      assert(Not finish_get Is Nothing)
+                                      assert(finish_get IsNot Nothing)
                                       Return waitfor(finish_get) AndAlso
                                              goto_next()
                                   End If

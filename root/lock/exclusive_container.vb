@@ -6,7 +6,7 @@ Public Class exclusive_container(Of T As Class)
     Private v As T
 
     Public Function has_value() As Boolean
-        Return Not v Is Nothing
+        Return v IsNot Nothing
     End Function
 
     Public Function [get]() As T
@@ -28,7 +28,7 @@ Public Class exclusive_container(Of T As Class)
         'Return atomic.create_if_nothing(v, Function() New N(), destroy)
         Return create(Function() New N(),
                       Sub(x As T)
-                          If Not destroy Is Nothing Then
+                          If destroy IsNot Nothing Then
                               destroy(cast(Of N)(x))
                           End If
                       End Sub)

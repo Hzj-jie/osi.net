@@ -16,7 +16,7 @@ Namespace logic
             Private ReadOnly stack As New unordered_map(Of String, ref)()
 
             Public Sub New(ByVal s As scope)
-                assert(Not s Is Nothing)
+                assert(s IsNot Nothing)
                 Me.s = s
             End Sub
 
@@ -31,7 +31,7 @@ Namespace logic
                 End Sub
 
                 Protected Sub New(ByVal other As typed_ref)
-                    assert(Not other Is Nothing)
+                    assert(other IsNot Nothing)
                     Me.type = other.type
                     Me.ref_type = other.ref_type
                 End Sub
@@ -70,7 +70,7 @@ Namespace logic
 
                 Public Sub New(ByVal r As ref, ByVal data_ref As data_ref)
                     MyBase.New(r)
-                    assert(Not data_ref Is Nothing)
+                    assert(data_ref IsNot Nothing)
                     Me.data_ref = data_ref
                 End Sub
             End Class
@@ -94,7 +94,7 @@ Namespace logic
                                     ByVal f As Func(Of UInt32, String, ref)) As Boolean
                 assert(Not name.null_or_whitespace())
                 assert(Not type.null_or_whitespace())
-                assert(Not f Is Nothing)
+                assert(f IsNot Nothing)
                 If find_duplication(name, type) Then
                     Return False
                 End If
@@ -116,7 +116,7 @@ Namespace logic
             Public Function export(ByVal name As String, ByRef o As exported_ref) As Boolean
                 Dim size As UInt64 = 0
                 Dim s As scope = Me.s
-                While Not s Is Nothing
+                While s IsNot Nothing
                     Dim r As variable_t.ref = Nothing
                     If Not s.v.stack.find(name, r) Then
                         size += s.v.size()

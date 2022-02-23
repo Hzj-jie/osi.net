@@ -31,7 +31,7 @@ Public MustInherit Class random_run_case
     End Sub
 
     Public Sub insert_call(ByVal percentage As Double, ByVal d As Action)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         r.insert_call(percentage,
                       Function() As Boolean
                           d()
@@ -53,7 +53,7 @@ Public Class random_run(Of RT)
 
     Public Sub insert_call(ByVal percentage As Double, ByVal d As Func(Of RT))
         assert(percentage >= 0 AndAlso percentage <= 1)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         If percentage > 0 Then
             insert_calls(pair.of(percentage, d))
         End If

@@ -81,9 +81,9 @@ Public NotInheritable Class cancellation_controller
     Private Sub replace(Of T As flip_event)(ByVal ref As atomic_ref(Of T),
                                             ByVal f As flip_event.[New](Of T),
                                             ByVal when_cancel As Action)
-        assert(Not ref Is Nothing)
-        assert(Not f Is Nothing)
-        assert(Not when_cancel Is Nothing)
+        assert(ref IsNot Nothing)
+        assert(f IsNot Nothing)
+        assert(when_cancel IsNot Nothing)
         Dim old As T = Nothing
         old = ref.exchange(f(flip_event.events.of_to_low(Sub()
                                                              when_cancel()
@@ -91,7 +91,7 @@ Public NotInheritable Class cancellation_controller
                                                              cancel_if_not(ref_counted_ref, ref)
                                                              cancel_if_not(timeout_ref, ref)
                                                          End Sub)))
-        If Not old Is Nothing Then
+        If old IsNot Nothing Then
             old.cancel()
         End If
     End Sub
@@ -106,7 +106,7 @@ Public NotInheritable Class cancellation_controller
                                     (ByVal ref As atomic_ref(Of T), ByVal cmp As atomic_ref(Of T2))
         Dim f As flip_event = Nothing
         f = ref.exchange(Nothing)
-        If Not f Is Nothing AndAlso object_compare(ref, cmp) <> 0 Then
+        If f IsNot Nothing AndAlso object_compare(ref, cmp) <> 0 Then
             f.cancel()
         End If
     End Sub

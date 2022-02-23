@@ -15,7 +15,7 @@ Public NotInheritable Class code_gen_delegate(Of WRITER As New)
     Private ReadOnly f As Func(Of typed_node, WRITER, Boolean)
 
     Private Sub New(ByVal f As Func(Of typed_node, WRITER, Boolean))
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Me.f = f
     End Sub
 
@@ -32,7 +32,7 @@ Public NotInheritable Class code_gen_delegate(Of WRITER As New)
                                 ByVal f As Func(Of code_gens(Of WRITER), typed_node, WRITER, Boolean)) _
                                As Action(Of code_gens(Of WRITER))
         Return Sub(ByVal b As code_gens(Of WRITER))
-                   assert(Not b Is Nothing)
+                   assert(b IsNot Nothing)
                    b.register(name,
                               New code_gen_delegate(Of WRITER)(
                                   Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
@@ -42,8 +42,8 @@ Public NotInheritable Class code_gen_delegate(Of WRITER As New)
     End Function
 
     Public Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
-        assert(Not n Is Nothing)
-        assert(Not o Is Nothing)
+        assert(n IsNot Nothing)
+        assert(o IsNot Nothing)
         Return f(n, o)
     End Function
 End Class
@@ -54,9 +54,9 @@ Public NotInheritable Class code_gen
                                                Function(ByVal this As code_gens(Of WRITER),
                                                         ByVal n As typed_node,
                                                         ByVal o As WRITER) As Boolean
-                                                   assert(Not this Is Nothing)
-                                                   assert(Not n Is Nothing)
-                                                   assert(Not o Is Nothing)
+                                                   assert(this IsNot Nothing)
+                                                   assert(n IsNot Nothing)
+                                                   assert(o IsNot Nothing)
                                                    Return True
                                                End Function)
     End Function
@@ -70,9 +70,9 @@ Public NotInheritable Class code_gen
                                                Function(ByVal this As code_gens(Of WRITER),
                                                         ByVal n As typed_node,
                                                         ByVal o As WRITER) As Boolean
-                                                   assert(Not this Is Nothing)
-                                                   assert(Not n Is Nothing)
-                                                   assert(Not o Is Nothing)
+                                                   assert(this IsNot Nothing)
+                                                   assert(n IsNot Nothing)
+                                                   assert(o IsNot Nothing)
                                                    For i As Int32 = 0 To selected_children.Length() - 1
                                                        assert(n.child_count() > selected_children(i))
                                                        If Not this.of(n.child(selected_children(i))).build(o) Then
@@ -93,9 +93,9 @@ Public NotInheritable Class code_gen
                                                Function(ByVal this As code_gens(Of WRITER),
                                                         ByVal n As typed_node,
                                                         ByVal o As WRITER) As Boolean
-                                                   assert(Not this Is Nothing)
-                                                   assert(Not n Is Nothing)
-                                                   assert(Not o Is Nothing)
+                                                   assert(this IsNot Nothing)
+                                                   assert(n IsNot Nothing)
+                                                   assert(o IsNot Nothing)
                                                    If n.child_count() <= 1 Then
                                                        Return True
                                                    End If
@@ -115,9 +115,9 @@ Public NotInheritable Class code_gen
                                                Function(ByVal this As code_gens(Of WRITER),
                                                         ByVal n As typed_node,
                                                         ByVal o As WRITER) As Boolean
-                                                   assert(Not this Is Nothing)
-                                                   assert(Not n Is Nothing)
-                                                   assert(Not o Is Nothing)
+                                                   assert(this IsNot Nothing)
+                                                   assert(n IsNot Nothing)
+                                                   assert(o IsNot Nothing)
                                                    Return this.of(n.child()).build(o)
                                                End Function)
     End Function
@@ -125,7 +125,7 @@ Public NotInheritable Class code_gen
     Public Shared Function of_all_children_with_precondition(Of WRITER As New) _
                                                             (ByVal w As Func(Of typed_node, Boolean),
                                                              ByVal name As String) As Action(Of code_gens(Of WRITER))
-        assert(Not w Is Nothing)
+        assert(w IsNot Nothing)
         Return code_gen_delegate(Of WRITER).of(name,
                                                Function(ByVal this As code_gens(Of WRITER),
                                                         ByVal n As typed_node,
@@ -147,7 +147,7 @@ Public NotInheritable Class code_gen
                                                         ByVal n As typed_node,
                                                         ByVal o As WRITER) As Boolean
                                                    For Each w As Func(Of typed_node, Boolean) In ws
-                                                       assert(Not w Is Nothing)
+                                                       assert(w IsNot Nothing)
                                                        If Not w(n) Then
                                                            Return False
                                                        End If
@@ -159,7 +159,7 @@ Public NotInheritable Class code_gen
     Public Shared Function of_all_children_with_wrapper(Of T As IDisposable, WRITER As New) _
                                                        (ByVal w As Func(Of T),
                                                         ByVal name As String) As Action(Of code_gens(Of WRITER))
-        assert(Not w Is Nothing)
+        assert(w IsNot Nothing)
         Return code_gen_delegate(Of WRITER).of(name,
                                                Function(ByVal this As code_gens(Of WRITER),
                                                         ByVal n As typed_node,
@@ -183,8 +183,8 @@ Public NotInheritable Class code_gen
         Return code_gen_delegate(Of typed_node_writer).of(
                    name,
                    Function(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
-                       assert(Not n Is Nothing)
-                       assert(Not o Is Nothing)
+                       assert(n IsNot Nothing)
+                       assert(o IsNot Nothing)
                        assert(n.leaf())
                        Return o.append(n)
                    End Function)
@@ -195,8 +195,8 @@ Public NotInheritable Class code_gen
         Return code_gen_delegate(Of WRITER).of(
                    name,
                    Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
-                       assert(Not n Is Nothing)
-                       assert(Not o Is Nothing)
+                       assert(n IsNot Nothing)
+                       assert(o IsNot Nothing)
                        Return o.append(n.only_descendant_str())
                    End Function)
     End Function
@@ -206,8 +206,8 @@ Public NotInheritable Class code_gen
         Return code_gen_delegate(Of WRITER).of(
                    name,
                    Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
-                       assert(Not n Is Nothing)
-                       assert(Not o Is Nothing)
+                       assert(n IsNot Nothing)
+                       assert(o IsNot Nothing)
                        Return o.append(n.input())
                    End Function)
     End Function
@@ -217,8 +217,8 @@ Public NotInheritable Class code_gen
         Return code_gen_delegate(Of WRITER).of(
                    name,
                    Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
-                       assert(Not n Is Nothing)
-                       assert(Not o Is Nothing)
+                       assert(n IsNot Nothing)
+                       assert(o IsNot Nothing)
                        Return o.append(n.input_without_ignored())
                    End Function)
     End Function
@@ -229,8 +229,8 @@ Public NotInheritable Class code_gen
         Return code_gen_delegate(Of WRITER).of(
                    name,
                    Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
-                       assert(Not n Is Nothing)
-                       assert(Not o Is Nothing)
+                       assert(n IsNot Nothing)
+                       assert(o IsNot Nothing)
                        Return o.append(name)
                    End Function)
     End Function

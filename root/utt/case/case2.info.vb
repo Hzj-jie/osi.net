@@ -48,8 +48,8 @@ Partial Public NotInheritable Class case2
         End Sub
 
         Public Shared Function merge(ByVal i As info, ByVal j As info) As info
-            assert(Not i Is Nothing)
-            assert(Not j Is Nothing)
+            assert(i IsNot Nothing)
+            assert(j IsNot Nothing)
             Return New info("",
                             "",
                             i.repeat_times * j.repeat_times,
@@ -61,7 +61,7 @@ Partial Public NotInheritable Class case2
         End Function
 
         Public Shared Function from(ByVal member As MemberInfo) As info
-            assert(Not member Is Nothing)
+            assert(member IsNot Nothing)
             Dim repeat_times As UInt64 = 0
             Using code_block
                 Dim attribute As attributes.repeat = Nothing
@@ -120,7 +120,7 @@ Partial Public NotInheritable Class case2
 
         Private Sub New(ByVal f As Func(Of Object, Boolean), ByVal info As info)
             MyBase.New(info)
-            assert(Not f Is Nothing)
+            assert(f IsNot Nothing)
             Me.f = f
         End Sub
 
@@ -129,7 +129,7 @@ Partial Public NotInheritable Class case2
         End Sub
 
         Public Shared Shadows Function from(ByVal method As MethodInfo) As function_info
-            assert(Not method Is Nothing)
+            assert(method IsNot Nothing)
             Return New function_info(Function(ByVal obj As Object) As Boolean
                                          Return _object_extensions.is_null_or_true(method.Invoke(obj, Nothing))
                                      End Function,
@@ -150,7 +150,7 @@ Partial Public NotInheritable Class case2
         End Sub
 
         Public Shared Shadows Function from(ByVal method As MethodInfo) As random_function_info
-            assert(Not method Is Nothing)
+            assert(method IsNot Nothing)
             Dim percentage As Double = 0
             Using code_block
                 Dim attribute As attributes.random = Nothing

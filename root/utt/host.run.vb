@@ -21,14 +21,14 @@ Partial Friend NotInheritable Class host
     End Sub
 
     Public Shared Function execute_case(ByVal c As [case]) As Boolean
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Return (assertion.is_true(do_(AddressOf c.prepare, False), "failed to prepare case ", c.full_name) AndAlso
                 assertion.is_true(do_(AddressOf c.run, False), "failed to run case ", c.full_name)) And
                assertion.is_true(do_(AddressOf c.finish, False), "failed to finish case ", c.full_name)
     End Function
 
     Private Shared Function execute_case(ByVal c As case_info) As Boolean
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         assert(env_vars.repeat_per_case >= 1)
         For i As UInt32 = 0 To env_vars.repeat_per_case - uint32_1
             If Not execute_case(c.case) Then
@@ -39,8 +39,8 @@ Partial Friend NotInheritable Class host
     End Function
 
     Private Shared Sub run(ByVal c As case_info, ByVal finished As EventWaitHandle)
-        assert(Not c Is Nothing)
-        assert(Not finished Is Nothing)
+        assert(c IsNot Nothing)
+        assert(finished IsNot Nothing)
 
         If Not self_health_stage() Then
             Dim msg() As Object = Nothing
@@ -160,7 +160,7 @@ Partial Friend NotInheritable Class host
     End Function
 
     Private Shared Sub wait_finish(ByVal finished As EventWaitHandle)
-        assert(Not finished Is Nothing)
+        assert(finished IsNot Nothing)
         While Not finished.WaitOne(5000)
             assert_running_time()
         End While

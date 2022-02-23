@@ -14,7 +14,7 @@ Public Class hash_distributor
     Private ReadOnly container As istrkeyvt_container
 
     Public Sub New(ByVal container As istrkeyvt_container)
-        assert(Not container Is Nothing)
+        assert(container IsNot Nothing)
         Me.container = container
     End Sub
 

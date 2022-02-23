@@ -65,7 +65,7 @@ Public Class bst(Of T)
         Dim l As node = Nothing
         While True
 #If Not Performance Then
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
 #End If
             Dim c As Int32 = 0
             c = n.compare(v)
@@ -109,7 +109,7 @@ Public Class bst(Of T)
         Dim l As node = Nothing
         While True
 #If Not Performance Then
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
 #End If
             Dim c As Int32 = n.compare(v)
             If c <= 0 Then

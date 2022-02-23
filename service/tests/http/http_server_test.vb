@@ -107,7 +107,7 @@ Public Class http_server_test
                                       Else
                                           Dim wr As HttpWebResponse = Nothing
                                           assertion.is_true(direct_cast(+resp, wr))
-                                          assertion.is_not_null(Not wr Is Nothing)
+                                          assertion.is_not_null(wr IsNot Nothing)
                                           wr.GetResponseStream().Close()
                                           wr.GetResponseStream().Dispose()
                                           wr.Close()
@@ -152,7 +152,7 @@ Public Class http_server_test
         End Function
 
         Private Function success_rate(ByVal i As atomic_int) As Double
-            assert(Not i Is Nothing)
+            assert(i IsNot Nothing)
             Dim r As Double = 0
             r = (+i) / parallel / iteration / repeat
             Return r

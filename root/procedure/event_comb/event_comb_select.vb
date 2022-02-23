@@ -70,15 +70,15 @@ Public Class event_comb_select(Of T)
     End Function
 
     Protected Sub foreach(ByVal d As Func(Of pair(Of T, Action), Boolean))
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         assert(Not q.empty())
         Dim s As Int64 = 0
         s = q.size()
         While s > 0
             Dim p As pair(Of T, Action) = Nothing
             assert(q.pop(p))
-            assert(Not p Is Nothing)
-            If Not p.second Is Nothing Then
+            assert(p IsNot Nothing)
+            If p.second IsNot Nothing Then
                 If d(p) Then
                     [select](p)
                 Else
@@ -100,8 +100,8 @@ Public Class event_comb_select(Of T)
     End Function
 
     Protected Sub [select](ByVal i As pair(Of T, Action))
-        assert(Not i Is Nothing)
-        assert(Not i.second Is Nothing)
+        assert(i IsNot Nothing)
+        assert(i.second IsNot Nothing)
         'must use emplace_back to ensure the pair in q and s is the same instance
         s.emplace_back(i)
     End Sub
@@ -113,7 +113,7 @@ Public Class event_comb_select(Of T)
     Private Sub selected()
         If Not s.empty() Then
             For i As UInt32 = 0 To s.size() - uint32_1
-                assert(Not s(i).second Is Nothing)
+                assert(s(i).second IsNot Nothing)
                 s(i).second()
                 s(i).second = Nothing
             Next

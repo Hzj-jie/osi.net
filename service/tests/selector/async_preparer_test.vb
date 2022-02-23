@@ -38,7 +38,7 @@ Public Class async_preparer_test
         End Function
 
         Public Overrides Function create() As event_comb
-            assert(Not l Is Nothing)
+            assert(l IsNot Nothing)
             Dim s As ref(Of String) = Nothing
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean

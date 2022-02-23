@@ -12,7 +12,7 @@ Friend Module _signal_case
     End Function
 
     <Extension()> Public Function valid_signal_case(ByVal c As [case]) As Boolean
-        Return Not c Is Nothing AndAlso
+        Return c IsNot Nothing AndAlso
                c.mode = mode.signal AndAlso
                valid_signal_action(c.action) AndAlso
                valid_signal_meta(c.action, c.meta)

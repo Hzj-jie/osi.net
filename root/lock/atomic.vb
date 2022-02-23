@@ -30,12 +30,12 @@ Public NotInheritable Class atomic
         End Function
     Private Shared ReadOnly destroy_auto_reset_event As Action(Of AutoResetEvent) =
         Sub(ByVal x As AutoResetEvent)
-            assert(Not x Is Nothing)
+            assert(x IsNot Nothing)
             x.Close()
         End Sub
     Private Shared ReadOnly destroy_manual_reset_event As Action(Of ManualResetEvent) =
         Sub(ByVal x As ManualResetEvent)
-            assert(Not x Is Nothing)
+            assert(x IsNot Nothing)
             x.Close()
         End Sub
 
@@ -199,14 +199,14 @@ Public NotInheritable Class atomic
     Public Shared Function set_if_nothing(Of T As Class)(ByRef i As T,
                                                          ByVal n As T,
                                                          Optional ByVal destroy As Action(Of T) = Nothing) As Boolean
-        If Not i Is Nothing OrElse n Is Nothing Then
+        If i IsNot Nothing OrElse n Is Nothing Then
             Return False
         End If
         Thread.MemoryBarrier()
         If Interlocked.CompareExchange(i, n, Nothing) Is Nothing Then
             Return True
         End If
-        If Not destroy Is Nothing Then
+        If destroy IsNot Nothing Then
             destroy(n)
         End If
         Return False
@@ -216,7 +216,7 @@ Public NotInheritable Class atomic
     Public Shared Function create_if_nothing(Of T As Class)(ByRef i As T,
                                                             ByVal ctor As Func(Of T),
                                                             Optional ByVal destroy As Action(Of T) = Nothing) As Boolean
-        If Not i Is Nothing Then
+        If i IsNot Nothing Then
             Return False
         End If
         Dim v As T = Nothing
@@ -225,7 +225,7 @@ Public NotInheritable Class atomic
         If Interlocked.CompareExchange(i, v, Nothing) Is Nothing Then
             Return True
         End If
-        If Not destroy Is Nothing Then
+        If destroy IsNot Nothing Then
             destroy(v)
         End If
         Return False

@@ -115,7 +115,7 @@ Public NotInheritable Class slimheapless_threadpool
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal this As slimheapless_threadpool, ByVal that As Action) As slimheapless_threadpool
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         this.push(that)
         Return this
     End Operator

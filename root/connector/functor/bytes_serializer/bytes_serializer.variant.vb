@@ -27,9 +27,9 @@ Partial Public Class bytes_serializer(Of T)
         Public Shared Sub register(ByVal sizeof As Func(Of T, UInt32),
                                    ByVal write_to As Func(Of T, MemoryStream, Boolean),
                                    ByVal read_from As _do_val_val_ref(Of UInt32, MemoryStream, T, Boolean))
-            assert(Not sizeof Is Nothing)
-            assert(Not write_to Is Nothing)
-            assert(Not read_from Is Nothing)
+            assert(sizeof IsNot Nothing)
+            assert(write_to IsNot Nothing)
+            assert(read_from IsNot Nothing)
             [variant].register(Function(ByVal i As T, ByVal o As MemoryStream) As Boolean
                                    If Not bytes_serializer.append_to(sizeof(i), o) Then
                                        Return False
@@ -55,7 +55,7 @@ Partial Public Class bytes_serializer(Of T)
 
     Public NotInheritable Class container(Of ELEMENT)
         Private Shared Function write_to(ByVal i As T, ByVal o As MemoryStream) As Boolean
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Dim it As container_operator(Of ELEMENT).enumerator = Nothing
             it = container_operator(Of T, ELEMENT).r.enumerate(i)
             If it Is Nothing Then
@@ -74,7 +74,7 @@ Partial Public Class bytes_serializer(Of T)
 
         Public Shared Sub register(ByVal op As container_operator(Of T, ELEMENT))
             [variant].register(Function(ByVal i As T, ByVal o As MemoryStream) As Boolean
-                                   assert(Not o Is Nothing)
+                                   assert(o IsNot Nothing)
                                    Dim l As UInt32 = 0
                                    l = container_operator(Of T, ELEMENT).r.size(i)
                                    If Not bytes_serializer.append_to(l, o) Then
@@ -87,7 +87,7 @@ Partial Public Class bytes_serializer(Of T)
                                    Return write_to(i, o)
                                End Function,
                                Function(ByVal i As MemoryStream, ByRef o As T) As Boolean
-                                   assert(Not i Is Nothing)
+                                   assert(i IsNot Nothing)
                                    Dim l As UInt32 = 0
                                    If Not bytes_serializer.consume_from(i, l) Then
                                        Return False

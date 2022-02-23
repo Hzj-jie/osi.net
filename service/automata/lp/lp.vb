@@ -62,7 +62,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
     Private Shared Function allocate_status_name_id(ByVal status_name_id As map(Of String, UInt32),
                                                     ByVal name As String,
                                                     ByRef id As UInt32) As Boolean
-        assert(Not status_name_id Is Nothing)
+        assert(status_name_id IsNot Nothing)
         assert(Not String.IsNullOrEmpty(name))
         assert(id >= parser(Of MAX_TYPE, RESULT_T).first_user_status)
         If Not strsame(name, start_status_name) AndAlso
@@ -102,7 +102,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
     Private Shared Function retrieve_map(Of T)(ByVal m As map(Of String, T),
                                                ByVal name As String,
                                                ByRef o As T) As Boolean
-        assert(Not m Is Nothing)
+        assert(m IsNot Nothing)
         assert(Not String.IsNullOrEmpty(name))
         Dim it As map(Of String, T).iterator = Nothing
         it = m.find(name)
@@ -150,7 +150,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
         Else
             Try
                 t = Type.GetType(i.method_type())
-                Return Not t Is Nothing
+                Return t IsNot Nothing
             Catch ex As Exception
                 raise_error(error_type.warning,
                             "failed to retrieve type ",
@@ -165,8 +165,8 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
     Private Function define_parser(ByVal type_name_id As map(Of String, Int32),
                                    ByVal status_name_id As map(Of String, UInt32),
                                    ByVal method_type As Type) As Boolean
-        assert(Not type_name_id Is Nothing)
-        assert(Not status_name_id Is Nothing)
+        assert(type_name_id IsNot Nothing)
+        assert(status_name_id IsNot Nothing)
         Dim it As map(Of String, map(Of String, pair(Of String, String))).iterator = Nothing
         it = i.statuses.begin()
         While it <> i.statuses.end()
@@ -183,7 +183,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                 If retrieve_type_id(type_name_id, (+it2).first, v) AndAlso
                    retrieve_status_id(status_name_id, (+it2).second.first, t) AndAlso
                    retrieve_action(method_type, (+it2).second.second, a) Then
-                    If Not If(a Is Nothing,
+                    If If(a IsNot Nothing,
                               p.define(f, CUInt(v), t),
                               p.define(f, CUInt(v), t, a)) Then
                         Return False
@@ -224,10 +224,10 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
             'should not happen
             Return Nothing
         Else
-            assert(Not c Is Nothing)
+            assert(c IsNot Nothing)
             Dim r As T = Nothing
             r = c()
-            assert(Not r Is Nothing)
+            assert(r IsNot Nothing)
             If r.parse(inputs) Then
                 Return r
             Else

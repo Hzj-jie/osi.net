@@ -14,7 +14,7 @@ Friend Class event_queue(Of PARA_T, _ONCE As _boolean)
     End Sub
 
     Public Function attach(ByVal v As iparameter_action(Of PARA_T)) As Boolean
-        If Not v Is Nothing AndAlso v.valid() Then
+        If v IsNot Nothing AndAlso v.valid() Then
             q.push(v)
             Return True
         Else
@@ -42,7 +42,7 @@ Friend Class event_queue(Of PARA_T, _ONCE As _boolean)
     Public Function raise_one(ByVal p As PARA_T) As Boolean
         Dim w As iparameter_action(Of PARA_T) = Nothing
         If q.pop(w) Then
-            assert(Not w Is Nothing)
+            assert(w IsNot Nothing)
             If w.valid() Then
                 w.run(p)
                 If attach_after Then

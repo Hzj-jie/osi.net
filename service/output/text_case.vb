@@ -54,7 +54,7 @@ Friend Module _text_case
     End Function
 
     <Extension()> Public Function valid_text_case(ByVal c As [case]) As Boolean
-        Return Not c Is Nothing AndAlso
+        Return c IsNot Nothing AndAlso
                c.mode = mode.text AndAlso
                valid_text_action(c.action) AndAlso
                valid_text_meta(c.action, c.meta)

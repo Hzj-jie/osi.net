@@ -11,9 +11,9 @@ Public Module _httplistener
     <Extension()> Public Function get_context(ByVal listener As HttpListener,
                                               ByVal ctx As ref(Of HttpListenerContext)) As event_comb
         Return create(Function() As Boolean
-                          Return Not listener Is Nothing AndAlso
+                          Return listener IsNot Nothing AndAlso
                                  listener.IsListening() AndAlso
-                                 Not ctx Is Nothing
+                                 ctx IsNot Nothing
                       End Function,
                       Function() As event_comb
                           Return event_comb_async_operation.ctor(

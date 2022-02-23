@@ -42,7 +42,7 @@ Namespace counter
         End Function
 
         Friend Function insert(ByVal cr As counter_record) As Int64
-            assert(Not cr Is Nothing)
+            assert(cr IsNot Nothing)
             Return l.writer_locked(Function() As Int64
                                        Dim rtn As Int64 = 0
                                        rtn = v.size()
@@ -52,14 +52,14 @@ Namespace counter
         End Function
 
         Friend Sub foreach(ByVal d As Action(Of counter_record))
-            assert(Not d Is Nothing)
+            assert(d IsNot Nothing)
             l.reader_locked(Sub()
                                 v.stream().foreach(d)
                             End Sub)
         End Sub
 
         Friend Sub workon(ByVal i As Int64, ByVal d As Action(Of counter_record))
-            assert(Not d Is Nothing)
+            assert(d IsNot Nothing)
             assert(i <= max_uint32)
             assert(i >= 0)
             l.reader_locked(Function() As Boolean

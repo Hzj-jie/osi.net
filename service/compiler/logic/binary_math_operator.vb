@@ -18,7 +18,7 @@ Namespace logic
         End Function
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
-            assert(Not result Is Nothing)
+            assert(result IsNot Nothing)
             'TODO: Should use result.is_variable_size()
             Return True
         End Function

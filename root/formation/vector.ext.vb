@@ -106,22 +106,22 @@ Public Module vector_extension
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function available_index(Of T)(ByVal v As vector(Of T), ByVal i As Int32) As Boolean
-        Return Not v Is Nothing AndAlso i >= 0 AndAlso i < v.size()
+        Return v IsNot Nothing AndAlso i >= 0 AndAlso i < v.size()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function available_index(Of T)(ByVal v As vector(Of T), ByVal i As UInt32) As Boolean
-        Return Not v Is Nothing AndAlso i < v.size()
+        Return v IsNot Nothing AndAlso i < v.size()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function available_index(Of T)(ByVal v As vector(Of T), ByVal i As Int64) As Boolean
-        Return Not v Is Nothing AndAlso i >= 0 AndAlso i < v.size()
+        Return v IsNot Nothing AndAlso i >= 0 AndAlso i < v.size()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function available_index(Of T)(ByVal v As vector(Of T), ByVal i As UInt64) As Boolean
-        Return Not v Is Nothing AndAlso i < v.size()
+        Return v IsNot Nothing AndAlso i < v.size()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -185,7 +185,7 @@ Public Module vector_extension
     <Extension()> Public Function str(Of T)(ByVal v As vector(Of T),
                                             ByVal f As Func(Of T, String),
                                             ByVal separator As String) As String
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         If v Is Nothing Then
             Return Nothing
         End If

@@ -75,7 +75,7 @@ Public NotInheritable Class unique_ptr(Of T As Class)
     End Function
 
     Public Shared Widening Operator CType(ByVal this As unique_ptr(Of T)) As Boolean
-        Return Not this Is Nothing AndAlso Not this.empty()
+        Return this IsNot Nothing AndAlso Not this.empty()
     End Operator
 
     Public Shared Operator Not(ByVal this As unique_ptr(Of T)) As Boolean

@@ -68,7 +68,7 @@ Public NotInheritable Class stack(Of T)
         If cmp <> 0 Then
             Return cmp
         End If
-        assert(Not other Is Nothing)
+        assert(other IsNot Nothing)
         Return d.CompareTo(other.d)
     End Function
 

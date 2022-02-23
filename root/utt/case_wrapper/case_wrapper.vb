@@ -8,7 +8,7 @@ Public Class case_wrapper
 
     Protected Sub New(ByVal c As [case])
         MyBase.New()
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Me.c = c
     End Sub
 
@@ -18,7 +18,7 @@ Public Class case_wrapper
                    ByVal assembly_qualified_name As String,
                    ByVal name As String)
         MyBase.New(full_name, assembly_qualified_name, name)
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Me.c = c
     End Sub
 

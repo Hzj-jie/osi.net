@@ -88,7 +88,7 @@ Public Class dev_pool_single_test
                                       Function() As Boolean
                                           p.renew()
                                           If assertion.is_true(ec.end_result()) Then
-                                              assert(Not h.get() Is Nothing)
+                                              assert(h.get() IsNot Nothing)
                                               ec = h.get().receive(p)
                                               Return waitfor(ec) AndAlso
                                                      goto_next()
@@ -100,7 +100,7 @@ Public Class dev_pool_single_test
                                       Function()
                                           assertion.is_true(ec.end_result())
                                           assertion.is_true(Not p.empty())
-                                          assert(Not h.get() Is Nothing)
+                                          assert(h.get() IsNot Nothing)
                                           ec = h.get().send(+p)
                                           Return waitfor(ec) AndAlso
                                                  goto_next()
@@ -139,7 +139,7 @@ Public Class dev_pool_single_test
                                           'short path for get method
                                           's = rnd_short_str()
                                       End If
-                                      assert(Not cp Is Nothing)
+                                      assert(cp IsNot Nothing)
                                       If assertion.is_true(cp.get(h)) AndAlso
                                          assertion.is_not_null(h) AndAlso
                                          assertion.is_not_null(h.get()) Then
@@ -153,7 +153,7 @@ Public Class dev_pool_single_test
                                   Function() As Boolean
                                       assertion.is_true(ec.end_result())
                                       p = New ref(Of String)()
-                                      assert(Not h Is Nothing AndAlso Not h.get() Is Nothing)
+                                      assert(h IsNot Nothing AndAlso h.get() IsNot Nothing)
                                       ec = h.get().receive(p)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

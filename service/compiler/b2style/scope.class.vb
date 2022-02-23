@@ -13,7 +13,7 @@ Partial Public NotInheritable Class b2style
             Private ReadOnly m As New unordered_map(Of name_with_namespace, class_def)()
 
             Public Function define(ByVal name As name_with_namespace, ByVal def As class_def) As Boolean
-                assert(Not def Is Nothing)
+                assert(def IsNot Nothing)
                 If Not def.check() Then
                     Return False
                 End If
@@ -33,7 +33,7 @@ Partial Public NotInheritable Class b2style
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
-                assert(Not s Is Nothing)
+                assert(s IsNot Nothing)
                 Me.s = s
             End Sub
 
@@ -43,7 +43,7 @@ Partial Public NotInheritable Class b2style
 
             Public Function resolve(ByVal name As String, ByRef o As class_def) As Boolean
                 Dim s As scope = Me.s
-                While Not s Is Nothing
+                While s IsNot Nothing
                     If s.c.resolve(name, o) Then
                         Return True
                     End If

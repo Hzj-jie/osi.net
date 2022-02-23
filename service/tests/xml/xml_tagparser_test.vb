@@ -67,7 +67,7 @@ Public Class xml_tagparser_test
     End Sub
 
     Private Shared Function run_case(ByVal c As case_t) As Boolean
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Dim tag As String = Nothing
         Dim attr As vector(Of pair(Of String, String)) = Nothing
         Dim self_close As Boolean = False
