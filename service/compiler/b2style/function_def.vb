@@ -7,6 +7,7 @@ Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class class_def
@@ -19,7 +20,7 @@ Partial Public NotInheritable Class b2style
                 override
             End Enum
 
-            Private ReadOnly c As class_def
+            Private ReadOnly class_def As class_def
             Private ReadOnly return_type As name_with_namespace
             ' TODO: Move name out of signature
             Private ReadOnly signature As vector(Of name_with_namespace)
@@ -40,41 +41,41 @@ Partial Public NotInheritable Class b2style
                 Return name_with_namespace.of(type)
             End Function
 
-            Public Sub New(ByVal c As class_def,
+            Public Sub New(ByVal class_def As class_def,
                            ByVal return_type As name_with_namespace,
                            ByVal signature As vector(Of name_with_namespace),
                            ByVal type As type_t,
                            ByVal content As String)
-                assert(Not c Is Nothing)
+                assert(Not class_def Is Nothing)
                 assert(Not signature.null_or_empty())
                 assert(Not content.null_or_whitespace())
-                Me.c = c
+                Me.class_def = class_def
                 Me.return_type = return_type
                 Me.signature = signature
                 Me.type = type
                 Me.content = content
             End Sub
 
-            Public Sub New(ByVal c As class_def,
+            Public Sub New(ByVal class_def As class_def,
                            ByVal return_type As name_with_namespace,
                            ByVal name As name_with_namespace,
                            ByVal type As type_t,
                            ByVal content As String)
-                Me.New(c, return_type, vector.emplace_of(name), type, content)
+                Me.New(class_def, return_type, vector.emplace_of(name), type, content)
             End Sub
 
             Public Function with_content(ByVal content As String) As function_def
-                Return New function_def(c, return_type, signature, type, content)
+                Return New function_def(class_def, return_type, signature, type, content)
             End Function
 
-            Public Function with_class(ByVal c As class_def) As function_def
-                Return New function_def(c, return_type, signature, type, content)
+            Public Function with_class(ByVal class_def As class_def) As function_def
+                Return New function_def(class_def, return_type, signature, type, content)
             End Function
 
             Public Function with_name(ByVal name As String) As function_def
                 Dim signature As vector(Of name_with_namespace) = Me.signature.CloneT()
                 signature(0) = name_of(name)
-                Return New function_def(c, return_type, signature, type, content)
+                Return New function_def(class_def, return_type, signature, type, content)
             End Function
 
             Public Function as_virtual(ByVal other As class_def) As function_def
@@ -83,14 +84,18 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public Function as_virtual() As function_def
-                Return as_virtual(c)
+                Return as_virtual(class_def)
+            End Function
+
+            Public Function is_virtual() As Boolean
+                Return type <> type_t.pure
             End Function
 
             Public Function delegate_type() As String
                 Dim content As New StringBuilder()
                 content.Append(_namespace.in_b2style_namespace("function")).
                         Append("<").
-                        Append(c.name.in_global_namespace())
+                        Append(class_def.name.in_global_namespace() + "&")
                 Dim i As UInt32 = 1
                 While i < signature.size()
                     content.Append(",").
@@ -141,7 +146,7 @@ Partial Public NotInheritable Class b2style
                                            map(Function(ByVal index As Int32) As String
                                                    Return "i" + index.ToString()
                                                End Function).
-                                           collect(Of vector(Of String))())
+                                           collect_to(Of vector(Of String))())
             End Function
 
             Public Function declaration(ByVal param_names As vector(Of String)) As String
@@ -153,7 +158,7 @@ Partial Public NotInheritable Class b2style
                         Append(" ").
                         Append(name().in_global_namespace()).
                         Append("(").
-                        Append(c.name.in_global_namespace()).
+                        Append(class_def.name.in_global_namespace()).
                         Append("& this")
                 Dim i As UInt32 = 1
                 While i < signature.size()

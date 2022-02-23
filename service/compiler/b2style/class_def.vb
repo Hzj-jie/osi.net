@@ -26,10 +26,17 @@ Partial Public NotInheritable Class b2style
 
         Private NotInheritable Class init_func_t
             Public ReadOnly bases As New vector(Of String)()
-            Public ReadOnly vfuncs As New StringBuilder()
+            Private ReadOnly vfuncs As New StringBuilder()
 
             Public Function function_body() As String
                 Return bases.str(character.newline) + vfuncs.ToString()
+            End Function
+
+            Public Function with_vfunc(ByVal f As function_def, ByVal class_def As class_def) As init_func_t
+                assert(Not f Is Nothing)
+                vfuncs.Append(
+                    "this." + f.delegate_name() + "=" + f.as_virtual(class_def).name().in_global_namespace() + ";")
+                Return Me
             End Function
         End Class
 
@@ -41,20 +48,39 @@ Partial Public NotInheritable Class b2style
             assert(Not other Is Nothing)
             _vars.emplace_back(other._vars)
             inherit_non_existing_funcs(other)
+            inherit_overrides(other)
             init_func.bases.emplace_back(init_func_def.forward_to(other))
             Return Me
         End Function
+
+        Private Sub inherit_overrides(ByVal other As class_def)
+            assert(Not other Is Nothing)
+            other.funcs().
+                  filter(Function(ByVal f As function_def) As Boolean
+                             assert(Not f Is Nothing)
+                             Return f.is_virtual()
+                         End Function).
+                  intersect(funcs()).
+                  foreach(Sub(ByVal f As function_def)
+                              with_func(f.with_class(Me).
+                                          as_virtual(Me).
+                                          with_content(f.as_virtual(Me).declaration() + "{" + f.forward_to(Me) + "}"))
+                              init_func.with_vfunc(f, Me)
+                          End Sub)
+        End Sub
 
         Private Sub inherit_non_existing_funcs(ByVal other As class_def)
             assert(Not other Is Nothing)
             _funcs.emplace_back(other.funcs().
                                       except(funcs()).
                                       filter(Function(ByVal f As function_def) As Boolean
+                                                 assert(Not f Is Nothing)
                                                  Return Not f.name().name().Equals(init_func_name)
                                              End Function).
                                       map(Function(ByVal f As function_def) As function_def
                                               assert(Not f Is Nothing)
                                               f = f.with_class(Me)
+                                              scope.current().call_hierarchy().to(f.name().in_global_namespace())
                                               Return f.with_content(New StringBuilder().Append(f.declaration()).
                                                                                         Append("{").
                                                                                         Append(f.forward_to(other)).
@@ -129,19 +155,22 @@ Partial Public NotInheritable Class b2style
                                                     signature,
                                                     t.second(),
                                                     "// This content should never be used.")
+                          If f.is_virtual() Then
+                              ' Rename the function declaration.
+                              f = f.as_virtual()
+                          End If
                           f = f.with_content(f.declaration(param_names) + node.last_child().input())
-                          If t.second() = function_def.type_t.pure Then
-                              with_func(f)
-                          Else
+                          If f.is_virtual() Then
                               If t.second() = function_def.type_t.overridable Then
                                   with_var(builders.parameter.no_ref(f.delegate_type(), f.delegate_name()))
+                                  init_func.with_vfunc(f, Me)
                               Else
                                   assert(t.second() = function_def.type_t.override)
                                   ' NVM, the one with base& this will be added during inherit_from.
                               End If
-                              with_func(f.as_virtual())
-                              init_func.vfuncs.Append(f.delegate_name() + "=" + f.name().in_global_namespace() + ";")
+                              scope.current().call_hierarchy().to(f.name().in_global_namespace())
                           End If
+                          with_func(f)
                       End Sub)
             If Not has_constructor Then
                 with_func(New function_def(Me,
