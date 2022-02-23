@@ -63,8 +63,7 @@ Partial Public NotInheritable Class b2style
                   intersect(funcs()).
                   foreach(Sub(ByVal f As function_def)
                               with_func(f.with_class(Me).
-                                          with_content(
-                                              f.virtual_declaration(Me).declaration() + "{" + f.forward_to(Me) + "}"))
+                                          with_content(f.virtual_declaration(Me) + "{" + f.forward_to(Me) + "}"))
                               init_func.with_vfunc(f, Me)
                           End Sub)
         End Sub
@@ -155,9 +154,8 @@ Partial Public NotInheritable Class b2style
                                                     signature,
                                                     t.second(),
                                                     "// This content should never be used.")
-                          f = f.with_content(f.declaration(param_names) + node.last_child().input())
                           If Not f.is_virtual() Then
-                              with_func(f)
+                              with_func(f.with_content(f.declaration(param_names) + node.last_child().input()))
                           Else
                               If t.second() = function_def.type_t.overridable Then
                                   with_var(builders.parameter.no_ref(f.delegate_type(), f.delegate_name()))
@@ -167,7 +165,7 @@ Partial Public NotInheritable Class b2style
                                   ' NVM, the one with base& this will be added during inherit_from.
                               End If
                               scope.current().call_hierarchy().to(f.name().in_global_namespace())
-                              with_func(f.with_virtual_content())
+                              with_func(f.with_content(f.virtual_declaration(param_names) + node.last_child().input()))
                           End If
                       End Sub)
             If Not has_constructor Then

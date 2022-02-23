@@ -7,7 +7,6 @@ Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class class_def
@@ -78,16 +77,22 @@ Partial Public NotInheritable Class b2style
                 Return New function_def(class_def, return_type, signature, type, content)
             End Function
 
-            Public Function with_virtual_content() As function_def
+            Private Function virtual_declaration(ByVal class_def As class_def,
+                                                 ByVal param_names As vector(Of String)) As String
+                Return declaration(virtual_name(class_def), class_def, param_names)
+            End Function
 
+            Public Function virtual_declaration(ByVal param_names As vector(Of String)) As String
+                Return virtual_declaration(class_def, param_names)
             End Function
 
             Public Function virtual_declaration(ByVal class_def As class_def) As String
-
+                Return virtual_declaration(class_def, default_param_names())
             End Function
 
             Public Function virtual_name(ByVal class_def As class_def) As String
-
+                assert(Not class_def Is Nothing)
+                Return class_def.name.in_global_namespace() + delegate_name()
             End Function
 
             Public Function is_virtual() As Boolean
@@ -121,6 +126,14 @@ Partial Public NotInheritable Class b2style
                                                ToString()
             End Function
 
+            Private Function default_param_names() As vector(Of String)
+                Return streams.range(0, signature.size() - uint32_1).
+                               map(Function(ByVal index As Int32) As String
+                                       Return "i" + index.ToString()
+                                   End Function).
+                               collect_to(Of vector(Of String))()
+            End Function
+
             Public Function forward_to(ByVal other As class_def) As String
                 assert(Not other Is Nothing)
                 Dim content As New StringBuilder()
@@ -132,34 +145,28 @@ Partial Public NotInheritable Class b2style
                     content.Append("return ")
                 End If
                 content.Append(name().in_global_namespace()).
-                        Append("(this")
-                Dim i As UInt32 = 1
-                While i < signature.size()
-                    content.Append(",").
-                            Append("i").
-                            Append(i - 1)
-                    i += uint32_1
-                End While
+                        Append("(this,").
+                        Append(default_param_names().str(","))
                 content.Append(");")
                 Return content.ToString()
             End Function
 
             Public Function declaration() As String
-                Return declaration(streams.range(0, signature.size() - uint32_1).
-                                           map(Function(ByVal index As Int32) As String
-                                                   Return "i" + index.ToString()
-                                               End Function).
-                                           collect_to(Of vector(Of String))())
+                Return declaration(default_param_names())
             End Function
 
-            Public Function declaration(ByVal param_names As vector(Of String)) As String
+            Private Function declaration(ByVal func_name As String,
+                                         ByVal class_def As class_def,
+                                         ByVal param_names As vector(Of String)) As String
+                assert(Not func_name.null_or_whitespace())
+                assert(Not class_def Is Nothing)
                 assert(Not param_names Is Nothing)
                 assert(param_names.size() = signature.size() - uint32_1)
                 ' No namespace is necessary, the first parameter contains namespace.
                 Dim content As New StringBuilder()
                 content.Append(return_type.in_global_namespace()).
                         Append(" ").
-                        Append(name().in_global_namespace()).
+                        Append(func_name).
                         Append("(").
                         Append(class_def.name.in_global_namespace()).
                         Append("& this")
@@ -173,6 +180,10 @@ Partial Public NotInheritable Class b2style
                 End While
                 content.Append(")")
                 Return content.ToString()
+            End Function
+
+            Public Function declaration(ByVal param_names As vector(Of String)) As String
+                Return declaration(name().in_global_namespace(), class_def, param_names)
             End Function
 
             Public Overrides Function Equals(ByVal obj As Object) As Boolean
