@@ -62,12 +62,12 @@ Partial Public NotInheritable Class b2style
                          End Function).
                   intersect(funcs()).
                   foreach(Sub(ByVal f As function_def)
-                              f = f.with_class(Me)
-                              with_func(f.with_name(f.virtual_name()).
-                                          with_content(f.virtual_declaration(other) +
-                                                       "{" +
-                                                       f.with_name(f.virtual_name()).forward_to(Me) +
-                                                       "}"))
+                              Dim myf As function_def = f.with_class(Me)
+                              with_func(myf.with_name(myf.virtual_name()).
+                                            with_content(myf.virtual_declaration(other) +
+                                                         "{" +
+                                                         myf.with_name(myf.virtual_name()).forward_to(Me) +
+                                                         "}"))
                               init_func.with_vfunc(f, Me)
                           End Sub)
         End Sub
