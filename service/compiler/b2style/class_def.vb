@@ -35,7 +35,7 @@ Partial Public NotInheritable Class b2style
             Public Function with_vfunc(ByVal f As function_def, ByVal class_def As class_def) As init_func_t
                 assert(Not f Is Nothing)
                 vfuncs.Append(
-                    "this." + f.delegate_name() + "=" + f.as_virtual(class_def).name().in_global_namespace() + ";")
+                    "this." + f.delegate_name() + "=" + f.virtual_name(class_def) + ";")
                 Return Me
             End Function
         End Class
@@ -63,8 +63,8 @@ Partial Public NotInheritable Class b2style
                   intersect(funcs()).
                   foreach(Sub(ByVal f As function_def)
                               with_func(f.with_class(Me).
-                                          as_virtual(Me).
-                                          with_content(f.as_virtual(Me).declaration() + "{" + f.forward_to(Me) + "}"))
+                                          with_content(
+                                              f.virtual_declaration(Me).declaration() + "{" + f.forward_to(Me) + "}"))
                               init_func.with_vfunc(f, Me)
                           End Sub)
         End Sub
@@ -155,12 +155,10 @@ Partial Public NotInheritable Class b2style
                                                     signature,
                                                     t.second(),
                                                     "// This content should never be used.")
-                          If f.is_virtual() Then
-                              ' Rename the function declaration.
-                              f = f.as_virtual()
-                          End If
                           f = f.with_content(f.declaration(param_names) + node.last_child().input())
-                          If f.is_virtual() Then
+                          If Not f.is_virtual() Then
+                              with_func(f)
+                          Else
                               If t.second() = function_def.type_t.overridable Then
                                   with_var(builders.parameter.no_ref(f.delegate_type(), f.delegate_name()))
                                   init_func.with_vfunc(f, Me)
@@ -169,8 +167,8 @@ Partial Public NotInheritable Class b2style
                                   ' NVM, the one with base& this will be added during inherit_from.
                               End If
                               scope.current().call_hierarchy().to(f.name().in_global_namespace())
+                              with_func(f.with_virtual_content())
                           End If
-                          with_func(f)
                       End Sub)
             If Not has_constructor Then
                 with_func(New function_def(Me,

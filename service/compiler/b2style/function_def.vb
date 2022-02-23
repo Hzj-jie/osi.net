@@ -78,13 +78,16 @@ Partial Public NotInheritable Class b2style
                 Return New function_def(class_def, return_type, signature, type, content)
             End Function
 
-            Public Function as_virtual(ByVal other As class_def) As function_def
-                assert(Not other Is Nothing)
-                Return with_name(other.name.in_global_namespace() + delegate_name())
+            Public Function with_virtual_content() As function_def
+
             End Function
 
-            Public Function as_virtual() As function_def
-                Return as_virtual(class_def)
+            Public Function virtual_declaration(ByVal class_def As class_def) As String
+
+            End Function
+
+            Public Function virtual_name(ByVal class_def As class_def) As String
+
             End Function
 
             Public Function is_virtual() As Boolean
