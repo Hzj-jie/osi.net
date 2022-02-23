@@ -22,8 +22,8 @@ Partial Public NotInheritable Class typed_node
 
     Public Sub dfs(ByVal node_handle As Action(Of typed_node, Action),
                    ByVal leaf_handle As Action(Of typed_node))
-        assert(Not node_handle Is Nothing)
-        assert(Not leaf_handle Is Nothing)
+        assert(node_handle IsNot Nothing)
+        assert(leaf_handle IsNot Nothing)
 
         If leaf() Then
             leaf_handle(Me)

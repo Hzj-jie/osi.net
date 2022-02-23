@@ -12,7 +12,7 @@ Public MustInherit Class filtered_module
     Private ReadOnly filter As context_filter
 
     Protected Sub New(ByVal filter As context_filter)
-        assert(Not filter Is Nothing)
+        assert(filter IsNot Nothing)
         Me.filter = filter
     End Sub
 

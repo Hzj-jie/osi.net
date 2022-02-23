@@ -213,7 +213,7 @@ Public NotInheritable Class vector(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByVal other As vector(Of T))
-        assert(Not other Is Nothing)
+        assert(other IsNot Nothing)
         assert(adaptive_array_t.swap(v, other.v))
     End Sub
 
@@ -267,7 +267,7 @@ Public NotInheritable Class vector(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub resize(ByVal n As UInt32, ByVal d As Func(Of T))
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim os As UInt32 = size()
         v.resize(n)
         For i As UInt32 = os To n - uint32_1
@@ -296,7 +296,7 @@ Public NotInheritable Class vector(Of T)
         If c <> object_compare_undetermined Then
             Return c
         End If
-        assert(Not other Is Nothing)
+        assert(other IsNot Nothing)
         Return adaptive_array_t.compare(v, other.v)
     End Function
 
@@ -321,7 +321,7 @@ Public NotInheritable Class vector(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal this As vector(Of T), ByVal that As T) As vector(Of T)
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         this.push_back(that)
         Return this
     End Operator

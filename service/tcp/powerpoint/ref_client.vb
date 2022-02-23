@@ -17,7 +17,7 @@ Public Class ref_client
     End Sub
 
     Public Sub New(ByVal c As TcpClient)
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Me.c = c
         Me.id = c.identity()
         update_refer_ms()
@@ -25,7 +25,7 @@ Public Class ref_client
 
     Public Sub New(ByVal p As powerpoint, ByVal c As TcpClient)
         Me.New(c)
-        assert(Not p Is Nothing)
+        assert(p IsNot Nothing)
         If envs.tcp_trace Then
             raise_error("new conneciton ",
                         id,
@@ -39,7 +39,7 @@ Public Class ref_client
     End Sub
 
     Public Shared Operator +(ByVal this As ref_client) As TcpClient
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Return this.client()
     End Operator
 

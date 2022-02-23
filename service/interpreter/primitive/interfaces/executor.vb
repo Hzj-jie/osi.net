@@ -84,9 +84,9 @@ Namespace primitive
 
     Public Module _executor
         <Extension()> Public Function access_as_bool(ByVal this As executor, ByVal p As data_ref) As Boolean
-            assert(Not this Is Nothing)
+            assert(this IsNot Nothing)
             Dim d As ref(Of Byte()) = this.access(p)
-            assert(Not d Is Nothing)
+            assert(d IsNot Nothing)
             Dim o As Boolean = False
             ' If the data slot is empty, treat it as false.
             If Not bytes_bool(+d, o) Then
@@ -96,12 +96,12 @@ Namespace primitive
         End Function
 
         <Extension()> Public Function stack_top(ByVal this As executor) As ref(Of Byte())
-            assert(Not this Is Nothing)
+            assert(this IsNot Nothing)
             Return this.access(data_ref.rel(0))
         End Function
 
         <Extension()> Public Function current_state(ByVal this As executor) As executor.state
-            assert(Not this Is Nothing)
+            assert(this IsNot Nothing)
             Return New executor.state(this.instruction_ref() + uint64_1, this.stack_size())
         End Function
     End Module

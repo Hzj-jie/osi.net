@@ -40,14 +40,14 @@ Public Module _injector
                                        ByVal buff() As Byte,
                                        ByVal count As UInt32,
                                        ByVal sent As ref(Of UInt32)) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return f.send(buff, uint32_0, count, sent)
     End Function
 
     <Extension()> Public Function send(ByVal f As flow_injector,
                                        ByVal buff() As Byte,
                                        ByVal sent As ref(Of UInt32)) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return f.send(buff, array_size(buff), sent)
     End Function
 
@@ -55,52 +55,52 @@ Public Module _injector
                                        ByVal buff() As Byte,
                                        ByVal offset As UInt32,
                                        ByVal count As UInt32) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return complete_io_4(buff, offset, count, AddressOf f.send)
     End Function
 
     <Extension()> Public Function send(ByVal f As flow_injector,
                                        ByVal buff() As Byte,
                                        ByVal count As UInt32) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return f.send(buff, uint32_0, count)
     End Function
 
     <Extension()> Public Function send(ByVal f As flow_injector,
                                        ByVal buff() As Byte) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return f.send(buff, array_size(buff))
     End Function
 
     <Extension()> Public Function send(ByVal f As block_injector,
                                        ByVal buff() As Byte,
                                        ByVal count As UInt32) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return f.send(buff, uint32_0, count)
     End Function
 
     <Extension()> Public Function send(ByVal f As block_injector,
                                        ByVal buff() As Byte) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return f.send(buff, array_size(buff))
     End Function
 
     <Extension()> Public Function send(ByVal f As text_injector,
                                        ByVal s As String,
                                        ByVal len As UInt32) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return f.send(s, uint32_0, len)
     End Function
 
     <Extension()> Public Function send(ByVal f As text_injector,
                                        ByVal s As String) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return f.send(s, strlen(s))
     End Function
 
     <Extension()> Public Function send(ByVal f As stream_injector,
                                        ByVal s As Stream) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return f.send(s, If(s Is Nothing, uint32_0, If(s.CanSeek(), s.Length(), max_uint32)))
     End Function
 End Module

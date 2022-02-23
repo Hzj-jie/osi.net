@@ -11,7 +11,7 @@ Friend Class list_case
     Private ReadOnly v As vector(Of String) = Nothing
 
     Private Function validate() As Boolean
-        Return Not v Is Nothing
+        Return v IsNot Nothing
     End Function
 
     Private Sub first()

@@ -49,7 +49,7 @@ Public NotInheritable Class callback_timeout_test
             run_times.increment()
             Dim this As Int32 = +counter
             Dim cb As callback_action = create_callback_action()
-            assert(Not cb Is Nothing)
+            assert(cb IsNot Nothing)
             Using New boost()
                 Using expectation.timelimited_operation(timeout_ms,
                                                         (timeout_ms + 4 * timeslice_length_ms) * thread_count)

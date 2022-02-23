@@ -10,7 +10,7 @@ Partial Public Class delegator_datagram_adapter
         Private ReadOnly u As delegator
 
         Public Sub New(ByVal u As delegator)
-            assert(Not u Is Nothing)
+            assert(u IsNot Nothing)
             Me.u = u
         End Sub
 

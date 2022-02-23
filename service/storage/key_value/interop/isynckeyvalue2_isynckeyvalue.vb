@@ -9,7 +9,7 @@ Public Class isynckeyvalue2_isynckeyvalue(Of SEEK_RESULT)
     Private ReadOnly impl As isynckeyvalue2(Of SEEK_RESULT)
 
     Public Sub New(ByVal impl As isynckeyvalue2(Of SEEK_RESULT))
-        assert(Not impl Is Nothing)
+        assert(impl IsNot Nothing)
         Me.impl = impl
     End Sub
 

@@ -66,7 +66,7 @@ Namespace rlexer
 
         Public Overrides Function run() As Boolean
             For i As Int32 = 0 To array_size_i(cases) - 1
-                assert(Not cases(i) Is Nothing)
+                assert(cases(i) IsNot Nothing)
                 Dim c As regex = Nothing
                 If assertion.is_true(regex.create(macros.default.expand(cases(i).regex), c)) AndAlso
                    assertion.is_not_null(c) Then

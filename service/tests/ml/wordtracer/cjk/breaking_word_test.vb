@@ -58,8 +58,8 @@ Namespace wordtracer.cjk
                     r.stream().
                       sort(Function(ByVal i As first_const_pair(Of Char, ed),
                                     ByVal j As first_const_pair(Of Char, ed)) As Int32
-                               assert(Not i Is Nothing)
-                               assert(Not j Is Nothing)
+                               assert(i IsNot Nothing)
+                               assert(j IsNot Nothing)
                                Return i.second.lambda.CompareTo(j.second.lambda)
                            End Function).
                       collect_to(Of vector(Of first_const_pair(Of Char, ed)))()))

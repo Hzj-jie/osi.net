@@ -143,7 +143,7 @@ Partial Public Class list(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal m As list(Of T))
-            assert(Not m Is Nothing)
+            assert(m IsNot Nothing)
             it = m.begin()
         End Sub
 

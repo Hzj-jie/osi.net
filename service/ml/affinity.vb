@@ -12,8 +12,8 @@ Public NotInheritable Class affinity
 
     Public Shared Function [of](Of T As distribution) _
                                (ByVal l As T, ByVal r As T, ByVal segment_count As UInt32) As Double
-        assert(Not l Is Nothing)
-        assert(Not r Is Nothing)
+        assert(l IsNot Nothing)
+        assert(r IsNot Nothing)
         Dim lp As one_of(Of tuple(Of Double, Double), vector(Of Double)) = l.parameter_space()
         Dim rp As one_of(Of tuple(Of Double, Double), vector(Of Double)) = r.parameter_space()
         assert(equal(lp, rp))

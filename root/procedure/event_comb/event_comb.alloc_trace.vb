@@ -17,7 +17,7 @@ Partial Public Class event_comb
         If(event_comb_alloc_trace, New map(Of String, Int64)(), Nothing)
 
     Private Shared Sub callstack_alloc_change(ByVal n As String, ByVal c As Int64)
-        assert(Not callstack_alloc Is Nothing)
+        assert(callstack_alloc IsNot Nothing)
         callstack_alloc_lock.locked(Sub()
                                         If callstack_alloc.find(n) = callstack_alloc.end() Then
                                             callstack_alloc(n) = counter.register_counter(
@@ -55,7 +55,7 @@ Partial Public Class event_comb
                                             While it <> callstack_alloc.end()
                                                 Dim s As counter.snapshot = Nothing
                                                 s = counter.snapshot.[New]((+it).second)
-                                                assert(Not s Is Nothing)
+                                                assert(s IsNot Nothing)
                                                 If +s.count > 0 Then
                                                     r.Append(", [").Append((+it).first).Append("] - ").Append(+s.count)
                                                 End If

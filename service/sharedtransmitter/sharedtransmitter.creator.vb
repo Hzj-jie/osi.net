@@ -74,7 +74,7 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
         End Function
 
         Public Function with_collection(ByVal c As collection) As creator
-            If Not c Is Nothing Then
+            If c IsNot Nothing Then
                 If Me.component_ref Is Nothing Then
                     If Not c.[New](Me.p, Me.local_port, Me.component_ref) Then
                         raise_error(error_type.warning, "Failed to create component on port(?) ", Me.local_port)
@@ -97,7 +97,7 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
         End Function
 
         Public Function with_functor(ByVal f As functor) As creator
-            If Not f Is Nothing Then
+            If f IsNot Nothing Then
                 If Me.accepter Is Nothing Then
                     Me.accepter = f.new_accepter(Me.p, Me.remote)
                 End If
@@ -115,10 +115,10 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
         End Function
 
         Public Function valid() As Boolean
-            Return Not component_ref Is Nothing AndAlso
-                   Not sender Is Nothing AndAlso
-                   Not accepter Is Nothing AndAlso
-                   Not dispenser Is Nothing
+            Return component_ref IsNot Nothing AndAlso
+                   sender IsNot Nothing AndAlso
+                   accepter IsNot Nothing AndAlso
+                   dispenser IsNot Nothing
         End Function
 
         Public Function create() As sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T, PARAMETER_T)

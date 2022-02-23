@@ -44,8 +44,8 @@ Public Class convector(Of T)
 
     Public Sub New(ByVal create_flower_a_b As Func(Of ref(Of singleentry), flower(Of T)),
                    ByVal create_flower_b_a As Func(Of ref(Of singleentry), flower(Of T)))
-        assert(Not create_flower_a_b Is Nothing)
-        assert(Not create_flower_b_a Is Nothing)
+        assert(create_flower_a_b IsNot Nothing)
+        assert(create_flower_b_a IsNot Nothing)
         Dim broken_pipe As ref(Of singleentry) = Nothing
         broken_pipe = New ref(Of singleentry)()
         Me.a_b = create_flower_a_b(broken_pipe)

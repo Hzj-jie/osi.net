@@ -9,8 +9,8 @@ Public Class context(Of INPUT_CASE As Class,
     Public ReadOnly output As OUTPUT_T
 
     Public Sub New(ByVal input As INPUT_T, ByVal output As OUTPUT_T)
-        assert(Not input Is Nothing)
-        assert(Not output Is Nothing)
+        assert(input IsNot Nothing)
+        assert(output IsNot Nothing)
         Me.input = input
         Me.output = output
     End Sub

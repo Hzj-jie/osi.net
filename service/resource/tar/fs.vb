@@ -23,8 +23,8 @@ Partial Public NotInheritable Class tar
 
         Protected Sub New(ByVal read As Func(Of MemoryStream, String, Boolean),
                           ByVal write As Func(Of MemoryStream, String, Boolean))
-            assert(Not read Is Nothing)
-            assert(Not write Is Nothing)
+            assert(read IsNot Nothing)
+            assert(write IsNot Nothing)
             Me.r = read
             Me.w = write
         End Sub
@@ -94,7 +94,7 @@ Partial Public NotInheritable Class tar
         End Function
 
         Public Function [with](ByVal v As vector(Of MemoryStream)) As testing_fs
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             Dim i As UInt32 = 0
             While i < v.size()
                 assert(m.emplace(strcat(mem_stream_prefix, i), v(i)).second())
@@ -104,7 +104,7 @@ Partial Public NotInheritable Class tar
         End Function
 
         Public Function [with](ByVal v As vector(Of String)) As testing_fs
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             Dim i As UInt32 = 0
             While i < v.size()
                 assert(m.emplace(v(i), memory_stream.of(v(i))).second())
@@ -124,7 +124,7 @@ Partial Public NotInheritable Class tar
         End Function
 
         Public Function [erase](ByVal v As vector(Of MemoryStream)) As testing_fs
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             Return [erase](streams.range(0, v.size()).
                                    map(Function(ByVal i As Int32) As String
                                            Return strcat(mem_stream_prefix, i)
@@ -133,7 +133,7 @@ Partial Public NotInheritable Class tar
         End Function
 
         Public Function [erase](ByVal v As vector(Of String)) As testing_fs
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             Dim i As UInt32 = 0
             While i < v.size()
                 assert(m.erase(v(i)))
@@ -163,7 +163,7 @@ Partial Public NotInheritable Class tar
         End Function
 
         Public Function read(ByVal file As String, ByVal o As MemoryStream) As Boolean Implements fs.read
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Dim it As map(Of String, MemoryStream).iterator = m.find(file)
             If it = m.end() Then
                 Return False
@@ -199,18 +199,18 @@ Partial Public NotInheritable Class tar
         Private ReadOnly m As MemoryStream
 
         Public Sub New(ByVal m As MemoryStream)
-            assert(Not m Is Nothing)
+            assert(m IsNot Nothing)
             Me.m = m
         End Sub
 
         Public Function exists(ByVal file As String) As Boolean Implements fs.exists
-            assert(Not file Is Nothing)
+            assert(file IsNot Nothing)
             Return exp_file.Equals(file)
         End Function
 
         Public Function read(ByVal file As String, ByVal o As MemoryStream) As Boolean Implements fs.read
-            assert(Not file Is Nothing)
-            assert(Not o Is Nothing)
+            assert(file IsNot Nothing)
+            assert(o IsNot Nothing)
             If Not exp_file.Equals(file) Then
                 Return False
             End If
@@ -219,8 +219,8 @@ Partial Public NotInheritable Class tar
         End Function
 
         Public Function write(ByVal file As String, ByVal i As MemoryStream) As Boolean Implements fs.write
-            assert(Not file Is Nothing)
-            assert(Not i Is Nothing)
+            assert(file IsNot Nothing)
+            assert(i IsNot Nothing)
             ' Allow writing only once.
             assert(m.Length() = 0)
             If Not exp_file.Equals(file) Then
@@ -238,8 +238,8 @@ Partial Public NotInheritable Class tar
         Private ReadOnly write_fs As fs
 
         Public Sub New(ByVal read_fs As fs, ByVal write_fs As fs)
-            assert(Not read_fs Is Nothing)
-            assert(Not write_fs Is Nothing)
+            assert(read_fs IsNot Nothing)
+            assert(write_fs IsNot Nothing)
             Me.read_fs = read_fs
             Me.write_fs = write_fs
         End Sub

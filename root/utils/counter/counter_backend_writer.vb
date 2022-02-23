@@ -24,7 +24,7 @@ Namespace counter
         End Sub
 
         Private Sub write(ByVal cr As counter_record)
-            assert(Not cr Is Nothing)
+            assert(cr IsNot Nothing)
             Dim startticks As Int64 = 0
             If envs.counter_selfhealth Then
                 startticks = Now().Ticks()
@@ -56,7 +56,7 @@ Namespace counter
         Private Sub write()
             If write_entry.mark_in_use() Then
                 foreach(Sub(ByVal cr As counter_record)
-                            assert(Not cr Is Nothing)
+                            assert(cr IsNot Nothing)
                             If cr.has_value() Then
                                 write(cr)
                             End If

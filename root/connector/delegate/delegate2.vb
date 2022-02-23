@@ -9,9 +9,9 @@ Imports osi.root.constants
 
 Public Module _delegate2
     Public Function delegate_is_pinning_object(ByVal d As [Delegate], ByVal o As Object) As Boolean
-        Return Not d Is Nothing AndAlso
-               Not o Is Nothing AndAlso
-               Not d.Target() Is Nothing AndAlso
+        Return d IsNot Nothing AndAlso
+               o IsNot Nothing AndAlso
+               d.Target() IsNot Nothing AndAlso
                (object_compare(d.Target(), o) = 0)
     End Function
 
@@ -40,7 +40,7 @@ Public Module _delegate2
 
     ' This should be rarely used, a typical scenario is to run clean up only.
     <Extension()> Public Sub ignore_exceptions(ByVal v As Action)
-        If Not v Is Nothing Then
+        If v IsNot Nothing Then
             Try
                 v()
             Catch
@@ -52,7 +52,7 @@ Public Module _delegate2
 #If PocketPC OrElse Smartphone Then
         Return "#CANNOT_GET_INVOKE_NAME#"
 #Else
-        If Not d Is Nothing Then
+        If d IsNot Nothing Then
             Try
                 Return d.Method().Name()
             Catch
@@ -63,11 +63,11 @@ Public Module _delegate2
     End Function
 
     <Extension()> Public Function method_identity(ByVal d As [Delegate]) As String
-        If Not d Is Nothing Then
+        If d IsNot Nothing Then
             Try
                 Dim rtn As StringBuilder = Nothing
                 rtn = New StringBuilder()
-                If Not d.Target() Is Nothing Then
+                If d.Target() IsNot Nothing Then
                     rtn.Append(d.Target().GetType().FullName()) _
                        .Append(character.colon)
                 End If

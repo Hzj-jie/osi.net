@@ -14,7 +14,7 @@ Partial Public NotInheritable Class vector(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal p As vector(Of T), ByVal i As UInt32)
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             assert(i < p.size())
             Me.p = p
             Me.i = i
@@ -22,13 +22,13 @@ Partial Public NotInheritable Class vector(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function size() As UInt32
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             Return p.size()
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function index() As UInt32
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             Return i
         End Function
 
@@ -53,7 +53,7 @@ Partial Public NotInheritable Class vector(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function value() As T
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             Return p(i)
         End Function
     End Structure

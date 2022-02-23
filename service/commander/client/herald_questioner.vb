@@ -35,7 +35,7 @@ Public Class herald_questioner(Of _ENABLE_AUTO_PING As _boolean)
 
     Public Sub New(ByVal h As herald, ByVal timeout_ms As Int64)
         MyBase.New(timeout_ms)
-        assert(Not h Is Nothing)
+        assert(h IsNot Nothing)
         Me.h = h
         assert_transmit_mode(h)
     End Sub

@@ -33,7 +33,7 @@ Partial Public Class accepter
     End Function
 
     Private Shared Sub [stop](ByVal l As TcpListener)
-        If Not l Is Nothing Then
+        If l IsNot Nothing Then
             l.Stop()
         End If
     End Sub

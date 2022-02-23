@@ -16,8 +16,8 @@ Public Module _async_sync
 
     Private Function async_sync(ByVal waitfor As Func(Of Boolean),
                                 ByVal end_result As Func(Of Boolean)) As Boolean
-        assert(Not waitfor Is Nothing)
-        assert(Not end_result Is Nothing)
+        assert(waitfor IsNot Nothing)
+        assert(end_result IsNot Nothing)
         Dim w As AutoResetEvent = New AutoResetEvent(False)
         Dim r As Boolean = False
         assert_begin(New event_comb(Function() As Boolean
@@ -49,7 +49,7 @@ Public Module _async_sync
                               Return waitfor(ec, timeout_ms)
                           End Function,
                           Function() As Boolean
-                              Return assert(Not ec Is Nothing) AndAlso
+                              Return assert(ec IsNot Nothing) AndAlso
                                      ec.end_result()
                           End Function)
     End Function
@@ -71,7 +71,7 @@ Public Module _async_sync
                               Return waitfor(cb, timeout_ms)
                           End Function,
                           Function() As Boolean
-                              Return assert(Not cb Is Nothing) AndAlso
+                              Return assert(cb IsNot Nothing) AndAlso
                                      cb.success_finished()
                           End Function)
     End Function

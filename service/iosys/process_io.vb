@@ -85,7 +85,7 @@ Public MustInherit Class process_io(Of INPUT_T, OUTPUT_T)
                         start_info().FileName(),
                         " with argument ",
                         start_info().Arguments(),
-                        If(Not ex Is Nothing, strcat(", ex ", ex.Message()), Nothing))
+                        If(ex IsNot Nothing, strcat(", ex ", ex.Message()), Nothing))
             Return False
         End If
     End Function

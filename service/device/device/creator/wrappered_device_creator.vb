@@ -10,8 +10,8 @@ Public Class wrappered_device_creator(Of T)
     Private ReadOnly v As var
 
     Public Sub New(ByVal c As idevice_creator(Of T), ByVal v As var)
-        assert(Not c Is Nothing)
-        assert(Not v Is Nothing)
+        assert(c IsNot Nothing)
+        assert(v IsNot Nothing)
         Me.c = c
         Me.v = v
     End Sub

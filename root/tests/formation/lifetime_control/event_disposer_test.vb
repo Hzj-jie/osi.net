@@ -13,7 +13,7 @@ Public Class event_disposer_test
     End Class
 
     Private Shared Function create(ByVal disposing As atomic_int) As event_disposer(Of cd_object(Of test_class))
-        assert(Not disposing Is Nothing)
+        assert(disposing IsNot Nothing)
         Dim p As event_disposer(Of cd_object(Of test_class)) = Nothing
         p = New event_disposer(Of cd_object(Of test_class))(New cd_object(Of test_class)())
         'also assert finalizers are running in a single thread
@@ -28,7 +28,7 @@ Public Class event_disposer_test
         disposing = New atomic_int()
         Dim p As event_disposer(Of cd_object(Of test_class)) = Nothing
         For i As UInt32 = 0 To size - uint32_1
-            If Not p Is Nothing Then
+            If p IsNot Nothing Then
                 p.Dispose()
             End If
             p = create(disposing)

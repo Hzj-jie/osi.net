@@ -49,7 +49,7 @@ Public NotInheritable Class wait_handle_behavior_test
 
     <SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")>
     Private Shared Function multiple_closes(ByVal e As EventWaitHandle) As Boolean
-        assert(Not e Is Nothing)
+        assert(e IsNot Nothing)
         For i As Int32 = 0 To 100
             e.Close()
         Next
@@ -57,7 +57,7 @@ Public NotInheritable Class wait_handle_behavior_test
     End Function
 
     Private Shared Function multiple_sets_and_resets(ByVal e As EventWaitHandle) As Boolean
-        assert(Not e Is Nothing)
+        assert(e IsNot Nothing)
         For i As Int32 = 0 To 100
             assertion.is_true(e.Set())
         Next
@@ -70,7 +70,7 @@ Public NotInheritable Class wait_handle_behavior_test
 #Disable Warning BC40000
     <SuppressMessage("", "BC40000")>
     Private Shared Function a_valid_handle_after_close(ByVal e As WaitHandle) As Boolean
-        assert(Not e Is Nothing)
+        assert(e IsNot Nothing)
         assertion.is_not_null(e.SafeWaitHandle())
         assertion.is_false(e.Handle() = IntPtr.Zero)
         e.Close()

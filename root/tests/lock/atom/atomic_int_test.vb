@@ -34,7 +34,7 @@ Public Class atomic_int_test
     End Function
 
     Protected Overrides Sub validate(ByVal ac As atom_case)
-        assert(Not ac Is Nothing)
+        assert(ac IsNot Nothing)
         assert(TypeOf ac Is atomic_int_case)
         assertion.equal(ac.direct_cast_to(Of atomic_int_case)().result(), round * thread_count)
     End Sub

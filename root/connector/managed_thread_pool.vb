@@ -12,14 +12,14 @@ Imports osi.root.constants
 Public NotInheritable Class managed_thread_pool
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub push(ByVal v As Action)
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         assert(ThreadPool.UnsafeQueueUserWorkItem(Sub(ByVal state As Object)
                                                       v()
                                                   End Sub, Nothing))
     End Sub
 
     Public Shared Sub with_timeout(ByVal d As Action, ByVal timeout_ms As Int64)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         If timeout_ms < 0 OrElse timeout_ms > max_int32 Then
             push(d)
             Return

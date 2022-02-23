@@ -141,8 +141,8 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     Public Shared Function gcd(ByVal a As big_uint, ByVal b As big_uint) As big_uint
-        assert(Not a Is Nothing)
-        assert(Not b Is Nothing)
+        assert(a IsNot Nothing)
+        assert(b IsNot Nothing)
 
         If a.is_zero() OrElse b.is_zero() Then
             Return zero()

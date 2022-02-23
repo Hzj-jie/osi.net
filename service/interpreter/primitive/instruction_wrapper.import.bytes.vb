@@ -113,7 +113,7 @@ Namespace primitive
                 Case Else
                     Return False
             End Select
-            assert(Not Me.i Is Nothing)
+            assert(Me.i IsNot Nothing)
             Return Me.i.import(i, p)
         End Function
     End Class

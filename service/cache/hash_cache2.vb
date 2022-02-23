@@ -38,12 +38,12 @@ Public Class hash_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE A
     End Sub
 
     Private Function foreach(ByVal d As _do(Of icache2(Of KEY_T, VALUE_T), event_comb)) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim i As Int32 = 0
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If i > 0 Then
-                                      assert(Not ec Is Nothing)
+                                      assert(ec IsNot Nothing)
                                       If Not ec.end_result() Then
                                           Return False
                                       End If

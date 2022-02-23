@@ -14,13 +14,13 @@ Partial Public Class device_pool(Of T)
         Private ReadOnly c As New collectionless(Of idevice(Of T))()
 
         Public Sub New(ByVal p As device_pool(Of T))
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             Me.p = p
             AddHandler p.closing, AddressOf close
         End Sub
 
         Public Sub insert(ByVal d As idevice(Of T))
-            assert(Not d Is Nothing)
+            assert(d IsNot Nothing)
             Dim i As UInt32 = c.emplace(d)
             AddHandler d.closing,
                        Sub()

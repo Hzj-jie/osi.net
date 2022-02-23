@@ -17,14 +17,14 @@ Partial Public NotInheritable Class b2style
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
+            assert(b IsNot Nothing)
             Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
+            assert(n IsNot Nothing)
+            assert(o IsNot Nothing)
             If n.descentdant_of("template-type-name") OrElse
                n.descentdant_of("function-name-with-template") Then
                 ' Expect to dump only the type name.

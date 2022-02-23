@@ -25,8 +25,8 @@ Public Class filtered_value(Of T)
     Private ReadOnly m As map(Of String, vector(Of pair(Of T, filter_set)))
 
     Friend Sub New(ByVal fs As filter_selector, ByVal m As filtered_raw_value(Of T))
-        assert(Not fs Is Nothing)
-        assert(Not m Is Nothing)
+        assert(fs IsNot Nothing)
+        assert(m IsNot Nothing)
         Me.m = New map(Of String, vector(Of pair(Of T, filter_set)))()
         m.foreach(Sub(ByVal key As String,
                       ByVal value As T,
@@ -49,7 +49,7 @@ Public Class filtered_value(Of T)
 
     Private Function [get](ByVal vs As vector(Of pair(Of T, filter_set)),
                            ByVal variants As vector(Of pair(Of String, String))) As vector(Of T)
-        assert(Not vs Is Nothing)
+        assert(vs IsNot Nothing)
         Dim r As vector(Of T) = Nothing
         r = New vector(Of T)()
         Dim i As UInt32 = 0
@@ -65,7 +65,7 @@ Public Class filtered_value(Of T)
     Private Function [get](ByVal vs As vector(Of pair(Of T, filter_set)),
                            ByRef v As T,
                            ByVal variants As vector(Of pair(Of String, String))) As Boolean
-        assert(Not vs Is Nothing)
+        assert(vs IsNot Nothing)
         Dim i As UInt32 = 0
         While i < vs.size()
             If vs(i).second.match(variants) Then

@@ -19,7 +19,7 @@ Partial Public NotInheritable Class bstyle
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
+            assert(b IsNot Nothing)
             Me.l = b
         End Sub
 
@@ -27,9 +27,9 @@ Partial Public NotInheritable Class bstyle
                                ByVal o As logic_writer,
                                ByVal build_caller As Func(Of String, vector(Of String), Boolean),
                                ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
-            assert(Not build_caller Is Nothing)
+            assert(n IsNot Nothing)
+            assert(o IsNot Nothing)
+            assert(build_caller IsNot Nothing)
             assert(n.child_count() >= 3)
             Dim bc As Func(Of vector(Of String), Boolean) =
                 Function(ByVal parameters As vector(Of String)) As Boolean
@@ -69,8 +69,8 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
+            assert(n IsNot Nothing)
+            assert(o IsNot Nothing)
             assert(n.child_count() >= 3)
             Dim b As Func(Of Func(Of String, String, vector(Of String), Boolean),
                              _do_val_ref(Of String, String, Boolean),
@@ -78,7 +78,7 @@ Partial Public NotInheritable Class bstyle
                 Function(ByVal builder As Func(Of String, String, vector(Of String), Boolean),
                          ByVal return_type_of As _do_val_ref(Of String, String, Boolean)) _
                         As Func(Of String, vector(Of String), Boolean)
-                    assert(Not builder Is Nothing)
+                    assert(builder IsNot Nothing)
                     Return Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
                                Dim return_type As String = Nothing
                                If Not return_type_of(name, return_type) Then

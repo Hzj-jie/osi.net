@@ -26,9 +26,9 @@ Public Class dataprovider(Of T)
     Private lu As Int64
 
     Public Sub New(ByVal watcher As idatawatcher, ByVal fetcher As idatafetcher, ByVal loader As idataloader(Of T))
-        assert(Not watcher Is Nothing)
-        assert(Not fetcher Is Nothing)
-        assert(Not loader Is Nothing)
+        assert(watcher IsNot Nothing)
+        assert(fetcher IsNot Nothing)
+        assert(loader IsNot Nothing)
         Me.watcher = watcher
         Me.fetcher = fetcher
         Me.loader = loader
@@ -56,14 +56,14 @@ Public Class dataprovider(Of T)
         begin_lifetime_event_comb(exp,
                                   Function() As Boolean
                                       w = watcher.watch(exp)
-                                      assert(Not w Is Nothing)
+                                      assert(w IsNot Nothing)
                                       assert_waitfor(w)
                                       Return goto_next()
                                   End Function,
                                   Function() As Boolean
                                       If w.end_result() Then
                                           f = fetcher.fetch(localfile)
-                                          assert(Not f Is Nothing)
+                                          assert(f IsNot Nothing)
                                           assert_waitfor(f)
                                           Return goto_next()
                                       Else
@@ -74,7 +74,7 @@ Public Class dataprovider(Of T)
                                       If f.end_result() Then
                                           r.clear()
                                           l = loader.load(localfile, r)
-                                          assert(Not l Is Nothing)
+                                          assert(l IsNot Nothing)
                                           assert_waitfor(l)
                                           Return goto_next()
                                       Else
@@ -83,7 +83,7 @@ Public Class dataprovider(Of T)
                                   End Function,
                                   Function() As Boolean
                                       If l.end_result() Then
-                                          assert(Not +r Is Nothing)
+                                          assert(+r IsNot Nothing)
                                           update(+r)
                                       End If
                                       File.Delete(localfile)
@@ -110,7 +110,7 @@ Public Class dataprovider(Of T)
 
     Public Function valid() As Boolean Implements idataprovider.valid
         lr = nowadays.ticks()
-        Return Not Me.v Is Nothing AndAlso
+        Return Me.v IsNot Nothing AndAlso
                Me.lu > 0
     End Function
 
@@ -142,7 +142,7 @@ Public Class dataprovider(Of T)
         Dim r As StringBuilder = Nothing
         r = New StringBuilder()
         For i As Int32 = 0 To array_size_i(p) - 1
-            assert(Not p(i) Is Nothing)
+            assert(p(i) IsNot Nothing)
             r.Append("&").
               Append(Convert.ToString(p(i).first)).
               Append("=").

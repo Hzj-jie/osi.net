@@ -53,7 +53,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 Return 0
             End Function
 
@@ -104,7 +104,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 Return 0
             End Function
 
@@ -180,7 +180,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -196,9 +196,9 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -286,7 +286,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -307,9 +307,9 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -397,7 +397,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -418,16 +418,16 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -515,7 +515,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -536,16 +536,16 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -651,7 +651,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -677,23 +677,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -799,7 +799,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -825,23 +825,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -947,7 +947,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -973,23 +973,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -1113,7 +1113,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -1144,30 +1144,30 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p3(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d3)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -1291,7 +1291,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -1322,30 +1322,30 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p3(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d3)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -1451,7 +1451,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -1477,23 +1477,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -1581,7 +1581,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -1602,16 +1602,16 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -1681,7 +1681,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -1697,9 +1697,9 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -1769,7 +1769,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -1785,9 +1785,9 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -1857,7 +1857,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -1873,9 +1873,9 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -1920,7 +1920,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 Return 0
             End Function
 
@@ -2032,7 +2032,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -2058,23 +2058,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -2180,7 +2180,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -2206,23 +2206,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -2310,7 +2310,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -2331,16 +2331,16 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -2428,7 +2428,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -2449,16 +2449,16 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -2564,7 +2564,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -2590,23 +2590,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -2730,7 +2730,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -2761,30 +2761,30 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p3(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d3)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -2890,7 +2890,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -2916,23 +2916,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -3002,7 +3002,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -3018,9 +3018,9 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -3126,7 +3126,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -3152,23 +3152,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -3256,7 +3256,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -3277,16 +3277,16 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -3374,7 +3374,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -3395,16 +3395,16 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -3510,7 +3510,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -3536,23 +3536,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -3658,7 +3658,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -3684,23 +3684,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -3788,7 +3788,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -3809,16 +3809,16 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -3863,7 +3863,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 Return 0
             End Function
 
@@ -3914,7 +3914,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 Return 0
             End Function
 
@@ -4026,7 +4026,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -4052,23 +4052,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -4174,7 +4174,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -4200,23 +4200,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -4322,7 +4322,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -4348,23 +4348,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -4470,7 +4470,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -4496,23 +4496,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -4618,7 +4618,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -4644,23 +4644,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -4766,7 +4766,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -4792,23 +4792,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -4914,7 +4914,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -4940,23 +4940,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -5062,7 +5062,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -5088,23 +5088,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -5210,7 +5210,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -5236,23 +5236,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -5358,7 +5358,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -5384,23 +5384,23 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p2(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d2)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -5488,7 +5488,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -5509,16 +5509,16 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
 
             Private Function p1(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d1)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -5588,7 +5588,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -5604,9 +5604,9 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class
@@ -5676,7 +5676,7 @@ Namespace primitive
                 If c <> object_compare_undetermined Then
                     Return c
                 End If
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 c = Me.d0.CompareTo(other.d0)
                 If c <> 0 Then
                     Return c
@@ -5692,9 +5692,9 @@ Namespace primitive
             End Function
 
             Private Function p0(ByVal imi As imitation) As ref(Of Byte())
-                assert(Not imi Is Nothing)
+                assert(imi IsNot Nothing)
                 Dim p As ref(Of Byte()) = imi.access(d0)
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p
             End Function
         End Class

@@ -24,8 +24,8 @@ Public NotInheritable Class token_challenger(Of COLLECTION, CONNECTION)
     End Sub
 
     Protected Overrides Function question(ByVal h As herald, ByVal accepted As ref(Of Boolean)) As event_comb
-        assert(Not h Is Nothing)
-        assert(Not accepted Is Nothing)
+        assert(h IsNot Nothing)
+        assert(accepted IsNot Nothing)
         Dim ec As event_comb = Nothing
         Dim r As ref(Of Byte()) = Nothing
         Dim code() As Byte = Nothing

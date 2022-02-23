@@ -34,7 +34,7 @@ Public NotInheritable Class piece_test
     End Function
 
     Private Shared Sub empty_to_null(ByVal i As vector(Of piece))
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Dim j As UInt32 = 0
         While j < i.size()
             If i(j).null_or_empty() Then

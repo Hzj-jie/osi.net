@@ -41,7 +41,7 @@ Partial Public NotInheritable Class b2style
                            ByVal signature As vector(Of name_with_namespace),
                            ByVal type As type_t,
                            ByVal content As String)
-                assert(Not c Is Nothing)
+                assert(c IsNot Nothing)
                 assert(Not signature.null_or_empty())
                 assert(Not content.null_or_whitespace())
                 Me.c = c
@@ -68,7 +68,7 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public Function forward_to(ByVal other As class_def) As String
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 Dim content As New StringBuilder()
                 content.Append("reinterpret_cast(this,").
                         Append(other.name.in_global_namespace()).

@@ -10,7 +10,7 @@ Imports osi.root.constants
 Partial Public NotInheritable Class stopwatch
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function push(ByVal p As Func(Of Func(Of Boolean), Boolean), ByVal e As [event]) As Boolean
-        assert(Not p Is Nothing)
+        assert(p IsNot Nothing)
         If e Is Nothing OrElse e.canceled() Then
             Return False
         End If
@@ -31,7 +31,7 @@ Partial Public NotInheritable Class stopwatch
     Private Shared Function push(ByVal p As Func(Of [event], Boolean),
                                  ByVal waitms As UInt32,
                                  ByVal d As Action) As [event]
-        assert(Not p Is Nothing)
+        assert(p IsNot Nothing)
         If d Is Nothing Then
             Return Nothing
         End If

@@ -45,8 +45,8 @@ Public NotInheritable Class uri_serializer(Of T)
     ' TODO: Test
     Protected Overrides Function to_str() As Func(Of T, StringWriter, Boolean)
         Return Function(ByVal i As T, ByVal o As StringWriter) As Boolean
-                   assert(Not i Is Nothing)
-                   assert(Not o Is Nothing)
+                   assert(i IsNot Nothing)
+                   assert(o IsNot Nothing)
                    Dim b() As Byte = Nothing
                    b = bytes_serializer.to_bytes(i)
                    o.Write(constants.uri.path_separator)
@@ -57,7 +57,7 @@ Public NotInheritable Class uri_serializer(Of T)
 
     Protected Overrides Function from_str() As _do_val_ref(Of StringReader, T, Boolean)
         Return Function(ByVal i As StringReader, ByRef o As T) As Boolean
-                   assert(Not i Is Nothing)
+                   assert(i IsNot Nothing)
                    If i.Read() <> Convert.ToInt32(constants.uri.path_separator) Then
                        Return False
                    End If

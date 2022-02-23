@@ -16,8 +16,8 @@ Public Class compress_test
 
         Private Shared Function run_case(ByVal compress As _do_val_ref(Of Byte(), Byte(), Boolean),
                                          ByVal decompress As _do_val_ref(Of Byte(), Byte(), Boolean)) As Boolean
-            assert(Not compress Is Nothing)
-            assert(Not decompress Is Nothing)
+            assert(compress IsNot Nothing)
+            assert(decompress IsNot Nothing)
             Dim unzipped() As Byte = Nothing
             Dim zipped() As Byte = Nothing
             unzipped = rnd_bytes(rnd_int(1024, 65536))

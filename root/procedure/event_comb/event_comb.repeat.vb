@@ -15,7 +15,7 @@ Partial Public Class event_comb
     End Function
 
     Public Shared Function repeat(ByVal c As UInt32, ByVal f As Func(Of UInt32, event_comb)) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Dim e As event_comb = Nothing
         Dim i As UInt32 = 0
         Return New event_comb(Function() As Boolean

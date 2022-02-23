@@ -25,7 +25,7 @@ Public Module _iproperty
     Private Function [get](Of T)(ByVal i As iproperty,
                                  ByVal r As ref(Of T),
                                  ByVal convert As _do_val_ref(Of Byte(), T, Boolean)) As event_comb
-        assert(Not convert Is Nothing)
+        assert(convert IsNot Nothing)
         Dim ec As event_comb = Nothing
         Dim p As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean

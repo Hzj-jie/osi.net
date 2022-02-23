@@ -93,7 +93,7 @@ Partial Public Class virtdisk
     End Sub
 
     Private Function stream() As Stream
-        assert(Not s Is Nothing)
+        assert(s IsNot Nothing)
         Return s.stream()
     End Function
 
@@ -121,7 +121,7 @@ Partial Public Class virtdisk
     End Function
 
     Public Function valid() As Boolean
-        Return Not stream() Is Nothing AndAlso
+        Return stream() IsNot Nothing AndAlso
                Not closed.in_use() AndAlso
                stream().CanRead() AndAlso
                stream().CanWrite() AndAlso

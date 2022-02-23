@@ -32,7 +32,7 @@ Partial Public NotInheritable Class syntaxer
             If c <> object_compare_undetermined Then
                 Return c
             End If
-            assert(Not other Is Nothing)
+            assert(other IsNot Nothing)
             c = compare(Me.c, other.c)
             If c <> 0 Then
                 Return c
@@ -42,7 +42,7 @@ Partial Public NotInheritable Class syntaxer
 
         Private Function syntax() As syntax
             Dim s As syntax = Nothing
-            assert(c.get(type, s) AndAlso Not s Is Nothing)
+            assert(c.get(type, s) AndAlso s IsNot Nothing)
             Return s
         End Function
 

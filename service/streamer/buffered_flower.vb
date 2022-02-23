@@ -23,9 +23,9 @@ Public Class buffered_flower(Of T)
                                                 ByVal result As atomic_int64,
                                                 ByVal treat_no_flow_as_failure As Boolean) _
                                                As direct_flower(Of T)
-        assert(Not input Is Nothing)
-        assert(Not pipe_dev Is Nothing)
-        assert(Not broken_pipe Is Nothing)
+        assert(input IsNot Nothing)
+        assert(pipe_dev IsNot Nothing)
+        assert(broken_pipe IsNot Nothing)
         Return New direct_flower(Of T)(input,
                                        pipe_dev,
                                        sense_timeout_ms,
@@ -40,9 +40,9 @@ Public Class buffered_flower(Of T)
                                                  ByVal sense_timeout_ms As Int64,
                                                  ByVal broken_pipe As ref(Of singleentry),
                                                  ByVal idle_timeout_ms As Int64) As direct_flower(Of T)
-        assert(Not pipe_dev Is Nothing)
-        assert(Not output Is Nothing)
-        assert(Not broken_pipe Is Nothing)
+        assert(pipe_dev IsNot Nothing)
+        assert(output IsNot Nothing)
+        assert(broken_pipe IsNot Nothing)
         Return New direct_flower(Of T)(pipe_dev, output, sense_timeout_ms, broken_pipe, idle_timeout_ms)
     End Function
 
@@ -55,7 +55,7 @@ Public Class buffered_flower(Of T)
                    Optional ByVal result As atomic_int64 = Nothing,
                    Optional ByVal treat_no_flow_as_failure As Boolean = True)
         MyBase.New()
-        assert(Not pipe Is Nothing)
+        assert(pipe IsNot Nothing)
         Dim pipe_dev As pipe_dev(Of T) = Nothing
         pipe_dev = New pipe_dev(Of T)(pipe)
         If broken_pipe Is Nothing Then

@@ -83,7 +83,7 @@ Public MustInherit Class token_info(Of COLLECTION, CONNECTION)
                          ByRef o As piece) As Boolean
         Dim s As signer = Nothing
         s = signer(p)
-        assert(Not s Is Nothing)
+        assert(s IsNot Nothing)
         Dim b() As Byte = Nothing
         If code.size() > uint32_0 AndAlso
            s.sign(token(p), code, b) AndAlso
@@ -99,7 +99,7 @@ Public MustInherit Class token_info(Of COLLECTION, CONNECTION)
                                ByVal code As piece,
                                ByVal response As piece) As Boolean
         Dim o As piece = Nothing
-        Return Not response Is Nothing AndAlso
+        Return response IsNot Nothing AndAlso
                sign(p, code, o) AndAlso
                response.compare(o) = 0
     End Function

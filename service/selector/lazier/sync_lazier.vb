@@ -26,20 +26,20 @@ Public Class sync_lazier(Of T, THREAD_SAFE As _boolean)
 
     Public Function alive() As ternary
         If threadsafe Then
-            assert(Not ts Is Nothing)
+            assert(ts IsNot Nothing)
             Return ts.alive()
         Else
-            assert(Not tus Is Nothing)
+            assert(tus IsNot Nothing)
             Return tus.alive()
         End If
     End Function
 
     Public Function [get]() As T
         If threadsafe Then
-            assert(Not ts Is Nothing)
+            assert(ts IsNot Nothing)
             Return ts.get()
         Else
-            assert(Not tus Is Nothing)
+            assert(tus IsNot Nothing)
             Return tus.get()
         End If
     End Function
@@ -51,14 +51,14 @@ Public Class sync_thread_unsafe_lazier(Of T)
     Private v As T
 
     Public Sub New(ByVal d As Func(Of T))
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Me.d = d
         Me.state = ternary.unknown
         Me.v = Nothing
     End Sub
 
     Protected Overridable Function prepare() As T
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Return d()
     End Function
 
@@ -74,7 +74,7 @@ Public Class sync_thread_unsafe_lazier(Of T)
             Catch ex As Exception
                 assert(False, ex)
             End Try
-            state = Not v Is Nothing
+            state = v IsNot Nothing
         End If
         Return v
     End Function
@@ -89,14 +89,14 @@ Public Class sync_thread_safe_lazier(Of T)
 
     Public Sub New(ByVal d As Func(Of T))
         Me.finish_get = New ManualResetEvent(False)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Me.d = d
         Me.state = ternary.unknown
         Me.v = Nothing
     End Sub
 
     Protected Overridable Function prepare() As T
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Return d()
     End Function
 
@@ -114,7 +114,7 @@ Public Class sync_thread_safe_lazier(Of T)
                     assert(False, ex)
                 End Try
                 assert(finish_get.Set())
-                state = Not v Is Nothing
+                state = v IsNot Nothing
             Else
                 assert(finish_get.WaitOne())
             End If

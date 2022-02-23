@@ -34,7 +34,7 @@ Partial Public NotInheritable Class nlexer
         Me.sc = New syntax_collection(map.emplace_index(
                         rs.stream().
                            map(Function(ByVal i As pair(Of String, rule)) As String
-                                   assert(Not i Is Nothing)
+                                   assert(i IsNot Nothing)
                                    If dump_rules Then
                                        raise_error(error_type.user, "Rule ", i.first, ": ", i.second)
                                    End If
@@ -153,7 +153,7 @@ Partial Public NotInheritable Class nlexer
     End Function
 
     Public Shared Function [of](ByVal parse As Func(Of rule_file, Boolean), ByRef o As nlexer) As Boolean
-        assert(Not parse Is Nothing)
+        assert(parse IsNot Nothing)
         Dim p As rule_file = Nothing
         p = New rule_file()
         If parse(p) Then
@@ -165,7 +165,7 @@ Partial Public NotInheritable Class nlexer
 
     Public Shared Function [of](ByVal i As String, ByRef o As nlexer) As Boolean
         Return [of](Function(ByVal p As rule_file) As Boolean
-                        assert(Not p Is Nothing)
+                        assert(p IsNot Nothing)
                         Return p.parse_content(i)
                     End Function,
                     o)
@@ -173,7 +173,7 @@ Partial Public NotInheritable Class nlexer
 
     Public Shared Function [of](ByVal ls() As String, ByRef o As nlexer) As Boolean
         Return [of](Function(ByVal p As rule_file) As Boolean
-                        assert(Not p Is Nothing)
+                        assert(p IsNot Nothing)
                         Return p.parse(ls)
                     End Function,
                     o)
@@ -181,7 +181,7 @@ Partial Public NotInheritable Class nlexer
 
     Public Shared Function of_file(ByVal file As String, ByRef o As nlexer) As Boolean
         Return [of](Function(ByVal p As rule_file) As Boolean
-                        assert(Not p Is Nothing)
+                        assert(p IsNot Nothing)
                         Return p.parse_file(file)
                     End Function,
                     o)

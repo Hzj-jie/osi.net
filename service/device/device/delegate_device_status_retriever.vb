@@ -35,7 +35,7 @@ Public Class delegate_device_status_retriever(Of T)
     End Function
 
     Public Sub close(ByVal c As T)
-        If Not closer Is Nothing Then
+        If closer IsNot Nothing Then
             closer(c)
         End If
     End Sub
@@ -45,7 +45,7 @@ Public Class delegate_device_status_retriever(Of T)
     End Function
 
     Public Sub check(ByVal c As T)
-        If Not checker Is Nothing Then
+        If checker IsNot Nothing Then
             checker(c)
         End If
     End Sub

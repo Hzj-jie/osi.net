@@ -67,7 +67,7 @@ Public Module _proxy
                         End Function,
                         Function() As Boolean
                             If ec.end_result() AndAlso
-                               Not (+r) Is Nothing AndAlso
+                               (+r) IsNot Nothing AndAlso
                                (+r).copy_headers_to(o) Then
                                 ec = (+r).read_response_body(o.Response().OutputStream(),
                                                              comm,

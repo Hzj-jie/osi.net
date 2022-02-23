@@ -18,7 +18,7 @@ Partial Public NotInheritable Class dispenser_test
         Private ReadOnly s As sensor
 
         Public Sub New(ByVal q As qless2(Of pair(Of Int32, Int32)))
-            assert(Not q Is Nothing)
+            assert(q IsNot Nothing)
             Me.q = q
             Me.s = as_sensor(Function() As Boolean
                                  Return Not q.empty()

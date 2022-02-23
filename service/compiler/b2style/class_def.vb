@@ -38,7 +38,7 @@ Partial Public NotInheritable Class b2style
         End Sub
 
         Public Function inherit_from(ByVal other As class_def) As class_def
-            assert(Not other Is Nothing)
+            assert(other IsNot Nothing)
             _vars.emplace_back(other._vars)
             inherit_non_existing_funcs(other)
             init_func.bases.emplace_back(init_func_def.forward_to(other))
@@ -46,14 +46,14 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Private Sub inherit_non_existing_funcs(ByVal other As class_def)
-            assert(Not other Is Nothing)
+            assert(other IsNot Nothing)
             _funcs.emplace_back(other.funcs().
                                       except(funcs()).
                                       filter(Function(ByVal f As function_def) As Boolean
                                                  Return Not f.name().name().Equals(init_func_name)
                                              End Function).
                                       map(Function(ByVal f As function_def) As function_def
-                                              assert(Not f Is Nothing)
+                                              assert(f IsNot Nothing)
                                               f = f.with_class(Me)
                                               Return f.with_content(New StringBuilder().Append(f.declaration()).
                                                                                         Append("{").
@@ -72,26 +72,26 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Public Function with_var(ByVal p As builders.parameter) As class_def
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             assert(Not p.ref)
             _vars.emplace_back(p)
             Return Me
         End Function
 
         Private Function with_func(ByVal f As function_def) As class_def
-            assert(Not f Is Nothing)
+            assert(f IsNot Nothing)
             _funcs.emplace_back(f)
             Return Me
         End Function
 
         Public Function with_funcs(ByVal n As typed_node) As class_def
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
             Dim has_constructor As Boolean = False
             Dim has_destructor As Boolean = False
             n.children_of("class-function").
               stream().
               map(Function(ByVal node As typed_node) As tuple(Of typed_node, function_def.type_t)
-                      assert(Not node Is Nothing)
+                      assert(node IsNot Nothing)
                       node = node.child()
                       If node.type_name.Equals("virtual-function") Then
                           Return tuple.of(node.child(1), function_def.type_t.virtual)
@@ -103,7 +103,7 @@ Partial Public NotInheritable Class b2style
                   End Function).
               foreach(Sub(ByVal t As tuple(Of typed_node, function_def.type_t))
                           Dim node As typed_node = t.first()
-                          assert(Not node Is Nothing)
+                          assert(node IsNot Nothing)
                           assert(node.child_count() = 5 OrElse node.child_count() = 6)
                           If node.child(1).input().Equals("construct") Then
                               has_constructor = True
@@ -173,7 +173,7 @@ Partial Public NotInheritable Class b2style
         Private Function check_vars_duplicate() As Boolean
             Dim c As unordered_map(Of String, UInt32) =
                 vars().map(Function(ByVal p As builders.parameter) As String
-                               assert(Not p Is Nothing)
+                               assert(p IsNot Nothing)
                                Return p.name
                            End Function).
                        count().

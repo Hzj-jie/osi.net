@@ -10,7 +10,7 @@ Public NotInheritable Class defer
         Private ReadOnly a As Action
 
         Public Sub New(ByVal a As Action)
-            assert(Not a Is Nothing)
+            assert(a IsNot Nothing)
             Me.a = a
         End Sub
 

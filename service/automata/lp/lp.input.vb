@@ -77,7 +77,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
         End Function
 
         Private Function parse_method_type(ByVal s As vector(Of String)) As Boolean
-            Return Not s Is Nothing AndAlso
+            Return s IsNot Nothing AndAlso
                    (s.empty() OrElse
                     (s.size() = 1 AndAlso eva(_method_type, s(0))))
         End Function
@@ -169,7 +169,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
             If Not parse_sections(inputs, sections) Then
                 Return False
             End If
-            assert(Not sections Is Nothing)
+            assert(sections IsNot Nothing)
             If sections.empty() Then
                 Return True
             End If

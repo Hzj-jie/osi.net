@@ -33,7 +33,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Decimal), ByVal y As Decimal) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -44,7 +44,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -53,7 +53,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Decimal), ByVal y As Decimal()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -64,7 +64,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -73,7 +73,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Decimal), ByVal y As Decimal) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -84,7 +84,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -109,7 +109,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Decimal()), ByVal y As Decimal()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -120,7 +120,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -129,7 +129,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Decimal()), ByVal y As Decimal()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -140,7 +140,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -149,7 +149,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Decimal()), ByVal y As Decimal()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -160,7 +160,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -185,7 +185,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Int64), ByVal y As Int64) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -196,7 +196,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -205,7 +205,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Int64), ByVal y As Int64()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -216,7 +216,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -225,7 +225,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Int64), ByVal y As Int64) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -236,7 +236,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -261,7 +261,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Int64()), ByVal y As Int64()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -272,7 +272,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -281,7 +281,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Int64()), ByVal y As Int64()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -292,7 +292,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -301,7 +301,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Int64()), ByVal y As Int64()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -312,7 +312,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -337,7 +337,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Int32), ByVal y As Int32) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -348,7 +348,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -357,7 +357,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Int32), ByVal y As Int32()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -368,7 +368,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -377,7 +377,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Int32), ByVal y As Int32) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -388,7 +388,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -413,7 +413,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Int32()), ByVal y As Int32()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -424,7 +424,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -433,7 +433,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Int32()), ByVal y As Int32()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -444,7 +444,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -453,7 +453,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Int32()), ByVal y As Int32()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -464,7 +464,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -489,7 +489,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Int16), ByVal y As Int16) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -500,7 +500,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -509,7 +509,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Int16), ByVal y As Int16()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -520,7 +520,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -529,7 +529,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Int16), ByVal y As Int16) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -540,7 +540,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -565,7 +565,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Int16()), ByVal y As Int16()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -576,7 +576,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -585,7 +585,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Int16()), ByVal y As Int16()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -596,7 +596,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -605,7 +605,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Int16()), ByVal y As Int16()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -616,7 +616,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -641,7 +641,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of SByte), ByVal y As SByte) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -652,7 +652,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -661,7 +661,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of SByte), ByVal y As SByte()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -672,7 +672,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -681,7 +681,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of SByte), ByVal y As SByte) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -692,7 +692,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -717,7 +717,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of SByte()), ByVal y As SByte()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -728,7 +728,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -737,7 +737,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of SByte()), ByVal y As SByte()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -748,7 +748,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -757,7 +757,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of SByte()), ByVal y As SByte()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -768,7 +768,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -793,7 +793,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of UInt64), ByVal y As UInt64) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -804,7 +804,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -813,7 +813,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of UInt64), ByVal y As UInt64()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -824,7 +824,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -833,7 +833,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of UInt64), ByVal y As UInt64) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -844,7 +844,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -869,7 +869,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of UInt64()), ByVal y As UInt64()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -880,7 +880,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -889,7 +889,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of UInt64()), ByVal y As UInt64()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -900,7 +900,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -909,7 +909,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of UInt64()), ByVal y As UInt64()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -920,7 +920,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -945,7 +945,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of UInt32), ByVal y As UInt32) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -956,7 +956,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -965,7 +965,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of UInt32), ByVal y As UInt32()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -976,7 +976,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -985,7 +985,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of UInt32), ByVal y As UInt32) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -996,7 +996,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1021,7 +1021,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of UInt32()), ByVal y As UInt32()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1032,7 +1032,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1041,7 +1041,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of UInt32()), ByVal y As UInt32()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1052,7 +1052,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1061,7 +1061,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of UInt32()), ByVal y As UInt32()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1072,7 +1072,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1097,7 +1097,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of UInt16), ByVal y As UInt16) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1108,7 +1108,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1117,7 +1117,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of UInt16), ByVal y As UInt16()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1128,7 +1128,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1137,7 +1137,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of UInt16), ByVal y As UInt16) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1148,7 +1148,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1173,7 +1173,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of UInt16()), ByVal y As UInt16()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1184,7 +1184,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1193,7 +1193,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of UInt16()), ByVal y As UInt16()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1204,7 +1204,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1213,7 +1213,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of UInt16()), ByVal y As UInt16()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1224,7 +1224,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1249,7 +1249,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Byte), ByVal y As Byte) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1260,7 +1260,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1269,7 +1269,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Byte), ByVal y As Byte()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1280,7 +1280,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1289,7 +1289,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Byte), ByVal y As Byte) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1300,7 +1300,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1325,7 +1325,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Byte()), ByVal y As Byte()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1336,7 +1336,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1345,7 +1345,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Byte()), ByVal y As Byte()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1356,7 +1356,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1365,7 +1365,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Byte()), ByVal y As Byte()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1376,7 +1376,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1401,7 +1401,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Single), ByVal y As Single) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1412,7 +1412,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1421,7 +1421,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Single), ByVal y As Single()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1432,7 +1432,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1441,7 +1441,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Single), ByVal y As Single) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1452,7 +1452,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1477,7 +1477,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Single()), ByVal y As Single()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1488,7 +1488,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1497,7 +1497,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Single()), ByVal y As Single()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1508,7 +1508,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1517,7 +1517,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Single()), ByVal y As Single()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1528,7 +1528,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1553,7 +1553,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Double), ByVal y As Double) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1564,7 +1564,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1573,7 +1573,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Double), ByVal y As Double()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1584,7 +1584,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1593,7 +1593,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Double), ByVal y As Double) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1604,7 +1604,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1629,7 +1629,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Double()), ByVal y As Double()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1640,7 +1640,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1649,7 +1649,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Double()), ByVal y As Double()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1660,7 +1660,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1669,7 +1669,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Double()), ByVal y As Double()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1680,7 +1680,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1705,7 +1705,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of String), ByVal y As String) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1716,7 +1716,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1725,7 +1725,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of String), ByVal y As String()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1736,7 +1736,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1745,7 +1745,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of String), ByVal y As String) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1756,7 +1756,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1781,7 +1781,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of String()), ByVal y As String()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1792,7 +1792,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1801,7 +1801,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of String()), ByVal y As String()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1812,7 +1812,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1821,7 +1821,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of String()), ByVal y As String()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1832,7 +1832,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1857,7 +1857,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Boolean), ByVal y As Boolean) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1868,7 +1868,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1877,7 +1877,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Boolean), ByVal y As Boolean()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1888,7 +1888,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1897,7 +1897,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Boolean), ByVal y As Boolean) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1908,7 +1908,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1933,7 +1933,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As ref(Of Boolean()), ByVal y As Boolean()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1944,7 +1944,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1953,7 +1953,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As array_ref(Of Boolean()), ByVal y As Boolean()()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1964,7 +1964,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -1973,7 +1973,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(ByVal x As weak_ref(Of Boolean()), ByVal y As Boolean()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -1984,7 +1984,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -2011,7 +2011,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(Of T)(ByVal x As ref(Of T), ByVal y As T) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -2022,7 +2022,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -2031,7 +2031,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(Of T)(ByVal x As array_ref(Of T), ByVal y As T()) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -2042,7 +2042,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True
@@ -2051,7 +2051,7 @@ Public Module _eva
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function eva(Of T)(ByVal x As weak_ref(Of T), ByVal y As T) As Boolean
-        If Not x Is Nothing Then
+        If x IsNot Nothing Then
             x.set(y)
         End If
         Return True
@@ -2062,7 +2062,7 @@ Public Module _eva
         If y Is Nothing Then
             Return False
         Else
-            If Not x Is Nothing Then
+            If x IsNot Nothing Then
                 x.set(y())
             End If
             Return True

@@ -11,7 +11,7 @@ Public Module _load
     <Extension()> Public Function load(ByVal c As configuration,
                                        ByVal wait_ms As Int64,
                                        ByVal ParamArray files() As String) As Boolean
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         If isemptyarray(files) Then
             Return True
         End If

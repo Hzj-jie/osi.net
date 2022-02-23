@@ -24,7 +24,7 @@ Public NotInheritable Class instance_stack(Of T)
         Get
             Dim s As stack(Of T) = Nothing
             s = thread_stack()
-            assert(Not s Is Nothing)
+            assert(s IsNot Nothing)
             Return s.back()
         End Get
         Set(ByVal value As T)
@@ -61,14 +61,14 @@ Public NotInheritable Class instance_stack(Of T)
     End Function
 
     Public Shared Sub push(ByVal v As T)
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         thread_stack_or_new().emplace(v)
     End Sub
 
     Public Shared Sub pop()
         Dim s As stack(Of T) = Nothing
         s = thread_stack()
-        assert(Not s Is Nothing)
+        assert(s IsNot Nothing)
         s.pop()
     End Sub
 

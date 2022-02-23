@@ -28,7 +28,7 @@ Namespace sign
             If h Is Nothing Then
                 h = create()
             End If
-            assert(Not h Is Nothing)
+            assert(h IsNot Nothing)
             h.Key() = key
             Return h.ComputeHash(i, offset, count)
         End Function

@@ -12,8 +12,8 @@ Imports osi.root.utt.attributes
 Public NotInheritable Class uri_path_encoder_bytes_test
     Private Shared Sub run_case(ByVal encode As Func(Of Byte(), StringWriter, Boolean),
                                 ByVal decode As Func(Of String, MemoryStream, Boolean))
-        assert(Not encode Is Nothing)
-        assert(Not decode Is Nothing)
+        assert(encode IsNot Nothing)
+        assert(decode IsNot Nothing)
         Dim b() As Byte = Nothing
         b = next_bytes(rnd_uint(1024, 4096))
         Using s As StringWriter = New StringWriter()

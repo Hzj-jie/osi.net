@@ -23,7 +23,7 @@ Public NotInheritable Class connection
     End Sub
 
     Private Shared Sub close(ByVal c As ref_client)
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         If envs.tcp_trace Then
             raise_error("connection ",
                         identity(c),
@@ -33,18 +33,18 @@ Public NotInheritable Class connection
     End Sub
 
     Private Shared Function validate(ByVal c As ref_client) As Boolean
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Return c.no_refer_client().alive()
     End Function
 
     Private Shared Function identity(ByVal c As ref_client) As String
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Return c.id
     End Function
 
     Private Shared Sub check_expiration(ByVal p As powerpoint, ByVal c As ref_client)
-        assert(Not p Is Nothing)
-        assert(Not c Is Nothing)
+        assert(p IsNot Nothing)
+        assert(c IsNot Nothing)
         'do not shutdown outgoing connections, since we need to generate it again
         '2014 Apr. 15th
         '? to make sure the connection is alive, sometime we need to shutdown and regenerate the connection
@@ -69,8 +69,8 @@ Public NotInheritable Class connection
     End Sub
 
     Private Shared Sub check_connectivity(ByVal p As powerpoint, ByVal c As ref_client)
-        assert(Not p Is Nothing)
-        assert(Not c Is Nothing)
+        assert(p IsNot Nothing)
+        assert(c IsNot Nothing)
         c.no_refer_client().free_poll_alive(p)
     End Sub
 

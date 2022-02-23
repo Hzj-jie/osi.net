@@ -11,7 +11,7 @@ Public Class token_herald_wrapper
     Private ReadOnly h As herald
 
     Public Sub New(ByVal h As herald)
-        assert(Not h Is Nothing)
+        assert(h IsNot Nothing)
         Me.h = h
     End Sub
 

@@ -33,7 +33,7 @@ Public Class qless2_event_sync_T_pump(Of T)
     Public Event data_arrived() Implements event_sync_T_pump(Of T).data_arrived
 
     Public Sub New(ByVal q As qless2(Of T))
-        assert(Not q Is Nothing)
+        assert(q IsNot Nothing)
         Me.q = q
     End Sub
 

@@ -64,7 +64,7 @@ Partial Public NotInheritable Class bstyle
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
-                assert(Not s Is Nothing)
+                assert(s IsNot Nothing)
                 Me.s = s
             End Sub
 
@@ -75,7 +75,7 @@ Partial Public NotInheritable Class bstyle
             Private Function retrieve(ByVal [alias] As String) As String
                 assert(Not builders.parameter_type.is_ref_type([alias]))
                 Dim s As scope = Me.s
-                While Not s Is Nothing
+                While s IsNot Nothing
                     [alias] = s.ta([alias])
                     s = s.parent
                 End While
@@ -93,12 +93,12 @@ Partial Public NotInheritable Class bstyle
             End Property
 
             Public Function canonical_of(ByVal p As builders.parameter_type) As builders.parameter_type
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p.map_type(AddressOf retrieve)
             End Function
 
             Public Function canonical_of(ByVal p As builders.parameter) As builders.parameter
-                assert(Not p Is Nothing)
+                assert(p IsNot Nothing)
                 Return p.map_type(AddressOf retrieve)
             End Function
 

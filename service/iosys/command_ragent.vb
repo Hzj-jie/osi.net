@@ -12,7 +12,7 @@ Public Class command_ragent(Of CASE_T)
 
     Public Function push(ByVal i As command) As Boolean
         Dim c As CASE_T = Nothing
-        If Not i Is Nothing AndAlso
+        If i IsNot Nothing AndAlso
            i.action_is(constants.remote.action.push) AndAlso
            cast(i, c) Then
             Dim f As Boolean = False

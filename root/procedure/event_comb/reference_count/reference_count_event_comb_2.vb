@@ -73,7 +73,7 @@ Public Class reference_count_event_comb_2
     End Function
 
     Private Shared Sub start(ByVal wp As weak_ref(Of reference_count_event_comb_2))
-        assert(Not wp Is Nothing)
+        assert(wp IsNot Nothing)
         assert_begin(New event_comb(Function() As Boolean
                                         Return waitfor(Function() As Boolean
                                                            Dim rcec As reference_count_event_comb_2 = Nothing
@@ -151,7 +151,7 @@ Public Class reference_count_event_comb_2
     End Function
 
     Protected Overridable Function work() As event_comb
-        assert(Not w Is Nothing)
+        assert(w IsNot Nothing)
         Return w()
     End Function
 

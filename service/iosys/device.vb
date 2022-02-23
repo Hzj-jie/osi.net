@@ -67,7 +67,7 @@ Public Class receivers(Of T As Class)
                                   s.foreach(Sub(ByVal r As ireceiver(Of T))
                                                 Dim ec As event_comb = Nothing
                                                 ec = r.receive(c)
-                                                If Not ec Is Nothing Then
+                                                If ec IsNot Nothing Then
                                                     ecs.emplace_back(ec)
                                                 End If
                                             End Sub)

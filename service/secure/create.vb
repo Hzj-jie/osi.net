@@ -48,7 +48,7 @@ Public Module _create
     End Function
 
     Public Function create(ByVal parameters As var, ByRef o As encryptor) As Boolean
-        Return Not parameters Is Nothing AndAlso
+        Return parameters IsNot Nothing AndAlso
                Not parameters.other_values().empty() AndAlso
                create(parameters.other_values()(0), parameters, o)
     End Function
@@ -157,7 +157,7 @@ Public Module _create
                        If Not create_encrypt_bytes_transformer_block_wrapper(mode, v, i, r) Then
                            Return False
                        End If
-                       assert(Not r Is Nothing)
+                       assert(r IsNot Nothing)
                        o = r
                        Return True
                    End Function)))
@@ -171,7 +171,7 @@ Public Module _create
                        If Not create_decrypt_bytes_transformer_block_wrapper(mode, v, i, r) Then
                            Return False
                        End If
-                       assert(Not r Is Nothing)
+                       assert(r IsNot Nothing)
                        o = r
                        Return True
                    End Function)))

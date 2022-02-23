@@ -19,7 +19,7 @@ Partial Public NotInheritable Class bstyle
                            ByVal params As vector(Of builders.parameter))
                 assert(Not name.null_or_whitespace())
                 assert(Not return_type.null_or_whitespace())
-                assert(Not params Is Nothing)
+                assert(params IsNot Nothing)
                 Me.name = name
                 Me.return_type = scope.current().type_alias()(return_type)
                 Me.params = params
@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
-                assert(Not s Is Nothing)
+                assert(s IsNot Nothing)
                 Me.s = s
             End Sub
 
@@ -49,7 +49,7 @@ Partial Public NotInheritable Class bstyle
                 Dim s As scope = Me.s
                 While s.cf Is Nothing
                     s = s.parent
-                    assert(Not s Is Nothing)
+                    assert(s IsNot Nothing)
                 End While
                 Return s.cf
             End Function

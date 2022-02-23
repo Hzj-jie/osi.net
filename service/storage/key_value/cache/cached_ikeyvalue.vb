@@ -15,7 +15,7 @@ Partial Friend Class cached_ikeyvalue
     Public Sub New(ByVal impl As ikeyvalue,
                    ByVal cached_count As UInt64,
                    ByVal max_value_size As UInt64)
-        assert(Not impl Is Nothing)
+        assert(impl IsNot Nothing)
         Me.impl = impl
         Me.cache = New caches(cached_count, max_value_size)
     End Sub

@@ -17,8 +17,8 @@ Public Module _stream_flow_adapter
                                           Optional ByVal send_rate_sec As UInt32 = uint32_0,
                                           Optional ByVal close_input_stream As Boolean = True,
                                           Optional ByVal close_output_stream As Boolean = False) As event_comb
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
+        assert(this IsNot Nothing)
+        assert(that IsNot Nothing)
         Dim i As stream_flow_adapter = Nothing
         Dim o As stream_flow_adapter = Nothing
         Dim ec As event_comb = Nothing
@@ -55,8 +55,8 @@ Public Module _stream_flow_adapter
                                           Optional ByVal close_input_stream As Boolean = True,
                                           Optional ByVal close_output_stream As Boolean = False,
                                           Optional ByVal result As ref(Of UInt64) = Nothing) As event_comb
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
+        assert(this IsNot Nothing)
+        assert(that IsNot Nothing)
         Dim i As stream_flow_adapter = Nothing
         Dim o As stream_flow_adapter = Nothing
         Dim ec As event_comb = Nothing
@@ -209,7 +209,7 @@ Public Class stream_flow_adapter
         Me.s = New disposer(Of Stream)(s,
                                        disposer:=If(close_stream_when_finish,
                                                     Sub(x As Stream)
-                                                        If Not x Is Nothing Then
+                                                        If x IsNot Nothing Then
                                                             x.Flush()
                                                             x.Close()
                                                             x.Dispose()

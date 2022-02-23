@@ -36,7 +36,7 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
 
     Public Sub New(ByVal d As T_receiver(Of pair(Of DATA_T, ID_T)),
                    Optional ByVal sense_timeout_ms As Int64 = constants.default_sense_timeout_ms)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Me.d = d
         If sense_timeout_ms < 0 Then
             Me.sense_timeout_ms = constants.default_sense_timeout_ms
@@ -89,7 +89,7 @@ Partial Public Class dispenser(Of DATA_T, ID_T)
                                           If Not accepters.empty() Then
                                               accepters.foreach(
                                                   Sub(ByVal i As accepter)
-                                                      assert(Not i Is Nothing)
+                                                      assert(i IsNot Nothing)
                                                       If i.accept((+result).second) Then
                                                           i.raise((+result).first, (+result).second)
                                                           accepted = True

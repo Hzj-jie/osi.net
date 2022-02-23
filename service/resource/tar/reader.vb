@@ -25,15 +25,15 @@ Partial Public NotInheritable Class tar
         End Sub
 
         Private Sub New(ByVal fs As fs, ByVal v As vector(Of String))
-            assert(Not fs Is Nothing)
-            assert(Not v Is Nothing)
+            assert(fs IsNot Nothing)
+            assert(v IsNot Nothing)
             Me.fs = fs
             Me.v = v
             Me.m = New MemoryStream()
         End Sub
 
         Public Shared Function of_testing(ByVal fs As testing_fs) As reader
-            assert(Not fs Is Nothing)
+            assert(fs IsNot Nothing)
             Return New reader(fs, fs.list_files())
         End Function
 
@@ -72,7 +72,7 @@ Partial Public NotInheritable Class tar
         End Function
 
         Public Sub foreach(ByVal f As Action(Of String, MemoryStream))
-            assert(Not f Is Nothing)
+            assert(f IsNot Nothing)
             Dim n As String = Nothing
             Dim m As MemoryStream = Nothing
             While [next](n, m)
@@ -88,7 +88,7 @@ Partial Public NotInheritable Class tar
         End Sub
 
         Public Sub foreach(ByVal f As Action(Of String, Double, StreamReader))
-            assert(Not f Is Nothing)
+            assert(f IsNot Nothing)
             foreach(Sub(ByVal name As String, ByVal m As MemoryStream)
                         Dim p As Double
                         Using r As New StreamReader(m, m.guess_encoding(p))

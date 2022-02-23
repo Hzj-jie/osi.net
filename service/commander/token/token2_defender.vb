@@ -55,8 +55,8 @@ Public NotInheritable Class token2_defender(Of COLLECTION As Class, CONNECTION)
                                               ByVal h As herald,
                                               ByVal p As COLLECTION,
                                               ByVal r As ref(Of COLLECTION)) As event_comb
-        assert(Not h Is Nothing)
-        assert(Not r Is Nothing)
+        assert(h IsNot Nothing)
+        assert(r IsNot Nothing)
         assert(r.empty())
         Dim cmd As ref(Of command) = Nothing
         Dim code As piece = Nothing
@@ -81,7 +81,7 @@ Public NotInheritable Class token2_defender(Of COLLECTION As Class, CONNECTION)
                               Function() As Boolean
                                   If ec.end_result() AndAlso Not cmd.empty() Then
                                       Dim reply As piece = Nothing
-                                      assert(Not code Is Nothing AndAlso Not code.empty())
+                                      assert(code IsNot Nothing AndAlso Not code.empty())
                                       If (+cmd).has_action() AndAlso
                                          search_for_token(Function(x As COLLECTION) As Boolean
                                                               Return info.sign_match(x,

@@ -49,7 +49,7 @@ Public Class device_pool_test
                     assert(e.Set())
                 Else
                     assert(e.WaitOne())
-                    assert(Not d Is Nothing)
+                    assert(d IsNot Nothing)
                     d.close()
                 End If
                 Return True

@@ -9,7 +9,7 @@ Public Class pool_one_adapter(Of T)
     Private ins As sync_thread_safe_lazier(Of idevice(Of T))
 
     Public Sub New(ByVal p As device_pool(Of T))
-        assert(Not p Is Nothing)
+        assert(p IsNot Nothing)
         Me.p = p
         Me.get_new_instance = Function() As idevice(Of T)
                                   Dim o As idevice(Of T) = Nothing
@@ -27,7 +27,7 @@ Public Class pool_one_adapter(Of T)
     End Sub
 
     Public Function [get]() As idevice(Of T)
-        assert(Not ins Is Nothing)
+        assert(ins IsNot Nothing)
         Return ins.get()
     End Function
 

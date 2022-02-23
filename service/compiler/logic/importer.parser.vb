@@ -15,8 +15,8 @@ Namespace logic
         Private Shared Function parse_typed_parameters(ByVal o As vector(Of pair(Of String, String)),
                                                        ByVal v As vector(Of String),
                                                        ByRef p As UInt32) As Boolean
-            assert(Not o Is Nothing)
-            assert(Not v Is Nothing)
+            assert(o IsNot Nothing)
+            assert(v IsNot Nothing)
             assert(v.size() > p)
             If Not strsame(v(p), "(") Then
                 Return False
@@ -42,8 +42,8 @@ Namespace logic
         Private Shared Function parse_parameters(ByVal o As vector(Of String),
                                                  ByVal v As vector(Of String),
                                                  ByRef p As UInt32) As Boolean
-            assert(Not o Is Nothing)
-            assert(Not v Is Nothing)
+            assert(o IsNot Nothing)
+            assert(v IsNot Nothing)
             assert(v.size() > p)
             If Not strsame(v(p), "(") Then
                 Return False
@@ -65,7 +65,7 @@ Namespace logic
         Private Function parse_paragraph(ByRef o As paragraph,
                                          ByVal v As vector(Of String),
                                          ByRef p As UInt32) As Boolean
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             assert(v.size() > p)
             If Not strsame(v(p), "{") Then
                 Return False

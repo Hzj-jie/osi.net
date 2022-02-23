@@ -17,9 +17,9 @@ Namespace syntaxer
         Sub New()
             Dim f As FieldInfo =
                 GetType(matching_delegate).GetField("type", BindingFlags.NonPublic Or BindingFlags.Instance)
-            assert(Not f Is Nothing)
+            assert(f IsNot Nothing)
             get_type = Function(this As matching_delegate) As UInt32
-                           assert(Not this Is Nothing)
+                           assert(this IsNot Nothing)
                            Return direct_cast(Of UInt32)(f.GetValue(this))
                        End Function
         End Sub

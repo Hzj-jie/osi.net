@@ -89,11 +89,11 @@ Public Module _transformation
     End Function
 
     <Extension()> Public Function not_null_and_true(ByVal d As Func(Of Boolean)) As Boolean
-        Return Not d Is Nothing AndAlso d()
+        Return d IsNot Nothing AndAlso d()
     End Function
 
     <Extension()> Public Function not_null_and_false(ByVal d As Func(Of Boolean)) As Boolean
-        Return Not d Is Nothing AndAlso (Not d())
+        Return d IsNot Nothing AndAlso (Not d())
     End Function
 
     <Extension()> Public Function type_erasure(Of T)(ByVal v As Action(Of Object)) As Action(Of T)

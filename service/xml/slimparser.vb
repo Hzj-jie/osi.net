@@ -31,7 +31,7 @@ Public Module _slimparser
     End Sub
 
     Public Sub unescapse(ByVal v As vector(Of pair(Of String, node_type)))
-        If Not v Is Nothing AndAlso Not v.empty() Then
+        If v IsNot Nothing AndAlso Not v.empty() Then
             For i As Int32 = 0 To v.size() - 1
                 If v(i).second = node_type.cdata Then
                     v(i).second = node_type.text
@@ -56,7 +56,7 @@ Public Module _slimparser
                                       ByVal type As node_type) As Boolean
         Dim v As vector(Of pair(Of String, node_type)) = Nothing
         If slim_parse(text, v) Then
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             If result Is Nothing Then
                 result = New vector(Of String)()
             Else

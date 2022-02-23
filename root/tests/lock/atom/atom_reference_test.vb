@@ -23,7 +23,7 @@ Public Class atom_reference_test
 
         Public Overrides Function run() As Boolean
             a.modify(Sub(ByRef s As StringBuilder)
-                         assert(Not s Is Nothing)
+                         assert(s IsNot Nothing)
                          Dim co As Boolean = True
                          Dim i As Int32 = 0
                          While co
@@ -54,7 +54,7 @@ Public Class atom_reference_test
     End Function
 
     Protected Overrides Sub validate(ByVal ac As atom_case)
-        assert(Not ac Is Nothing)
+        assert(ac IsNot Nothing)
         assert(TypeOf ac Is atom_reference_case)
         assertion.equal(ac.direct_cast_to(Of atom_reference_case)().result().reverse(),
                      Convert.ToString(round * thread_count))

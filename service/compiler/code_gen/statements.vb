@@ -19,7 +19,7 @@ Public NotInheritable Class statements(Of WRITER)
     End Sub
 
     Public Sub export(ByVal o As WRITER)
-        assert(Not o Is Nothing)
+        assert(o IsNot Nothing)
         Dim i As UInt32 = 0
         While i < v.size()
             v(i).export(o)

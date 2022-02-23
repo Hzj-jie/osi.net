@@ -38,7 +38,7 @@ Partial Public Class channel
                    Optional ByVal stopping As Func(Of Boolean) = Nothing,
                    Optional ByVal idle_timeout_ms As Int64 = npos,
                    Optional ByVal max_channel_count As UInt32 = constants.default_max_channel_count)
-        assert(Not h Is Nothing)
+        assert(h IsNot Nothing)
         assert(max_channel_count > 0)
         Me.h = h
         ReDim Me.m(CInt(max_channel_count - uint32_1))
@@ -95,7 +95,7 @@ Partial Public Class channel
                                     End Function,
                                     Function() As Boolean
                                         If ec.end_result() Then
-                                            If Not (+p) Is Nothing Then
+                                            If (+p) IsNot Nothing Then
                                                 Dim remote_id As UInt32 = 0
                                                 If (+p).parameter(constants.remote.parameter.local_id, remote_id) Then
                                                     If (+p).action_is(constants.remote.action.connect) Then
@@ -119,7 +119,7 @@ Partial Public Class channel
     End Sub
 
     Private Sub send(ByVal c As command)
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         send_queue.emplace(c)
         send_event.mark()
     End Sub
@@ -134,7 +134,7 @@ Partial Public Class channel
                                             Dim n As Int64 = 0
                                             n = nowadays.milliseconds()
                                             For i As UInt32 = 0 To array_size(m) - uint32_1
-                                                If Not m(CInt(i)) Is Nothing AndAlso
+                                                If m(CInt(i)) IsNot Nothing AndAlso
                                                    n - m(CInt(i)).last_active_ms() >= idle_timeout_ms Then
                                                     ' TODO
                                                 End If

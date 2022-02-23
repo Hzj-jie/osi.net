@@ -17,7 +17,7 @@ Public Class http_client_test
                                                     {"header4", "value4"}}
 
     Private Shared Sub assert_result_size(ByVal headers(,) As String, ByVal m As map(Of String, vector(Of String)))
-        assert(Not m Is Nothing)
+        assert(m IsNot Nothing)
         Dim c As UInt32 = 0
         Dim it As map(Of String, vector(Of String)).iterator = Nothing
         it = m.begin()
@@ -29,7 +29,7 @@ Public Class http_client_test
     End Sub
 
     Private Shared Sub assert_coverage(ByVal headers(,) As String, ByVal m As map(Of String, vector(Of String)))
-        assert(Not m Is Nothing)
+        assert(m IsNot Nothing)
         For i As Int32 = 0 To array_size(headers) - 1
             Dim it As map(Of String, vector(Of String)).iterator = Nothing
             it = m.find(headers(i, 0))

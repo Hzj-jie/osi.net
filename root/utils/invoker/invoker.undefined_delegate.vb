@@ -46,7 +46,7 @@ Public NotInheritable Class invoker
 
     Private Sub New(ByVal impl As invoker(Of undefined_delegate_type),
                     ByVal m As Func(Of Object(), Object))
-        assert(Not impl Is Nothing)
+        assert(impl IsNot Nothing)
         Me.impl = impl
         assert(impl.invoke_only())
         Me.m = m
@@ -57,12 +57,12 @@ Public NotInheritable Class invoker
     End Function
 
     Public Overrides Function pre_binding() As Boolean
-        Return Not m Is Nothing
+        Return m IsNot Nothing
     End Function
 
     Public Overrides Function pre_bind(ByRef d As Func(Of Object(), Object)) As Boolean
         If pre_binding() Then
-            assert(Not m Is Nothing)
+            assert(m IsNot Nothing)
             d = m
             Return True
         End If

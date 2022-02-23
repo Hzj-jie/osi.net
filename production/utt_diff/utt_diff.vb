@@ -152,8 +152,8 @@ Public Module utt_diff
                         ByVal right As map(Of String, case_info),
                         ByVal miss_only As Boolean,
                         ByVal left_first As Boolean)
-        assert(Not left Is Nothing)
-        assert(Not right Is Nothing)
+        assert(left IsNot Nothing)
+        assert(right IsNot Nothing)
         Dim it As map(Of String, case_info).iterator = Nothing
         it = left.begin()
         Dim lt As Int64 = 0
@@ -212,7 +212,7 @@ Public Module utt_diff
         If strindexof(l, m1) <> npos AndAlso
            strindexof(l, m2) <> npos AndAlso
            strsplit(l, {m1, m2, m3, m4, m5}, New String() {}, v) Then
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             If v.size() > 1 Then
                 c = v(1)
                 If v.size() > 2 AndAlso Int64.TryParse(v(2), t) Then
@@ -263,7 +263,7 @@ Public Module utt_diff
                 Using r As StreamReader = New StreamReader(s)
                     Dim l As String = Nothing
                     l = r.ReadLine()
-                    While Not l Is Nothing
+                    While l IsNot Nothing
                         Dim c As String = Nothing
                         Dim t As Int64 = 0
                         Dim u As Double = 0
@@ -287,7 +287,7 @@ Public Module utt_diff
         Dim v As vector(Of case_info) = Nothing
         If parse(f, v, failure) Then
             o.renew()
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             For i As Int32 = 0 To v.size() - 1
                 o(v(i).name) = v(i)
             Next

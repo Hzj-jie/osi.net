@@ -13,8 +13,8 @@ Partial Public Class device_creator_adapter(Of IT, OT)
         Public Sub New(ByVal i As iasync_device_creator(Of IT),
                        ByVal c As Func(Of IT, OT),
                        ByVal c2 As Func(Of async_getter(Of OT), OT))
-            assert(Not i Is Nothing)
-            assert(Not c Is Nothing)
+            assert(i IsNot Nothing)
+            assert(c IsNot Nothing)
             Me.i = i
             Me.c = c
             Me.c2 = c2

@@ -15,7 +15,7 @@ Public NotInheritable Class adapter_registry
     Public Shared Sub register(Of T1, T2)(ByVal type_name As String,
                                           ByVal secondary_type_name As String,
                                           ByVal adapter_new As Func(Of T1, T2))
-        assert(Not adapter_new Is Nothing)
+        assert(adapter_new IsNot Nothing)
 #If REGISTER_RAW_DEVICE Then
         assert(constructor.register(type_name,
                                     Function(v As var, ByRef o As T2) As Boolean
@@ -86,21 +86,21 @@ End Class
 
 Public NotInheritable Class registry(Of T)
     Private Shared Function identity(ByVal v As var) As String
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         Const s As String = "identity"
         v.bind(s)
         Return v(s)
     End Function
 
     Private Shared Function max_count(ByVal v As var) As UInt32
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         Const s As String = "max-count"
         v.bind(s)
         Return v(s).to(Of UInt32)()
     End Function
 
     Private Shared Sub attach_checker(ByVal v As var, ByVal d As device_pool(Of T))
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         Const s As String = "check-interval-ms"
         v.bind(s)
         Dim o As Int64 = int64_0
@@ -160,9 +160,9 @@ Public NotInheritable Class registry(Of T)
                            fms = v(failure_wait_ms).to(Of Int64)(constants.default_auto_generation_failure_wait_ms)
                            mc = v(max_concurrent_generations).to(Of Int32)(
                                     constants.default_auto_generation_max_concurrent_generations)
-                           If Not x Is Nothing Then
+                           If x IsNot Nothing Then
                                o = auto_device_exporter.[New](x, cms, fms, mc)
-                           ElseIf Not y Is Nothing Then
+                           ElseIf y IsNot Nothing Then
                                o = auto_device_exporter.[New](y, cms, fms, mc)
                            Else
                                assert(False)

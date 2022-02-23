@@ -22,7 +22,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
 
     Public Sub register(ByVal s As String, ByVal b As code_gen(Of WRITER))
         assert(Not s.null_or_whitespace())
-        assert(Not b Is Nothing)
+        assert(b IsNot Nothing)
         assert(m.emplace(s, b).second(), s)
     End Sub
 
@@ -45,7 +45,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
     End Function
 
     Private Function code_gen_of(ByVal n As typed_node) As code_gen(Of WRITER)
-        assert(Not n Is Nothing)
+        assert(n IsNot Nothing)
         Return code_gen_of(n.type_name)
     End Function
 
@@ -67,8 +67,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Private ReadOnly n As typed_node
 
         Public Sub New(ByVal b As code_gen(Of WRITER), ByVal n As typed_node)
-            assert(Not b Is Nothing)
-            assert(Not n Is Nothing)
+            assert(b IsNot Nothing)
+            assert(n IsNot Nothing)
             Me.b = b
             Me.n = n
         End Sub
@@ -103,8 +103,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Private ReadOnly n As typed_node
 
         Public Sub New(ByVal l As code_gens(Of WRITER), ByVal n As typed_node)
-            assert(Not l Is Nothing)
-            assert(Not n Is Nothing)
+            assert(l IsNot Nothing)
+            assert(n IsNot Nothing)
             Me.l = l
             Me.n = n
         End Sub

@@ -76,7 +76,7 @@ Namespace logic
 
         Public Function types() As type_t
             If is_root() Then
-                assert(Not t Is Nothing)
+                assert(t IsNot Nothing)
                 Return t
             End If
             assert(t Is Nothing)

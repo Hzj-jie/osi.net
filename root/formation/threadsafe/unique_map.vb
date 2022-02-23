@@ -98,7 +98,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
         If keys.null_Or_empty() Then
             Return 0
         End If
-        If Not vs Is Nothing Then
+        If vs IsNot Nothing Then
             vs.clear()
         End If
         Return writer_locked(Function() As UInt32
@@ -106,7 +106,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
                                  For i As UInt32 = uint32_0 To keys.size() - uint32_1
                                      Dim v As VALUE_T = Nothing
                                      If unlocked_erase(keys(i), v) Then
-                                         If Not vs Is Nothing Then
+                                         If vs IsNot Nothing Then
                                              vs.emplace_back(v)
                                          End If
                                          r += uint32_1
@@ -221,8 +221,8 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
     End Function
 
     Public Function generate(ByVal key As KEY_T, ByVal ctor As Func(Of VALUE_T)) As VALUE_T
-        assert(Not key Is Nothing)
-        assert(Not ctor Is Nothing)
+        assert(key IsNot Nothing)
+        assert(ctor IsNot Nothing)
         Dim v As VALUE_T = Nothing
         If [get](key, v) Then
             Return v
@@ -241,7 +241,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
     End Function
 
     Public Sub foreach(ByVal f As Action(Of KEY_T, VALUE_T))
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         reader_locked(Sub()
                           m.stream().foreach(m.on_pair(Sub(ByVal k As KEY_T, ByVal s As STORE_T)
                                                            Dim v As VALUE_T = Nothing

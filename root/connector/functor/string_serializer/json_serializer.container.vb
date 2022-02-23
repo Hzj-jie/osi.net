@@ -10,7 +10,7 @@ Partial Public NotInheritable Class json_serializer(Of T)
         Private Shared Sub register(ByVal prefix As String,
                                     ByVal trailing As String)
             json_serializer.register(Function(ByVal i As T, ByVal o As StringWriter) As Boolean
-                                         assert(Not o Is Nothing)
+                                         assert(o IsNot Nothing)
                                          o.Write(prefix)
 
                                          Dim it As container_operator(Of ELEMENT).enumerator = Nothing

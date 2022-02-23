@@ -71,7 +71,7 @@ Public NotInheritable Class error_event
     End Sub
 
     Public Shared Function capture_logs(ByVal err_type As error_type, ByVal d As Action) As List(Of String)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim tid As Int32 = Threading.Thread.CurrentThread().ManagedThreadId()
         Dim r As New List(Of String)()
         Dim capturer As r3EventHandler = Sub(ByVal et As error_type, ByVal msg As String)

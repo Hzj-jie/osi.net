@@ -91,7 +91,7 @@ Partial Public NotInheritable Class free_cluster
                               Function() As Boolean
                                   If ec Is Nothing OrElse ec.end_result() Then
                                       assert(cs.size() = offsets.size())
-                                      assert(Not h Is Nothing)
+                                      assert(h IsNot Nothing)
                                       ecs.resize(cs.size() + uint32_1)
                                       Dim bs As UInt32 = 0
                                       bs = array_size(buff)
@@ -232,7 +232,7 @@ Partial Public NotInheritable Class free_cluster
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      assert(Not (+c) Is Nothing)
+                                      assert((+c) IsNot Nothing)
                                       assert((+c).mark_free_as_empty())
                                       assert(hcs.find((+c).id()) = hcs.end())
                                       hcs((+c).id()) = (+c)

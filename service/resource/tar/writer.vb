@@ -27,10 +27,10 @@ Partial Public NotInheritable Class tar
                         ByVal max_size As UInt32,
                         ByVal file_namer As Func(Of UInt32, String),
                         ByVal files As vector(Of String))
-            assert(Not fs Is Nothing)
+            assert(fs IsNot Nothing)
             assert(max_size > 0)
-            assert(Not file_namer Is Nothing)
-            assert(Not files Is Nothing)
+            assert(file_namer IsNot Nothing)
+            assert(files IsNot Nothing)
             Me.fs = fs
             Me.max_size = max_size
             Me.file_namer = file_namer

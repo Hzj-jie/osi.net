@@ -84,7 +84,7 @@ Partial Public NotInheritable Class gitver
     Private Shared Function parse(ByVal commit_str As String) As commit_info
         Dim r As commit_info = Nothing
         If parse(commit_str, r) Then
-            assert(Not r Is Nothing)
+            assert(r IsNot Nothing)
             Return r
         End If
         Return New commit_info()

@@ -30,7 +30,7 @@ Public Class config_object_loader(Of T)
     End Function
 
     Protected Overridable Overloads Function load() As T
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Return d()
     End Function
 End Class

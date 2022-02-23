@@ -10,7 +10,7 @@ Partial Public Class bytes_serializer(Of T)
     Public NotInheritable Class forward_registration
         Private Shared Function c(Of OT)(ByVal f As Func(Of OT, MemoryStream, Boolean)) _
                                         As Func(Of T, MemoryStream, Boolean)
-            assert(Not f Is Nothing)
+            assert(f IsNot Nothing)
             Return Function(ByVal i As T, ByVal o As MemoryStream) As Boolean
                        Dim r As OT = Nothing
                        r = cast(Of OT)().from(i)
@@ -20,7 +20,7 @@ Partial Public Class bytes_serializer(Of T)
 
         Private Shared Function c(Of OT)(ByVal f As _do_val_ref(Of MemoryStream, OT, Boolean)) _
                                         As _do_val_ref(Of MemoryStream, T, Boolean)
-            assert(Not f Is Nothing)
+            assert(f IsNot Nothing)
             Return Function(ByVal i As MemoryStream, ByRef o As T) As Boolean
                        Dim r As OT = Nothing
                        If Not f(i, r) Then

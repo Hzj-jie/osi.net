@@ -14,7 +14,7 @@ Public Class istrkeyvt_fs
     Public ReadOnly accessor As istrkeyvt
 
     Public Sub New(ByVal accessor As istrkeyvt)
-        assert(Not accessor Is Nothing)
+        assert(accessor IsNot Nothing)
         Me.accessor = accessor
     End Sub
 

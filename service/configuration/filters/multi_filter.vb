@@ -14,7 +14,7 @@ Public Class multi_filter
         ReDim filters(array_size(ss) - 1)
         For i As Int32 = 0 To array_size(ss) - 1
             filters(i) = ctor(ss(i))
-            assert(Not filters(i) Is Nothing)
+            assert(filters(i) IsNot Nothing)
         Next
     End Sub
 

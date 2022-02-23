@@ -16,14 +16,14 @@ Public NotInheritable Class disposable
         Public ReadOnly d As Action(Of Object)
 
         Public Sub New(ByVal t As Type, ByVal d As Action(Of Object))
-            assert(Not t Is Nothing)
-            assert(Not d Is Nothing)
+            assert(t IsNot Nothing)
+            assert(d IsNot Nothing)
             Me.t = t
             Me.d = d
         End Sub
 
         Public Shared Function [New](Of T)(ByVal d As Action(Of T)) As type_disposer
-            assert(Not d Is Nothing)
+            assert(d IsNot Nothing)
             Return New type_disposer(GetType(T), d.type_restore())
         End Function
     End Class
@@ -34,30 +34,30 @@ Public NotInheritable Class disposable
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")>
     Shared Sub New()
         register_base_type(Sub(ByVal s As Stream)
-                               If Not s Is Nothing Then
+                               If s IsNot Nothing Then
                                    s.Flush()
                                    s.Close()
                                    s.Dispose()
                                End If
                            End Sub)
         register_base_type(Sub(ByVal s As WaitHandle)
-                               If Not s Is Nothing Then
+                               If s IsNot Nothing Then
                                    s.Close()
                                    s.Dispose()
                                End If
                            End Sub)
         register_base_type(Sub(ByVal s As TcpClient)
-                               If Not s Is Nothing Then
+                               If s IsNot Nothing Then
                                    s.Close()
                                End If
                            End Sub)
         register_base_type(Sub(ByVal s As UdpClient)
-                               If Not s Is Nothing Then
+                               If s IsNot Nothing Then
                                    s.Close()
                                End If
                            End Sub)
         register_base_type(Sub(ByVal s As Socket)
-                               If Not s Is Nothing Then
+                               If s IsNot Nothing Then
                                    s.Close()
                                    s.Dispose()
                                End If
@@ -122,10 +122,10 @@ Public NotInheritable Class disposable(Of T)
         If type_info(Of T).is_object Then
             raise_error(error_type.performance, "disposable(Of Object) is definitely a performance destroyer.")
             Return Sub(ByVal i As T)
-                       If Not i Is Nothing Then
+                       If i IsNot Nothing Then
                            Dim a As Action(Of T) = Nothing
                            If disposable.find(i.GetType(), a) Then
-                               assert(Not a Is Nothing)
+                               assert(a IsNot Nothing)
                                a(i)
                            End If
                        End If
@@ -149,7 +149,7 @@ Public NotInheritable Class disposable(Of T)
     Public Shared Sub dispose(ByVal v As T)
         Dim a As Action(Of T) = Nothing
         a = D()
-        If Not a Is Nothing Then
+        If a IsNot Nothing Then
             a(v)
         End If
     End Sub

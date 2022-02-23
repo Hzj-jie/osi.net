@@ -16,7 +16,7 @@ Public Class multiton_invoke(Of T, PARA_T)
     Inherits __do(Of multiton(Of T, PARA_T), T, Boolean)
 
     Public Overrides Function at(ByRef i As multiton(Of T, PARA_T), ByRef j As T) As Boolean
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Return i.allocate(j)
     End Function
 End Class
@@ -33,7 +33,7 @@ Public Class multiton(Of T, PARA_T)
     Private ReadOnly parameter As PARA_T
 
     Public Sub New(ByVal alloc As allocator(Of T, PARA_T), ByVal parameter As PARA_T)
-        assert(Not alloc Is Nothing)
+        assert(alloc IsNot Nothing)
         Me.alloc = alloc
         Me.parameter = parameter
     End Sub

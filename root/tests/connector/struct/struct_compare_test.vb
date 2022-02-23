@@ -46,7 +46,7 @@ Public NotInheritable Class struct_compare_test
         End Function
 
         Public Function compare_to(ByVal r As c) As Int32
-            assert(Not r Is Nothing)
+            assert(r IsNot Nothing)
             Dim c As Int32 = 0
             c = compare(a, r.a)
             If c <> 0 Then

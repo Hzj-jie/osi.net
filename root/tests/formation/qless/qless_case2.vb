@@ -25,7 +25,7 @@ Friend Class qless_case2
     End Sub
 
     Private Sub push_thread(ByVal finished As ref(Of singleentry))
-        assert(Not finished Is Nothing)
+        assert(finished IsNot Nothing)
         For i As Int64 = -max To max
 #If False Then
             If Not q.push(i) Then
@@ -42,7 +42,7 @@ Friend Class qless_case2
     End Sub
 
     Private Sub pop_thread(ByVal finished As ref(Of singleentry))
-        assert(Not finished Is Nothing)
+        assert(finished IsNot Nothing)
         While Not finished.in_use()
             If Not q.pop(Nothing) Then
                 sleep(rnd_int(-1, 2))

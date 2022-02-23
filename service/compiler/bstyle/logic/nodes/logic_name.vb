@@ -13,7 +13,7 @@ Imports osi.service.compiler.logic
 Partial Public NotInheritable Class bstyle
     Public NotInheritable Class logic_name
         Public Shared Function temp_variable(ByVal n As typed_node) As String
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
             Return strcat("temp_value_@",
                           code_builder.current().nested_build_level(),
                           "@",
@@ -25,11 +25,11 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function of_function(Of T As builders.parameter_type) _
                                           (ByVal raw_name As String,
                                            ByVal ParamArray params() As T) As String
-            assert(Not params Is Nothing)
+            assert(params IsNot Nothing)
             Return build(raw_name,
                          streams.of(params).
                                  map(Function(ByVal i As T) As String
-                                         assert(Not i Is Nothing)
+                                         assert(i IsNot Nothing)
                                          Return i.type
                                      End Function).
                                  collect_to(Of vector(Of String))())
@@ -77,7 +77,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Private Shared Function build(ByVal raw_name As String, ByVal types As vector(Of String)) As String
-            assert(Not types Is Nothing)
+            assert(types IsNot Nothing)
             Dim s As New StringBuilder(raw_name)
             Dim i As UInt32 = 0
             Dim ta As scope.type_alias_proxy = scope.current().type_alias()

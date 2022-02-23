@@ -23,7 +23,7 @@ Namespace logic
         End Sub
 
         Protected Sub New(ByVal es As Func(Of instruction_gen()))
-            assert(Not es Is Nothing)
+            assert(es IsNot Nothing)
             Me.es = es
         End Sub
 

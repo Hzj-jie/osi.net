@@ -8,7 +8,7 @@ Public NotInheritable Class ##TYPE##_synchronize_invoke
     Private ReadOnly r As ##TYPE##
 
     Public Sub New(ByVal r As ##TYPE##)
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         Me.r = r
     End Sub
 

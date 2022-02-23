@@ -26,7 +26,7 @@ Partial Public NotInheritable Class typed_node
                    ByVal type_name As String,
                    ByVal word_start As UInt32,
                    ByVal word_end As UInt32)
-        assert(Not ref Is Nothing)
+        assert(ref IsNot Nothing)
         assert(word_start <= word_end)  ' start == end means empty-matching
         assert(word_end <= ref.size())
         assert(Not type_name.null_or_whitespace())
@@ -44,24 +44,24 @@ Partial Public NotInheritable Class typed_node
     End Sub
 
     Public Shared Function of_root(ByVal ref As vector(Of typed_word)) As typed_node
-        assert(Not ref Is Nothing)
+        assert(ref IsNot Nothing)
         Return New typed_node(ref, root_type, root_type_name, uint32_0, ref.size())
     End Function
 
     Public Sub attach_to(ByVal parent As typed_node)
-        assert(Not parent Is Nothing)
+        assert(parent IsNot Nothing)
         assert(Me.parent Is Nothing)
         Me.parent = parent
         parent.subnodes.emplace_back(Me)
     End Sub
 
     Public Sub attach(ByVal nodes As vector(Of typed_node))
-        assert(Not nodes Is Nothing)
+        assert(nodes IsNot Nothing)
         If nodes.empty() Then
             Return
         End If
         For i As UInt32 = 0 To nodes.size() - uint32_1
-            assert(Not nodes(i) Is Nothing)
+            assert(nodes(i) IsNot Nothing)
             nodes(i).attach_to(Me)
         Next
     End Sub
@@ -71,7 +71,7 @@ Partial Public NotInheritable Class typed_node
     End Function
 
     Public Function child_index(ByVal c As typed_node) As UInt32
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         assert(object_compare(Me, c.parent) = 0)
         assert(Not subnodes.empty())
         For i As UInt32 = 0 To subnodes.size() - uint32_1
@@ -94,7 +94,7 @@ Partial Public NotInheritable Class typed_node
     End Function
 
     Public Shared Function child(ByVal n As typed_node) As typed_node
-        assert(Not n Is Nothing)
+        assert(n IsNot Nothing)
         Return n.child()
     End Function
 
@@ -190,7 +190,7 @@ Partial Public NotInheritable Class typed_node
                 Return False
             End If
             n = n.parent
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
             If n.type_name.Equals(names(i)) Then
                 i += 1
                 If i = names.Length() Then

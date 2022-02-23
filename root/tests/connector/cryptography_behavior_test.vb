@@ -23,7 +23,7 @@ Public Class cryptography_behavior_test
         Private o()() As Byte = Nothing
 
         Private Sub New(ByVal h As HashAlgorithm, ByVal size As UInt32, ByVal thread_count As UInt32)
-            assert(Not h Is Nothing)
+            assert(h IsNot Nothing)
             assert(size > uint32_0)
             assert(thread_count > uint32_1)
             Me.h = h
@@ -96,7 +96,7 @@ Public Class cryptography_behavior_test
         Private ReadOnly f As Func(Of HashAlgorithm)
 
         Private Sub New(ByVal f As Func(Of HashAlgorithm))
-            assert(Not f Is Nothing)
+            assert(f IsNot Nothing)
             Me.f = f
         End Sub
 
@@ -130,7 +130,7 @@ Public Class cryptography_behavior_test
         Private r() As Byte
 
         Private Sub New(ByVal h As HashAlgorithm)
-            assert(Not h Is Nothing)
+            assert(h IsNot Nothing)
             Me.h = h
         End Sub
 
@@ -185,7 +185,7 @@ Public Class cryptography_behavior_test
         Private r() As Byte
 
         Private Sub New(ByVal h As KeyedHashAlgorithm)
-            assert(Not h Is Nothing)
+            assert(h IsNot Nothing)
             Me.h = h
         End Sub
 

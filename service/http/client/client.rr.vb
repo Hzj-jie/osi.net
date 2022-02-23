@@ -44,7 +44,7 @@ Public Module _client_rr
     End Sub
 
     <Extension()> Public Sub close(ByVal this As ref(Of HttpWebResponse))
-        If Not (+this) Is Nothing Then
+        If (+this) IsNot Nothing Then
             this.get().Close()
         End If
     End Sub
@@ -320,7 +320,7 @@ Public Module _client_rr
                                                RegularExpressions.RegexOptions.IgnoreCase Or
                                                RegularExpressions.RegexOptions.Multiline)
         Return match.Success() AndAlso
-               Not match.Groups() Is Nothing AndAlso
+               match.Groups() IsNot Nothing AndAlso
                match.Groups().Count() = 2 AndAlso
                match.Groups()(1).Success() AndAlso
                try_get_encoding(match.Groups()(1).Value(), o)
@@ -335,7 +335,7 @@ Public Module _client_rr
                                                RegularExpressions.RegexOptions.IgnoreCase Or
                                                RegularExpressions.RegexOptions.Multiline)
         Return match.Success() AndAlso
-               Not match.Groups() Is Nothing AndAlso
+               match.Groups() IsNot Nothing AndAlso
                match.Groups().Count() = 2 AndAlso
                match.Groups()(1).Success() AndAlso
                try_get_encoding(match.Groups()(1).Value(), o)

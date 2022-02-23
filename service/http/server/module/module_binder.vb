@@ -27,7 +27,7 @@ Partial Public NotInheritable Class module_binder
                               function_name,
                               AddressOf delegate_module.[New],
                               AddressOf pre_or_post_alloc_bind)
-            If Not m Is Nothing Then
+            If m IsNot Nothing Then
                 Return m
             End If
 
@@ -38,7 +38,7 @@ Partial Public NotInheritable Class module_binder
                               function_name,
                               AddressOf delegate_procedure_module.[New],
                               AddressOf pre_or_post_alloc_bind)
-            If Not m Is Nothing Then
+            If m IsNot Nothing Then
                 Return m
             End If
 
@@ -49,7 +49,7 @@ Partial Public NotInheritable Class module_binder
                               function_name,
                               AddressOf delegate_filtered_module.[New],
                               AddressOf pre_or_post_alloc_bind)
-            If Not m Is Nothing Then
+            If m IsNot Nothing Then
                 Return m
             End If
 
@@ -60,7 +60,7 @@ Partial Public NotInheritable Class module_binder
                               function_name,
                               AddressOf delegate_filtered_procedure_module.[New],
                               AddressOf pre_or_post_alloc_bind)
-            If Not m Is Nothing Then
+            If m IsNot Nothing Then
                 Return m
             End If
         End Using
@@ -76,8 +76,8 @@ Partial Public NotInheritable Class module_binder
              ByVal create As Func(Of context_filter, delegate_type, module_handle.module),
              ByVal pre_or_post_alloc_bind As _do_val_ref(Of invoker(Of delegate_type), delegate_type, Boolean)) _
             As module_handle.named_module
-        assert(Not create Is Nothing)
-        assert(Not pre_or_post_alloc_bind Is Nothing)
+        assert(create IsNot Nothing)
+        assert(pre_or_post_alloc_bind IsNot Nothing)
 
         Dim invoker As invoker(Of delegate_type) = Nothing
         If Not typeless_invoker.of(invoker).

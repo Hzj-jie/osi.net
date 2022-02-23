@@ -47,7 +47,7 @@ Public Class constructor_wrapper_test
         If assertion.is_not_null(o) Then
             Dim w As wrap = Nothing
             If assertion.is_true(cast(Of wrap)(o, w)) Then
-                assert(Not w Is Nothing)
+                assert(w IsNot Nothing)
                 assertion.is_not_null(w.x)
                 assertion.is_true(TypeOf w.x Is impl)
             End If

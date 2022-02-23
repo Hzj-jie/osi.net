@@ -143,7 +143,7 @@ Partial Public Class bt(OF T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal m As bt(Of T))
-            assert(Not m Is Nothing)
+            assert(m IsNot Nothing)
             it = m.begin()
         End Sub
 
@@ -174,7 +174,7 @@ Partial Public Class bt(OF T)
             Dim n As node = Nothing
             n = p
             For i As UInt32 = 0 To that - uint32_1
-                assert(Not n Is Nothing)
+                assert(n IsNot Nothing)
                 If n.has_right_child() Then
                     n = n.right_child().min()
                 ElseIf n.is_left_subtree() Then
@@ -191,7 +191,7 @@ Partial Public Class bt(OF T)
                     End If
                 End If
             Next
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
             Return New iterator(n)
         End Function
 
@@ -200,7 +200,7 @@ Partial Public Class bt(OF T)
             Dim n As node = Nothing
             n = p
             For i As UInt32 = 0 To that - uint32_1
-                assert(Not n Is Nothing)
+                assert(n IsNot Nothing)
                 If n.has_left_child() Then
                     n = n.left_child().max()
                 ElseIf n.is_right_subtree() Then
@@ -217,7 +217,7 @@ Partial Public Class bt(OF T)
                     End If
                 End If
             Next
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
             Return New iterator(n)
         End Function
 

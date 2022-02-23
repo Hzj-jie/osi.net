@@ -54,7 +54,7 @@ Public Class block_piece_dev_adapter
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
-                                         Not (+p) Is Nothing AndAlso
+                                         (+p) IsNot Nothing AndAlso
                                          eva(o, New piece(+p)) AndAlso
                                          goto_end()
                               End Function)

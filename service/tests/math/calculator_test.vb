@@ -12,10 +12,10 @@ Public Class calculator_test
                                       ByVal cases() As pair(Of String(), String),
                                       ByVal has_error As Boolean,
                                       ByVal has_result As Boolean) As Boolean
-        assert(Not e Is Nothing)
+        assert(e IsNot Nothing)
         assert(Not isemptyarray(cases))
         For i As Int32 = 0 To array_size(cases) - 1
-            assert(Not cases(i) Is Nothing)
+            assert(cases(i) IsNot Nothing)
             Dim r As expression_result(Of Int32) = Nothing
             r = e.execute(cases(i).first)
             assertion.equal(r.has_error(), has_error, strcat(cases(i).first))
@@ -29,7 +29,7 @@ Public Class calculator_test
                                       ByVal cases(,) As String,
                                       ByVal has_error As Boolean,
                                       ByVal has_result As Boolean) As Boolean
-        assert(Not e Is Nothing)
+        assert(e IsNot Nothing)
         assert(Not isemptyarray(cases))
         For i As Int32 = 0 To array_size(cases) - 1
             Dim r As expression_result(Of Int32) = Nothing

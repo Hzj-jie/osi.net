@@ -97,7 +97,7 @@ Friend NotInheritable Class map_map_cache(Of KEY_T As IComparable(Of KEY_T), VAL
                                                    old_key = k
                                                End If
                                            End Sub))
-            assert(Not old_key Is Nothing)
+            assert(old_key IsNot Nothing)
             assert([erase](old_key))
             assert(size() = max_size)
         End If

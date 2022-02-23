@@ -45,7 +45,7 @@ Public NotInheritable Class dispatcher
                              ByVal act As Func(Of command, command, event_comb),
                              Optional ByVal replace As Boolean = False) As Boolean
         Return Not isemptyarray(action) AndAlso
-               Not act Is Nothing AndAlso
+               act IsNot Nothing AndAlso
                l.writer_locked(Function() As Boolean
                                    Dim ap As array_ref(Of Byte) = Nothing
                                    ap = array_ref.of(action)
@@ -84,7 +84,7 @@ Public NotInheritable Class dispatcher
                                                          End Function) Then
                                       Return False
                                   End If
-                                  assert(Not a Is Nothing)
+                                  assert(a IsNot Nothing)
                                   ec = a(i, o)
                                   Return waitfor(ec) AndAlso
                                              goto_next()

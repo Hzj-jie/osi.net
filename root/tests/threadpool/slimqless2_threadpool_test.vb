@@ -66,7 +66,7 @@ Public NotInheritable Class slimqless2_threadpool_test
     Public Overrides Function prepare() As Boolean
         If MyBase.prepare() Then
             t = New slimqless2_threadpool()
-            assert(Not t Is Nothing)
+            assert(t IsNot Nothing)
             inserted.set(0)
             executed.set(0)
             Return True

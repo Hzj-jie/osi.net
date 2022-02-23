@@ -43,7 +43,7 @@ Public Module _create
     End Function
 
     Public Function create(ByVal parameters As var, ByRef o As zipper) As Boolean
-        Return Not parameters Is Nothing AndAlso
+        Return parameters IsNot Nothing AndAlso
                Not parameters.other_values().empty() AndAlso
                create(parameters.other_values()(0), parameters, o)
     End Function

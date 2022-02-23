@@ -28,7 +28,7 @@ Partial Public NotInheritable Class b2style
                               n.child(0).child(2),
                               n.child(0).child(3)).
                            map(Function(ByVal x As typed_node) As String
-                                   assert(Not x Is Nothing)
+                                   assert(x IsNot Nothing)
                                    Return x.input_without_ignored()
                                End Function).
                            collect_by(stream(Of String).collectors.to_str("")).
@@ -46,7 +46,7 @@ Partial Public NotInheritable Class b2style
 
         Public Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
                 Implements code_gen(Of typed_node_writer).build
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             o.append(bstyle_format(n))
             Return True
         End Function

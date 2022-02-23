@@ -14,7 +14,7 @@ Public Class container(Of T)
                     ByVal dev As idevice(Of T),
                     ByVal d As T)
         assert((d Is Nothing) Xor (dev Is Nothing))
-        assert(pool Is Nothing OrElse Not dev Is Nothing)
+        assert(pool Is Nothing OrElse dev IsNot Nothing)
         Me.pool = pool
         Me.dev = dev
         If d Is Nothing Then
@@ -63,7 +63,7 @@ Public Class container(Of T)
     End Function
 
     Protected Overrides Sub disposer()
-        If Not pool Is Nothing Then
+        If pool IsNot Nothing Then
             pool.release(dev)
         End If
     End Sub

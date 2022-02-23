@@ -15,7 +15,7 @@ Partial Public NotInheritable Class rlexer
     Public Sub New(ByVal rs As vector(Of regex),
                    ByVal type_choice As match_choice,
                    ByVal word_choice As match_choice)
-        assert(Not rs Is Nothing)
+        assert(rs IsNot Nothing)
         assert(rs.find(Nothing) = npos)
         Me.rs = rs
         Me.type_choice = type_choice
@@ -40,9 +40,9 @@ Partial Public NotInheritable Class rlexer
         r = New rule()
         Dim e As rule.exporter = Nothing
         If r.parse(rule_file) AndAlso r.export(e) Then
-            assert(Not e Is Nothing)
+            assert(e IsNot Nothing)
             o = e.rlexer
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Return True
         End If
         Return False

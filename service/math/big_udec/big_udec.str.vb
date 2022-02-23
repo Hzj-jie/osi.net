@@ -22,7 +22,7 @@ Partial Public NotInheritable Class big_udec
         Private upure_len As UInt32
 
         Public Sub New(ByVal this As big_udec)
-            assert(Not this Is Nothing)
+            assert(this IsNot Nothing)
             Me.this = this
         End Sub
 
@@ -177,8 +177,8 @@ Partial Public NotInheritable Class big_udec
                 Return False
             End If
         End If
-        assert(Not n Is Nothing)
-        assert(Not d Is Nothing)
+        assert(n IsNot Nothing)
+        assert(d IsNot Nothing)
         If d.is_zero() Then
             Return False
         End If

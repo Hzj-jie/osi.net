@@ -13,7 +13,7 @@ Namespace logic
         Private ReadOnly p As paragraph
 
         Public Sub New(ByVal p As paragraph)
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             Me.p = p
         End Sub
 

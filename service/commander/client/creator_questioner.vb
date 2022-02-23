@@ -25,16 +25,16 @@ Public Class creator_questioner(Of _ENABLE_AUTO_PING As _boolean)
 
     Public Sub New(ByVal h As Func(Of herald), ByVal timeout_ms As Int64)
         MyBase.New(timeout_ms)
-        assert(Not h Is Nothing)
+        assert(h IsNot Nothing)
         Me.h = h
     End Sub
 
     Public Sub New(ByVal d As Func(Of idevice(Of herald)), ByVal timeout_ms As Int64)
         Me.New(Function() As herald
-                   assert(Not d Is Nothing)
+                   assert(d IsNot Nothing)
                    Dim v As idevice(Of herald) = Nothing
                    v = d()
-                   assert(Not v Is Nothing)
+                   assert(v IsNot Nothing)
                    Return v.get()
                End Function,
                timeout_ms)

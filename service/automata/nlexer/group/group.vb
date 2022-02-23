@@ -14,8 +14,8 @@ Partial Public NotInheritable Class nlexer
         Private ReadOnly u As matcher
 
         Public Sub New(ByVal m As matcher, ByVal u As matcher)
-            assert(Not m Is Nothing)
-            assert(Not u Is Nothing)
+            assert(m IsNot Nothing)
+            assert(u IsNot Nothing)
             Me.m = m
             Me.u = u
         End Sub

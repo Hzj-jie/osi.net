@@ -13,7 +13,7 @@ Friend Class isynckeyvalue_ikeyvalue
     Private ReadOnly i As isynckeyvalue
 
     Public Sub New(ByVal i As isynckeyvalue)
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Me.i = i
     End Sub
 

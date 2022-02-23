@@ -7,8 +7,8 @@ Public Module _tcpclient
     <Extension()> Public Function connect(ByVal client As TcpClient,
                                           ByVal remote_endpoint As IPEndPoint) As event_comb
         Return create(Function() As Boolean
-                          Return Not client Is Nothing AndAlso
-                                 Not remote_endpoint Is Nothing AndAlso
+                          Return client IsNot Nothing AndAlso
+                                 remote_endpoint IsNot Nothing AndAlso
                                  Not client.Connected()
                       End Function,
                       Function() As event_comb

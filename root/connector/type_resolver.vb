@@ -48,7 +48,7 @@ Public NotInheritable Class type_resolver(Of T)
     End Function
 
     Public Function from_types(ByVal types As ICollection(Of Type), ByRef o As T) As Boolean
-        assert(Not types Is Nothing)
+        assert(types IsNot Nothing)
         If types.Count() = 0 Then
             Return False
         End If
@@ -63,7 +63,7 @@ Public NotInheritable Class type_resolver(Of T)
     Public Function from_type_or_base(ByVal type As Type, ByRef o As T) As Boolean
         Dim types As List(Of Type) = Nothing
         types = New List(Of Type)()
-        While Not type Is Nothing
+        While type IsNot Nothing
             types.Add(type)
             type = type.BaseType()
         End While

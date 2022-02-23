@@ -40,8 +40,8 @@ Partial Public NotInheritable Class nlexer
                                            ByVal v As vector(Of result),
                                            ByVal c As syntax_collection) As vector(Of typed_word)
             assert(Not str.null_or_empty())
-            assert(Not v Is Nothing)
-            assert(Not c Is Nothing)
+            assert(v IsNot Nothing)
+            assert(c IsNot Nothing)
             Return v.stream().
                      map(Function(ByVal r As result) As typed_word
                              Return New typed_word(str, r.start, r.end, r.rule_index, c.type_name(r.rule_index))
@@ -73,7 +73,7 @@ Partial Public NotInheritable Class nlexer
 
         Public Shared Function [of](ByVal raw As String, ByVal v As vector(Of result)) As vector(Of str_result)
             assert(Not raw.null_or_empty())
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
             Return v.stream().
                      map(Function(ByVal r As result) As str_result
                              assert(r.end <= strlen(raw))

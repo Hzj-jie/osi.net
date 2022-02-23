@@ -13,7 +13,7 @@ Imports osi.service.argument
 Public NotInheritable Class constructor
     Private Shared Function convert(Of T)(ByVal f As _do_val_ref(Of var, T, Boolean)) _
                                          As Func(Of var, ref(Of T), event_comb)
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return Function(ByVal v As var, ByVal o As ref(Of T)) As event_comb
                    Return sync_async(Function() As Boolean
                                          Dim r As T = Nothing
@@ -24,7 +24,7 @@ Public NotInheritable Class constructor
     End Function
 
     Private Shared Function convert(Of T)(ByVal f As Func(Of var, T)) As Func(Of var, ref(Of T), event_comb)
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return Function(ByVal v As var, ByVal o As ref(Of T)) As event_comb
                    Return sync_async(Sub()
                                          eva(o, f(v))

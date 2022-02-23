@@ -23,7 +23,7 @@ Public Module _event_wait_handle
     End Function
 
     <Extension()> Public Function force_set(ByVal i As EventWaitHandle) As Boolean
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Try
             assert(i.Set())
             Return True
@@ -50,7 +50,7 @@ Public Module _event_wait_handle
     End Function
 
     <Extension()> Public Function force_reset(ByVal i As EventWaitHandle) As Boolean
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Try
             assert(i.Reset())
             Return True
@@ -63,7 +63,7 @@ Public Module _event_wait_handle
     End Function
 
     <Extension()> Public Function wait(ByVal i As WaitHandle, ByVal ms As Int64) As Boolean
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Try
             If ms < 0 OrElse ms > max_int32 Then
                 Return assert(i.WaitOne())
@@ -82,7 +82,7 @@ Public Module _event_wait_handle
     End Function
 
     <Extension()> Public Sub wait_close(ByVal i As WaitHandle)
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         assert(wait(i))
         i.Close()
     End Sub

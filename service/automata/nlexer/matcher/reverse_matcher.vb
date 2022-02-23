@@ -13,7 +13,7 @@ Partial Public NotInheritable Class nlexer
         Private ReadOnly m As matcher
 
         Public Sub New(ByVal m As matcher)
-            assert(Not m Is Nothing)
+            assert(m IsNot Nothing)
             Me.m = m
         End Sub
 

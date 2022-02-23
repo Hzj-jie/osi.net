@@ -52,7 +52,7 @@ Partial Public NotInheritable Class client
         Friend Shared Function from(ByVal this As response, ByVal o As HttpWebResponse) As Boolean
             If o Is Nothing Then
                 Return False
-            ElseIf Not this Is Nothing Then
+            ElseIf this IsNot Nothing Then
                 this._headers = o.Headers()
                 'for mono
                 Try
@@ -74,8 +74,8 @@ Partial Public NotInheritable Class client
         End Function
 
         Friend Shared Function from(ByVal this As response, ByVal that As response) As Boolean
-            assert(Not that Is Nothing)
-            If Not this Is Nothing Then
+            assert(that IsNot Nothing)
+            If this IsNot Nothing Then
                 this._headers = that.headers()
                 this._mutually_authenticated = that.mutually_authenticated()
                 this._from_cache = that.from_cache()
@@ -124,7 +124,7 @@ Partial Public NotInheritable Class client
                                               Dim it As map(Of String, vector(Of String)).iterator = Nothing
                                               it = request_headers.begin()
                                               While it <> request_headers.end()
-                                                  If Not (+it).second Is Nothing AndAlso Not (+it).second.empty() Then
+                                                  If (+it).second IsNot Nothing AndAlso Not (+it).second.empty() Then
                                                       For i As UInt32 = 0 To CUInt((+it).second.size() - 1)
                                                           r.Headers().unsafe_add_header((+it).first,
                                                                                         (+it).second(i))
@@ -133,7 +133,7 @@ Partial Public NotInheritable Class client
                                                   it += 1
                                               End While
                                           End If
-                                          If Not request_body Is Nothing Then
+                                          If request_body IsNot Nothing Then
                                               If request_length = undefined_content_length Then
                                                   ec = r.write_request_body(request_body,
                                                                             request_comm,
@@ -158,7 +158,7 @@ Partial Public NotInheritable Class client
                                   End If
                               End Function,
                               Function() As Boolean
-                                  assert(Not r Is Nothing)
+                                  assert(r IsNot Nothing)
                                   If ec.end_result_or_null() Then
                                       ec = r.get_response(response)
                                       Return waitfor(ec, response_comm.timeout_ms) AndAlso
@@ -172,7 +172,7 @@ Partial Public NotInheritable Class client
                                   If ec.end_result() Then
                                       Return goto_end()
                                   Else
-                                      assert(Not r Is Nothing)
+                                      assert(r IsNot Nothing)
                                       r.Abort()
                                       Return False
                                   End If

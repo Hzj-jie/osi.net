@@ -57,7 +57,7 @@ Partial Public NotInheritable Class percentile
                                             ByVal percentile As Double,
                                             ByVal cmp As Func(Of P, P, Int32)) _
                                As Func(Of tuple(Of T, P), Boolean)
-        assert(Not cmp Is Nothing)
+        assert(cmp IsNot Nothing)
         If percentile = 0 Then
             Return Function(ByVal i As tuple(Of T, P)) As Boolean
                        Return False

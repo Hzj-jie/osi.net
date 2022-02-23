@@ -17,7 +17,7 @@ Partial Public Class callback_action
 
     Private Shared Function _step_sub_check(ByVal step_check_pass_action As _do(Of Int32, ternary),
                                             ByVal ParamArray d() As Func(Of ternary)) As Func(Of ternary)
-        assert(Not step_check_pass_action Is Nothing)
+        assert(step_check_pass_action IsNot Nothing)
         If d Is Nothing OrElse d.Length() = 0 Then
             Return todo(step_check_pass)
         Else
@@ -190,7 +190,7 @@ Partial Public Class callback_action
 
     Private Shared Function _step_check(ByVal step_check_pass_action As _do(Of Int32, Boolean),
                                         ByVal ParamArray d() As Func(Of ternary)) As Func(Of Boolean)
-        assert(Not step_check_pass_action Is Nothing)
+        assert(step_check_pass_action IsNot Nothing)
         If d Is Nothing OrElse d.Length() = 0 Then
             Return todo(check_pass)
         End If
