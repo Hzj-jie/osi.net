@@ -126,7 +126,7 @@ Public NotInheritable Class big_uint
                                   ByVal result As big_uint)
         Dim i As UInt64 = 0
         i = remainder.bit_count() - that.bit_count()
-        If Not result Is Nothing Then
+        If result IsNot Nothing Then
             result.set_bit_count(remainder.bit_count() - that.bit_count() + uint64_1)
         End If
         that = that.CloneT()
@@ -135,7 +135,7 @@ Public NotInheritable Class big_uint
             Dim cmp As Int32 = 0
             cmp = that.compare(remainder)
             If cmp = 0 Then
-                If Not result Is Nothing Then
+                If result IsNot Nothing Then
                     result.setrbit(i, True)
                 End If
                 remainder.set_zero()
@@ -143,7 +143,7 @@ Public NotInheritable Class big_uint
                 Exit While
             End If
             If cmp < 0 Then
-                If Not result Is Nothing Then
+                If result IsNot Nothing Then
                     result.setrbit(i, True)
                 End If
                 remainder.assert_sub(that)
@@ -178,7 +178,7 @@ Public NotInheritable Class big_uint
                                    ByVal result As big_uint)
         Dim i As UInt32 = 0
         i = remainder.uint32_size() - that.uint32_size()
-        If Not result Is Nothing Then
+        If result IsNot Nothing Then
             result.v.resize(i + uint32_1)
         End If
         While True
@@ -197,7 +197,7 @@ Public NotInheritable Class big_uint
                     cmp = compare(remainder, that, i)
                     If cmp >= 0 Then
                         remainder.assert_sub(that, i)
-                        If Not result Is Nothing Then
+                        If result IsNot Nothing Then
                             result.recursive_add(uint32_1, i)
                         End If
                         If cmp = 0 Then
@@ -213,7 +213,7 @@ Public NotInheritable Class big_uint
 #Else
                 t32 = CUInt(n)
 #End If
-                If Not result Is Nothing Then
+                If result IsNot Nothing Then
                     result.recursive_add(t32, i)
                 End If
                 remainder.assert_sub(that * t32, i)

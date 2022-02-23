@@ -10,11 +10,11 @@ Imports osi.root.constants
 Friend Module _caster_registry
     Sub New()
         caster.register(Function(ByVal i As String) As StringBuilder
-                            assert(Not i Is Nothing)
+                            assert(i IsNot Nothing)
                             Return New StringBuilder(i)
                         End Function)
         caster.register(Function(ByVal i As StringBuilder) As String
-                            assert(Not i Is Nothing)
+                            assert(i IsNot Nothing)
                             Return Convert.ToString(i)
                         End Function)
     End Sub

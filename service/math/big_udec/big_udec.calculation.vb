@@ -44,9 +44,9 @@ Partial Public NotInheritable Class big_udec
 
     ' Replace by (x - y) / d
     Private Sub [sub](ByVal x As big_uint, ByVal y As big_uint, ByVal d As big_uint, ByRef overflow As Boolean)
-        assert(Not x Is Nothing)
-        assert(Not y Is Nothing)
-        assert(Not d Is Nothing)
+        assert(x IsNot Nothing)
+        assert(y IsNot Nothing)
+        assert(d IsNot Nothing)
         overflow = False
         If y.is_zero() Then
             assert(replace_by(x, d))

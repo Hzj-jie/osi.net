@@ -31,8 +31,8 @@ Partial Public Class bt(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Sub move_to(ByVal from As bt(Of T), ByVal [to] As bt(Of T))
 #If Not Performance Then
-        assert(Not from Is Nothing)
-        assert(Not [to] Is Nothing)
+        assert(from IsNot Nothing)
+        assert([to] IsNot Nothing)
 #End If
         [to].root = from.root
         from.root = Nothing
@@ -50,8 +50,8 @@ Partial Public Class bt(Of T)
     'make sure the tree from root <r> is not a graph
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub assert_structure(ByVal r As node, ByVal v As vector(Of node))
-        assert(Not r Is Nothing)
-        assert(Not v Is Nothing)
+        assert(r IsNot Nothing)
+        assert(v IsNot Nothing)
         For i As UInt32 = 0 To v.size() - uint32_1
             assert(object_compare(v(i), r) <> 0)
         Next
@@ -66,7 +66,7 @@ Partial Public Class bt(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Sub assert_structure(ByVal r As node)
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         assert_structure(r, New vector(Of node)())
     End Sub
 
@@ -112,7 +112,7 @@ Partial Public Class bt(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub preorder_traversal(ByVal s As StringBuilder)
-        If Not root Is Nothing Then
+        If root IsNot Nothing Then
             root.preorder_traversal(s)
         End If
     End Sub
@@ -127,7 +127,7 @@ Partial Public Class bt(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub inorder_traversal(ByVal s As StringBuilder)
-        If Not root Is Nothing Then
+        If root IsNot Nothing Then
             root.inorder_traversal(s)
         End If
     End Sub
@@ -142,7 +142,7 @@ Partial Public Class bt(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub postorder_traversal(ByVal s As StringBuilder)
-        If Not root Is Nothing Then
+        If root IsNot Nothing Then
             root.postorder_traversal(s)
         End If
     End Sub
@@ -161,17 +161,17 @@ Partial Public Class bt(Of T)
                                       ByVal size As Func(Of BTT, UInt32),
                                       ByVal cmp As Func(Of T, T, Int32)) As Int32
 #If Not Performance Then
-        assert(Not cmp Is Nothing)
+        assert(cmp IsNot Nothing)
 #End If
         Dim c As Int32 = object_compare(this, that)
         If c <> object_compare_undetermined Then
             Return c
         End If
 #If Not Performance Then
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
+        assert(this IsNot Nothing)
+        assert(that IsNot Nothing)
 #End If
-        If Not size Is Nothing Then
+        If size IsNot Nothing Then
             Dim l As UInt32 = 0
             Dim r As UInt32 = 0
             l = size(this)

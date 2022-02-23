@@ -38,7 +38,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Function functions() As function_t
             If is_root() Then
-                assert(Not f Is Nothing)
+                assert(f IsNot Nothing)
                 Return f
             End If
             assert(f Is Nothing)

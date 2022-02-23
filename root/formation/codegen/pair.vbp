@@ -85,7 +85,7 @@ Public NotInheritable Class ##FILENAME##(Of FT, ST)
                                        Return True
                                    End Function,
                                    Function(ByVal sr As StringReader, ByRef o As ##FILENAME##(Of FT, ST)) As Boolean
-                                       assert(Not sr Is Nothing)
+                                       assert(sr IsNot Nothing)
                                        Dim i As String = sr.ReadToEnd()
                                        Dim pos As Int32 = i.strindexof(":")
                                        If pos = npos Then
@@ -116,7 +116,7 @@ Public NotInheritable Class ##FILENAME##(Of FT, ST)
 
     Public Shared ReadOnly first_getter As Func(Of ##FILENAME##(Of FT, ST), FT) =
         Function(ByVal p As ##FILENAME##(Of FT, ST)) As FT
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             Return p.first
         End Function
 
@@ -130,7 +130,7 @@ Public NotInheritable Class ##FILENAME##(Of FT, ST)
 
     Public Shared ReadOnly second_getter As Func(Of ##FILENAME##(Of FT, ST), ST) =
         Function(ByVal p As ##FILENAME##(Of FT, ST)) As ST
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             Return p.second
         End Function
 
@@ -145,24 +145,24 @@ Public NotInheritable Class ##FILENAME##(Of FT, ST)
     Public Shared ReadOnly first_comparer As Func(Of ##FILENAME##(Of FT, ST), ##FILENAME##(Of FT, ST), Int32) =
         Function(ByVal l As ##FILENAME##(Of FT, ST),
                  ByVal r As ##FILENAME##(Of FT, ST)) As Int32
-            assert(Not l Is Nothing)
-            assert(Not r Is Nothing)
+            assert(l IsNot Nothing)
+            assert(r IsNot Nothing)
             Return compare(l.first, r.first)
         End Function
 
     Public Shared ReadOnly second_comparer As Func(Of ##FILENAME##(Of FT, ST), ##FILENAME##(Of FT, ST), Int32) =
         Function(ByVal l As ##FILENAME##(Of FT, ST),
                  ByVal r As ##FILENAME##(Of FT, ST)) As Int32
-            assert(Not l Is Nothing)
-            assert(Not r Is Nothing)
+            assert(l IsNot Nothing)
+            assert(r IsNot Nothing)
             Return compare(l.second, r.second)
         End Function
 
     Public Shared ReadOnly second_first_comparer As Func(Of ##FILENAME##(Of FT, ST), ##FILENAME##(Of FT, ST), Int32) =
         Function(ByVal l As ##FILENAME##(Of FT, ST),
                  ByVal r As ##FILENAME##(Of FT, ST)) As Int32
-            assert(Not l Is Nothing)
-            assert(Not r Is Nothing)
+            assert(l IsNot Nothing)
+            assert(r IsNot Nothing)
             Dim cmp As Int32 = 0
             cmp = compare(l.second, r.second)
             If cmp <> 0 Then

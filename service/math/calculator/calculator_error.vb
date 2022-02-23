@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 
 Public Module _calculator_error
     <Extension()> Public Function has_error(ByVal this As calculator_error) As Boolean
-        Return Not this Is Nothing AndAlso
+        Return this IsNot Nothing AndAlso
                (this.divide_by_zero OrElse
                 this.imaginary_number OrElse
                 this.overflow OrElse

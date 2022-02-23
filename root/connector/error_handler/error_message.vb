@@ -61,7 +61,7 @@ Public NotInheritable Class error_message
     End Function
 
     Public Shared Function p(ByVal m() As Object) As String
-        assert(Not m Is Nothing)
+        assert(m IsNot Nothing)
         ' shortcut
         If m.Length() = 1 AndAlso TypeOf m(0) Is String Then
             Return Convert.ToString(m(0))
@@ -98,7 +98,7 @@ Public NotInheritable Class error_message
         If Not direct_cast(i, a) Then
             Return False
         End If
-        assert(Not a Is Nothing)
+        assert(a IsNot Nothing)
         process_obj_array(a, s)
         Return True
     End Function
@@ -118,7 +118,7 @@ Public NotInheritable Class error_message
         If Not direct_cast(i, f) Then
             Return False
         End If
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         process_obj(f(), s)
         Return True
     End Function

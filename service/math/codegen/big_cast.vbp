@@ -21,7 +21,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As ##CLASS_NAME##) As Boolean
-        Return Not this Is Nothing AndAlso this.true()
+        Return this IsNot Nothing AndAlso this.true()
     End Operator
 
     Public Shared Operator Not(ByVal this As ##CLASS_NAME##) As Boolean

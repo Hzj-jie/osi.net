@@ -28,14 +28,14 @@ Public Class dispose_ptr(Of T)
     Public Sub New(ByVal p As Func(Of T),
                    Optional ByVal init As Action = Nothing,
                    Optional ByVal disposer As Action(Of T) = Nothing)
-        If Not init Is Nothing Then
+        If init IsNot Nothing Then
             init()
         End If
-        If Not p Is Nothing Then
+        If p IsNot Nothing Then
             [set](p())
         End If
         If disposer Is Nothing Then
-            assert(Not [default](Of T).disposer() Is Nothing)
+            assert([default](Of T).disposer() IsNot Nothing)
             Me._disposer = [default](Of T).disposer()
         Else
             Me._disposer = disposer
@@ -62,7 +62,7 @@ Public Class dispose_ptr(Of T)
         Else
             Me._disposer = disposer
         End If
-        assert(Not Me._disposer Is Nothing)
+        assert(Me._disposer IsNot Nothing)
     End Sub
 
     Public Sub New(Optional ByVal disposer As Action(Of T) = Nothing)

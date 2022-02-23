@@ -102,7 +102,7 @@ Public NotInheritable Class ##TYPE##_threadpool
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal this As ##TYPE##_threadpool, ByVal that As Action) As ##TYPE##_threadpool
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         this.push(that)
         Return this
     End Operator

@@ -76,7 +76,7 @@ Public Class connection_state
         Else
             o.renew()
             For i As Int32 = 0 To array_size(a) - 1
-                If Not a(i) Is Nothing Then
+                If a(i) IsNot Nothing Then
                     o(_socket.identity(a(i).LocalEndPoint(), a(i).RemoteEndPoint())) = a(i).State()
                 End If
             Next
@@ -177,6 +177,6 @@ Public Class connection_state
     End Function
 
     Public Shared Function valid() As Boolean
-        Return Not m Is Nothing
+        Return m IsNot Nothing
     End Function
 End Class

@@ -19,8 +19,8 @@ Friend NotInheritable Class config_streamreader_dataloader
     Public Sub New(ByVal c As characters,
                    ByVal fs As filter_selector,
                    ByVal static_variants As vector(Of pair(Of String, String)))
-        assert(Not c Is Nothing)
-        assert(Not fs Is Nothing)
+        assert(c IsNot Nothing)
+        assert(fs IsNot Nothing)
         Me.c = c
         Me.base_fs = fs
         Me.static_variants = static_variants
@@ -33,7 +33,7 @@ Friend NotInheritable Class config_streamreader_dataloader
         Public ignore_section As Boolean
 
         Public Sub New(ByVal fs As filter_selector)
-            assert(Not fs Is Nothing)
+            assert(fs IsNot Nothing)
             Me.fs = fs
             rc = New raw_config()
         End Sub
@@ -42,7 +42,7 @@ Friend NotInheritable Class config_streamreader_dataloader
     Private Function split_filter_value(ByVal f As String,
                                         ByVal r As vector(Of pair(Of String, String))) As Boolean
         assert(Not String.IsNullOrEmpty(f))
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         Dim v As String = Nothing
         If strsep(f, f, v, c.filter_key_value_separator, False) AndAlso
            Not String.IsNullOrEmpty(f) AndAlso
@@ -153,7 +153,7 @@ Friend NotInheritable Class config_streamreader_dataloader
         Else
             If static_filter.match(s.fs, sf, static_variants) Then
                 If s.rs Is Nothing Then
-                    If Not df Is Nothing Then
+                    If df IsNot Nothing Then
                         raise_error(error_type.warning,
                                     "dynamic filter does not work with filter selector configuration, ignore")
                         Return
@@ -167,8 +167,8 @@ Friend NotInheritable Class config_streamreader_dataloader
     End Sub
 
     Private Shared Sub inject_section(ByVal s As session)
-        assert(Not s Is Nothing)
-        If Not s.rs Is Nothing AndAlso Not s.rs.empty() Then
+        assert(s IsNot Nothing)
+        If s.rs IsNot Nothing AndAlso Not s.rs.empty() Then
             s.rc.insert(s.rs.name(), New section(s.fs, s.rs), s.rs.raw_filters())
         End If
     End Sub
@@ -176,7 +176,7 @@ Friend NotInheritable Class config_streamreader_dataloader
     Protected Overrides Function load(ByVal s As StreamReader, ByRef result As config) As Boolean
         Dim sec As session = New session(copy(base_fs))
         Dim l As String = s.ReadLine()
-        While Not l Is Nothing
+        While l IsNot Nothing
             l = l.Trim()
             load_line(l, sec)
             l = s.ReadLine()

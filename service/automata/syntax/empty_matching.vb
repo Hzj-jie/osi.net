@@ -16,7 +16,7 @@ Partial Public NotInheritable Class syntaxer
         End Sub
 
         Public Overrides Function match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As result
-            If Not v Is Nothing AndAlso v.size() > p Then
+            If v IsNot Nothing AndAlso v.size() > p Then
                 Return result.success(p)
             End If
             Return result.failure(p)

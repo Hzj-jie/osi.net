@@ -103,7 +103,7 @@ Partial Public Class powerpoint
             assert(False)
         End If
 
-        assert(Not closer Is Nothing)
+        assert(closer IsNot Nothing)
     End Sub
 
     Public Function local_defined() As Boolean
@@ -292,10 +292,10 @@ Partial Public Class powerpoint
                                            ByVal creator As idevice_creator(Of T),
                                            ByVal exporter As imanual_device_exporter(Of T)) As idevice_pool(Of T)
         If local_defined() AndAlso remote_defined() Then
-            assert(Not dev Is Nothing)
+            assert(dev IsNot Nothing)
             Return singleton_device_pool.[New](dev, identity)
         ElseIf local_defined() Then
-            assert(Not exporter Is Nothing)
+            assert(exporter IsNot Nothing)
             Return manual_pre_generated_device_pool.[New](exporter, max_connected, identity)
         ElseIf remote_defined() Then
             Return delay_generate_device_pool.[New](creator, max_connected, identity)

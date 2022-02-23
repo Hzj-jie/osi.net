@@ -36,7 +36,7 @@ Partial Public Class virtdisk
             If i Is Nothing Then
                 Return 0
             ElseIf i.is_fs Then
-                assert(Not i.di Is Nothing)
+                assert(i.di IsNot Nothing)
                 Return i.di.capacity()
             ElseIf i.is_ms Then
                 Return available_virtual_memory()

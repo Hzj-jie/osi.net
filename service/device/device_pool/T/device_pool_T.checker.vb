@@ -31,7 +31,7 @@ Partial Public Class device_pool(Of T)
 
     Public Function clear_checker() As Boolean
         Dim c As checker = Nothing
-        If atomic.clear_if_not_nothing(_checker, c) AndAlso assert(Not c Is Nothing) Then
+        If atomic.clear_if_not_nothing(_checker, c) AndAlso assert(c IsNot Nothing) Then
             c.stop()
             Return True
         Else
@@ -46,7 +46,7 @@ Partial Public Class device_pool(Of T)
         Private exp As singleentry
 
         Public Sub New(ByVal p As device_pool(Of T), ByVal interval_ms As Int64)
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             assert(interval_ms > 0)
             Me.p = p
             begin_lifetime_event_comb(expiration_controller.[New](AddressOf expired),

@@ -10,7 +10,7 @@ Imports osi.root.constants
 
 Public Module _memory_stream
     <Extension()> Public Sub assert_valid(ByVal this As MemoryStream)
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         assert(this.Length() >= 0, "Length of a MemoryStream instance is less than 0.")
         assert(this.Length() <= max_int32, "Length of a MemoryStream instance is over max_int32.")
         assert(this.Position() >= 0, "Position of a MemoryStream instance is less than 0.")
@@ -61,7 +61,7 @@ Public Module _memory_stream
                                             ByVal b() As Byte,
                                             ByVal offset As UInt32,
                                             ByVal count As UInt32) As Boolean
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         If b Is Nothing Then
             Return False
         End If
@@ -112,7 +112,7 @@ Public Module _memory_stream
     End Function
 
     <Extension()> Public Function write_byte(ByVal this As MemoryStream, ByVal b As Byte) As Boolean
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Try
             this.WriteByte(b)
             Return True
@@ -122,12 +122,12 @@ Public Module _memory_stream
     End Function
 
     <Extension()> Public Function eos(ByVal this As MemoryStream) As Boolean
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Return this.Position() = this.Length()
     End Function
 
     <Extension()> Public Function dump_to_file(ByVal this As MemoryStream, ByVal o As String) As Boolean
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         assert(Not memory_stream.is_wrapper(this))
         Try
             Using fs As New FileStream(o, FileMode.Create)
@@ -142,7 +142,7 @@ Public Module _memory_stream
 
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")>
     <Extension()> Public Function zip_to_file(ByVal this As MemoryStream, ByVal o As String) As Boolean
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Dim b() As Byte = Nothing
         b = this.ToArray()
         Try
@@ -158,7 +158,7 @@ Public Module _memory_stream
     End Function
 
     <Extension()> Public Function read_from_file(ByVal this As MemoryStream, ByVal i As String) As Boolean
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Try
             Using fs As New FileStream(i, FileMode.Open, FileAccess.Read)
                 fs.CopyTo(this)
@@ -172,7 +172,7 @@ Public Module _memory_stream
 
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")>
     <Extension()> Public Function unzip_from_file(ByVal this As MemoryStream, ByVal i As String) As Boolean
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Try
             Using fs As FileStream = New FileStream(i, FileMode.Open),
                   gz As GZipStream = New GZipStream(fs, CompressionMode.Decompress, True)
@@ -186,7 +186,7 @@ Public Module _memory_stream
     End Function
 
     <Extension()> Public Function trim_used(ByRef this As MemoryStream) As MemoryStream
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         If this.Position() = 0 Then
             Return this
         End If
@@ -199,7 +199,7 @@ Public Module _memory_stream
     End Function
 
     <Extension()> Public Function trim(ByVal this As MemoryStream, ByVal length As UInt32) As MemoryStream
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         If this.Length() > length Then
             this.SetLength(length)
         End If
@@ -207,7 +207,7 @@ Public Module _memory_stream
     End Function
 
     <Extension()> Public Function clear(ByVal this As MemoryStream) As MemoryStream
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         this.Position() = 0
         this.SetLength(0)
         Return this
@@ -260,7 +260,7 @@ Public Module _memory_stream
     End Function
 
     <Extension()> Public Function empty(ByVal this As MemoryStream) As Boolean
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Return this.Length() = 0
     End Function
 End Module
@@ -455,7 +455,7 @@ Public NotInheritable Class memory_stream
     End Function
 
     Public Shared Function is_wrapper(ByVal i As MemoryStream) As Boolean
-        Return Not i Is Nothing AndAlso i.GetType().Equals(GetType(forwarder))
+        Return i IsNot Nothing AndAlso i.GetType().Equals(GetType(forwarder))
     End Function
 
     Private NotInheritable Class forwarder
@@ -464,7 +464,7 @@ Public NotInheritable Class memory_stream
         Private ReadOnly o As Stream
 
         Public Sub New(ByVal o As Stream)
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Me.o = o
         End Sub
 

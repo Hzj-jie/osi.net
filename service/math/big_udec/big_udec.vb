@@ -49,8 +49,8 @@ Partial Public NotInheritable Class big_udec
 
     <copy_constructor>
     Private Sub New(ByVal n As big_uint, ByVal d As big_uint)
-        assert(Not n Is Nothing)
-        assert(Not d Is Nothing)
+        assert(n IsNot Nothing)
+        assert(d IsNot Nothing)
         Me.n = n
         Me.d = d
     End Sub

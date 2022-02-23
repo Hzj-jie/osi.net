@@ -63,7 +63,7 @@ Public Class status(Of _MIN As _int64, _MAX As _int64)
     End Sub
 
     Public Function new_status(ByVal c As [case]) As Boolean Implements istatus.new_status
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         If c.action = action.down OrElse
            c.action = action.up Then
             Dim i As Int32 = 0

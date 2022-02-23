@@ -39,7 +39,7 @@ Public NotInheritable Class big_int_input_perf
                 Console.WriteLine(start)
                 Dim r As String = Nothing
                 r = Console.ReadLine()
-                While Not r Is Nothing
+                While r IsNot Nothing
                     Try
                         run_case(r)
                     Catch ex As Exception

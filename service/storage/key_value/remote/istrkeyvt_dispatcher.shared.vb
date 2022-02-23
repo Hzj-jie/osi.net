@@ -18,7 +18,7 @@ Partial Public Class istrkeyvt_dispatcher
     Private Shared Function handle(ByVal i As command,
                                    ByVal o As command,
                                    ByVal d As Func(Of event_comb)) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = d()
@@ -41,7 +41,7 @@ Partial Public Class istrkeyvt_dispatcher
         Return handle(i,
                       o,
                       Function() As event_comb
-                          assert(Not d Is Nothing)
+                          assert(d IsNot Nothing)
                           Dim ec As event_comb = Nothing
                           Return New event_comb(Function() As Boolean
                                                     If p Is Nothing OrElse p() Then
@@ -71,7 +71,7 @@ Partial Public Class istrkeyvt_dispatcher
                                                     Int64,
                                                     ref(Of Boolean),
                                                     event_comb)) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim key As String = Nothing
         Dim buff() As Byte = Nothing
         Dim ts As Int64 = 0
@@ -96,7 +96,7 @@ Partial Public Class istrkeyvt_dispatcher
                                        ByVal d As Func(Of String,
                                                           event_comb),
                                        ByVal r As Func(Of Boolean)) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim key As String = Nothing
         Return handle(i,
                       o,
@@ -114,8 +114,8 @@ Partial Public Class istrkeyvt_dispatcher
                                           ByVal p As Func(Of Boolean),
                                           ByVal d As Func(Of ref(Of Boolean),
                                                              event_comb)) As event_comb
-        assert(Not d Is Nothing)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
+        assert(d IsNot Nothing)
         Dim r As ref(Of Boolean) = Nothing
         Return handle(i,
                       o,
@@ -135,8 +135,8 @@ Partial Public Class istrkeyvt_dispatcher
                                         ByVal p As Func(Of Boolean),
                                         ByVal d As Func(Of ref(Of Int64),
                                                            event_comb)) As event_comb
-        assert(Not d Is Nothing)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
+        assert(d IsNot Nothing)
         Dim r As ref(Of Int64) = Nothing
         Return handle(i,
                       o,
@@ -156,7 +156,7 @@ Partial Public Class istrkeyvt_dispatcher
                                               ByVal d As Func(Of String,
                                                                  ref(Of Boolean),
                                                                  event_comb)) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim key As String = Nothing
         Dim r As ref(Of Boolean) = Nothing
         Return handle(i,

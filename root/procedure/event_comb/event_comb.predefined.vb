@@ -20,7 +20,7 @@ Partial Public Class event_comb
     End Function
 
     Public Shared Function succeeded(ByVal a As Action) As event_comb
-        assert(Not a Is Nothing)
+        assert(a IsNot Nothing)
         Return New event_comb(Function() As Boolean
                                   a()
                                   Return goto_end()
@@ -28,7 +28,7 @@ Partial Public Class event_comb
     End Function
 
     Public Shared Function one_step(ByVal f As Func(Of Boolean)) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Return New event_comb(Function() As Boolean
                                   Return f() AndAlso
                                          goto_end()
@@ -37,7 +37,7 @@ Partial Public Class event_comb
 
     ' Provide a way to chain with repeat() and call Func(of event_comb) for multiple times.
     Public Shared Function [of](ByVal f As Func(Of event_comb)) As event_comb
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = f()
@@ -78,7 +78,7 @@ Partial Public Class event_comb
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If Not break_error Is Nothing AndAlso
+                                  If break_error IsNot Nothing AndAlso
                                      (+break_error) Then
                                       Return False
                                   ElseIf cec.end_result() Then
@@ -106,7 +106,7 @@ Partial Public Class event_comb
                                   End If
                               End Function,
                               Function() As Boolean
-                                  If Not break_error Is Nothing AndAlso
+                                  If break_error IsNot Nothing AndAlso
                                      (+break_error) Then
                                       Return False
                                   ElseIf cec.end_result_or_null() Then
@@ -114,7 +114,7 @@ Partial Public Class event_comb
                                   Else
                                       Return goto_end()
                                   End If
-                                  assert(Not ec Is Nothing)
+                                  assert(ec IsNot Nothing)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
@@ -139,7 +139,7 @@ Partial Public Class event_comb
         Else
             Return Function(ec As event_comb,
                             break_error As ref(Of Boolean)) As event_comb
-                       assert(Not c Is Nothing)
+                       assert(c IsNot Nothing)
                        Return sync_async(Function() As Boolean
                                              Dim b As Boolean = False
                                              Return c(ec, b) AndAlso

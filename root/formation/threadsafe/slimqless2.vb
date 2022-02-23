@@ -69,8 +69,8 @@ Public NotInheritable Class slimqless2(Of T)
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function run(ByRef e As slimqless2(Of T)) As Boolean Implements ifunc(Of slimqless2(Of T), Boolean).run
 #If DEBUG Then
-            assert(Not e Is Nothing)
-            assert(Not e.e Is Nothing)
+            assert(e IsNot Nothing)
+            assert(e.e IsNot Nothing)
 #End If
             Return Not e.e.vs.mark_value_writting()
         End Function
@@ -102,11 +102,11 @@ Public NotInheritable Class slimqless2(Of T)
     Public Function pop(ByRef o As T) As Boolean
         While True
             Dim nf As node = f.next
-            assert(Not nf Is Nothing)
+            assert(nf IsNot Nothing)
             If nf Is e Then
                 Return False
             End If
-            assert(Not nf.next Is Nothing)
+            assert(nf.next IsNot Nothing)
             If atomic.compare_exchange(f.next, nf.next, nf) Then
                 assert(nf.vs.not_no_value())
                 wait_when(wait_written_d.instance, nf.vs)

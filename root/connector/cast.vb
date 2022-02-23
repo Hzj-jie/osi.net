@@ -69,10 +69,10 @@ Public Module _cast
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function _direct_cast(Of T)(ByVal i As Object, ByRef o As T) As Boolean
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Try
             o = DirectCast(i, T)
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Return True
         Catch
             Return False
@@ -81,7 +81,7 @@ Public Module _cast
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function c_nothing(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
-        If Not i Is Nothing Then
+        If i IsNot Nothing Then
             Return False
         End If
         o = Nothing
@@ -118,14 +118,14 @@ Public Module _cast
                                                ByVal itt As Type,
                                                ByVal n As String,
                                                ByRef c As _do_val_ref(Of IT, T, Boolean)) As Boolean
-            assert(Not itt Is Nothing)
+            assert(itt IsNot Nothing)
             If isemptyarray(ms) Then
                 Return False
             End If
             Dim ott As Type = Nothing
             ott = GetType(T)
             For j As Int32 = 0 To array_size_i(ms) - 1
-                If Not ms(j) Is Nothing AndAlso
+                If ms(j) IsNot Nothing AndAlso
                        ms(j).Name() = n AndAlso
                        array_size(ms(j).GetParameters()) = 1 AndAlso
                        itt.is(ms(j).GetParameters()(0).ParameterType()) AndAlso
@@ -161,14 +161,14 @@ Public Module _cast
         Private Shared Function select_casting(ByVal ct As Type,
                                                ByVal it As Type,
                                                ByRef c As _do_val_ref(Of IT, T, Boolean)) As Boolean
-            assert(Not ct Is Nothing)
+            assert(ct IsNot Nothing)
             Return select_casting(ct.GetMethods(cast_operator_binding_flags), it, c)
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function select_casting(Of CT)(ByVal it As Type,
                                                       ByRef c As _do_val_ref(Of IT, T, Boolean)) As Boolean
-            assert(Not it Is Nothing)
+            assert(it IsNot Nothing)
             assert(GetType(T) Is GetType(CT) OrElse GetType(IT) Is GetType(CT))
             Return select_casting(GetType(CT), it, c)
         End Function
@@ -181,7 +181,7 @@ Public Module _cast
 
         Private Shared Function select_casting(ByRef c As _do_val_ref(Of IT, T, Boolean)) As Boolean
             c = Function(i As IT, ByRef o As T) As Boolean
-                    assert(Not i Is Nothing)
+                    assert(i IsNot Nothing)
                     Dim it As Type = Nothing
                     it = i.GetType()
                     Dim v As _do_val_ref(Of IT, T, Boolean) = Nothing
@@ -200,7 +200,7 @@ Public Module _cast
             t = select_casting(Of IT)(c) OrElse
                     select_casting(Of T)(c) OrElse
                     select_casting(c)
-            assert(Not c Is Nothing)
+            assert(c IsNot Nothing)
             Return c
         End Function
 
@@ -225,7 +225,7 @@ Public Module _cast
         itt = If(i Is Nothing, GetType(IT), i.GetType())
         ott = GetType(T)
         For j As Int32 = 0 To array_size(ms) - 1
-            If Not ms(j) Is Nothing AndAlso
+            If ms(j) IsNot Nothing AndAlso
                ms(j).Name() = n AndAlso
                array_size(ms(j).GetParameters()) = 1 AndAlso
                itt.is(ms(j).GetParameters()(0).ParameterType()) AndAlso

@@ -21,7 +21,7 @@ End Class
 ' Implementations can assume i and j are not null. Users should not use this class directly except for the registration.
 Public NotInheritable Class equaler(Of T, T2)
     Public Shared Sub register(ByVal f As Func(Of T, T2, Boolean))
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         register(Of T, T2)(f)
         If Not type_info(Of T, type_info_operators.is, T2).v Then
             register(Of T2, T)(Function(ByVal i As T2, ByVal j As T) As Boolean

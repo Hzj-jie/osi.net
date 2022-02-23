@@ -52,8 +52,8 @@ Public Class pipe(Of T)
     End Function
 
     Public Function enable_io_pending_punishment() As Boolean
-        Return Not input_pending Is Nothing AndAlso
-               assert(Not output_pending Is Nothing)
+        Return input_pending IsNot Nothing AndAlso
+               assert(output_pending IsNot Nothing)
     End Function
 
     Public Sub clear()
@@ -71,17 +71,17 @@ Public Class pipe(Of T)
     Private Function unlimited(ByVal v As Func(Of Boolean),
                                ByVal using_pending As pending_io_punishment(Of _true)) As event_comb
         assert(retries < 0)
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         Return New event_comb(Function() As Boolean
                                   If v() Then
                                       If enable_io_pending_punishment() Then
-                                          assert(Not using_pending Is Nothing)
+                                          assert(using_pending IsNot Nothing)
                                           using_pending.reset()
                                       End If
                                       Return goto_end()
                                   Else
                                       If enable_io_pending_punishment() Then
-                                          assert(Not using_pending Is Nothing)
+                                          assert(using_pending IsNot Nothing)
                                           Dim pending_time_ms As Int64 = 0
                                           assert(using_pending.record(False, pending_time_ms))
                                           Return waitfor(pending_time_ms)
@@ -95,7 +95,7 @@ Public Class pipe(Of T)
     Private Function limited(ByVal v As Func(Of Boolean),
                              ByVal using_pending As pending_io_punishment(Of _true)) As event_comb
         assert(retries >= 0)
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         Dim c As Int32 = 0
         Return New event_comb(Function() As Boolean
                                   c = retries + 1
@@ -106,7 +106,7 @@ Public Class pipe(Of T)
                                   c -= 1
                                   If v() Then
                                       If enable_io_pending_punishment() Then
-                                          assert(Not using_pending Is Nothing)
+                                          assert(using_pending IsNot Nothing)
                                           using_pending.reset()
                                       End If
                                       Return goto_end()
@@ -114,7 +114,7 @@ Public Class pipe(Of T)
                                       If c = 0 Then
                                           Return False
                                       ElseIf enable_io_pending_punishment() Then
-                                          assert(Not using_pending Is Nothing)
+                                          assert(using_pending IsNot Nothing)
                                           Dim pending_time_ms As Int64 = 0
                                           assert(using_pending.record(False, pending_time_ms))
                                           Return waitfor(pending_time_ms)

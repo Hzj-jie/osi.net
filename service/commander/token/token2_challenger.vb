@@ -43,13 +43,13 @@ Public NotInheritable Class token2_challenger(Of COLLECTION, CONNECTION)
                    ByVal c As CONNECTION,
                    ByVal s As signer)
         MyBase.New(info, p, c)
-        assert(Not s Is Nothing)
+        assert(s IsNot Nothing)
         Me.s = s
     End Sub
 
     Protected Overrides Function question(ByVal h As herald, ByVal accepted As ref(Of Boolean)) As event_comb
-        assert(Not h Is Nothing)
-        assert(Not accepted Is Nothing)
+        assert(h IsNot Nothing)
+        assert(accepted IsNot Nothing)
         assert(Not +accepted)
         Dim ec As event_comb = Nothing
         Dim r As ref(Of command) = Nothing
@@ -92,7 +92,7 @@ Public NotInheritable Class token2_challenger(Of COLLECTION, CONNECTION)
                               Function() As Boolean
                                   Dim reply As piece = Nothing
                                   If ec.end_result() AndAlso Not r.empty() Then
-                                      assert(Not code Is Nothing AndAlso Not code.empty())
+                                      assert(code IsNot Nothing AndAlso Not code.empty())
                                       If (+r).has_action() AndAlso
                                          info.sign_match(p, code, (+r).action()) Then
                                           eva(accepted, True)

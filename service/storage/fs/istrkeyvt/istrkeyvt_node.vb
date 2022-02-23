@@ -14,7 +14,7 @@ Public Class istrkeyvt_node
     Private ReadOnly p As String
 
     Public Sub New(ByVal path As String, ByVal accessor As istrkeyvt)
-        assert(Not accessor Is Nothing)
+        assert(accessor IsNot Nothing)
         assert(Not String.IsNullOrEmpty(path))
         Me.accessor = accessor
         Me.p = path

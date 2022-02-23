@@ -45,7 +45,7 @@ Public Class type_attribute_signal_test
         End Sub
 
         Public Sub New(ByVal o As Object)
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             a = type_attribute.of(o)
         End Sub
 
@@ -61,7 +61,7 @@ Public Class type_attribute_signal_test
         Private ReadOnly a As type_attribute
 
         Public Sub New(ByVal o As Object)
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             a = type_attribute.of(o)
         End Sub
 

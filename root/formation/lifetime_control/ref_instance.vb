@@ -131,7 +131,7 @@ Public NotInheritable Class ref_instance(Of T)
         Private ReadOnly r As ref_instance(Of T)
 
         Public Sub New(ByVal r As ref_instance(Of T))
-            assert(Not r Is Nothing)
+            assert(r IsNot Nothing)
             Me.r = r
         End Sub
 
@@ -148,7 +148,7 @@ Public NotInheritable Class ref_instance(Of T)
         Private ReadOnly r As ref_instance(Of T)
 
         Public Sub New(ByVal r As ref_instance(Of T))
-            assert(Not r Is Nothing)
+            assert(r IsNot Nothing)
             Me.r = r
         End Sub
 

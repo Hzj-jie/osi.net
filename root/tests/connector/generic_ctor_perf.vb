@@ -45,7 +45,7 @@ Public NotInheritable Class generic_ctor_perf
 
         Public Overrides Function run() As Boolean
             Dim x As gen_0 = New gen_0()
-            Return Not x Is Nothing
+            Return x IsNot Nothing
         End Function
     End Class
 
@@ -54,7 +54,7 @@ Public NotInheritable Class generic_ctor_perf
 
         Public Overrides Function run() As Boolean
             Dim x As gen_1(Of Int32) = New gen_1(Of Int32)()
-            Return Not x Is Nothing
+            Return x IsNot Nothing
         End Function
     End Class
 
@@ -63,7 +63,7 @@ Public NotInheritable Class generic_ctor_perf
 
         Public Overrides Function run() As Boolean
             Dim x As gen_2(Of Int32, Int32) = New gen_2(Of Int32, Int32)()
-            Return Not x Is Nothing
+            Return x IsNot Nothing
         End Function
     End Class
 
@@ -72,7 +72,7 @@ Public NotInheritable Class generic_ctor_perf
 
         Public Overrides Function run() As Boolean
             Dim x As gen_3(Of Int32, Int32, Int32) = New gen_3(Of Int32, Int32, Int32)()
-            Return Not x Is Nothing
+            Return x IsNot Nothing
         End Function
     End Class
 End Class

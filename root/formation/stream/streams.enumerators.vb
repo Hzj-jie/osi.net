@@ -55,8 +55,8 @@ Partial Public NotInheritable Class streams
             Private ReadOnly f As Func(Of T, Boolean)
 
             Public Sub New(ByVal i As container_operator(Of T).enumerator, ByVal f As Func(Of T, Boolean))
-                assert(Not i Is Nothing)
-                assert(Not f Is Nothing)
+                assert(i IsNot Nothing)
+                assert(f IsNot Nothing)
                 Me.i = i
                 Me.f = f
             End Sub
@@ -95,8 +95,8 @@ Partial Public NotInheritable Class streams
             Public Sub New(ByVal i As container_operator(Of T).enumerator, ByVal f As Func(Of T, R))
                 assert(Not GetType(R).generic_type_is(GetType(container_operator(Of ))))
 
-                assert(Not i Is Nothing)
-                assert(Not f Is Nothing)
+                assert(i IsNot Nothing)
+                assert(f IsNot Nothing)
                 Me.i = i
                 Me.f = f
             End Sub
@@ -122,7 +122,7 @@ Partial Public NotInheritable Class streams
             Private v As UInt32
 
             Public Sub New(ByVal c As UInt32, ByVal e As container_operator(Of T).enumerator)
-                assert(Not e Is Nothing)
+                assert(e IsNot Nothing)
                 Me.c = c
                 Me.e = e
                 Me.v = uint32_0

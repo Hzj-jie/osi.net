@@ -162,7 +162,7 @@ Partial Public Class cluster
     End Sub
 
     Private Shared Function valid_virtdisk(ByVal vd As virtdisk) As Boolean
-        Return Not vd Is Nothing
+        Return vd IsNot Nothing
     End Function
 
     Private Shared Sub assert_valid_virtdisk(ByVal vd As virtdisk)

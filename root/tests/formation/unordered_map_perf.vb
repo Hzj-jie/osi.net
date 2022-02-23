@@ -65,8 +65,8 @@ Public Class unordered_map_perf(Of KEY_T, VALUE_T)
         Public Sub New(ByVal percentages() As Double,
                        ByVal rnd_key As Func(Of KEY_T),
                        ByVal rnd_value As Func(Of VALUE_T))
-            assert(Not rnd_key Is Nothing)
-            assert(Not rnd_value Is Nothing)
+            assert(rnd_key IsNot Nothing)
+            assert(rnd_value IsNot Nothing)
             Me.rnd_key = rnd_key
             Me.rnd_value = rnd_value
             insert_call(percentages(0), AddressOf insert)

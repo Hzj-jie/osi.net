@@ -31,7 +31,7 @@ Public Class remote_node
                                 ByVal path As String,
                                 ByRef o As remote_node) As Boolean
         Return Not String.IsNullOrEmpty(target) AndAlso
-               Not q Is Nothing AndAlso
+               q IsNot Nothing AndAlso
                eva(o, New remote_node(target, q, path))
     End Function
 
@@ -86,7 +86,7 @@ Public Class remote_node
     Public Function properties(ByVal r As ref(Of vector(Of String))) As event_comb Implements inode.properties
         Return q(properties_command(),
                  Function(c As command) As Boolean
-                     Return Not c Is Nothing AndAlso
+                     Return c IsNot Nothing AndAlso
                             c.parameter(Of parameter, vector(Of String))(parameter.keys, r)
                  End Function)
     End Function
@@ -98,7 +98,7 @@ Public Class remote_node
     Public Function subnodes(ByVal r As ref(Of vector(Of String))) As event_comb Implements inode.subnodes
         Return q(subnodes_command(),
                  Function(c As command) As Boolean
-                     Return Not c Is Nothing AndAlso
+                     Return c IsNot Nothing AndAlso
                             c.parameter(Of parameter, vector(Of String))(parameter.keys, r)
                  End Function)
     End Function

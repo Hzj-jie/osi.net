@@ -26,7 +26,7 @@ Public Class token_info_sign_test
         Private ReadOnly s As signer
 
         Public Sub New(ByVal s As signer)
-            assert(Not s Is Nothing)
+            assert(s IsNot Nothing)
             Me.s = s
             Me.k = rnd_bytes(rnd_uint(10, 100))
         End Sub
@@ -60,7 +60,7 @@ Public Class token_info_sign_test
     End Class
 
     Private Shared Function sign_case1(ByVal f As info) As Boolean
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Dim code() As Byte = Nothing
         code = rnd_bytes(rnd_uint(100, 200))
         Dim o As piece = Nothing

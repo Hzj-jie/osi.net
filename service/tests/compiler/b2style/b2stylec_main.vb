@@ -33,14 +33,14 @@ Public NotInheritable Class b2stylec_main
         End If
         Dim e As executor = Nothing
         assert(b2style.with_default_functions().parse(source, e))
-        If Not text_output Is Nothing Then
+        If text_output IsNot Nothing Then
             Dim s As String = Nothing
             assert(e.export(s))
             Using text_output
                 text_output.Write(s)
             End Using
         Else
-            assert(Not binary_output Is Nothing)
+            assert(binary_output IsNot Nothing)
             Dim b() As Byte = Nothing
             assert(e.export(b))
             Using binary_output

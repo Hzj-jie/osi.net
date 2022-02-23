@@ -15,21 +15,21 @@ Imports lock_t = osi.root.lock.slimlock.monitorlock
 Public Module _event_comb_lock
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Sub release(ByVal i As ref(Of event_comb_lock))
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         i.p.release()
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Sub wait(ByVal i As ref(Of event_comb_lock))
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         i.p.wait()
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function locked(ByVal i As ref(Of event_comb_lock),
                                          ByVal d As Func(Of event_comb)) As event_comb
-        assert(Not i Is Nothing)
-        assert(Not d Is Nothing)
+        assert(i IsNot Nothing)
+        assert(d IsNot Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Return waitfor(i) AndAlso
@@ -50,8 +50,8 @@ Public Module _event_comb_lock
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function locked(ByVal i As ref(Of event_comb_lock),
                                          ByVal d As Func(Of Boolean)) As event_comb
-        assert(Not i Is Nothing)
-        assert(Not d Is Nothing)
+        assert(i IsNot Nothing)
+        assert(d IsNot Nothing)
         Return New event_comb(Function() As Boolean
                                   Return waitfor(i) AndAlso
                                          goto_next()
@@ -71,7 +71,7 @@ Public Module _event_comb_lock
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function locked(ByVal i As ref(Of event_comb_lock),
                                          ByVal d As Action) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Return locked(i, Function() As Boolean
                              d()
                              Return True
@@ -90,7 +90,7 @@ Public Structure event_comb_lock
     Public Sub wait() Implements islimlock.wait
         Dim v As Action = Nothing
         v = event_comb.wait()
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         l.wait()
         If inuse = IN_USE Then
             q.emplace(v)
@@ -109,10 +109,10 @@ Public Structure event_comb_lock
             inuse = NOT_IN_USE
         Else
             assert(q.pop(v))
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
         End If
         l.release()
-        If Not v Is Nothing Then
+        If v IsNot Nothing Then
             v()
         End If
     End Sub
@@ -137,7 +137,7 @@ Public Structure event_comb_lock(Of SIZE As _int64)
     Public Sub wait() Implements islimlock.wait
         Dim v As Action = Nothing
         v = event_comb.wait()
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         l.wait()
         If inuse = IN_USE Then
             q.emplace(v)
@@ -156,10 +156,10 @@ Public Structure event_comb_lock(Of SIZE As _int64)
             inuse = NOT_IN_USE
         Else
             v = q.pop()
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
         End If
         l.release()
-        If Not v Is Nothing Then
+        If v IsNot Nothing Then
             v()
         End If
     End Sub
@@ -185,7 +185,7 @@ Public Structure unlimited_event_comb_lock
         create_if_nothing(q)
         Dim v As Action = Nothing
         v = event_comb.wait()
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         l.wait()
         If inuse = IN_USE Then
             assert(q.push(ref.of(v)))
@@ -205,10 +205,10 @@ Public Structure unlimited_event_comb_lock
         Else
             v = +(q.front())
             assert(q.pop())
-            assert(Not v Is Nothing)
+            assert(v IsNot Nothing)
         End If
         l.release()
-        If Not v Is Nothing Then
+        If v IsNot Nothing Then
             v()
         End If
     End Sub

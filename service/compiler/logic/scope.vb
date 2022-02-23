@@ -28,7 +28,7 @@ Namespace logic
             ' TODO: Types should be scoped.
             Me.t = New type_t()
             Me.a = New anchor_t()
-            assert(Not functions Is Nothing)
+            assert(functions IsNot Nothing)
             Me.f = functions
         End Sub
 
@@ -39,7 +39,7 @@ Namespace logic
 
         Public Function functions() As interrupts
             If is_root() Then
-                assert(Not f Is Nothing)
+                assert(f IsNot Nothing)
                 Return f
             End If
             assert(f Is Nothing)

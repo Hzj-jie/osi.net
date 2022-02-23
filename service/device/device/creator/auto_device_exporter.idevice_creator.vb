@@ -24,7 +24,7 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
                        ByVal failure_wait_ms As Int64,
                        ByVal max_concurrent_generations As Int32)
             MyBase.New(id, check_interval_ms, failure_wait_ms, max_concurrent_generations)
-            assert(Not c Is Nothing)
+            assert(c IsNot Nothing)
             Me.c = c
         End Sub
 

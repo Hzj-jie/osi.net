@@ -37,12 +37,12 @@ Partial Public Class istrkeyvt_questioner
     End Function
 
     Private Function response(ByVal c As command, ByVal result As ref(Of Boolean)) As Boolean
-        Return Not c Is Nothing AndAlso
+        Return c IsNot Nothing AndAlso
                c.parameter(Of parameter, Boolean)(parameter.result, result)
     End Function
 
     Private Function response(ByVal c As command, ByVal result As ref(Of Int64)) As Boolean
-        Return Not c Is Nothing AndAlso
+        Return c IsNot Nothing AndAlso
                c.parameter(Of parameter, Int64)(parameter.size, result)
     End Function
 End Class

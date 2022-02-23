@@ -43,7 +43,7 @@ void eva2(FILE* fo)
 
 void eva3(FILE* fo)
 {
-    fputs("        If Not x Is Nothing Then\n"
+    fputs("        If x IsNot Nothing Then\n"
           "            x.set(y)\n"
           "        End If\n"
           "        Return True\n"
@@ -56,7 +56,7 @@ void eva4(FILE* fo)
     fputs("        If y Is Nothing Then\n"
           "            Return False\n"
           "        Else\n"
-          "            If Not x Is Nothing Then\n"
+          "            If x IsNot Nothing Then\n"
           "                x.set(y())\n"
           "            End If\n"
           "            Return True\n"

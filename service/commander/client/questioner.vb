@@ -71,7 +71,7 @@ Public Class questioner(Of ENABLE_AUTO_PING As _boolean)
     Private ReadOnly q As iquestioner(Of _false)
 
     Private Sub New(ByVal q As iquestioner(Of _false))
-        assert(Not q Is Nothing)
+        assert(q IsNot Nothing)
         Me.q = q
     End Sub
 

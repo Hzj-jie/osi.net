@@ -28,7 +28,7 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Sub with_value_list(ByVal v As vector(Of String))
-                assert(Not v Is Nothing)
+                assert(v IsNot Nothing)
                 value_lists.push(v)
             End Sub
 
@@ -45,7 +45,7 @@ Partial Public NotInheritable Class bstyle
                 Public Sub New(ByVal type As String, ByVal names As vector(Of String))
                     assert(Not type.null_or_whitespace())
                     ' Allow empty struct, so the names can be empty.
-                    assert(Not names Is Nothing)
+                    assert(names IsNot Nothing)
                     type = scope.current().type_alias()(type)
                     If Not scope.current().structs().defined(type) Then
                         assert(names.size() = 1)

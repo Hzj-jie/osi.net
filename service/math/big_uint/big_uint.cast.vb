@@ -23,7 +23,7 @@ Partial Public NotInheritable Class big_uint
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As big_uint) As Boolean
-        Return Not this Is Nothing AndAlso this.true()
+        Return this IsNot Nothing AndAlso this.true()
     End Operator
 
     ' This has been implemented by big_uint.not() function. Revise the performance impact: big_uint.not() is a bit-wise

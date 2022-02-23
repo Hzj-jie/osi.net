@@ -42,7 +42,7 @@
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function alive() As Boolean
         Dim p As WeakReference = Me.p
-        Return Not p Is Nothing AndAlso p.IsAlive()
+        Return p IsNot Nothing AndAlso p.IsAlive()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

@@ -26,7 +26,7 @@ Partial Public NotInheritable Class var
             End If
         ElseIf c.is_arg(s, a, b) Then
             'priority of switcher is higher than normal value
-            If Not raw(a) Is Nothing Then
+            If raw(a) IsNot Nothing Then
                 raw(a).push_back(b)
             End If
         Else
@@ -46,9 +46,9 @@ Partial Public NotInheritable Class var
     Public Sub parse(ByVal args As vector(Of pair(Of String, String)))
         raw.clear()
         others.clear()
-        If Not args Is Nothing Then
+        If args IsNot Nothing Then
             For i As UInt32 = uint32_0 To args.size() - uint32_1
-                assert(Not args(i) Is Nothing)
+                assert(args(i) IsNot Nothing)
                 assert(Not (String.IsNullOrEmpty(args(i).first) AndAlso
                             String.IsNullOrEmpty(args(i).second)))
                 If String.IsNullOrEmpty(args(i).second) Then

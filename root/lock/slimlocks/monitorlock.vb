@@ -16,7 +16,7 @@ Namespace slimlock
         Private obj As Object
 
         Public Sub New(ByVal i As Object)
-            assert(Not i Is Nothing)
+            assert(i IsNot Nothing)
             Me.obj = i
         End Sub
 

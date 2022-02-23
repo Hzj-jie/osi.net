@@ -24,7 +24,7 @@ Partial Public Class token_test
         End Function
 
         Public Shared Function create_good(ByVal p As mock_ppt) As mock_conn
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             Return New mock_conn(p.token, True)
         End Function
 

@@ -164,7 +164,7 @@ Public Class ref_node(Of T)
     End Function
 
     Public Overrides Function GetHashCode() As Int32
-        If Not data() Is Nothing Then
+        If data() IsNot Nothing Then
             Return data().GetHashCode()
         End If
         Return 0

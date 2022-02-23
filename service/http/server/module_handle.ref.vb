@@ -12,7 +12,7 @@ Partial Public Class module_handle
         Public ReadOnly counter_index As Int64
 
         Public Sub New(ByVal name As String, ByVal m As [module])
-            assert(Not m Is Nothing)
+            assert(m IsNot Nothing)
             [module] = m
             counter_index = counter.builder.
                                     [New]().

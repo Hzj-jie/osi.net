@@ -10,7 +10,7 @@ Public Class device_manager(Of T)
     End Sub
 
     Public Shared Function retire(ByVal key As String, Optional ByRef o As idevice(Of T) = Nothing) As Boolean
-        If [erase](key, o) AndAlso assert(Not o Is Nothing) Then
+        If [erase](key, o) AndAlso assert(o IsNot Nothing) Then
             o.close()
             Return True
         Else

@@ -28,7 +28,7 @@ Public NotInheritable Class target_questioner
                       ByVal q As questioner(Of _true),
                       ByVal internal As Boolean)
         assert(Not isemptyarray(name))
-        assert(Not q Is Nothing)
+        assert(q IsNot Nothing)
         Me.name = name
         Me.q = q
     End Sub

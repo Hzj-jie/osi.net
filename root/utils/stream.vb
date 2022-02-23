@@ -22,7 +22,7 @@ Public Module _stream
 
     'not only whether the stream can write, but also try to write an empty buff
     <Extension()> Public Function can_read(ByVal i As Stream) As Boolean
-        Return Not i Is Nothing AndAlso i.CanRead()
+        Return i IsNot Nothing AndAlso i.CanRead()
 #If 0 Then
         If i Is Nothing OrElse Not i.CanRead() Then
             Return False
@@ -38,7 +38,7 @@ Public Module _stream
     End Function
 
     <Extension()> Public Function can_write(ByVal i As Stream) As Boolean
-        Return Not i Is Nothing AndAlso i.CanWrite()
+        Return i IsNot Nothing AndAlso i.CanWrite()
 #If 0 Then
         If i Is Nothing OrElse Not i.CanWrite() Then
             Return False
@@ -68,7 +68,7 @@ Public Module _stream
     End Function
 
     <Extension()> Public Function keep_position(ByVal i As Stream) As IDisposable
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Dim p As Int64 = 0
         p = i.Position()
         Return defer.to(Sub()

@@ -14,7 +14,7 @@ Partial Public NotInheritable Class wordbreaker
             Private ReadOnly e As onebound(Of Char).evaluator
 
             Public Sub New(ByVal m As onebound(Of Char).model)
-                assert(Not m Is Nothing)
+                assert(m IsNot Nothing)
                 ' Do not allow a word to contain over 8 characters.
                 e = New onebound(Of Char).evaluator(m, 8)
             End Sub
@@ -33,7 +33,7 @@ Partial Public NotInheritable Class wordbreaker
             End Property
 
             Public Sub break(ByVal ss As IEnumerable(Of String), ByVal r As Action(Of String))
-                assert(Not r Is Nothing)
+                assert(r IsNot Nothing)
                 For Each s As String In ss
                     If s.null_or_whitespace() Then
                         Continue For
@@ -55,7 +55,7 @@ Partial Public NotInheritable Class wordbreaker
                              ByVal [end] As UInt32,
                              ByVal o As Action(Of String))
                 assert([end] >= start)
-                assert(Not o Is Nothing)
+                assert(o IsNot Nothing)
                 If [end] = start Then
                     Return
                 End If

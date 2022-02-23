@@ -20,7 +20,7 @@ Public Class stopable_istrkeyvt
     End Sub
 
     Public Sub New(ByVal impl As istrkeyvt)
-        assert(Not impl Is Nothing)
+        assert(impl IsNot Nothing)
         Me.impl = impl
         Me.stopping = New ref(Of singleentry)()
         Me.working = New atomic_int()
@@ -31,7 +31,7 @@ Public Class stopable_istrkeyvt
     End Function
 
     Private Function work(ByVal d As Func(Of event_comb)) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If stopped() Then

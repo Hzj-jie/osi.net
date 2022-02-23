@@ -41,7 +41,7 @@ Public Module _binding_flags
             Return False
         End If
 
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         If v.empty() Then
             bf = bf Or BindingFlags.Default
             Return True
@@ -68,7 +68,7 @@ Public Module _binding_flags
         ' Trigger bytes_serializer registering.
         enum_def(Of BindingFlags)()
         string_serializer.register(Function(ByVal i As StringReader, ByRef o As method_binding_flags) As Boolean
-                                       assert(Not i Is Nothing)
+                                       assert(i IsNot Nothing)
                                        Dim bf As BindingFlags = Nothing
                                        If string_serializer.from_str(i, bf) Then
                                            o = New method_binding_flags(bf)

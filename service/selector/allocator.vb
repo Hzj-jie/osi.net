@@ -40,13 +40,13 @@ Public Class allocator(Of T, PARA_T)
     Private ReadOnly alloc As _do_val_ref(Of PARA_T, T, Boolean)
 
     Public Sub New(ByVal alloc As _do_val_ref(Of PARA_T, T, Boolean))
-        assert(Not alloc Is Nothing)
+        assert(alloc IsNot Nothing)
         Me.alloc = alloc
     End Sub
 
     Public Sub New(ByVal alloc As Func(Of PARA_T, T))
         Me.New(Function(i As PARA_T, ByRef o As T) As Boolean
-                   assert(Not alloc Is Nothing)
+                   assert(alloc IsNot Nothing)
                    o = alloc(i)
                    Return True
                End Function)

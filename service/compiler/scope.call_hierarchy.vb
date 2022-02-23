@@ -79,9 +79,9 @@ Partial Public Class scope(Of T As scope(Of T))
             Private ReadOnly o As Func(Of String)
 
             Public Sub New(ByVal ch As call_hierarchy, ByVal f As String, ByVal o As Func(Of String))
-                assert(Not ch Is Nothing)
+                assert(ch IsNot Nothing)
                 assert(Not f.null_or_whitespace())
-                assert(Not o Is Nothing)
+                assert(o IsNot Nothing)
                 Me.ch = ch
                 Me.f = f
                 Me.o = o

@@ -56,7 +56,7 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
             If Not q.pop(p) Then
                 Return 0
             End If
-            assert(Not p Is Nothing AndAlso Not isemptyarray(+p))
+            assert(p IsNot Nothing AndAlso Not isemptyarray(+p))
             last = (+p)
             last_index = 0
         End If

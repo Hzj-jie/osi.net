@@ -21,9 +21,9 @@ Partial Public NotInheritable Class server
                            ByVal charset As String,
                            ByVal encoder As Encoding,
                            ByVal query As map(Of String, vector(Of String)))
-                assert(Not owner Is Nothing)
-                assert(Not encoder Is Nothing)
-                assert(Not query Is Nothing)
+                assert(owner IsNot Nothing)
+                assert(encoder IsNot Nothing)
+                assert(query IsNot Nothing)
                 Me.owner = owner
                 Me.is_www_form_urlencoded = is_www_form_urlencoded
                 Me.charset = charset

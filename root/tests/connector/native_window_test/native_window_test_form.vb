@@ -14,7 +14,7 @@ Public Class native_window_test_form
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        assert(Not cb Is Nothing)
+        assert(cb IsNot Nothing)
         Me.cb = cb
     End Sub
 

@@ -33,10 +33,10 @@ Partial Public NotInheritable Class syntaxer
     Public Sub New(ByVal collection As syntax_collection,
                    ByVal ignore_types As unordered_set(Of UInt32),
                    ByVal root_types As vector(Of UInt32))
-        assert(Not collection Is Nothing)
+        assert(collection IsNot Nothing)
         assert(collection.complete())
         assert(Not root_types.null_or_empty())
-        assert(Not ignore_types Is Nothing)
+        assert(ignore_types IsNot Nothing)
         Me.collection = collection
         Me.root_types = root_types
         Me.ignore_types = ignore_types
@@ -49,7 +49,7 @@ Partial Public NotInheritable Class syntaxer
     End Function
 
     Private Function debug_str(ByVal v As vector(Of typed_word), ByVal p As UInt32) As String
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         Dim start As UInt32 = CUInt(max(0, p - 6))
         Dim [end] As UInt32 = CUInt(min(start + 13, v.size()))
         Dim r As New StringBuilder()
@@ -69,7 +69,7 @@ Partial Public NotInheritable Class syntaxer
     End Function
 
     Private Sub log_unmatched(ByVal v As vector(Of typed_word), ByVal p As UInt32, ByVal f As matching.result)
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         assert(f.failed())
         Dim l As Func(Of UInt32, String()) = Function(ByVal pos As UInt32) As String()
                                                  Return {
@@ -94,7 +94,7 @@ Partial Public NotInheritable Class syntaxer
         End If
         v = v.stream().
               filter(Function(ByVal t As typed_word) As Boolean
-                         assert(Not t Is Nothing)
+                         assert(t IsNot Nothing)
                          Return ignore_types.find(t.type) = ignore_types.end()
                      End Function).
               collect_to(Of vector(Of typed_word))()
@@ -107,7 +107,7 @@ Partial Public NotInheritable Class syntaxer
                 Return [optional].empty(Of typed_node)()
             End If
             Dim r As matching.result.suc_t = m.suc
-            assert(Not r Is Nothing)
+            assert(r IsNot Nothing)
             If p = r.pos Then
                 Return [optional].empty(Of typed_node)()
             End If

@@ -44,7 +44,7 @@ Namespace counter
 
         Friend Sub distribute(ByVal startticks As Int64, ByVal msg As String)
             writers.foreach(Sub(ByVal writer As icounter_writer)
-                                assert(Not writer Is Nothing)
+                                assert(writer IsNot Nothing)
                                 writer.write(msg)
                             End Sub)
             If envs.counter_selfhealth Then

@@ -58,7 +58,7 @@ Public Class configuration
         Else
             Me.loader = loader_ctor2()
         End If
-        assert(Not loader Is Nothing)
+        assert(loader IsNot Nothing)
 
         Me.loader_name = Me.loader.GetType().AssemblyQualifiedName()
 
@@ -72,7 +72,7 @@ Public Class configuration
     Private Function provider(ByVal file As String) As dataprovider(Of config)
         Dim r As dataprovider(Of config) = Nothing
         r = provider_ctor(file, loader, loader_name)
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         Return r
     End Function
 
@@ -92,7 +92,7 @@ Public Class configuration
     Public Sub unload(ByVal file As String)
         Dim r As dataprovider(Of config) = Nothing
         r = provider_ctor(file, loader, loader_name)
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         r.expire()
     End Sub
 
@@ -118,7 +118,7 @@ Public Class configuration
     Private Function [get](ByVal file As String,
                            ByVal config As ref(Of config),
                            ByVal w As Func(Of Func(Of Boolean), Boolean)) As event_comb
-        assert(Not w Is Nothing)
+        assert(w IsNot Nothing)
         Dim p As dataprovider(Of config) = Nothing
         Return New event_comb(Function() As Boolean
                                   p = provider(file)

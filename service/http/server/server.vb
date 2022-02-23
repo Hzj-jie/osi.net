@@ -115,7 +115,7 @@ Partial Public NotInheritable Class server
     End Function
 
     Private Function add_several(ByVal s As String, ByVal a As Func(Of String, Boolean)) As Boolean
-        assert(Not a Is Nothing)
+        assert(a IsNot Nothing)
         Dim vs As vector(Of String) = Nothing
         If Not vs.split_from(s) Then
             Return False
@@ -138,7 +138,7 @@ Partial Public NotInheritable Class server
     End Function
 
     Private Sub end_context(ByVal ctx As HttpListenerContext, ByVal abort As Boolean)
-        assert(Not ctx Is Nothing)
+        assert(ctx IsNot Nothing)
         ctx.shutdown(abort)
         assert(cc.decrement() >= 0)
     End Sub
@@ -165,9 +165,9 @@ Partial Public NotInheritable Class server
                                             End If
                                         End Function,
                                         Function() As Boolean
-                                            If Not ec Is Nothing AndAlso
+                                            If ec IsNot Nothing AndAlso
                                                ec.end_result() AndAlso
-                                               Not +ctx Is Nothing Then
+                                               +ctx IsNot Nothing Then
                                                 RaiseEvent context_received(New context(Me, +ctx, ls, encoder))
                                             Else
                                                 assert(cc.decrement() >= 0)

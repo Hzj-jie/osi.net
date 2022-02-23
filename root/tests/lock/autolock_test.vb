@@ -43,7 +43,7 @@ Public NotInheritable Class autolock_test
         Private l As T
 
         Public Sub New(ByVal ma As _do(Of T, IDisposable))
-            assert(Not ma Is Nothing)
+            assert(ma IsNot Nothing)
             Me.make_autolock = ma
             run_times = New atomic_int()
             If GetType(T).IsClass() Then

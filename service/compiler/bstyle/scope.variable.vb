@@ -61,7 +61,7 @@ Partial Public NotInheritable Class bstyle
             Public ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
-                assert(Not s Is Nothing)
+                assert(s IsNot Nothing)
                 Me.s = s
             End Sub
 
@@ -85,7 +85,7 @@ Partial Public NotInheritable Class bstyle
                     Return False
                 End If
                 Dim s As scope = Me.s
-                While Not s Is Nothing
+                While s IsNot Nothing
                     If s.v.redefine(type, name) OrElse s.v.redefine(type, heap_name_of(name)) Then
                         Return True
                     End If
@@ -106,10 +106,10 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Function define(ByVal vs As vector(Of builders.parameter)) As Boolean
-                assert(Not vs Is Nothing)
+                assert(vs IsNot Nothing)
                 Dim i As UInt32 = 0
                 While i < vs.size()
-                    assert(Not vs(i) Is Nothing)
+                    assert(vs(i) IsNot Nothing)
                     If Not define(vs(i).type, vs(i).name) Then
                         Return False
                     End If
@@ -132,15 +132,15 @@ Partial Public NotInheritable Class bstyle
                 End If
 
                 Dim s As scope = Me.s
-                While Not s Is Nothing
+                While s IsNot Nothing
                     If Not s.v.resolve(name, type) Then
                         s = s.parent
                         Continue While
                     End If
-                    If Not signature Is Nothing Then
+                    If signature IsNot Nothing Then
                         Dim f As function_signature = Nothing
                         If s.delegates().retrieve(type, f) Then
-                            assert(Not f Is Nothing)
+                            assert(f IsNot Nothing)
                             signature.set(f)
                         End If
                     End If

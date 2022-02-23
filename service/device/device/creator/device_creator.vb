@@ -6,7 +6,7 @@ Imports osi.root.connector
 Public Module _device_creator
     <Extension()> Public Function create_valid_device(Of T)(ByVal this As idevice_creator(Of T),
                                                             ByRef o As idevice(Of T)) As Boolean
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         If this.create(o) Then
             If o Is Nothing Then
                 Return False
@@ -59,12 +59,12 @@ Public Class delegate_device_creator(Of T)
     Private ReadOnly c As _do(Of idevice(Of T), Boolean)
 
     Public Sub New(ByVal c As _do(Of idevice(Of T), Boolean))
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Me.c = c
     End Sub
 
     Public Sub New(ByVal c As Func(Of idevice(Of T)))
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Me.c = Function(ByRef o As idevice(Of T)) As Boolean
                    o = c()
                    Return True
@@ -92,7 +92,7 @@ Public Class delegate_device_creator(Of T)
                    Optional ByVal closer As Action(Of T) = Nothing,
                    Optional ByVal identifier As Func(Of T, String) = Nothing,
                    Optional ByVal checker As Action(Of T) = Nothing)
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Me.c = creator(c, validator, closer, identifier, checker)
     End Sub
 
@@ -101,7 +101,7 @@ Public Class delegate_device_creator(Of T)
                    Optional ByVal closer As Action(Of T) = Nothing,
                    Optional ByVal identifier As Func(Of T, String) = Nothing,
                    Optional ByVal checker As Action(Of T) = Nothing)
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Me.c = creator(Function(ByRef o As T) As Boolean
                            o = c()
                            Return True

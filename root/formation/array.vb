@@ -24,7 +24,7 @@ Public NotInheritable Class array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function alloc_of(Of T)(ByVal f As Func(Of T), ByVal size As UInt32) As const_array(Of T)
 #If Not Performance Then
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         assert(size > 0)
         assert(size <= max_int32)
 #End If

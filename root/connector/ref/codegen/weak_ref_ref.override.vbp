@@ -5,7 +5,7 @@
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get](ByRef o As T) As Boolean
         Dim p As ref(Of T) = Nothing
-        If [get](p) AndAlso Not p Is Nothing AndAlso Not p.empty() Then
+        If [get](p) AndAlso p IsNot Nothing AndAlso Not p.empty() Then
             o = p.get()
             Return True
         End If

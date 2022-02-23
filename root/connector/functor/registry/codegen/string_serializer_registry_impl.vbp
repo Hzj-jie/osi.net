@@ -1,16 +1,16 @@
 
 ##DEFAULT TYPE Byte
         string_serializer.register(Sub(ByVal i As ##TYPE##, ByVal o As StringWriter)
-                                       assert(Not o Is Nothing)
+                                       assert(o IsNot Nothing)
                                        o.Write(i)
                                    End Sub,
                                    Function(ByVal i As StringReader, ByRef o As ##TYPE##) As Boolean
-                                       assert(Not i Is Nothing)
+                                       assert(i IsNot Nothing)
                                        Return ##TYPE##.TryParse(i.ReadToEnd(), o)
                                    End Function)
 #If "##TYPE##" <> "Char" Then
         json_serializer.register(Sub(ByVal i As ##TYPE##, ByVal o As StringWriter)
-                                     assert(Not o Is Nothing)
+                                     assert(o IsNot Nothing)
                                      o.Write(i)
                                  End Sub)
 #End If

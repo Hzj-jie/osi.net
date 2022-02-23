@@ -62,7 +62,7 @@ Public Class iosys_test
             If assertion.is_not_null(c) Then
                 Dim lc As iosys_test_case = Nothing
                 While assertion.is_true(q.pop(lc))
-                    assert(Not lc Is Nothing)
+                    assert(lc IsNot Nothing)
                     If assertion.equal(c.value, lc.value) Then
                         Exit While
                     End If

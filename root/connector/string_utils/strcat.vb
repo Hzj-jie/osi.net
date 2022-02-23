@@ -82,7 +82,7 @@ Public Module _strcat
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function strcat_hint(ByVal len As UInt32, ByVal p As IEnumerable(Of Object)) As String
         Dim s As StringBuilder = Nothing
-        If Not p Is Nothing Then
+        If p IsNot Nothing Then
             s = New StringBuilder(CInt(len))
             For Each x As Object In p
                 s.Append(Convert.ToString(x))
@@ -109,7 +109,7 @@ Public Module _strcat
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function strcat_hint(Of T)(ByVal len As UInt32, ByVal p As IEnumerable(Of T)) As String
         Dim s As StringBuilder = Nothing
-        If Not p Is Nothing Then
+        If p IsNot Nothing Then
             s = New StringBuilder(CInt(len))
             For Each x As T In p
                 s.Append(x)
@@ -126,7 +126,7 @@ Public Module _strcat
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function strcat_hint(ByVal len As UInt32, ByVal p As IEnumerable(Of String)) As String
         Dim s As StringBuilder = Nothing
-        If Not p Is Nothing Then
+        If p IsNot Nothing Then
             s = New StringBuilder(CInt(len))
             For Each x As String In p
                 s.Append(x)
@@ -153,7 +153,7 @@ Public Module _strcat
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function strcat_hint(ByVal len As UInt32, ByVal p As IEnumerable(Of Char)) As String
         Dim s As StringBuilder = Nothing
-        If Not p Is Nothing Then
+        If p IsNot Nothing Then
             s = New StringBuilder(CInt(len))
             For Each x As Char In p
                 s.Append(x)
@@ -239,7 +239,7 @@ Public Module _strcat
     <Extension()> Public Function strjoin(Of T)(ByVal sep As String,
                                                 ByVal vs As IEnumerable(Of T)) As String
         Dim s As StringBuilder = Nothing
-        If Not vs Is Nothing Then
+        If vs IsNot Nothing Then
             s = New StringBuilder()
             For Each x As T In vs
                 If strlen(s) > 0 Then

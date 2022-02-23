@@ -26,7 +26,7 @@ Public Class finalizer_test
         <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")>
         Protected Sub New(ByVal p As atomic_int)
             Me.content = initialize()
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             Me.p = p
         End Sub
 
@@ -83,8 +83,8 @@ Public Class finalizer_test
     End Class
 
     Private Sub run_case(Of T)(ByVal ctor As _do(Of atomic_int, T), ByVal validate As void(Of atomic_int))
-        assert(Not ctor Is Nothing)
-        assert(Not validate Is Nothing)
+        assert(ctor IsNot Nothing)
+        assert(validate IsNot Nothing)
         Dim f As atomic_int = Nothing
         f = New atomic_int(0)
         For i As Int32 = 0 To test_size - 1
@@ -101,13 +101,13 @@ Public Class finalizer_test
     Public Overrides Function run() As Boolean
         run_case(Function(ByRef f) New tc_array(f),
                  Sub(ByRef f As atomic_int)
-                     assert(Not f Is Nothing)
+                     assert(f IsNot Nothing)
                      assertion.more_or_equal(+f, 0)            'never fail
                      assertion.less_or_equal(+f, test_size)
                  End Sub)
         run_case(Function(ByRef f) New tc_array_keepalive(f),
                  Sub(ByRef f As atomic_int)
-                     assert(Not f Is Nothing)
+                     assert(f IsNot Nothing)
                      assertion.equal(+f, 0)
                  End Sub)
 

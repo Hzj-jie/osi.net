@@ -124,7 +124,7 @@ Public Class responder(Of CONTINUOUS As _boolean)
     Private ReadOnly r As iresponder(Of CONTINUOUS)
 
     Private Sub New(ByVal r As iresponder(Of CONTINUOUS))
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         Me.r = r
     End Sub
 

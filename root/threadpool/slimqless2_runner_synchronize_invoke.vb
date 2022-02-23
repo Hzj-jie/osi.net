@@ -16,7 +16,7 @@ Public NotInheritable Class slimqless2_runner_synchronize_invoke
     Private ReadOnly r As slimqless2_runner
 
     Public Sub New(ByVal r As slimqless2_runner)
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         Me.r = r
     End Sub
 

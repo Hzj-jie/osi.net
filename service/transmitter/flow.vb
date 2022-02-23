@@ -29,7 +29,7 @@ Public Module _flow
                                                    ByVal offset As UInt32,
                                                    ByVal count As UInt32,
                                                    ByVal result As ref(Of UInt32)) As event_comb
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = sense(this, timeout_ms)

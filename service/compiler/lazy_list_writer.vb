@@ -25,22 +25,22 @@ Public Class lazy_list_writer
     End Function
 
     Public Function append(ByVal d As data_block) As Boolean
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Return append(AddressOf d.ToString)
     End Function
 
     Public Function append(ByVal v As vector(Of String)) As Boolean
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         Return append(Function() As String
                           Return v.str()
                       End Function)
     End Function
 
     Public Function append(ByVal v As vector(Of pair(Of String, String))) As Boolean
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         Return append(Function() As String
                           Return v.str(Function(ByVal x As pair(Of String, String)) As String
-                                           assert(Not x Is Nothing)
+                                           assert(x IsNot Nothing)
                                            Return strcat(x.first, character.blank, x.second)
                                        End Function,
                                        character.blank)
@@ -48,23 +48,23 @@ Public Class lazy_list_writer
     End Function
 
     Public Function append(Of WRITER As lazy_list_writer)(ByVal a As Func(Of WRITER, Boolean)) As Boolean
-        assert(Not a Is Nothing)
+        assert(a IsNot Nothing)
         Return a(direct_cast(Of WRITER)(Me))
     End Function
 
     Public Function append(ByVal f As Func(Of String)) As Boolean
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         v.emplace_back(f)
         Return True
     End Function
 
     Public Function append(ByVal w As lazy_list_writer) As Boolean
-        assert(Not w Is Nothing)
+        assert(w IsNot Nothing)
         Return append(AddressOf w.str)
     End Function
 
     Public Function append(ByVal r As ref(Of String)) As Boolean
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         Return append(AddressOf r.ToString)
     End Function
 
@@ -72,7 +72,7 @@ Public Class lazy_list_writer
     ' this function, the outer lazy_list_writer should take care of it.
     Public Function str() As String
         Return v.str(Function(ByVal x As Func(Of String)) As String
-                         assert(Not x Is Nothing)
+                         assert(x IsNot Nothing)
                          Return x()
                      End Function,
                      character.blank)

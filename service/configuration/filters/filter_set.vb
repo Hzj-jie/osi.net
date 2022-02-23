@@ -6,7 +6,7 @@ Friend Class filter_set
     Private ReadOnly filters As map(Of String, vector(Of ifilter))
 
     Public Sub New(ByVal fs As filter_selector, ByVal raw_filters As vector(Of pair(Of String, String)))
-        assert(Not fs Is Nothing)
+        assert(fs IsNot Nothing)
         If raw_filters Is Nothing OrElse raw_filters.size() = 0 Then
             filters = Nothing
         Else
@@ -14,16 +14,16 @@ Friend Class filter_set
             For i As Int32 = 0 To raw_filters.size() - 1
                 Dim f As ifilter = Nothing
                 f = fs.create(raw_filters(i).first, raw_filters(i).second)
-                assert(Not f Is Nothing)
+                assert(f IsNot Nothing)
                 filters(raw_filters(i).first).push_back(f)
             Next
         End If
     End Sub
 
     Private Shared Function match(ByVal fs As vector(Of ifilter), ByVal s As String) As Boolean
-        assert(Not fs Is Nothing AndAlso fs.size() > 0)
+        assert(fs IsNot Nothing AndAlso fs.size() > 0)
         For i As Int32 = 0 To fs.size() - 1
-            assert(Not fs(i) Is Nothing)
+            assert(fs(i) IsNot Nothing)
             If Not fs(i).match(s) Then
                 Return False
             End If
@@ -40,7 +40,7 @@ Friend Class filter_set
                     Dim j As map(Of String, vector(Of ifilter)).iterator = Nothing
                     j = filters.find(variants(i).first)
                     If j <> filters.end() AndAlso
-                       assert(Not (+j).second Is Nothing) AndAlso
+                       assert((+j).second IsNot Nothing) AndAlso
                        Not match((+j).second, variants(i).second) Then
                         Return False
                     End If

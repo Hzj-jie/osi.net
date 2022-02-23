@@ -11,7 +11,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     End Function
 
     Public Function left_shift(ByVal size As ##CLASS_NAME##, ByRef overflow As Boolean) As ##CLASS_NAME##
-        If Not size Is Nothing Then
+        If size IsNot Nothing Then
             Dim u As UInt64 = 0
             u = size.as_uint64(overflow)
             If Not overflow Then
@@ -22,7 +22,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     End Function
 
     Public Function left_shift(ByVal size As ##IMPL_CLASS##, ByRef overflow As Boolean) As ##CLASS_NAME##
-        If Not size Is Nothing Then
+        If size IsNot Nothing Then
             Dim u As UInt64 = 0
             u = size.as_uint64(overflow)
             If Not overflow Then
@@ -75,7 +75,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     End Function
 
     Public Function right_shift(ByVal size As ##CLASS_NAME##, ByRef overflow As Boolean) As ##CLASS_NAME##
-        If Not size Is Nothing Then
+        If size IsNot Nothing Then
             Dim u As UInt64 = 0
             u = size.as_uint64(overflow)
             If Not overflow Then
@@ -86,7 +86,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     End Function
 
     Public Function right_shift(ByVal size As ##IMPL_CLASS##, ByRef overflow As Boolean) As ##CLASS_NAME##
-        If Not size Is Nothing Then
+        If size IsNot Nothing Then
             Dim u As UInt64 = 0
             u = size.as_uint64(overflow)
             If Not overflow Then

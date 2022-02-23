@@ -66,7 +66,7 @@ Public NotInheritable Class lexer_test
         End Function
 
         Private Shared Function run_case(ByVal l As lexer) As Boolean
-            assert(Not l Is Nothing)
+            assert(l IsNot Nothing)
             Dim exp As vector(Of lexer.word) = Nothing
             Dim s As String = Nothing
             exp = generate_sentense(s)
@@ -165,7 +165,7 @@ Public NotInheritable Class lexer_test
 
         Private Shared Function run_case(ByVal ws() As pair(Of String, UInt32),
                                          ByVal l As lexer) As Boolean
-            assert(Not l Is Nothing)
+            assert(l IsNot Nothing)
             Dim exp As vector(Of lexer.word) = Nothing
             Dim s As String = Nothing
             exp = generate_sentense(ws, s)

@@ -12,7 +12,7 @@ Public Class expression_test
                                       ByVal cases(,) As String,
                                       ByVal has_error As Boolean,
                                       ByVal has_result As Boolean) As Boolean
-        assert(Not e Is Nothing)
+        assert(e IsNot Nothing)
         assert(Not isemptyarray(cases))
         For i As Int32 = 0 To array_size(cases) - 1
             Dim r As expression_result(Of Int32) = Nothing

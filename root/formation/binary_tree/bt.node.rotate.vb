@@ -12,7 +12,7 @@ Partial Public Class bt(Of T)
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function left_rotate(ByVal a As node) As node
 #If Not Performance Then
-            assert(Not a Is Nothing)
+            assert(a IsNot Nothing)
             assert(a.has_right_child())
 #End If
             Dim c As node = Nothing
@@ -38,7 +38,7 @@ Partial Public Class bt(Of T)
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Private Shared Function right_rotate(ByVal a As node) As node
 #If Not Performance Then
-            assert(Not a Is Nothing)
+            assert(a IsNot Nothing)
             assert(a.has_left_child())
 #End If
             Dim b As node = Nothing

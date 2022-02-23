@@ -16,8 +16,8 @@ Public Class block_wrapper
     Public ReadOnly wrapped As block
 
     Private Sub New(ByVal inner As block, ByVal wrapped As block)
-        assert(Not inner Is Nothing)
-        assert(Not wrapped Is Nothing)
+        assert(inner IsNot Nothing)
+        assert(wrapped IsNot Nothing)
         Me.inner = inner
         Me.wrapped = wrapped
     End Sub
@@ -25,7 +25,7 @@ Public Class block_wrapper
     Public Shared Function bind_wrap(ByVal v As var, ByRef o As _do_val_ref(Of block, block, Boolean)) As Boolean
         Dim f As _do_val_ref(Of block, block, Boolean) = Nothing
         If wrapper.bind(v, f) AndAlso
-           assert(Not f Is Nothing) Then
+           assert(f IsNot Nothing) Then
             o = Function(i As block, ByRef r As block) As Boolean
                     Dim wrapped As block = Nothing
                     If f(i, wrapped) Then
@@ -44,8 +44,8 @@ Public Class block_wrapper
     Public Shared Function unwrap(ByVal i As block, ByRef o As block) As Boolean
         Dim w As block_wrapper = Nothing
         If cast(Of block_wrapper)(i, w) AndAlso
-           assert(Not w Is Nothing) AndAlso
-           assert(Not w.inner Is Nothing) Then
+           assert(w IsNot Nothing) AndAlso
+           assert(w.inner IsNot Nothing) Then
             o = w.inner
             Return True
         Else

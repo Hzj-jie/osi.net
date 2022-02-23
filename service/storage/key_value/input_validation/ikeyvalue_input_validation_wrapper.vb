@@ -9,7 +9,7 @@ Friend Class ikeyvalue_input_validation_wrapper
     Private ReadOnly impl As ikeyvalue
 
     Public Sub New(ByVal impl As ikeyvalue)
-        assert(Not impl Is Nothing)
+        assert(impl IsNot Nothing)
         Me.impl = impl
     End Sub
 

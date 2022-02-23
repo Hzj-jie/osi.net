@@ -22,7 +22,7 @@ Public NotInheritable Class string_serializer_object(Of T, PROTECTOR)
     Private ReadOnly s As string_serializer(Of T, PROTECTOR)
 
     Public Sub New(ByVal s As string_serializer(Of T, PROTECTOR))
-        assert(Not s Is Nothing)
+        assert(s IsNot Nothing)
         Me.s = s
     End Sub
 

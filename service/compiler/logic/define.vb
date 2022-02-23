@@ -41,7 +41,7 @@ Namespace logic
         End Function
 
         Private Function define_variable(ByVal type As String, ByVal o As vector(Of String)) As Boolean
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             If Not scope.current().types().retrieve(type, Nothing) Then
                 Return False
             End If

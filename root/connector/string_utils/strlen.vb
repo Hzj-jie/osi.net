@@ -66,7 +66,7 @@ Public Module _strlen
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Sub last_index(ByVal input As StringBuilder, ByVal v As Int32)
-        assert(Not input Is Nothing)
+        assert(input IsNot Nothing)
         v += 1
         assert(v >= 0)
         If input.Length() <> v Then

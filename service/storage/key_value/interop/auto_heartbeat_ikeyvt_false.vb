@@ -10,12 +10,12 @@ Friend Class auto_heartbeat_ikeyvt_false
     Private ReadOnly impl As ikeyvt(Of _false)
 
     Public Sub New(ByVal impl As ikeyvt(Of _false))
-        assert(Not impl Is Nothing)
+        assert(impl IsNot Nothing)
         Me.impl = impl
     End Sub
 
     Private Function retry(ByVal d As Func(Of event_comb)) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim ec As event_comb = Nothing
         Dim retried As Boolean = False
         Return New event_comb(Function() As Boolean
@@ -42,7 +42,7 @@ Friend Class auto_heartbeat_ikeyvt_false
     End Function
 
     Private Function not_full_retry(ByVal d As Func(Of event_comb)) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Return retry(Function() As event_comb
                          Dim ec As event_comb = Nothing
                          Dim b As ref(Of Boolean) = Nothing

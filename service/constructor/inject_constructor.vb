@@ -33,8 +33,8 @@ Public NotInheritable Class inject_constructor(Of T)
     Shared Sub New()
         info = type_info(Of T).annotated_constructor_info(Of inject_constructor)()
         f = type_info(Of T).annotated_constructor(Of inject_constructor)()
-        assert(Not info Is Nothing)
-        assert(Not f Is Nothing)
+        assert(info IsNot Nothing)
+        assert(f IsNot Nothing)
     End Sub
 
     Public Shared Function invoke(ByRef o As T, ByVal ParamArray args() As Object) As Boolean

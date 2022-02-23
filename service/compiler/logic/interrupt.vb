@@ -27,7 +27,7 @@ Namespace logic
         End Sub
 
         Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Dim function_id As UInt32 = 0
             If Not scope.current().functions().of(function_name, function_id) Then
                 errors.interrupt_undefined(function_name)

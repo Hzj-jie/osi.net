@@ -23,7 +23,7 @@ Public NotInheritable Class async_result_destructor
         Dim th As Thread = New Thread(Sub()
                                           Dim v As Action = Nothing
                                           While q.pop(v) OrElse are.WaitOne()
-                                              If Not v Is Nothing Then
+                                              If v IsNot Nothing Then
                                                   Dim n As Int64 = 0
                                                   n = Now().milliseconds()
                                                   Try
@@ -55,14 +55,14 @@ Public NotInheritable Class async_result_destructor
     End Sub
 
     Public Shared Sub queue(ByVal state As async_state_t, ByVal ar As IAsyncResult)
-        assert(Not state Is Nothing AndAlso Not ar Is Nothing)
+        assert(state IsNot Nothing AndAlso ar IsNot Nothing)
         queue(Sub()
                   state.mark_finish(ar, False)
               End Sub)
     End Sub
 
     Public Shared Sub queue(ByVal e As Action)
-        assert(Not e Is Nothing)
+        assert(e IsNot Nothing)
         q.emplace(e)
         are.Set()
     End Sub

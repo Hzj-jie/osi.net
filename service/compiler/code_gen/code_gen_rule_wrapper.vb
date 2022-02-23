@@ -44,7 +44,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             Using defer.to(Sub()
                                nested -= uint32_1
                            End Sub)
-                assert(Not o Is Nothing)
+                assert(o IsNot Nothing)
                 If input.null_or_whitespace() Then
                     Return True
                 End If
@@ -52,7 +52,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
                 If Not nlp().parse(input, root:=root) Then
                     Return False
                 End If
-                assert(Not root Is Nothing)
+                assert(root IsNot Nothing)
                 assert(root.type = typed_node.root_type)
                 assert(root.type_name.Equals(typed_node.root_type_name))
                 If root.leaf() Then
@@ -86,7 +86,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         End Sub
 
         Public Function build(ByVal input As String, ByVal o As WRITER) As Boolean
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             ' Do not run the end_scope operations if currently it's in the root scope, the interpreter/primitive will be
             ' freed anyway.
             Using New SCOPE_T().without_end_scope()
@@ -128,7 +128,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         Protected ReadOnly functions As interrupts
 
         Public Sub New(ByVal functions As interrupts)
-            assert(Not functions Is Nothing)
+            assert(functions IsNot Nothing)
             Me.functions = functions
         End Sub
 
@@ -142,7 +142,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         End Function
 
         Public Function parse(ByVal input As String, ByVal e As exportable) As Boolean
-            assert(Not e Is Nothing)
+            assert(e IsNot Nothing)
             Dim o As New WRITER()
             Return code_gen_rule_wrapper(Of WRITER,
                                             _nlexer_rule,

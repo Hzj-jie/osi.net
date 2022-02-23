@@ -12,12 +12,12 @@ Imports clusters_t = osi.root.formation.unordered_map(Of System.Int64, osi.servi
 
 Partial Public NotInheritable Class free_cluster
     Private Shared Function head_cluster(ByVal c As cluster) As Boolean
-        Return assert(Not c Is Nothing) AndAlso Not c.free() AndAlso Not c.has_prev_id()
+        Return assert(c IsNot Nothing) AndAlso Not c.free() AndAlso Not c.has_prev_id()
     End Function
 
     Private Shared Function chain(ByVal h As cluster, ByVal cs As vector(Of cluster)) As event_comb
-        assert(Not h Is Nothing)
-        assert(Not cs Is Nothing)
+        assert(h IsNot Nothing)
+        assert(cs IsNot Nothing)
         Dim i As Int32 = 0
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -36,14 +36,14 @@ Partial Public NotInheritable Class free_cluster
     End Function
 
     Private Function cluster(ByVal id As Int64, ByRef c As cluster, ByVal m As clusters_t) As Boolean
-        assert(Not m Is Nothing)
+        assert(m IsNot Nothing)
         Dim it As clusters_t.iterator = Nothing
         it = m.find(id)
         If it = m.end() Then
             Return False
         Else
             c = (+it).second
-            assert(Not c Is Nothing)
+            assert(c IsNot Nothing)
             Return True
         End If
     End Function
@@ -58,7 +58,7 @@ Partial Public NotInheritable Class free_cluster
     End Function
 
     Private Function next_cluster(ByVal c As cluster, ByRef n As cluster) As Boolean
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         If c.has_next_id() Then
             If cluster(c.next_id(), n) Then
                 Return True
@@ -73,10 +73,10 @@ Partial Public NotInheritable Class free_cluster
 
     Private Sub chained_clusters(ByVal h As cluster, ByVal cs As vector(Of cluster))
         assert(head_cluster(h))
-        assert(Not cs Is Nothing AndAlso cs.empty())
+        assert(cs IsNot Nothing AndAlso cs.empty())
         Dim n As cluster = Nothing
         Do
-            If Not n Is Nothing Then
+            If n IsNot Nothing Then
                 h = n
             End If
             cs.emplace_back(h)
@@ -86,7 +86,7 @@ Partial Public NotInheritable Class free_cluster
     'exp_size is the real size of the data
     Private Function free_cluster(ByVal exp_size As UInt64, ByVal c As ref(Of cluster)) As event_comb
         assert(exp_size > 0)
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If Not fcs.empty() Then
@@ -113,8 +113,8 @@ Partial Public NotInheritable Class free_cluster
                                    ByVal cs As vector(Of cluster),
                                    ByVal offsets As vector(Of UInt64)) As event_comb
         assert(exp_size > 0)
-        assert(Not cs Is Nothing AndAlso cs.empty())
-        assert(Not offsets Is Nothing AndAlso offsets.empty())
+        assert(cs IsNot Nothing AndAlso cs.empty())
+        assert(offsets IsNot Nothing AndAlso offsets.empty())
         Dim ec As event_comb = Nothing
         Dim c As ref(Of cluster) = Nothing
         Dim i As UInt64 = 0
@@ -125,7 +125,7 @@ Partial Public NotInheritable Class free_cluster
                                           assert(c Is Nothing)
                                           c = New ref(Of cluster)()
                                       Else
-                                          assert(Not c Is Nothing AndAlso Not (+c) Is Nothing)
+                                          assert(c IsNot Nothing AndAlso (+c) IsNot Nothing)
                                           cs.emplace_back(+c)
                                           offsets.emplace_back(i)
                                           assert((+c).free())

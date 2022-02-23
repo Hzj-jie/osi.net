@@ -31,9 +31,9 @@ Public Class async_getter_adapter(Of T)
     Private ReadOnly attr As type_attribute
 
     Protected Sub New(ByVal p As pair(Of async_getter(Of T), type_attribute))
-        assert(Not p Is Nothing)
-        assert(Not p.first Is Nothing)
-        assert(Not p.second Is Nothing)
+        assert(p IsNot Nothing)
+        assert(p.first IsNot Nothing)
+        assert(p.second IsNot Nothing)
         Me.dev = p.first
         Me.attr = p.second
     End Sub
@@ -63,8 +63,8 @@ Public Class async_getter_adapter(Of T)
                                      (ByVal i As async_getter(Of IT),
                                       ByVal c As Func(Of IT, OT)) _
                                      As pair(Of async_getter(Of T), type_attribute)
-        assert(Not i Is Nothing)
-        assert(Not c Is Nothing)
+        assert(i IsNot Nothing)
+        assert(c IsNot Nothing)
         Dim p As ref(Of IT) = Nothing
         Dim ec As event_comb = Nothing
         Return pair.emplace_of(Of async_getter(Of T), type_attribute)(
@@ -110,7 +110,7 @@ Public Class async_getter_adapter(Of T)
     End Function
 
     Public Function _do(ByVal d As Func(Of T, event_comb)) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim ec As event_comb = Nothing
         Dim p As ref(Of T) = Nothing
         Return New event_comb(Function() As Boolean

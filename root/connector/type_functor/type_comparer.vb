@@ -43,8 +43,8 @@ Public NotInheritable Class type_comparer
     End Function
 
     Public Shared Function infer_compare(ByVal x As Object, ByVal y As Object) As Int32
-        assert(Not x Is Nothing)
-        assert(Not y Is Nothing)
+        assert(x IsNot Nothing)
+        assert(y IsNot Nothing)
         Return compare(x.GetType(), y.GetType(), x, y)
     End Function
 

@@ -61,7 +61,7 @@ Public NotInheritable Class thread_static(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function or_set(ByVal i As T, ByVal validate As Func(Of T, Boolean), ByRef o As T) As Boolean
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Return or_set(func_t.of(i), validate, o)
     End Function
 
@@ -74,7 +74,7 @@ Public NotInheritable Class thread_static(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function or_set(ByVal i As Func(Of T), validate As Func(Of T, Boolean), ByRef o As T) As Boolean
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
         Dim tid As UInt32 = 0
         If Not current_slot_id(tid) Then
             Return False

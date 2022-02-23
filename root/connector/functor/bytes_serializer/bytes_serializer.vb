@@ -22,7 +22,7 @@ Partial Public Class bytes_serializer(Of T)
         Else
             f = write_to()
         End If
-        If Not f Is Nothing Then
+        If f IsNot Nothing Then
             Return f(i, o)
         End If
 
@@ -43,7 +43,7 @@ Partial Public Class bytes_serializer(Of T)
     End Function
 
     Private Function do_from_bytes(ByVal i As MemoryStream, ByRef o As T, ByVal consume As Boolean) As Boolean
-        assert(Not i Is Nothing)
+        assert(i IsNot Nothing)
 
         Dim f As _do_val_ref(Of MemoryStream, T, Boolean) = Nothing
         If consume Then
@@ -51,7 +51,7 @@ Partial Public Class bytes_serializer(Of T)
         Else
             f = read_from()
         End If
-        If Not f Is Nothing Then
+        If f IsNot Nothing Then
             Return f(i, o)
         End If
 

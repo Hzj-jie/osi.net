@@ -43,8 +43,8 @@ Public NotInheritable Class type_equaler
     End Function
 
     Public Shared Function infer_equal(ByVal x As Object, ByVal y As Object) As Boolean
-        assert(Not x Is Nothing)
-        assert(Not y Is Nothing)
+        assert(x IsNot Nothing)
+        assert(y IsNot Nothing)
         Return equal(x.GetType(), y.GetType(), x, y)
     End Function
 

@@ -21,7 +21,7 @@ Public NotInheritable Class unordered_map
                                                      As unordered_map(Of KEY_T, VALUE_T)
         Dim r As New unordered_map(Of KEY_T, VALUE_T)()
         For i As Int32 = 0 To array_size_i(vs) - 1
-            If Not vs(i) Is Nothing Then
+            If vs(i) IsNot Nothing Then
                 If require_copy Then
                     r.emplace(vs(i).to_first_const_pair())
                 Else
@@ -55,7 +55,7 @@ Public Module _unordered_map
                             ByVal f As Func(Of KEY_T,
                                                VALUE_T,
                                                tuple(Of unordered_map(Of KEY_T, VALUE_T).iterator, Boolean))) As Boolean
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         If this Is Nothing OrElse that Is Nothing Then
             Return False
         End If

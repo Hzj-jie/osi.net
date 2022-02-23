@@ -24,14 +24,14 @@ Partial Public Class event_comb
         Return New event_comb(Function() As Boolean
                                   restore = event_comb.wait()
                                   this.then(Sub(ByVal r As Object)
-                                                If Not result Is Nothing Then
+                                                If result IsNot Nothing Then
                                                     result.set(direct_cast(Of T)(r))
                                                 End If
                                                 succeeded = True
                                                 restore()
                                             End Sub,
                                             Sub()
-                                                If Not result Is Nothing Then
+                                                If result IsNot Nothing Then
                                                     result.set([default](Of T).null)
                                                 End If
                                                 succeeded = False

@@ -62,7 +62,7 @@ Partial Public NotInheritable Class big_dec
     End Function
 
     Public Function add(ByVal that As big_dec) As big_dec
-        If Not that Is Nothing AndAlso Not that.is_zero() Then
+        If that IsNot Nothing AndAlso Not that.is_zero() Then
             If is_zero() Then
                 replace_by(that)
             ElseIf positive() = that.positive() Then
@@ -172,7 +172,7 @@ Partial Public NotInheritable Class big_dec
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As big_dec) As Boolean
-        Return Not this Is Nothing AndAlso this.true()
+        Return this IsNot Nothing AndAlso this.true()
     End Operator
 
     Public Shared Operator Not(ByVal this As big_dec) As Boolean
@@ -232,8 +232,8 @@ Partial Public NotInheritable Class big_dec
         Dim c As Int32 = 0
         c = object_compare(this, that)
         If c = object_compare_undetermined Then
-            assert(Not this Is Nothing)
-            assert(Not that Is Nothing)
+            assert(this IsNot Nothing)
+            assert(that IsNot Nothing)
             If this.positive() <> that.positive() Then
                 Return If(this.positive(), 1, -1)
             Else

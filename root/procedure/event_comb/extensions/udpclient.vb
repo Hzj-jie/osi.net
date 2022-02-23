@@ -10,9 +10,9 @@ Public Module _udpclient
     Private Function send(ByVal this As UdpClient,
                           ByVal s As Func(Of AsyncCallback, IAsyncResult),
                           ByVal r As ref(Of UInt32)) As event_comb
-        assert(Not s Is Nothing)
+        assert(s IsNot Nothing)
         Return create(Function() As Boolean
-                          Return Not this Is Nothing
+                          Return this IsNot Nothing
                       End Function,
                       Function() As event_comb
                           Return event_comb_async_operation.ctor(Function(ac As AsyncCallback) As IAsyncResult
@@ -75,7 +75,7 @@ Public Module _udpclient
                                           Optional ByVal ep As ref(Of IPEndPoint) = Nothing) _
                                          As event_comb
         Return create(Function() As Boolean
-                          Return Not this Is Nothing
+                          Return this IsNot Nothing
                       End Function,
                       Function() As event_comb
                           Return event_comb_async_operation.ctor(Function(ac As AsyncCallback) As IAsyncResult

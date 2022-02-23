@@ -14,7 +14,7 @@ Partial Public NotInheritable Class stopwatch
         Private ms As Int64
 
         Public Sub New(ByVal waitms As UInt32, ByVal d As Action)
-            assert(Not d Is Nothing)
+            assert(d IsNot Nothing)
             Me.d = d
             Me.waitms = waitms
             Me.restart()

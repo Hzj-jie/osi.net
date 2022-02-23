@@ -1,11 +1,11 @@
 
 ##DEFAULT TYPE Byte
         bytes_serializer.fixed.register(Function(ByVal i As ##TYPE##, ByVal o As MemoryStream) As Boolean
-                                            assert(Not o Is Nothing)
+                                            assert(o IsNot Nothing)
                                             Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As ##TYPE##) As Boolean
-                                            assert(Not i Is Nothing)
+                                            assert(i IsNot Nothing)
                                             If i.Length() - i.Position() < type_info(Of ##TYPE##).size_uint32() Then
                                                 Return False
                                             End If

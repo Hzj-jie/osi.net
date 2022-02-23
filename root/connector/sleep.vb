@@ -81,12 +81,12 @@ Public Module _sleep
     End Sub
 
     Private Function until_when(Of T)(ByVal d As _do(Of T, Boolean)) As _do(Of T, Boolean)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Return Function(ByRef x) Not d(x)
     End Function
 
     Private Function when_when(ByVal d As Func(Of Boolean)) As _do(Of Byte, Boolean)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Return Function(ByRef x) d()
     End Function
 
@@ -95,7 +95,7 @@ Public Module _sleep
     End Function
 
     Public Sub sleep_wait_when(Of T)(ByVal d As _do(Of T, Boolean), ByRef i As T, ByVal ms As Int64)
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         While d(i)
             sleep(ms)
         End While
@@ -105,7 +105,7 @@ Public Module _sleep
                                           ByRef i As T,
                                           ByVal ms As Int64,
                                           ByVal timeout_ms As Int64) As Boolean
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim start_ms As Int64 = 0
         start_ms = Now().milliseconds()
         Dim timeouted As Boolean = False

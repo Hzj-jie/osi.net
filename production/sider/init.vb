@@ -52,7 +52,7 @@ Public Module _init
                                    Optional ByVal r As ref(Of istrkeyvt) = Nothing) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  assert(Not s Is Nothing)
+                                  assert(s IsNot Nothing)
                                   r.renew()
                                   ec = async_device_constructor.resolve(
                                            New var(s.values().env_transform(env_start_str, env_end_str)),
@@ -74,7 +74,7 @@ Public Module _init
     Private Sub load_istrkeyvt()
         Dim ss As vector(Of section) = Nothing
         ss = config.sections("istrkeyvt")
-        assert(Not ss Is Nothing)
+        assert(ss IsNot Nothing)
         If Not ss.empty() Then
             Dim loaded As atomic_int = Nothing
             loaded = New atomic_int()
@@ -114,7 +114,7 @@ Public Module _init
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
-                                         assert(Not +o Is Nothing) AndAlso
+                                         assert(+o IsNot Nothing) AndAlso
                                          -+o AndAlso
                                          goto_end()
                               End Function)
@@ -127,7 +127,7 @@ Public Module _init
     Private Sub load_server()
         Dim ss As vector(Of section) = Nothing
         ss = config.sections("server")
-        assert(Not ss Is Nothing)
+        assert(ss IsNot Nothing)
         If Not ss.empty() Then
             Dim loaded As atomic_int = Nothing
             loaded = New atomic_int()

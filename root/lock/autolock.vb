@@ -11,7 +11,7 @@ Public Module _autolock
         Private ReadOnly i As T
 
         Public Sub New(ByRef i As T)
-            assert(Not i Is Nothing)
+            assert(i IsNot Nothing)
             Me.i = i
             Me.i.wait()
         End Sub
@@ -27,7 +27,7 @@ Public Module _autolock
         Private ReadOnly i As ref(Of T)
 
         Public Sub New(ByRef i As ref(Of T))
-            assert(Not i Is Nothing)
+            assert(i IsNot Nothing)
             Me.i = i
             Me.i.p.wait()
         End Sub

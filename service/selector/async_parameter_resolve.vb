@@ -10,8 +10,8 @@ Public Module _async_parameter_resolve
                                                       ByVal exec As Func(Of FT, ref(Of T), event_comb),
                                                       ByVal p1 As PT1,
                                                       ByVal o As ref(Of T)) As event_comb
-        assert(Not r Is Nothing)
-        assert(Not exec Is Nothing)
+        assert(r IsNot Nothing)
+        assert(exec IsNot Nothing)
         Dim f As FT = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -29,10 +29,10 @@ Public Module _async_parameter_resolve
                                      (ByVal r As _do_val_ref(Of PT1, Func(Of ref(Of T), event_comb), Boolean),
                                       ByVal p1 As PT1,
                                       ByVal o As ref(Of T)) As event_comb
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         Return parameter_resolve(r,
                                  Function(x As Func(Of ref(Of T), event_comb), y As ref(Of T)) As event_comb
-                                     assert(Not x Is Nothing)
+                                     assert(x IsNot Nothing)
                                      Return x(y)
                                  End Function,
                                  p1,
@@ -44,11 +44,11 @@ Public Module _async_parameter_resolve
                                       ByVal p1 As PT1,
                                       ByVal p2 As PT2,
                                       ByVal o As ref(Of T)) As event_comb
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         Return parameter_resolve(r,
                                  Function(x As Func(Of PT2, ref(Of T), event_comb),
                                           y As ref(Of T)) As event_comb
-                                     assert(Not x Is Nothing)
+                                     assert(x IsNot Nothing)
                                      Return x(p2, y)
                                  End Function,
                                  p1,
@@ -63,11 +63,11 @@ Public Module _async_parameter_resolve
                                       ByVal p2 As PT2,
                                       ByVal p3 As PT3,
                                       ByVal o As ref(Of T)) As event_comb
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         Return parameter_resolve(r,
                                  Function(x As Func(Of PT2, PT3, ref(Of T), event_comb),
                                           y As ref(Of T)) As event_comb
-                                     assert(Not x Is Nothing)
+                                     assert(x IsNot Nothing)
                                      Return x(p2, p3, y)
                                  End Function,
                                  p1,
@@ -83,11 +83,11 @@ Public Module _async_parameter_resolve
                                       ByVal p3 As PT3,
                                       ByVal p4 As PT4,
                                       ByVal o As ref(Of T)) As event_comb
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         Return parameter_resolve(r,
                                  Function(x As Func(Of PT2, PT3, PT4, ref(Of T), event_comb),
                                           y As ref(Of T)) As event_comb
-                                     assert(Not x Is Nothing)
+                                     assert(x IsNot Nothing)
                                      Return x(p2, p3, p4, y)
                                  End Function,
                                  p1,
@@ -104,11 +104,11 @@ Public Module _async_parameter_resolve
                          ByVal p4 As PT4,
                          ByVal p5 As PT5,
                          ByVal o As ref(Of T)) As event_comb
-        assert(Not r Is Nothing)
+        assert(r IsNot Nothing)
         Return parameter_resolve(r,
                                  Function(x As _func(Of PT2, PT3, PT4, PT5, ref(Of T), event_comb),
                                           y As ref(Of T)) As event_comb
-                                     assert(Not x Is Nothing)
+                                     assert(x IsNot Nothing)
                                      Return x(p2, p3, p4, p5, y)
                                  End Function,
                                  p1,

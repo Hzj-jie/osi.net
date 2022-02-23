@@ -35,7 +35,7 @@ Friend NotInheritable Class dataprovider_collection
                                                                   v.expire()
                                                               End If
                                                               If v.expired() Then
-                                                                  assert(Not k Is Nothing)
+                                                                  assert(k IsNot Nothing)
                                                                   ns.push_back(k)
                                                               End If
                                                           End Sub)
@@ -60,7 +60,7 @@ Friend NotInheritable Class dataprovider_collection
     End Sub
 
     Private Shared Function out_of_lifetime(ByVal lifetime_ms As Int64, ByVal v As idataprovider) As Boolean
-        assert(Not v Is Nothing)
+        assert(v IsNot Nothing)
         Return ticks_to_milliseconds(nowadays.ticks() - v.last_refered_ticks()) > lifetime_ms
     End Function
 End Class

@@ -16,7 +16,7 @@ Partial Public NotInheritable Class b2style
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
+            assert(b IsNot Nothing)
             Me.l = b
         End Sub
 

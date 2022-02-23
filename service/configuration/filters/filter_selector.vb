@@ -72,7 +72,7 @@ Public NotInheritable Class filter_selector
     End Sub
 
     Public Sub New(ByVal m As map(Of String, Func(Of String, ifilter)))
-        assert(Not m Is Nothing)
+        assert(m IsNot Nothing)
         Me.m = m
     End Sub
 

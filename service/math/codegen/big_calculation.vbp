@@ -5,7 +5,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     End Function
 
     Public Function add(ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
-        If Not that Is Nothing AndAlso Not that.is_zero() Then
+        If that IsNot Nothing AndAlso Not that.is_zero() Then
             If is_zero() Then
                 replace_by(that)
             ElseIf positive() = that.positive() Then

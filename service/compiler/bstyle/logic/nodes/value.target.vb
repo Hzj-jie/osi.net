@@ -16,7 +16,7 @@ Partial Public NotInheritable Class bstyle
         ' Type of the single data slot is handled by logic.
         Public Shared Function read_target_single_data_slot() As read_scoped(Of target).ref(Of String)
             Return scope.current().value_target().value(Function(ByVal x As target, ByRef o As String) As Boolean
-                                                            assert(Not x Is Nothing)
+                                                            assert(x IsNot Nothing)
                                                             If x.names.size() <> 1 Then
                                                                 Return False
                                                             End If
@@ -32,7 +32,7 @@ Partial Public NotInheritable Class bstyle
         Private Shared Sub define_single_data_slot_temp_target(ByVal type As String,
                                                                ByVal name As String,
                                                                ByVal o As logic_writer)
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             type = scope.current().type_alias()(type)
             assert(Not scope.current().structs().defined(type))
             Dim existing_type As String = Nothing
@@ -56,14 +56,14 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function with_temp_target(ByVal type As String,
                                                 ByVal n As typed_node,
                                                 ByVal o As logic_writer) As vector(Of String)
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
+            assert(n IsNot Nothing)
+            assert(o IsNot Nothing)
             Dim params As struct_def = Nothing
             assert(scope.current().structs().resolve(type, logic_name.temp_variable(n), params))
-            assert(Not params Is Nothing)
+            assert(params IsNot Nothing)
             params.primitives.
                    foreach(Sub(ByVal p As builders.parameter)
-                               assert(Not p Is Nothing)
+                               assert(p IsNot Nothing)
                                define_single_data_slot_temp_target(p.type, p.name, o)
                            End Sub)
             Return with_target(type, params.primitives())
@@ -71,9 +71,9 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function with_target(ByVal type As String,
                                            ByVal ps As stream(Of builders.parameter)) As vector(Of String)
-            assert(Not ps Is Nothing)
+            assert(ps IsNot Nothing)
             Dim vs As vector(Of String) = ps.map(Function(ByVal p As builders.parameter) As String
-                                                     assert(Not p Is Nothing)
+                                                     assert(p IsNot Nothing)
                                                      assert(Not p.name.null_or_whitespace())
                                                      Return p.name
                                                  End Function).

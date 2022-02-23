@@ -23,7 +23,7 @@ Public NotInheritable Class console_key_info_mapping_test
         End If
         assertion.not_equal(c, character.null)
         assertion.is_true(c.keycode(v))
-        If Not assertion.is_true(Not v Is Nothing AndAlso Not v.empty()) Then
+        If assertion.is_true(Not v IsNot Nothing AndAlso Not v.empty()) Then
             Return False
         End If
         For i As UInt32 = 0 To v.size() - uint32_1

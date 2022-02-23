@@ -28,7 +28,7 @@ Friend Class map_case
     Private ReadOnly v As [set](Of String) = Nothing
 
     Private Function validate() As Boolean
-        Return Not v Is Nothing
+        Return v IsNot Nothing
     End Function
 
     Private Shared Function rnd_key() As String
@@ -200,8 +200,8 @@ Friend Class map_case
 
         Dim cmp As void(Of map(Of String, UInt32), map(Of String, UInt32)) =
             Sub(ByRef base, ByRef camp)
-                assert(Not base Is Nothing)
-                assert(Not camp Is Nothing)
+                assert(base IsNot Nothing)
+                assert(camp IsNot Nothing)
                 c = 0
                 it = base.begin()
                 While it <> base.end()

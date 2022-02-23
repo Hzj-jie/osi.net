@@ -31,7 +31,7 @@ Namespace primitive
                 ' rnd_int64 is not very well distributed because of the precision.
                 r = (rnd_int64() Or rnd_int(ref_types.abs, ref_types.hrel + 1))
             Loop Until [New](r, o)
-            assert(Not o Is Nothing)
+            assert(o IsNot Nothing)
             Return o
         End Function
 
@@ -197,7 +197,7 @@ Namespace primitive
             For Each i As ref_types In {ref_types.abs, ref_types.rel, ref_types.habs, ref_types.hrel}
                 If strstartwith(s, i.ToString()) Then
                     t = i.ToString()
-                    assert(Not t Is Nothing)
+                    assert(t IsNot Nothing)
                     Exit For
                 End If
             Next
@@ -234,7 +234,7 @@ Namespace primitive
             If c <> object_compare_undetermined Then
                 Return c
             End If
-            assert(Not other Is Nothing)
+            assert(other IsNot Nothing)
             Return export().CompareTo(other.export())
         End Function
 

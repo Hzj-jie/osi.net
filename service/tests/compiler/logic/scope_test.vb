@@ -28,8 +28,8 @@ Namespace logic
         Private Shared Sub execute(ByVal s As scope,
                                    ByVal stack As vector(Of pair(Of String, String)),
                                    ByVal depth As Int32)
-            assert(Not s Is Nothing)
-            assert(Not stack Is Nothing)
+            assert(s IsNot Nothing)
+            assert(stack IsNot Nothing)
             Dim c As Int32 = rnd_int(0, 100)
             For i As Int32 = 0 To c - 1
                 Dim name As String = Nothing

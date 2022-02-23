@@ -35,12 +35,12 @@ End Interface
 
 Public Module _device_pool
     <Extension()> Public Function limited_max_count(ByVal d As idevice_pool) As Boolean
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Return d.max_count() > 0
     End Function
 
     <Extension()> Public Function empty(ByVal d As idevice_pool) As Boolean
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Return d.free_count() = 0
     End Function
 

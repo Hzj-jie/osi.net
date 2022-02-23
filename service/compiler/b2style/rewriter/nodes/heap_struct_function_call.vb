@@ -16,13 +16,13 @@ Partial Public NotInheritable Class b2style
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
+            assert(b IsNot Nothing)
             Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
                 Implements code_gen(Of typed_node_writer).build
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
             Return l.typed(Of function_call).build(heap_struct_name.bstyle_function(n.child(0)), n, o)
         End Function
     End Class

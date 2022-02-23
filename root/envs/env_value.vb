@@ -49,7 +49,7 @@ Public Module _env_value
             Return False
         Else
             o = Environment.GetEnvironmentVariable(i)
-            Return Not o Is Nothing
+            Return o IsNot Nothing
         End If
     End Function
 

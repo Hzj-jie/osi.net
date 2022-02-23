@@ -8,7 +8,7 @@ Friend Class isynckeyvalue_input_validation_wrapper
     Private ReadOnly impl As isynckeyvalue
 
     Public Sub New(ByVal impl As isynckeyvalue)
-        assert(Not impl Is Nothing)
+        assert(impl IsNot Nothing)
         Me.impl = impl
     End Sub
 

@@ -52,7 +52,7 @@ Partial Public Class listener
 
         Public Sub New(ByVal c As UdpClient)
             MyBase.New()
-            assert(Not c Is Nothing)
+            assert(c IsNot Nothing)
             Me.c = c
             Me.s = as_sensor(Function(ByRef pending As Boolean) As Boolean
                                  Dim b As Int32 = 0

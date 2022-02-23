@@ -46,7 +46,7 @@ public static class Program {
       wl("                ByVal v As vector(Of String),");
       wl("                ByRef p As UInt32,");
       wl("                ByRef o As instruction_gen) As Boolean");
-      wl("            assert(Not v Is Nothing)");
+      wl("            assert(v IsNot Nothing)");
       wl("            assert(v.size() > p)");
       wl("            If Not v(p).Equals(\"" + ss[0] + "\") Then");
       wl("                Return False");

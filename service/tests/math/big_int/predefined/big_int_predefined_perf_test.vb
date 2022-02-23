@@ -71,7 +71,7 @@ Public Class big_int_predefined_perf_test
                 Console.WriteLine(start)
                 Dim r As String = Nothing
                 r = Console.ReadLine()
-                While Not r Is Nothing
+                While r IsNot Nothing
                     Try
                         run_case(r)
                     Catch ex As Exception

@@ -43,7 +43,7 @@ Partial Public Class type_attribute
                 Return o
             Else
                 If check_before_get(init_mode) Then
-                    assert(Not v Is Nothing)
+                    assert(v IsNot Nothing)
                 End If
                 Return v
             End If
@@ -58,7 +58,7 @@ Partial Public Class type_attribute
         Public Sub [set](ByVal i As Object, ByVal init_mode As init_mode, ByVal forward_mode As forward_mode)
             If Not forward_signal.set(v, i, forward_mode) Then
                 If check_before_set(init_mode) Then
-                    assert(Not i Is Nothing)
+                    assert(i IsNot Nothing)
                     assert(v Is Nothing)
                 End If
                 v = i

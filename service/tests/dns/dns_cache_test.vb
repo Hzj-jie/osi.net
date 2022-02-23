@@ -28,7 +28,7 @@ Public NotInheritable Class dns_cache_test
 
     Private Shared Function check_cache(ByVal f As Func(Of ref(Of IPHostEntry), event_comb),
                                         ByVal exp As IPHostEntry) As Boolean
-        assert(Not f Is Nothing)
+        assert(f IsNot Nothing)
         Dim c As ref(Of IPHostEntry) = Nothing
         c.renew()
         ' Inserting to cache is an asynchronous operation.

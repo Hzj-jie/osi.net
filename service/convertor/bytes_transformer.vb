@@ -21,7 +21,7 @@ Public Module _bytes_transformer
                                ByRef i() As Byte,
                                ByRef offset As UInt32,
                                ByRef count As UInt32) As Boolean
-        assert(Not t Is Nothing)
+        assert(t IsNot Nothing)
         Dim b() As Byte = Nothing
         If t(i, offset, count, b) Then
             i = b
@@ -37,7 +37,7 @@ Public Module _bytes_transformer
                                             ByRef i() As Byte,
                                             ByRef offset As UInt32,
                                             ByRef count As UInt32) As Boolean
-        assert(Not bt Is Nothing)
+        assert(bt IsNot Nothing)
         Return transform(AddressOf bt.transform, i, offset, count)
     End Function
 
@@ -46,7 +46,7 @@ Public Module _bytes_transformer
                                ByRef i() As Byte,
                                ByRef offset As UInt32,
                                ByRef count As UInt32) As Boolean
-        assert(Not bt Is Nothing)
+        assert(bt IsNot Nothing)
         If bt.empty() Then
             Return True
         ElseIf forward Then
@@ -74,14 +74,14 @@ Public Module _bytes_transformer
                                             ByVal i() As Byte,
                                             ByVal count As UInt32,
                                             ByRef o() As Byte) As Boolean
-        assert(Not bt Is Nothing)
+        assert(bt IsNot Nothing)
         Return bt.transform(i, uint32_0, count, o)
     End Function
 
     <Extension()> Public Function transform(ByVal bt As bytes_transformer,
                                             ByVal i() As Byte,
                                             ByRef o() As Byte) As Boolean
-        assert(Not bt Is Nothing)
+        assert(bt IsNot Nothing)
         Return bt.transform(i, uint32_0, array_size(i), o)
     End Function
 
@@ -89,14 +89,14 @@ Public Module _bytes_transformer
                                                     ByVal i() As Byte,
                                                     ByVal count As UInt32,
                                                     ByRef o() As Byte) As Boolean
-        assert(Not bt Is Nothing)
+        assert(bt IsNot Nothing)
         Return bt.transform_forward(i, uint32_0, count, o)
     End Function
 
     <Extension()> Public Function transform_forward(ByVal bt As bytes_transformer_collection,
                                                     ByVal i() As Byte,
                                                     ByRef o() As Byte) As Boolean
-        assert(Not bt Is Nothing)
+        assert(bt IsNot Nothing)
         Return bt.transform_forward(i, uint32_0, array_size(i), o)
     End Function
 
@@ -104,14 +104,14 @@ Public Module _bytes_transformer
                                                      ByVal i() As Byte,
                                                      ByVal count As UInt32,
                                                      ByRef o() As Byte) As Boolean
-        assert(Not bt Is Nothing)
+        assert(bt IsNot Nothing)
         Return bt.transform_backward(i, uint32_0, count, o)
     End Function
 
     <Extension()> Public Function transform_backward(ByVal bt As bytes_transformer_collection,
                                                      ByVal i() As Byte,
                                                      ByRef o() As Byte) As Boolean
-        assert(Not bt Is Nothing)
+        assert(bt IsNot Nothing)
         Return bt.transform_backward(i, uint32_0, array_size(i), o)
     End Function
 End Module

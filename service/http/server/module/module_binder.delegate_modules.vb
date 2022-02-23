@@ -15,8 +15,8 @@ Partial Public NotInheritable Class module_binder
         Private ReadOnly action As Func(Of server.context, Boolean)
 
         Private Sub New(ByVal filter As context_filter, ByVal action As Func(Of server.context, Boolean))
-            assert(Not filter Is Nothing)
-            assert(Not action Is Nothing)
+            assert(filter IsNot Nothing)
+            assert(action IsNot Nothing)
             Me.filter = filter
             Me.action = action
         End Sub
@@ -40,8 +40,8 @@ Partial Public NotInheritable Class module_binder
 
         Private Sub New(ByVal filter As context_filter,
                         ByVal action As _do_val_ref(Of server.context, event_comb, Boolean))
-            assert(Not filter Is Nothing)
-            assert(Not action Is Nothing)
+            assert(filter IsNot Nothing)
+            assert(action IsNot Nothing)
             Me.filter = filter
             Me.action = action
         End Sub
@@ -64,7 +64,7 @@ Partial Public NotInheritable Class module_binder
 
         Private Sub New(ByVal filter As context_filter, ByVal action As Action(Of server.context))
             MyBase.New(filter)
-            assert(Not action Is Nothing)
+            assert(action IsNot Nothing)
             Me.action = action
         End Sub
 
@@ -85,7 +85,7 @@ Partial Public NotInheritable Class module_binder
 
         Private Sub New(ByVal filter As context_filter, ByVal action As Func(Of server.context, event_comb))
             MyBase.New(filter)
-            assert(Not action Is Nothing)
+            assert(action IsNot Nothing)
             Me.action = action
         End Sub
 

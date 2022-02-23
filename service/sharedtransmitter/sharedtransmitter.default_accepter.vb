@@ -14,7 +14,7 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
         Private ReadOnly remote As const_pair(Of ADDRESS_T, PORT_T)
 
         Public Sub New(ByVal remote As const_pair(Of ADDRESS_T, PORT_T))
-            assert(Not remote Is Nothing)
+            assert(remote IsNot Nothing)
             Me.remote = remote
         End Sub
 

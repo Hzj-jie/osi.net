@@ -12,7 +12,7 @@ Partial Public NotInheritable Class promise
     End Function
 
     Public Function [then](ByVal on_resolve As Action(Of Object), ByVal on_reject As Action(Of Object)) As promise
-        assert(Not on_resolve Is Nothing)
+        assert(on_resolve IsNot Nothing)
         Return [then](Function(ByVal result As Object) As Object
                           on_resolve(result)
                           Return result

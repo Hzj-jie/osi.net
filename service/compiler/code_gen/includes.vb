@@ -70,7 +70,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR)
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
             assert(n.child_count() = 2)
             Return include_file(n.child(1).word().str().Trim(character.quote).c_unescape(), o)
         End Function
@@ -86,7 +86,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Private Const kw_include As String = "#include"
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
             assert(n.leaf())
             Dim file As String = n.word().str()
             assert(file.StartsWith(kw_include))

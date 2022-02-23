@@ -223,7 +223,7 @@ Public Module _headers_extension
     <Extension()> Public Function is_www_form_urlencoded(ByVal r As HttpListenerRequest,
                                                          Optional ByRef cs As String = Nothing,
                                                          Optional ByRef encoder As Text.Encoding = Nothing) As Boolean
-        Return Not r Is Nothing AndAlso
+        Return r IsNot Nothing AndAlso
                r.HasEntityBody() AndAlso
                strsame(r.ContentType(),
                        constants.headers.values.content_type.request.www_form_urlencoded,
@@ -236,7 +236,7 @@ Public Module _headers_extension
     <Extension()> Public Function is_www_form_urlencoded(ByVal ctx As HttpListenerContext,
                                                          Optional ByRef charset As String = Nothing,
                                                          Optional ByRef encoder As Text.Encoding = Nothing) As Boolean
-        Return Not ctx Is Nothing AndAlso
+        Return ctx IsNot Nothing AndAlso
                is_www_form_urlencoded(ctx.Request(), charset, encoder)
     End Function
 End Module

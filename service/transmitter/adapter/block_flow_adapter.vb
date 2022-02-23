@@ -13,7 +13,7 @@ Public Class block_flow_adapter
 
     Public Sub New(ByVal b As block)
         MyBase.New(b)
-        assert(Not b Is Nothing)
+        assert(b IsNot Nothing)
         Me.pump = New block_pump_flow_pump_adapter(underlying_device)
     End Sub
 

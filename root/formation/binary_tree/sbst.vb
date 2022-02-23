@@ -44,7 +44,7 @@ Public Class sbst(Of T)
     'http://en.wikipedia.org/wiki/Splay_tree
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub splay(ByVal n As node)
-        assert(Not n Is Nothing)
+        assert(n IsNot Nothing)
         While Not n.is_root()
             If n.is_left_subtree() Then
                 n = n.parent().right_rotate()

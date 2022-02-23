@@ -13,8 +13,8 @@ Public Class client_checker
     End Sub
 
     Public Sub New(ByVal c As TcpClient, ByVal p As powerpoint)
-        assert(Not c Is Nothing)
-        assert(Not p Is Nothing)
+        assert(c IsNot Nothing)
+        assert(p IsNot Nothing)
         Me.c = c
         Me.p = p
         Me.last_poll_alive_ms = nowadays.milliseconds()

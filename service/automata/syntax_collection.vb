@@ -27,11 +27,11 @@ Public NotInheritable Class syntax_collection
                     ByVal str_syntax_type As map(Of UInt32, String),
                     ByVal v As vector(Of syntax),
                     ByVal next_type As UInt32)
-        assert(Not token_str_type Is Nothing)
-        assert(Not str_token_type Is Nothing)
-        assert(Not syntax_str_type Is Nothing)
-        assert(Not str_syntax_type Is Nothing)
-        assert(Not v Is Nothing)
+        assert(token_str_type IsNot Nothing)
+        assert(str_token_type IsNot Nothing)
+        assert(syntax_str_type IsNot Nothing)
+        assert(str_syntax_type IsNot Nothing)
+        assert(v IsNot Nothing)
         Me.token_str_type = token_str_type
         Me.str_token_type = str_token_type
         Me.syntax_str_type = syntax_str_type
@@ -72,7 +72,7 @@ Public NotInheritable Class syntax_collection
 
     Public Sub New(ByVal token_str_type As map(Of String, UInt32))
         Me.New(True)
-        assert(Not token_str_type Is Nothing)
+        assert(token_str_type IsNot Nothing)
         copy(Me.token_str_type, token_str_type)
         next_type = find_next_type()
 
@@ -90,7 +90,7 @@ Public NotInheritable Class syntax_collection
     End Sub
 
     Private Function find_next_type() As UInt32
-        assert(Not token_str_type Is Nothing)
+        assert(token_str_type IsNot Nothing)
         Dim max As UInt32 = 0
         Dim it As map(Of String, UInt32).iterator = token_str_type.begin()
         While it <> token_str_type.end()
@@ -113,7 +113,7 @@ Public NotInheritable Class syntax_collection
     Private Function define(ByVal m As map(Of String, UInt32),
                             ByVal name As String,
                             Optional ByRef o As UInt32 = Nothing) As Boolean
-        assert(Not m Is Nothing)
+        assert(m IsNot Nothing)
         If Not characters.valid_type_str(name) Then
             Return False
         End If
@@ -149,7 +149,7 @@ Public NotInheritable Class syntax_collection
     Private Shared Function str_type(ByVal m As map(Of String, UInt32),
                                      ByVal name As String,
                                      ByRef o As UInt32) As Boolean
-        assert(Not m Is Nothing)
+        assert(m IsNot Nothing)
         If Not characters.valid_type_str(name) Then
             Return False
         End If
@@ -165,7 +165,7 @@ Public NotInheritable Class syntax_collection
     Private Shared Function type_str(ByVal m As map(Of UInt32, String),
                                      ByVal id As UInt32,
                                      ByRef o As String) As Boolean
-        assert(Not m Is Nothing)
+        assert(m IsNot Nothing)
         Dim it As map(Of UInt32, String).iterator = Nothing
         it = m.find(id)
         If it = m.end() Then
@@ -236,7 +236,7 @@ Public NotInheritable Class syntax_collection
     End Function
 
     Public Function [get](ByVal type As UInt32, ByRef o As syntax) As Boolean
-        If type < v.size() AndAlso Not v(type) Is Nothing Then
+        If type < v.size() AndAlso v(type) IsNot Nothing Then
             o = v(type)
             Return True
         End If

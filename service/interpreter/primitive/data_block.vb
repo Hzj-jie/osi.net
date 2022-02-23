@@ -89,7 +89,7 @@ Namespace primitive
         End Sub
 
         Public Sub New(ByVal a() As Byte)
-            assert(Not a Is Nothing)
+            assert(a IsNot Nothing)
             buff = a
         End Sub
 
@@ -99,7 +99,7 @@ Namespace primitive
         End Sub
 
         Public Function str(ByVal type As Char, ByRef o As String) As Boolean
-            assert(Not buff Is Nothing)
+            assert(buff IsNot Nothing)
             Select Case type
                 Case prefix.boolean
                     Dim b As Boolean = False
@@ -147,7 +147,7 @@ Namespace primitive
         End Function
 
         Public Function as_bool(ByRef o As Boolean) As Boolean
-            assert(Not buff Is Nothing)
+            assert(buff IsNot Nothing)
             Return entire_bytes_bool(buff, o)
         End Function
 
@@ -158,7 +158,7 @@ Namespace primitive
         End Function
 
         Public Function as_c_escaped_string(ByRef o As String) As Boolean
-            assert(Not buff Is Nothing)
+            assert(buff IsNot Nothing)
             Dim s As String = Nothing
             Return as_string(s) AndAlso
                    c_unescape(s, o)
@@ -171,7 +171,7 @@ Namespace primitive
         End Function
 
         Public Function as_double(ByRef o As Double) As Boolean
-            assert(Not buff Is Nothing)
+            assert(buff IsNot Nothing)
             Return entire_bytes_double(buff, o)
         End Function
 
@@ -182,7 +182,7 @@ Namespace primitive
         End Function
 
         Public Function as_int(ByRef o As Int32) As Boolean
-            assert(Not buff Is Nothing)
+            assert(buff IsNot Nothing)
             Return entire_bytes_int32(buff, o)
         End Function
 
@@ -193,7 +193,7 @@ Namespace primitive
         End Function
 
         Public Function as_long(ByRef o As Int64) As Boolean
-            assert(Not buff Is Nothing)
+            assert(buff IsNot Nothing)
             Return entire_bytes_int64(buff, o)
         End Function
 
@@ -204,7 +204,7 @@ Namespace primitive
         End Function
 
         Public Function as_string(ByRef o As String) As Boolean
-            assert(Not buff Is Nothing)
+            assert(buff IsNot Nothing)
             o = bytes_str(buff)
             Return True
         End Function
@@ -220,7 +220,7 @@ Namespace primitive
         End Function
 
         Public Function value_bytes_size() As UInt32
-            assert(Not buff Is Nothing)
+            assert(buff IsNot Nothing)
             Return array_size(buff)
         End Function
 
@@ -229,7 +229,7 @@ Namespace primitive
         End Function
 
         Public Function export(ByRef b() As Byte) As Boolean Implements exportable.export
-            assert(Not buff Is Nothing)
+            assert(buff IsNot Nothing)
             ReDim b(CInt(bytes_size() - uint32_1))
             Dim p As UInt32 = 0
             assert(uint32_bytes(array_size(buff), b, p))
@@ -296,7 +296,7 @@ Namespace primitive
                 Case Else
                     Return False
             End Select
-            assert(Not buff Is Nothing)
+            assert(buff IsNot Nothing)
             p += uint32_1
             Return True
         End Function
@@ -309,7 +309,7 @@ Namespace primitive
             Dim c As Int32 = 0
             c = object_compare(Me, other)
             If c = object_compare_undetermined Then
-                assert(Not other Is Nothing)
+                assert(other IsNot Nothing)
                 Return memcmp(buff, other.buff)
             End If
             Return c

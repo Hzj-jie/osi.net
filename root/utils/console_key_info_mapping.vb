@@ -70,7 +70,7 @@ Public Module _console_key_info_mapping
         If ci >= console_key_min_char_int AndAlso
            ci <= console_key_max_char_int Then
             o = m(ci)
-            Return Not (o Is Nothing OrElse o.empty())
+            Return (o IsNot Nothing OrElse o.empty())
         Else
             Return False
         End If
@@ -79,7 +79,7 @@ Public Module _console_key_info_mapping
     <Extension()> Public Function keycode(ByVal c As Char, ByRef o As keyinfo) As Boolean
         Dim v As vector(Of keyinfo) = Nothing
         If keycode(c, v) Then
-            assert(Not (v Is Nothing OrElse v.empty()))
+            assert((v IsNot Nothing OrElse v.empty()))
             o = v(0)
             Return True
         Else

@@ -42,7 +42,7 @@ Partial Public NotInheritable Class dns_cache
                                     ByVal c As icache2(Of String, IPHostEntry),
                                     ByVal timeout_ms As Int64,
                                     ByVal force_resolve As Boolean) As event_comb
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If String.IsNullOrEmpty(s) Then
@@ -89,11 +89,11 @@ Partial Public NotInheritable Class dns_cache
     End Function
 
     Private Shared Function ipv4_selector(ByVal address As IPAddress) As Boolean
-        Return Not address Is Nothing AndAlso address.AddressFamily() = Sockets.AddressFamily.InterNetwork
+        Return address IsNot Nothing AndAlso address.AddressFamily() = Sockets.AddressFamily.InterNetwork
     End Function
 
     Private Shared Function ipv6_selector(ByVal address As IPAddress) As Boolean
-        Return Not address Is Nothing AndAlso address.AddressFamily() = Sockets.AddressFamily.InterNetworkV6
+        Return address IsNot Nothing AndAlso address.AddressFamily() = Sockets.AddressFamily.InterNetworkV6
     End Function
 
     Public Shared Function resolve(ByVal hostname_or_address As String,
@@ -116,7 +116,7 @@ Partial Public NotInheritable Class dns_cache
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      assert(Not +p Is Nothing)
+                                      assert(+p IsNot Nothing)
                                       For i As Int32 = 0 To array_size_i((+p).AddressList()) - 1
                                           If selector Is Nothing OrElse selector((+p).AddressList()(i)) Then
                                               Return eva(result, (+p).AddressList()(i)) AndAlso
@@ -154,7 +154,7 @@ Partial Public NotInheritable Class dns_cache
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      assert(Not +p Is Nothing)
+                                      assert(+p IsNot Nothing)
                                       Return eva(result, Convert.ToString(+p)) AndAlso
                                              goto_end()
                                   Else
@@ -201,12 +201,12 @@ Partial Public NotInheritable Class dns_cache
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      assert(Not +p Is Nothing)
+                                      assert(+p IsNot Nothing)
                                       If selector Is Nothing OrElse selector((+p).HostName()) Then
                                           Return eva(result, (+p).HostName()) AndAlso
                                                  goto_end()
                                       End If
-                                      assert(Not selector Is Nothing)
+                                      assert(selector IsNot Nothing)
                                       For i As Int32 = 0 To array_size_i((+p).Aliases()) - 1
                                           If selector((+p).Aliases()(i)) Then
                                               Return eva(result, (+p).Aliases()(i)) AndAlso

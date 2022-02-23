@@ -116,7 +116,7 @@ Public NotInheritable Class qless_threadpool
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal this As qless_threadpool, ByVal that As Action) As qless_threadpool
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         this.push(that)
         Return this
     End Operator

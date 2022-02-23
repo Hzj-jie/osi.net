@@ -1,7 +1,7 @@
 
     Public Shared Operator +(ByVal this As [##FILENAME##](Of T),
                              ByVal v As T) As [##FILENAME##](Of T)
-        assert(Not this Is Nothing)
+        assert(this IsNot Nothing)
         assert(this.insert(v).second)
         Return this
     End Operator

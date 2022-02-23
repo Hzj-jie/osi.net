@@ -32,7 +32,7 @@ Public Module _double_keys
 
     Public Function half_keycount(ByVal d As Func(Of ref(Of Int64), event_comb),
                                   ByVal r As ref(Of Int64)) As event_comb
-        assert(Not d Is Nothing)
+        assert(d IsNot Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If r Is Nothing Then
@@ -59,8 +59,8 @@ Public Module _double_keys
     Public Function select_list(ByVal d As Func(Of ref(Of vector(Of Byte())), event_comb),
                                 ByVal [select] As _do_val_ref(Of Byte(), Byte(), Boolean),
                                 ByVal result As ref(Of vector(Of Byte()))) As event_comb
-        assert(Not d Is Nothing)
-        assert(Not [select] Is Nothing)
+        assert(d IsNot Nothing)
+        assert([select] IsNot Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If result Is Nothing Then

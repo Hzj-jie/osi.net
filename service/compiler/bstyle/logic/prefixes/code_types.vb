@@ -45,7 +45,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Shared Sub register(ByVal p As statements)
-            assert(Not p Is Nothing)
+            assert(p IsNot Nothing)
             p.register(instance)
         End Sub
 

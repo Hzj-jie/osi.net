@@ -20,7 +20,7 @@ Partial Public NotInheritable Class b2style
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
+            assert(b IsNot Nothing)
             Me.l = b
         End Sub
 
@@ -40,7 +40,7 @@ Partial Public NotInheritable Class b2style
                 assert(Not i.null_or_whitespace())
                 Return streams.of(_namespace.of(i).Split("."c)).
                                map(Function(ByVal x As String) As String
-                                       assert(Not x Is Nothing)
+                                       assert(x IsNot Nothing)
                                        If Not x.Contains(namespace_separator) Then
                                            Return x
                                        End If
@@ -98,7 +98,7 @@ Partial Public NotInheritable Class b2style
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
-            assert(Not n Is Nothing)
+            assert(n IsNot Nothing)
             assert(n.child_count() >= 4)
             Using scope.current().current_namespace().define([of](n.child(1).word().str()))
                 For i As UInt32 = 3 To n.child_count() - uint32_2

@@ -20,8 +20,8 @@ Partial Public Class client_flow_adapter
     Private ReadOnly f As flow
 
     Public Sub New(ByVal c As ref_client, ByVal p As powerpoint)
-        assert(Not c Is Nothing)
-        assert(Not p Is Nothing)
+        assert(c IsNot Nothing)
+        assert(p IsNot Nothing)
         Me.c = c
         Me.p = p
         Me.f = If(constants.use_socket,
@@ -34,7 +34,7 @@ Partial Public Class client_flow_adapter
     End Sub
 
     Private Function finish(ByVal ec As event_comb, ByVal m As String) As Boolean
-        assert(Not ec Is Nothing)
+        assert(ec IsNot Nothing)
         If ec.end_result() Then
             Return goto_end()
         Else
@@ -54,7 +54,7 @@ Partial Public Class client_flow_adapter
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = f.send(buff, offset, count, sent)
-                                  assert(Not ec Is Nothing)
+                                  assert(ec IsNot Nothing)
                                   Return waitfor(ec, p.send_timeout_ms(count)) AndAlso
                                          goto_next()
                               End Function,

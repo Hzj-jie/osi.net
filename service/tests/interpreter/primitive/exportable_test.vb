@@ -16,7 +16,7 @@ Namespace primitive
         Public NotOverridable Overrides Function run() As Boolean
             For i As UInt32 = 0 To 65535
                 Dim x As T = create()
-                assert(Not x Is Nothing)
+                assert(x IsNot Nothing)
                 Dim b() As Byte = Nothing
                 assertion.is_true(x.export(b))
                 Dim y As T = create()

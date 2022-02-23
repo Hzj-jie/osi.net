@@ -26,7 +26,7 @@ Public MustInherit Class keyboard_receiver
 
     Protected NotOverridable Overrides Function handle(ByVal c As [case],
                                                        ByRef ec As event_comb) As Boolean
-        assert(Not c Is Nothing)
+        assert(c IsNot Nothing)
         Dim kc As Int32 = 0
         If c.keyboard_code(kc) Then
             Return handle(c.action, kc, ec)

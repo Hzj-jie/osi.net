@@ -79,7 +79,7 @@ Public Module _component_generation
                                      ByVal self_close As Boolean,
                                      ByRef o As String) As Boolean
         Dim v As vector(Of pair(Of String, String)) = Nothing
-        If Not attributes Is Nothing AndAlso Not attributes.empty() Then
+        If attributes IsNot Nothing AndAlso Not attributes.empty() Then
             v = New vector(Of pair(Of String, String))()
             Dim it As map(Of String, String).iterator = Nothing
             it = attributes.begin()

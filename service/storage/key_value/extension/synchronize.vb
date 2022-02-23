@@ -96,7 +96,7 @@ Public Module _synchronize
                                           ByVal key As String,
                                           Optional ByVal result As ref(Of Boolean) = Nothing) As event_comb
         Return event_comb.chain_before(Function() As Boolean
-                                           Return Not i Is Nothing
+                                           Return i IsNot Nothing
                                        End Function,
                                        Function() As event_comb
                                            Return i.delete(key, result)
