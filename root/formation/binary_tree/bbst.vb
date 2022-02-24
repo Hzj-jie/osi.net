@@ -45,7 +45,7 @@ Public Class bbst(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function left_rotate(ByVal n As node) As node
 #If Not Performance Then
-        assert(n IsNot Nothing)
+        assert(Not n Is Nothing)
 #End If
         Dim l As node = n.left_rotate()
         n.revise_or_clear_right_subtree_height()
@@ -56,7 +56,7 @@ Public Class bbst(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function right_rotate(ByVal n As node) As node
 #If Not Performance Then
-        assert(n IsNot Nothing)
+        assert(Not n Is Nothing)
 #End If
         Dim r As node = n.right_rotate()
         n.revise_or_clear_left_subtree_height()
@@ -75,7 +75,7 @@ Public Class bbst(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub assert_balance(ByVal n As node)
-        assert(n IsNot Nothing)
+        assert(Not n Is Nothing)
         assert(Math.Abs(n.balance_factor()) <= 1)
         If n.has_left_child() Then
             assert_balance(n.left_child())
@@ -87,16 +87,16 @@ Public Class bbst(Of T)
 
     Private Shared Sub rebalance(ByVal n As node, ByRef root As node)
 #If Not Performance Then
-        assert(n IsNot Nothing)
+        assert(Not n Is Nothing)
 #End If
         While Not n.is_root()
 #If Not Performance Then
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
 #End If
             n.debug_assert_structure()
             Dim p As node = n.parent()
 #If Not Performance Then
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
 #End If
             If n.is_left_subtree() Then
                 p.revise_left_subtree_height()
@@ -144,16 +144,16 @@ Public Class bbst(Of T)
 
     Private Shared Sub rebalance2(ByVal n As node, ByRef root As node)
 #If Not Performance Then
-        assert(n IsNot Nothing)
+        assert(Not n Is Nothing)
 #End If
         n.debug_assert_structure()
         Dim c As node = Nothing
         While True
 #If Not Performance Then
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
 #End If
             n.debug_assert_structure()
-            If c IsNot Nothing Then
+            If Not c Is Nothing Then
                 If Not c.revise_parent_subtree_height() Then
                     Exit While
                 End If
@@ -186,7 +186,7 @@ Public Class bbst(Of T)
             End If
 
 #If Not Performance Then
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
 #End If
             If n.has_parent() Then
                 c = n
@@ -198,7 +198,7 @@ Public Class bbst(Of T)
             End If
         End While
 #If Not Performance Then
-        assert(root IsNot Nothing)
+        assert(Not root Is Nothing)
 #End If
         heighted_box.debug_assert_height(root)
         debug_assert_balance(root)
@@ -263,11 +263,11 @@ Public Class bbst(Of T)
         Dim result As iterator = it + 1
         Dim p As node = Nothing
         Dim r As node = MyBase.[erase](it.node(), it.node().balance_factor() > 0, p)
-        If r IsNot Nothing Then
+        If Not r Is Nothing Then
             r.revise_or_clear_left_subtree_height()
             r.revise_or_clear_right_subtree_height()
         End If
-        If p IsNot Nothing Then
+        If Not p Is Nothing Then
 #If use_rebalance Then
             'do not need to return whether the removed node is left / right of the p
             p.revise_or_clear_left_subtree_height()

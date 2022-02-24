@@ -24,7 +24,7 @@ Partial Public Class bt(Of T)
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function copy_node(ByVal n As node, ByVal cmp As Func(Of T, T, Int32)) As node
 #If Not Performance Then
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
 #End If
             Return create_node(n.value(), cmp)
         End Function
@@ -37,7 +37,7 @@ Partial Public Class bt(Of T)
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function copy_node(ByVal n As node) As node
 #If Not Performance Then
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
 #End If
             Return create_node(n.value())
         End Function
@@ -106,7 +106,7 @@ Partial Public Class bt(Of T)
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Shadows Function copy_node(ByVal n As node, ByVal cmp As Func(Of T, T, Int32)) As node
 #If Not Performance Then
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
 #End If
             Return New node(New heighted_box(n), cmp)
         End Function
@@ -119,7 +119,7 @@ Partial Public Class bt(Of T)
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Shadows Function copy_node(ByVal n As node) As node
 #If Not Performance Then
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
 #End If
             Return New node(New heighted_box(n))
         End Function
@@ -127,7 +127,7 @@ Partial Public Class bt(Of T)
         'make sure all the height recorded in heighted_box are correct
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Sub assert_height(ByVal r As node)
-            assert(r IsNot Nothing)
+            assert(Not r Is Nothing)
             assert(r.left_subtree_height() = r.heighted_box().left_height)
             assert(r.right_subtree_height() = r.heighted_box().right_height)
             If r.has_left_child() Then

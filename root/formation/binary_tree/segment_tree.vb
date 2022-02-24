@@ -135,7 +135,7 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
         End Sub
 
         Friend Sub spread(ByVal n As node)
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
             If has_value() Then
                 n.value().set_value(value())
             End If
@@ -155,7 +155,7 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
             Dim c As Int32 = 0
             c = object_compare(Me, other)
             If c = object_compare_undetermined Then
-                assert(other IsNot Nothing)
+                assert(Not other Is Nothing)
                 If Me.has_value() = other.has_value() Then
                     If Me.has_value() Then
                         Return connector.compare(Me.value(), other.value())
@@ -234,7 +234,7 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
 
     Protected Shared Function accumulate(ByVal n As node, ByVal v As Int64, ByRef o As T) As Boolean
         assert(acc)
-        assert(n IsNot Nothing)
+        assert(Not n Is Nothing)
         assert(n.cover(v))
         Dim r As Boolean = False
         If n.value().has_value() Then
@@ -259,9 +259,9 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
                               ByVal r As vector(Of pair(Of iterator, pair(Of Int64, Int64))))
         assert(Not acc)
         assert(min <= max)
-        assert(n IsNot Nothing)
+        assert(Not n Is Nothing)
         assert(n.cover(min, max))
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         If n.value().has_value() OrElse
            n.is_leaf() Then
             r.emplace_back(pair.emplace_of(New iterator(n),
@@ -282,7 +282,7 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
 
     Protected Shared Function find(ByVal n As node, ByVal v As Int64) As iterator
         assert(Not acc)
-        assert(n IsNot Nothing)
+        assert(Not n Is Nothing)
         assert(n.cover(v))
         If n.value().has_value() OrElse
            n.is_leaf() Then
@@ -303,7 +303,7 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
                                ByVal min As Int64,
                                ByVal max As Int64,
                                ByVal value As T)
-        assert(n IsNot Nothing)
+        assert(Not n Is Nothing)
         assert(min <= max)
         assert(n.cover(min, max))
         If n.equal(min, max) Then

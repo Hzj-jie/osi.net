@@ -19,7 +19,7 @@ Partial Public NotInheritable Class wordtracer
             Private ReadOnly sample_rate As Double
 
             Public Sub New(ByVal m As unordered_map(Of String, Double), ByVal sample_rate As Double)
-                assert(m IsNot Nothing)
+                assert(Not m Is Nothing)
                 assert(Not m.empty())
                 assert(sample_rate >= 0 AndAlso sample_rate <= 1)
                 Me.m = m
@@ -91,7 +91,7 @@ Partial Public NotInheritable Class wordtracer
             End Function
 
             Public Function train(ByVal reader As tar.reader) As onebound(Of String).model
-                assert(reader IsNot Nothing)
+                assert(Not reader Is Nothing)
                 reader.foreach(Sub(ByVal name As String, ByVal p As Double, ByVal r As StreamReader)
                                    If p < 0.8 Then
                                        raise_error(error_type.user,
@@ -102,7 +102,7 @@ Partial Public NotInheritable Class wordtracer
                                        Return
                                    End If
                                    Dim line As String = r.ReadLine()
-                                   While line IsNot Nothing
+                                   While Not line Is Nothing
                                        one_str(line)
                                        line = r.ReadLine()
                                    End While

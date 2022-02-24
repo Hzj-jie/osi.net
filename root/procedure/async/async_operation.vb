@@ -28,7 +28,7 @@ Public NotInheritable Class async_operation
                        ByVal after_set_result As void(Of Boolean),
                        ByVal result As ref(Of T),
                        ByVal callstack As String)
-            assert([end] IsNot Nothing)
+            assert(Not [end] Is Nothing)
             Me.end = [end]
             Me.after_set_result = after_set_result
             Me.result = result
@@ -37,7 +37,7 @@ Public NotInheritable Class async_operation
 
         Public Sub mark_finish(ByVal ar As IAsyncResult,
                                ByVal set_result As Boolean) Implements async_state_t.mark_finish
-            assert(ar IsNot Nothing)
+            assert(Not ar Is Nothing)
             If _finished_called.mark_in_use() Then
                 Dim rst As T = Nothing
                 Dim end_result As Boolean = False
@@ -75,7 +75,7 @@ Public NotInheritable Class async_operation
                            ByVal after_set_result As void(Of Boolean),
                            ByVal result As ref(Of T),
                            Optional ByVal callstack As String = Nothing)
-        assert(begin IsNot Nothing)
+        assert(Not begin Is Nothing)
         Me.callstack = callstack
         state = New async_state_t(Of T)([end], after_set_result, result, callstack)
         Try
@@ -121,7 +121,7 @@ Public NotInheritable Class async_operation
     End Function
 
     Public Function begin_succeeded() As Boolean
-        Return ar IsNot Nothing
+        Return Not ar Is Nothing
     End Function
 
     Public Function finished() As Boolean

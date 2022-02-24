@@ -19,7 +19,7 @@ Public Class pool_responder(Of CONTINUOUS As _boolean)
                                                          Return p.expired()
                                                      End Function,
                                                      stopping))
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Me.p = p
     End Sub
 

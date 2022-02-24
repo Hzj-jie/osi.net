@@ -103,8 +103,8 @@ Public NotInheritable Class reference_count_event_comb_2_test
     End Class
 
     Private Overloads Function run(ByVal rc As case1, ByVal c As [case]) As Boolean
-        assert(rc IsNot Nothing)
-        assert(c IsNot Nothing)
+        assert(Not rc Is Nothing)
+        assert(Not c Is Nothing)
         If Not c.run() Then
             Return False
         End If

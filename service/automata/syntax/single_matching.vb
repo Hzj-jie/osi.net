@@ -23,7 +23,7 @@ Partial Public NotInheritable Class syntaxer
             If v Is Nothing OrElse v.size() <= p Then
                 Return result.failure(p)
             End If
-            assert(v(p) IsNot Nothing)
+            assert(Not v(p) Is Nothing)
             If v(p).type <> m Then
                 Return result.failure(p)
             End If
@@ -41,7 +41,7 @@ Partial Public NotInheritable Class syntaxer
             If c <> object_compare_undetermined Then
                 Return c
             End If
-            assert(other IsNot Nothing)
+            assert(Not other Is Nothing)
             Return compare(Me.m, other.m)
         End Function
 

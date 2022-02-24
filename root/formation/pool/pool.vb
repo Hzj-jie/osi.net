@@ -36,15 +36,15 @@ Public Class pool(Of T As Class)
         assert(i >= 0 AndAlso i < p.size())
         assert(p(i) Is Nothing)
         n = create()
-        assert(n IsNot Nothing)
+        assert(Not n Is Nothing)
         p.emplace(i, pair.emplace_of(n, True))
     End Sub
 
     Public Function unlocked_get(ByRef o As T, ByRef index As Int32) As Boolean
         For i As Int32 = 0 To p.size() - 1
-            If p(i) IsNot Nothing AndAlso
+            If Not p(i) Is Nothing AndAlso
                p(i).second Then
-                assert(p(i).first IsNot Nothing)
+                assert(Not p(i).first Is Nothing)
                 p(i).second = False
                 o = p(i).first
                 index = i

@@ -11,7 +11,7 @@ Partial Public Class struct(Of T)
                                             ByVal i As T,
                                             ByVal o As S,
                                             ByVal f As Func(Of UInt32, Type, Object, S, Boolean)) As Boolean
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Dim vs() As struct.variable = Nothing
         If Not (+op).disassemble(i, vs) Then
             Return False
@@ -28,7 +28,7 @@ Partial Public Class struct(Of T)
                                             ByVal i As T,
                                             ByVal o As S,
                                             ByVal f As Func(Of Type, Object, S, Boolean)) As Boolean
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return serialize(op,
                          i,
                          o,
@@ -44,7 +44,7 @@ Partial Public Class struct(Of T)
                                               ByVal i As S,
                                               ByRef o As T,
                                               ByVal f As _do_val_val_ref(Of Type, S, Object, Boolean)) As Boolean
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Dim vs() As Object = Nothing
         ReDim vs(array_size_i((+op).definitions()) - 1)
         For j As Int32 = 0 To array_size_i((+op).definitions()) - 1
@@ -62,17 +62,17 @@ Partial Public Class struct(Of T)
                                            ByVal early_return As Func(Of RT, Boolean),
                                            ByVal obj_compare_result As Func(Of Int32, RT),
                                            ByVal default_result As RT) As RT
-        assert(typed_cmp IsNot Nothing)
-        assert(early_return IsNot Nothing)
-        assert(obj_compare_result IsNot Nothing)
+        assert(Not typed_cmp Is Nothing)
+        assert(Not early_return Is Nothing)
+        assert(Not obj_compare_result Is Nothing)
 
         Dim cmp As Int32 = 0
         cmp = object_compare(l, r)
         If cmp <> object_compare_undetermined Then
             Return obj_compare_result(cmp)
         End If
-        assert(l IsNot Nothing)
-        assert(r IsNot Nothing)
+        assert(Not l Is Nothing)
+        assert(Not r Is Nothing)
         Dim vsl() As struct.variable = Nothing
         Dim vsr() As struct.variable = Nothing
         assert((+op).disassemble(l, vsl))

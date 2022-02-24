@@ -11,7 +11,7 @@ Friend Module _type_case_functions
     'consistent with the behavior of TypeOf Is operator
     <Extension()> Public Function istype(Of T, T2)(ByVal i As T) As Boolean
         Return (type_info(Of T, type_info_operators.is, T2).v AndAlso
-                (i.is_valuetype() OrElse i IsNot Nothing)) OrElse
+                (i.is_valuetype() OrElse Not i Is Nothing)) OrElse
                TypeOf i Is T2
     End Function
 

@@ -15,7 +15,7 @@ Public Class device_pool_manager(Of T)
 
     Public Shared Function retire(ByVal key As String, Optional ByRef o As idevice_pool(Of T) = Nothing) As Boolean
         If [erase](key, o) Then
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             o.close()
             Return True
         Else
@@ -30,16 +30,16 @@ Public Class device_pool_manager(Of T)
     End Function
 
     Public Shared Function expired(ByVal key As String, Optional ByRef o As idevice_pool(Of T) = Nothing) As Boolean
-        Return [get](key, o) AndAlso assert(o IsNot Nothing) AndAlso o.expired()
+        Return [get](key, o) AndAlso assert(Not o Is Nothing) AndAlso o.expired()
     End Function
 
     Public Shared Function expired(Of OT As idevice_pool(Of T))(ByVal key As String, ByRef o As OT) As Boolean
-        Return [get](key, o) AndAlso assert(o IsNot Nothing) AndAlso o.expired()
+        Return [get](key, o) AndAlso assert(Not o Is Nothing) AndAlso o.expired()
     End Function
 
     Public Shared Function total_count(ByVal key As String, Optional ByRef o As idevice_pool(Of T) = Nothing) As UInt32
         If [get](key, o) Then
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             Return o.total_count()
         Else
             Return uint32_0
@@ -48,7 +48,7 @@ Public Class device_pool_manager(Of T)
 
     Public Shared Function total_count(Of OT As idevice_pool(Of T))(ByVal key As String, ByRef o As oT) As UInt32
         If [get](key, o) Then
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             Return o.total_count()
         Else
             Return uint32_0
@@ -57,7 +57,7 @@ Public Class device_pool_manager(Of T)
 
     Public Shared Function free_count(Of OT As idevice_pool(Of T))(ByVal key As String, ByRef o As OT) As UInt32
         If [get](key, o) Then
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             Return o.free_count()
         Else
             Return uint32_0
@@ -68,7 +68,7 @@ Public Class device_pool_manager(Of T)
                                            ByRef o As idevice(Of T),
                                            Optional ByRef p As idevice_pool(Of T) = Nothing) As Boolean
         Return [get](key, p) AndAlso
-               assert(p IsNot Nothing) AndAlso
+               assert(Not p Is Nothing) AndAlso
                p.get(o)
     End Function
 
@@ -77,7 +77,7 @@ Public Class device_pool_manager(Of T)
                                            ByRef o As idevice(Of T),
                                            ByRef p As PT) As Boolean
         Return [get](key, p) AndAlso
-               assert(p IsNot Nothing) AndAlso
+               assert(Not p Is Nothing) AndAlso
                p.get(o)
     End Function
 
@@ -85,7 +85,7 @@ Public Class device_pool_manager(Of T)
                                    ByVal i As idevice(Of T),
                                    Optional ByRef p As idevice_pool(Of T) = Nothing) As Boolean
         Return [get](key, p) AndAlso
-               assert(p IsNot Nothing) AndAlso
+               assert(Not p Is Nothing) AndAlso
                p.release(i)
     End Function
 
@@ -94,7 +94,7 @@ Public Class device_pool_manager(Of T)
                                    ByVal i As idevice(Of T),
                                    ByRef p As PT) As Boolean
         Return [get](key, p) AndAlso
-               assert(p IsNot Nothing) AndAlso
+               assert(Not p Is Nothing) AndAlso
                p.release(i)
     End Function
 End Class

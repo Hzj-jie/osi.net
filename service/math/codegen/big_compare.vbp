@@ -36,8 +36,8 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         Dim c As Int32 = 0
         c = object_compare(this, that)
         If c = object_compare_undetermined Then
-            assert(this IsNot Nothing)
-            assert(that IsNot Nothing)
+            assert(Not this Is Nothing)
+            assert(Not that Is Nothing)
             If this.positive() <> that.positive() Then
                 Return If(this.positive(), 1, -1)
             Else

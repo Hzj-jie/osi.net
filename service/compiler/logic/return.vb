@@ -27,7 +27,7 @@ Namespace logic
         End Sub
 
         Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             Dim r As variable = Nothing
             If Not logic.return_value.retrieve(name, o, r) Then
                 Return False

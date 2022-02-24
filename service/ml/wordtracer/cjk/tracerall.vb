@@ -27,9 +27,9 @@ Partial Public NotInheritable Class wordtracer
                                           ByVal len As UInt32,
                                           ByVal sel As Func(Of String, Char, Boolean),
                                           ByVal result As unordered_map(Of String, unordered_map(Of Char, UInt32)))
-                assert(line IsNot Nothing)
+                assert(Not line Is Nothing)
                 assert(len >= uint32_2)
-                assert(sel IsNot Nothing)
+                assert(Not sel Is Nothing)
                 If line.null_or_whitespace() Then
                     Return
                 End If
@@ -86,7 +86,7 @@ Partial Public NotInheritable Class wordtracer
                                             ByVal len As UInt32,
                                             ByVal sel As Func(Of String, Char, Boolean)) _
                                            As unordered_map(Of String, unordered_map(Of Char, UInt32))
-                assert(t IsNot Nothing)
+                assert(Not t Is Nothing)
                 t.reset()
                 Dim v As unordered_map(Of String, unordered_map(Of Char, UInt32)) =
                     New unordered_map(Of String, unordered_map(Of Char, UInt32))()
@@ -98,7 +98,7 @@ Partial Public NotInheritable Class wordtracer
                                       Return
                                   End If
                                   Dim line As String = r.ReadLine()
-                                  While line IsNot Nothing
+                                  While Not line Is Nothing
                                       train_line(line, len, sel, v)
                                       line = r.ReadLine()
                                   End While
@@ -111,7 +111,7 @@ Partial Public NotInheritable Class wordtracer
             Private Function train(ByVal process As Func(Of UInt32, Func(Of String, Char, Boolean),
                                    unordered_map(Of String, unordered_map(Of Char, UInt32)))) _
                                   As vector(Of unordered_map(Of String, UInt32))
-                assert(process IsNot Nothing)
+                assert(Not process Is Nothing)
                 Dim r As vector(Of unordered_map(Of String, UInt32)) = New vector(Of unordered_map(Of String, UInt32))()
                 For i As UInt32 = 2 To max_len
                     Dim sel As Func(Of String, Char, Boolean) = Nothing
@@ -132,7 +132,7 @@ Partial Public NotInheritable Class wordtracer
                         stream().
                         map(Function(ByVal e As first_const_pair(Of String, unordered_map(Of Char, UInt32))) _
                                 As first_const_pair(Of String, vector(Of tuple(Of Char, UInt32)))
-                                assert(e IsNot Nothing)
+                                assert(Not e Is Nothing)
                                 Dim s As vector(Of tuple(Of Char, UInt32)) =
                                     e.second.
                                       stream().

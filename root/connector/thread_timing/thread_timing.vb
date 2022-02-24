@@ -154,7 +154,7 @@ Public Class priority
     <CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly")>
     Public Sub Dispose() Implements IDisposable.Dispose
         If Not n.keep_process_priority() Then
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             If ppc <> n.target_process_priority() Then
                 'for mono
                 Try
@@ -164,7 +164,7 @@ Public Class priority
             End If
         End If
         If Not n.keep_thread_priority() Then
-            assert(t IsNot Nothing)
+            assert(Not t Is Nothing)
             If otp <> n.target_thread_priority() Then
                 t.Priority() = otp
             End If

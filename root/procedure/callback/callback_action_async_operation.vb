@@ -97,7 +97,7 @@ Public NotInheritable Class callback_action_async_operation
     End Function
 
     Private Function ao() As async_operation
-        assert(_ao IsNot Nothing)
+        assert(Not _ao Is Nothing)
         Return _ao
     End Function
 

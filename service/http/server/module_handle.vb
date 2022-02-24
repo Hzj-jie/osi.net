@@ -30,12 +30,12 @@ Partial Public NotInheritable Class module_handle
     End Function
 
     Public Sub attach(ByVal server As server)
-        assert(server IsNot Nothing)
+        assert(Not server Is Nothing)
         AddHandler server.context_received, handle
     End Sub
 
     Public Sub detach(ByVal server As server)
-        assert(server IsNot Nothing)
+        assert(Not server Is Nothing)
         RemoveHandler server.context_received, handle
     End Sub
 
@@ -49,7 +49,7 @@ Partial Public NotInheritable Class module_handle
         Else
             Dim r As counter.snapshot = Nothing
             r = counter.snapshot.[New](v(i).counter_index)
-            assert(r IsNot Nothing)
+            assert(Not r Is Nothing)
             Return r
         End If
     End Function

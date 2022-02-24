@@ -10,8 +10,8 @@ Public Class time_test
                                   ByVal exp As Date,
                                   ByVal _1 As Func(Of Date, Date),
                                   ByVal _2 As Func(Of Int64, Int64)) As Boolean
-        assert(_1 IsNot Nothing)
-        assert(_2 IsNot Nothing)
+        assert(Not _1 Is Nothing)
+        assert(Not _2 Is Nothing)
         assertion.equal(_1(d), exp)
         assertion.equal(_2(d.Ticks()), exp.Ticks())
         Return True

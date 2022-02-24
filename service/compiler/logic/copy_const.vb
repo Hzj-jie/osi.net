@@ -17,7 +17,7 @@ Namespace logic
 
         Public Sub New(ByVal target As String, ByVal data As data_block)
             assert(Not String.IsNullOrEmpty(target))
-            assert(data IsNot Nothing)
+            assert(Not data Is Nothing)
             Me.target = target
             Me.data = data
         End Sub

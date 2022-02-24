@@ -26,10 +26,10 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
 
         Shared Sub New()
             port_to_uint32 = alloc(Of _PORT_TO_UINT32)()
-            assert(port_to_uint32 IsNot Nothing)
+            assert(Not port_to_uint32 Is Nothing)
             resource_count = alloc(Of _RESOURCE_COUNT)().as_uint32()
             functor = alloc(Of _FUNCTOR)()
-            assert(functor IsNot Nothing)
+            assert(Not functor Is Nothing)
         End Sub
 
         Public Sub New()
@@ -78,7 +78,7 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
                 End If
                 local_port = port_to_uint32.reverse(id)
             End If
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             Return True
         End Function
 

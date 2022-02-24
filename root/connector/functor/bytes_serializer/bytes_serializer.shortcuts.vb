@@ -20,7 +20,7 @@ Partial Public Class bytes_serializer(Of T)
             Return False
         End If
 
-        assert(ms IsNot Nothing)
+        assert(Not ms Is Nothing)
         Using ms
             If Not append_to(i, ms) Then
                 Return False
@@ -51,7 +51,7 @@ Partial Public Class bytes_serializer(Of T)
     Public Function consume_from(ByVal b() As Byte, ByRef offset As UInt32, ByRef o As T) As Boolean
         Dim ms As MemoryStream = Nothing
         If memory_stream.from_index(b, offset, ms) Then
-            assert(ms IsNot Nothing)
+            assert(Not ms Is Nothing)
             Using ms
                 If consume_from(ms, o) Then
                     ms.assert_valid()

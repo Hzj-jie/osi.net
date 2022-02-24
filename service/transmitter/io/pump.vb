@@ -45,7 +45,7 @@ Public Module _pump
                                           ByVal buff() As Byte,
                                           ByVal offset As UInt32,
                                           ByVal count As UInt32) As event_comb
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return complete_io_4(buff, offset, count, AddressOf f.receive)
     End Function
 
@@ -63,19 +63,19 @@ Public Module _pump
                                           ByVal buff() As Byte,
                                           ByVal count As UInt32,
                                           ByVal result As ref(Of UInt32)) As event_comb
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return f.receive(buff, uint32_0, count, result)
     End Function
 
     <Extension()> Public Function receive(ByVal f As flow_pump,
                                           ByVal buff() As Byte,
                                           ByVal result As ref(Of UInt32)) As event_comb
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return f.receive(buff, array_size(buff), result)
     End Function
 
     <Extension()> Public Function receive(Of T)(ByVal i As text_pump, ByVal o As ref(Of T)) As event_comb
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Dim ec As event_comb = Nothing
         Dim p As ref(Of String) = Nothing
         Return New event_comb(Function() As Boolean

@@ -15,7 +15,7 @@ Public Module deploys
 
     Private Sub init()
         Try
-            assert(Directory.CreateDirectory(temp_folder) IsNot Nothing)
+            assert(Not Directory.CreateDirectory(temp_folder) Is Nothing)
         Catch ex As Exception
             assert(False, ex.Message())
         End Try

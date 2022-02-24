@@ -17,7 +17,7 @@ Partial Public Class channel
         Private lams As Int64
 
         Public Sub New(ByVal channel As channel, ByVal local_id As UInt32, ByVal remote_id As UInt32)
-            assert(channel IsNot Nothing)
+            assert(Not channel Is Nothing)
             Me.channel = channel
             Me.local_id = local_id
             Me.remote_id = remote_id

@@ -17,7 +17,7 @@ Public Class xml_slimparser_test
                                    "</some_tag2>"
 
     Private Shared Sub create(ByVal r As vector(Of pair(Of String, node_type)))
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         Dim selector As Int32 = 0
         selector = rnd_int(0, 5)
         Dim s As String = Nothing

@@ -22,22 +22,22 @@ Partial Public Class powerpoint
         End Sub
 
         Public Overrides Function identity(ByVal p As powerpoint) As String
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             Return p.identity
         End Function
 
         Public Overrides Function identity(ByVal c As TcpClient) As String
-            assert(c IsNot Nothing)
+            assert(Not c Is Nothing)
             Return c.identity()
         End Function
 
         Public Overrides Sub shutdown(ByVal c As TcpClient)
-            assert(c IsNot Nothing)
+            assert(Not c Is Nothing)
             c.shutdown()
         End Sub
 
         Protected Overrides Function token_str(ByVal p As powerpoint) As String
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             Return p.token
         End Function
 
@@ -46,12 +46,12 @@ Partial Public Class powerpoint
         End Function
 
         Protected Overrides Function create_herald(ByVal p As powerpoint, ByVal c As TcpClient) As herald
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             Return p.as_herald(c)
         End Function
 
         Public Overrides Function response_timeout_ms(ByVal p As powerpoint) As Int64
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             Return p.response_timeout_ms
         End Function
     End Class
@@ -59,7 +59,7 @@ Partial Public Class powerpoint
     Public NotInheritable Class challenger
         Public Shared Function [New](ByVal p As powerpoint, ByVal c As TcpClient) _
                                     As itoken_challenger
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             If strsame(p.tokener, constants.bypass_tokener) Then
                 Return bypass_token_challenger.[New](token_info.instance, p, c)
             ElseIf strsame(p.tokener, constants.token1) OrElse String.IsNullOrEmpty(p.token) Then
@@ -75,7 +75,7 @@ Partial Public Class powerpoint
 
     Public NotInheritable Class defender
         Public Shared Function [New](ByVal p As powerpoint) As itoken_defender(Of powerpoint, TcpClient)
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             If strsame(p.tokener, constants.bypass_tokener) Then
                 Return bypass_token_defender.[New](token_info.instance)
             ElseIf strsame(p.tokener, constants.token1) OrElse String.IsNullOrEmpty(p.token) Then

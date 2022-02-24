@@ -16,7 +16,7 @@ Public Class sync_indicator_adapter
     Private ReadOnly f As _do(Of Boolean, Boolean)
 
     Public Sub New(ByVal f As _do(Of Boolean, Boolean))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Me.f = f
     End Sub
 
@@ -42,7 +42,7 @@ Public Class indicator_adapter
     Private ReadOnly f As Func(Of ref(Of Boolean), event_comb)
 
     Public Sub New(ByVal f As Func(Of ref(Of Boolean), event_comb))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Me.f = f
     End Sub
 
@@ -64,7 +64,7 @@ Public Class sensor_adapter
     Private ReadOnly f As Func(Of ref(Of Boolean), Int64, event_comb)
 
     Public Sub New(ByVal f As Func(Of ref(Of Boolean), Int64, event_comb))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Me.f = f
     End Sub
 
@@ -89,7 +89,7 @@ Public Module _sensor
 
     <Extension()> Public Function sense(ByVal this As sensor,
                                         ByVal timeout_ms As Int64) As event_comb
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Dim ec As event_comb = Nothing
         Dim p As ref(Of Boolean) = Nothing
         Return New event_comb(Function() As Boolean
@@ -106,7 +106,7 @@ Public Module _sensor
     End Function
 
     <Extension()> Public Function sense(ByVal this As sensor) As event_comb
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
 #If DEBUG Then
         Dim ec As event_comb = Nothing
         Dim p As ref(Of Boolean) = Nothing

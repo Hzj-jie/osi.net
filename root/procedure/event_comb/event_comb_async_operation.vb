@@ -20,7 +20,7 @@ Public Class event_comb_async_operation
     Private Shared Shadows Function current() As event_comb_async_operation
         Dim o As event_comb_async_operation = Nothing
         o = DirectCast(event_comb.current(), event_comb_async_operation)
-        assert(o IsNot Nothing)
+        assert(Not o Is Nothing)
         Return o
     End Function
 
@@ -35,7 +35,7 @@ Public Class event_comb_async_operation
                         'if the void from wait()'s return has been called before goto_next(),
                         'the goto_next() will not take effect
                         'but the new change in event_comb.private_waitfor makes it safe
-                        assert(begin IsNot Nothing)
+                        assert(Not begin Is Nothing)
                         Dim c As event_comb_async_operation = Nothing
                         c = current()
                         Try
@@ -86,7 +86,7 @@ Public Class event_comb_async_operation
                    ByVal [end] As Action(Of IAsyncResult))
         Me.New(begin,
                Sub(e As Boolean, ar As IAsyncResult)
-                   assert([end] IsNot Nothing)
+                   assert(Not [end] Is Nothing)
                    [end](ar)
                End Sub,
                [end])
@@ -102,7 +102,7 @@ Public Class event_comb_async_operation
             Return New event_comb_async_operation(begin,
                                               Sub(e As Boolean, ar As IAsyncResult)
                                                   Dim r As T = Nothing
-                                                  assert([end] IsNot Nothing)
+                                                  assert(Not [end] Is Nothing)
                                                   r = [end](ar)
                                                   If Not e Then
                                                       eva(result, r)

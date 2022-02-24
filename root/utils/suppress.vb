@@ -29,7 +29,7 @@ Public NotInheritable Class suppress
     Private Shared ReadOnly m As hashmapless(Of String, atomic_bool) = hashmapless(Of String, atomic_bool).tiny()
 
     Private Shared Sub register(Of PROTECTOR)(ByVal i As atomic_bool)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         global_resolver(Of Func(Of Boolean), PROTECTOR).assert_first_register(
                 Function() As Boolean
                     Return i.true_()
@@ -71,7 +71,7 @@ Public NotInheritable Class suppress
                 If Not m.get(key, a) Then
                     Return False
                 End If
-                assert(a IsNot Nothing)
+                assert(Not a Is Nothing)
                 Return +a
             End Function)
     End Sub

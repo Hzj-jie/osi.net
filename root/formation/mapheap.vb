@@ -15,19 +15,19 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
         Private ReadOnly m As map(Of MAP_KEY, Int64) = Nothing
 
         Public Sub New(ByVal m As map(Of MAP_KEY, Int64))
-            assert(m IsNot Nothing)
+            assert(Not m Is Nothing)
             Me.m = m
         End Sub
 
         <copy_constructor>
         Public Sub New(ByVal h As heap2, ByVal m As map(Of MAP_KEY, Int64))
             MyBase.New(h)
-            assert(m IsNot Nothing)
+            assert(Not m Is Nothing)
             Me.m = m
         End Sub
 
         Public Overrides Function [erase](ByVal index As Int64) As Boolean
-            assert(at(index) IsNot Nothing, "index " + Convert.ToString(index) + " is not in heap.")
+            assert(Not at(index) Is Nothing, "index " + Convert.ToString(index) + " is not in heap.")
             Dim k As MAP_KEY = Nothing
             k = at(index).second
             assert(MyBase.erase(index), "mybase.erase(" + Convert.ToString(index) + ") returns false.")
@@ -41,8 +41,8 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
 
         Public Overrides Function update(ByVal index As Int64, ByVal value As pair(Of HEAP_KEY, MAP_KEY)) As Int64
             assert(index <> npos, "should not call update with index = npos.")
-            assert(value IsNot Nothing, "value is nothing.")
-            If at(index) IsNot Nothing Then
+            assert(Not value Is Nothing, "value is nothing.")
+            If Not at(index) Is Nothing Then
                 assert(m.erase(at(index).second) _
                             , "_map.erase(" + Convert.ToString(at(index).second) + ") returns false.")
             End If
@@ -55,7 +55,7 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
         End Function
 
         Protected Overrides Function swap(ByVal first As Int64, ByVal second As Int64) As Boolean
-            assert(m IsNot Nothing, "_map is nothing before swap")
+            assert(Not m Is Nothing, "_map is nothing before swap")
             If Not MyBase.swap(first, second) Then
                 Return False
             End If
@@ -100,8 +100,8 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
 
     <copy_constructor>
     Private Sub New(ByVal m As map(Of MAP_KEY, Int64), ByVal h As heap2)
-        assert(m IsNot Nothing)
-        assert(h IsNot Nothing)
+        assert(Not m Is Nothing)
+        assert(Not h Is Nothing)
         Me.m = m
         Me.h = h
     End Sub
@@ -126,7 +126,7 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
         End If
         Dim heap_node As pair(Of HEAP_KEY, MAP_KEY) = Nothing
         heap_node = h((+heap_pos).second)
-        assert(heap_node IsNot Nothing, "heapNode is nothing, _map is not concur with _heap.")
+        assert(Not heap_node Is Nothing, "heapNode is nothing, _map is not concur with _heap.")
         If accumulate Then
             heap_node.first = binary_operator.add(heap_node.first, value)
         Else
@@ -150,7 +150,7 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
     Public Sub pop_front(ByRef key As MAP_KEY, ByRef value As HEAP_KEY)
         Dim heapNode As pair(Of HEAP_KEY, MAP_KEY) = Nothing
         h.pop_front(heapNode)
-        If heapNode IsNot Nothing Then
+        If Not heapNode Is Nothing Then
             key = heapNode.second
             value = heapNode.first
         Else

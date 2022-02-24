@@ -8,7 +8,7 @@
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal m As ##ROOT_FILENAME##(Of ##TEMPLATE_TYPES##))
-            assert(m IsNot Nothing)
+            assert(Not m Is Nothing)
             it = m.begin()
         End Sub
 

@@ -10,7 +10,7 @@ Friend Class ikeyvt_input_validation_wrapper(Of THREADSAFE As _boolean)
     Private ReadOnly impl As ikeyvt(Of THREADSAFE)
 
     Public Sub New(ByVal impl As ikeyvt(Of THREADSAFE))
-        assert(impl IsNot Nothing)
+        assert(Not impl Is Nothing)
         Me.impl = impl
     End Sub
 

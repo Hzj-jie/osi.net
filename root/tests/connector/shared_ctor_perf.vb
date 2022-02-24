@@ -51,7 +51,7 @@ Public NotInheritable Class shared_ctor_perf
 
         Public Overrides Function run() As Boolean
             Dim x As no_cctor_no_shared = New no_cctor_no_shared()
-            Return x IsNot Nothing
+            Return Not x Is Nothing
         End Function
     End Class
 
@@ -60,7 +60,7 @@ Public NotInheritable Class shared_ctor_perf
 
         Public Overrides Function run() As Boolean
             Dim x As cctor_no_shared = New cctor_no_shared()
-            Return x IsNot Nothing
+            Return Not x Is Nothing
         End Function
     End Class
 
@@ -69,7 +69,7 @@ Public NotInheritable Class shared_ctor_perf
 
         Public Overrides Function run() As Boolean
             Dim x As no_cctor_shared = New no_cctor_shared()
-            Return x IsNot Nothing
+            Return Not x Is Nothing
         End Function
     End Class
 
@@ -78,7 +78,7 @@ Public NotInheritable Class shared_ctor_perf
 
         Public Overrides Function run() As Boolean
             Dim x As cctor_shared = New cctor_shared()
-            Return x IsNot Nothing
+            Return Not x Is Nothing
         End Function
     End Class
 End Class

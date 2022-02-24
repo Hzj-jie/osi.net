@@ -49,8 +49,8 @@ Public Class mock_dev_T(Of T, _RANDOM_SEND_FAILURE As _boolean, _RANDOM_RECEIVE_
 
     Protected Sub New(ByVal send_pump As slimqless2_event_sync_T_pump(Of T),
                       ByVal receive_pump As slimqless2_event_sync_T_pump(Of T))
-        assert(send_pump IsNot Nothing)
-        assert(receive_pump IsNot Nothing)
+        assert(Not send_pump Is Nothing)
+        assert(Not receive_pump Is Nothing)
         Me.send_pump = send_pump
         Me.receive_pump = receive_pump
         Me.receiver = event_sync_T_pump_T_receiver_adapter.[New](Me.receive_pump)
@@ -100,14 +100,14 @@ Public Class mock_dev_T(Of T, _RANDOM_SEND_FAILURE As _boolean, _RANDOM_RECEIVE_
     Protected Shared Function equal(ByVal p As slimqless2_event_sync_T_pump(Of T),
                                     ByVal [is] As Func(Of T, Boolean),
                                     ByVal finish As Func(Of Boolean)) As Boolean
-        assert(p IsNot Nothing)
-        assert([is] IsNot Nothing)
-        assert(finish IsNot Nothing)
+        assert(Not p Is Nothing)
+        assert(Not [is] Is Nothing)
+        assert(Not finish Is Nothing)
         Dim r As Boolean = False
         Dim o As T = Nothing
         r = True
         While Not finish() AndAlso p.receive(o)
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             If Not [is](o) Then
                 r = False
             End If
@@ -116,7 +116,7 @@ Public Class mock_dev_T(Of T, _RANDOM_SEND_FAILURE As _boolean, _RANDOM_RECEIVE_
     End Function
 
     Protected Function equal(ByVal p As slimqless2_event_sync_T_pump(Of T), ByVal v() As T) As Boolean
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Dim i As Int32 = 0
         Return equal(p,
                      Function(x As T) As Boolean

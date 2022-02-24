@@ -34,14 +34,14 @@ Public Class weak_dispose_ptr(Of T)
     Public Sub New(ByVal p As Func(Of T),
                    Optional ByVal init As Action = Nothing,
                    Optional ByVal disposer As Action(Of T) = Nothing)
-        If init IsNot Nothing Then
+        If Not init Is Nothing Then
             init()
         End If
-        If p IsNot Nothing Then
+        If Not p Is Nothing Then
             [set](p())
         End If
         If disposer Is Nothing Then
-            assert([default](Of T).disposer() IsNot Nothing)
+            assert(Not [default](Of T).disposer() Is Nothing)
             Me._disposer = [default](Of T).disposer()
         Else
             Me._disposer = disposer
@@ -68,7 +68,7 @@ Public Class weak_dispose_ptr(Of T)
         Else
             Me._disposer = disposer
         End If
-        assert(Me._disposer IsNot Nothing)
+        assert(Not Me._disposer Is Nothing)
     End Sub
 
     Public Sub New(Optional ByVal disposer As Action(Of T) = Nothing)

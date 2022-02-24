@@ -17,7 +17,7 @@ Public Class block_pump_flow_pump_adapter
     Private buffered As piece
 
     Public Sub New(ByVal b As block_pump)
-        assert(b IsNot Nothing)
+        assert(Not b Is Nothing)
         Me.block_pump_dev = b
         Me.buffered = Nothing
     End Sub
@@ -61,7 +61,7 @@ Public Class block_pump_flow_pump_adapter
                                   End If
                               End Function,
                               Function() As Boolean
-                                  assert(b IsNot Nothing)
+                                  assert(Not b Is Nothing)
                                   If ec.end_result() Then
                                       If isemptyarray(+b) Then
                                           Return eva(result, uint32_0) AndAlso

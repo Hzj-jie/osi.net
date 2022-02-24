@@ -43,7 +43,7 @@ Partial Public NotInheritable Class command
     End Function
 
     Public Function has_action() As Boolean
-        Return a.get() IsNot Nothing
+        Return Not a.get() Is Nothing
     End Function
 
     Public Function has_parameters() As Boolean

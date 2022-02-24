@@ -28,7 +28,7 @@ Namespace logic
                            ByVal return_type As String,
                            ByVal parameters As const_array(Of builders.parameter_type))
                 MyBase.New(name, return_type, parameters)
-                assert(begin IsNot Nothing)
+                assert(Not begin Is Nothing)
                 Me.begin = begin
             End Sub
         End Class
@@ -42,7 +42,7 @@ Namespace logic
                                    ByVal return_type As String,
                                    ByVal parameters() As T) As Boolean
                 assert(Not name.null_or_whitespace())
-                assert(o IsNot Nothing)
+                assert(Not o Is Nothing)
                 assert(Not return_type.null_or_whitespace())
                 Dim a As New anchor(name, o.size(), return_type, parameters)
                 If m.emplace(a.name, a).second() Then
@@ -59,7 +59,7 @@ Namespace logic
 
         Public Function anchors() As anchor_t
             If is_root() Then
-                assert(a IsNot Nothing)
+                assert(Not a Is Nothing)
                 Return a
             End If
             assert(a Is Nothing)

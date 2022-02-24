@@ -81,7 +81,7 @@ Public NotInheritable Class rwlock
         Private ReadOnly l As rwlock
 
         Public Sub New(ByVal l As rwlock)
-            assert(l IsNot Nothing)
+            assert(Not l Is Nothing)
             l.read_lock()
             Me.l = l
         End Sub
@@ -97,7 +97,7 @@ Public NotInheritable Class rwlock
         Private ReadOnly l As rwlock
 
         Public Sub New(ByVal l As rwlock)
-            assert(l IsNot Nothing)
+            assert(Not l Is Nothing)
             l.write_lock()
             Me.l = l
         End Sub

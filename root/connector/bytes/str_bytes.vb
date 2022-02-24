@@ -13,14 +13,14 @@ Public Module _str_bytes
                                             ByVal start As UInt32,
                                             ByVal len As UInt32) As Boolean
         Return start + len <= strlen(s) AndAlso
-               s IsNot Nothing
+               Not s Is Nothing
     End Function
 
     Private Function valid_input_parameters(ByVal b() As Byte,
                                             ByVal start As UInt32,
                                             ByVal len As UInt32) As Boolean
         Return start + len <= array_size(b) AndAlso
-               b IsNot Nothing
+               Not b Is Nothing
     End Function
 
     Public Function str_bytes(ByVal s As String,

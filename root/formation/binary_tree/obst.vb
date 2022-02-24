@@ -22,8 +22,8 @@ Public Class obst(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Sub New(ByVal create_node As Func(Of T, node),
                       ByVal copy_node As Func(Of node, node))
-        assert(create_node IsNot Nothing)
-        assert(copy_node IsNot Nothing)
+        assert(Not create_node Is Nothing)
+        assert(Not copy_node Is Nothing)
         Me.create_node = create_node
         Me.copy_node = copy_node
     End Sub
@@ -51,8 +51,8 @@ Public Class obst(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Shared Shadows Sub move_to(ByVal from As obst(Of T), ByVal [to] As obst(Of T))
-        assert(from IsNot Nothing)
-        assert([to] IsNot Nothing)
+        assert(Not from Is Nothing)
+        assert(Not [to] Is Nothing)
         bst(Of T).move_to(from, [to])
         [to].s = from.s
         from.s = 0
@@ -68,8 +68,8 @@ Public Class obst(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Sub clone_to(ByVal from As obst(Of T), ByVal [to] As obst(Of T))
-        assert(from IsNot Nothing)
-        assert([to] IsNot Nothing)
+        assert(Not from Is Nothing)
+        assert(Not [to] Is Nothing)
         If Not from.empty() Then
             clone_to(from.root, [to].root)
         End If
@@ -117,7 +117,7 @@ Public Class obst(Of T)
         Dim n As node = Nothing
         n = If(it.is_end(), root, it.node())
         While True
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
             Dim c As Int32 = 0
             c = n.compare(v)
             If c = 0 Then
@@ -168,11 +168,11 @@ Public Class obst(Of T)
     Protected Function [erase](ByVal n As node,
                                ByVal select_left As Boolean,
                                ByRef parent_of_removed_node As node) As node
-        assert(n IsNot Nothing)
+        assert(Not n Is Nothing)
         Dim r As node = n.erase(select_left, parent_of_removed_node)
         If n.is_root() Then
             root = r
-            If root IsNot Nothing Then
+            If Not root Is Nothing Then
                 root.clear_parent()
             End If
         End If
@@ -213,7 +213,7 @@ Public Class obst(Of T)
         Return bt(Of T).compare(this,
                                 that,
                                 Function(x As obst(Of T)) As UInt32
-                                    assert(x IsNot Nothing)
+                                    assert(Not x Is Nothing)
                                     Return x.size()
                                 End Function,
                                 cmp)

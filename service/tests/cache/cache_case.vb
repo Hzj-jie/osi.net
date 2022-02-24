@@ -20,7 +20,7 @@ Public Class cache_case
 
     Public Sub New(ByVal s1 As icache(Of String, Byte()),
                    ByVal validate As Boolean)
-        assert(s1 IsNot Nothing)
+        assert(Not s1 Is Nothing)
         Me.s1 = s1
         If validate Then
             s2 = map_cache(Of String, Byte())()
@@ -105,7 +105,7 @@ Public Class cache_case
     End Sub
 
     Private Function validate() As Boolean
-        Return s2 IsNot Nothing
+        Return Not s2 Is Nothing
     End Function
 
     'return true if the content of value is already the same as expected

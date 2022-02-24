@@ -25,7 +25,7 @@ Public MustInherit Class istrkeyvt_case
     Private ReadOnly i As iistrkeyvt_case
 
     Protected Sub New(ByVal i As iistrkeyvt_case)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Me.i = i
     End Sub
 
@@ -43,7 +43,7 @@ Public MustInherit Class istrkeyvt_case
 
     Protected Overridable Function create_istrkeyvt(ByVal p As ref(Of istrkeyvt)) As event_comb
         Return New event_comb(Function() As Boolean
-                                  Return assert(p IsNot Nothing) AndAlso
+                                  Return assert(Not p Is Nothing) AndAlso
                                          eva(p, create_istrkeyvt()) AndAlso
                                          assertion.is_not_null(+p) AndAlso
                                          goto_end()
@@ -557,7 +557,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                       Return goto_end()
                                   End If
                                   If round > 0 Then
-                                      assert(ec IsNot Nothing)
+                                      assert(Not ec Is Nothing)
                                       assertion.is_true(ec.end_result())
                                       If Not ec.end_result() Then
                                           failures += 1
@@ -578,7 +578,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
 
     Public Function create(ByVal keyvt As istrkeyvt) As event_comb Implements iistrkeyvt_case.create
         Dim ec As event_comb = Nothing
-        assert(keyvt IsNot Nothing)
+        assert(Not keyvt Is Nothing)
         Return New event_comb(Function() As Boolean
                                   ec = cases(keyvt, New map(Of String, pair(Of Byte(), Int64))())
                                   Return waitfor(ec) AndAlso

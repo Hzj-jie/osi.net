@@ -14,8 +14,8 @@ Public Class udp_dev_test
     Private p2 As powerpoint
 
     Private Shared Function send_and_receive_once(ByVal sender As udp_dev, ByVal receiver As udp_dev) As event_comb
-        assert(sender IsNot Nothing)
-        assert(receiver IsNot Nothing)
+        assert(Not sender Is Nothing)
+        assert(Not receiver Is Nothing)
         Dim v() As Byte = Nothing
         Dim p As ref(Of Boolean) = Nothing
         Dim r As ref(Of Byte()) = Nothing
@@ -62,7 +62,7 @@ Public Class udp_dev_test
         Return New event_comb(Function() As Boolean
                                   If i < 50 Then
                                       If i > 0 Then
-                                          assert(ec IsNot Nothing)
+                                          assert(Not ec Is Nothing)
                                           If Not assertion.is_true(ec.end_result()) Then
                                               Return False
                                           End If

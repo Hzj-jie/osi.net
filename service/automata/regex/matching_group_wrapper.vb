@@ -9,7 +9,7 @@ Partial Public Class rlexer
         Private ReadOnly g As matching_group
 
         Protected Sub New(ByVal g As matching_group)
-            assert(g IsNot Nothing)
+            assert(Not g Is Nothing)
             Me.g = g
         End Sub
 

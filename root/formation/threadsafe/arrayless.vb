@@ -81,12 +81,12 @@ Public Class arrayless(Of T)
                 Dim found As Boolean = False
                 a(i).l.wait()
                 If Not a(i).d Then
-                    assert(c IsNot Nothing)
+                    assert(Not c Is Nothing)
                     a(i).v = nothrow(c, i)
                     a(i).d = True
                     ' We expect the [New] function returns a valid instance, otherwise it means the allocation failed.
-                    ' Note, if T is a value type, 'a(i).v IsNot Nothing' always returns true. Refer to nothing_test.
-                    If a(i).v IsNot Nothing Then
+                    ' Note, if T is a value type, 'Not a(i).v Is Nothing' always returns true. Refer to nothing_test.
+                    If Not a(i).v Is Nothing Then
                         id = i
                         o = a(i).v
                         found = True
@@ -132,7 +132,7 @@ Public Class arrayless(Of T)
             If Not a(id).d Then
                 a(id).l.wait()
                 If Not a(id).d Then
-                    assert(c IsNot Nothing)
+                    assert(Not c Is Nothing)
                     a(id).v = nothrow(c, id)
                     a(id).d = True
                 End If

@@ -40,7 +40,7 @@ Friend Class ikeyvalue_ikeyvt_false
     Private ReadOnly s As ikeyvalue = Nothing
 
     Public Sub New(ByVal s As ikeyvalue)
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Me.s = s
     End Sub
 
@@ -52,7 +52,7 @@ Friend Class ikeyvalue_ikeyvt_false
                                                           Byte(),
                                                           ref(Of Boolean),
                                                           event_comb)) As event_comb
-        assert(op IsNot Nothing)
+        assert(Not op Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = op(value_key(key), value, result)

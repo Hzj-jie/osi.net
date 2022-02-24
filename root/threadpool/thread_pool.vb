@@ -26,7 +26,7 @@ Public NotInheritable Class thread_pool
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub push(ByVal v As Action)
-        assert(v IsNot Nothing)
+        assert(Not v Is Nothing)
         assert(ref.q.push(v))
     End Sub
 

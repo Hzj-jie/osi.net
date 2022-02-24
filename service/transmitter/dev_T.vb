@@ -26,7 +26,7 @@ Public Module _dev_T
                                     (ByVal this As T2,
                                      ByVal timeout_ms As Int64,
                                      ByVal r As ref(Of T1)) As event_comb
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = sense(this, timeout_ms)

@@ -8,7 +8,7 @@ Public Class event_comb_case_wrapper
     Private ReadOnly c As event_comb_case = Nothing
 
     Protected Sub New(ByVal c As event_comb_case)
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Me.c = c
     End Sub
 

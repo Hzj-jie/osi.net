@@ -16,8 +16,8 @@ Partial Public NotInheritable Class case2
             Dim fs() As Func(Of Object, Boolean) = Nothing
             ReDim fs(CInt(vs.size() - uint32_1))
             For i As UInt32 = 0 To vs.size() - uint32_1
-                assert(vs(i) IsNot Nothing)
-                assert(vs(i).f IsNot Nothing)
+                assert(Not vs(i) Is Nothing)
+                assert(Not vs(i).f Is Nothing)
                 fs(CInt(i)) = vs(i).f
             Next
             Return Function(ByVal obj As Object) As Boolean
@@ -33,8 +33,8 @@ Partial Public NotInheritable Class case2
 
     Private Shared Function parse_functions(Of AT As Attribute, FI As function_info) _
                                            (ByVal t As Type, ByVal from As Func(Of MethodInfo, FI)) As vector(Of FI)
-        assert(t IsNot Nothing)
-        assert(from IsNot Nothing)
+        assert(Not t Is Nothing)
+        assert(Not from Is Nothing)
         Dim ms() As MethodInfo = Nothing
         ms = t.GetMethods(binding_flags.all_method)
         If isemptyarray(ms) Then

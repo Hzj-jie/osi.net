@@ -214,7 +214,7 @@ Public Class free_cluster_test
     End Function
 
     Private Shared Function cases(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
-        assert(fc IsNot Nothing)
+        assert(Not fc Is Nothing)
         Dim ec As event_comb = Nothing
         Dim i As Int64 = 0
         Return New event_comb(Function() As Boolean

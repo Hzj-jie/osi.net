@@ -34,8 +34,8 @@ Public Class transceive_timeout
     Private ReadOnly rt As rate_timeout
 
     Public Sub New(ByVal send_rate_timeout As rate_timeout, ByVal receive_rate_timeout As rate_timeout)
-        assert(send_rate_timeout IsNot Nothing)
-        assert(receive_rate_timeout IsNot Nothing)
+        assert(Not send_rate_timeout Is Nothing)
+        assert(Not receive_rate_timeout Is Nothing)
         Me.st = send_rate_timeout
         Me.rt = receive_rate_timeout
     End Sub

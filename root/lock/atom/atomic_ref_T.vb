@@ -10,7 +10,7 @@ Public NotInheritable Class atomic_ref(Of T)
     Private ReadOnly r As atomic_ref
 
     Public Sub New(ByVal r As atomic_ref)
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         Me.r = r
     End Sub
 

@@ -69,7 +69,7 @@ Public Class multithreading_case_wrapper
     End Sub
 
     Public Shared Function current() As multithreading_case_wrapper
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Return this
     End Function
 

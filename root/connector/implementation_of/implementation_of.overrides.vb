@@ -20,7 +20,7 @@ Partial Public Class implementation_of(Of T)
         Private ReadOnly f As Func(Of T)
 
         Public Sub New(ByVal f As Func(Of T))
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             Me.f = f
         End Sub
 

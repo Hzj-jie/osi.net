@@ -80,7 +80,7 @@ Partial Friend Class cached_ikeyvalue
             Dim v2 As Boolean = False
             Dim v3 As Int64 = 0
             Return (v.get(array_ref.of(key), v1) AndAlso
-                    v1 IsNot Nothing) OrElse
+                    Not v1 Is Nothing) OrElse
                    (h.get(array_ref.of(key), v2) AndAlso
                     v2) OrElse
                    (s.get(array_ref.of(key), v3) AndAlso
@@ -91,7 +91,7 @@ Partial Friend Class cached_ikeyvalue
             If result Is Nothing OrElse array_size(result) < max_value_size Then
                 v.set(array_ref.of(key), result)
             End If
-            h.set(array_ref.of(key), result IsNot Nothing)
+            h.set(array_ref.of(key), Not result Is Nothing)
             s.set(array_ref.of(key), If(result Is Nothing, npos, array_size(result)))
         End Sub
 

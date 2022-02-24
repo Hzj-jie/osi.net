@@ -11,7 +11,7 @@ Namespace counter
         Private l As lock_t
 
         Public Sub New(ByVal writer As T)
-            assert(writer IsNot Nothing)
+            assert(Not writer Is Nothing)
             Me.writer = writer
         End Sub
 

@@ -12,7 +12,7 @@ Public NotInheritable Class delegate_info(Of T)
     Private Shared Function calculate_invoke() As MethodInfo
         assert(GetType(T).is(GetType([Delegate])))
         Dim invoke As MethodInfo = GetType(T).GetMethod("Invoke", binding_flags.instance_public_method)
-        assert(invoke IsNot Nothing)
+        assert(Not invoke Is Nothing)
         Return invoke
     End Function
 

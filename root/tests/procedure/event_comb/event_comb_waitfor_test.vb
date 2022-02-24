@@ -15,7 +15,7 @@ Public NotInheritable Class event_comb_waitfor_test
     Inherits [case]
 
     Private Shared Function waitfor_test(ByVal w As Func(Of Int64, Int64, Boolean)) As Boolean
-        assert(w IsNot Nothing)
+        assert(Not w Is Nothing)
         Dim i As Int32 = 0
         Const target As Int32 = -1
         Const wait_ms As Int64 = 10000

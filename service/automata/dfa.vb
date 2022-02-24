@@ -16,7 +16,7 @@ Public Class dfa(Of KEY_T,
         trans_count = +(alloc(Of TRANSITION_COUNT)())
         assert(trans_count > 0)
         trans_index = alloc(Of KEY_TO_INDEX)()
-        assert(trans_index IsNot Nothing)
+        assert(Not trans_index Is Nothing)
     End Sub
 
     Private Shared Function transition_position(ByVal k As KEY_T) As UInt32
@@ -39,7 +39,7 @@ Public Class dfa(Of KEY_T,
             assert(pos < array_size(k))
             Dim index As UInt32 = 0
             index = transition_position(k(pos))
-            If transitions(index) IsNot Nothing AndAlso
+            If Not transitions(index) Is Nothing AndAlso
                transitions(index).action(k, pos, result) Then
                 Return transitions(index).next
             Else
@@ -50,7 +50,7 @@ Public Class dfa(Of KEY_T,
         Public Function insert(ByVal k As KEY_T,
                                ByVal next_status As status,
                                ByVal action As Func(Of KEY_T(), UInt32, RESULT_T, Boolean)) As Boolean
-            assert(next_status IsNot Nothing)
+            assert(Not next_status Is Nothing)
             If action Is Nothing Then
                 Return False
             Else
@@ -71,8 +71,8 @@ Public Class dfa(Of KEY_T,
         Public ReadOnly action As Func(Of KEY_T(), UInt32, RESULT_T, Boolean)
 
         Public Sub New(ByVal [next] As status, ByVal action As Func(Of KEY_T(), UInt32, RESULT_T, Boolean))
-            assert([next] IsNot Nothing)
-            assert(action IsNot Nothing)
+            assert(Not [next] Is Nothing)
+            assert(Not action Is Nothing)
             Me.next = [next]
             Me.action = action
         End Sub

@@ -16,7 +16,7 @@ Namespace rlexer
         Inherits [case]
 
         Private Shared Function create_rlexer(ByVal l As rl, ByVal ParamArray regexes() As String) As Boolean
-            assert(l IsNot Nothing)
+            assert(Not l Is Nothing)
             assert(Not isemptyarray(regexes))
             For i As Int32 = 0 To regexes.Length() - 1
                 Dim r As regex = Nothing
@@ -52,7 +52,7 @@ Namespace rlexer
             If assertion.is_false(r.null_or_empty()) AndAlso
                assertion.equal(r.size(), CUInt(29)) Then
                 assertion.equal(r.str(Function(ByVal w As typed_word) As String
-                                          assert(w IsNot Nothing)
+                                          assert(Not w Is Nothing)
                                           Return w.str()
                                       End Function), doc)
                 Dim types() As UInt32 = {0, 6, 8, 7, 10, 2, 10, 4, 10, 5, 10, 8, 9, 4,

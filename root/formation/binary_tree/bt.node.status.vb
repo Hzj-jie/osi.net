@@ -16,7 +16,7 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_heighted_box() As Boolean
-            Return hb IsNot Nothing
+            Return Not hb Is Nothing
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -29,7 +29,7 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_weighted_box() As Boolean
-            Return wb IsNot Nothing
+            Return Not wb Is Nothing
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -42,7 +42,7 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_range_box() As Boolean
-            Return rb IsNot Nothing
+            Return Not rb Is Nothing
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -70,7 +70,7 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function has_left_child() As Boolean
-            Return l IsNot Nothing
+            Return Not l Is Nothing
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -80,7 +80,7 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function has_right_child() As Boolean
-            Return r IsNot Nothing
+            Return Not r Is Nothing
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -106,21 +106,21 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_parent_of(ByVal n As node) As Boolean
-            Return n IsNot Nothing AndAlso
+            Return Not n Is Nothing AndAlso
                    (left_linked(n) OrElse
                     right_linked(n))
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function parent_is(ByVal n As node) As Boolean
-            Return n IsNot Nothing AndAlso
+            Return Not n Is Nothing AndAlso
                    parent_linked(n)
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_left_subtree_of(ByVal n As node) As Boolean
             Return parent_is(n) AndAlso
-                   assert(n IsNot Nothing) AndAlso
+                   assert(Not n Is Nothing) AndAlso
                    n.left_linked(Me)
         End Function
 
@@ -133,7 +133,7 @@ Partial Public Class bt(Of T)
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_right_subtree_of(ByVal n As node) As Boolean
             Return parent_is(n) AndAlso
-                   assert(n IsNot Nothing) AndAlso
+                   assert(Not n Is Nothing) AndAlso
                    n.right_linked(Me)
         End Function
 

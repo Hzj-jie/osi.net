@@ -25,7 +25,7 @@ Public Class dataprovider_dataloader(Of T)
     End Sub
 
     Protected Overridable Function load(ByVal dps() As idataprovider) As T
-        assert(loader IsNot Nothing)
+        assert(Not loader Is Nothing)
         Return loader(dps)
     End Function
 

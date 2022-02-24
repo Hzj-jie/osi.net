@@ -93,7 +93,7 @@ Partial Public NotInheritable Class fces
                               End Function,
                               Function() As Boolean
                                   If i > 0 Then
-                                      assert(ec IsNot Nothing)
+                                      assert(Not ec Is Nothing)
                                       If Not ec.end_result() Then
                                           Return False
                                       End If

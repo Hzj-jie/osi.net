@@ -15,7 +15,7 @@ Public Module _weak_action
         Return Sub()
                    Dim v As Action = Nothing
                    v = direct_cast(Of Action)(p.Target())
-                   If v IsNot Nothing Then
+                   If Not v Is Nothing Then
                        v()
                    End If
                End Sub

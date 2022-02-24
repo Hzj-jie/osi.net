@@ -32,14 +32,14 @@ Public Class reference_count_event_comb_1
         Me.w = work
         Me.f = final
         Me.r = New reference_count_runner(Sub(this As reference_count_runner)
-                                              assert(this IsNot Nothing)
+                                              assert(Not this Is Nothing)
                                               start()
                                               this.mark_started()
                                           End Sub,
                                           Sub(this As reference_count_runner)
                                               Dim c As event_comb = Nothing
                                               c = ec
-                                              If c IsNot Nothing Then
+                                              If Not c Is Nothing Then
                                                   c.cancel()
                                               End If
                                           End Sub)
@@ -152,7 +152,7 @@ Public Class reference_count_event_comb_1
     End Function
 
     Protected Overridable Function work() As event_comb
-        assert(w IsNot Nothing)
+        assert(Not w Is Nothing)
         Return w()
     End Function
 

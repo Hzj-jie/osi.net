@@ -134,20 +134,20 @@ Public Class server_dev
     End Function
 
     Private Shared Function validate(ByVal this As server_dev) As Boolean
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Return Not this.finished
     End Function
 
     Private Shared Sub close(ByVal this As server_dev)
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         this.ctx.shutdown()
-        If this.after_respond IsNot Nothing Then
+        If Not this.after_respond Is Nothing Then
             this.after_respond()
         End If
     End Sub
 
     Private Shared Function identity(ByVal this As server_dev) As String
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Return this.id
     End Function
 
@@ -170,7 +170,7 @@ Public Class server_dev
     Public Shared Function device_exporter(ByVal s As server,
                                            Optional ByVal ls As link_status = Nothing) _
                                           As imanual_device_exporter(Of text)
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Dim o As imanual_device_exporter(Of text) = Nothing
         o = New manual_device_exporter(Of text)(s.identity())
         AddHandler http_listener_context_handle.[New](s).handle_context_offline,
@@ -187,7 +187,7 @@ Public Class server_dev
     Public Shared Function device_pool(ByVal s As server,
                                        Optional ByVal ls As link_status = Nothing,
                                        Optional ByVal max_connection As UInt32 = uint32_0) As idevice_pool(Of text)
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Return manual_pre_generated_device_pool.[New](device_exporter(s, ls), max_connection, s.identity())
     End Function
 End Class

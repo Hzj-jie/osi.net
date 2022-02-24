@@ -123,7 +123,7 @@ Public NotInheritable Class ref_test
         Private Shared Function compares(ByVal i As ref(Of test_class2),
                                          ByVal s As String,
                                          ByVal exp As Int32) As Boolean
-            assert(i IsNot Nothing)
+            assert(Not i Is Nothing)
             assertion.equal(i.CompareTo(New test_class2(s)), exp)
             assertion.equal(i.CompareTo(New ref(Of test_class2)(New test_class2(s))), exp)
             assertion.equal(i.CompareTo(DirectCast(New ref(Of test_class2)(New test_class2(s)), Object)), exp)

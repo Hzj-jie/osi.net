@@ -10,7 +10,7 @@ Partial Public Class pre_generated_device_pool(Of T)
     Protected Sub New(ByVal p As idevice_exporter(Of T), ByVal max_count As UInt32, ByVal identity As String)
         MyBase.New(max_count, identity)
         q = New qless2(Of idevice(Of T))()
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         AddHandler p.new_device_exported, Sub(d As idevice(Of T), ByRef export_result As Boolean)
                                               export_result = insert_new_device(d)
                                           End Sub
@@ -34,7 +34,7 @@ Partial Public Class pre_generated_device_pool(Of T)
     End Function
 
     Private Function insert_new_device(ByVal c As idevice(Of T)) As Boolean
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         If Not expired() AndAlso c.is_valid() AndAlso increase_total_count() Then
             AddHandler c.closing, AddressOf decrease_total_count
             q.emplace(c)

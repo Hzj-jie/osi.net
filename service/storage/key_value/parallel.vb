@@ -9,8 +9,8 @@ Public Module _parallel
     Public Function parallel(ByVal d As Func(Of event_comb),
                              ByVal t As Func(Of event_comb),
                              Optional ByVal e As Func(Of Boolean) = Nothing) As event_comb
-        assert(d IsNot Nothing)
-        assert(t IsNot Nothing)
+        assert(Not d Is Nothing)
+        assert(Not t Is Nothing)
         Dim ec1 As event_comb = Nothing
         Dim ec2 As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -31,9 +31,9 @@ Public Module _parallel
                                     ByVal t As Func(Of ref(Of RT), event_comb),
                                     ByVal consistent As Func(Of RT, RT, Boolean),
                                     ByVal r As ref(Of RT)) As event_comb
-        assert(d IsNot Nothing)
-        assert(t IsNot Nothing)
-        assert(consistent IsNot Nothing)
+        assert(Not d Is Nothing)
+        assert(Not t Is Nothing)
+        assert(Not consistent Is Nothing)
         Dim r1 As ref(Of RT) = Nothing
         Dim r2 As ref(Of RT) = Nothing
         Return parallel(Function() As event_comb

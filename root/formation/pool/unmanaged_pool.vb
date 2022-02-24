@@ -28,7 +28,7 @@ Public Class unmanaged_pool(Of T)
         Else
             If size.increment() <= max_size Then
                 o = create()
-                assert(o IsNot Nothing)
+                assert(Not o Is Nothing)
                 Return True
             Else
                 assert(size.decrement() >= 0)
@@ -38,7 +38,7 @@ Public Class unmanaged_pool(Of T)
     End Function
 
     Public Sub release(ByVal i As T)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         q.emplace(i)
     End Sub
 End Class

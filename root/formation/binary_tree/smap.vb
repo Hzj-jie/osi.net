@@ -31,24 +31,24 @@ Public NotInheritable Class smap(Of KEY_T, VALUE_T)
     Shared Sub New()
         container_operator(Of smap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).size(
                 Function(ByVal i As smap(Of KEY_T, VALUE_T)) As UInt32
-                    assert(i IsNot Nothing)
+                    assert(Not i Is Nothing)
                     Return i.size()
                 End Function)
         container_operator(Of smap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).emplace(
                 Function(ByVal i As smap(Of KEY_T, VALUE_T),
                          ByVal j As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
-                    assert(i IsNot Nothing)
+                    assert(Not i Is Nothing)
                     Return i.emplace(j).second
                 End Function)
         container_operator(Of smap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).enumerate(
                 Function(ByVal i As smap(Of KEY_T, VALUE_T)) _
                         As container_operator(Of first_const_pair(Of KEY_T, VALUE_T)).enumerator
-                    assert(i IsNot Nothing)
+                    assert(Not i Is Nothing)
                     Return New enumerator(i)
                 End Function)
         container_operator(Of smap(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE_T)).clear(
                 Sub(ByVal i As smap(Of KEY_T, VALUE_T))
-                    assert(i IsNot Nothing)
+                    assert(Not i Is Nothing)
                     i.clear()
                 End Sub)
         bytes_serializer(Of smap(Of KEY_T, VALUE_T)).container(Of first_const_pair(Of KEY_T, VALUE_T)).register()
@@ -58,27 +58,27 @@ Public NotInheritable Class smap(Of KEY_T, VALUE_T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function on_first(ByVal f As Action(Of KEY_T)) As Action(Of first_const_pair(Of KEY_T, VALUE_T))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return Sub(ByVal i As first_const_pair(Of KEY_T, VALUE_T))
-                   assert(i IsNot Nothing)
+                   assert(Not i Is Nothing)
                    f(i.first)
                End Sub
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function on_second(ByVal f As Action(Of VALUE_T)) As Action(Of first_const_pair(Of KEY_T, VALUE_T))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return Sub(ByVal i As first_const_pair(Of KEY_T, VALUE_T))
-                   assert(i IsNot Nothing)
+                   assert(Not i Is Nothing)
                    f(i.second)
                End Sub
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function on_pair(ByVal f As Action(Of KEY_T, VALUE_T)) As Action(Of first_const_pair(Of KEY_T, VALUE_T))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return Sub(ByVal i As first_const_pair(Of KEY_T, VALUE_T))
-                   assert(i IsNot Nothing)
+                   assert(Not i Is Nothing)
                    f(i.first, i.second)
                End Sub
     End Function
@@ -91,52 +91,52 @@ Public NotInheritable Class smap(Of KEY_T, VALUE_T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function first_mapper(Of KEY2_T)(ByVal f As Func(Of KEY_T, KEY2_T)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), first_const_pair(Of KEY2_T, VALUE_T))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As first_const_pair(Of KEY2_T, VALUE_T)
-                   assert(p IsNot Nothing)
+                   assert(Not p Is Nothing)
                    Return first_const_pair.of(f(p.first), p.second)
                End Function
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function first_mapper(Of KEY2_T)(ByVal f As Func(Of KEY_T, VALUE_T, KEY2_T)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), first_const_pair(Of KEY2_T, VALUE_T))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As first_const_pair(Of KEY2_T, VALUE_T)
-                   assert(p IsNot Nothing)
+                   assert(Not p Is Nothing)
                    Return first_const_pair.of(f(p.first, p.second), p.second)
                End Function
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function second_mapper(Of VALUE2_T)(ByVal f As Func(Of VALUE_T, VALUE2_T)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE2_T))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As first_const_pair(Of KEY_T, VALUE2_T)
-                   assert(p IsNot Nothing)
+                   assert(Not p Is Nothing)
                    Return first_const_pair.of(p.first, f(p.second))
                End Function
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function second_mapper(Of VALUE2_T)(ByVal f As Func(Of KEY_T, VALUE_T, VALUE2_T)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), first_const_pair(Of KEY_T, VALUE2_T))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As first_const_pair(Of KEY_T, VALUE2_T)
-                   assert(p IsNot Nothing)
+                   assert(Not p Is Nothing)
                    Return first_const_pair.of(p.first, f(p.first, p.second))
                End Function
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function first_filter(ByVal f As Func(Of KEY_T, Boolean)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), Boolean)
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return Function(ByVal i As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
-                   assert(i IsNot Nothing)
+                   assert(Not i Is Nothing)
                    Return f(i.first)
                End Function
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function second_filter(ByVal f As Func(Of VALUE_T, Boolean)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), Boolean)
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return Function(ByVal i As first_const_pair(Of KEY_T, VALUE_T)) As Boolean
                    Return f(i.second)
                End Function
@@ -144,9 +144,9 @@ Public NotInheritable Class smap(Of KEY_T, VALUE_T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function mapper(Of R)(ByVal f As Func(Of KEY_T, VALUE_T, R)) As Func(Of first_const_pair(Of KEY_T, VALUE_T), R)
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return Function(ByVal p As first_const_pair(Of KEY_T, VALUE_T)) As R
-                   assert(p IsNot Nothing)
+                   assert(Not p Is Nothing)
                    Return f(p.first, p.second)
                End Function
     End Function
@@ -201,8 +201,8 @@ Public NotInheritable Class smap(Of KEY_T, VALUE_T)
 
     Private Function emplace_merge_copied_pair(ByVal v As first_const_pair(Of KEY_T, VALUE_T),
                                                ByVal merger as Func(Of VALUE_T, VALUE_T, VALUE_T)) As VALUE_T
-        assert(v IsNot Nothing)
-        assert(merger IsNot Nothing)
+        assert(Not v Is Nothing)
+        assert(Not merger Is Nothing)
         Dim it As iterator = find(v.first)
         If it = [end]() Then
             assert(emplace(v).second)
@@ -239,7 +239,7 @@ Public NotInheritable Class smap(Of KEY_T, VALUE_T)
     Public Shared Operator +(ByVal this As smap(Of KEY_T, VALUE_T),
                              ByVal v As first_const_pair(Of KEY_T, VALUE_T)) as smap(Of KEY_T, VALUE_T)
 
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         assert(this.insert(v).second)
         Return this
     End Operator

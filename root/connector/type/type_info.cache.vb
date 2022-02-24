@@ -10,7 +10,7 @@ Imports osi.root.constants
 Partial Public NotInheritable Class type_info(Of T)
     Private NotInheritable Class finalizer_cache
         Public Shared ReadOnly f As MethodInfo = GetType(T).finalizer()
-        Public Shared ReadOnly v As Action(Of T) = If(f IsNot Nothing,
+        Public Shared ReadOnly v As Action(Of T) = If(Not f Is Nothing,
                                                       Sub(ByVal i As Object)
                                                           f.Invoke(i, Nothing)
                                                       End Sub,
@@ -18,7 +18,7 @@ Partial Public NotInheritable Class type_info(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function has() As Boolean
-            Return f IsNot Nothing
+            Return Not f Is Nothing
         End Function
 
         Private Sub New()

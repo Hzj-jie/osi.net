@@ -30,14 +30,14 @@ Namespace logic
         ' @VisibleForTesting
         Public Sub New(ByVal v As String, ByVal true_path As paragraph, ByVal false_path As paragraph)
             assert(Not String.IsNullOrEmpty(v))
-            assert(true_path IsNot Nothing)
+            assert(Not true_path Is Nothing)
             Me.v = v
             Me.true_path = true_path
             Me.false_path = false_path
         End Sub
 
         Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             Dim var As variable = Nothing
             If Not variable.of(v, o, var) Then
                 Return False
@@ -49,7 +49,7 @@ Namespace logic
             End If
 
             Dim false_o As New vector(Of String)()
-            If false_path IsNot Nothing AndAlso Not false_path.build(false_o) Then
+            If Not false_path Is Nothing AndAlso Not false_path.build(false_o) Then
                 Return False
             End If
             false_o.emplace_back(instruction_builder.str(command.jump, data_ref.rel(true_o.size() + uint32_1)))

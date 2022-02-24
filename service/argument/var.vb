@@ -51,7 +51,7 @@ Partial Public NotInheritable Class var
     Private Function find(ByVal m As map(Of String, vector(Of String)),
                           ByVal n As String,
                           ByRef o As vector(Of String)) As Boolean
-        assert(m IsNot Nothing)
+        assert(Not m Is Nothing)
         assert(Not String.IsNullOrEmpty(n))
         Dim it As map(Of String, vector(Of String)).iterator = m.find(n)
         If it = m.end() Then

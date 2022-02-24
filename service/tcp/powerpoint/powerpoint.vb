@@ -110,12 +110,12 @@ Partial Public Class powerpoint
                                   End Sub)
         End If
 
-        assert(closer IsNot Nothing)
+        assert(Not closer Is Nothing)
     End Sub
 
     Public Shared Function auto_device_exporter_new(Of T)(ByVal i As iasync_device_creator(Of T)) _
                                                    As iauto_device_exporter(Of T)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return auto_device_exporter.[New](i,
                                           constants.interval_ms.connector_check,
                                           constants.interval_ms.connector_fail,
@@ -124,7 +124,7 @@ Partial Public Class powerpoint
 
     Public Shared Function auto_device_exporter_new(Of T)(ByVal i As idevice_creator(Of T)) _
                                                    As iauto_device_exporter(Of T)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return auto_device_exporter.[New](i,
                                           constants.interval_ms.connector_check,
                                           constants.interval_ms.connector_fail,
@@ -157,7 +157,7 @@ Partial Public Class powerpoint
     End Function
 
     Public Function ref_client_creator() As iasync_device_creator(Of ref_client)
-        assert(_ref_client_creator IsNot Nothing)
+        assert(Not _ref_client_creator Is Nothing)
         Return _ref_client_creator
     End Function
 
@@ -171,7 +171,7 @@ Partial Public Class powerpoint
     End Function
 
     Public Function ref_client_auto_device_exporter() As iauto_device_exporter(Of ref_client)
-        assert(_ref_client_auto_device_exporter IsNot Nothing)
+        assert(Not _ref_client_auto_device_exporter Is Nothing)
         Return _ref_client_auto_device_exporter
     End Function
 
@@ -185,7 +185,7 @@ Partial Public Class powerpoint
     End Function
 
     Public Function ref_client_manual_device_exporter() As imanual_device_exporter(Of ref_client)
-        assert(_ref_client_manual_device_exporter IsNot Nothing)
+        assert(Not _ref_client_manual_device_exporter Is Nothing)
         Return _ref_client_manual_device_exporter
     End Function
 
@@ -199,7 +199,7 @@ Partial Public Class powerpoint
     End Function
 
     Public Function flow_creator() As idevice_creator(Of flow)
-        assert(_flow_creator IsNot Nothing)
+        assert(Not _flow_creator Is Nothing)
         Return _flow_creator
     End Function
 
@@ -213,7 +213,7 @@ Partial Public Class powerpoint
     End Function
 
     Public Function flow_manual_device_exporter() As imanual_device_exporter(Of flow)
-        assert(_flow_manual_device_exporter IsNot Nothing)
+        assert(Not _flow_manual_device_exporter Is Nothing)
         Return _flow_manual_device_exporter
     End Function
 
@@ -227,7 +227,7 @@ Partial Public Class powerpoint
     End Function
 
     Public Function flow_auto_device_exporter() As iauto_device_exporter(Of flow)
-        assert(_flow_auto_device_exporter IsNot Nothing)
+        assert(Not _flow_auto_device_exporter Is Nothing)
         Return _flow_auto_device_exporter
     End Function
 
@@ -306,7 +306,7 @@ Partial Public Class powerpoint
                                            ByVal m As imanual_device_exporter(Of T)) As idevice_pool(Of T)
         Dim r As device_pool(Of T) = Nothing
         If is_outgoing Then
-            If delay_connect AndAlso c IsNot Nothing Then
+            If delay_connect AndAlso Not c Is Nothing Then
                 r = delay_generate_device_pool.[New](c, max_connected, identity)
             Else
                 r = auto_pre_generated_device_pool.[New](a, max_connected, identity)
@@ -346,7 +346,7 @@ Partial Public Class powerpoint
                 constants.interval_ms.connector_check)
         m = max(m, constants.interval_ms.connector_fail)
         For i As Int32 = 0 To array_size_i(this) - 1
-            If this(i) IsNot Nothing AndAlso
+            If Not this(i) Is Nothing AndAlso
                this(i).is_outgoing Then
                 m = max(m, this(i).connecting_timeout_ms)
             End If

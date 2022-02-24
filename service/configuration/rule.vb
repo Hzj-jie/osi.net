@@ -60,7 +60,7 @@ Public MustInherit Class rule
             If strsame(f, command_include) Then
                 x = AddressOf include
             Else
-                assert(command_mapping() IsNot Nothing)
+                assert(Not command_mapping() Is Nothing)
                 Dim it As map(Of String, Func(Of String, Boolean)).iterator = Nothing
                 it = command_mapping().find(f)
                 If it = command_mapping().end() Then
@@ -71,7 +71,7 @@ Public MustInherit Class rule
                     x = (+it).second
                 End If
             End If
-            assert(x IsNot Nothing)
+            assert(Not x Is Nothing)
             If Not x(s) Then
                 raise_error(error_type.user, "failed to execute command ", ls(i))
                 Return False

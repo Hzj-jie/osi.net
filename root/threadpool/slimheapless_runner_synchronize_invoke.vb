@@ -22,7 +22,7 @@ Public NotInheritable Class slimheapless_runner_synchronize_invoke
     Private ReadOnly r As slimheapless_runner
 
     Public Sub New(ByVal r As slimheapless_runner)
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         Me.r = r
     End Sub
 

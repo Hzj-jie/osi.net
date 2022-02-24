@@ -9,7 +9,7 @@ Imports osi.root.constants
 
 Partial Public NotInheritable Class typed_node
     Private Sub nodes_debug_str(ByVal s As StringBuilder)
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         If subnodes.empty() Then
             Return
         End If
@@ -26,7 +26,7 @@ Partial Public NotInheritable Class typed_node
     End Sub
 
     Private Function debug_str(ByVal s As StringBuilder) As StringBuilder
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         s.Append("[").
           Append(type).
           Append(":").
@@ -85,7 +85,7 @@ Partial Public NotInheritable Class typed_node
     End Function
 
     Private Function self_debug_str(ByVal s As StringBuilder) As StringBuilder
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         s.Append("@").Append(type_name).Append(": ")
         For i As Int32 = 0 To min(CInt(word_count()), 3) - 1
             s.Append(word(CUInt(i)).str()).Append(" ")
@@ -95,7 +95,7 @@ Partial Public NotInheritable Class typed_node
     End Function
 
     Private Function trace_back_str(ByVal s As StringBuilder) As StringBuilder
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         self_debug_str(s)
         If Not root() Then
             parent.trace_back_str(s)

@@ -10,7 +10,7 @@ Partial Public NotInheritable Class struct
         Public ReadOnly value As Object
 
         Public Sub New(ByVal type As Type, ByVal name As String, ByVal value As Object)
-            assert(type IsNot Nothing)
+            assert(Not type Is Nothing)
             Me.type = type
             assert(Not String.IsNullOrEmpty(name))
             Me.name = name

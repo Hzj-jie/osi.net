@@ -50,6 +50,6 @@ Public MustInherit Class flower(Of T)
         End If
         Dim f As Func(Of T, Boolean) = Nothing
         f = global_resolver(Of Func(Of T, Boolean), flower(Of T)).resolve_or_null()
-        Return f IsNot Nothing AndAlso f(i)
+        Return Not f Is Nothing AndAlso f(i)
     End Function
 End Class

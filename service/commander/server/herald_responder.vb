@@ -26,7 +26,7 @@ Public Class herald_responder(Of CONTINUOUS As _boolean)
                    ByVal e As executor,
                    ByVal stopping As Func(Of Boolean))
         MyBase.New(pending_request_timeout_ms, e, stopping)
-        assert(h IsNot Nothing)
+        assert(Not h Is Nothing)
         Me.instance = h
         assert_transmit_mode(h)
     End Sub
@@ -81,7 +81,7 @@ Public Class herald_responder(Of CONTINUOUS As _boolean)
     End Function
 
     Private Function respond_once() As event_comb
-        assert(instance IsNot Nothing)
+        assert(Not instance Is Nothing)
         Dim ec As event_comb = Nothing
         Dim i As ref(Of command) = Nothing
         Dim o As command = Nothing

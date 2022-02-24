@@ -122,7 +122,7 @@ Public Class registry_test
     Private Shared Function assert_mock_dev_impl(ByVal i As mock_dev, ByVal v As var) As Boolean
         If assertion.is_not_null(i) Then
             Dim j As mock_dev_impl = Nothing
-            If assertion.is_true(cast(i, j)) AndAlso assert(j IsNot Nothing) Then
+            If assertion.is_true(cast(i, j)) AndAlso assert(Not j Is Nothing) Then
                 assertion.reference_equal(j.v, v)
             End If
         End If
@@ -132,7 +132,7 @@ Public Class registry_test
     Private Shared Function assert_mock_dev_wrapper(ByVal i As mock_dev, ByVal v As var) As Boolean
         If assertion.is_not_null(i) Then
             Dim j As mock_dev_wrapper = Nothing
-            If assertion.is_true(cast(i, j)) AndAlso assert(j IsNot Nothing) Then
+            If assertion.is_true(cast(i, j)) AndAlso assert(Not j Is Nothing) Then
                 assertion.reference_equal(j.v, v)
                 If Not assert_mock_dev_impl(j.r, v) Then
                     Return False
@@ -163,7 +163,7 @@ Public Class registry_test
     Private Shared Function assert_mock_dev_impl(ByVal i As idevice_creator(Of mock_dev), ByVal v As var) As Boolean
         If assertion.is_not_null(i) Then
             Dim j As mock_dev_creator = Nothing
-            If assertion.is_true(cast(i, j)) AndAlso assert(j IsNot Nothing) Then
+            If assertion.is_true(cast(i, j)) AndAlso assert(Not j Is Nothing) Then
                 assertion.reference_equal(j.v, v)
             End If
         End If
@@ -174,7 +174,7 @@ Public Class registry_test
                                                  ByVal v As var) As Boolean
         If assertion.is_not_null(i) Then
             Dim j As mock_dev_manual_device_exporter = Nothing
-            If assertion.is_true(cast(i, j)) AndAlso assert(j IsNot Nothing) Then
+            If assertion.is_true(cast(i, j)) AndAlso assert(Not j Is Nothing) Then
                 assertion.reference_equal(j.v, v)
             End If
         End If
@@ -208,7 +208,7 @@ Public Class registry_test
     Private Shared Function assert_mock_dev_wrapper(ByVal i As idevice_creator(Of mock_dev), ByVal v As var) As Boolean
         If assertion.is_not_null(i) Then
             Dim j As wrappered_device_creator(Of mock_dev) = Nothing
-            If assertion.is_true(cast(i, j)) AndAlso assert(j IsNot Nothing) Then
+            If assertion.is_true(cast(i, j)) AndAlso assert(Not j Is Nothing) Then
                 Dim k As idevice_creator(Of mock_dev) = Nothing
                 assert(valuer.try_get(j, binding_flags.instance_private, "c", k))
                 If Not assert_mock_dev_impl(k, v) Then
@@ -224,7 +224,7 @@ Public Class registry_test
                                                     ByVal v As var) As Boolean
         If assertion.is_not_null(i) Then
             Dim j As auto_device_exporter(Of mock_dev) = Nothing
-            If assertion.is_true(cast(i, j)) AndAlso assert(j IsNot Nothing) Then
+            If assertion.is_true(cast(i, j)) AndAlso assert(Not j Is Nothing) Then
                 Dim k As idevice_creator(Of mock_dev) = Nothing
                 k = (New valuer(Of idevice_creator(Of mock_dev))(j, binding_flags.instance_private, "c")).get()
                 If Not assert_mock_dev_wrapper(k, v) Then
@@ -366,7 +366,7 @@ Public Class registry_test
                 Return False
             End If
         Finally
-            If i IsNot Nothing Then
+            If Not i Is Nothing Then
                 i.close()
             End If
         End Try
@@ -376,7 +376,7 @@ Public Class registry_test
         Try
             Return assert_mock_dev_wrapper(i, v)
         Finally
-            If i IsNot Nothing Then
+            If Not i Is Nothing Then
                 i.close()
             End If
         End Try
@@ -406,7 +406,7 @@ Public Class registry_test
                 Return False
             End If
         Finally
-            If i IsNot Nothing Then
+            If Not i Is Nothing Then
                 i.close()
             End If
         End Try
@@ -416,7 +416,7 @@ Public Class registry_test
         Try
             Return assert_mock_dev_wrapper(i, v)
         Finally
-            If i IsNot Nothing Then
+            If Not i Is Nothing Then
                 i.close()
             End If
         End Try

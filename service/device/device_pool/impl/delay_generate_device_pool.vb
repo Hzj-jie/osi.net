@@ -65,7 +65,7 @@ Public Class delay_generate_device_pool(Of T, REUSABLE As _boolean)
 
     Public Sub New(ByVal c As idevice_creator(Of T), ByVal max_count As UInt32, ByVal identity As String)
         MyBase.New(max_count, identity)
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Me.c = c
         If device_reusable Then
             Me.q = New qless2(Of idevice(Of T))()
@@ -85,13 +85,13 @@ Public Class delay_generate_device_pool(Of T, REUSABLE As _boolean)
     End Sub
 
     Protected NotOverridable Overrides Function get_device(ByRef r As idevice(Of T)) As Boolean
-        Return (device_reusable AndAlso assert(q IsNot Nothing) AndAlso q.pop(r)) OrElse
+        Return (device_reusable AndAlso assert(Not q Is Nothing) AndAlso q.pop(r)) OrElse
                create_new_device(r)
     End Function
 
     Protected NotOverridable Overrides Function release_device(ByVal c As idevice(Of T)) As Boolean
         If device_reusable Then
-            assert(q IsNot Nothing)
+            assert(Not q Is Nothing)
             q.push(c)
             Return True
         Else
@@ -107,7 +107,7 @@ Public Class delay_generate_device_pool(Of T, REUSABLE As _boolean)
 
     Protected NotOverridable Overrides Function get_free_count() As UInt32
         If device_reusable Then
-            assert(q IsNot Nothing)
+            assert(Not q Is Nothing)
             Return q.size()
         Else
             Return 0

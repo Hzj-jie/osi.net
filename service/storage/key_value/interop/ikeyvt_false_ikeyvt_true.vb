@@ -15,7 +15,7 @@ Friend Class ikeyvt_false_ikeyvt_true
     Private ReadOnly l As ref(Of event_comb_lock)
 
     Public Sub New(ByVal impl As ikeyvt(Of _false))
-        assert(impl IsNot Nothing)
+        assert(Not impl Is Nothing)
         Me.impl = impl
         Me.l = New ref(Of event_comb_lock)()
     End Sub

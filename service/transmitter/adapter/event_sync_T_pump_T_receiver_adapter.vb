@@ -34,7 +34,7 @@ Public Class event_sync_T_pump_T_receiver_adapter(Of T)
     Private ReadOnly arrived_event As signal_event
 
     Public Sub New(ByVal p As event_sync_T_pump(Of T))
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Me.p = p
         Me.arrived_event = New signal_event(p.pending())
         AddHandler p.data_arrived,

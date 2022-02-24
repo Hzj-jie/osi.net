@@ -68,7 +68,7 @@ Public Module _encoding
     <Extension()> Public Function GetBytes(ByVal e As Encoding,
                                            ByVal chars() As Char,
                                            ByVal count As Int32) As Byte()
-        assert(e IsNot Nothing)
+        assert(Not e Is Nothing)
         Return e.GetBytes(chars, 0, count)
     End Function
 
@@ -76,8 +76,8 @@ Public Module _encoding
                                            ByVal s As String,
                                            ByVal index As Int32,
                                            ByVal length As Int32) As Byte()
-        assert(e IsNot Nothing)
-        assert(s IsNot Nothing)
+        assert(Not e Is Nothing)
+        assert(Not s Is Nothing)
         Return e.GetBytes(s.ToCharArray(index, length))
     End Function
 
@@ -90,7 +90,7 @@ Public Module _encoding
     <Extension()> Public Function GetByteCount(ByVal e As Encoding,
                                                ByVal chars() As Char,
                                                ByVal count As Int32) As Int32
-        assert(e IsNot Nothing)
+        assert(Not e Is Nothing)
         Return e.GetByteCount(chars, 0, count)
     End Function
 
@@ -98,8 +98,8 @@ Public Module _encoding
                                                ByVal s As String,
                                                ByVal index As Int32,
                                                ByVal length As Int32) As Int32
-        assert(e IsNot Nothing)
-        assert(s IsNot Nothing)
+        assert(Not e Is Nothing)
+        assert(Not s Is Nothing)
         Return e.GetByteCount(s.ToCharArray(index, length))
     End Function
 
@@ -110,8 +110,8 @@ Public Module _encoding
     End Function
 
     <Extension()> Public Function encoding_possibility(ByVal this As Stream, ByVal e As Encoding) As Double
-        assert(this IsNot Nothing)
-        assert(e IsNot Nothing)
+        assert(Not this Is Nothing)
+        assert(Not e Is Nothing)
         If this.Length() < e.GetPreamble().array_size_i() Then
             Return 0
         End If
@@ -142,7 +142,7 @@ Public Module _encoding
     <Extension()> Public Function guess_encoding(ByVal this As Stream,
                                                  ByRef max_possibility As Double,
                                                  ParamArray ByVal candidates() As Encoding) As Encoding
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         assert(Not candidates.isemptyarray())
         max_possibility = 0
         Dim max_encoding As Encoding = Encoding.Default

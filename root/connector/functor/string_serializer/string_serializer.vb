@@ -62,13 +62,13 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
         End If
 
         Dim f As Func(Of T, StringWriter, Boolean) = to_str()
-        If f IsNot Nothing Then
+        If Not f Is Nothing Then
             Return f(i, o)
         End If
 
         Dim f2 As Func(Of T, StringWriter, Boolean) = uri_serializer(Of T).r.to_str()
         assert(object_compare(f, f2) <> 0)
-        assert(f2 IsNot Nothing)
+        assert(Not f2 Is Nothing)
         f2(i, o)
         Return True
     End Function
@@ -78,16 +78,16 @@ Partial Public Class string_serializer(Of T, PROTECTOR)
     End Function
 
     Private Function do_from_str(ByVal i As StringReader, ByRef o As T) As Boolean
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
 
         Dim f As _do_val_ref(Of StringReader, T, Boolean) = from_str()
-        If f IsNot Nothing Then
+        If Not f Is Nothing Then
             Return f(i, o)
         End If
 
         Dim f2 As _do_val_ref(Of StringReader, T, Boolean) = uri_serializer(Of T).r.from_str()
         assert(object_compare(f, f2) <> 0)
-        assert(f2 IsNot Nothing)
+        assert(Not f2 Is Nothing)
         Return f2(i, o)
     End Function
 

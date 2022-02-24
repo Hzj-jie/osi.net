@@ -32,7 +32,7 @@ Public NotInheritable Class qless_runner
     End Sub
 
     Public Sub New(ByVal q As waitable_qless(Of Action))
-        assert(q IsNot Nothing)
+        assert(Not q Is Nothing)
         Me.q = q
         Me.t = New Thread(Sub()
                               current = Me
@@ -53,7 +53,7 @@ Public NotInheritable Class qless_runner
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function current_thread_is_managed() As Boolean
-        Return current IsNot Nothing
+        Return Not current Is Nothing
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

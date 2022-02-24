@@ -68,7 +68,7 @@ Partial Public NotInheritable Class list(Of T)
         Public Sub appendlast(ByVal that As node)
             assert(Not Object.ReferenceEquals(Me, that), "should not append last to a node itself.")
             ref(ref_index.last) = that
-            If that IsNot Nothing Then
+            If Not that Is Nothing Then
                 that.ref(ref_index.next) = Me
             End If
         End Sub
@@ -76,7 +76,7 @@ Partial Public NotInheritable Class list(Of T)
         Public Sub appendnext(ByVal that As node)
             assert(Not Object.ReferenceEquals(Me, that), "should not append next to a node itself.")
             ref(ref_index.next) = that
-            If that IsNot Nothing Then
+            If Not that Is Nothing Then
                 that.ref(ref_index.last) = Me
             End If
         End Sub
@@ -212,7 +212,7 @@ Partial Public NotInheritable Class list(Of T)
         Set(ByVal value As T)
             Dim rtn As node = Nothing
             rtn = find(index)
-            If rtn IsNot Nothing Then
+            If Not rtn Is Nothing Then
                 rtn.data = value
             End If
         End Set
@@ -225,7 +225,7 @@ Partial Public NotInheritable Class list(Of T)
     Public Function emplace_back(ByVal new_data As T) As Boolean
         Dim add As node = Nothing
         add = node.of(new_data)
-        If _back IsNot Nothing Then
+        If Not _back Is Nothing Then
             _back.appendnext(add)
         Else
             _front = add
@@ -243,7 +243,7 @@ Partial Public NotInheritable Class list(Of T)
     Public Function emplace_front(ByVal new_data As T) As Boolean
         Dim add As node = Nothing
         add = node.of(new_data)
-        If _front IsNot Nothing Then
+        If Not _front Is Nothing Then
             _front.appendlast(add)
         Else
             _back = add
@@ -296,7 +296,7 @@ Partial Public NotInheritable Class list(Of T)
         End If
         _size += uint32_1
         it = it.next()
-        assert(it IsNot Nothing, "it.next() is nothing after insert.")
+        assert(Not it Is Nothing, "it.next() is nothing after insert.")
 
         Return New iterator(it)
     End Function
@@ -324,9 +324,9 @@ Partial Public NotInheritable Class list(Of T)
             Return [end]()
         End If
         Dim del As node = it
-        If it.last IsNot Nothing Then
+        If Not it.last Is Nothing Then
             it.last.appendnext(it.next)
-        ElseIf it.next IsNot Nothing Then
+        ElseIf Not it.next Is Nothing Then
             it.next.appendlast(it.last)
         End If
         If Object.ReferenceEquals(it, _front) Then
@@ -367,7 +367,7 @@ Partial Public NotInheritable Class list(Of T)
         Dim it As list(Of T).node
         rtn = New list(Of T)()
         it = _front
-        While it IsNot Nothing
+        While Not it Is Nothing
             rtn.push_back(it.data)
             it = it.next
         End While
@@ -384,7 +384,7 @@ Partial Public NotInheritable Class list(Of T)
     End Function
 
     Public Function CompareTo(ByVal that As list(Of T)) As Int32 Implements IComparable(Of list(Of T)).CompareTo
-        assert(that IsNot Nothing, "that should not be nothing after inherits from IComparable2.")
+        assert(Not that Is Nothing, "that should not be nothing after inherits from IComparable2.")
 
         Dim i As iterator = Nothing
         Dim j As iterator = Nothing

@@ -12,7 +12,7 @@ Imports monitorlock = osi.root.lock.slimlock.monitorlock
 Public Module _cache
     Private Function wrapper(Of KEY_T As IComparable(Of KEY_T), VALUE_T) _
                             (ByVal i As islimcache2(Of KEY_T, VALUE_T)) As icache(Of KEY_T, VALUE_T)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return New cache(Of KEY_T, VALUE_T)(i)
     End Function
 
@@ -81,7 +81,7 @@ Public Class cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     End Sub
 
     Public Sub New(ByVal c As islimcache2(Of KEY_T, VALUE_T))
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         assert(Not TypeOf c Is icache(Of KEY_T, VALUE_T))
         Me.c = c
     End Sub

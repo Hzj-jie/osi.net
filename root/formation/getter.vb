@@ -25,13 +25,13 @@ Public NotInheritable Class not_null_getter(Of T)
     Private ReadOnly g As getter(Of T)
 
     Public Sub New(ByVal g As getter(Of T))
-        assert(g IsNot Nothing)
+        assert(Not g Is Nothing)
         Me.g = g
     End Sub
 
     Public Function [get](ByRef k As T) As Boolean Implements getter(Of T).get
         If g.get(k) Then
-            Return type_info(Of T).is_valuetype OrElse k IsNot Nothing
+            Return type_info(Of T).is_valuetype OrElse Not k Is Nothing
         Else
             Return False
         End If
@@ -51,7 +51,7 @@ Public NotInheritable Class predefined_instance_getter(Of T As Class)
     Inherits predefined_getter(Of T)
 
     Public Sub New(ByVal v As T)
-        MyBase.New(v, v IsNot Nothing)
+        MyBase.New(v, Not v Is Nothing)
     End Sub
 End Class
 
@@ -91,7 +91,7 @@ End Class
 
 Public Module _getter
     <Extension()> Public Function [get](Of T)(ByVal this As getter(Of T)) As T
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Dim r As T = Nothing
         assert(this.[get](r))
         Return r

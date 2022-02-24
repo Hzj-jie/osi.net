@@ -12,7 +12,7 @@ Partial Public NotInheritable Class boolaffinity(Of K)
         Private ReadOnly m As model
 
         Public Sub New(ByVal m As model)
-            assert(m IsNot Nothing)
+            assert(Not m Is Nothing)
             Me.m = m
         End Sub
 

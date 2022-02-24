@@ -137,7 +137,7 @@ Public NotInheritable Class argument_setter
         If field.FieldType().GetGenericArguments().Length() <> 1 Then
             Return [optional].empty(Of Type)()
         End If
-        If field.GetValue(Nothing) IsNot Nothing Then
+        If Not field.GetValue(Nothing) Is Nothing Then
             Return [optional].empty(Of Type)()
         End If
         Return [optional].of(field.FieldType().GetGenericArguments(0))

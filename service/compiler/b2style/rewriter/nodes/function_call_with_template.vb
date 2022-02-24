@@ -16,13 +16,13 @@ Partial Public NotInheritable Class b2style
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(b IsNot Nothing)
+            assert(Not b Is Nothing)
             Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
                 Implements code_gen(Of typed_node_writer).build
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
             Dim extended_type As String = Nothing
             If Not scope.current().template().resolve(l, n.child(0), extended_type) Then
                 Return False

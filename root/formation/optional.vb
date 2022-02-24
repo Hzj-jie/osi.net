@@ -63,7 +63,7 @@ Public Structure [optional](Of T)
 
         Me.b = b
         Me.v = v
-        assert(Not b OrElse v IsNot Nothing)
+        assert(Not b OrElse Not v Is Nothing)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -73,7 +73,7 @@ Public Structure [optional](Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function map(Of R)(ByVal f As Func(Of T, R)) As [optional](Of R)
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         If Not Me Then
             Return [optional].empty(Of R)()
         End If
@@ -82,7 +82,7 @@ Public Structure [optional](Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function or_else(ByVal r As T) As T
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         If empty() Then
             Return r
         End If
@@ -91,7 +91,7 @@ Public Structure [optional](Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function or_else(ByVal f As Func(Of T)) As T
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         If empty() Then
             Return f()
         End If
@@ -105,7 +105,7 @@ Public Structure [optional](Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub if_present(ByVal a As Action(Of T))
-        assert(a IsNot Nothing)
+        assert(Not a Is Nothing)
         If Not empty() Then
             a(+Me)
         End If

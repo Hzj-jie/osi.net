@@ -11,7 +11,7 @@ Friend NotInheritable Class case_info
 
     Public Sub New(ByVal name As String, ByVal [case] As [case])
         assert(Not String.IsNullOrEmpty(name))
-        assert([case] IsNot Nothing, name)
+        assert(Not [case] Is Nothing, name)
         Me.case = [case]
     End Sub
 

@@ -16,7 +16,7 @@ Partial Public NotInheritable Class flip_events
 
         Public Sub New(ByVal e As events, ByVal r As atomic_int)
             MyBase.New(e)
-            assert(r IsNot Nothing)
+            assert(Not r Is Nothing)
             Me.r = r
             If (+r) > 0 Then
                 raise_to_high()

@@ -71,7 +71,7 @@ Public Module _signing
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function signing(ByVal v As Object, Optional ByVal signing_index As Int32 = 16) As UInt32
         Dim bi As Int32 = 0
-        If v IsNot Nothing Then
+        If Not v Is Nothing Then
             bi = v.GetHashCode()
         End If
         Return signing_from_hashcode(bi, signing_index)

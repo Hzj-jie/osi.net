@@ -14,8 +14,8 @@ Public NotInheritable Class nlp
     Private ReadOnly s As syntaxer
 
     Private Sub New(ByVal n As nlexer, ByVal s As syntaxer)
-        assert(n IsNot Nothing)
-        assert(s IsNot Nothing)
+        assert(Not n Is Nothing)
+        assert(Not s Is Nothing)
         Me.n = n
         Me.s = s
     End Sub
@@ -38,8 +38,8 @@ Public NotInheritable Class nlp
     Private Shared Function create(ByVal n As _do(Of nlexer, Boolean),
                                    ByVal s As Func(Of syntaxer.rule, Boolean),
                                    ByRef o As nlp) As Boolean
-        assert(n IsNot Nothing)
-        assert(s IsNot Nothing)
+        assert(Not n Is Nothing)
+        assert(Not s Is Nothing)
         Dim i As nlexer = Nothing
         If Not n(i) Then
             Return False

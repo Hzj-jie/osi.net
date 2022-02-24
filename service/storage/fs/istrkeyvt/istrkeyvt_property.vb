@@ -13,7 +13,7 @@ Public Class istrkeyvt_property
     Private ReadOnly p As String
 
     Public Sub New(ByVal path As String, ByVal name As String, ByVal accessor As istrkeyvt)
-        assert(accessor IsNot Nothing)
+        assert(Not accessor Is Nothing)
         assert(Not String.IsNullOrEmpty(path))
         assert(Not String.IsNullOrEmpty(name))
         Me.accessor = accessor

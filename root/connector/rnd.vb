@@ -119,7 +119,7 @@ Public Module _rnd
     End Function
 
     Private Function ri(ByVal r As Random, ByVal min As Int32, ByVal max As Int32) As Int32
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         Return r.Next(min, max)
     End Function
 
@@ -168,7 +168,7 @@ Public Module _rnd
     End Function
 
     Public Function rnd_bool(ByVal r As Random) As Boolean
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         Return r.Next(2) = 0
     End Function
 
@@ -177,7 +177,7 @@ Public Module _rnd
     End Function
 
     Public Function rnd_bool_trues(ByVal r As Random, ByVal times As Int32) As Boolean
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         For i As Int32 = 0 To times - 1
             If Not rnd_bool() Then
                 Return False
@@ -256,7 +256,7 @@ Public Module _rnd
     End Function
 
     Public Function next_double(ByVal r As Random) As Double
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         Return r.NextDouble()
     End Function
 
@@ -265,7 +265,7 @@ Public Module _rnd
     End Function
 
     Public Function next_bytes(ByVal r As Random, ByVal buff() As Byte) As Boolean
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         If buff Is Nothing Then
             Return False
         Else
@@ -512,7 +512,7 @@ Public Module _rnd
     End Function
 
     Public Function rnd_ints(ByVal r As Random, ByVal v() As Int32) As Boolean
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         If v Is Nothing Then
             Return False
         End If

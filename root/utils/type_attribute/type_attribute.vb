@@ -28,17 +28,17 @@ Partial Public Class type_attribute
     End Interface
 
     Public Sub [set](ByVal i As Object)
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         s.set(i, init, fwd)
     End Sub
 
     Public Function [get]() As Object
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Return s.get(init, fwd)
     End Function
 
     Public Function [get](Of T)() As T
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Return s.get(Of T)(init, fwd)
     End Function
 

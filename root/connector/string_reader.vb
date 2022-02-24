@@ -19,7 +19,7 @@ Public Module _string_reader
         Catch ex As Exception
             assert(False, ex.details())
         End Try
-        assert(_pos IsNot Nothing)
+        assert(Not _pos Is Nothing)
         assert(Not _pos.IsStatic())
         Return _pos
     End Function
@@ -31,13 +31,13 @@ Public Module _string_reader
         Catch ex As Exception
             assert(False, ex.details())
         End Try
-        assert(_length IsNot Nothing)
+        assert(Not _length Is Nothing)
         assert(Not _length.IsStatic())
         Return _length
     End Function
 
     <Extension()> Public Function length(ByVal this As StringReader) As UInt32
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Dim r As Int32 = 0
         r = direct_cast(Of Int32)(_length.GetValue(this))
         assert(r >= 0)
@@ -45,7 +45,7 @@ Public Module _string_reader
     End Function
 
     <Extension()> Public Function position(ByVal this As StringReader) As UInt32
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Dim r As Int32 = 0
         r = direct_cast(Of Int32)(_pos.GetValue(this))
         assert(r >= 0)
@@ -53,7 +53,7 @@ Public Module _string_reader
     End Function
 
     <Extension()> Public Function position(ByVal this As StringReader, ByVal p As UInt32) As Boolean
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         If p > this.length() Then
             Return False
         Else

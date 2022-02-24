@@ -37,7 +37,7 @@ Public NotInheritable Class samples(Of T)
     End Sub
 
     Private Shared Function create_vector(ByVal f As Func(Of T), ByVal count As UInt32) As vector(Of T)
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         assert(count > 0)
         Dim r As vector(Of T) = Nothing
         r = New vector(Of T)()

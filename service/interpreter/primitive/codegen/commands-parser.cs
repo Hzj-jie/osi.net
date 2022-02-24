@@ -107,7 +107,7 @@ public class commands_parser {
         instruction_wrapper_import_bytes_writer.WriteLine("                Case Else\r\n" +
                                                           "                    Return False\r\n" +
                                                           "            End Select\r\n" +
-                                                          "            assert(Me.i IsNot Nothing)\r\n" +
+                                                          "            assert(Not Me.i Is Nothing)\r\n" +
                                                           "            Return Me.i.import(i, p)\r\n" +
                                                           "        End Function\r\n" +
                                                           "    End Class\r\n" +
@@ -115,7 +115,7 @@ public class commands_parser {
         instruction_wrapper_import_str_writer.WriteLine("                Case Else\r\n" +
                                                         "                    Return False\r\n" +
                                                         "            End Select\r\n" +
-                                                        "            assert(Me.i IsNot Nothing)\r\n" +
+                                                        "            assert(Not Me.i Is Nothing)\r\n" +
                                                         "            Return Me.i.import(s, p)\r\n" +
                                                         "        End Function\r\n" +
                                                         "    End Class\r\n" +
@@ -231,7 +231,7 @@ public class commands_parser {
                                       "                If c <> object_compare_undetermined Then\r\n" +
                                       "                    Return c\r\n" +
                                       "                End If\r\n" +
-                                      "                assert(other IsNot Nothing)");
+                                      "                assert(Not other Is Nothing)");
         for (int i = 0; i < cmd.args.Count; i++) {
             instructions_writer.WriteLine("                c = Me.d" + i.ToString() + ".CompareTo(other.d" + i.ToString() + ")\r\n" +
                                           "                If c <> 0 Then\r\n" +
@@ -249,9 +249,9 @@ public class commands_parser {
             if (cmd.args[i] == "data_ref") {
                 instructions_writer.WriteLine("\r\n" +
                                               "            Private Function p" + i.ToString() + "(ByVal imi As imitation) As ref(Of Byte())\r\n" +
-                                              "                assert(imi IsNot Nothing)\r\n" +
+                                              "                assert(Not imi Is Nothing)\r\n" +
                                               "                Dim p As ref(Of Byte()) = imi.access(d" + i.ToString() + ")\r\n" +
-                                              "                assert(p IsNot Nothing)\r\n" +
+                                              "                assert(Not p Is Nothing)\r\n" +
                                               "                Return p\r\n" +
                                               "            End Function");
             }

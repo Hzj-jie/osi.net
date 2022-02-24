@@ -27,7 +27,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
         End Sub
 
         Public Shared Function succeeded(ByVal result As RESULT_T) As result
-            assert(result IsNot Nothing)
+            assert(Not result Is Nothing)
             Return New result(result:=result)
         End Function
 

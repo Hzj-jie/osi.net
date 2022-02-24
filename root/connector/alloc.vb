@@ -16,7 +16,7 @@ Public Module _alloc
 
     Public Function alloc(Of T)() As T
 #If cached_alloc Then
-        assert(type_info(Of T).dominated_constructor() IsNot Nothing)
+        assert(Not type_info(Of T).dominated_constructor() Is Nothing)
         Return type_info(Of T).dominated_constructor()()
 #Else
         Try

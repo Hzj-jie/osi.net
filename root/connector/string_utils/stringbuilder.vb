@@ -8,13 +8,13 @@ Imports System.Text
 
 Public Module _stringbuilder
     <Extension()> Public Sub clear(ByVal this As StringBuilder)
-        If this IsNot Nothing Then
+        If Not this Is Nothing Then
             this.Length() = 0
         End If
     End Sub
 
     <Extension()> Public Sub shrink_to_fit(ByVal this As StringBuilder)
-        If this IsNot Nothing Then
+        If Not this Is Nothing Then
             this.Capacity() = this.Length()
         End If
     End Sub
@@ -25,8 +25,8 @@ Public Module _stringbuilder
 
     <Extension()> Public Function trim_end(ByVal this As StringBuilder,
                                            ByVal trim_it As Func(Of Char, Boolean)) As StringBuilder
-        assert(this IsNot Nothing)
-        assert(trim_it IsNot Nothing)
+        assert(Not this Is Nothing)
+        assert(Not trim_it Is Nothing)
         For i As Int32 = this.last_index() To 0 Step -1
             If Not trim_it(this(i)) Then
                 this.last_index(i)

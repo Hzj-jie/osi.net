@@ -42,7 +42,7 @@ Public Module _set
     End Function
 
     <Extension()> Public Function has(Of T)(ByVal this As [set](Of T), ByVal v As T) As Boolean
-        Return this IsNot Nothing AndAlso this.find(v) <> this.end()
+        Return Not this Is Nothing AndAlso this.find(v) <> this.end()
     End Function
 
     <Extension()> Public Function stream(Of T)(ByVal this As [set](Of T)) As stream(Of T)

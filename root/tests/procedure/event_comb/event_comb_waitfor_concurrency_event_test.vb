@@ -38,7 +38,7 @@ Public Class event_comb_waitfor_concurrency_event_test
         End Sub
 
         Private Sub assert_concurrency()
-            assert(i IsNot Nothing)
+            assert(Not i Is Nothing)
             assertion.more(+i, 0)
             assertion.less_or_equal(CUInt(+i), concurrency_count)
         End Sub

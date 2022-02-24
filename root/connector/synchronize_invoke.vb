@@ -19,7 +19,7 @@ Public MustInherit Class synchronize_invoke
         Private r As Object
 
         Public Sub New(ByVal method As [Delegate], ByVal args() As Object, ByVal sync As Boolean)
-            assert(method IsNot Nothing)
+            assert(Not method Is Nothing)
             Me.method = method
             Me.args = args
             Me.sync = sync
@@ -109,7 +109,7 @@ Public MustInherit Class synchronize_invoke
         End If
         Dim r As async_result = Nothing
         r = direct_cast(Of async_result)(result)
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         assert(r.AsyncWaitHandle().wait())
         r.AsyncWaitHandle().Dispose()
         Return r.result()

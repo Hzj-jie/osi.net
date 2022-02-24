@@ -16,7 +16,7 @@ Partial Public NotInheritable Class nlexer
         Private ReadOnly raw_rule As String
 
         Public Sub New(ByVal raw_rule As String, ByVal ms As vector(Of matcher))
-            assert(ms IsNot Nothing)
+            assert(Not ms Is Nothing)
             assert(Not ms.empty())
             Me.raw_rule = raw_rule
             Me.ms = ms
@@ -62,7 +62,7 @@ Partial Public NotInheritable Class nlexer
                 If Not groups.of(s, i, m) Then
                     Return False
                 End If
-                assert(m IsNot Nothing)
+                assert(Not m Is Nothing)
                 assert(i > j)
                 ms.emplace_back(m)
             End While

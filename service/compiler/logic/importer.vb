@@ -27,7 +27,7 @@ Namespace logic
         End Function
 
         Public Sub New(ByVal functions As interrupts)
-            assert(functions IsNot Nothing)
+            assert(Not functions Is Nothing)
             Me.functions = functions
         End Sub
 
@@ -58,7 +58,7 @@ Namespace logic
         Private Function import_proxy(Of T)(ByVal i As T,
                                             ByVal f As Func(Of T, vector(Of instruction_gen), Boolean),
                                             ByVal e As exportable) As Boolean
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             If e Is Nothing Then
                 Return False
             End If

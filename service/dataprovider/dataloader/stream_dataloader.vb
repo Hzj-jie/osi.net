@@ -17,7 +17,7 @@ Public MustInherit Class stream_dataloader(Of T)
     Protected MustOverride Function create(ByVal localfile As String) As Stream
 
     Protected Overridable Function load(ByVal s As Stream, ByVal result As ref(Of T)) As event_comb
-        assert(l IsNot Nothing)
+        assert(Not l Is Nothing)
         Return l.load(s, result)
     End Function
 

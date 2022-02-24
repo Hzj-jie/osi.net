@@ -18,7 +18,7 @@ Public Class bytes_transformer_block_wrapper
     Private ReadOnly rt As bytes_transformer_collection
 
     Public Sub New(ByVal impl As block)
-        assert(impl IsNot Nothing)
+        assert(Not impl Is Nothing)
         Me.block_dev = impl
         Me.st = New bytes_transformer_collection()
         Me.rt = New bytes_transformer_collection()
@@ -34,7 +34,7 @@ Public Class bytes_transformer_block_wrapper
         If Not direct_cast(Of bytes_transformer_block_wrapper)(i, o) Then
             o = New bytes_transformer_block_wrapper(i)
         End If
-        assert(o IsNot Nothing)
+        assert(Not o Is Nothing)
         Return o.chain(f, s)
     End Function
 
@@ -62,7 +62,7 @@ Public Class bytes_transformer_block_wrapper
     End Function
 
     Public Function chain(ByVal v As pair(Of bytes_transformer, bytes_transformer)) As Boolean
-        Return v IsNot Nothing AndAlso
+        Return Not v Is Nothing AndAlso
                chain(v.first, v.second)
     End Function
 

@@ -8,7 +8,7 @@ Imports System.Runtime.CompilerServices
 
 Public Module _finalizer
     <Extension()> Public Function has_finalizer(ByVal this As Type) As Boolean
-        Return this.finalizer() IsNot Nothing
+        Return Not this.finalizer() Is Nothing
     End Function
 
     <Extension()> Public Function finalizer(ByVal this As Type) As MethodInfo

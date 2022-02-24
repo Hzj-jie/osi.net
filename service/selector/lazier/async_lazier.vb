@@ -29,30 +29,30 @@ Public Class async_lazier(Of T, THREAD_SAFE As _boolean)
 
     Public Function initialized_wait_handle() As WaitHandle Implements async_getter(Of T).initialized_wait_handle
         If threadsafe Then
-            assert(ts IsNot Nothing)
+            assert(Not ts Is Nothing)
             Return ts.initialized_wait_handle()
         Else
-            assert(tus IsNot Nothing)
+            assert(Not tus Is Nothing)
             Return tus.initialized_wait_handle()
         End If
     End Function
 
     Public Function alive() As ternary Implements async_getter(Of T).alive
         If threadsafe Then
-            assert(ts IsNot Nothing)
+            assert(Not ts Is Nothing)
             Return ts.alive()
         Else
-            assert(tus IsNot Nothing)
+            assert(Not tus Is Nothing)
             Return tus.alive()
         End If
     End Function
 
     Public Function [get](ByRef r As T) As Boolean Implements async_getter(Of T).get
         If threadsafe Then
-            assert(ts IsNot Nothing)
+            assert(Not ts Is Nothing)
             Return ts.get(r)
         Else
-            assert(tus IsNot Nothing)
+            assert(Not tus Is Nothing)
             Return tus.get(r)
         End If
     End Function
@@ -61,13 +61,13 @@ Public Class async_lazier(Of T, THREAD_SAFE As _boolean)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If threadsafe Then
-                                      assert(ts IsNot Nothing)
+                                      assert(Not ts Is Nothing)
                                       ec = ts.get(r)
                                   Else
-                                      assert(tus IsNot Nothing)
+                                      assert(Not tus Is Nothing)
                                       ec = tus.get(r)
                                   End If
-                                  assert(ec IsNot Nothing)
+                                  assert(Not ec Is Nothing)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
@@ -102,7 +102,7 @@ Public Class async_thread_unsafe_lazier(Of T)
     Private v As T
 
     Public Sub New(ByVal d As Func(Of ref(Of T), event_comb))
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Me.d = d
         Me.inited = New ManualResetEvent(False)
         Me.state = ternary.unknown
@@ -139,7 +139,7 @@ Public Class async_thread_unsafe_lazier(Of T)
     End Function
 
     Protected Overridable Function initialize(ByVal r As ref(Of T)) As event_comb
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Return d(r)
     End Function
 
@@ -201,7 +201,7 @@ Public Class async_thread_safe_lazier(Of T)
     Private v As T
 
     Public Sub New(ByVal d As Func(Of ref(Of T), event_comb))
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Me.finish_get = New signal_event()
         Me.d = d
         Me.inited = New ManualResetEvent(False)
@@ -239,7 +239,7 @@ Public Class async_thread_safe_lazier(Of T)
     End Function
 
     Protected Overridable Function prepare(ByVal r As ref(Of T)) As event_comb
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Return d(r)
     End Function
 

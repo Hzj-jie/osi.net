@@ -19,7 +19,7 @@ Public Module _object_extensions
 
     <Extension()> Public Function is_not_null_and_true(Of T)(ByVal this As T) As Boolean
         Dim r As Boolean = Nothing
-        Return this IsNot Nothing AndAlso
+        Return Not this Is Nothing AndAlso
                direct_cast(this, r) AndAlso
                r
     End Function

@@ -109,7 +109,7 @@ public static class Program {
           if (parameter_types[i] == "String") {
             wl("                assert(Not " + passed_parameters[i] + ".null_or_whitespace())");
           } else if (parameter_types[i] != "UInt32") {
-            wl("                assert(" + passed_parameters[i] + " IsNot Nothing)");
+            wl("                assert(Not " + passed_parameters[i] + " Is Nothing)");
           }
           wl("                Me." + passed_parameters[i] + " = " + passed_parameters[i]);
         }

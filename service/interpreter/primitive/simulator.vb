@@ -32,7 +32,7 @@ Namespace primitive
         Private _stop As Boolean
 
         Public Sub New(ByVal interrupts As interrupts)
-            assert(interrupts IsNot Nothing)
+            assert(Not interrupts Is Nothing)
             _interrupts = interrupts
         End Sub
 
@@ -140,7 +140,7 @@ Namespace primitive
         End Function
 
         Public Function access(ByVal p As data_ref) As ref(Of Byte()) Implements executor.access
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             ' data_ref has only 62 bits, so using int64 instead of uint64 is safe.
             Dim l As Int64 = 0
             If p.relative() OrElse p.heap_relative() Then
@@ -222,7 +222,7 @@ Namespace primitive
         End Sub
 
         Private Sub halt(ByVal ex As executor_stop_error)
-            assert(ex IsNot Nothing)
+            assert(Not ex Is Nothing)
             _errors.emplace_back(ex.error_types)
             _halt = True
         End Sub
@@ -297,8 +297,8 @@ Namespace primitive
                                       ByRef p As UInt32,
                                       ByVal imp As _do_val_val_ref(Of instruction_wrapper, T, UInt32, Boolean),
                                       ByVal size_of As Func(Of T, UInt32)) As Boolean
-            assert(imp IsNot Nothing)
-            assert(size_of IsNot Nothing)
+            assert(Not imp Is Nothing)
+            assert(Not size_of Is Nothing)
             If p >= size_of(i) Then
                 Return False
             End If
@@ -318,7 +318,7 @@ Namespace primitive
             Return import(i,
                           p,
                           Function(ByVal ins As instruction_wrapper, ByVal x() As Byte, ByRef pos As UInt32) As Boolean
-                              assert(ins IsNot Nothing)
+                              assert(Not ins Is Nothing)
                               Return ins.import(x, pos)
                           End Function,
                           Function(ByVal x() As Byte) As UInt32
@@ -332,7 +332,7 @@ Namespace primitive
                           Function(ByVal ins As instruction_wrapper,
                                    ByVal x As vector(Of String),
                                    ByRef pos As UInt32) As Boolean
-                              assert(ins IsNot Nothing)
+                              assert(Not ins Is Nothing)
                               Return ins.import(x, pos)
                           End Function,
                           Function(ByVal x As vector(Of String)) As UInt32

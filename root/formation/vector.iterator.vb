@@ -142,7 +142,7 @@ Partial Public NotInheritable Class vector(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal m As vector(Of T))
-            assert(m IsNot Nothing)
+            assert(Not m Is Nothing)
             it = m.begin()
         End Sub
 

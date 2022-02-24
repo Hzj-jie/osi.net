@@ -26,14 +26,14 @@ Namespace syntaxer
                            ByVal start As UInt32,
                            ByVal [end] As UInt32,
                            ByVal v() As UInt32)
-                assert(m IsNot Nothing)
+                assert(Not m Is Nothing)
                 assert(exp OrElse [end] >= start)
                 Me.m = m
                 Me.exp = exp
                 Me.start = start
                 Me.end = [end]
                 Me.v = typed_word.fakes(v)
-                assert(Me.v IsNot Nothing)
+                assert(Not Me.v Is Nothing)
             End Sub
 
             Public Sub New(ByVal m As matching,
@@ -57,7 +57,7 @@ Namespace syntaxer
             assert(Not isemptyarray(ms))
             For i As Int32 = 0 To array_size_i(ms) - 1
                 Dim m As matching_case = ms(i)
-                assert(m IsNot Nothing)
+                assert(Not m Is Nothing)
                 Dim r As matching.result = m.m.match(m.v, m.start)
                 assertion.equal(r.succeeded(), m.exp, i)
                 If r.succeeded() Then

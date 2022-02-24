@@ -33,7 +33,7 @@ Partial Public Class implementation_of(Of T)
     Public Overridable Function resolve(ByRef o As T) As Boolean
         Dim f As Func(Of T) = Nothing
         If resolver(f) Then
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             o = f()
             Return True
         Else

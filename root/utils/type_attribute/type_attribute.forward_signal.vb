@@ -6,8 +6,8 @@ Partial Public Class type_attribute
         Private ReadOnly s As type_attribute
 
         Public Sub New(ByVal s As type_attribute)
-            assert(s IsNot Nothing)
-            assert(s.s IsNot Nothing)
+            assert(Not s Is Nothing)
+            assert(Not s.s Is Nothing)
             Me.s = s
         End Sub
 

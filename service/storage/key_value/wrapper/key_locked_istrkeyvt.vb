@@ -15,7 +15,7 @@ Public Class key_locked_istrkeyvt
     Private ReadOnly locks As multilock(Of event_comb_lock)
 
     Public Sub New(ByVal impl As istrkeyvt)
-        assert(impl IsNot Nothing)
+        assert(Not impl Is Nothing)
         Me.impl = impl
         Me.locks = New multilock(Of event_comb_lock)()
     End Sub
@@ -30,7 +30,7 @@ Public Class key_locked_istrkeyvt
 
     Private Function locked(ByVal key As String,
                             ByVal d As Func(Of event_comb)) As event_comb
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Return lock(key) AndAlso

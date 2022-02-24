@@ -15,9 +15,9 @@ Public Module _distributor
                                                                            ref(Of T)(),
                                                                            T2,
                                                                            Boolean)) As event_comb
-        assert(container IsNot Nothing)
-        assert(d IsNot Nothing)
-        assert(merge IsNot Nothing)
+        assert(Not container Is Nothing)
+        assert(Not d Is Nothing)
+        assert(Not merge Is Nothing)
         assert(container.size() > 1)
         Dim ecs() As event_comb = Nothing
         Dim rs() As ref(Of T) = Nothing
@@ -26,7 +26,7 @@ Public Module _distributor
                                   ReDim rs(container.size() - 1)
                                   For i As Int32 = 0 To container.size() - 1
                                       rs(i) = New ref(Of T)()
-                                      assert(container(i) IsNot Nothing)
+                                      assert(Not container(i) Is Nothing)
                                       ecs(i) = d(container(i), rs(i))
                                   Next
                                   Return waitfor(ecs) AndAlso
@@ -44,7 +44,7 @@ Public Module _distributor
                                          ByVal d As Func(Of istrkeyvt, ref(Of T), event_comb),
                                          ByVal result As ref(Of T2),
                                          ByVal merge As _do_val_ref(Of ref(Of T)(), T2, Boolean)) As event_comb
-        assert(merge IsNot Nothing)
+        assert(Not merge Is Nothing)
         Return distribute(container,
                           d,
                           result,
@@ -58,7 +58,7 @@ Public Module _distributor
                                          ByVal d As Func(Of istrkeyvt, ref(Of T), event_comb),
                                          ByVal result As ref(Of T2),
                                          ByVal merge As Func(Of ref(Of T)(), T2)) As event_comb
-        assert(merge IsNot Nothing)
+        assert(Not merge Is Nothing)
         Return distribute(container,
                           d,
                           result,
@@ -70,7 +70,7 @@ Public Module _distributor
 
     Public Function distribute(ByVal container As istrkeyvt_container,
                                ByVal d As Func(Of istrkeyvt, event_comb)) As event_comb
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Return distribute(container,
                           Function(x, y) d(x),
                           DirectCast(Nothing, ref(Of Int32)),

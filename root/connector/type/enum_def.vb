@@ -16,7 +16,7 @@ Public NotInheritable Class enum_definition(Of T)
 
     Shared Sub New()
         assert(type_info(Of T).is_enum)
-        assert(values IsNot Nothing AndAlso values.Length() >= 0)
+        assert(Not values Is Nothing AndAlso values.Length() >= 0)
         bytes_serializer.fixed.register(Of T)(AddressOf instance.append_to, AddressOf instance.consume_from)
         string_serializer.register(Of T)(AddressOf instance.write_to, AddressOf instance.read_from)
     End Sub
@@ -38,7 +38,7 @@ Public NotInheritable Class enum_definition(Of T)
     End Function
 
     Public Sub foreach(ByVal d As Action(Of T, String))
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         For Each value As T In values
             Try
                 d(value, [Enum].GetName(type, value))
@@ -49,14 +49,14 @@ Public NotInheritable Class enum_definition(Of T)
     End Sub
 
     Public Sub foreach(ByVal d As Action(Of T))
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         foreach(Sub(ByVal i As T, ByVal name As String)
                     d(i)
                 End Sub)
     End Sub
 
     Public Sub foreach(ByVal d As Action(Of String))
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         foreach(Sub(ByVal i As T, ByVal name As String)
                     d(name)
                 End Sub)
@@ -157,12 +157,12 @@ Public NotInheritable Class enum_definition(Of T)
 
     ' Use string_serializer instead of directly calling this function.
     Private Function read_from(ByVal i As StringReader, ByRef o As T) As Boolean
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return from(i.ReadToEnd(), o)
     End Function
 
     Private Function write_to(ByVal i As T, ByVal o As StringWriter) As Boolean
-        assert(o IsNot Nothing)
+        assert(Not o Is Nothing)
         Dim s As String = Nothing
         If Not [to](i, s) Then
             Return False

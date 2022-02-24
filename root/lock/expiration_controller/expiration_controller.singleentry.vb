@@ -8,7 +8,7 @@ Partial Public MustInherit Class expiration_controller
         Private ReadOnly stopping As ref(Of singleentry)
 
         Public Sub New(ByVal stopping As ref(Of singleentry))
-            assert(stopping IsNot Nothing)
+            assert(Not stopping Is Nothing)
             Me.stopping = stopping
         End Sub
 

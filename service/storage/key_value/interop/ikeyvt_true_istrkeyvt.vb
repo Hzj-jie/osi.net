@@ -11,7 +11,7 @@ Friend Class ikeyvt_true_istrkeyvt
     Private ReadOnly impl As ikeyvt(Of _true)
 
     Public Sub New(ByVal impl As ikeyvt(Of _true))
-        assert(impl IsNot Nothing)
+        assert(Not impl Is Nothing)
         Me.impl = impl
     End Sub
 

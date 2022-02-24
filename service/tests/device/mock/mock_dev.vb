@@ -103,19 +103,19 @@ Public Class mock_dev(Of PROTECTOR)
     End Function
 
     Public Shared Function validate(ByVal x As mock_dev(Of PROTECTOR)) As Boolean
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         Return Not x.closed()
     End Function
 
     Public Shared Sub close(ByVal x As mock_dev(Of PROTECTOR))
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         If x.c.increment() = 1 Then
             closed_count.increment()
         End If
     End Sub
 
     Public Shared Function identity(ByVal x As mock_dev(Of PROTECTOR)) As String
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         Return strcat("mock_dev_", x.id)
     End Function
 

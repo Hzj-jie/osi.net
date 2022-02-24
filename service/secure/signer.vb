@@ -58,7 +58,7 @@ Namespace sign
         End Function
 
         <Extension()> Public Function bypass(ByVal e As signer) As Boolean
-            Return assert(e IsNot Nothing) AndAlso
+            Return assert(Not e Is Nothing) AndAlso
                    object_compare(e, secure.sign.bypass.instance) = 0
         End Function
 
@@ -66,8 +66,8 @@ Namespace sign
                                            ByVal key() As Byte,
                                            ByVal p As piece,
                                            ByRef o() As Byte) As Boolean
-            Return e IsNot Nothing AndAlso
-                   p IsNot Nothing AndAlso
+            Return Not e Is Nothing AndAlso
+                   Not p Is Nothing AndAlso
                    e.sign(key, p.buff, p.offset, p.count, o)
         End Function
 
@@ -76,7 +76,7 @@ Namespace sign
                                            ByVal i() As Byte,
                                            ByVal count As UInt32,
                                            ByRef o() As Byte) As Boolean
-            Return e IsNot Nothing AndAlso
+            Return Not e Is Nothing AndAlso
                    e.sign(key, i, uint32_0, count, o)
         End Function
 
@@ -84,7 +84,7 @@ Namespace sign
                                            ByVal key() As Byte,
                                            ByVal i() As Byte,
                                            ByRef o() As Byte) As Boolean
-            Return e IsNot Nothing AndAlso
+            Return Not e Is Nothing AndAlso
                    e.sign(key, i, array_size(i), o)
         End Function
 
@@ -94,7 +94,7 @@ Namespace sign
                                            ByVal offset As UInt32,
                                            ByVal count As UInt32) As Byte()
             Dim o() As Byte = Nothing
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             assert(e.sign(key, i, offset, count, o))
             Return o
         End Function
@@ -104,7 +104,7 @@ Namespace sign
                                            ByVal i() As Byte,
                                            ByVal count As UInt32) As Byte()
             Dim o() As Byte = Nothing
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             assert(e.sign(key, i, count, o))
             Return o
         End Function
@@ -113,7 +113,7 @@ Namespace sign
                                            ByVal key() As Byte,
                                            ByVal i() As Byte) As Byte()
             Dim o() As Byte = Nothing
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             assert(e.sign(key, i, o))
             Return o
         End Function

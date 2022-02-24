@@ -299,7 +299,7 @@ finish:
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Widening Operator CType(ByVal this As array_ref(Of T)) As Boolean
-        Return this IsNot Nothing AndAlso Not this.empty()
+        Return Not this Is Nothing AndAlso Not this.empty()
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

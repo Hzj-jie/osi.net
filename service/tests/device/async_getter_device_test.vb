@@ -44,7 +44,7 @@ Public Class async_getter_device_test
         If assertion.is_true(d.get().wait_until_initialized(seconds_to_milliseconds(1))) Then  ' may not always success
             assertion.is_true(d.is_valid())
             assert(d.get().get(r))
-            assert(r IsNot Nothing)
+            assert(Not r Is Nothing)
         End If
         Return True
     End Function

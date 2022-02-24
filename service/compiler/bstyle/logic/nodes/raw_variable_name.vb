@@ -17,7 +17,7 @@ Partial Public NotInheritable Class bstyle
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(b IsNot Nothing)
+            assert(Not b Is Nothing)
             Me.l = b
         End Sub
 
@@ -25,10 +25,10 @@ Partial Public NotInheritable Class bstyle
                                      ByVal struct_handle As Func(Of String, stream(Of builders.parameter), Boolean),
                                      ByVal single_data_slot_handle As Func(Of String, String, Boolean),
                                      ByVal o As logic_writer) As Boolean
-            assert(n IsNot Nothing)
-            assert(struct_handle IsNot Nothing)
-            assert(single_data_slot_handle IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not struct_handle Is Nothing)
+            assert(Not single_data_slot_handle Is Nothing)
+            assert(Not o Is Nothing)
 
             Dim type As String = Nothing
             If Not scope.current().variables().resolve(n.input_without_ignored(), type) Then
@@ -43,7 +43,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
             assert(n.child_count() = 1)
             Return build(n.child(),
                          Function(ByVal type As String, ByVal ps As stream(Of builders.parameter)) As Boolean

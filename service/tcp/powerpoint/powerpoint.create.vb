@@ -386,7 +386,7 @@ Partial Public Class powerpoint
             Const p_keepalive_interval_ms As String = "keepalive-interval-ms"
             Const p_tokener As String = "tokener"
             Const p_delay_connect As String = "delay-connect"
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             v.bind(p_is_outgoing,
                    p_host,
                    p_port,

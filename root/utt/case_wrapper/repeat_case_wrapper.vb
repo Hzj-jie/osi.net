@@ -24,12 +24,12 @@ Public Class repeat_case_wrapper
     End Sub
 
     Public Shared Function current() As repeat_case_wrapper
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Return this
     End Function
 
     Public Shared Function current_round() As UInt64
-        assert(this_round IsNot Nothing)
+        assert(Not this_round Is Nothing)
         Return this_round()
     End Function
 

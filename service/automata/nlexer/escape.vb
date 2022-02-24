@@ -27,7 +27,7 @@ Partial Public NotInheritable Class nlexer
     End Class
 
     Public Shared Function escape(ByVal s As String) As String
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         If s.null_or_whitespace() Then
             Return s
         End If
@@ -40,7 +40,7 @@ Partial Public NotInheritable Class nlexer
     End Function
 
     Public Shared Function unescape(ByVal s As String) As String
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         If s.null_or_whitespace() Then
             Return s
         End If

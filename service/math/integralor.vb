@@ -29,13 +29,13 @@ Public NotInheritable Class integralor
     End Function
 
     Public Function with_function(ByVal f As Func(Of Double, Double)) As integralor
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Me.f = f
         Return Me
     End Function
 
     Public Function calculate() As Double
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         assert(incremental <> 0)
         If start = [end] Then
             Return 0

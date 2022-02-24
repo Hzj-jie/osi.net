@@ -18,20 +18,20 @@ Partial Public NotInheritable Class bstyle
 
         Private Sub New(ByVal nesteds As vector(Of builders.parameter),
                         ByVal primitives As vector(Of builders.parameter))
-            assert(nesteds IsNot Nothing)
-            assert(primitives IsNot Nothing)
+            assert(Not nesteds Is Nothing)
+            assert(Not primitives Is Nothing)
             Me._nesteds = nesteds
             Me._primitives = primitives
             Me._nesteds.
                stream().
                foreach(Sub(ByVal p As builders.parameter)
-                           assert(p IsNot Nothing)
+                           assert(Not p Is Nothing)
                            assert(Not p.ref)
                        End Sub)
             Me._primitives.
                stream().
                foreach(Sub(ByVal p As builders.parameter)
-                           assert(p IsNot Nothing)
+                           assert(Not p Is Nothing)
                            assert(Not p.ref)
                            assert(Not scope.current().structs().defined(p.type))
                        End Sub)
@@ -64,7 +64,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Shared Function nested(ByVal p As builders.parameter) As builders.parameter
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             assert(Not p.ref)
             Return nested(p.type, p.name)
         End Function
@@ -79,11 +79,11 @@ Partial Public NotInheritable Class bstyle
 
         Private Shared Function append_prefix(ByVal v As vector(Of builders.parameter),
                                               ByVal name As String) As vector(Of builders.parameter)
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(Not name.null_or_whitespace())
             Return v.stream().
                      map(Function(ByVal n As builders.parameter) As builders.parameter
-                             assert(n IsNot Nothing)
+                             assert(Not n Is Nothing)
                              Return n.map_name(Function(ByVal nname As String) As String
                                                    Return name + "." + nname
                                                End Function)
@@ -96,7 +96,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Sub append(ByVal r As struct_def)
-            assert(r IsNot Nothing)
+            assert(Not r Is Nothing)
             _nesteds.emplace_back(r._nesteds)
             _primitives.emplace_back(r._primitives)
         End Sub

@@ -35,17 +35,17 @@ Partial Class rlexer
                             ByVal word_choice As match_choice,
                             ByVal str_type As map(Of String, UInt32),
                             ByVal type_str As map(Of UInt32, String))
-                assert(rlexer IsNot Nothing)
+                assert(Not rlexer Is Nothing)
                 Me.rlexer = rlexer
-                assert(macros IsNot Nothing)
+                assert(Not macros Is Nothing)
                 Me.macros = macros
-                assert(words IsNot Nothing)
+                assert(Not words Is Nothing)
                 Me.words = words
                 Me.type_choice = type_choice
                 Me.word_choice = word_choice
-                assert(str_type IsNot Nothing)
+                assert(Not str_type Is Nothing)
                 Me.str_type = str_type
-                assert(type_str IsNot Nothing)
+                assert(Not type_str Is Nothing)
                 Me.type_str = type_str
             End Sub
 
@@ -166,7 +166,7 @@ Partial Class rlexer
                     o.resize(v.size())
                     For i As UInt32 = 0 To v.size() - uint32_1
                         Dim s As String = Nothing
-                        If v(i) IsNot Nothing AndAlso type_to_str(v(i).type, s) Then
+                        If Not v(i) Is Nothing AndAlso type_to_str(v(i).type, s) Then
                             o(i) = s
                         Else
                             Return False

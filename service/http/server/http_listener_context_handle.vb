@@ -37,17 +37,17 @@ Public NotInheritable Class http_listener_context_handle
     End Function
 
     Public Sub attach(ByVal server As server)
-        assert(server IsNot Nothing)
+        assert(Not server Is Nothing)
         AddHandler server.context_received, handle
     End Sub
 
     Public Sub detach(ByVal server As server)
-        assert(server IsNot Nothing)
+        assert(Not server Is Nothing)
         RemoveHandler server.context_received, handle
     End Sub
 
     Private Sub context_received(ByVal ctx As server.context)
-        assert(ctx IsNot Nothing)
+        assert(Not ctx Is Nothing)
         Dim ec As event_comb = Nothing
         If event_attached(handle_contextEvent) Then
             RaiseEvent handle_context(ctx.context, ec)

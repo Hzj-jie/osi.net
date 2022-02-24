@@ -13,7 +13,7 @@ Partial Public Class stream(Of T)
         Private ReadOnly cmp As Func(Of T, T, Int32)
 
         Public Sub New(ByVal v As T, ByVal cmp As Func(Of T, T, Int32))
-            assert(cmp IsNot Nothing)
+            assert(Not cmp Is Nothing)
             Me.v = v
             Me.cmp = cmp
         End Sub

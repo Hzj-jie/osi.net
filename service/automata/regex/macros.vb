@@ -50,7 +50,7 @@ Partial Public Class rlexer
         End Sub
 
         Public Sub define(ByVal p As pair(Of String, String))
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             define(p.first, p.second)
         End Sub
 

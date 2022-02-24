@@ -16,7 +16,7 @@ Partial Public Class accepter
         Dim o As Int64 = 0
         For i As Int32 = 0 To adapters.size() - 1
             Dim a As adapter = Nothing
-            If adapters.get(i, a) AndAlso a IsNot Nothing Then
+            If adapters.get(i, a) AndAlso Not a Is Nothing Then
                 o += a.attached_powerpoint_count()
             End If
         Next
@@ -26,14 +26,14 @@ Partial Public Class accepter
     Public Shared Function port_attached(ByVal p As Int32) As Boolean
         Dim a As adapter = Nothing
         If adapters.get(p, a) Then
-            Return a IsNot Nothing AndAlso a.attached_powerpoint_count() > 0
+            Return Not a Is Nothing AndAlso a.attached_powerpoint_count() > 0
         Else
             Return False
         End If
     End Function
 
     Public Shared Sub listen(ByVal p As powerpoint)
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         assert(Not p.is_outgoing)
         assert(String.IsNullOrEmpty(p.host_or_ip))
         adapters.[New](p.port,

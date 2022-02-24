@@ -10,7 +10,7 @@ Partial Public NotInheritable Class promise
         Inherits thenable
 
         Public Sub New(ByVal executor As Action(Of Action(Of Object), Action(Of Object)))
-            assert(executor IsNot Nothing)
+            assert(Not executor Is Nothing)
             Try
                 executor(AddressOf resolve, AddressOf reject)
             Catch ex As Exception

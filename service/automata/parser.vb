@@ -54,7 +54,7 @@ Public Class parser(Of _MAX_TYPE As _int64, RESULT_T)
 
     Private Function define(ByVal words() As lexer.typed_word,
                             ByVal d As Func(Of lexer.typed_word, Boolean)) As Boolean
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         For i As Int32 = 0 To array_size(words) - 1
             If Not d(words(i)) Then
                 Return False

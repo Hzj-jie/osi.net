@@ -10,8 +10,8 @@ Imports osi.root.formation
 ' Use attributes instead of inheritance to execute test case.
 Partial Public NotInheritable Class case2
     Private Shared Function create(ByVal c As [case], ByVal info As info) As utt.case
-        assert(c IsNot Nothing)
-        assert(info IsNot Nothing)
+        assert(Not c Is Nothing)
+        assert(Not info Is Nothing)
         Dim r As utt.[case] = c
         If info.repeat_times > 1 Then
             r = repeat(r, CLng(info.repeat_times))
@@ -37,9 +37,9 @@ Partial Public NotInheritable Class case2
                                    ByVal prepare As Func(Of Object, Boolean),
                                    ByVal finish As Func(Of Object, Boolean),
                                    ByVal function_info As function_info) As utt.[case]
-        assert(t IsNot Nothing)
-        assert(class_info IsNot Nothing)
-        assert(function_info IsNot Nothing)
+        assert(Not t Is Nothing)
+        assert(Not class_info Is Nothing)
+        assert(Not function_info Is Nothing)
 
         Dim n As info = info.merge(class_info, function_info)
         Return create(New [case](t,
@@ -56,9 +56,9 @@ Partial Public NotInheritable Class case2
                                    ByVal prepare As Func(Of Object, Boolean),
                                    ByVal finish As Func(Of Object, Boolean),
                                    ByVal randoms As vector(Of random_function_info)) As utt.[case]
-        assert(t IsNot Nothing)
-        assert(class_info IsNot Nothing)
-        assert(randoms IsNot Nothing)
+        assert(Not t Is Nothing)
+        assert(Not class_info Is Nothing)
+        assert(Not randoms Is Nothing)
 
         Return create(New random_run_case(t,
                                           prepare,
@@ -69,7 +69,7 @@ Partial Public NotInheritable Class case2
     End Function
 
     Public Shared Function create(ByVal t As Type) As vector(Of utt.[case])
-        assert(t IsNot Nothing)
+        assert(Not t Is Nothing)
         Dim r As New vector(Of utt.[case])()
         If Not t.has_custom_attribute(Of attributes.test)() OrElse
            t.IsAbstract() OrElse

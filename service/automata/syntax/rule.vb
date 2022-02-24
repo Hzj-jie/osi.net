@@ -23,7 +23,7 @@ Partial Public NotInheritable Class syntaxer
         Private ReadOnly collection As syntax_collection
 
         Public Sub New(ByVal collection As syntax_collection)
-            assert(collection IsNot Nothing)
+            assert(Not collection Is Nothing)
             m.emplace(command_ignore_types, AddressOf ignore_types)
             m.emplace(command_root_types, AddressOf root_types)
             Me.collection = collection

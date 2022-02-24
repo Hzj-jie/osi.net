@@ -11,7 +11,7 @@ Imports mhc = osi.service.cache.constants.mapheap_cache
 Public Module _cache2
     Private Function wrapper(Of KEY_T As IComparable(Of KEY_T), VALUE_T) _
                             (ByVal i As islimcache2(Of KEY_T, VALUE_T)) As icache2(Of KEY_T, VALUE_T)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return New cache2(Of KEY_T, VALUE_T)(i)
     End Function
 
@@ -58,7 +58,7 @@ Public Class cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Private ReadOnly l As ref(Of event_comb_lock)
 
     Public Sub New(ByVal c As islimcache2(Of KEY_T, VALUE_T))
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         assert(Not TypeOf c Is icache(Of KEY_T, VALUE_T))
         Me.c = c
         l = New ref(Of event_comb_lock)()
@@ -84,7 +84,7 @@ Public Class cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
                          Implements icache2(Of KEY_T, VALUE_T).get
         Return l.locked(Function() As Boolean
                             Dim v As VALUE_T = Nothing
-                            Return value IsNot Nothing AndAlso
+                            Return Not value Is Nothing AndAlso
                                    eva(value, DirectCast(Nothing, VALUE_T)) AndAlso
                                    c.get(key, v) AndAlso
                                    eva(value, v)
@@ -103,7 +103,7 @@ Public Class cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     Public Function size(ByVal value As ref(Of Int64)) As event_comb _
                         Implements icache2(Of KEY_T, VALUE_T).size
         Return l.locked(Function() As Boolean
-                            Return value IsNot Nothing AndAlso
+                            Return Not value Is Nothing AndAlso
                                    eva(value, c.size())
                         End Function)
     End Function

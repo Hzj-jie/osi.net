@@ -14,7 +14,7 @@ Namespace rlexer
         Inherits [case]
 
         Private Overloads Shared Function run(ByVal r As rule) As Boolean
-            assert(r IsNot Nothing)
+            assert(Not r Is Nothing)
             Dim e As rule.exporter = Nothing
             If assertion.is_true(r.export(e)) AndAlso assertion.is_not_null(e) Then
                 assertion.equal(e.type_choice, match_choice.first_defined)

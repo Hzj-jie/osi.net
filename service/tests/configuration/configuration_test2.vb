@@ -120,10 +120,10 @@ Public Class configuration_test2
         Public Function build() As vector(Of pair(Of String, String))
             Dim r As vector(Of pair(Of String, String)) = Nothing
             r = New vector(Of pair(Of String, String))()
-            If lang IsNot Nothing Then
+            If Not lang Is Nothing Then
                 assert(append_variant(r, "lang", lang))
             End If
-            If brand IsNot Nothing Then
+            If Not brand Is Nothing Then
                 assert(append_variant(r, "brand", brand))
             End If
             If time <> -1 Then
@@ -132,22 +132,22 @@ Public Class configuration_test2
             If percentage <> -1 Then
                 assert(append_variant(r, "percentage", percentage))
             End If
-            If name IsNot Nothing Then
+            If Not name Is Nothing Then
                 assert(append_variant(r, "name", name))
             End If
-            If email IsNot Nothing Then
+            If Not email Is Nothing Then
                 assert(append_variant(r, "email", email))
             End If
-            If user_name IsNot Nothing Then
+            If Not user_name Is Nothing Then
                 assert(append_variant(r, "user-name", user_name))
             End If
-            If reverse_host IsNot Nothing Then
+            If Not reverse_host Is Nothing Then
                 assert(append_variant(r, "reverse-host", reverse_host))
             End If
-            If path IsNot Nothing Then
+            If Not path Is Nothing Then
                 assert(append_variant(r, "path", path))
             End If
-            If password IsNot Nothing Then
+            If Not password Is Nothing Then
                 assert(append_variant(r, "password", password))
             End If
             If processor_usage <> -1 Then

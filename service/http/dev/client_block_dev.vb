@@ -61,7 +61,7 @@ Public MustInherit Class client_block_dev
 
     Public Function receive(ByVal result As ref(Of Byte())) As event_comb Implements block_pump.receive
         Return question(Function(ByVal r As client.memory_stream_response) As event_comb
-                            assert(r IsNot Nothing)
+                            assert(Not r Is Nothing)
                             Dim ec As event_comb = Nothing
                             Return New event_comb(Function() As Boolean
                                                       ec = issue_request(r)

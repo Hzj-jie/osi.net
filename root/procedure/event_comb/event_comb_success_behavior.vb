@@ -11,7 +11,7 @@ Public Module _event_comb_success_behavior
     <Extension()> Public Function success_behavior(ByVal ec As event_comb,
                                                    ByVal suc As Func(Of Boolean),
                                                    ByVal fal As Action) As Boolean
-        If ec IsNot Nothing AndAlso ec.success_finished() AndAlso do_(suc, False) Then
+        If Not ec Is Nothing AndAlso ec.success_finished() AndAlso do_(suc, False) Then
             Return True
         Else
             void_(fal)

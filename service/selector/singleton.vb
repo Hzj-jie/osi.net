@@ -15,7 +15,7 @@ Public Class singleton_invoke(Of T, PARA_T)
     Inherits __do(Of singleton(Of T, PARA_T), T, Boolean)
 
     Public Overrides Function at(ByRef i As singleton(Of T, PARA_T), ByRef j As T) As Boolean
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return i.allocate(j)
     End Function
 End Class
@@ -32,7 +32,7 @@ Public Class singleton(Of T, PARA_T)
     Private result As Boolean
 
     Public Sub New(ByVal alloc As allocator(Of T, PARA_T), ByVal parameter As PARA_T)
-        assert(alloc IsNot Nothing)
+        assert(Not alloc Is Nothing)
         Me.l = New sync_thread_safe_lazier(Of T)(Function() As T
                                                      Dim r As T = Nothing
                                                      result = alloc.allocate(parameter, r)

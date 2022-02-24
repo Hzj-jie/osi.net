@@ -432,12 +432,12 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
         Return New event_comb(Function() As Boolean
                                   If round_count < 0 OrElse round < round_count Then
                                       If round > 0 Then
-                                          assert(ec IsNot Nothing)
+                                          assert(Not ec Is Nothing)
                                           assertion.is_true(ec.end_result())
                                       End If
                                       round += 1
                                       If round_count < 0 Then
-                                          assert(count IsNot Nothing)
+                                          assert(Not count Is Nothing)
                                           count.increment()
                                       End If
                                       ec = rnd_case(keyvt)
@@ -454,7 +454,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
 
     Public Function create(ByVal keyvt As istrkeyvt) As event_comb Implements iistrkeyvt_case.create
         Dim ecs() As event_comb = Nothing
-        assert(keyvt IsNot Nothing)
+        assert(Not keyvt Is Nothing)
         Return New event_comb(Function() As Boolean
                                   start_report()
                                   ReDim ecs(parallel - 1)

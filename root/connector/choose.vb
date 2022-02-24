@@ -29,7 +29,7 @@ Public Module _choose
                                   ByVal last As Int32,
                                   ByVal a() As T,
                                   ByVal count As Int32) As Boolean
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         assert(array_size(selected) = count)
         assert(index <= count)
         assert(last <= array_size(a))

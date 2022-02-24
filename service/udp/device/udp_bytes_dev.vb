@@ -21,14 +21,14 @@ Public Class udp_bytes_dev
         Private ReadOnly d As getter(Of UdpClient)
 
         Public Sub New(ByVal d As getter(Of UdpClient))
-            assert(d IsNot Nothing)
+            assert(Not d Is Nothing)
             Me.d = d
         End Sub
 
         Public Function indicate(ByRef pending As Boolean) As Boolean Implements sync_indicator.indicate
             Dim u As UdpClient = Nothing
             If d.get(u) Then
-                assert(u IsNot Nothing)
+                assert(Not u Is Nothing)
                 Dim b As Int32 = 0
                 b = u.buffered_bytes()
                 If b < 0 Then
@@ -47,7 +47,7 @@ Public Class udp_bytes_dev
     Private ReadOnly s As sensor
 
     Public Sub New(ByVal d As getter(Of UdpClient))
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Me.d = d
         Me.s = New indicator_sensor_adapter(New sync_indicator_indicator_adapter(New indicator(d)))
     End Sub
@@ -60,7 +60,7 @@ Public Class udp_bytes_dev
         Return New event_comb(Function() As Boolean
                                   Dim udp_client As UdpClient = Nothing
                                   If d.get(udp_client) Then
-                                      assert(udp_client IsNot Nothing)
+                                      assert(Not udp_client Is Nothing)
                                       buff = New ref(Of Byte())()
                                       remote = New ref(Of IPEndPoint)()
                                       ec = udp_client.receive(buff, remote)
@@ -90,7 +90,7 @@ Public Class udp_bytes_dev
                                   Else
                                       Dim udp_client As UdpClient = Nothing
                                       If d.get(udp_client) Then
-                                          assert(udp_client IsNot Nothing)
+                                          assert(Not udp_client Is Nothing)
                                           ec = complete_io_3(i.first,
                                                              uint32_0,
                                                              array_size(i.first),

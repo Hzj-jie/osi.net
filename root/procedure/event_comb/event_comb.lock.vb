@@ -94,7 +94,7 @@ Partial Public Class event_comb
     ' TODO: Remove reenterable_locked, use locked. Also remove the queue_job() in event_comb.lifetime: trigger_timeout.
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub reenterable_locked(ByVal d As Action)
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         If lock_trace AndAlso event_comb_trace Then
             Dim n As Int64 = Now().milliseconds()
             _reenterable_locked(d)
@@ -110,7 +110,7 @@ Partial Public Class event_comb
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function reenterable_locked(ByVal f As Func(Of Boolean)) As Boolean
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Dim r As Boolean = False
         reenterable_locked(Sub()
                                r = f()

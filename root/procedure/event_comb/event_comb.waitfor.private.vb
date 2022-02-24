@@ -15,13 +15,13 @@ Imports osi.root.utils
 
 Partial Public Class event_comb
     Private Function _waitfor(ByVal ec As event_comb, ByVal begin As Func(Of Boolean)) As Boolean
-        assert(begin IsNot Nothing)
+        assert(Not begin Is Nothing)
         assert_in_lock()
         If ec Is Nothing OrElse object_compare(Me, ec) = 0 Then
             Return False
         End If
         Return ec.reenterable_locked(Function() As Boolean
-                                         If ec._started() OrElse ec.cb IsNot Nothing Then
+                                         If ec._started() OrElse Not ec.cb Is Nothing Then
                                              Return False
                                          End If
                                          inc_pends()
@@ -84,7 +84,7 @@ Partial Public Class event_comb
         If Not _waitfor(ecs) Then
             Return False
         End If
-        assert(ecs IsNot Nothing AndAlso ecs.Length() > 0)
+        assert(Not ecs Is Nothing AndAlso ecs.Length() > 0)
         For i As Int64 = 1 To ecs.Length() - 1
             dec_pends()
         Next
@@ -94,7 +94,7 @@ Partial Public Class event_comb
     Private Function _waitfor(ByVal [try] As Func(Of Boolean),
                               ByVal w As Func(Of Func(Of Boolean), Action, Boolean)) As Boolean
         assert_in_lock()
-        assert(w IsNot Nothing)
+        assert(Not w Is Nothing)
         If [try] Is Nothing Then
             Return False
         End If
@@ -157,8 +157,8 @@ Partial Public Class event_comb
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Sub _waitfor(ByVal d As Action, ByVal cb As Action)
-        assert(d IsNot Nothing)
-        assert(cb IsNot Nothing)
+        assert(Not d Is Nothing)
+        assert(Not cb Is Nothing)
         managed_thread_pool.push(Sub()
                                      Try
                                          d()
@@ -186,7 +186,7 @@ Partial Public Class event_comb
         End If
         Dim cb As Action = Nothing
         cb = _multiple_resume_wait()
-        assert(stopwatch.push(timeout_ms, cb.as_weak_action()) IsNot Nothing)
+        assert(Not stopwatch.push(timeout_ms, cb.as_weak_action()) Is Nothing)
         _waitfor(d, cb)
         Return True
     End Function
@@ -260,7 +260,7 @@ Partial Public Class event_comb
         If ms = 0 Then
             Return _waitfor_yield()
         End If
-        Return assert(stopwatch.push(ms, _wait()) IsNot Nothing)
+        Return assert(Not stopwatch.push(ms, _wait()) Is Nothing)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

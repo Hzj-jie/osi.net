@@ -59,14 +59,14 @@ Partial Public NotInheritable Class connector
 
     ' remote_host is one of the resolved address (usually the first one which matches ipv4 setting), or a null.
     Private Function new_client(ByVal remote_host As IPAddress) As UdpClient
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Dim r As UdpClient = Nothing
         If p.local_port = socket_invalid_port Then
             r = New UdpClient(p.address_family)
         Else
             r = New UdpClient(p.local_port, p.address_family)
         End If
-        If remote_host IsNot Nothing AndAlso p.remote_port <> socket_invalid_port Then
+        If Not remote_host Is Nothing AndAlso p.remote_port <> socket_invalid_port Then
             r.Connect(New IPEndPoint(remote_host, p.remote_port))
         End If
         Return r
@@ -148,7 +148,7 @@ Partial Public NotInheritable Class connector
     End Function
 
     Public Function connect(ByVal r As ref(Of delegator)) As event_comb
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Dim ec As event_comb = Nothing
         Dim result As ref(Of IPHostEntry) = Nothing
         Return New event_comb(Function() As Boolean
@@ -168,7 +168,7 @@ Partial Public NotInheritable Class connector
                                       ReDim eps(array_size_i((+result).AddressList()) - 1)
                                       Dim selected_remote_host As IPAddress = Nothing
                                       For i As Int32 = 0 To array_size_i((+result).AddressList()) - 1
-                                          If (+result).AddressList()(i) IsNot Nothing Then
+                                          If Not (+result).AddressList()(i) Is Nothing Then
                                               eps(i) = New IPEndPoint((+result).AddressList()(i), p.remote_port)
                                               If selected_remote_host Is Nothing AndAlso
                                                  (+result).AddressList()(i).AddressFamily() = p.address_family Then

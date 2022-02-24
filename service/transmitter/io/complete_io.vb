@@ -22,10 +22,10 @@ Public Module _complete_io
                                ByVal buff() As Byte,
                                ByVal max_copy As UInt32,
                                ByVal p As ref(Of UInt32)) As event_comb
-        assert(r IsNot Nothing)
-        assert(w IsNot Nothing)
+        assert(Not r Is Nothing)
+        assert(Not w Is Nothing)
         assert(array_size(buff) >= max_copy)
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   p.set(uint32_0)
@@ -87,10 +87,10 @@ Public Module _complete_io
                                                         End Function,
                                                         Function(last_ec As event_comb,
                                                                  ByRef break_error As Boolean) As Boolean
-                                                            assert(last_ec IsNot Nothing)
+                                                            assert(Not last_ec Is Nothing)
                                                             break_error = (Not last_ec.end_result())
                                                             If (+p) > 0 Then
-                                                                If result IsNot Nothing Then
+                                                                If Not result Is Nothing Then
                                                                     eva(result, (+result) + (+p))
                                                                 End If
                                                                 Return True
@@ -128,7 +128,7 @@ Public Module _complete_io
                                      ByRef count As UInt64,
                                      ByVal p As ref(Of UInt32),
                                      ByVal pending_counter As pending_io_punishment) As Boolean
-        assert(pending_counter IsNot Nothing)
+        assert(Not pending_counter Is Nothing)
         If last_ec Is Nothing Then
             assert(p Is Nothing OrElse (+p) = 0)
             break_error = False
@@ -197,8 +197,8 @@ Public Module _complete_io
                                 ByVal w As Func(Of Byte(),
                                                    event_comb)) _
                                As event_comb
-        assert(r IsNot Nothing)
-        assert(w IsNot Nothing)
+        assert(Not r Is Nothing)
+        assert(Not w Is Nothing)
         Dim p As ref(Of Byte()) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -242,7 +242,7 @@ Public Module _complete_io
                                                             ref(Of UInt32),
                                                             event_comb)) _
                                As event_comb
-        assert(partial_io IsNot Nothing)
+        assert(Not partial_io Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If array_size(buff) < offset + count Then
@@ -307,7 +307,7 @@ Public Module _complete_io
                                                             ref(Of UInt32),
                                                             event_comb)) _
                                As event_comb
-        assert(partial_io IsNot Nothing)
+        assert(Not partial_io Is Nothing)
         Return complete_io(buff,
                            offset,
                            count,

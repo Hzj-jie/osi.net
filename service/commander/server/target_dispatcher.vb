@@ -11,7 +11,7 @@ Public NotInheritable Class target_dispatcher(Of T)
     Private ReadOnly dispatcher As dispatcher
 
     Public Sub New(ByVal dispatcher As dispatcher)
-        assert(dispatcher IsNot Nothing)
+        assert(Not dispatcher Is Nothing)
         Me.dispatcher = dispatcher
     End Sub
 
@@ -22,16 +22,16 @@ Public NotInheritable Class target_dispatcher(Of T)
     Private Shared Function handle(ByVal i As command,
                                    ByVal o As command,
                                    ByVal act As Func(Of T, command, command, event_comb)) As event_comb
-        assert(i IsNot Nothing)
-        assert(o IsNot Nothing)
-        assert(act IsNot Nothing)
+        assert(Not i Is Nothing)
+        assert(Not o Is Nothing)
+        assert(Not act Is Nothing)
         Dim ec As event_comb = Nothing
         Dim c As container(Of T) = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim b As String = Nothing
                                   If i.parameter(constants.parameter.name, b) AndAlso
                                      container(Of T).create(b, c) Then
-                                      assert(c IsNot Nothing)
+                                      assert(Not c Is Nothing)
                                       ec = act(+c, i, o)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -41,7 +41,7 @@ Public NotInheritable Class target_dispatcher(Of T)
                                   End If
                               End Function,
                               Function() As Boolean
-                                  assert(c IsNot Nothing)
+                                  assert(Not c Is Nothing)
                                   c.release()
                                   Return ec.end_result() AndAlso
                                          goto_end()
@@ -63,7 +63,7 @@ Public NotInheritable Class target_dispatcher(Of T)
                                     ByVal action() As Byte,
                                     ByVal act As Func(Of T, command, command, event_comb),
                                     Optional ByVal replace As Boolean = False) As Boolean
-        Return dispatcher IsNot Nothing AndAlso
+        Return Not dispatcher Is Nothing AndAlso
                dispatcher.register(action, handle(act), replace)
     End Function
 
@@ -78,7 +78,7 @@ Public NotInheritable Class target_dispatcher(Of T)
                                            ByVal act As Func(Of T, command, command, event_comb),
                                            Optional ByVal replace As Boolean = False) _
                                           As Boolean
-        Return dispatcher IsNot Nothing AndAlso
+        Return Not dispatcher Is Nothing AndAlso
                dispatcher.register(action, handle(act), replace)
     End Function
 

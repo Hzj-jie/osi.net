@@ -43,14 +43,14 @@ Namespace primitive
 
         <Extension()> Public Function import(ByVal e As exportable, ByVal a() As Byte) As Boolean
             Dim p As UInt32 = 0
-            Return assert(e IsNot Nothing) AndAlso
+            Return assert(Not e Is Nothing) AndAlso
                    e.import(a, p) AndAlso
                    (p = array_size(a))
         End Function
 
         <Extension()> Public Function import(ByVal e As exportable, ByVal v As vector(Of String)) As Boolean
             Dim p As UInt32 = 0
-            Return assert(e IsNot Nothing) AndAlso
+            Return assert(Not e Is Nothing) AndAlso
                    Not v.null_or_empty() AndAlso
                    e.import(v, p) AndAlso
                    (p = v.size())
@@ -65,7 +65,7 @@ Namespace primitive
         End Function
 
         <Extension()> Public Function export(ByVal e As exportable) As String
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             Dim r As String = Nothing
             assert(e.export(r))
             Return r
@@ -79,12 +79,12 @@ Namespace primitive
                 raise_error(error_type.warning, "failed to read from file ", f, ", ex ", ex)
                 Return False
             End Try
-            Return assert(e IsNot Nothing) AndAlso
+            Return assert(Not e Is Nothing) AndAlso
                    e.import(a)
         End Function
 
         <Extension()> Public Function write_bitcode(ByVal e As exportable, ByVal f As String) As Boolean
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             Dim a() As Byte = Nothing
             If e.export(a) Then
                 Try
@@ -107,12 +107,12 @@ Namespace primitive
                 raise_error(error_type.warning, "failed to read from file ", f)
                 Return False
             End Try
-            Return assert(e IsNot Nothing) AndAlso
+            Return assert(Not e Is Nothing) AndAlso
                    e.import(s)
         End Function
 
         <Extension()> Public Function write_asccode(ByVal e As exportable, ByVal f As String) As Boolean
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             Dim s As String = Nothing
             If e.export(s) Then
                 Try
@@ -129,13 +129,13 @@ Namespace primitive
 
         ' assemble() and following functions convert various formats of asccode into bitcode.
         <Extension()> Public Function assemble(ByVal e As exportable, ByVal s As String, ByRef o() As Byte) As Boolean
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             Return e.import(s) AndAlso
                    e.export(o)
         End Function
 
         <Extension()> Public Function assemble(ByVal e As exportable, ByVal s As String, ByVal o As String) As Boolean
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             Return e.import(s) AndAlso
                    e.write_bitcode(o)
         End Function
@@ -143,7 +143,7 @@ Namespace primitive
         <Extension()> Public Function load_and_assemble(ByVal e As exportable,
                                                         ByVal f As String,
                                                         ByRef o() As Byte) As Boolean
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             Return e.load_asccode(f) AndAlso
                    e.export(o)
         End Function
@@ -151,7 +151,7 @@ Namespace primitive
         <Extension()> Public Function load_and_assemble(ByVal e As exportable,
                                                         ByVal f As String,
                                                         ByVal o As String) As Boolean
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             Return e.load_asccode(f) AndAlso
                    e.write_bitcode(o)
         End Function

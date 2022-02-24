@@ -22,7 +22,7 @@ Partial Public NotInheritable Class b2style
 
         Public Function defines() As define_t
             If is_root() Then
-                assert(d IsNot Nothing)
+                assert(Not d Is Nothing)
                 Return d
             End If
             assert(d Is Nothing)

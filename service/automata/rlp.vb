@@ -13,8 +13,8 @@ Public NotInheritable Class rlp
     Private ReadOnly s As syntaxer.rule.exporter
 
     Private Sub New(ByVal r As rlexer.rule.exporter, ByVal s As syntaxer.rule.exporter)
-        assert(r IsNot Nothing)
-        assert(s IsNot Nothing)
+        assert(Not r Is Nothing)
+        assert(Not s Is Nothing)
         Me.r = r
         Me.s = s
     End Sub
@@ -46,8 +46,8 @@ Public NotInheritable Class rlp
     Private Shared Function create(ByVal rl As Func(Of rlexer.rule, Boolean),
                                    ByVal sl As Func(Of syntaxer.rule, Boolean),
                                    ByRef o As rlp) As Boolean
-        assert(rl IsNot Nothing)
-        assert(sl IsNot Nothing)
+        assert(Not rl Is Nothing)
+        assert(Not sl Is Nothing)
         Dim r As New rlexer.rule()
         If Not rl(r) Then
             Return False
@@ -64,11 +64,11 @@ Public NotInheritable Class rlp
                                             ByVal syntaxer_rule_file As String,
                                             ByRef o As rlp) As Boolean
         Return create(Function(r As rlexer.rule) As Boolean
-                          assert(r IsNot Nothing)
+                          assert(Not r Is Nothing)
                           Return r.parse_file(rlexer_rule_file)
                       End Function,
                       Function(s As syntaxer.rule) As Boolean
-                          assert(s IsNot Nothing)
+                          assert(Not s Is Nothing)
                           Return s.parse_file(syntaxer_rule_file)
                       End Function,
                       o)
@@ -78,11 +78,11 @@ Public NotInheritable Class rlp
                                                ByVal syntaxer_rule As String,
                                                ByRef o As rlp) As Boolean
         Return create(Function(r As rlexer.rule) As Boolean
-                          assert(r IsNot Nothing)
+                          assert(Not r Is Nothing)
                           Return r.parse_content(rlexer_rule)
                       End Function,
                       Function(s As syntaxer.rule) As Boolean
-                          assert(s IsNot Nothing)
+                          assert(Not s Is Nothing)
                           Return s.parse_content(syntaxer_rule)
                       End Function,
                       o)
@@ -92,11 +92,11 @@ Public NotInheritable Class rlp
                                   ByVal syntaxer_rules() As String,
                                   ByRef o As rlp) As Boolean
         Return create(Function(r As rlexer.rule) As Boolean
-                          assert(r IsNot Nothing)
+                          assert(Not r Is Nothing)
                           Return r.parse(rlexer_rules)
                       End Function,
                       Function(s As syntaxer.rule) As Boolean
-                          assert(s IsNot Nothing)
+                          assert(Not s Is Nothing)
                           Return s.parse(syntaxer_rules)
                       End Function,
                       o)

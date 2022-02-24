@@ -10,7 +10,7 @@ Imports osi.root.utils
 Public NotInheritable Class implicit_conversions
     Public Shared Function valuer_test_get_only_case_try_get(Of T As New, T2 As {T, New}) _
                                                             (ByVal i As valuer(Of T2), ByRef o As T) As Boolean
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return i.try_get(o)
     End Function
 

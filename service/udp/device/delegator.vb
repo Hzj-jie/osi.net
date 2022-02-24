@@ -36,11 +36,11 @@ Public Class delegator
 
     Public Sub New(ByVal sources() As IPEndPoint, ByVal c As UdpClient, ByVal p As powerpoint)
         MyBase.New(Sub(ByVal x As UdpClient)
-                       If x IsNot Nothing Then
+                       If Not x Is Nothing Then
                            x.Close()
                        End If
                    End Sub)
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
 #If SINGLE_OPERATION Then
         send_lock = New ref(Of event_comb_lock)()
         receive_lock = New ref(Of event_comb_lock)()
@@ -49,7 +49,7 @@ Public Class delegator
         Me.sources = sources
         Me.id = c.identity()
         Me.p = p
-        If p IsNot Nothing Then
+        If Not p Is Nothing Then
             If envs.udp_trace Then
                 raise_error("new conneciton ",
                             id,
@@ -130,7 +130,7 @@ Public Class delegator
                               Function() As Boolean
                                   If ec.end_result() Then
                                       If fixed_sources() Then
-                                          assert(+source IsNot Nothing)
+                                          assert(Not +source Is Nothing)
                                           For i As UInt32 = uint32_0 To sources.size() - uint32_1
                                               If (+source).match_endpoint(sources(i)) Then
                                                   Return goto_end()

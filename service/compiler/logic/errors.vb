@@ -22,17 +22,17 @@ Namespace logic
         End Sub
 
         Public Shared Sub unassignable_from_bool(ByVal v As variable)
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             raise("Variable ", v.name, " [", v.type, "] is not assignable from bool.")
         End Sub
 
         Public Shared Sub unassignable_from_uint32(ByVal v As variable)
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             raise("Variable ", v.name, " [", v.type, "] is not assignable from uint32.")
         End Sub
 
         Public Shared Sub unassignable_to_uint32(ByVal v As variable)
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             raise("Variable ", v.name, " [", v.type, "] is not assignable to uint32.")
         End Sub
 
@@ -41,8 +41,8 @@ Namespace logic
         End Sub
 
         Public Shared Sub unassignable(ByVal target As variable, ByVal source As variable)
-            assert(target IsNot Nothing)
-            assert(source IsNot Nothing)
+            assert(Not target Is Nothing)
+            assert(Not source Is Nothing)
             raise("Source ",
                   source.name,
                   " [",
@@ -55,7 +55,7 @@ Namespace logic
         End Sub
 
         Public Shared Sub unassignable_zero_type(ByVal target As variable)
-            assert(target IsNot Nothing)
+            assert(Not target Is Nothing)
             raise("target ",
                   target.name,
                   " [",
@@ -64,7 +64,7 @@ Namespace logic
         End Sub
 
         Public Shared Sub no_return_value_provided(ByVal target As variable)
-            assert(target IsNot Nothing)
+            assert(Not target Is Nothing)
             raise("target ",
                   target.name,
                   " [",
@@ -73,7 +73,7 @@ Namespace logic
         End Sub
 
         Public Shared Sub unassignable_array(ByVal target As variable, ByVal size As UInt32)
-            assert(target IsNot Nothing)
+            assert(Not target Is Nothing)
             raise("Target ",
                   target.name,
                   " [",
@@ -83,7 +83,7 @@ Namespace logic
         End Sub
 
         Public Shared Sub unassignable_variable_size(ByVal target As variable)
-            assert(target IsNot Nothing)
+            assert(Not target Is Nothing)
             raise("Target ",
                   target.name,
                   " [",

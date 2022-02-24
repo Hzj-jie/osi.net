@@ -53,13 +53,13 @@ Public Module _thread
                 tps = this_process.ref.Threads()
                 Assert(Not tps.null_or_empty())
                 For i As Int32 = 0 To tps.Count() - 1
-                    Assert(tps(i) IsNot Nothing)
+                    Assert(Not tps(i) Is Nothing)
                     If tps(i).Id() = current_process_thread_id() Then
                         r = tps(i)
                         Exit For
                     End If
                 Next
-                Assert(r IsNot Nothing)
+                Assert(Not r Is Nothing)
                 _current_process_thread = r
                 For i As Int32 = 0 To tps.Count() - 1
                     Dim c As Int32 = 0

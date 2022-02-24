@@ -27,7 +27,7 @@ Public Module tcp_bridge
         register_slimqless2_threadpool()
         connection_state.bind()
         Dim config_file As String = "tcp_bridge.ini"
-        If My.Application().CommandLineArgs() IsNot Nothing AndAlso
+        If Not My.Application().CommandLineArgs() Is Nothing AndAlso
            My.Application().CommandLineArgs().Count() > 0 AndAlso
            Not String.IsNullOrEmpty(My.Application().CommandLineArgs()(0)) Then
             config_file = My.Application().CommandLineArgs()(0)
@@ -39,8 +39,8 @@ Public Module tcp_bridge
     End Sub
 
     Private Function create_dev(ByVal c As TcpClient, ByVal p As powerpoint) As piece_dev
-        assert(c IsNot Nothing)
-        assert(p IsNot Nothing)
+        assert(Not c Is Nothing)
+        assert(Not p Is Nothing)
         Return New flow_piece_dev_adapter(p.as_flow(c), max(c.send_buff_size(), c.receive_buff_size()))
     End Function
 
@@ -146,7 +146,7 @@ Public Module tcp_bridge
                                          keepalive_interval_ms),
                        "failed to create connection ", connection_section_name, i + connection_section_index)
             End If
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             assert(connection_manager.register(name, p))
             If Not String.IsNullOrEmpty(target) Then
                 Dim cid As Int64 = 0
@@ -210,8 +210,8 @@ Public Module tcp_bridge
                                          End Function,
                                          Function() As Boolean
                                              If ec.end_result() Then
-                                                 assert((+c2) IsNot Nothing)
-                                                 assert((+p2) IsNot Nothing)
+                                                 assert(Not (+c2) Is Nothing)
+                                                 assert(Not (+p2) Is Nothing)
                                                  total_bytes = New atomic_int64()
                                                  If chunk_count = 0 Then
                                                      ec = +(New convector(Of piece)(
@@ -248,7 +248,7 @@ Public Module tcp_bridge
                                              End If
                                          End Function,
                                          Function() As Boolean
-                                             assert((+c2) IsNot Nothing)
+                                             assert(Not (+c2) Is Nothing)
                                              If Not ec.end_result() OrElse reset_connection Then
                                                  c2.get().shutdown()
                                              End If

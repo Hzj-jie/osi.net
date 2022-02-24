@@ -23,7 +23,7 @@ Namespace logic
         End Function
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
-            assert(result IsNot Nothing)
+            assert(Not result Is Nothing)
             ' TODO: Should be Return result.is_variable_size()?
             Return True
         End Function
@@ -41,18 +41,18 @@ Namespace logic
         End Function
 
         Protected Overrides Function left_restrict(ByVal left As variable) As Boolean
-            assert(left IsNot Nothing)
+            assert(Not left Is Nothing)
             ' TODO: Should be Return left.is_variable_size()?
             Return True
         End Function
 
         Protected Overrides Function right_restrict(ByVal right As variable) As Boolean
-            assert(right IsNot Nothing)
+            assert(Not right Is Nothing)
             Return right.is_assignable_to_uint32()
         End Function
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
-            assert(result IsNot Nothing)
+            assert(Not result Is Nothing)
             ' TODO: Should be Return result.is_variable_size()?
             Return True
         End Function
@@ -70,18 +70,18 @@ Namespace logic
         End Function
 
         Protected Overrides Function left_restrict(ByVal left As variable) As Boolean
-            assert(left IsNot Nothing)
+            assert(Not left Is Nothing)
             ' TODO: Should be Return left.is_variable_size()?
             Return True
         End Function
 
         Protected Overrides Function right_restrict(ByVal right As variable) As Boolean
-            assert(right IsNot Nothing)
+            assert(Not right Is Nothing)
             Return right.is_assignable_to_uint32()
         End Function
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
-            assert(result IsNot Nothing)
+            assert(Not result Is Nothing)
             ' TODO: Should be Return result.is_variable_size()?
             Return True
         End Function
@@ -102,7 +102,7 @@ Namespace logic
         End Function
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
-            assert(result IsNot Nothing)
+            assert(Not result Is Nothing)
             ' TODO: Should be Return result.is_variable_size()?
             Return True
         End Function
@@ -112,12 +112,12 @@ Namespace logic
         End Function
 
         Protected Overrides Function parameter2_restrict(ByVal p2 As variable) As Boolean
-            assert(p2 IsNot Nothing)
+            assert(Not p2 Is Nothing)
             Return p2.is_assignable_to_uint32()
         End Function
 
         Protected Overrides Function parameter3_restrict(ByVal p3 As variable) As Boolean
-            assert(p3 IsNot Nothing)
+            assert(Not p3 Is Nothing)
             Return p3.is_assignable_to_uint32()
         End Function
     End Class
@@ -134,7 +134,7 @@ Namespace logic
         End Function
 
         Protected Overrides Function parameter_restrict(ByVal parameter As variable) As Boolean
-            assert(parameter IsNot Nothing)
+            assert(Not parameter Is Nothing)
             Return parameter.is_variable_size()
         End Function
     End Class

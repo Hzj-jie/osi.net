@@ -14,7 +14,7 @@ Partial Public Class callback_manager
     End Sub
 
     Private Sub begin_check(ByVal action As callback_action)
-        assert(action IsNot Nothing)
+        assert(Not action Is Nothing)
         assert(queue_runner.push(AddressOf action.action_check))
     End Sub
 End Class

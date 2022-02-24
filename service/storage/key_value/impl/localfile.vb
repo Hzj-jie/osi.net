@@ -114,7 +114,7 @@ Public Module _localfile
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  Return fs IsNot Nothing AndAlso
+                                  Return Not fs Is Nothing AndAlso
                                          eva(f, fs) AndAlso
                                          goto_end()
                               End Function)

@@ -42,7 +42,7 @@ Friend Class trie_case
     End Function
 
     Private Function validate() As Boolean
-        Return m IsNot Nothing
+        Return Not m Is Nothing
     End Function
 
     Private Sub find()

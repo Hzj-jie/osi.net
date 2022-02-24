@@ -89,7 +89,7 @@ Public NotInheritable Class strsplit_test
 
     Private Shared Function run_case(ByVal c As case_t) As Boolean
         Dim v As vector(Of String) = Nothing
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         assertion.equal(c.return,
                      strsplit(c.str,
                               c.separators,
@@ -103,7 +103,7 @@ Public NotInheritable Class strsplit_test
     End Function
 
     Private Shared Function contains(ByVal s As String, ByVal a() As String) As Boolean
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         For i As Int32 = 0 To array_size_i(a) - 1
             If s.Contains(a(i)) Then
                 Return True
@@ -113,9 +113,9 @@ Public NotInheritable Class strsplit_test
     End Function
 
     Private Shared Function contains(ByVal s As String, ByVal a() As pair(Of String, String)) As Boolean
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         For i As Int32 = 0 To array_size_i(a) - 1
-            assert(a(i) IsNot Nothing)
+            assert(Not a(i) Is Nothing)
             If s.Contains(a(i).first) OrElse
                s.Contains(a(i).second) Then
                 Return True
@@ -263,7 +263,7 @@ Public NotInheritable Class strsplit_test
     End Function
 
     Private Shared Function run_predefined_cases() As Boolean
-        assert(predefined_cases IsNot Nothing AndAlso
+        assert(Not predefined_cases Is Nothing AndAlso
                Not predefined_cases.empty())
         For i As UInt32 = 0 To predefined_cases.size() - uint32_1
             If Not run_case(predefined_cases(i)) Then

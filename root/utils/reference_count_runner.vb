@@ -21,7 +21,7 @@ Public Class reference_count_runner
         Return Sub(x As reference_count_runner(Of _false, _false))
                    Dim y As reference_count_runner = Nothing
                    y = DirectCast(x, reference_count_runner)
-                   assert(y IsNot Nothing)
+                   assert(Not y Is Nothing)
                    v(y)
                End Sub
     End Function

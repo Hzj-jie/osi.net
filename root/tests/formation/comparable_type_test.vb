@@ -25,7 +25,7 @@ Public Class comparable_type_test
         Else
             f = AddressOf assertion.less
         End If
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         f(compare(New comparable_type(t1), New comparable_type(t2)), 0)
         f(compare(New comparable_type(t1), t2), 0)
         f(compare(New comparable_type(t1), DirectCast(t2, Object)), 0)

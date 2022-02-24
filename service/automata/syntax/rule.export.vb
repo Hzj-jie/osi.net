@@ -19,7 +19,7 @@ Partial Public NotInheritable Class syntaxer
             Public ReadOnly collection As syntax_collection
 
             Public Sub New(ByVal i As rule)
-                assert(i IsNot Nothing)
+                assert(Not i Is Nothing)
                 Me.ignore_types = i.ignores
                 Me.root_types = i.roots
                 Me.collection = i.collection

@@ -26,22 +26,22 @@ Public NotInheritable Class [bset](Of T)
     Shared Sub New()
         container_operator(Of [bset](Of T), T).size(
                 Function(ByVal i As [bset](Of T)) As UInt32
-                    assert(i IsNot Nothing)
+                    assert(Not i Is Nothing)
                     Return i.size()
                 End Function)
         container_operator(Of [bset](Of T), T).emplace(
                 Function(ByVal i As [bset](Of T), ByVal j As T) As Boolean
-                    assert(i IsNot Nothing)
+                    assert(Not i Is Nothing)
                     Return i.emplace(j).second
                 End Function)
         container_operator(Of [bset](Of T), T).enumerate(
                 Function(ByVal i As [bset](Of T)) As container_operator(Of T).enumerator
-                    assert(i IsNot Nothing)
+                    assert(Not i Is Nothing)
                     Return New enumerator(i)
                 End Function)
         container_operator(Of [bset](Of T), T).clear(
                 Sub(ByVal i As [bset](Of T))
-                    assert(i IsNot Nothing)
+                    assert(Not i Is Nothing)
                     i.clear()
                 End Sub)
         bytes_serializer(Of [bset](Of T)).container(Of T).register()
@@ -98,7 +98,7 @@ Public NotInheritable Class [bset](Of T)
 
     Public Shared Operator +(ByVal this As [bset](Of T),
                              ByVal v As T) As [bset](Of T)
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         assert(this.insert(v).second)
         Return this
     End Operator

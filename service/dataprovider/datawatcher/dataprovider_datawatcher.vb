@@ -19,7 +19,7 @@ Public Class dataprovider_datawatcher
         Dim wdps() As weak_ref(Of idataprovider) = Nothing
         wdps = weak_refs.of(dps)
         For i As Int32 = 0 To dps.Length() - 1
-            assert(dps(i) IsNot Nothing)
+            assert(Not dps(i) Is Nothing)
             dps(i).register_update_event(Me, Sub(x) x.rule_trigger(rule, wdps))
         Next
     End Sub
@@ -42,7 +42,7 @@ Public Class dataprovider_datawatcher
             For i As Int32 = 0 To dps.Length() - 1
                 Dim p As idataprovider = Nothing
                 p = (+(dps(i)))
-                If p IsNot Nothing AndAlso
+                If Not p Is Nothing AndAlso
                    p.valid() AndAlso
                    p.last_updated_ticks() > last_trigger_time_ticks Then
                     last_trigger_time_ticks = p.last_updated_ticks()

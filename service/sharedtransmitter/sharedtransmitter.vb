@@ -52,10 +52,10 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
                     ByVal has_data As Boolean)
         Me.valid = valid
         If is_valid() Then
-            assert(component_ref IsNot Nothing)
-            assert(sender IsNot Nothing)
-            assert(accepter IsNot Nothing)
-            assert(dispenser IsNot Nothing)
+            assert(Not component_ref Is Nothing)
+            assert(Not sender Is Nothing)
+            assert(Not accepter Is Nothing)
+            assert(Not dispenser Is Nothing)
             Me.p = p
             Me.local_port = local_port
             Me.remote = remote
@@ -77,7 +77,7 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
 
     Public Function component() As COMPONENT_T
         If is_valid() Then
-            assert(component_ref IsNot Nothing)
+            assert(Not component_ref Is Nothing)
             assert(component_ref.referred())
             Dim r As COMPONENT_T = Nothing
             r = component_ref.get()
@@ -93,9 +93,9 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
 
     Protected Overrides Sub disposer()
         If is_valid() Then
-            assert(component_ref IsNot Nothing, "component_ref")
+            assert(Not component_ref Is Nothing, "component_ref")
             component_ref.unref()
-            assert(dispenser IsNot Nothing, "dispenser")
+            assert(Not dispenser Is Nothing, "dispenser")
             assert(dispenser.detach(accepter), "detach")
         End If
     End Sub

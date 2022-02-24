@@ -9,7 +9,7 @@ Public MustInherit Class status_receiver(Of STATUS_T As istatus)
     Protected ReadOnly rs As STATUS_T
 
     Protected Sub New(ByVal rs As STATUS_T)
-        assert(rs IsNot Nothing)
+        assert(Not rs Is Nothing)
         Me.rs = rs
     End Sub
 
@@ -18,7 +18,7 @@ Public MustInherit Class status_receiver(Of STATUS_T As istatus)
     End Function
 
     Protected Overridable Function check_case(ByVal c As [case]) As Boolean
-        Return c IsNot Nothing
+        Return Not c Is Nothing
     End Function
 
     Protected MustOverride Function handle(ByVal c As [case], ByRef ec As event_comb) As Boolean

@@ -22,7 +22,7 @@ Partial Public Class hasharray(Of T,
                        ByVal column As UInt32,
                        ByVal row As UInt32)
 #If Not Performance Then
-            assert(owner IsNot Nothing)
+            assert(Not owner Is Nothing)
 #End If
             Me.owner = owner
 #If Not Performance Then

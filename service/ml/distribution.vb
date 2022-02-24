@@ -42,7 +42,7 @@ Public Module _distribution
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function as_samples(ByVal i As vector(Of Double)) _
                                       As one_of(Of tuple(Of Double, Double), vector(Of Double))
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return one_of(Of tuple(Of Double, Double), vector(Of Double)).of_second(i)
     End Function
 

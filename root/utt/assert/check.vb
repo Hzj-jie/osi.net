@@ -276,7 +276,7 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
     End Function
 
     Public Shared Function death(ByVal d As Action, ByVal check_exception As Action(Of String)) As Boolean
-        assert(check_exception IsNot Nothing)
+        assert(Not check_exception Is Nothing)
         Dim r As Boolean = True
         expect_assertion_failure(d,
                                  Sub()

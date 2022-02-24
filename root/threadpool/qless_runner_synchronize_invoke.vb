@@ -22,7 +22,7 @@ Public NotInheritable Class qless_runner_synchronize_invoke
     Private ReadOnly r As qless_runner
 
     Public Sub New(ByVal r As qless_runner)
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         Me.r = r
     End Sub
 

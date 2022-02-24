@@ -66,8 +66,8 @@ Partial Public Class atomic_int32(Of LOCK_T As {islimlock, Structure})
     End Sub
 
     Public Sub modify(ByVal d As void(Of Int32))
-        assert(d IsNot Nothing)
-        If d IsNot Nothing Then
+        assert(Not d Is Nothing)
+        If Not d Is Nothing Then
             l.locked(Sub() d(p))
         End If
     End Sub

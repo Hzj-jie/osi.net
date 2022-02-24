@@ -69,7 +69,7 @@ Public Class mock_block(Of RANDOM_SEND_FAILURE As _boolean, RANDOM_RECEIVE_FAILU
         Dim i As Int32 = 0
         Return equal(p,
                      Function(o As piece) As Boolean
-                         assert(o IsNot Nothing)
+                         assert(Not o Is Nothing)
                          If i + o.count > array_size(v) OrElse
                             o.compare(v, i, o.count) <> 0 Then
                              Return False

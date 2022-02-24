@@ -14,7 +14,7 @@ Partial Public NotInheritable Class connector
     Private ReadOnly p As powerpoint
 
     Public Sub New(ByVal p As powerpoint)
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Me.p = p
     End Sub
 

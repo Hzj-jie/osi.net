@@ -17,7 +17,7 @@ Friend NotInheritable Class accumulate_segment_tree_case
 
     Private Function single_find_case(ByVal t As accumulate_segment_tree(Of Int64),
                                       ByVal s As vector(Of pair(Of Int64, pair(Of Int64, Int64)))) As Boolean
-        assert(t IsNot Nothing)
+        assert(Not t Is Nothing)
         For i As Int32 = 0 To 4096 * If(isreleasebuild(), 10, 1) - 1
             Dim p As Int64 = 0
             p = rnd_position()

@@ -17,7 +17,7 @@ Friend Module input_validation
                            ByVal result As ref(Of Boolean)) As Boolean
         Return Not isemptyarray(key) AndAlso
                Not isemptyarray(value) AndAlso
-               result IsNot Nothing AndAlso
+               Not result Is Nothing AndAlso
                eva(result, False)
     End Function
 
@@ -45,7 +45,7 @@ Friend Module input_validation
     End Function
 
     Public Function capacity(ByVal result As ref(Of Int64)) As Boolean
-        Return result IsNot Nothing AndAlso
+        Return Not result Is Nothing AndAlso
                eva(result, npos)
     End Function
 
@@ -56,7 +56,7 @@ Friend Module input_validation
     Public Function delete(ByVal key() As Byte,
                            ByVal result As ref(Of Boolean)) As Boolean
         Return Not isemptyarray(key) AndAlso
-               result IsNot Nothing AndAlso
+               Not result Is Nothing AndAlso
                eva(result, False)
     End Function
 
@@ -73,7 +73,7 @@ Friend Module input_validation
     End Function
 
     Public Function empty(ByVal result As ref(Of Boolean)) As Boolean
-        Return result IsNot Nothing AndAlso
+        Return Not result Is Nothing AndAlso
                eva(result, False)
     End Function
 
@@ -82,7 +82,7 @@ Friend Module input_validation
     End Function
 
     Public Function full(ByVal result As ref(Of Boolean)) As Boolean
-        Return result IsNot Nothing AndAlso
+        Return Not result Is Nothing AndAlso
                eva(result, False)
     End Function
 
@@ -91,7 +91,7 @@ Friend Module input_validation
     End Function
 
     Public Function keycount(ByVal result As ref(Of Int64)) As Boolean
-        Return result IsNot Nothing AndAlso
+        Return Not result Is Nothing AndAlso
                eva(result, npos)
     End Function
 
@@ -100,7 +100,7 @@ Friend Module input_validation
     End Function
 
     Public Function list(ByVal result As ref(Of vector(Of Byte()))) As Boolean
-        Return result IsNot Nothing AndAlso
+        Return Not result Is Nothing AndAlso
                eva(result, DirectCast(Nothing, vector(Of Byte())))
     End Function
 
@@ -109,7 +109,7 @@ Friend Module input_validation
     End Function
 
     Public Function list(ByVal result As ref(Of vector(Of String))) As Boolean
-        Return result IsNot Nothing AndAlso
+        Return Not result Is Nothing AndAlso
                eva(result, DirectCast(Nothing, vector(Of String)))
     End Function
 
@@ -118,7 +118,7 @@ Friend Module input_validation
                            ByVal result As ref(Of Boolean)) As Boolean
         Return Not isemptyarray(key) AndAlso
                Not isemptyarray(value) AndAlso
-               result IsNot Nothing AndAlso
+               Not result Is Nothing AndAlso
                eva(result, False)
     End Function
 
@@ -148,7 +148,7 @@ Friend Module input_validation
     Public Function read(ByVal key() As Byte,
                          ByVal value As ref(Of Byte())) As Boolean
         Return Not isemptyarray(key) AndAlso
-               value IsNot Nothing AndAlso
+               Not value Is Nothing AndAlso
                eva(value, DirectCast(Nothing, Byte()))
     End Function
 
@@ -162,7 +162,7 @@ Friend Module input_validation
                          ByVal result As ref(Of Byte()),
                          ByVal ts As ref(Of Int64)) As Boolean
         Return read(key, result) AndAlso
-               ts IsNot Nothing AndAlso
+               Not ts Is Nothing AndAlso
                eva(ts, npos)
     End Function
 
@@ -176,7 +176,7 @@ Friend Module input_validation
     Public Function seek(ByVal key() As Byte,
                          ByVal result As ref(Of Boolean)) As Boolean
         Return Not isemptyarray(key) AndAlso
-               result IsNot Nothing AndAlso
+               Not result Is Nothing AndAlso
                eva(result, False)
     End Function
 
@@ -195,7 +195,7 @@ Friend Module input_validation
     Public Function sizeof(ByVal key() As Byte,
                            ByVal result As ref(Of Int64)) As Boolean
         Return Not isemptyarray(key) AndAlso
-               result IsNot Nothing AndAlso
+               Not result Is Nothing AndAlso
                eva(result, npos)
     End Function
 
@@ -227,7 +227,7 @@ Friend Module input_validation
     End Function
 
     Public Function valuesize(ByVal result As ref(Of Int64)) As Boolean
-        Return result IsNot Nothing AndAlso
+        Return Not result Is Nothing AndAlso
                eva(result, npos)
     End Function
 

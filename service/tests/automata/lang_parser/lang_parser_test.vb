@@ -54,7 +54,7 @@ Public Class lang_parser_test
     Private ReadOnly lp As lang_parser
 
     Protected Sub New(ByVal lp As lang_parser)
-        assert(lp IsNot Nothing)
+        assert(Not lp Is Nothing)
         Me.lp = lp
     End Sub
 
@@ -83,7 +83,7 @@ Public Class lang_parser_test
                 Return False
             End If
         End If
-        If assert(n.subnodes IsNot Nothing) AndAlso
+        If assert(Not n.subnodes Is Nothing) AndAlso
            assertion.equal(n.subnodes.size(), array_size(t.subnodes), n.subnodes, " v.s. ", t.subnodes) Then
             Dim i As UInt32 = 0
             While i < array_size(t.subnodes)
@@ -100,7 +100,7 @@ Public Class lang_parser_test
                               Optional ByVal tree As tree_node = Nothing) As Boolean
         Dim n As typed_node = Nothing
         If assertion.is_true(lp.parse(txt, root:=n)) Then
-            If tree IsNot Nothing Then
+            If Not tree Is Nothing Then
                 assert_node(n, tree)
             End If
         End If
@@ -351,7 +351,7 @@ Public Class lang_parser_test
     End Function
 
     Public Shared Function run_cases(ByVal f As _do(Of lang_parser, Boolean)) As Boolean
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Dim lp As lang_parser = Nothing
         Return assertion.is_true(f(lp)) AndAlso (New lang_parser_test(lp).run())
     End Function

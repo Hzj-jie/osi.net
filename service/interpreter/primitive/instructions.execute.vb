@@ -15,7 +15,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 imi.push_stack()
             End Sub
         End Class
@@ -24,7 +24,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 imi.pop_stack()
             End Sub
         End Class
@@ -33,7 +33,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 If d0.relative() Then
                     imi.advance_instruction_ref(d0.offset())
                 Else
@@ -47,7 +47,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_uint(+p1(imi))
                 Dim b2 As New big_uint(+p2(imi))
                 p0(imi).set(b1.add(b2).as_bytes())
@@ -58,7 +58,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_uint(+p1(imi))
                 Dim b2 As New big_uint(+p2(imi))
                 Dim c As Boolean = False
@@ -71,7 +71,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 p0(imi).set(d1.as_bytes())
             End Sub
         End Class
@@ -80,7 +80,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 p0(imi).set(+p1(imi))
                 p1(imi).clear()
             End Sub
@@ -90,7 +90,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 p0(imi).set(copy(+p1(imi)))
             End Sub
         End Class
@@ -99,7 +99,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_uint(+p1(imi))
                 Dim b2 As New big_uint(+p2(imi))
                 p0(imi).set(b1.multiply(b2).as_bytes())
@@ -110,7 +110,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b2 As New big_uint(+p2(imi))
                 Dim b3 As New big_uint(+p3(imi))
                 Dim rmd As big_uint = Nothing
@@ -126,7 +126,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b2 As New big_uint(+p2(imi))
                 Dim b3 As New big_uint(+p3(imi))
                 Dim rmd As big_uint = Nothing
@@ -142,7 +142,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_uint(+p1(imi))
                 Dim b2 As New big_uint(+p2(imi))
                 p0(imi).set(b1.power(b2).as_bytes())
@@ -153,7 +153,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 If Not imi.access_as_bool(d1) Then
                     Return
                 End If
@@ -170,7 +170,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 p0(imi).set(bool_bytes(imi.carry_over()))
             End Sub
         End Class
@@ -179,7 +179,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 p0(imi).set(bool_bytes(imi.divided_by_zero()))
             End Sub
         End Class
@@ -188,7 +188,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 p0(imi).set(bool_bytes(imi.imaginary_number()))
             End Sub
         End Class
@@ -197,7 +197,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 imi.stop()
             End Sub
         End Class
@@ -206,7 +206,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_uint(+p1(imi))
                 Dim b2 As New big_uint(+p2(imi))
                 p0(imi).set(bool_bytes(b1.equal(b2)))
@@ -217,7 +217,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_uint(+p1(imi))
                 Dim b2 As New big_uint(+p2(imi))
                 p0(imi).set(bool_bytes(b1.less(b2)))
@@ -228,7 +228,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim p0 As ref(Of Byte()) = Me.p0(imi)
                 p0.set(array_concat(+p0, +p1(imi)))
             End Sub
@@ -238,7 +238,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim p0 As ref(Of Byte()) = Me.p0(imi)
                 Dim b() As Byte = Nothing
                 If Not chunk.from_bytes(+p1(imi), b) Then
@@ -254,7 +254,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim p0 As ref(Of Byte()) = Me.p0(imi)
                 Dim p1 As ref(Of Byte()) = Me.p1(imi)
                 Dim l As UInt32 = imi.access_as_uint32(d2)
@@ -272,7 +272,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim p0 As ref(Of Byte()) = Me.p0(imi)
                 Dim p1 As ref(Of Byte()) = Me.p1(imi)
                 Dim sl() As UInt32 = imi.access_as_uint32(d2, d3)
@@ -291,7 +291,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 p2(imi).set(imi.interrupts().invoke(imi.access_as_uint32(d0), +p1(imi)))
             End Sub
         End Class
@@ -339,7 +339,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_uint(+p1(imi))
                 Dim b2 As New big_uint(+p2(imi))
                 p0(imi).set(b1.and(b2).as_bytes())
@@ -350,7 +350,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_uint(+p1(imi))
                 Dim b2 As New big_uint(+p2(imi))
                 p0(imi).set(b1.or(b2).as_bytes())
@@ -361,7 +361,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_uint(+p1(imi))
                 p0(imi).set(b1.not().as_bytes())
             End Sub
@@ -371,7 +371,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 imi.store_state()
             End Sub
         End Class
@@ -380,7 +380,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 imi.restore_state()
             End Sub
         End Class
@@ -389,7 +389,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_udec(+p1(imi))
                 Dim b2 As New big_udec(+p2(imi))
                 p0(imi).set(b1.add(b2).as_bytes())
@@ -400,7 +400,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_udec(+p1(imi))
                 Dim b2 As New big_udec(+p2(imi))
                 p0(imi).set(b1.sub(b2).as_bytes())
@@ -411,7 +411,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_udec(+p1(imi))
                 Dim b2 As New big_udec(+p2(imi))
                 p0(imi).set(b1.multiply(b2).as_bytes())
@@ -422,7 +422,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_udec(+p1(imi))
                 Dim b2 As New big_udec(+p2(imi))
                 Dim c As Boolean = False
@@ -435,7 +435,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_udec(+p1(imi))
                 Dim b2 As New big_udec(+p2(imi))
                 Dim c As Boolean = False
@@ -448,7 +448,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_udec(+p1(imi))
                 Dim b2 As New big_udec(+p2(imi))
                 p0(imi).set(b1.power(b2).as_bytes())
@@ -459,7 +459,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_udec(+p1(imi))
                 Dim b2 As New big_udec(+p2(imi))
                 p0(imi).set(bool_bytes(b1.equal(b2)))
@@ -470,7 +470,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_udec(+p1(imi))
                 Dim b2 As New big_udec(+p2(imi))
                 p0(imi).set(bool_bytes(b1.less(b2)))
@@ -481,7 +481,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_uint(+p1(imi))
                 Dim b2 As New big_uint(+p2(imi))
                 p0(imi).set(b1.left_shift(b2).as_bytes())
@@ -492,7 +492,7 @@ Namespace primitive
             Implements instruction
 
             Public Sub execute(ByVal imi As imitation) Implements instruction.execute
-                assert(imi IsNot Nothing)
+                assert(Not imi Is Nothing)
                 Dim b1 As New big_uint(+p1(imi))
                 Dim b2 As New big_uint(+p2(imi))
                 p0(imi).set(b1.right_shift(b2).as_bytes())

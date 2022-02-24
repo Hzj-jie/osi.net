@@ -24,7 +24,7 @@ Partial Public Class constructor(Of T)
     End Function
 
     Public Shared Function register(ByVal allocator As allocator(Of T, var)) As Boolean
-        If allocator Is Nothing OrElse l IsNot Nothing Then
+        If allocator Is Nothing OrElse Not l Is Nothing Then
             Return False
         Else
             l = New lazier(Of T, var)(allocator)
@@ -63,7 +63,7 @@ Partial Public Class constructor(Of T)
             If Not lt.select(type, v, o) Then
                 Return False
             End If
-        ElseIf l IsNot Nothing Then
+        ElseIf Not l Is Nothing Then
             If Not l.select(v, o) Then
                 Return False
             End If

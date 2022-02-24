@@ -35,7 +35,7 @@ Public Module _performance
     End Class
 
     Private Function recent_processor_usage(ByVal impl As recent_processor_usage_record_implementation) As Double
-        assert(impl IsNot Nothing)
+        assert(Not impl Is Nothing)
         Dim ticks As Int64 = 0
         Dim usage As Int64 = 0
         ticks = Now().Ticks()

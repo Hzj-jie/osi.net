@@ -30,7 +30,7 @@ Partial Public NotInheritable Class b2style
 
         Public Function current_namespace() As current_namespace_t
             If is_root() Then
-                assert(cn IsNot Nothing)
+                assert(Not cn Is Nothing)
                 Return cn
             End If
             Return (+root).current_namespace()

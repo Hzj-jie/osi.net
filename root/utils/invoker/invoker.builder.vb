@@ -21,7 +21,7 @@ Partial Public NotInheritable Class invoker
 
         Public Function with_object(ByVal obj As Object) As invoker_builder(Of RT)
             Me.obj = obj
-            If type IsNot Nothing OrElse obj Is Nothing Then
+            If Not type Is Nothing OrElse obj Is Nothing Then
                 Return Me
             End If
             Return with_type(obj.GetType())

@@ -17,7 +17,7 @@ Partial Public NotInheritable Class bstyle
             Private Function resolve_type(ByVal type As String,
                                           ByVal name As String,
                                           ByVal d As struct_def) As Boolean
-                assert(d IsNot Nothing)
+                assert(Not d Is Nothing)
                 ' Struct member types are always resolved during the define / build stage, so scope.current() equals to
                 ' the scope where the struct_t instance is being defined.
                 type = scope.current().type_alias()(type)
@@ -26,7 +26,7 @@ Partial Public NotInheritable Class bstyle
                     d.with_primitive(type, name)
                     Return True
                 End If
-                assert(sub_type IsNot Nothing)
+                assert(Not sub_type Is Nothing)
                 d.with_nested(type, name)
                 d.append(sub_type.append_prefix(name))
                 Return True
@@ -39,7 +39,7 @@ Partial Public NotInheritable Class bstyle
                 Dim d As New struct_def()
                 Dim i As UInt32 = 0
                 While i < members.size()
-                    assert(members(i) IsNot Nothing)
+                    assert(Not members(i) Is Nothing)
                     assert(Not members(i).ref)
                     If Not resolve_type(members(i).type, members(i).name, d) Then
                         Return False
@@ -64,7 +64,7 @@ Partial Public NotInheritable Class bstyle
                     Return False
                 End If
                 ' name can be null to check the availability of a struct definition.
-                If name IsNot Nothing Then
+                If Not name Is Nothing Then
                     assert(Not name.null_or_whitespace())
                     o = o.append_prefix(name)
                 End If
@@ -76,7 +76,7 @@ Partial Public NotInheritable Class bstyle
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
-                assert(s IsNot Nothing)
+                assert(Not s Is Nothing)
                 Me.s = s
             End Sub
 
@@ -88,7 +88,7 @@ Partial Public NotInheritable Class bstyle
                                     ByVal name As String,
                                     ByRef o As struct_def) As Boolean
                 Dim s As scope = Me.s
-                While s IsNot Nothing
+                While Not s Is Nothing
                     If s.s.resolve(type, name, o) Then
                         Return True
                     End If

@@ -18,16 +18,16 @@ Partial Public NotInheritable Class bstyle
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(b IsNot Nothing)
+            assert(Not b Is Nothing)
             Me.l = b
         End Sub
 
         Public Function build(ByVal index As typed_node,
                               ByVal o As logic_writer,
                               ByVal f As Func(Of String, Boolean)) As Boolean
-            assert(index IsNot Nothing)
-            assert(o IsNot Nothing)
-            assert(f IsNot Nothing)
+            assert(Not index Is Nothing)
+            assert(Not o Is Nothing)
+            assert(Not f Is Nothing)
             If Not l.of(index).build(o) Then
                 Return False
             End If
@@ -45,8 +45,8 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(n IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
             assert(n.child_count() = 4)
             Return build(n.child(2),
                          o,
@@ -58,7 +58,7 @@ Partial Public NotInheritable Class bstyle
                                             value.with_target(
                                                 type,
                                                 ps.map(Function(ByVal d As builders.parameter) As builders.parameter
-                                                           assert(d IsNot Nothing)
+                                                           assert(Not d Is Nothing)
                                                            Return d.map_name(Function(ByVal name As String) As String
                                                                                  Return variable.name_of(name, indexstr)
                                                                              End Function)

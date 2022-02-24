@@ -35,11 +35,11 @@ Public Class weak_reference_handler(Of T, AT)
     End Sub
 
     Public Function valid() As Boolean Implements idelegate.valid
-        Return a IsNot Nothing AndAlso v.alive()
+        Return Not a Is Nothing AndAlso v.alive()
     End Function
 
     Protected Function ready_to_run(ByRef v As T) As Boolean
-        Return a IsNot Nothing AndAlso
+        Return Not a Is Nothing AndAlso
                Me.v.get(v)
     End Function
 End Class

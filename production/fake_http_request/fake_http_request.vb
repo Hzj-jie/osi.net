@@ -55,7 +55,7 @@ Public Module fake_http_request
             Using r As StreamReader = New StreamReader(args(0))
                 Dim s As String = Nothing
                 s = r.ReadLine()
-                While s IsNot Nothing
+                While Not s Is Nothing
                     If Not String.IsNullOrEmpty(s) Then
                         urls.push_back(s)
                     End If

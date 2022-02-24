@@ -112,11 +112,11 @@ Public NotInheritable Class send_input
                                                          ByVal input_size As Int32) As UInt32
 
     Private Shared Function send_input(Of T)(ByVal e() As T, ByVal attach As void(Of input, T)) As UInt32
-        assert(attach IsNot Nothing)
+        assert(Not attach Is Nothing)
         Dim o() As input = Nothing
         Dim c As UInt32 = 0
         For i As Int32 = 0 To array_size_i(e) - 1
-            If e(i) IsNot Nothing Then
+            If Not e(i) Is Nothing Then
                 c += uint32_1
             End If
         Next
@@ -128,7 +128,7 @@ Public NotInheritable Class send_input
         ReDim o(CInt(c) - 1)
         Dim j As Int32 = 0
         For i As Int32 = 0 To array_size_i(e) - 1
-            If e(i) IsNot Nothing Then
+            If Not e(i) Is Nothing Then
                 o(j) = New input()
                 attach(o(j), e(i))
                 j += 1

@@ -11,7 +11,7 @@ Public Class istrkeyvt_container
     Private ReadOnly targets As vector(Of pair(Of istrkeyvt, String))
 
     Public Sub New(ByVal targets As vector(Of pair(Of istrkeyvt, String)))
-        assert(targets IsNot Nothing AndAlso Not targets.empty())
+        assert(Not targets Is Nothing AndAlso Not targets.empty())
         Me.targets = targets
     End Sub
 
@@ -24,8 +24,8 @@ Public Class istrkeyvt_container
             For i As UInt32 = 0 To array_size(names) - uint32_1
                 Dim c As container(Of istrkeyvt) = Nothing
                 If container(Of istrkeyvt).create(names(i), c) Then
-                    assert(c IsNot Nothing)
-                    assert(c.device_pool() Is Nothing AndAlso c.device() Is Nothing AndAlso c.instance() IsNot Nothing)
+                    assert(Not c Is Nothing)
+                    assert(c.device_pool() Is Nothing AndAlso c.device() Is Nothing AndAlso Not c.instance() Is Nothing)
                     ts.emplace_back(pair.emplace_of(+c, names(i)))
                     c.release()
                 Else
@@ -45,7 +45,7 @@ Public Class istrkeyvt_container
     End Function
 
     Public Shared Function create(ByVal v As var, ByRef o As istrkeyvt_container) As Boolean
-        Return v IsNot Nothing AndAlso
+        Return Not v Is Nothing AndAlso
                ctor(+(v.other_values()), o)
     End Function
 
@@ -56,7 +56,7 @@ Public Class istrkeyvt_container
     Default Public ReadOnly Property target(ByVal i As Int32) As istrkeyvt
         Get
             assert(i >= 0 AndAlso i < targets.size())
-            assert(targets(i).first IsNot Nothing)
+            assert(Not targets(i).first Is Nothing)
             Return targets(i).first
         End Get
     End Property

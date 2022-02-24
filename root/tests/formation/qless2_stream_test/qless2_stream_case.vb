@@ -69,7 +69,7 @@ Friend Class qless2_stream_case
     End Function
 
     Private Function verify() As Boolean
-        Return popped IsNot Nothing
+        Return Not popped Is Nothing
     End Function
 
     Private Sub not_popped(ByVal b() As Byte)

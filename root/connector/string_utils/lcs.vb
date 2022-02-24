@@ -8,7 +8,7 @@ Public Module _lcs
                                ByRef start As UInt32,
                                ByRef len As UInt32,
                                ByVal compare As Func(Of T, T, Int32)) As Boolean
-        assert(compare IsNot Nothing)
+        assert(Not compare Is Nothing)
         If isemptyarray(this) OrElse isemptyarray(that) Then
             Return False
         Else

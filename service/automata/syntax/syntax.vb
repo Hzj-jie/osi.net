@@ -111,7 +111,7 @@ Partial Public NotInheritable Class syntaxer
             If c <> object_compare_undetermined Then
                 Return c
             End If
-            assert(other IsNot Nothing)
+            assert(Not other Is Nothing)
             c = compare(Me.type, other.type)
             If c <> 0 Then
                 Return c

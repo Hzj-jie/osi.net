@@ -30,8 +30,8 @@ Public NotInheritable Class connection
     End Function
 
     Private Shared Sub close(ByVal shutdown As Action, ByVal id As Func(Of String))
-        assert(shutdown IsNot Nothing)
-        assert(id IsNot Nothing)
+        assert(Not shutdown Is Nothing)
+        assert(Not id Is Nothing)
         If envs.udp_trace Then
             raise_error("connection ",
                         id(),
@@ -50,12 +50,12 @@ Public NotInheritable Class connection
     End Sub
 
     Private Shared Function validate(ByVal c As UdpClient) As Boolean
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Return c.alive()
     End Function
 
     Private Shared Function identity(ByVal c As UdpClient) As String
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Return c.identity(0)
     End Function
 
@@ -69,12 +69,12 @@ Public NotInheritable Class connection
     End Sub
 
     Private Shared Function validate(ByVal c As delegator) As Boolean
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Return c.alive()
     End Function
 
     Private Shared Function identity(ByVal c As delegator) As String
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Return c.id
     End Function
 

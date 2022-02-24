@@ -17,7 +17,7 @@ Namespace logic
 
         Protected Sub New(ByVal cmd As command, ByVal result As String, ByVal parameters() As String)
             assert(result Is Nothing OrElse Not result.null_or_whitespace())
-            assert(parameters IsNot Nothing)
+            assert(Not parameters Is Nothing)
             Me.cmd = cmd
             Me.result = [optional].of_nullable(result)
             Me.parameters = parameters
@@ -35,7 +35,7 @@ Namespace logic
         ' Forward return-value to scope_wrapper.
         Private Shared Function define_return_value(ByVal anchor As scope.anchor,
                                                     ByVal o As vector(Of String)) As Boolean
-            assert(anchor IsNot Nothing)
+            assert(Not anchor Is Nothing)
             If Not return_value.export(anchor.name, anchor.return_type, o) Then
                 Return False
             End If
@@ -43,7 +43,7 @@ Namespace logic
         End Function
 
         Private Function parameter_place_holder_of(ByVal anchor As scope.anchor, ByVal i As Int32) As String
-            assert(anchor IsNot Nothing)
+            assert(Not anchor Is Nothing)
             assert(i < parameters.array_size_i())
             Return strcat("@parameter_", i, "_of_", anchor.name, "_place_holder")
         End Function
@@ -51,8 +51,8 @@ Namespace logic
         ' Forward parameters to scope_wrapper.
         Private Function define_parameters(ByVal anchor As scope.anchor,
                                            ByVal o As vector(Of String)) As Boolean
-            assert(anchor IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not anchor Is Nothing)
+            assert(Not o Is Nothing)
             If array_size(parameters) <> anchor.parameters.size() Then
                 errors.mismatch_callee_parameters(anchor.name, parameters)
                 Return False
@@ -89,8 +89,8 @@ Namespace logic
 
         ' Forward return-value from scope
         Private Function forward_to_result(ByVal anchor As scope.anchor, ByVal o As vector(Of String)) As Boolean
-            assert(anchor IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not anchor Is Nothing)
+            assert(Not o Is Nothing)
             ' The count of parameters should be checked already in define_parameter.
             assert(array_size(parameters) = anchor.parameters.size())
             For i As Int32 = 0 To parameters.array_size_i() - 1
@@ -119,14 +119,14 @@ Namespace logic
         End Function
 
         Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             ' rel(array_size(parameters)) is for return value.
             Using scope.current().start_scope()
                 Dim anchor As scope.anchor = Nothing
                 If Not retrieve_anchor(anchor) Then
                     Return False
                 End If
-                assert(anchor IsNot Nothing)
+                assert(Not anchor Is Nothing)
 
                 If Not define_return_value(anchor, o) Then
                     Return False
