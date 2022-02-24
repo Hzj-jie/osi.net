@@ -45,9 +45,9 @@ Partial Public Class token_test
                                                           mock_conn, 
                                                           token_info(Of mock_ppt, mock_conn)),
                       ByVal with_empty_token As Boolean)
-        assert(defender_creator IsNot Nothing)
-        assert(challenger_creator IsNot Nothing)
-        assert(token_info_creator IsNot Nothing)
+        assert(Not defender_creator Is Nothing)
+        assert(Not challenger_creator Is Nothing)
+        assert(Not token_info_creator Is Nothing)
         Me.defender_creator = defender_creator
         Me.challenger_creator = challenger_creator
         Me.token_info_creator = token_info_creator

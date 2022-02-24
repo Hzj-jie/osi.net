@@ -30,8 +30,8 @@ Partial Public NotInheritable Class tar
 
         Public Shared Sub dump(ByVal input As MemoryStream, ByVal root As String)
             reader_of(input).foreach(Sub(ByVal file As String, ByVal m As MemoryStream)
-                                         assert(file IsNot Nothing)
-                                         assert(m IsNot Nothing)
+                                         assert(Not file Is Nothing)
+                                         assert(Not m Is Nothing)
                                          Try
                                              Directory.GetParent(Path.Combine(root, file)).Create()
                                          Catch ex As Exception

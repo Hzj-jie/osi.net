@@ -10,14 +10,14 @@ Public Module _compress
                               ByVal offset As UInt32,
                               ByVal count As UInt32,
                               ByVal ctor As Func(Of MemoryStream, Stream)) As Boolean
-        assert(ctor IsNot Nothing)
+        assert(Not ctor Is Nothing)
         If array_size(i) < offset + count Then
             Return False
         Else
             Using os As MemoryStream = New MemoryStream()
                 Try
                     Using gs As Stream = ctor(os)
-                        assert(gs IsNot Nothing)
+                        assert(Not gs Is Nothing)
                         gs.Write(i, offset, count)
                     End Using
                 Catch ex As Exception
@@ -127,15 +127,15 @@ Public Module _compress
                                 ByVal count As UInt32,
                                 ByRef o() As Byte,
                                 ByVal ctor As Func(Of MemoryStream, Stream)) As Boolean
-        assert(ctor IsNot Nothing)
+        assert(Not ctor Is Nothing)
         Dim ms As MemoryStream = Nothing
         If memory_stream.[New](i, offset, count, ms) Then
-            assert(ms IsNot Nothing)
+            assert(Not ms Is Nothing)
             Using ms
                 Using os As MemoryStream = New MemoryStream()
                     Try
                         Using gs As Stream = ctor(ms)
-                            assert(gs IsNot Nothing)
+                            assert(Not gs Is Nothing)
                             Const buff_size As Int32 = 1024
                             Dim buff() As Byte = Nothing
                             ReDim buff(buff_size - 1)

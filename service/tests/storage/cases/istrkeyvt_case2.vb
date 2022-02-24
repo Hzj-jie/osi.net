@@ -79,7 +79,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                               End Function,
                               Function() As Boolean
                                   assertion.is_true(ec.end_result())
-                                  If (+v) IsNot Nothing Then
+                                  If Not (+v) Is Nothing Then
                                       assertion.is_true(is_rand_bytes(k, +v))
                                       assertion.is_true(is_rand_timestamp(k, +t))
                                   End If
@@ -406,7 +406,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                       Return goto_end()
                                   End If
                                   If round > 0 Then
-                                      assert(ec IsNot Nothing)
+                                      assert(Not ec Is Nothing)
                                       assertion.is_true(ec.end_result())
                                       If Not ec.end_result() Then
                                           failures += 1
@@ -427,7 +427,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
 
     Public Function create(ByVal keyvt As istrkeyvt) As event_comb Implements iistrkeyvt_case.create
         Dim ec As event_comb = Nothing
-        assert(keyvt IsNot Nothing)
+        assert(Not keyvt Is Nothing)
         Return New event_comb(Function() As Boolean
                                   ec = cases(keyvt)
                                   Return waitfor(ec) AndAlso

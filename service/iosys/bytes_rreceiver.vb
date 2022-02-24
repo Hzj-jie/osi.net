@@ -14,7 +14,7 @@ Public Class bytes_rreceiver(Of CASE_T)
 
     Public Sub New(ByVal send As Func(Of Byte(), event_comb))
         MyBase.New()
-        assert(send IsNot Nothing)
+        assert(Not send Is Nothing)
         Me.s = send
     End Sub
 

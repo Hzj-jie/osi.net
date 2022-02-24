@@ -133,7 +133,7 @@ Public Module _extension
 
     <Extension()> Public Sub shutdown(ByVal u As UdpClient)
         On Error Resume Next
-        If u IsNot Nothing Then
+        If Not u Is Nothing Then
             u.Client().Shutdown(SocketShutdown.Both)
             u.Client().Close()
             u.Close()

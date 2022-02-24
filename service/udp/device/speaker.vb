@@ -41,7 +41,7 @@ Public Class speaker
     End Function
 
     Public Sub New(ByVal c As UdpClient)
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Me.c = c
     End Sub
 

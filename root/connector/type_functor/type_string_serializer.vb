@@ -57,7 +57,7 @@ Public Class type_string_serializer(Of PROTECTOR)
         If Not implemented Then
             Return False
         End If
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Return s.to_str(i, o)
     End Function
 
@@ -70,7 +70,7 @@ Public Class type_string_serializer(Of PROTECTOR)
         If Not implemented Then
             Return False
         End If
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Return s.to_str(i, o)
     End Function
 
@@ -144,7 +144,7 @@ Public Class type_string_serializer(Of PROTECTOR)
         If Not implemented Then
             Return False
         End If
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Return s.from_str(str, o)
     End Function
 
@@ -157,7 +157,7 @@ Public Class type_string_serializer(Of PROTECTOR)
         If Not implemented Then
             Return False
         End If
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Return s.from_str(str, o)
     End Function
 

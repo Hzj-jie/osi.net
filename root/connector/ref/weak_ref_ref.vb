@@ -126,13 +126,13 @@ Public Class weak_ref_ref(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function hash(ByVal i As T) As Int32
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return i.GetHashCode()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function str(ByVal i As T) As String
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return i.ToString()
     End Function
 'finish single_obj_ref_operator.vbp --------
@@ -176,7 +176,7 @@ Public Class weak_ref_ref(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function alive() As Boolean
         Dim p As WeakReference = Me.p
-        Return p IsNot Nothing AndAlso p.IsAlive()
+        Return Not p Is Nothing AndAlso p.IsAlive()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -199,7 +199,7 @@ Public Class weak_ref_ref(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [get](ByRef o As T) As Boolean
         Dim p As ref(Of T) = Nothing
-        If [get](p) AndAlso p IsNot Nothing AndAlso Not p.empty() Then
+        If [get](p) AndAlso Not p Is Nothing AndAlso Not p.empty() Then
             o = p.get()
             Return True
         End If
@@ -358,7 +358,7 @@ finish:
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Widening Operator CType(ByVal this As weak_ref_ref(Of T)) As Boolean
-        Return this IsNot Nothing AndAlso Not this.empty()
+        Return Not this Is Nothing AndAlso Not this.empty()
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

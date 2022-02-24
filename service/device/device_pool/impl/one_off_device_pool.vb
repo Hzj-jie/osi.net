@@ -37,7 +37,7 @@ Public NotInheritable Class one_off_device_pool(Of T)
 
     Public Sub New(ByVal c As idevice_creator(Of T), ByVal max_count As UInt32, ByVal identity As String)
         MyBase.New(max_count, identity)
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Me.c = c
     End Sub
 

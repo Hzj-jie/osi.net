@@ -23,7 +23,7 @@ Public NotInheritable Class chunk
             Return False
         End If
 
-        If v IsNot Nothing AndAlso Not ms.write(v) Then
+        If Not v Is Nothing AndAlso Not ms.write(v) Then
             Return False
         End If
 
@@ -160,7 +160,7 @@ Public NotInheritable Class chunks
 
     <copy_constructor>
     Protected Sub New(ByVal v As vector(Of Byte()))
-        assert(v IsNot Nothing)
+        assert(Not v Is Nothing)
         Me.v = v
     End Sub
 

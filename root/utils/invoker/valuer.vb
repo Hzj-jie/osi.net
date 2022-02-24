@@ -10,7 +10,7 @@ Imports osi.root.constants
 Partial Public NotInheritable Class valuer
     Private Shared Function get_type(Of T)(ByVal obj As T) As Type
         ' get or set from an object is usually senseless.
-        If type_info(Of T).is_object AndAlso obj IsNot Nothing Then
+        If type_info(Of T).is_object AndAlso Not obj Is Nothing Then
             Return obj.GetType()
         Else
             Return GetType(T)
@@ -284,15 +284,15 @@ Public Class valuer(Of VT)
     End Function
 
     Public Function pre_binding() As Boolean
-        Return getter IsNot Nothing AndAlso
-               assert(setter IsNot Nothing) AndAlso
+        Return Not getter Is Nothing AndAlso
+               assert(Not setter Is Nothing) AndAlso
                assert(getter_post Is Nothing) AndAlso
                assert(setter_post Is Nothing)
     End Function
 
     Public Function post_binding() As Boolean
-        Return getter_post IsNot Nothing AndAlso
-               assert(setter_post IsNot Nothing) AndAlso
+        Return Not getter_post Is Nothing AndAlso
+               assert(Not setter_post Is Nothing) AndAlso
                assert(getter Is Nothing) AndAlso
                assert(setter Is Nothing)
     End Function
@@ -411,7 +411,7 @@ Public Class valuer(Of VT)
     End Property
 
     Public Shared Operator +(ByVal this As valuer(Of VT)) As VT
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Return this.get()
     End Operator
 End Class

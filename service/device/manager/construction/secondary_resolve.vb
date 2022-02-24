@@ -17,12 +17,12 @@ Public Module _secondary_resolve
                                            ByVal type_name As String,
                                            ByVal f As _do_val_ref(Of PT, RT, Boolean),
                                            ByRef o As T) As Boolean
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         If v Is Nothing Then
             Return False
         End If
         Dim p As PT = Nothing
-        If type_name IsNot Nothing Then
+        If Not type_name Is Nothing Then
             v.bind(type_name)
         End If
         Return constructor(Of PT).resolve(type_name, v, p) AndAlso

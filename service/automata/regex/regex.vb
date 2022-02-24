@@ -19,7 +19,7 @@ Partial Public Class rlexer
         End Sub
 
         Private Sub New(ByVal gs As vector(Of matching_group))
-            assert(gs IsNot Nothing)
+            assert(Not gs Is Nothing)
             Me.gs = gs
         End Sub
 
@@ -29,7 +29,7 @@ Partial Public Class rlexer
             assert(Not gs.empty())
             assert(index >= 0 AndAlso index < gs.size())
             assert(Not poses.null_or_empty())
-            assert(gs(index) IsNot Nothing)
+            assert(Not gs(index) Is Nothing)
             Dim o As [set](Of UInt32) = Nothing
             o = New [set](Of UInt32)()
             For j As UInt32 = 0 To poses.size() - uint32_1

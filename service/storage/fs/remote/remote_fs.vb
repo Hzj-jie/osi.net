@@ -32,7 +32,7 @@ Public Class remote_fs
                                 ByVal q As questioner,
                                 ByRef o As remote_fs) As Boolean
         Return Not String.IsNullOrEmpty(target) AndAlso
-               q IsNot Nothing AndAlso
+               Not q Is Nothing AndAlso
                eva(o, New remote_fs(target, q))
     End Function
 
@@ -66,7 +66,7 @@ Public Class remote_fs
     Public Function exist(ByVal path As String, ByVal r As ref(Of Boolean)) As event_comb Implements ifs.exist
         Return q(exist_command(path),
                  Function(c As command) As Boolean
-                     Return c IsNot Nothing AndAlso
+                     Return Not c Is Nothing AndAlso
                             c.parameter(Of parameter, Boolean)(parameter.result, r)
                  End Function)
     End Function

@@ -7,7 +7,7 @@ Partial Public Class type_attribute
     End Sub
 
     Public Sub forward_to(ByVal i As type_attribute)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         i.forward_from(Me)
     End Sub
 

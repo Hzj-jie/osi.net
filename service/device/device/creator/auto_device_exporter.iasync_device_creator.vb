@@ -34,7 +34,7 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
                         ByVal max_concurrent_generations As Int32,
                         Optional ByVal adapter As Func(Of async_getter(Of T), T) = Nothing)
             MyBase.New(id, check_interval_ms, failure_wait_ms, max_concurrent_generations)
-            assert(c IsNot Nothing)
+            assert(Not c Is Nothing)
             Me.c = c
             Me.converter = async_device_device_converter.[New](adapter)
         End Sub
@@ -43,10 +43,10 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
         Protected Overrides Function create_device(ByVal p As ref(Of idevice(Of T))) As event_comb
             Dim ad As idevice(Of async_getter(Of T)) = Nothing
             Return New event_comb(Function() As Boolean
-                                      If c.create(ad) AndAlso ad IsNot Nothing Then
+                                      If c.create(ad) AndAlso Not ad Is Nothing Then
                                           Dim ag As async_getter(Of T) = Nothing
                                           ag = ad.get()
-                                          If ag IsNot Nothing Then
+                                          If Not ag Is Nothing Then
                                               Return waitfor(ag.get(DirectCast(Nothing, ref(Of T)))) AndAlso
                                                      goto_next()
                                           Else
@@ -57,7 +57,7 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
                                       End If
                                   End Function,
                                   Function() As Boolean
-                                      assert(ad IsNot Nothing)
+                                      assert(Not ad Is Nothing)
                                       Dim o As idevice(Of T) = Nothing
                                       Return converter.adapt(ad, o) AndAlso
                                              eva(p, o) AndAlso

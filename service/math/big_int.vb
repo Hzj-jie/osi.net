@@ -62,7 +62,7 @@ Partial Public NotInheritable Class big_int
     End Function
 
     Public Function add(ByVal that As big_int) As big_int
-        If that IsNot Nothing AndAlso Not that.is_zero() Then
+        If Not that Is Nothing AndAlso Not that.is_zero() Then
             If is_zero() Then
                 replace_by(that)
             ElseIf positive() = that.positive() Then
@@ -172,7 +172,7 @@ Partial Public NotInheritable Class big_int
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As big_int) As Boolean
-        Return this IsNot Nothing AndAlso this.true()
+        Return Not this Is Nothing AndAlso this.true()
     End Operator
 
     Public Shared Operator Not(ByVal this As big_int) As Boolean
@@ -232,8 +232,8 @@ Partial Public NotInheritable Class big_int
         Dim c As Int32 = 0
         c = object_compare(this, that)
         If c = object_compare_undetermined Then
-            assert(this IsNot Nothing)
-            assert(that IsNot Nothing)
+            assert(Not this Is Nothing)
+            assert(Not that Is Nothing)
             If this.positive() <> that.positive() Then
                 Return If(this.positive(), 1, -1)
             Else
@@ -880,7 +880,7 @@ Partial Public NotInheritable Class big_int
     End Function
 
     Public Function left_shift(ByVal size As big_int, ByRef overflow As Boolean) As big_int
-        If size IsNot Nothing Then
+        If Not size Is Nothing Then
             Dim u As UInt64 = 0
             u = size.as_uint64(overflow)
             If Not overflow Then
@@ -891,7 +891,7 @@ Partial Public NotInheritable Class big_int
     End Function
 
     Public Function left_shift(ByVal size As big_uint, ByRef overflow As Boolean) As big_int
-        If size IsNot Nothing Then
+        If Not size Is Nothing Then
             Dim u As UInt64 = 0
             u = size.as_uint64(overflow)
             If Not overflow Then
@@ -944,7 +944,7 @@ Partial Public NotInheritable Class big_int
     End Function
 
     Public Function right_shift(ByVal size As big_int, ByRef overflow As Boolean) As big_int
-        If size IsNot Nothing Then
+        If Not size Is Nothing Then
             Dim u As UInt64 = 0
             u = size.as_uint64(overflow)
             If Not overflow Then
@@ -955,7 +955,7 @@ Partial Public NotInheritable Class big_int
     End Function
 
     Public Function right_shift(ByVal size As big_uint, ByRef overflow As Boolean) As big_int
-        If size IsNot Nothing Then
+        If Not size Is Nothing Then
             Dim u As UInt64 = 0
             u = size.as_uint64(overflow)
             If Not overflow Then

@@ -24,7 +24,7 @@ Public NotInheritable Class file_index
     Private ReadOnly ci As capinfo
 
     Public Sub New(ByVal index As ikeyvalue, ByVal data_dir As String)
-        assert(index IsNot Nothing)
+        assert(Not index Is Nothing)
         Me.index = index
         Me.dr = New data_dir(data_dir)
         Me.ci = New capinfo(data_dir)
@@ -138,7 +138,7 @@ Public NotInheritable Class file_index
                         ByVal ts_key() As Byte,
                         ByVal fn_key() As Byte,
                         ByVal ts As Int64)
-            assert(fi IsNot Nothing)
+            assert(Not fi Is Nothing)
             Me.fi = fi
             Me.filename = filename
             Me.ts_key = ts_key
@@ -153,7 +153,7 @@ Public NotInheritable Class file_index
         Public Shared Function ctor(ByVal fi As file_index,
                                     ByVal key() As Byte,
                                     ByVal o As ref(Of atom)) As event_comb
-            assert(fi IsNot Nothing)
+            assert(Not fi Is Nothing)
             Dim ec As event_comb = Nothing
             Dim b As ref(Of Byte()) = Nothing
             Dim ts_key() As Byte = Nothing
@@ -230,7 +230,7 @@ Public NotInheritable Class file_index
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
-                                         assert(+p IsNot Nothing) AndAlso
+                                         assert(Not +p Is Nothing) AndAlso
                                          eva(o, adapt(+p)) AndAlso
                                          goto_end()
                               End Function)

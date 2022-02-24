@@ -31,7 +31,7 @@ Friend Class heapless_case2
     End Sub
 
     Private Sub push_thread(ByVal finished As ref(Of singleentry))
-        assert(finished IsNot Nothing)
+        assert(Not finished Is Nothing)
         For i As Int64 = -max To max
 #If False Then
             If Not q.push(i) Then
@@ -48,7 +48,7 @@ Friend Class heapless_case2
     End Sub
 
     Private Sub pop_thread(ByVal finished As ref(Of singleentry))
-        assert(finished IsNot Nothing)
+        assert(Not finished Is Nothing)
         While Not finished.in_use()
             If Not q.pop(Nothing) Then
                 sleep(rnd_int(-1, 2))

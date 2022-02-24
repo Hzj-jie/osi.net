@@ -38,7 +38,7 @@ Public Class device_exporter(Of T)
     End Sub
 
     Protected Function device_exported(ByVal d As idevice(Of T)) As Boolean
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         counter.increase(EXPORTED_COUNT_COUNTER, exped.increment())
         Dim export_result As Boolean = False
         RaiseEvent new_device_exported(d, export_result)

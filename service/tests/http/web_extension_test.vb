@@ -11,7 +11,7 @@ Public Class web_extension_test
     Inherits [case]
 
     Private Shared Sub write_stream(ByVal i As MemoryStream, ByVal s As String)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         assert(Not String.IsNullOrEmpty(s))
         i.Seek(0, SeekOrigin.Begin)
         Dim b() As Byte = Nothing
@@ -23,7 +23,7 @@ Public Class web_extension_test
     Private Shared Function encoding_detection_case(
                                 ByVal prepare As Action(Of WebHeaderCollection, MemoryStream, EncodingInfo),
                                 ByVal gzip As Boolean) As Boolean
-        assert(prepare IsNot Nothing)
+        assert(Not prepare Is Nothing)
         Dim h As WebHeaderCollection = Nothing
         Dim ms As MemoryStream = Nothing
         For Each enc As EncodingInfo In Encoding.GetEncodings()

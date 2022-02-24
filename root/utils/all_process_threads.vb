@@ -15,7 +15,7 @@ Public NotInheritable Class all_process_threads
         End If
         Dim r As Boolean = True
         For i As Int32 = 0 To tps.Count() - 1
-            If tps(i) IsNot Nothing Then
+            If Not tps(i) Is Nothing Then
                 If Not tps(i).suspend_thread() Then
                     r = False
                 End If
@@ -30,7 +30,7 @@ Public NotInheritable Class all_process_threads
             Return False
         End If
         For Each t As ProcessThread In tps
-            If t IsNot Nothing AndAlso t.Id() = current_process_thread_id() Then
+            If Not t Is Nothing AndAlso t.Id() = current_process_thread_id() Then
                 tps.Remove(t)
                 t.Dispose()
                 Exit For
@@ -47,7 +47,7 @@ Public NotInheritable Class all_process_threads
         End If
         Dim r As Boolean = True
         For i As Int32 = 0 To tps.Count() - 1
-            If tps(i) IsNot Nothing Then
+            If Not tps(i) Is Nothing Then
                 If Not tps(i).resume_thread() Then
                     r = False
                 End If

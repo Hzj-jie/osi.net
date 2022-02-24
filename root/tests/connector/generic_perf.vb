@@ -56,7 +56,7 @@ Public Class generic_perf
     End Function
 
     Private Sub report_performance(ByVal p As ref(Of Int64), ByVal c As String)
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         raise_error(error_type.performance,
                     "generic_perf * ",
                     test_size_scale,

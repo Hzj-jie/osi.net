@@ -205,7 +205,7 @@ Partial Public Class callback_action
     End Function
 
     Private Function action(ByVal d As Func(Of Boolean)) As Boolean
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Dim rtn As Boolean = Nothing
         current() = Me
         Try

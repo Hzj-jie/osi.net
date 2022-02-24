@@ -21,7 +21,7 @@ Public Module _async_getter
         Private ReadOnly a As async_getter(Of IT)
 
         Public Sub New(ByVal a As async_getter(Of IT))
-            assert(a IsNot Nothing)
+            assert(Not a Is Nothing)
             Me.a = a
         End Sub
 
@@ -61,7 +61,7 @@ Public Module _async_getter
     End Class
 
     <Extension()> Public Sub wait_until_initialized(Of T)(ByVal this As async_getter(Of T))
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         assert(this.initialized_wait_handle().WaitOne())
     End Sub
 
@@ -71,13 +71,13 @@ Public Module _async_getter
             wait_until_initialized(Of T)(this)
             Return True
         Else
-            assert(this IsNot Nothing)
+            assert(Not this Is Nothing)
             Return this.initialized_wait_handle().WaitOne(CInt(timeout_ms))
         End If
     End Function
 
     <Extension()> Public Function wait_get(Of T)(ByVal this As async_getter(Of T), ByRef r As T) As Boolean
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         this.wait_until_initialized()
         assert(this.initialized())
         Return this.get(r)

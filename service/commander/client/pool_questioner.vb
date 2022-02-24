@@ -20,7 +20,7 @@ Public Class pool_questioner(Of _ENABLE_AUTO_PING As _boolean)
 
     Public Sub New(ByVal p As idevice_pool(Of herald), ByVal timeout_ms As Int64)
         MyBase.New(timeout_ms)
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Me.p = p
     End Sub
 

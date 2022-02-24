@@ -89,7 +89,7 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
         assert(array_size(data) = hash_size)
         Me.data = data
         For i As Int32 = 0 To array_size_i(data) - 1
-            assert(data(i) IsNot Nothing)
+            assert(Not data(i) Is Nothing)
         Next
     End Sub
 
@@ -128,7 +128,7 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
 
     ' Returning iterator is not reasonable, as it may be invalidated by operations in other threads.
     Public Function insert(ByVal k As KEY_T, ByVal f As Func(Of VALUE_T)) As pair(Of VALUE_T, Boolean)
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Dim index As UInt32 = 0
         index = index_of_key(k)
         Dim d As unordered_map(Of KEY_T, VALUE_T) = Nothing

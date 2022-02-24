@@ -36,7 +36,7 @@ Public Module _callstack
     End Function
 
     Private Function build_stack_trace(ByVal s As StackFrame) As String
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         If s.GetMethod() Is Nothing Then
             Return "##NO_MANAGED_METHOD##"
         End If

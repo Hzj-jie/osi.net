@@ -28,7 +28,7 @@ Partial Public NotInheritable Class rlexer
             Dim matches As vector(Of pair(Of UInt32, UInt32)) = Nothing
             matches = New vector(Of pair(Of UInt32, UInt32))()
             For k As UInt32 = 0 To rs.size() - uint32_1
-                assert(rs(k) IsNot Nothing)
+                assert(Not rs(k) Is Nothing)
                 If word_choice = match_choice.greedy Then
                     Dim new_pos As UInt32 = 0
                     If rs(k).longest_match(i, j, new_pos) Then

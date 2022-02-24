@@ -19,15 +19,15 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(n IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
             assert(n.child_count() = 2)
             Return build(n.child(0), n.child(1), o)
         End Function
 
         Public Shared Function build(ByVal type As typed_node, ByVal name As typed_node, ByVal o As logic_writer) As Boolean
-            assert(type IsNot Nothing)
-            assert(name IsNot Nothing)
+            assert(Not type Is Nothing)
+            assert(Not name Is Nothing)
             Dim t As String = type.input_without_ignored()
             Dim n As String = name.input_without_ignored()
             Return struct.define_in_stack(t, n, o) OrElse
@@ -37,7 +37,7 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function declare_single_data_slot(ByVal type As String,
                                                         ByVal name As String,
                                                         ByVal o As logic_writer) As Boolean
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
 
             If Not scope.current().structs().defined(type) AndAlso
                scope.current().variables().define(type, name) AndAlso

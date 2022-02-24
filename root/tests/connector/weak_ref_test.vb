@@ -86,8 +86,8 @@ Public NotInheritable Class weak_ref_test
             garbage_collector.repeat_collect()
 
             For i As Int32 = 0 To size - 1
-                assertion.equal(cs(i) IsNot Nothing, ps(i).alive())
-                If cs(i) IsNot Nothing Then
+                assertion.equal(Not cs(i) Is Nothing, ps(i).alive())
+                If Not cs(i) Is Nothing Then
                     assertion.is_true(ps(i).alive())
                     Dim t As test_class = Nothing
                     assertion.is_true(ps(i).get(t))

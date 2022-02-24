@@ -12,7 +12,7 @@ Partial Public NotInheritable Class b2style
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
-                assert(s IsNot Nothing)
+                assert(Not s Is Nothing)
                 Me.s = s
             End Sub
 

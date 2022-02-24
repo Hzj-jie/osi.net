@@ -18,7 +18,7 @@ Namespace rlexer
             If assertion.is_true(matching_group_creator.create("[a,b,c]*", g)) Then
                 Dim mg As any_matching_group = Nothing
                 If assertion.is_true(cast(g, mg)) Then
-                    assert(mg IsNot Nothing)
+                    assert(Not mg Is Nothing)
                     Dim sg As string_matching_group = Nothing
                     If assertion.is_true(cast(+mg, sg)) Then
                         assertion.array_equal(+sg, {"a", "b", "c"})
@@ -38,10 +38,10 @@ Namespace rlexer
             If assertion.is_true(matching_group_creator.create("[*]*", g)) Then
                 Dim mg As any_matching_group = Nothing
                 If assertion.is_true(cast(g, mg)) Then
-                    assert(mg IsNot Nothing)
+                    assert(Not mg Is Nothing)
                     Dim am As any_character_matching_group = Nothing
                     assertion.is_true(cast(+mg, am))
-                    assert(am IsNot Nothing)
+                    assert(Not am Is Nothing)
                 End If
             End If
             Return True
@@ -52,12 +52,12 @@ Namespace rlexer
             If assertion.is_true(matching_group_creator.create("[*]--", g)) Then
                 Dim ug As unmatched_matching_group = Nothing
                 If assertion.is_true(cast(g, ug)) Then
-                    assert(ug IsNot Nothing)
+                    assert(Not ug Is Nothing)
                     If assertion.is_true(cast(+ug, ug)) Then
-                        assert(ug IsNot Nothing)
+                        assert(Not ug Is Nothing)
                         Dim am As any_character_matching_group = Nothing
                         assertion.is_true(cast(+ug, am))
-                        assert(am IsNot Nothing)
+                        assert(Not am Is Nothing)
                     End If
                 End If
             End If
@@ -76,7 +76,7 @@ Namespace rlexer
             If assertion.is_true(matching_group_creator.create("[a,b,c]+", g)) Then
                 Dim mg As multi_matching_group = Nothing
                 If assertion.is_true(cast(g, mg)) Then
-                    assert(mg IsNot Nothing)
+                    assert(Not mg Is Nothing)
                     Dim sg As string_matching_group = Nothing
                     If assertion.is_true(cast(+mg, sg)) Then
                         assertion.array_equal(+sg, {"a", "b", "c"})
@@ -91,10 +91,10 @@ Namespace rlexer
             If assertion.is_true(matching_group_creator.create("[*]+", g)) Then
                 Dim mg As multi_matching_group = Nothing
                 If assertion.is_true(cast(g, mg)) Then
-                    assert(mg IsNot Nothing)
+                    assert(Not mg Is Nothing)
                     Dim am As any_character_matching_group = Nothing
                     assertion.is_true(cast(+mg, am))
-                    assert(am IsNot Nothing)
+                    assert(Not am Is Nothing)
                 End If
             End If
             Return True

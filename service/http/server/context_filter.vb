@@ -43,7 +43,7 @@ Public MustInherit Class context_filter
                 Return True
             End If
             For i As Int32 = 0 To array_size_i(v) - 1
-                assert(v(i) IsNot Nothing)
+                assert(Not v(i) Is Nothing)
                 If Not v(i).select(context) Then
                     Return False
                 End If

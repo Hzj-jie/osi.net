@@ -29,9 +29,9 @@ Namespace logic
                                          ByVal target As variable,
                                          ByVal source As variable,
                                          ByVal o As vector(Of String)) As Boolean
-            assert(target IsNot Nothing)
-            assert(source IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not target Is Nothing)
+            assert(Not source Is Nothing)
+            assert(Not o Is Nothing)
             If target.is_assignable_from(source) Then
                 o.emplace_back(instruction_builder.str(cmd, target, source))
                 Return True

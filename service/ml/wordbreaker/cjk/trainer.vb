@@ -15,7 +15,7 @@ Partial Public NotInheritable Class wordbreaker
                                     ByVal [end] As UInt32,
                                     ByVal trainer As onebound(Of Char).trainer)
                 assert([end] >= start)
-                assert(trainer IsNot Nothing)
+                assert(Not trainer Is Nothing)
                 If [end] = start Then
                     Return
                 End If

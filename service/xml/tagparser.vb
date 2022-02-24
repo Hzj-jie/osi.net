@@ -80,7 +80,7 @@ Public Module _tagparser
                         Else
                             Dim v As vector(Of String) = Nothing
                             If strsplit(line, attribute_surrounding, v, True, False, False) AndAlso
-                               v IsNot Nothing AndAlso
+                               Not v Is Nothing AndAlso
                                Not v.empty() Then
                                 tag = v(0)
                                 attributes.renew()
@@ -88,9 +88,9 @@ Public Module _tagparser
                                     Dim f As String = Nothing
                                     Dim s As String = Nothing
                                     If strsep(v(i), f, s, constants.attribute_separator_str, False) AndAlso
-                                       f IsNot Nothing Then
+                                       Not f Is Nothing Then
                                         f = f.Trim()
-                                        If s IsNot Nothing Then
+                                        If Not s Is Nothing Then
                                             s = s.Trim()
                                         End If
                                         If String.IsNullOrEmpty(f) Then

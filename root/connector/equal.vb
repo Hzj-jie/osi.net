@@ -59,7 +59,7 @@ Public Module _equal
 
         Private Shared Function always_succeed(ByVal f As Func(Of T, T2, Boolean)) _
                                               As _do_val_val_ref(Of T, T2, Boolean, Boolean)
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             Return Function(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
                        o = f(this, that)
                        Return True

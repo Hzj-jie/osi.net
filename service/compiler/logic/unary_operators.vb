@@ -23,7 +23,7 @@ Namespace logic
         End Function
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
-            assert(result IsNot Nothing)
+            assert(Not result Is Nothing)
             Return result.is_variable_size()
         End Function
     End Class
@@ -44,7 +44,7 @@ Namespace logic
         End Function
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
-            assert(result IsNot Nothing)
+            assert(Not result Is Nothing)
             Return result.is_assignable_from_bool()
         End Function
     End Class
@@ -65,7 +65,7 @@ Namespace logic
         End Function
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
-            assert(result IsNot Nothing)
+            assert(Not result Is Nothing)
             Return result.is_assignable_from_uint32()
         End Function
     End Class
@@ -86,7 +86,7 @@ Namespace logic
         End Function
 
         Protected Overrides Function result_restrict(ByVal result As variable) As Boolean
-            assert(result IsNot Nothing)
+            assert(Not result Is Nothing)
             Return result.is_assignable_from_bool()
         End Function
     End Class

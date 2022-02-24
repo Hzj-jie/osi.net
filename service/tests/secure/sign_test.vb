@@ -30,7 +30,7 @@ Public Class sign_test
         Private ReadOnly s As signer
 
         Public Sub New(ByVal s As signer)
-            assert(s IsNot Nothing)
+            assert(Not s Is Nothing)
             Me.s = s
         End Sub
 

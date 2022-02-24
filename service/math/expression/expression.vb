@@ -25,15 +25,15 @@ Partial Public Class expression(Of T)
     Public Sub New(ByVal c As calculator(Of T),
                    ByVal n As iparser(Of T),
                    ByVal o As ioutputter(Of T))
-        assert(c IsNot Nothing)
-        assert(n IsNot Nothing)
-        assert(o IsNot Nothing)
+        assert(Not c Is Nothing)
+        assert(Not n Is Nothing)
+        assert(Not o Is Nothing)
         Me.c = c
         Me.n = n
         Me.o = o
         Me.base = default_base
         Me.l = lp(Of expression(Of T)).ctor(expression_syntax.as_lines())
-        assert(Me.l IsNot Nothing)
+        assert(Not Me.l Is Nothing)
     End Sub
 
     Public Function execute(ByVal input As String) As expression_result(Of T)

@@ -19,7 +19,7 @@ Public Structure fixed_queue(Of T, _MAX_SIZE As _int64)
     Private Sub create()
         If q Is Nothing Then
             ReDim q(MAX_SIZE_D_1)
-            assert(q IsNot Nothing)
+            assert(Not q Is Nothing)
         End If
     End Sub
 

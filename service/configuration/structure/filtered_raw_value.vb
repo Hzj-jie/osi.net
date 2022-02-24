@@ -24,13 +24,13 @@ Friend Class filtered_raw_value(Of T)
     End Sub
 
     Public Sub foreach(ByVal d As Action(Of String, T, vector(Of pair(Of String, String))))
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         m.stream().foreach(m.on_pair(Sub(ByVal k As String,
                                          ByVal v As vector(Of pair(Of T, vector(Of pair(Of String, String)))))
                                          If Not v.null_or_empty() Then
                                              v.stream().foreach(
                                                  Sub(ByVal p As pair(Of T, vector(Of pair(Of String, String))))
-                                                     assert(p IsNot Nothing)
+                                                     assert(Not p Is Nothing)
                                                      d(k, p.first, p.second)
                                                  End Sub)
                                          End If

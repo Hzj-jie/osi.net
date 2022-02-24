@@ -28,7 +28,7 @@ Friend NotInheritable Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VAL
         m = New map(Of KEY_T, VALUE_T)()
         mh = New mapheap(Of KEY_T, reverse(Of UInt64))()
         clock = thread_static_implementation_of(Of tick_clock).resolve_or_default(tick_clock.default)
-        assert(clock IsNot Nothing)
+        assert(Not clock Is Nothing)
     End Sub
 
     Private Function no_retire() As Boolean
@@ -36,7 +36,7 @@ Friend NotInheritable Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VAL
     End Function
 
     Private Function retired(ByVal d As reverse(Of UInt64)) As Boolean
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Return Not no_retire() AndAlso clock.ticks() - (+d) >= retire_ticks
     End Function
 
@@ -92,7 +92,7 @@ Friend NotInheritable Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VAL
         If size() > max_size Then
             Dim oldname As KEY_T = Nothing
             mh.pop_front(oldname, Nothing)
-            assert(oldname IsNot Nothing)
+            assert(Not oldname Is Nothing)
             assert(m.erase(oldname))
             assert(size() = max_size)
         End If

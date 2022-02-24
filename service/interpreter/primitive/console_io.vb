@@ -14,7 +14,7 @@ Namespace primitive
         Private err As TextWriter
 
         Private Function [get](Of T)(ByVal i As T, ByVal r As T) As T
-            assert(r IsNot Nothing)
+            assert(Not r Is Nothing)
             Return If(i Is Nothing, r, i)
         End Function
 
@@ -55,19 +55,19 @@ Namespace primitive
             Public Sub New(ByVal input As String)
                 out = make_disposer(New StringWriter())
                 err = make_disposer(New StringWriter())
-                If input IsNot Nothing Then
+                If Not input Is Nothing Then
                     [in] = make_disposer(New StringReader(input))
                 End If
                 c = New console_io()
                 c.redirect_output(+out)
                 c.redirect_error(+err)
-                If [in] IsNot Nothing Then
+                If Not [in] Is Nothing Then
                     c.redirect_input(+[in])
                 End If
             End Sub
 
             Public Shared Operator +(ByVal this As test_wrapper) As console_io
-                assert(this IsNot Nothing)
+                assert(Not this Is Nothing)
                 Return this.c
             End Operator
 

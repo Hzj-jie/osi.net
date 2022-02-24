@@ -26,7 +26,7 @@ Public Class slim_constructor(Of KEY_TYPE, PARAMETER, RETURN_TYPE)
         End If
         Dim v As vector(Of _do_val_ref(Of PARAMETER, RETURN_TYPE, Boolean)) = Nothing
         v = (+it).second
-        assert(v IsNot Nothing)
+        assert(Not v Is Nothing)
         Dim i As UInt32 = 0
         While i < v.size()
             If v(i)(p, o) Then
@@ -44,12 +44,12 @@ Public Class slim_constructor(Of KEY_TYPE, PARAMETER, RETURN_TYPE)
     End Function
 
     Public Sub register(ByVal key As KEY_TYPE, ByVal c As _do_val_ref(Of PARAMETER, RETURN_TYPE, Boolean))
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         cs(key).emplace_back(c)
     End Sub
 
     Public Sub register(ByVal key As KEY_TYPE, ByVal c As Func(Of PARAMETER, RETURN_TYPE))
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         register(key,
                  Function(ByVal p As PARAMETER, ByRef o As RETURN_TYPE) As Boolean
                      o = c(p)

@@ -20,7 +20,7 @@ Public Class trigger_datawatcher
     End Sub
 
     Public Sub trigger()
-        assert(inuse IsNot Nothing)
+        assert(Not inuse Is Nothing)
         inuse.mark_in_use()
     End Sub
 

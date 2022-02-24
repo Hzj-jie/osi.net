@@ -17,7 +17,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Sub
 
         Public Sub New(ByVal m As model, ByVal longest_Sequence As UInt32)
-            assert(m IsNot Nothing)
+            assert(Not m Is Nothing)
             assert(longest_Sequence > 0)
             Me.m = m
             Me.longest_sequence = longest_Sequence
@@ -28,7 +28,7 @@ Partial Public NotInheritable Class onebound(Of K)
             Public ReadOnly possibility As Double
 
             Public Sub New(ByVal splitters As vector(Of UInt32), ByVal possibility As Double)
-                assert(splitters IsNot Nothing)
+                assert(Not splitters Is Nothing)
                 assert(possibility >= 0)
                 Me.splitters = splitters
                 Me.possibility = possibility
@@ -45,9 +45,9 @@ Partial Public NotInheritable Class onebound(Of K)
                                   ByVal splitters As vector(Of UInt32),
                                   ByVal possibility As Double,
                                   ByVal cache As vector(Of result)) As result
-            assert(v IsNot Nothing)
-            assert(splitters IsNot Nothing)
-            assert(cache IsNot Nothing)
+            assert(Not v Is Nothing)
+            assert(Not splitters Is Nothing)
+            assert(Not cache Is Nothing)
             assert(v.size() > i)
             If i = v.size() - 1 OrElse possibility = 0 Then
                 Return New result(splitters, possibility)
@@ -62,7 +62,7 @@ Partial Public NotInheritable Class onebound(Of K)
             d = m.affinity(v(i), v(i + uint32_1))
             d = 1 - d
             If d > 0 Then
-                If cache(i) IsNot Nothing Then
+                If Not cache(i) Is Nothing Then
                     l = cache(i)
                 Else
                     Dim s As vector(Of UInt32) = Nothing
@@ -81,7 +81,7 @@ Partial Public NotInheritable Class onebound(Of K)
                 r = evaluate(v, i + uint32_1, splitters.CloneT(), d * possibility, cache)
             End If
 
-            assert((l IsNot Nothing AndAlso r Is Nothing))
+            assert(Not (l Is Nothing AndAlso r Is Nothing))
             If l Is Nothing Then
                 Return r
             End If

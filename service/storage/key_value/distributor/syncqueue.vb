@@ -19,7 +19,7 @@ Public NotInheritable Class syncqueue
 
     Public Sub New(ByVal impl As iredundance_distributor)
         Me.impl = impl
-        assert(Me.impl IsNot Nothing)
+        assert(Not Me.impl Is Nothing)
         prepare_sync_queue = New slimqless2(Of String)()
         sync_queue = New unique_queue(Of String)()
         sync_queue_lock = New ref(Of event_comb_lock)()

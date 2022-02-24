@@ -34,17 +34,17 @@ Partial Public Structure tuple(Of T1, T2)
     End Function
 
     Public Shared Function from_pair(ByVal p As pair(Of T1, T2)) As tuple(Of T1, T2)
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Return New tuple(Of T1, T2)(p.first, p.second)
     End Function
 
     Public Shared Function from_const_pair(ByVal p As const_pair(Of T1, T2)) As tuple(Of T1, T2)
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Return New tuple(Of T1, T2)(p.first, p.second)
     End Function
 
     Public Shared Function from_first_const_pair(ByVal p As first_const_pair(Of T1, T2)) As tuple(Of T1, T2)
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Return New tuple(Of T1, T2)(p.first, p.second)
     End Function
 

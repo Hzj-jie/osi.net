@@ -9,7 +9,7 @@ Friend Class istrkeyvt_input_validation_wrapper
     Private ReadOnly impl As istrkeyvt
 
     Public Sub New(ByVal impl As istrkeyvt)
-        assert(impl IsNot Nothing)
+        assert(Not impl Is Nothing)
         Me.impl = impl
     End Sub
 

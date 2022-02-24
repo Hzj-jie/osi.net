@@ -28,8 +28,8 @@ Public NotInheritable Class coupling_ratio
     Private Shared Function calculate_mean(Of T)(ByVal all As Func(Of Double, Double),
                                                  ByVal prefixes As Func(Of T, Double, Double)) _
                                                 As Func(Of T, T, Double, Double)
-        assert(all IsNot Nothing)
-        assert(prefixes IsNot Nothing)
+        assert(Not all Is Nothing)
+        assert(Not prefixes Is Nothing)
         Return Function(ByVal a As T, ByVal b As T, ByVal c As Double) As Double
                    Dim l As Double = all(c)
                    Dim r As Double = prefixes(a, c)
@@ -54,7 +54,7 @@ Public NotInheritable Class coupling_ratio
     End Function
 
     Public Shared Function execute(Of T)(ByVal i As onebound(Of T).model) As onebound(Of T).model
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         If use_percentile_ranking Or False Then
             Dim all As percentile.ranking_samples(Of Double) =
                 percentile.ascent.ranking_samples(

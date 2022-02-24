@@ -36,8 +36,8 @@ Partial Public NotInheritable Class big_uint
                 Return c
             End If
         End If
-        assert(this IsNot Nothing)
-        assert(that IsNot Nothing)
+        assert(Not this Is Nothing)
+        assert(Not that Is Nothing)
         If this.is_zero() Then
             If that.is_zero() Then
                 Return 0

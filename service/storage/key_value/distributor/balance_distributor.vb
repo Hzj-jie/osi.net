@@ -28,7 +28,7 @@ Public Class balance_distributor
 
     Public Sub New(ByVal c As istrkeyvt_container,
                    Optional ByVal update_frequency As Int32 = npos)
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Me.container = c
         Me.capacities = New vector(Of Int64)()
         Me.capacities.resize(Me.container.size())
@@ -127,7 +127,7 @@ Public Class balance_distributor
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
-                                         (+p) IsNot Nothing AndAlso
+                                         Not (+p) Is Nothing AndAlso
                                          Not (+p).empty() AndAlso
                                          eva(o, (+p)(0)) AndAlso
                                          goto_end()
@@ -137,7 +137,7 @@ Public Class balance_distributor
     Private Function select_by_key(ByVal key As String,
                                    ByVal d As Func(Of istrkeyvt, event_comb),
                                    Optional ByVal ud As Action = Nothing) As event_comb
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Dim ec As event_comb = Nothing
         Dim i As ref(Of istrkeyvt) = Nothing
         Return New event_comb(Function() As Boolean
@@ -148,12 +148,12 @@ Public Class balance_distributor
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      assert((+i) IsNot Nothing)
+                                      assert(Not (+i) Is Nothing)
                                       ec = d(+i)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
                                   Else
-                                      If ud IsNot Nothing Then
+                                      If Not ud Is Nothing Then
                                           ud()
                                       End If
                                       Return goto_end()
@@ -207,7 +207,7 @@ Public Class balance_distributor
 
     Private Function [select](ByVal key As String,
                               ByVal d As Func(Of istrkeyvt, event_comb)) As event_comb
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Dim ec As event_comb = Nothing
         Dim i As ref(Of istrkeyvt) = Nothing
         Return New event_comb(Function() As Boolean
@@ -218,7 +218,7 @@ Public Class balance_distributor
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      assert((+i) IsNot Nothing)
+                                      assert(Not (+i) Is Nothing)
                                       ec = d(+i)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

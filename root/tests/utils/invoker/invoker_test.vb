@@ -13,12 +13,12 @@ Public Class invoker_test
     Inherits [case]
 
     Private Shared Sub ss1(ByVal c As atomic_int)
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         c.increment()
     End Sub
 
     Private Shared Function sf1(ByVal c As atomic_int) As Int32
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Return c.increment()
     End Function
 

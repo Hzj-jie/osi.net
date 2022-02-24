@@ -37,7 +37,7 @@ Public Class to_string_shadower(Of T)
         If cmp <> object_compare_undetermined Then
             Return cmp
         End If
-        assert(other IsNot Nothing)
+        assert(Not other Is Nothing)
         Return compare(x, other.x)
     End Function
 

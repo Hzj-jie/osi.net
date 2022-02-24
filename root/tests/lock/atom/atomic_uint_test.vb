@@ -36,7 +36,7 @@ Public MustInherit Class atomic_uint_test
     Protected MustOverride Overrides Function create_case() As atom_case
 
     Protected Overrides Sub validate(ByVal ac As atom_case)
-        assert(ac IsNot Nothing)
+        assert(Not ac Is Nothing)
         assert(TypeOf ac Is atomic_uint_case)
         assertion.is_true(ac.direct_cast_to(Of atomic_uint_case)().result() >= 0)
         assertion.equal(CLng(ac.direct_cast_to(Of atomic_uint_case)().result()),

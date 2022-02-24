@@ -9,8 +9,8 @@ Imports osi.root.envs
 Partial Public NotInheritable Class promise
     Public Shared Function [New](Of T)(ByVal begin As Func(Of AsyncCallback, IAsyncResult),
                                        ByVal [end] As Func(Of IAsyncResult, T)) As promise
-        assert(begin IsNot Nothing)
-        assert([end] IsNot Nothing)
+        assert(Not begin Is Nothing)
+        assert(Not [end] Is Nothing)
         Return New promise(Sub(ByVal resolve As Action(Of Object), ByVal reject As Action(Of Object))
                                begin(Sub(ByVal ar As IAsyncResult)
                                          Try
@@ -27,8 +27,8 @@ Partial Public NotInheritable Class promise
 
     Public Shared Function [New](ByVal begin As Func(Of AsyncCallback, IAsyncResult),
                                  ByVal [end] As Action(Of IAsyncResult)) As promise
-        assert(begin IsNot Nothing)
-        assert([end] IsNot Nothing)
+        assert(Not begin Is Nothing)
+        assert(Not [end] Is Nothing)
         Return New promise(Sub(ByVal resolve As Action(Of Object), ByVal reject As Action(Of Object))
                                begin(Sub(ByVal ar As IAsyncResult)
                                          Try

@@ -17,14 +17,14 @@ Partial Public NotInheritable Class b2style
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(b IsNot Nothing)
+            assert(Not b Is Nothing)
             Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
-            assert(n IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
             assert(n.child_count() >= 2)
             assert(n.child(0).type_name.Equals("start-paragraph"))
             assert(n.last_child().type_name.Equals("end-paragraph"))

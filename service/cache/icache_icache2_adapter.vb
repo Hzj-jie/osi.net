@@ -15,7 +15,7 @@ Public NotInheritable Class icache_icache2_adapter(Of KEY_T As IComparable(Of KE
     Private ReadOnly i As icache(Of KEY_T, VALUE_T)
 
     Public Sub New(ByVal i As icache(Of KEY_T, VALUE_T))
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Me.i = i
     End Sub
 

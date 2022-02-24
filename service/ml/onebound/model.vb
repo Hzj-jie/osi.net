@@ -16,7 +16,7 @@ Partial Public NotInheritable Class onebound(Of K)
 
         <copy_constructor>
         Public Sub New(ByVal m As unordered_map(Of K, unordered_map(Of K, Double)))
-            assert(m IsNot Nothing)
+            assert(Not m Is Nothing)
             Me.m = m
         End Sub
 
@@ -108,7 +108,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Function multiply(ByVal other As model) As model
-            assert(other IsNot Nothing)
+            assert(Not other Is Nothing)
             Dim r As New unordered_map(Of K, unordered_map(Of K, Double))()
             flat_map().foreach(Sub(ByVal v As first_const_pair(Of const_pair(Of K, K), Double))
                                    If v.second <= 0 Then
@@ -124,7 +124,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Function add(ByVal other As model) As Boolean
-            assert(other IsNot Nothing)
+            assert(Not other Is Nothing)
             Try
                 other.m.
                       stream().
@@ -193,7 +193,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Function map(Of R)(ByVal f As Func(Of K, R)) As onebound(Of R).model
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             Return New onebound(Of R).model(m.stream().
                                               map(m.mapper(Function(ByVal k As K,
                                                                     ByVal v As unordered_map(Of K, Double)) _
@@ -209,7 +209,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Function map(ByVal f As Func(Of K, K, Double, Double)) As onebound(Of K).model
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             Return New onebound(Of K).model(
                        m.stream().
                          map(m.mapper(Function(ByVal k As K,
@@ -229,7 +229,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Function map_each(Of R)(ByVal f As Func(Of unordered_map(Of K, Double), R)) As unordered_map(Of K, R)
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             Return m.stream().
                      map(m.second_mapper(f)).
                      collect_to(Of unordered_map(Of K, R))()
@@ -240,7 +240,7 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Function to_map(Of K2)(ByVal f As Func(Of K, K, K2)) As unordered_map(Of K2, Double)
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             Return flat_map().map(Function(ByVal v As first_const_pair(Of const_pair(Of K, K), Double)) As first_const_pair(Of K2, Double)
                                       Return first_const_pair.emplace_of(f(v.first.first, v.first.second), v.second)
                                   End Function).

@@ -13,7 +13,7 @@ Public Module _hasharray_ext
                            (ByVal this As hasharray(Of T, UNIQUE),
                             ByVal that As hasharray(Of T, UNIQUE),
                             ByVal f As Func(Of T, tuple(Of hasharray(Of T, UNIQUE).iterator, Boolean))) As Boolean
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         If this Is Nothing OrElse that Is Nothing Then
             Return False
         End If

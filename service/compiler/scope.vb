@@ -34,7 +34,7 @@ Partial Public Class scope(Of T As scope(Of T))
     End Function
 
     Public Sub when_end_scope(ByVal a As Action)
-        assert(a IsNot Nothing)
+        assert(Not a Is Nothing)
         ds.emplace_back(a)
     End Sub
 
@@ -51,7 +51,7 @@ Partial Public Class scope(Of T As scope(Of T))
             ds(CUInt(i))()
             i -= 1
         End While
-        If parent IsNot Nothing Then
+        If Not parent Is Nothing Then
             assert(object_compare(parent.child, Me) = 0)
             parent.child = Nothing
         End If
@@ -59,7 +59,7 @@ Partial Public Class scope(Of T As scope(Of T))
     End Sub
 
     Public Shared Function current() As T
-        assert(in_thread IsNot Nothing)
+        assert(Not in_thread Is Nothing)
         Return in_thread
     End Function
 

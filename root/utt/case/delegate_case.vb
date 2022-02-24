@@ -12,7 +12,7 @@ Public NotInheritable Class delegate_case
     Private ReadOnly r As Func(Of Boolean)
 
     Public Sub New(ByVal v As Action)
-        assert(v IsNot Nothing)
+        assert(Not v Is Nothing)
         r = Function() As Boolean
                 v()
                 Return True
@@ -20,7 +20,7 @@ Public NotInheritable Class delegate_case
     End Sub
 
     Public Sub New(ByVal f As Func(Of Boolean))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         r = f
     End Sub
 
@@ -35,7 +35,7 @@ Public NotInheritable Class delegate_event_comb_case
     Private ReadOnly r As Func(Of event_comb)
 
     Public Sub New(ByVal f As Func(Of event_comb))
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         r = f
     End Sub
 

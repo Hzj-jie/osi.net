@@ -23,7 +23,7 @@ Public NotInheritable Class singleton_device_pool(Of T)
 
     Public Sub New(ByVal d As idevice(Of T), ByVal identity As String)
         MyBase.New(uint32_0, identity)
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Me.d = d
         assert(increase_total_count())
     End Sub

@@ -23,13 +23,13 @@ Public Class complete_io_test
 
     Protected NotOverridable Overrides Function send_consistent(ByVal flow_dev As mock_flow_dev,
                                                                 ByVal buff() As Byte) As Boolean
-        assert(flow_dev IsNot Nothing)
+        assert(Not flow_dev Is Nothing)
         Return flow_dev.send_consistent(buff)
     End Function
 
     Protected NotOverridable Overrides Function receive_consistent(ByVal flow_dev As mock_flow_dev,
                                                                    ByVal buff() As Byte) As Boolean
-        assert(flow_dev IsNot Nothing)
+        assert(Not flow_dev Is Nothing)
         Return flow_dev.receive_consistent(buff)
     End Function
 End Class

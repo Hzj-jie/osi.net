@@ -133,7 +133,7 @@ Public NotInheritable Class gettype_perf
         Private ReadOnly v As T
 
         Public Sub New(ByVal v As T)
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             Me.v = v
         End Sub
 
@@ -150,7 +150,7 @@ Public NotInheritable Class gettype_perf
         Private ReadOnly i As Type
 
         Public Sub New(ByVal v As T)
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             Me.i = v.GetType()
         End Sub
 

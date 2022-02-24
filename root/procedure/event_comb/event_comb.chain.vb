@@ -11,7 +11,7 @@ Partial Public Class event_comb
     Private Shared Function accept_ec(ByVal ec As event_comb,
                                       ByVal accept_null_ec As Boolean,
                                       ByVal d As Func(Of Boolean)) As Boolean
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Return (accept_null_ec AndAlso ec Is Nothing) OrElse d()
     End Function
 
@@ -38,8 +38,8 @@ Partial Public Class event_comb
     Public Shared Function chain_before(ByVal d As Func(Of Boolean),
                                         ByVal c As Func(Of event_comb),
                                         Optional ByVal accept_null_ec As Boolean = False) As event_comb
-        assert(d IsNot Nothing)
-        assert(c IsNot Nothing)
+        assert(Not d Is Nothing)
+        assert(Not c Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If d() Then
@@ -68,8 +68,8 @@ Partial Public Class event_comb
                                        ByVal before As Func(Of Boolean),
                                        ByVal after As Func(Of Boolean),
                                        Optional ByVal accept_null_ec As Boolean = False) As event_comb
-        assert(c IsNot Nothing)
-        assert(before IsNot Nothing OrElse after IsNot Nothing)
+        assert(Not c Is Nothing)
+        assert(Not before Is Nothing OrElse Not after Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = c()
@@ -77,11 +77,11 @@ Partial Public Class event_comb
                               End Function,
                              Function() As Boolean
                                  Dim rtn As Boolean = True
-                                 If before IsNot Nothing Then
+                                 If Not before Is Nothing Then
                                      rtn = before()
                                  End If
                                  rtn = rtn AndAlso end_result(ec, accept_null_ec)
-                                 If after IsNot Nothing Then
+                                 If Not after Is Nothing Then
                                      rtn = rtn AndAlso after()
                                  End If
                                  Return rtn
@@ -125,7 +125,7 @@ Partial Public Class event_comb
     End Function
 
     Public Shared Function chain(ByVal ParamArray cs() As void(Of event_comb, Boolean, Boolean, Boolean)) As event_comb
-        assert(cs IsNot Nothing AndAlso cs.Length() > 0)
+        assert(Not cs Is Nothing AndAlso cs.Length() > 0)
         Dim i As Int32 = 0
         Dim ec As event_comb = Nothing
         Dim accept_null_ec As Boolean = False
@@ -147,7 +147,7 @@ Partial Public Class event_comb
     End Function
 
     Public Shared Function as_predict(ByVal d As Func(Of Boolean)) As void(Of event_comb, Boolean, Boolean, Boolean)
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Return Sub(ByRef ec As event_comb,
                    ByRef accept_null_ec As Boolean,
                    ByRef predict As Boolean,
@@ -162,7 +162,7 @@ Partial Public Class event_comb
     Public Shared Function as_event_comb(ByVal d As Func(Of event_comb),
                                          Optional ByVal accept_null_ec As Boolean = False) _
                                         As void(Of event_comb, Boolean, Boolean, Boolean)
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Return Sub(ByRef ec As event_comb,
                    ByRef ane As Boolean,
                    ByRef predict As Boolean,
@@ -182,9 +182,9 @@ Partial Public Class event_comb
     Public Shared Function chain(ByVal before As Func(Of Boolean),
                                  ByVal cs As _do(Of Int32, event_comb, Boolean, Boolean),
                                  ByVal after As Func(Of Boolean)) As event_comb
-        assert(before IsNot Nothing)
-        assert(cs IsNot Nothing)
-        assert(after IsNot Nothing)
+        assert(Not before Is Nothing)
+        assert(Not cs Is Nothing)
+        assert(Not after Is Nothing)
         Dim i As Int32 = 0
         Dim ec As event_comb = Nothing
         Dim accept_null_ec As Boolean = False
@@ -223,8 +223,8 @@ Partial Public Class event_comb
                                                  ByRef ec As event_comb,
                                                  ByRef accept_null_ec As Boolean,
                                                  ByVal d As void(Of Int32, event_comb, Boolean)) As Boolean
-        assert(cs IsNot Nothing AndAlso cs.Length() > 0)
-        assert(d IsNot Nothing)
+        assert(Not cs Is Nothing AndAlso cs.Length() > 0)
+        assert(Not d Is Nothing)
         If i = cs.Length() Then
             Return False
         Else
@@ -238,9 +238,9 @@ Partial Public Class event_comb
                                         ByVal c As _do(Of Int32, event_comb),
                                         ByVal after As Func(Of Boolean),
                                         ByVal accept_null_ec As _do(Of Int32, Boolean)) As event_comb
-        assert(cs IsNot Nothing AndAlso cs.Length() > 0)
-        assert(c IsNot Nothing)
-        assert(accept_null_ec IsNot Nothing)
+        assert(Not cs Is Nothing AndAlso cs.Length() > 0)
+        assert(Not c Is Nothing)
+        assert(Not accept_null_ec Is Nothing)
         Return chain(before,
                      Function(ByRef i As Int32, ByRef ec As event_comb, ByRef ane As Boolean) As Boolean
                          Return chain_response(cs, i, ec, ane,
@@ -261,7 +261,7 @@ Partial Public Class event_comb
     Public Shared Function chain(ByVal before As Func(Of Boolean),
                                  ByVal cs() As _do(Of event_comb, Boolean),
                                  ByVal after As Func(Of Boolean)) As event_comb
-        assert(cs IsNot Nothing AndAlso cs.Length() > 0)
+        assert(Not cs Is Nothing AndAlso cs.Length() > 0)
         Return chain(before,
                      Function(ByRef i As Int32, ByRef ec As event_comb, ByRef accept_null_ec As Boolean) As Boolean
                          Return chain_response(cs, i, ec, accept_null_ec,
@@ -293,7 +293,7 @@ Partial Public Class event_comb
     End Function
 
     Public Shared Function chain(ByVal ParamArray cs() As void(Of event_comb, Boolean)) As event_comb
-        assert(cs IsNot Nothing AndAlso cs.Length() > 0)
+        assert(Not cs Is Nothing AndAlso cs.Length() > 0)
         Return chain(Function(ByRef i As Int32, ByRef ec As event_comb, ByRef accept_null_ec As Boolean) As Boolean
                          Return chain_response(cs, i, ec, accept_null_ec,
                                                Sub(ByRef j As Int32, ByRef e As event_comb, ByRef a As Boolean)

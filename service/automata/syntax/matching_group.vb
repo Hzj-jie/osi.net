@@ -42,7 +42,7 @@ Partial Public NotInheritable Class syntaxer
         Private Function first_match(ByVal v As vector(Of typed_word), ByVal p As UInt32) As best_match_result
             Dim r As result = result.failure(p)
             For i As Int32 = 0 To array_size_i(ms) - 1
-                assert(ms(i) IsNot Nothing)
+                assert(Not ms(i) Is Nothing)
                 Dim c As result = ms(i).match(v, p)
                 r = r Or c
                 If r.succeeded() Then
@@ -56,7 +56,7 @@ Partial Public NotInheritable Class syntaxer
             Dim r As result = result.failure(p)
             Dim best_id As Int32 = -1
             For i As Int32 = 0 To ms.array_size_i() - 1
-                assert(ms(i) IsNot Nothing)
+                assert(Not ms(i) Is Nothing)
                 Dim c As result = ms(i).match(v, p)
                 If c.succeeded() AndAlso (r.failed() OrElse c.suc.pos > r.suc.pos) Then
                     best_id = i
@@ -93,14 +93,14 @@ Partial Public NotInheritable Class syntaxer
             If c <> object_compare_undetermined Then
                 Return c
             End If
-            assert(other IsNot Nothing)
+            assert(Not other Is Nothing)
             Return memcmp(Me.ms, other.ms)
         End Function
 
         Public Overrides Function ToString() As String
             Dim r As New StringBuilder("matching_group [")
             For i As Int32 = 0 To array_size_i(ms) - 1
-                assert(ms(i) IsNot Nothing)
+                assert(Not ms(i) Is Nothing)
                 r.Append(ms(i)).Append(",")
             Next
             Return Convert.ToString(r.Append("]"))

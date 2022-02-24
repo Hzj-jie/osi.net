@@ -14,7 +14,7 @@ Namespace rewriters
         Inherits lazy_list_writer(Of DEBUG_DUMP)
 
         Public Overloads Function append(ByVal t As typed_node) As Boolean
-            assert(t IsNot Nothing)
+            assert(Not t Is Nothing)
             Return append(AddressOf t.input)
         End Function
     End Class

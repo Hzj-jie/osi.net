@@ -16,7 +16,7 @@ Namespace primitive
         Private ReadOnly lm As New loaded_method()
 
         Public Sub New(ByVal io As console_io)
-            assert(io IsNot Nothing)
+            assert(Not io Is Nothing)
             Me.io = io
             v.emplace_back(AddressOf stdout)
             v.emplace_back(AddressOf stderr)
@@ -28,7 +28,7 @@ Namespace primitive
             v.emplace_back(AddressOf putchar)
 
             For i As UInt32 = 0 To v.size() - uint32_1
-                assert(v(i) IsNot Nothing)
+                assert(Not v(i) Is Nothing)
                 m(v(i).Method().Name()) = i
             Next
         End Sub
@@ -42,7 +42,7 @@ Namespace primitive
                 executor_stop_error.throw(executor.error_type.undefined_interrupt)
                 Return Nothing
             End If
-            assert(v(i) IsNot Nothing)
+            assert(Not v(i) Is Nothing)
             Return v(i)(j)
         End Function
 

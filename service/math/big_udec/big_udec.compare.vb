@@ -29,8 +29,8 @@ Partial Public NotInheritable Class big_udec
             Return c
         End If
 
-        assert(this IsNot Nothing)
-        assert(that IsNot Nothing)
+        assert(Not this Is Nothing)
+        assert(Not that Is Nothing)
 
         If this.is_zero() AndAlso that.is_zero() Then
             Return 0

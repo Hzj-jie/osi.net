@@ -42,7 +42,7 @@ Partial Public Class cluster
         Dim ec As event_comb = Nothing
         Dim c As cluster = Nothing
         Return New event_comb(Function() As Boolean
-                                  If vd IsNot Nothing AndAlso
+                                  If Not vd Is Nothing AndAlso
                                      valid_id(id) AndAlso
                                      valid_offset(offset) AndAlso
                                      valid_length(length) Then

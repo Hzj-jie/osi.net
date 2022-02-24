@@ -15,7 +15,7 @@ Partial Public Class hasharray(Of T,
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function hash(ByVal v As hasher_node) As UInt32
 #If Not Performance Then
-        assert(v IsNot Nothing)
+        assert(Not v Is Nothing)
 #End If
         Return v.hash_code() Mod column_count()
     End Function
@@ -32,7 +32,7 @@ Partial Public Class hasharray(Of T,
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub reset_array()
-        If v IsNot Nothing AndAlso v.size() = column_count() Then
+        If Not v Is Nothing AndAlso v.size() = column_count() Then
             For i As UInt32 = 0 To v.size() - uint32_1
                 v(i).renew()
             Next

@@ -34,7 +34,7 @@ Public Module _text
                                                   (ByVal this As T,
                                                    ByVal timeout_ms As Int64,
                                                    ByVal r As ref(Of String)) As event_comb
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   ec = sense(this, timeout_ms)

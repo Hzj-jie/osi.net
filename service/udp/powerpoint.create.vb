@@ -226,7 +226,7 @@ Partial Public Class powerpoint
             Const p_max_receive_buffer_size As String = "max-receive-buffer-size"
             Const p_accept_new_connection As String = "accept-new-connection"
             Const p_max_connected As String = "max-connected"
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             v.bind(p_host,
                    p_remote_port,
                    p_local_port,

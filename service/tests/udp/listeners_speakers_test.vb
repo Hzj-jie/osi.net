@@ -34,8 +34,8 @@ Public NotInheritable Class listeners_speakers_test
     End Function
 
     Private Function send_and_receive(ByVal listener As listener, ByVal speaker As speaker) As event_comb
-        assert(listener IsNot Nothing)
-        assert(speaker IsNot Nothing)
+        assert(Not listener Is Nothing)
+        assert(Not speaker Is Nothing)
         Dim ec As event_comb = Nothing
         Dim i As Int32 = 0
         Dim accepter As listener.one_accepter = Nothing

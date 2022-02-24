@@ -39,7 +39,7 @@ Partial Public Class sharedtransmitter_test
                 ByVal sc As sharedtransmitter(Of Byte, Byte, component, Int32, parameter),
                 ByVal first As Int32,
                 ByVal self_increment As Boolean) As event_comb
-            assert(sc IsNot Nothing)
+            assert(Not sc Is Nothing)
             Dim ec As event_comb = Nothing
             Dim p As ref(Of Int32) = Nothing
             Dim c As Int32 = 0

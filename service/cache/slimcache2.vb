@@ -11,7 +11,7 @@ Friend NotInheritable Class slimcache2(Of KEY_T As IComparable(Of KEY_T), VALUE_
     Private ReadOnly s As islimcache(Of KEY_T, VALUE_T)
 
     Public Sub New(ByVal s As islimcache(Of KEY_T, VALUE_T))
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         assert(Not TypeOf s Is islimcache2(Of KEY_T, VALUE_T))
         assert(Not TypeOf s Is icache(Of KEY_T, VALUE_T))
         Me.s = s

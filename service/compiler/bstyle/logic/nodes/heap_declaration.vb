@@ -16,14 +16,14 @@ Partial Public NotInheritable Class bstyle
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(b IsNot Nothing)
+            assert(Not b Is Nothing)
             Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(n IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
             assert(n.child_count() = 2)
             assert(n.child(1).child_count() = 4)
             Return build(n.child(0), n.child(1).child(0), n.child(1).child(2), o)
@@ -33,9 +33,9 @@ Partial Public NotInheritable Class bstyle
                               ByVal name As typed_node,
                               ByVal length As typed_node,
                               ByVal o As logic_writer) As Boolean
-            assert(type IsNot Nothing)
-            assert(name IsNot Nothing)
-            assert(length IsNot Nothing)
+            assert(Not type Is Nothing)
+            assert(Not name Is Nothing)
+            assert(Not length Is Nothing)
             Dim t As String = type.input_without_ignored()
             Dim n As String = name.input_without_ignored()
             Return l.typed(Of struct).define_in_heap(t, n, length, o) OrElse
@@ -52,7 +52,7 @@ Partial Public NotInheritable Class bstyle
                                                         ByVal length As String,
                                                         ByVal o As logic_writer) As Boolean
             assert(Not scope.current().structs().defined(type))
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             Return scope.current().variables().define_heap(type, name) AndAlso
                    builders.of_define_heap(name,
                                            scope.current().type_alias()(type),

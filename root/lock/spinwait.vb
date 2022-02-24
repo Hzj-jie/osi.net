@@ -93,7 +93,7 @@ Public Module spinwait
             lazy_wait_when(d, o)
         Else
 #If DEBUG Then
-            assert(d IsNot Nothing)
+            assert(Not d Is Nothing)
 #End If
             While d(o)
             End While
@@ -106,7 +106,7 @@ Public Module spinwait
         Private ReadOnly f As _do(Of T, Boolean)
 
         Public Sub New(ByVal f As _do(Of T, Boolean))
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             Me.f = f
         End Sub
 
@@ -156,19 +156,19 @@ Public Module spinwait
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub strict_wait_when(ByVal d As Func(Of Boolean))
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         strict_wait_when(Function(ByRef x) d(), 0)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub wait_when(ByVal d As Func(Of Boolean))
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         wait_when(Function(ByRef x) d(), 0)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub lazy_wait_when(ByVal d As Func(Of Boolean))
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         lazy_wait_when(Function(ByRef x) d(), 0)
     End Sub
 

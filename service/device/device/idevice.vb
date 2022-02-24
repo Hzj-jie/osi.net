@@ -68,14 +68,14 @@ End Interface
 <global_init(global_init_level.services)>
 Public Module _idevice
     <Extension()> Public Function create(Of T)(ByVal this As idevice_creator(Of T)) As idevice(Of T)
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Dim o As idevice(Of T) = Nothing
         assert(this.create(o))
         Return o
     End Function
 
     <Extension()> Public Sub dispose(ByVal this As idevice)
-        If this IsNot Nothing Then
+        If Not this Is Nothing Then
             this.close()
         End If
     End Sub
@@ -93,7 +93,7 @@ End Module
 <global_init(global_init_level.services)>
 Public Module _idevice_exporter
     <Extension()> Public Sub dispose(ByVal this As idevice_exporter)
-        If this IsNot Nothing Then
+        If Not this Is Nothing Then
             While this.started()
                 this.stop()
             End While

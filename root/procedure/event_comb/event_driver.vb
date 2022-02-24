@@ -12,7 +12,7 @@ Imports osi.root.threadpool
 Friend Class event_driver
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function event_comb_valid(ByVal ec As event_comb) As Boolean
-        Return ec IsNot Nothing AndAlso ec.not_pending()
+        Return Not ec Is Nothing AndAlso ec.not_pending()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

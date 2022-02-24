@@ -26,7 +26,7 @@ Public NotInheritable Class event_comb_cancel_test
         End Function
 
         Private Shared Function cancel_event_comb(ByVal ec As event_comb) As event_comb
-            assert(ec IsNot Nothing)
+            assert(Not ec Is Nothing)
             Return New event_comb(Function() As Boolean
                                       Return waitfor(Function() Not ec.not_started()) AndAlso
                                              waitfor(rnd_int(0, 20)) AndAlso

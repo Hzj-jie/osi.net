@@ -10,7 +10,7 @@ Friend Class cached_filter
     Private ReadOnly c As icache(Of String, Boolean)
 
     Public Sub New(ByVal cache_size As Int64, ByVal inner As ifilter)
-        assert(inner IsNot Nothing)
+        assert(Not inner Is Nothing)
         c = New hash_cache(Of String, Boolean)(cache_size)
         f = inner
     End Sub

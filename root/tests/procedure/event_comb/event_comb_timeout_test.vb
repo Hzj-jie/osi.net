@@ -75,7 +75,7 @@ Public NotInheritable Class event_comb_timeout_test
             this = +counter
             Dim ec As event_comb = Nothing
             ec = create_event_comb()
-            assert(ec IsNot Nothing)
+            assert(Not ec Is Nothing)
             Using assertion.timelimited_operation(timeout_ms, acceptable_latency_ms())
                 assertion.is_false(async_sync(ec, timeout_ms))
             End Using

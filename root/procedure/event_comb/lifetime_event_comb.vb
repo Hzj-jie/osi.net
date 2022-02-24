@@ -12,7 +12,7 @@ Public Module _lifetime_event_comb
     Public Function lifetime_event_comb(ByVal stop_result As Boolean,
                                         ByVal control As expiration_controller,
                                         ByVal ParamArray d() As Func(Of Boolean)) As event_comb
-        assert(control IsNot Nothing)
+        assert(Not control Is Nothing)
         Dim d2() As Func(Of Boolean) = Nothing
         ReDim d2(array_size_i(d) - 1)
         For i As Int32 = 0 To array_size_i(d) - 1

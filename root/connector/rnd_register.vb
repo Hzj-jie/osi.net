@@ -30,13 +30,13 @@ Public NotInheritable Class rnd_register(Of T)
     Private Shared c As Func(Of T)
 
     Public Shared Sub register(ByVal c As Func(Of T))
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         assert(rnd_register(Of T).c Is Nothing OrElse object_compare(rnd_register(Of T).c, c) = 0)
         rnd_register(Of T).c = c
     End Sub
 
     Public Shared Function defined() As Boolean
-        Return c IsNot Nothing
+        Return Not c Is Nothing
     End Function
 
     Public Shared Function ref() As Func(Of T)
@@ -44,7 +44,7 @@ Public NotInheritable Class rnd_register(Of T)
     End Function
 
     Public Shared Function rnd() As T
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Return c()
     End Function
 

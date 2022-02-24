@@ -12,7 +12,7 @@ Public Module _text_reader
             v = New vector(Of String)()
             Dim l As String = Nothing
             l = r.ReadLine()
-            While l IsNot Nothing
+            While Not l Is Nothing
                 v.emplace_back(l)
                 l = r.ReadLine()
             End While

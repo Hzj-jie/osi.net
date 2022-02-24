@@ -14,7 +14,7 @@ Public Module _config
                         ByVal s As String,
                         ByRef o As section,
                         ByVal variants As vector(Of pair(Of String, String))) As Boolean
-        Return c IsNot Nothing AndAlso c.get(s, o, variants) AndAlso assert(s IsNot Nothing)
+        Return Not c Is Nothing AndAlso c.get(s, o, variants) AndAlso assert(Not s Is Nothing)
     End Function
 
     <Extension()> Public Function sections(ByVal c As config,

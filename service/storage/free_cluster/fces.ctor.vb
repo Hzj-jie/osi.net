@@ -16,8 +16,8 @@ Imports store_t = osi.root.formation.unordered_map(Of osi.root.connector.array_r
 <global_init(global_init_level.server_services)>
 Partial Public NotInheritable Class fces
     Private Sub New(ByVal index As free_cluster, ByVal content As free_cluster, ByVal max_key_count As Int64)
-        assert(index IsNot Nothing)
-        assert(content IsNot Nothing)
+        assert(Not index Is Nothing)
+        assert(Not content Is Nothing)
         Me.index = index
         Me.content = content
         Me.max_key_count = If(max_key_count <= 0, max_int64, max_key_count)
@@ -28,8 +28,8 @@ Partial Public NotInheritable Class fces
                                  ByVal d1 As Func(Of ref(Of free_cluster), event_comb),
                                  ByVal d2 As Func(Of ref(Of free_cluster), event_comb),
                                  Optional ByVal max_key_count As Int64 = npos) As event_comb
-        assert(d1 IsNot Nothing)
-        assert(d2 IsNot Nothing)
+        assert(Not d1 Is Nothing)
+        assert(Not d2 Is Nothing)
         Dim ec1 As event_comb = Nothing
         Dim ec2 As event_comb = Nothing
         Dim f1 As ref(Of free_cluster) = Nothing
@@ -60,7 +60,7 @@ Partial Public NotInheritable Class fces
 
     Private Shared Function ctor(ByVal r As ref(Of istrkeyvt),
                                  ByVal d As Func(Of ref(Of fces), event_comb)) As event_comb
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Dim f As ref(Of fces) = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -208,7 +208,7 @@ Partial Public NotInheritable Class fces
                                                     bs,
                                                     mkc)
                                       End If
-                                      assert(ec IsNot Nothing)
+                                      assert(Not ec Is Nothing)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
                                   End If

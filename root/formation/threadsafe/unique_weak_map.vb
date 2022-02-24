@@ -13,7 +13,7 @@ Public Class unique_weak_map(Of KEY_T As IComparable(Of KEY_T), VALUE_T)
     End Sub
 
     Protected NotOverridable Overrides Function store_value(ByVal i As weak_ref(Of VALUE_T), ByRef o As VALUE_T) As Boolean
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return i.get(o)
     End Function
 

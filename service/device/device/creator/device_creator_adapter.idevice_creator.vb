@@ -9,8 +9,8 @@ Partial Public Class device_creator_adapter(Of IT, OT)
         Private ReadOnly c As Func(Of IT, OT)
 
         Public Sub New(ByVal i As idevice_creator(Of IT), ByVal c As Func(Of IT, OT))
-            assert(i IsNot Nothing)
-            assert(c IsNot Nothing)
+            assert(Not i Is Nothing)
+            assert(Not c Is Nothing)
             Me.i = i
             Me.c = c
         End Sub

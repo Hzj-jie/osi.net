@@ -22,7 +22,7 @@ Partial Public Class module_handle
         Public ReadOnly [module] As [module]
 
         Public Sub New(ByVal name As String, ByVal [module] As [module])
-            assert([module] IsNot Nothing)
+            assert(Not [module] Is Nothing)
             Me.name = name
             Me.module = [module]
         End Sub

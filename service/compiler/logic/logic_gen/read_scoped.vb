@@ -25,9 +25,9 @@ Namespace logic
             Private ReadOnly current As T
 
             Public Sub New(ByVal r As read_scoped(Of T), ByVal f As _do_val_ref(Of T, RT, Boolean))
-                assert(r IsNot Nothing)
+                assert(Not r Is Nothing)
                 assert(Not r.s.empty())
-                assert(f IsNot Nothing)
+                assert(Not f Is Nothing)
                 Me.r = r
                 Me.f = f
                 r.pending_dispose += uint32_1
@@ -51,7 +51,7 @@ Namespace logic
             End Function
 
             Public Shared Operator +(ByVal this As ref(Of RT)) As RT
-                assert(this IsNot Nothing)
+                assert(Not this Is Nothing)
                 Dim r As RT = Nothing
                 assert(this.retrieve(r))
                 Return r

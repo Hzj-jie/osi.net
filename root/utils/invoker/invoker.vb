@@ -98,12 +98,12 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
                     ByVal match_d As Boolean,
                     ByVal obj As Object)
         assert(GetType(delegate_t).is(GetType([Delegate])))
-        assert(mi IsNot Nothing)
+        assert(Not mi Is Nothing)
         If is_delegate_undefined Then
             assert(m Is Nothing)
             assert(Not match_d)
         End If
-        If m IsNot Nothing Then
+        If Not m Is Nothing Then
             assert(match_d)
         End If
         Me.mi = mi
@@ -121,7 +121,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
                                             ByVal mi As MethodInfo,
                                             ByRef m As delegate_t,
                                             ByVal suppress_error As Boolean) As Boolean
-        assert(mi IsNot Nothing)
+        assert(Not mi Is Nothing)
         If is_delegate_undefined Then
             Return False
         End If
@@ -179,7 +179,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
     End Function
 
     Public Overrides Function pre_binding() As Boolean
-        Return m IsNot Nothing
+        Return Not m Is Nothing
     End Function
 
     Public Overrides Function post_binding() As Boolean
@@ -191,7 +191,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
     End Function
 
     Public Function instance_invocable() As Boolean
-        Return [static]() AndAlso Not pre_binding() AndAlso Not obj IsNot Nothing
+        Return Not [static]() AndAlso Not pre_binding() AndAlso Not obj Is Nothing
     End Function
 
     Public Function static_invocable() As Boolean
@@ -200,7 +200,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
 
     Public Overrides Function pre_bind(ByRef d As delegate_t) As Boolean
         If pre_binding() Then
-            assert(m IsNot Nothing)
+            assert(Not m Is Nothing)
             d = m
             Return True
         End If
@@ -210,7 +210,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
     Public Overloads Function post_bind(ByVal obj As Object,
                                         ByRef d As delegate_t,
                                         ByVal suppress_error As Boolean) As Boolean
-        Return obj IsNot Nothing AndAlso
+        Return Not obj Is Nothing AndAlso
                Not [static]() AndAlso
                post_binding() AndAlso
                Not is_delegate_undefined AndAlso
@@ -227,7 +227,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
     End Function
 
     Public Function instance_invoke(ByVal ParamArray params() As Object) As Object
-        assert(obj IsNot Nothing)
+        assert(Not obj Is Nothing)
         Return invoke(obj, params)
     End Function
 

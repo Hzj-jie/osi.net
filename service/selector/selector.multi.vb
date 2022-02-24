@@ -79,18 +79,18 @@ Public Class selector(Of T,
 
     Public Function [erase](ByVal t As TYPE_T, ByVal p As PARA_T) As Boolean
         Dim s As SELECTOR_T = Nothing
-        Return m.get(t, s) AndAlso assert(s IsNot Nothing) AndAlso s.erase(p)
+        Return m.get(t, s) AndAlso assert(Not s Is Nothing) AndAlso s.erase(p)
     End Function
 
     Public Function [erase](ByVal t As TYPE_T, ByVal ps As vector(Of PARA_T)) As Boolean
         Dim s As SELECTOR_T = Nothing
-        Return m.get(t, s) AndAlso assert(s IsNot Nothing) AndAlso s.erase(ps)
+        Return m.get(t, s) AndAlso assert(Not s Is Nothing) AndAlso s.erase(ps)
     End Function
 
     Public Function [select](ByVal i As TYPE_T, ByVal p As PARA_T, ByRef o As T) As Boolean
         Dim s As SELECTOR_T = Nothing
         If m.get(i, s) Then
-            assert(s IsNot Nothing)
+            assert(Not s Is Nothing)
             Return s.select(p, o)
         Else
             Return False

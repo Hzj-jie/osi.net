@@ -15,7 +15,7 @@ Public NotInheritable Class typed_once_action(Of T)
     End Function
 
     Public Shared Sub [do](ByVal i As Action)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         If first() Then
             i()
         End If

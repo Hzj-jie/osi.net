@@ -16,14 +16,14 @@ Partial Public NotInheritable Class b2style
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(b IsNot Nothing)
+            assert(Not b Is Nothing)
             Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
-            assert(n IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
             assert(n.child_count() = 3)
             Dim function_name As String = _namespace.bstyle_format.operator_function_name(l.of(n.child(1)).dump())
             scope.current().call_hierarchy().to_bstyle_function(function_name)

@@ -12,7 +12,7 @@ Namespace counter
         Public Function increase(ByVal id As Int64, ByVal dc As lazier(Of Int64)) As Boolean
             Dim cr As counter_record = Nothing
             cr = counter(id)
-            Return cr IsNot Nothing AndAlso cr.increase(dc)
+            Return Not cr Is Nothing AndAlso cr.increase(dc)
         End Function
 
         Public Function increase(ByVal id As Int64, ByVal dc As Func(Of Int64)) As Boolean
@@ -22,7 +22,7 @@ Namespace counter
         Public Function increase(ByVal id As Int64, Optional ByVal c As Int64 = 1) As Boolean
             Dim cr As counter_record = Nothing
             cr = counter(id)
-            Return cr IsNot Nothing AndAlso cr.increase(c)
+            Return Not cr Is Nothing AndAlso cr.increase(c)
         End Function
 
         Public Function decrease(ByVal id As Int64, ByVal dc As lazier(Of Int64)) As Boolean

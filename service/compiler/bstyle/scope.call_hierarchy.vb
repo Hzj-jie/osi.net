@@ -19,7 +19,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shadows Function call_hierarchy() As call_hierarchy_t
             If is_root() Then
-                assert(fc IsNot Nothing)
+                assert(Not fc Is Nothing)
                 Return fc
             End If
             assert(fc Is Nothing)

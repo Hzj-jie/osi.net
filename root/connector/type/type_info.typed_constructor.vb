@@ -10,7 +10,7 @@ Partial Public NotInheritable Class type_info(Of T)
 
         Public Sub New(ByVal raw As Func(Of Object))
             Me.raw = raw
-            If raw IsNot Nothing Then
+            If Not raw Is Nothing Then
                 typed = Function() As T
                             Return direct_cast(Of T)(raw())
                         End Function
@@ -29,7 +29,7 @@ Partial Public NotInheritable Class type_info(Of T)
 
         Public Sub New(ByVal raw As Func(Of Object(), Object))
             Me.raw = raw
-            If raw IsNot Nothing Then
+            If Not raw Is Nothing Then
                 typed = Function(ByVal parameters() As Object) As T
                             Return direct_cast(Of T)(raw(parameters))
                         End Function

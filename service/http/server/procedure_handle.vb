@@ -11,7 +11,7 @@ Imports osi.root.procedure
 ' when the event_comb has been finished or timed out.
 Public NotInheritable Class procedure_handle
     Public Shared Sub process_context(ByVal ctx As server.context, ByVal ec As event_comb)
-        assert(ctx IsNot Nothing)
+        assert(Not ctx Is Nothing)
         If ec Is Nothing Then
             ctx.finish()
         Else
@@ -20,7 +20,7 @@ Public NotInheritable Class procedure_handle
                                                    goto_next()
                                         End Function,
                                         Function() As Boolean
-                                            assert(ec IsNot Nothing)
+                                            assert(Not ec Is Nothing)
                                             ctx.finish(Not ec.end_result())
                                             Return goto_end()
                                         End Function))
@@ -29,7 +29,7 @@ Public NotInheritable Class procedure_handle
 
     Public Shared Function process_context(ByVal ctx As server.context,
                                            ByVal f As _do_val_ref(Of server.context, event_comb, Boolean)) As Boolean
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Dim ec As event_comb = Nothing
         If f(ctx, ec) Then
             process_context(ctx, ec)
@@ -41,7 +41,7 @@ Public NotInheritable Class procedure_handle
 
     Public Shared Function process_context(ByVal ctx As server.context,
                                            ByVal f As _do(Of event_comb, Boolean)) As Boolean
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return process_context(ctx,
                                Function(ByVal c As server.context, ByRef o As event_comb) As Boolean
                                    Return f(o)

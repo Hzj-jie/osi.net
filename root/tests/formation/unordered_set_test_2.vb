@@ -31,7 +31,7 @@ Friend NotInheritable Class unordered_set_case
     End Function
 
     Private Function validate() As Boolean
-        Return keys IsNot Nothing
+        Return Not keys Is Nothing
     End Function
 
     Public Sub New(ByVal validate As Boolean)
@@ -128,8 +128,8 @@ Friend NotInheritable Class unordered_set_case
 
         Dim cmp As void(Of [unordered_set](Of String), [unordered_set](Of String)) =
             Sub(ByRef base, ByRef camp)
-                assert(base IsNot Nothing)
-                assert(camp IsNot Nothing)
+                assert(Not base Is Nothing)
+                assert(Not camp Is Nothing)
                 c = 0
                 it = base.begin()
                 While it <> base.end()

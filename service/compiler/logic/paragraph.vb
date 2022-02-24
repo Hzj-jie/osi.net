@@ -31,11 +31,11 @@ Namespace logic
         End Function
 
         Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             Using scope.current().start_scope()
                 Dim i As UInt32 = 0
                 While i < s.size()
-                    assert(s(i) IsNot Nothing)
+                    assert(Not s(i) Is Nothing)
                     If Not s(i).build(o) Then
                         Return False
                     End If

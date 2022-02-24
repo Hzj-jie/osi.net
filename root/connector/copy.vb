@@ -10,8 +10,8 @@ Public Module _copy
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function copy_clone(Of T)(ByRef dest As T, ByVal src As T) As Boolean
 #If DEBUG Then
-        assert(type_info(Of T).new_object_clone() IsNot Nothing)
-        assert(src IsNot Nothing)
+        assert(Not type_info(Of T).new_object_clone() Is Nothing)
+        assert(Not src Is Nothing)
 #End If
         Return type_info(Of T).new_object_clone()(src, dest)
     End Function

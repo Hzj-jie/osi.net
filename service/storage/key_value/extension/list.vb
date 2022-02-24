@@ -46,7 +46,7 @@ Public Module _list
 
     Private Function read(ByVal d As Func(Of ref(Of Byte()), event_comb),
                           ByVal result As ref(Of vector(Of Byte()))) As event_comb
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Dim ec As event_comb = Nothing
         Dim p As ref(Of Byte()) = Nothing
         Return New event_comb(Function() As Boolean
@@ -89,7 +89,7 @@ Public Module _list
 
     Private Function read(ByVal d As Func(Of ref(Of vector(Of Byte())), event_comb),
                           ByVal result As ref(Of vector(Of String))) As event_comb
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Dim ec As event_comb = Nothing
         Dim r As ref(Of vector(Of Byte())) = Nothing
         Return New event_comb(Function() As Boolean

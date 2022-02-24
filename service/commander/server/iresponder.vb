@@ -16,8 +16,8 @@ Public MustInherit Class iexecutable_responder(Of CONTINUOUS As _boolean)
     Protected Sub New(ByVal pending_request_timeout_ms As Int64,
                       ByVal e As executor,
                       ByVal stopping As Func(Of Boolean))
-        assert(stopping IsNot Nothing OrElse Not continuous)
-        assert(e IsNot Nothing)
+        assert(Not stopping Is Nothing OrElse Not continuous)
+        assert(Not e Is Nothing)
         Me.pending_request_timeout_ms = pending_request_timeout_ms
         Me.e = e
         Me.stopping = stopping
@@ -41,7 +41,7 @@ Public MustInherit Class iexecutable_responder(Of CONTINUOUS As _boolean)
 
     Protected Function expired() As Boolean
         assert(continuous)
-        assert(stopping IsNot Nothing)
+        assert(Not stopping Is Nothing)
         Return stopping()
     End Function
 End Class

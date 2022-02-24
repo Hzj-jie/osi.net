@@ -16,8 +16,8 @@ Partial Public Class client_flow_adapter
         Private ReadOnly sensor As sensor
 
         Public Sub New(ByVal c As TcpClient, ByVal p As powerpoint)
-            assert(c IsNot Nothing)
-            assert(p IsNot Nothing)
+            assert(Not c Is Nothing)
+            assert(Not p Is Nothing)
             Me.c = c
             ' TODO: Cannot send header_data_increment to stream_flow_adapter.
             Me.sf = New stream_flow_adapter(c.stream(), p.send_rate_sec, p.receive_rate_sec, False)

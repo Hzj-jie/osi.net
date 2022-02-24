@@ -11,7 +11,7 @@ Partial Public NotInheritable Class promise
     Private appended As singleentry
 
     Private Sub New(ByVal t As thenable)
-        assert(t IsNot Nothing)
+        assert(Not t Is Nothing)
         Me.t = t
     End Sub
 
@@ -44,7 +44,7 @@ Partial Public NotInheritable Class promise
     End Sub
 
     Public Function [then](ByVal on_resolve As Func(Of Object, Object), ByVal on_reject As Action(Of Object)) As promise
-        assert(on_resolve IsNot Nothing)
+        assert(Not on_resolve Is Nothing)
         If Not appended.mark_in_use() Then
             Return Nothing
         End If
@@ -54,7 +54,7 @@ Partial Public NotInheritable Class promise
                    r._resolve(on_resolve(result))
                End Sub,
                Sub(ByVal reason As Object)
-                   If on_reject IsNot Nothing Then
+                   If Not on_reject Is Nothing Then
                        on_reject(reason)
                    End If
                    r._reject(reason)

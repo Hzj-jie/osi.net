@@ -17,7 +17,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("start_scope") Then
                 Return False
@@ -44,7 +44,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("type") Then
                 Return False
@@ -76,7 +76,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("append_slice") Then
                 Return False
@@ -105,7 +105,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("cut_slice") Then
                 Return False
@@ -140,7 +140,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("cut") Then
                 Return False
@@ -175,7 +175,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("cut_len") Then
                 Return False
@@ -216,7 +216,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("clear") Then
                 Return False
@@ -239,7 +239,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("add") Then
                 Return False
@@ -274,7 +274,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("subtract") Then
                 Return False
@@ -309,7 +309,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("multiply") Then
                 Return False
@@ -344,7 +344,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("divide") Then
                 Return False
@@ -385,7 +385,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("extract") Then
                 Return False
@@ -426,7 +426,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("power") Then
                 Return False
@@ -461,7 +461,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("and") Then
                 Return False
@@ -496,7 +496,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("or") Then
                 Return False
@@ -531,7 +531,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("callee") Then
                 Return False
@@ -580,7 +580,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("caller") Then
                 Return False
@@ -619,7 +619,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("caller") Then
                 Return False
@@ -652,7 +652,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("callee_ref") Then
                 Return False
@@ -691,7 +691,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("caller_ref") Then
                 Return False
@@ -730,7 +730,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("caller_ref") Then
                 Return False
@@ -763,7 +763,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("address_of") Then
                 Return False
@@ -792,7 +792,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("less") Then
                 Return False
@@ -827,7 +827,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("more") Then
                 Return False
@@ -862,7 +862,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("equal") Then
                 Return False
@@ -897,7 +897,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("less_or_equal") Then
                 Return False
@@ -932,7 +932,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("more_or_equal") Then
                 Return False
@@ -967,7 +967,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("if") Then
                 Return False
@@ -1019,7 +1019,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("if") Then
                 Return False
@@ -1052,7 +1052,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("copy") Then
                 Return False
@@ -1081,7 +1081,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("copy_const") Then
                 Return False
@@ -1115,7 +1115,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("define") Then
                 Return False
@@ -1144,7 +1144,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("define_heap") Then
                 Return False
@@ -1179,7 +1179,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("do_until") Then
                 Return False
@@ -1212,7 +1212,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("do_while") Then
                 Return False
@@ -1245,7 +1245,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("interrupt") Then
                 Return False
@@ -1280,7 +1280,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("move") Then
                 Return False
@@ -1309,7 +1309,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("return") Then
                 Return False
@@ -1341,7 +1341,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("return") Then
                 Return False
@@ -1370,7 +1370,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("append") Then
                 Return False
@@ -1399,7 +1399,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("not") Then
                 Return False
@@ -1428,7 +1428,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("sizeof") Then
                 Return False
@@ -1457,7 +1457,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("empty") Then
                 Return False
@@ -1486,7 +1486,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("while_then") Then
                 Return False
@@ -1519,7 +1519,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("stop") Then
                 Return False
@@ -1536,7 +1536,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_add") Then
                 Return False
@@ -1571,7 +1571,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_subtract") Then
                 Return False
@@ -1606,7 +1606,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_multiply") Then
                 Return False
@@ -1641,7 +1641,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_divide") Then
                 Return False
@@ -1676,7 +1676,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_extract") Then
                 Return False
@@ -1711,7 +1711,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_power") Then
                 Return False
@@ -1746,7 +1746,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_less") Then
                 Return False
@@ -1781,7 +1781,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_more") Then
                 Return False
@@ -1816,7 +1816,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_equal") Then
                 Return False
@@ -1851,7 +1851,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_less_or_equal") Then
                 Return False
@@ -1886,7 +1886,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("float_more_or_equal") Then
                 Return False
@@ -1921,7 +1921,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("left_shift") Then
                 Return False
@@ -1956,7 +1956,7 @@ Namespace logic
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(v.size() > p)
             If Not v(p).Equals("right_shift") Then
                 Return False

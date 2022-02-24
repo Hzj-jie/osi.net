@@ -42,7 +42,7 @@ Public Class sign_strongness_test
         Private ReadOnly rs As [set](Of piece)
 
         Public Sub New(ByVal s As signer)
-            assert(s IsNot Nothing)
+            assert(Not s Is Nothing)
             Me.s = s
             Me.rs = New [set](Of piece)()
         End Sub

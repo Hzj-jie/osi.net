@@ -34,7 +34,7 @@ Public Module _type
             raise_error(error_type.warning, "Type.GetType(", type_name, ") throws exception ", ex.details())
             Return False
         End Try
-        Return o IsNot Nothing
+        Return Not o Is Nothing
     End Function
 
     <Extension()> Public Function [New](ByRef o As Type,

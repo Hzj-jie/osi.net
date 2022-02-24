@@ -9,7 +9,7 @@ Partial Public Class type_attribute
     End Function
 
     Public Function copy_to(ByVal i As type_attribute) As type_attribute
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return i.copy_from(Me)
     End Function
 

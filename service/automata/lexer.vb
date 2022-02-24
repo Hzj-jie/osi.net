@@ -216,7 +216,7 @@ Public Class lexer
         If adfa.parse(b,
                       result,
                       Function(NIU() As Byte, pos As UInt32) As Boolean
-                          If uw IsNot Nothing Then
+                          If Not uw Is Nothing Then
                               result.emplace_back(uw.output())
                               uw = Nothing
                           End If
@@ -229,7 +229,7 @@ Public Class lexer
                           uw.append(b(pos))
                           Return True
                       End Function) Then
-            If uw IsNot Nothing Then
+            If Not uw Is Nothing Then
                 o.emplace_back(uw.output)
             End If
             o.emplace_back(word.end_word)

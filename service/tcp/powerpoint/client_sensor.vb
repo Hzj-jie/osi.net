@@ -14,7 +14,7 @@ Public Class client_sensor
         Private ReadOnly checker As client_checker
 
         Public Sub New(ByVal c As TcpClient, ByVal p As powerpoint)
-            assert(c IsNot Nothing)
+            assert(Not c Is Nothing)
             Me.c = c
             Me.checker = New client_checker(c, p)
         End Sub
@@ -49,7 +49,7 @@ Public Class client_sensor
         End Sub
 
         Public Sub New(ByVal c As TcpClient, ByVal p As powerpoint)
-            assert(c IsNot Nothing)
+            assert(Not c Is Nothing)
             Me.c = c
             Me.checker = New client_checker(c, p)
         End Sub

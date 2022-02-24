@@ -40,25 +40,25 @@ Public Class delegate_device(Of T)
         Dim tcloser As Action(Of T) = Nothing
         Dim tidentifier As Func(Of T, String) = Nothing
         Dim tchecker As Action(Of T) = Nothing
-        If validator IsNot Nothing Then
+        If Not validator Is Nothing Then
             tvalidator = Function(ByVal x As T) As Boolean
                              assert(object_compare(i, x) = 0)
                              Return validator(i)
                          End Function
         End If
-        If closer IsNot Nothing Then
+        If Not closer Is Nothing Then
             tcloser = Sub(ByVal x As T)
                           assert(object_compare(i, x) = 0)
                           closer(i)
                       End Sub
         End If
-        If identifier IsNot Nothing Then
+        If Not identifier Is Nothing Then
             tidentifier = Function(ByVal x As T) As String
                               assert(object_compare(i, x) = 0)
                               Return identifier(i)
                           End Function
         End If
-        If checker IsNot Nothing Then
+        If Not checker Is Nothing Then
             tchecker = Sub(ByVal x As T)
                            assert(object_compare(i, x) = 0)
                            checker(i)
@@ -69,7 +69,7 @@ Public Class delegate_device(Of T)
 
     Protected Sub New(ByVal c As T, ByVal sr As delegate_device_status_retriever(Of T))
         MyBase.New(c)
-        assert(sr IsNot Nothing)
+        assert(Not sr Is Nothing)
         Me.sr = sr
     End Sub
 

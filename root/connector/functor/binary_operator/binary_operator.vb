@@ -26,7 +26,7 @@ Public Class binary_operator(Of T, T2, RT)
            accumulatable(Of T, T2, RT).v Then
             Return True
         End If
-        assert(accumulatable(Of T, T2, RT).ex IsNot Nothing)
+        assert(Not accumulatable(Of T, T2, RT).ex Is Nothing)
         raise_error(error_type.warning,
                     "cannot add a T (",
                     GetType(T).full_name(),
@@ -43,7 +43,7 @@ Public Class binary_operator(Of T, T2, RT)
     Public Function add(ByVal i As T, ByVal j As T2) As RT
         Dim f As Func(Of T, T2, RT) = Nothing
         f = global_resolver(Of Func(Of T, T2, RT), add_protector).resolve_or_null()
-        If f IsNot Nothing Then
+        If Not f Is Nothing Then
             Return f(i, j)
         End If
         assert(accumulatable(Of T, T2, RT).v)
@@ -54,7 +54,7 @@ Public Class binary_operator(Of T, T2, RT)
     Public Function minus(ByVal i As T, ByVal j As T2) As RT
         Dim f As Func(Of T, T2, RT) = Nothing
         f = global_resolver(Of Func(Of T, T2, RT), minus_protector).resolve_or_null()
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return f(i, j)
     End Function
 
@@ -62,7 +62,7 @@ Public Class binary_operator(Of T, T2, RT)
     Public Function multiply(ByVal i As T, ByVal j As T2) As RT
         Dim f As Func(Of T, T2, RT) = Nothing
         f = global_resolver(Of Func(Of T, T2, RT), multiply_protector).resolve_or_null()
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         Return f(i, j)
     End Function
 

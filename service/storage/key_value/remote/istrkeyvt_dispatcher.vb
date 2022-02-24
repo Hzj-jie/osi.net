@@ -10,7 +10,7 @@ Public Class istrkeyvt_dispatcher
     Private ReadOnly dispatcher As target_dispatcher(Of istrkeyvt)
 
     Public Sub New(ByVal dispatcher As target_dispatcher(Of istrkeyvt))
-        assert(dispatcher IsNot Nothing)
+        assert(Not dispatcher Is Nothing)
         Me.dispatcher = dispatcher
         assert(listen(Me.dispatcher))
     End Sub
@@ -32,7 +32,7 @@ Public Class istrkeyvt_dispatcher
     End Operator
 
     Public Shared Function listen(ByVal dispatcher As target_dispatcher(Of istrkeyvt)) As Boolean
-        Return dispatcher IsNot Nothing AndAlso
+        Return Not dispatcher Is Nothing AndAlso
                dispatcher.register(action.istrkeyvt_append, AddressOf append) AndAlso
                dispatcher.register(action.istrkeyvt_capacity, AddressOf capacity) AndAlso
                dispatcher.register(action.istrkeyvt_delete, AddressOf delete) AndAlso
@@ -52,7 +52,7 @@ Public Class istrkeyvt_dispatcher
     End Function
 
     Public Shared Function ignore(ByVal dispatcher As target_dispatcher(Of istrkeyvt)) As Boolean
-        Return dispatcher IsNot Nothing AndAlso
+        Return Not dispatcher Is Nothing AndAlso
                dispatcher.erase(action.istrkeyvt_append) AndAlso
                dispatcher.erase(action.istrkeyvt_capacity) AndAlso
                dispatcher.erase(action.istrkeyvt_delete) AndAlso
@@ -128,7 +128,7 @@ Public Class istrkeyvt_dispatcher
                           Return a_strkeyvt(strkeyvt).list(r)
                       End Function,
                       Function() As Boolean
-                          If (+r) IsNot Nothing Then
+                          If Not (+r) Is Nothing Then
                               o.attach(parameter.keys, +r)
                           End If
                           Return True

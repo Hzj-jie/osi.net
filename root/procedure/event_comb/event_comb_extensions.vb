@@ -8,7 +8,7 @@ Imports osi.root.connector
 
 Public Module _event_comb_extensions
     <Extension()> Public Function success_finished(ByVal this As event_comb) As Boolean
-        Return this IsNot Nothing AndAlso this.end() AndAlso this.end_result()
+        Return Not this Is Nothing AndAlso this.end() AndAlso this.end_result()
     End Function
 
     <Extension()> Public Function cancel(ByVal ecs() As event_comb) As Boolean
@@ -57,7 +57,7 @@ Public Module _event_comb_extensions
 
     <Extension()> Public Function end_result_or_null(ByVal ecs() As event_comb) As Boolean
         For i As Int32 = 0 To array_size_i(ecs) - 1
-            If ecs(i) IsNot Nothing AndAlso Not ecs(i).end_result() Then
+            If Not ecs(i) Is Nothing AndAlso Not ecs(i).end_result() Then
                 Return False
             End If
         Next
@@ -66,7 +66,7 @@ Public Module _event_comb_extensions
 
     <Extension()> Public Function any_end_result_or_null(ByVal ecs() As event_comb) As Boolean
         For i As Int32 = 0 To array_size_i(ecs) - 1
-            If ecs(i) IsNot Nothing AndAlso ecs(i).end_result() Then
+            If Not ecs(i) Is Nothing AndAlso ecs(i).end_result() Then
                 Return True
             End If
         Next
@@ -75,8 +75,8 @@ Public Module _event_comb_extensions
 
     Friend Function create(ByVal precondition As Func(Of Boolean),
                            ByVal ctor As Func(Of event_comb)) As event_comb
-        assert(precondition IsNot Nothing)
-        assert(ctor IsNot Nothing)
+        assert(Not precondition Is Nothing)
+        assert(Not ctor Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If precondition() Then

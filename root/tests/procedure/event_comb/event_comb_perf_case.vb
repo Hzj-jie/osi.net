@@ -24,7 +24,7 @@ Friend Class event_comb_perf_case
     End Sub
 
     Private Function fake_work(ByVal e As Func(Of Boolean)) As Func(Of Boolean)
-        assert(e IsNot Nothing)
+        assert(Not e Is Nothing)
         Return Function() As Boolean
                    fake_processor_work(rnd_int(0, ms))
                    Return waitfor(rnd_int(0, ms)) AndAlso

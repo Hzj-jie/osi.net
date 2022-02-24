@@ -76,7 +76,7 @@ Public Module _chmod
     End Function
 
     Public Sub chmod(ByVal file As String, ByVal permissions As FilePermissions, ByRef o As Int32)
-        If f IsNot Nothing AndAlso f.static() AndAlso f.pre_binding() Then
+        If Not f Is Nothing AndAlso f.static() AndAlso f.pre_binding() Then
             o = direct_cast(Of Int32)((+f)({file, CUInt(permissions)}))
         Else
             o = -2

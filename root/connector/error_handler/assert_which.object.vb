@@ -17,7 +17,7 @@ Partial Public NotInheritable Class assert_which
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function is_not_null() As Object
-            assert(obj IsNot Nothing)
+            assert(Not obj Is Nothing)
             Return obj
         End Function
     End Structure

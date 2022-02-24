@@ -24,9 +24,9 @@ Namespace logic
                         ByVal start As UInt32,
                         ByVal [end] As UInt32,
                         ByVal e As instruction_gen)
-            assert(v IsNot Nothing)
+            assert(Not v Is Nothing)
             assert(start >= 0 AndAlso [end] > start AndAlso [end] <= v.size())
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             Me.v = New vector(Of String)()
             assert(Me.v.emplace_back(+v, start, [end] - start))
             Me.e = e
@@ -43,7 +43,7 @@ Namespace logic
         End Function
 
         Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             Dim start As UInt32 = o.size()
             If Not e.build(o) Then
                 Return False

@@ -13,7 +13,7 @@ Partial Public Class bytes_serializer(Of T)
         Private ReadOnly s As bytes_serializer(Of T)
 
         Public Sub New(ByVal s As bytes_serializer(Of T))
-            assert(s IsNot Nothing)
+            assert(Not s Is Nothing)
             Me.s = s
         End Sub
 

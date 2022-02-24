@@ -18,7 +18,7 @@ Public NotInheritable Class not_null(Of T As Class)
     Private ReadOnly v As T
 
     Public Sub New(ByVal v As T)
-        assert(v IsNot Nothing)
+        assert(Not v Is Nothing)
         Me.v = v
     End Sub
 
@@ -27,7 +27,7 @@ Public NotInheritable Class not_null(Of T As Class)
     End Function
 
     Public Shared Operator +(ByVal this As not_null(Of T)) As T
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Return this.get()
     End Operator
 

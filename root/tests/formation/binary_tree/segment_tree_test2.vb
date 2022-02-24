@@ -71,7 +71,7 @@ Friend Class segment_tree_case2
                               ByVal p As Int64,
                               ByRef has_value As Boolean,
                               ByRef value As Int64)
-        assert(segments IsNot Nothing)
+        assert(Not segments Is Nothing)
         has_value = False
         value = 0
         assert(Not segments.empty())
@@ -90,7 +90,7 @@ Friend Class segment_tree_case2
 
     Private Function single_find_case(ByVal t As segment_tree(Of Int64),
                                       ByVal segments As vector(Of pair(Of Int64, pair(Of Int64, Int64)))) As Boolean
-        assert(t IsNot Nothing)
+        assert(Not t Is Nothing)
         For i As Int32 = 0 To 1024 * If(isreleasebuild(), 10, 1) - 1
             Dim p As Int64 = 0
             p = rnd_position()
@@ -113,7 +113,7 @@ Friend Class segment_tree_case2
 
     Private Function range_find_case(ByVal t As segment_tree(Of Int64),
                                      ByVal segments As vector(Of pair(Of Int64, pair(Of Int64, Int64)))) As Boolean
-        assert(t IsNot Nothing)
+        assert(Not t Is Nothing)
         For i As Int32 = 0 To 16 * If(isreleasebuild(), 8, 1) - 1
             Dim r As pair(Of Int64, Int64) = Nothing
             r = rnd_small_segment()

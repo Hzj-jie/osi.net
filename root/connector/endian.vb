@@ -206,12 +206,12 @@ Public NotInheritable Class endian
             Else
                 assert(False)
             End If
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             Return f
         End Function
 
         Private Shared Function c(Of VT)(ByVal f As Func(Of VT, VT)) As Func(Of T, T)
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             Return Function(ByVal i As T) As T
                        Return direct_cast(Of T)(f(direct_cast(Of VT)(i)))
                    End Function

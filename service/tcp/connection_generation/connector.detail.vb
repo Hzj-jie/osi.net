@@ -15,8 +15,8 @@ Imports osi.service.dns
 
 Partial Public NotInheritable Class connector
     Private Function connect(ByVal add As IPAddress, ByVal r As ref(Of TcpClient)) As event_comb
-        assert(add IsNot Nothing)
-        assert(p IsNot Nothing)
+        assert(Not add Is Nothing)
+        assert(Not p Is Nothing)
         assert(p.is_outgoing)
         Dim ec As event_comb = Nothing
         Dim c As TcpClient = Nothing
@@ -45,7 +45,7 @@ Partial Public NotInheritable Class connector
                                   End If
                               End Function,
                               Function() As Boolean
-                                  assert(c IsNot Nothing)
+                                  assert(Not c Is Nothing)
                                   Return ec.end_result() AndAlso
                                          +accepted AndAlso
                                          eva(r, c) AndAlso
@@ -54,7 +54,7 @@ Partial Public NotInheritable Class connector
     End Function
 
     Private Function connect(ByVal r As ref(Of TcpClient)) As event_comb
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         assert(p.is_outgoing)
         Dim ec As event_comb = Nothing
         Dim add As ref(Of IPAddress) = Nothing
@@ -67,7 +67,7 @@ Partial Public NotInheritable Class connector
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If ec.end_result() AndAlso (+add) IsNot Nothing Then
+                                  If ec.end_result() AndAlso Not (+add) Is Nothing Then
                                       ec = connect(+add, r)
                                       Return waitfor(ec) AndAlso
                                              goto_next()

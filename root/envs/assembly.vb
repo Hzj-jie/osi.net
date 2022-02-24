@@ -17,7 +17,7 @@ Public Module _assembly
                 current_assembly = Assembly.GetExecutingAssembly()
             End If
         End If
-        assert(current_assembly IsNot Nothing)
+        assert(Not current_assembly Is Nothing)
         Return current_assembly
     End Function
 End Module

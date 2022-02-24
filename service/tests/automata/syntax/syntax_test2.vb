@@ -169,7 +169,7 @@ Namespace syntaxer
                                             ByVal type As UInt32,
                                             ByVal word_start As UInt32,
                                             ByVal word_end As UInt32) As Boolean
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
             Return assertion.more(n.subnodes.size(), id) AndAlso
                    assertion.equal(n.subnodes(id).type, type) AndAlso
                    assertion.equal(n.subnodes(id).word_start, word_start) AndAlso

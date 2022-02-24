@@ -6,10 +6,10 @@ Imports osi.root.lock
 
 Partial Public Class device_pool(Of T)
     Protected Overloads Sub close_existing_devices(ByVal q As qless2(Of idevice(Of T)))
-        assert(q IsNot Nothing)
+        assert(Not q Is Nothing)
         While total_count() > uint32_0 OrElse Not q.empty()
             Dim c As idevice(Of T) = Nothing
-            While q.pop(c) AndAlso assert(c IsNot Nothing)
+            While q.pop(c) AndAlso assert(Not c Is Nothing)
                 raise_device_removed(c)
                 c.close()
             End While

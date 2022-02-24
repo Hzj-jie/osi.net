@@ -21,7 +21,7 @@ Public Class chained_case_wrapper
         assert(Not isemptyarray(cs))
         Me.pp = 0
         For i As Int32 = 0 To array_size_i(cs) - 1
-            assert(cs(i) IsNot Nothing)
+            assert(Not cs(i) Is Nothing)
             If cs(i).reserved_processors() > pp Then
                 pp = cs(i).reserved_processors()
             End If

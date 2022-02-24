@@ -55,7 +55,7 @@ Public Class concurrency_event(Of AutoReset As _boolean)
 
     Private Function to_action(ByVal i As iaction) As Action
         Return Sub()
-                   assert(i IsNot Nothing)
+                   assert(Not i Is Nothing)
                    If i.valid() Then
                        i.run()
                    End If

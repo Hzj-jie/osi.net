@@ -108,13 +108,13 @@ Public Class exec_case
             AddHandler p.receive_error, AddressOf error_received
             Dim ex As Exception = Nothing
             If Not p.start(ex) Then
-                If ex IsNot Nothing Then
+                If Not ex Is Nothing Then
                     assertion.is_true(False, ex.Message())
                 End If
                 Return False
             End If
             assert(ex Is Nothing)
-            If inputs() IsNot Nothing Then
+            If Not inputs() Is Nothing Then
                 For Each s As String In inputs()
                     p.stdin().Write(s)
                 Next

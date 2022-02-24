@@ -25,7 +25,7 @@ Partial Public NotInheritable Class free_cluster
     End Sub
 
     Private Sub New(ByVal i As virtdisk)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         cs = New clusters_t()
         hcs = New clusters_t()
         fcs = New queue(Of cluster)()
@@ -88,7 +88,7 @@ Partial Public NotInheritable Class free_cluster
                                   End If
                               End Function,
                                          Function() As Boolean
-                                             If ec.end_result() AndAlso (+r) IsNot Nothing Then
+                                             If ec.end_result() AndAlso Not (+r) Is Nothing Then
                                                  If cs.find((+r).id()) <> cs.end() Then
                                                      raise_error(error_type.warning,
                                                                  "duplicate cluster id ",

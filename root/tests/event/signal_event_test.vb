@@ -98,7 +98,7 @@ Public Class signal_event_test
             assertion.equal(se.attached_count(), 0)
             assertion.is_false(se.attached())
             For i As Int32 = 0 To e.size() - 1
-                assert(e(i) IsNot Nothing)
+                assert(Not e(i) Is Nothing)
                 assertion.equal(e(i).called_times(), 1)
             Next
             e.clear()

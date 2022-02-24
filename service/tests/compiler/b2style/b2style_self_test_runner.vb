@@ -16,7 +16,7 @@ Public MustInherit Class b2style_self_test_runner
     Private ReadOnly data() As Byte
 
     Protected Sub New(ByVal filter As String, ByVal data() As Byte)
-        assert(filter IsNot Nothing)
+        assert(Not filter Is Nothing)
         assert(Not data.null_or_empty())
         Me.filter = filter
         Me.data = data

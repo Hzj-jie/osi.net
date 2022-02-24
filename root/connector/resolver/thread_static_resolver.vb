@@ -59,7 +59,7 @@ Public Class thread_static_resolver(Of T As Class, PROTECTOR)
             r = New resolver(Of T)()
             resolver = r
         End If
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         Return r
     End Function
 

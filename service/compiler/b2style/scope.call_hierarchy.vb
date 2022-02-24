@@ -18,7 +18,7 @@ Partial Public NotInheritable Class b2style
 
             Public Shared Function from_value_clause() As Func(Of typed_node, Boolean)
                 Return Function(ByVal n As typed_node) As Boolean
-                           assert(n IsNot Nothing)
+                           assert(Not n Is Nothing)
                            ' From value-clause or value-definition
                            assert(n.child_count() = 3 OrElse n.child_count() = 4)
                            ' TODO: This is a very simple solution with noticable amount of false-positive cases. But it
@@ -41,7 +41,7 @@ Partial Public NotInheritable Class b2style
 
         Public Shadows Function call_hierarchy() As call_hierarchy_t
             If is_root() Then
-                assert(fc IsNot Nothing)
+                assert(Not fc Is Nothing)
                 Return fc
             End If
             assert(fc Is Nothing)

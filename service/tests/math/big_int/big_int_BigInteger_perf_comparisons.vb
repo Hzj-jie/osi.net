@@ -276,7 +276,7 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
             End Sub
 
             Private Sub New(ByVal e1 As Action(Of big_int, big_int), ByVal e2 As Action(Of BigInteger, BigInteger))
-                assert(e1 IsNot Nothing OrElse e2 IsNot Nothing)
+                assert(Not e1 Is Nothing OrElse Not e2 Is Nothing)
                 assert(e1 Is Nothing OrElse e2 Is Nothing)
                 Me.e1 = e1
                 Me.e2 = e2

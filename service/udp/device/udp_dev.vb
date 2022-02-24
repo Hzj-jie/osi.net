@@ -37,7 +37,7 @@ Public Class udp_dev
     End Sub
 
     Public Sub New(ByVal p As powerpoint, ByVal sources As const_array(Of IPEndPoint), ByVal buff() As Byte)
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Me.p = p
         If p.local_port = socket_invalid_port Then
             If Not udp_clients.next(p, Me.local_port, Nothing) Then
@@ -53,7 +53,7 @@ Public Class udp_dev
             Me.accepter = New listener.multiple_accepter(sources)
             Me.buff_size = New atomic_int32()
             AddHandler accepter.received, AddressOf push_queue
-            If buff IsNot Nothing Then
+            If Not buff Is Nothing Then
                 push_queue(buff, Nothing)
             End If
             assert(listeners.[New](p, local_port).attach(accepter))
@@ -151,22 +151,22 @@ Public Class udp_dev
     End Function
 
     Private Shared Function validator(ByVal i As udp_dev) As Boolean
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return i.valid()
     End Function
 
     Private Shared Sub closer(ByVal i As udp_dev)
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         i.close()
     End Sub
 
     Private Shared Function identifier(ByVal i As udp_dev) As String
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return i.p.identity
     End Function
 
     Public Shared Operator +(ByVal this As udp_dev) As idevice(Of udp_dev)
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Return this.make_device(validator:=AddressOf validator,
                                 closer:=AddressOf closer,
                                 identifier:=AddressOf identifier)

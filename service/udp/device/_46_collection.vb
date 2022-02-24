@@ -30,7 +30,7 @@ Public MustInherit Class _46_collection(Of T, __NEW As __do(Of powerpoint, UInt1
     End Function
 
     Public Shared Function [New](ByVal p As powerpoint, ByVal local_port As UInt16, ByRef o As T) As Boolean
-        If p IsNot Nothing Then
+        If Not p Is Nothing Then
             If p.local_defined() Then
                 local_port = p.local_port
             End If
@@ -61,7 +61,7 @@ Public MustInherit Class _46_collection(Of T, __NEW As __do(Of powerpoint, UInt1
     End Function
 
     Public Shared Function [next](ByVal p As powerpoint, ByRef port As UInt16, ByRef o As T) As Boolean
-        If p IsNot Nothing Then
+        If Not p Is Nothing Then
             Return If(p.ipv4, v4, v6).next(_new_T(p), port, o)
         Else
             Return False
@@ -75,7 +75,7 @@ Public MustInherit Class _46_collection(Of T, __NEW As __do(Of powerpoint, UInt1
     End Function
 
     Public Shared Function [erase](ByVal p As powerpoint, ByVal port As UInt16) As Boolean
-        If p IsNot Nothing Then
+        If Not p Is Nothing Then
             If p.local_defined() Then
                 port = p.local_port
             End If

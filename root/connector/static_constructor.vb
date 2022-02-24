@@ -42,13 +42,13 @@ Public NotInheritable Class static_constructor
     Public Shared Sub execute(ByVal t As Type)
         Dim a As Action = Nothing
         a = as_action(t)
-        If a IsNot Nothing Then
+        If Not a Is Nothing Then
             a()
         End If
     End Sub
 
     Public Shared Sub once_execute(ByVal t As Type)
-        If t IsNot Nothing Then
+        If Not t Is Nothing Then
             Runtime.CompilerServices.RuntimeHelpers.RunClassConstructor(t.TypeHandle())
         End If
     End Sub
@@ -58,11 +58,11 @@ Public NotInheritable Class static_constructor
     Private ReadOnly oa As Action
 
     Public Sub New(ByVal t As Type)
-        assert(t IsNot Nothing)
+        assert(Not t Is Nothing)
         c = retrieve(t)
         a = as_action(c)
         oa = as_once_action(t)
-        assert(oa IsNot Nothing)
+        assert(Not oa Is Nothing)
     End Sub
 
     Public Function retrieve() As ConstructorInfo
@@ -78,7 +78,7 @@ Public NotInheritable Class static_constructor
     End Function
 
     Public Sub execute()
-        If a IsNot Nothing Then
+        If Not a Is Nothing Then
             a()
         End If
     End Sub

@@ -18,7 +18,7 @@ Partial Public Class token_test
                        ByVal id As UInt32,
                        ByVal c As mock_conn,
                        ByVal s As signer)
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             Me.f = f
             Me.id = id
             Me.c = c

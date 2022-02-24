@@ -28,7 +28,7 @@ Friend Class omap_case
     Private ReadOnly v As [set](Of String) = Nothing
 
     Private Function validate() As Boolean
-        Return v IsNot Nothing
+        Return Not v Is Nothing
     End Function
 
     Private Shared Function rnd_key() As String
@@ -200,8 +200,8 @@ Friend Class omap_case
 
         Dim cmp As void(Of omap(Of String, UInt32), omap(Of String, UInt32)) =
             Sub(ByRef base, ByRef camp)
-                assert(base IsNot Nothing)
-                assert(camp IsNot Nothing)
+                assert(Not base Is Nothing)
+                assert(Not camp Is Nothing)
                 c = 0
                 it = base.begin()
                 While it <> base.end()

@@ -12,19 +12,19 @@ Public Class ikeyvalue2_ikeyvt2(Of SEEK_RESULT)
 
     Public Sub New(ByVal d As ikeyvalue2(Of SEEK_RESULT),
                    ByVal t As ikeyvalue2(Of SEEK_RESULT))
-        assert(d IsNot Nothing)
-        assert(t IsNot Nothing)
+        assert(Not d Is Nothing)
+        assert(Not t Is Nothing)
         Me.d = d
         Me.t = t
     End Sub
 
     Private Shared Function data_seek_result(ByVal key As pair(Of SEEK_RESULT, SEEK_RESULT)) As SEEK_RESULT
-        assert(key IsNot Nothing)
+        assert(Not key Is Nothing)
         Return key.first
     End Function
 
     Private Shared Function timestamp_seek_result(ByVal key As pair(Of SEEK_RESULT, SEEK_RESULT)) As SEEK_RESULT
-        assert(key IsNot Nothing)
+        assert(Not key Is Nothing)
         Return key.second
     End Function
 

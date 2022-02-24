@@ -61,7 +61,7 @@ void write_body(FILE*& fo, int pc, bool has_rtn, bool no_throw)
 {
     if(no_throw)
     {
-        fp("        assert(d IsNot Nothing)");
+        fp("        assert(Not d Is Nothing)");
     }
     else
     {

@@ -33,7 +33,7 @@ Public Class sync_thread_safe_lazier_test
         End Function
 
         Public Overrides Function run() As Boolean
-            assert(l IsNot Nothing)
+            assert(Not l Is Nothing)
             Dim s As String = Nothing
             s = l.get()
             lock.locked(Sub()

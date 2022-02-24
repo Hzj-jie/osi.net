@@ -22,8 +22,8 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
                       ByVal info As token_info(Of COLLECTION, CONNECTION),
                       Optional ByVal max_connecting As UInt32 = uint32_0,
                       Optional ByVal accepting_over_max_connecting_wait_ms As Int64 = int64_0)
-        assert(powerpoints IsNot Nothing)
-        assert(info IsNot Nothing)
+        assert(Not powerpoints Is Nothing)
+        assert(Not info Is Nothing)
         Me.powerpoints = powerpoints
         Me.info = info
         If max_connecting = 0 Then
@@ -46,12 +46,12 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
     End Sub
 
     Public Sub attach(ByVal p As COLLECTION)
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         assert(powerpoints.insert(p))
     End Sub
 
     Public Sub detach(ByVal p As COLLECTION)
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         assert(powerpoints.erase(p))
     End Sub
 
@@ -101,17 +101,17 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
 
     Protected Function search_for_token(ByVal match As Func(Of COLLECTION, Boolean),
                                         ByVal c As ref(Of COLLECTION)) As Boolean
-        assert(match IsNot Nothing)
+        assert(Not match Is Nothing)
         Dim selected As COLLECTION = Nothing
         powerpoints.foreach(Sub(ByVal current As COLLECTION)
-                                assert(current IsNot Nothing)
+                                assert(Not current Is Nothing)
                                 If match(current) Then
                                     selected = current
                                     break_lambda.at_here()
                                 End If
                             End Sub)
         eva(c, selected)
-        Return selected IsNot Nothing
+        Return Not selected Is Nothing
     End Function
 
     Protected Function search_for_token(ByVal challenge As piece, ByVal c As ref(Of COLLECTION)) As Boolean
@@ -130,7 +130,7 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
     End Function
 
     Private Function accepting(ByVal c As CONNECTION, ByVal r As ref(Of COLLECTION)) As event_comb
-        assert(r IsNot Nothing)
+        assert(Not r Is Nothing)
         Dim p As COLLECTION = Nothing
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
@@ -162,7 +162,7 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
 
     Default Public ReadOnly Property accept(ByVal c As CONNECTION, ByVal r As ref(Of COLLECTION)) As event_comb
         Get
-            assert(c IsNot Nothing)
+            assert(Not c Is Nothing)
             Dim ec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
                                       If max_connecting > 0 AndAlso connecting.increment() > max_connecting Then
@@ -177,7 +177,7 @@ Public MustInherit Class itoken_defender(Of COLLECTION As Class, CONNECTION)
                                   End Function,
                                   Function() As Boolean
                                       assert(connecting.decrement() >= 0)
-                                      If ec.end_result() OrElse +r IsNot Nothing Then
+                                      If Not ec.end_result() OrElse +r Is Nothing Then
                                           info.shutdown(c)
                                       End If
                                       Return ec.end_result() AndAlso

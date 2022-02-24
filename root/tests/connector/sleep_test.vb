@@ -17,9 +17,9 @@ Public NotInheritable Class sleep_test
                                  ByVal w2 As _do_val_ref_val(Of _do(Of Int32, Boolean), Int32, Int64, Boolean),
                                  ByVal d As _do(Of Int32, Boolean),
                                  ByVal exp As Int32) As Boolean
-        assert(w1 IsNot Nothing)
-        assert(w2 IsNot Nothing)
-        assert(d IsNot Nothing)
+        assert(Not w1 Is Nothing)
+        assert(Not w2 Is Nothing)
+        assert(Not d Is Nothing)
         Dim i As Int32 = 0
         assertion.is_true(w1(Function() d(i), 0))
         assertion.equal(i, exp)
@@ -33,8 +33,8 @@ Public NotInheritable Class sleep_test
                                  ByVal w2 As void_val_ref_val(Of _do(Of Int32, Boolean), Int32, Int64),
                                  ByVal d As _do(Of Int32, Boolean),
                                  ByVal exp As Int32) As Boolean
-        assert(w1 IsNot Nothing)
-        assert(w2 IsNot Nothing)
+        assert(Not w1 Is Nothing)
+        assert(Not w2 Is Nothing)
         Return succ(Function(v As Func(Of Boolean), ms As Int64) As Boolean
                         w1(v, ms)
                         Return True
@@ -89,8 +89,8 @@ Public NotInheritable Class sleep_test
 
     Private Shared Function succ(ByVal u As Func(Of _do(Of Int32, Boolean), Int32, Boolean),
                                  ByVal w As Func(Of _do(Of Int32, Boolean), Int32, Boolean)) As Boolean
-        assert(u IsNot Nothing)
-        assert(w IsNot Nothing)
+        assert(Not u Is Nothing)
+        assert(Not w Is Nothing)
         Const size As Int32 = 10000
         Return u(Function(ByRef x) _inc(x) = size, size) AndAlso
                u(Function(ByRef x) _inc(x) > size, size + 1) AndAlso
@@ -109,7 +109,7 @@ Public NotInheritable Class sleep_test
     End Function
 
     Private Shared Function timeout(ByVal d As Func(Of Int64, Boolean)) As Boolean
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Const timeout_ms As Int64 = second_milli
         Using New boost()
             Using assertion.timelimited_operation(timeout_ms, timeout_ms + 4 * timeslice_length_ms)

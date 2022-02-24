@@ -26,7 +26,7 @@ Public Module _piece
     <Extension()> Public Function from_piece(Of T)(ByVal this As bytes_serializer(Of T),
                                                    ByVal i As piece,
                                                    ByRef o As T) As Boolean
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         If i Is Nothing OrElse i.buff Is Nothing Then
             Return False
         End If
@@ -42,7 +42,7 @@ Public Module _piece
     End Function
 
     <Extension()> Public Function to_piece(Of T)(ByVal this As bytes_serializer(Of T), ByVal i As T) As piece
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Return New piece(this.to_bytes(i))
     End Function
 
@@ -58,7 +58,7 @@ Public Module _piece
                                             Function(ByVal l As UInt32,
                                                      ByVal i As MemoryStream,
                                                      ByRef o As piece) As Boolean
-                                                assert(i IsNot Nothing)
+                                                assert(Not i Is Nothing)
                                                 If piece.create(i, l, o) Then
                                                     i.Seek(l, SeekOrigin.Current)
                                                     Return True
@@ -353,7 +353,7 @@ Public NotInheritable Class piece
     End Function
 
     Public Function start_with(ByVal that As piece) As Boolean
-        Return that IsNot Nothing AndAlso
+        Return Not that Is Nothing AndAlso
                count >= that.count AndAlso
                memcmp(buff, offset, that.buff, that.offset, that.count) = 0
     End Function
@@ -372,7 +372,7 @@ Public NotInheritable Class piece
     End Function
 
     Public Function end_with(ByVal that As piece) As Boolean
-        Return that IsNot Nothing AndAlso
+        Return Not that Is Nothing AndAlso
                count >= that.count AndAlso
                memcmp(buff, offset + count - that.count, that.buff, that.offset, that.count) = 0
     End Function

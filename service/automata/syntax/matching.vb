@@ -16,7 +16,7 @@ Partial Public NotInheritable Class syntaxer
         Protected ReadOnly c As syntax_collection
 
         Protected Sub New(ByVal c As syntax_collection)
-            assert(c IsNot Nothing)
+            assert(Not c Is Nothing)
             Me.c = c
         End Sub
 
@@ -26,14 +26,14 @@ Partial Public NotInheritable Class syntaxer
                 Public ReadOnly nodes As vector(Of typed_node)
 
                 Public Sub New(ByVal pos As UInt32, ByVal nodes As vector(Of typed_node))
-                    assert(nodes IsNot Nothing)
+                    assert(Not nodes Is Nothing)
                     Me.pos = pos
                     Me.nodes = nodes
                 End Sub
 
                 Public Shared Operator Or(ByVal this As suc_t, ByVal that As suc_t) As suc_t
-                    assert(this IsNot Nothing)
-                    assert(that IsNot Nothing)
+                    assert(Not this Is Nothing)
+                    assert(Not that Is Nothing)
                     If this.pos >= that.pos Then
                         Return this
                     End If
@@ -66,7 +66,7 @@ Partial Public NotInheritable Class syntaxer
             End Sub
 
             Public Function succeeded() As Boolean
-                Return suc IsNot Nothing
+                Return Not suc Is Nothing
             End Function
 
             Public Function failed() As Boolean
@@ -116,7 +116,7 @@ Partial Public NotInheritable Class syntaxer
                                ByVal type As UInt32,
                                ByVal pos As UInt32,
                                ByVal f As Func(Of result)) As result
-            assert(f IsNot Nothing)
+            assert(Not f Is Nothing)
             If s Is Nothing Then
                 s = New map(Of UInt32, UInt32)()
             End If
@@ -213,7 +213,7 @@ Partial Public NotInheritable Class syntaxer
                                                 (ByVal c As syntax_collection,
                                                  ByVal ms() As T,
                                                  ByVal ctor As Func(Of syntax_collection, T, matching)) As matching()
-            assert(ctor IsNot Nothing)
+            assert(Not ctor Is Nothing)
             If isemptyarray(ms) Then
                 Return Nothing
             End If
@@ -238,9 +238,9 @@ Partial Public NotInheritable Class syntaxer
         Private Shared Function create_matching(ByVal s As String,
                                                 ByVal collection As syntax_collection,
                                                 ByRef o As matching) As Boolean
-            assert(collection IsNot Nothing)
+            assert(Not collection Is Nothing)
             Dim it As map(Of String, UInt32).iterator = Nothing
-            assert(s IsNot Nothing)
+            assert(Not s Is Nothing)
             s = s.Trim()
             If Not characters.valid_type_str(s) Then
                 Return False
@@ -252,7 +252,7 @@ Partial Public NotInheritable Class syntaxer
                 i = collection.define(s)
                 o = New matching_delegate(collection, i)
             End If
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             Return True
         End Function
 

@@ -15,66 +15,66 @@ Imports Text = System.Text
 
 Public Module _rr
     Public Sub set_chunked_transfer(ByVal x As HttpWebRequest)
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         x.SendChunked() = True
         ' x.TransferEncoding() = constants.headers.values.transfer_encoding.chunked
     End Sub
 
     Public Sub set_content_length(ByVal x As HttpWebRequest, ByVal l As Int64)
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         x.ContentLength() = l
     End Sub
 
     Public Function fetch_stream(ByVal x As HttpWebRequest, ByVal os As ref(Of Stream)) As event_comb
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         Return x.get_request_stream(os)
     End Function
 
     Public Function fetch_headers(ByVal x As HttpWebResponse) As WebHeaderCollection
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         Return x.Headers()
     End Function
 
     Public Function fetch_stream(ByVal x As HttpWebResponse) As Stream
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         Return x.GetResponseStream()
     End Function
 
     Public Function get_content_length(ByVal x As HttpWebResponse) As Int64
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         Return x.ContentLength()
     End Function
 
 
     Public Sub set_chunked_transfer(ByVal x As HttpListenerResponse)
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         x.SendChunked() = True
     End Sub
 
     Public Sub set_content_length(ByVal x As HttpListenerResponse, ByVal l As Int64)
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         x.ContentLength64() = l
     End Sub
 
     Public Function fetch_stream(ByVal x As HttpListenerResponse, ByVal os As ref(Of Stream)) As event_comb
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         Return sync_async(Sub()
                               eva(os, x.OutputStream())
                           End Sub)
     End Function
 
     Public Function fetch_headers(ByVal x As HttpListenerRequest) As WebHeaderCollection
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         Return cast(Of WebHeaderCollection)(x.Headers())
     End Function
 
     Public Function fetch_stream(ByVal x As HttpListenerRequest) As Stream
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         Return x.InputStream()
     End Function
 
     Public Function get_content_length(ByVal x As HttpListenerRequest) As Int64
-        assert(x IsNot Nothing)
+        assert(Not x Is Nothing)
         Return x.ContentLength64()
     End Function
 
@@ -155,9 +155,9 @@ Public Module _rr
                                           ByVal fetch_headers As Func(Of T, WebHeaderCollection),
                                           ByVal fetch_stream As Func(Of T, Stream),
                                           ByVal get_content_length As Func(Of T, Int64)) As event_comb
-        assert(fetch_headers IsNot Nothing)
-        assert(fetch_stream IsNot Nothing)
-        assert(get_content_length IsNot Nothing)
+        assert(Not fetch_headers Is Nothing)
+        assert(Not fetch_stream Is Nothing)
+        assert(Not get_content_length Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If i Is Nothing OrElse o Is Nothing Then
@@ -190,7 +190,7 @@ Public Module _rr
                                               End If
                                           End If
                                       End If
-                                      assert(ec IsNot Nothing)
+                                      assert(Not ec Is Nothing)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
                                   End If
@@ -206,9 +206,9 @@ Public Module _rr
                                ByVal set_content_length As Action(Of T, Int64),
                                ByVal fetch_stream As Func(Of T, ref(Of Stream), event_comb),
                                ByVal send_to As Func(Of Stream, UInt64, event_comb)) As event_comb
-        assert(set_content_length IsNot Nothing)
-        assert(fetch_stream IsNot Nothing)
-        assert(send_to IsNot Nothing)
+        assert(Not set_content_length Is Nothing)
+        assert(Not fetch_stream Is Nothing)
+        assert(Not send_to Is Nothing)
         Dim ec As event_comb = Nothing
         Dim os As ref(Of Stream) = Nothing
         Return New event_comb(Function() As Boolean
@@ -228,7 +228,7 @@ Public Module _rr
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() AndAlso
-                                     (+os) IsNot Nothing Then
+                                     Not (+os) Is Nothing Then
                                       ec = send_to(+os, count)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -254,7 +254,7 @@ Public Module _rr
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   Dim b() As Byte = Nothing
-                                  If i IsNot Nothing Then
+                                  If Not i Is Nothing Then
                                       If enc Is Nothing Then
                                           enc = default_encoding
                                       End If
@@ -330,8 +330,8 @@ Public Module _rr
                                            ByVal fetch_stream As Func(Of T, ref(Of Stream), event_comb),
                                            ByVal result As ref(Of UInt64),
                                            ByVal close_input_stream As Boolean) As event_comb
-        assert(set_chunked_transfer IsNot Nothing)
-        assert(fetch_stream IsNot Nothing)
+        assert(Not set_chunked_transfer Is Nothing)
+        assert(Not fetch_stream Is Nothing)
         Dim ec As event_comb = Nothing
         Dim os As ref(Of Stream) = Nothing
         Return New event_comb(Function() As Boolean
@@ -347,7 +347,7 @@ Public Module _rr
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() AndAlso
-                                     (+os) IsNot Nothing Then
+                                     Not (+os) Is Nothing Then
                                       ec = i.copy_to(+os,
                                                      buff_size,
                                                      receive_rate_sec,

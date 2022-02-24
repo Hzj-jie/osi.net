@@ -46,7 +46,7 @@ Partial Public NotInheritable Class boolaffinity(Of K)
         End Sub
 
         Public Sub New(ByVal m As unordered_map(Of K, affinity))
-            assert(m IsNot Nothing)
+            assert(Not m Is Nothing)
             Me.m = m
         End Sub
 

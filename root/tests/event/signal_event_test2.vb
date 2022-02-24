@@ -28,7 +28,7 @@ Public Class signal_event_test2
             Private ReadOnly called As atomic_int
 
             Public Sub New(ByVal before As action)
-                assert(before IsNot Nothing)
+                assert(Not before Is Nothing)
                 Me.before = before
                 Me.called = New atomic_int()
             End Sub
@@ -122,7 +122,7 @@ Public Class signal_event_test2
             assertion.equal(se.attached_count(), 0)
             assertion.is_false(se.attached())
             For i As Int32 = 0 To e.size() - 1
-                assert(e(i) IsNot Nothing)
+                assert(Not e(i) Is Nothing)
                 assertion.equal(e(i).called_times(), 1)
             Next
             Return MyBase.finish()

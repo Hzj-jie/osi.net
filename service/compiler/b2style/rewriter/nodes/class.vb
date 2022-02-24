@@ -20,14 +20,14 @@ Partial Public NotInheritable Class b2style
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(b IsNot Nothing)
+            assert(Not b Is Nothing)
             Me.l = b
         End Sub
 
         Protected Overrides Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
             Dim o As New StringBuilder()
-            assert(n IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             Dim class_name As String = n.child(1).input()
             Dim cd As New class_def(class_name)
@@ -60,7 +60,7 @@ Partial Public NotInheritable Class b2style
               Append("{")
             cd.vars().
                foreach(Sub(ByVal var As builders.parameter)
-                           assert(var IsNot Nothing)
+                           assert(Not var Is Nothing)
                            o.Append(var.type).
                              Append(" ").
                              Append(var.name).
@@ -69,7 +69,7 @@ Partial Public NotInheritable Class b2style
             o.Append("};")
             cd.funcs().
                foreach(Sub(ByVal f As class_def.function_def)
-                           assert(f IsNot Nothing)
+                           assert(Not f Is Nothing)
                            o.Append(f.content)
                        End Sub)
             s = o.ToString()

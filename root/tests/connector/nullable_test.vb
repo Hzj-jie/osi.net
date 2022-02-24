@@ -27,7 +27,7 @@ Public Class nullable_test
         End Try
 
         return_value(i)
-        assertion.is_true(i IsNot Nothing)
+        assertion.is_true(Not i Is Nothing)
         assertion.is_true(i.HasValue())
         assertion.equal(i, value)
 

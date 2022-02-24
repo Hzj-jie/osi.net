@@ -44,14 +44,14 @@ Public Structure one_of(Of T1, T2)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function map_first(Of T12)(ByVal f As Func(Of T1, T12)) As one_of(Of T12, T2)
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         assert(is_first())
         Return one_of(Of T12, T2).of_first(f(first()))
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function map_second(Of T22)(ByVal f As Func(Of T2, T22)) As one_of(Of T1, T22)
-        assert(f IsNot Nothing)
+        assert(Not f Is Nothing)
         assert(is_second())
         Return one_of(Of T1, T22).of_second(f(second()))
     End Function
@@ -79,8 +79,8 @@ Public Structure one_of(Of T1, T2)
     End Function
 
     Public Function map(Of R)(ByVal v1 As Func(Of T1, R), ByVal v2 As Func(Of T2, R)) As R
-        assert(v1 IsNot Nothing)
-        assert(v2 IsNot Nothing)
+        assert(Not v1 Is Nothing)
+        assert(Not v2 Is Nothing)
         If is_first() Then
             Return v1(first())
         End If

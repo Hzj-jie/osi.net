@@ -51,7 +51,7 @@ Public MustInherit Class async_getter_device(Of T)
     Protected MustOverride Overloads Function validate(ByVal c As T) As Boolean
 
     Protected NotOverridable Overrides Sub check(ByVal c As async_getter(Of T))
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Dim r As T = Nothing
         If c.get(r) Then
             check(r)
@@ -59,7 +59,7 @@ Public MustInherit Class async_getter_device(Of T)
     End Sub
 
     Protected NotOverridable Overrides Function identity(ByVal c As async_getter(Of T)) As String
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Dim r As T = Nothing
         If c.get(r) Then
             Return identity(r)
@@ -69,7 +69,7 @@ Public MustInherit Class async_getter_device(Of T)
     End Function
 
     Protected NotOverridable Overrides Sub close(ByVal c As async_getter(Of T))
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         If c.initialized() Then
             Dim r As T = Nothing
             'assert(Not in_restricted_threadpool_thread())
@@ -93,7 +93,7 @@ Public MustInherit Class async_getter_device(Of T)
     End Sub
 
     Protected NotOverridable Overrides Function validate(ByVal c As async_getter(Of T)) As Boolean
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         Dim r As T = Nothing
         Return c.not_initialized() OrElse (c.get(r) AndAlso validate(r))
     End Function

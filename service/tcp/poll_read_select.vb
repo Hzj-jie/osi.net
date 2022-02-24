@@ -24,7 +24,7 @@ Public NotInheritable Class poll_read_select
 
     Public Shared Shadows Function queue(ByVal i As TcpClient,
                                          Optional ByVal timeout_ms As Int64 = npos) As event_comb
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If timeout_ms = 0 Then
@@ -52,7 +52,7 @@ Public NotInheritable Class poll_read_select
     End Function
 
     Protected Overrides Function [select](ByVal i As pair(Of TcpClient, Int64)) As Boolean
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return Not free_poll_alive(i.first)
     End Function
 
@@ -68,8 +68,8 @@ Public NotInheritable Class poll_read_select
                                   Dim v As New List()
                                   Dim m As New map(Of Int64, pair(Of pair(Of TcpClient, Int64), Action))()
                                   foreach(Function(p As pair(Of pair(Of TcpClient, Int64), Action)) As Boolean
-                                              assert(p.first IsNot Nothing)
-                                              assert(p.first.first IsNot Nothing)
+                                              assert(Not p.first Is Nothing)
+                                              assert(Not p.first.first Is Nothing)
                                               If nowadays.milliseconds() < p.first.second Then
                                                   v.Add(p.first.first.Client())
 #If DEBUG Then

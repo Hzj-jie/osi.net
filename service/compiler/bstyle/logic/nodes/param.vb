@@ -17,13 +17,13 @@ Partial Public NotInheritable Class bstyle
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(b IsNot Nothing)
+            assert(Not b Is Nothing)
             Me.l = b
         End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
             assert(n.child_count() = 2)
             Dim type_node As typed_node = n.child(0)
             struct.forward_in_stack(type_node.child(0).word().str(),

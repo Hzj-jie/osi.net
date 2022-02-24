@@ -16,7 +16,7 @@ Partial Public Class event_comb
         Private ReadOnly cc As utils.cancellation_controller
 
         Public Sub New(ByVal e As event_comb)
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             Me.e = e
             Me.cc = New utils.cancellation_controller()
         End Sub
@@ -73,12 +73,12 @@ Partial Public Class event_comb
         End Sub
 
         Private Shared Sub cancel_event_comb(ByVal e As event_comb)
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             e.cancel()
         End Sub
 
         Private Shared Sub trigger_timeout(ByVal e As event_comb)
-            assert(e IsNot Nothing)
+            assert(Not e Is Nothing)
             ' flip_events.timeout may immediately execute the callback, which breaks event_comb, as it uses
             ' reenterable_locked(). Eventually reenterable_locked() should be avoided, but before that, this is a short
             ' term fix.

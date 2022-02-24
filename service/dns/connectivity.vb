@@ -162,8 +162,8 @@ Public NotInheritable Class connectivity
     Private Shared Function check_host(ByVal host As String,
                                        ByVal dns_resolve_result As ref(Of Boolean),
                                        ByVal access_result As ref(Of Boolean)) As event_comb
-        assert(dns_resolve_result IsNot Nothing)
-        assert(access_result IsNot Nothing)
+        assert(Not dns_resolve_result Is Nothing)
+        assert(Not access_result Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   dns_resolve_result.set(False)

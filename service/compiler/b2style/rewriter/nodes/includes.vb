@@ -75,8 +75,8 @@ Partial Public NotInheritable Class b2style
 
         ' Forward missing files to the bstyle.
         Protected Overrides Function handle_not_dumpable(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
-            assert(n IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
             o.append(n)
             Return True
         End Function
@@ -95,8 +95,8 @@ Partial Public NotInheritable Class b2style
 
         ' Forward missing files to the bstyle.
         Protected Overrides Function handle_not_dumpable(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
-            assert(n IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
             o.append(n)
             Return True
         End Function

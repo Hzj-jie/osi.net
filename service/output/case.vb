@@ -55,7 +55,7 @@ Public NotInheritable Class [case]
         bytes_serializer(Of mode).forward_registration.from(Of Int32)()
         bytes_serializer(Of action).forward_registration.from(Of Int32)()
         bytes_serializer.fixed.register(Function(ByVal i As [case], ByVal o As MemoryStream) As Boolean
-                                            assert(o IsNot Nothing)
+                                            assert(Not o Is Nothing)
                                             Return bytes_serializer.append_to(i.mode_or_void(), o) AndAlso
                                                    bytes_serializer.append_to(i.action_or_void(), o) AndAlso
                                                    bytes_serializer.append_to(i.meta_or_null(), o)

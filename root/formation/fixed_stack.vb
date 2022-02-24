@@ -10,45 +10,45 @@ Imports osi.root.connector
 Public Module _fixed_stack_wrapper
     <Extension()> Public Function back(Of T, _MAX_SIZE As _int64) _
                                       (ByVal this As ref(Of fixed_stack(Of T, _MAX_SIZE))) As T
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Return this.p.back()
     End Function
 
     <Extension()> Public Sub pop(Of T, _MAX_SIZE As _int64) _
                                 (ByVal this As ref(Of fixed_stack(Of T, _MAX_SIZE)))
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         this.p.pop()
     End Sub
 
     <Extension()> Public Sub push(Of T, _MAX_SIZE As _int64) _
                                  (ByVal this As ref(Of fixed_stack(Of T, _MAX_SIZE)),
                                   ByVal i As T)
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         this.p.push(i)
     End Sub
 
     <Extension()> Public Sub emplace(Of T, _MAX_SIZE As _int64) _
                                     (ByVal this As ref(Of fixed_stack(Of T, _MAX_SIZE)),
                                      ByVal i As T)
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         this.p.emplace(i)
     End Sub
 
     <Extension()> Public Function empty(Of T, _MAX_SIZE As _int64) _
                                        (ByVal this As ref(Of fixed_stack(Of T, _MAX_SIZE))) As Boolean
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Return this.p.empty()
     End Function
 
     <Extension()> Public Function full(Of T, _MAX_SIZE As _int64) _
                                       (ByVal this As ref(Of fixed_stack(Of T, _MAX_SIZE))) As Boolean
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         Return this.p.full()
     End Function
 
     <Extension()> Public Sub clear(Of T, _MAX_SIZE As _int64) _
                                   (ByVal this As ref(Of fixed_stack(Of T, _MAX_SIZE)))
-        assert(this IsNot Nothing)
+        assert(Not this Is Nothing)
         this.p.clear()
     End Sub
 End Module
@@ -61,7 +61,7 @@ Public Structure fixed_stack(Of T, _MAX_SIZE As _int64)
     Private Sub create()
         If q Is Nothing Then
             ReDim q(CInt(MAX_SIZE) - 1)
-            assert(q IsNot Nothing)
+            assert(Not q Is Nothing)
         End If
     End Sub
 

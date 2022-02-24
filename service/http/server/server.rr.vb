@@ -246,7 +246,7 @@ Public Module _server_rr
     <Extension()> Public Sub shutdown(ByVal ctx As HttpListenerContext,
                                       Optional ByVal abort As Boolean = False)
         Try
-            If ctx IsNot Nothing Then
+            If Not ctx Is Nothing Then
                 ctx.Request().InputStream().Close()
                 ctx.Request().InputStream().Dispose()
             End If
@@ -257,7 +257,7 @@ Public Module _server_rr
         End Try
 
         Try
-            If ctx IsNot Nothing Then
+            If Not ctx Is Nothing Then
                 ctx.Response().OutputStream().Close()
                 ctx.Response().OutputStream().Dispose()
             End If
@@ -271,7 +271,7 @@ Public Module _server_rr
         End Try
 
         Try
-            If ctx IsNot Nothing Then
+            If Not ctx Is Nothing Then
                 If abort Then
                     ctx.Response().Abort()
                 Else

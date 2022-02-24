@@ -20,7 +20,7 @@ Public Class randomness_test
     End Sub
 
     Private Shared Function rnd_case(ByVal d As _do(Of Int32, Int32, Int32)) As Boolean
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         Dim s() As Boolean = Nothing
         ReDim s(upper - lower - 1)
         For i As Int32 = 0 To (upper - lower) * 10 - 1

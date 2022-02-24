@@ -15,7 +15,7 @@ Partial Public NotInheritable Class nlexer
         Private ReadOnly m As vector(Of matcher)
 
         Public Sub New(ByVal m As vector(Of matcher))
-            assert(m IsNot Nothing)
+            assert(Not m Is Nothing)
             assert(Not m.empty())
             Me.m = m
         End Sub

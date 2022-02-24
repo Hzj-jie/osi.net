@@ -9,7 +9,7 @@ Imports osi.root.constants
 
 Public Module _constructor
     <Extension()> Public Function allocatable(ByVal t As Type) As Boolean
-        Return t IsNot Nothing AndAlso
+        Return Not t Is Nothing AndAlso
                Not t.IsArray() AndAlso
                Not t.IsAbstract() AndAlso
                Not t.IsEnum() AndAlso

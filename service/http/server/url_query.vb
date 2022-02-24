@@ -80,7 +80,7 @@ Public NotInheritable Class url_query
             Return False
         End If
 
-        assert(encoder IsNot Nothing)
+        assert(Not encoder Is Nothing)
         Dim s As String = Nothing
         Try
             s = encoder.GetString(+request_body)

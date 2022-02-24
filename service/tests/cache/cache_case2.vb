@@ -17,7 +17,7 @@ Public Class cache_case2
     Private ReadOnly c As islimcache2(Of Int32, Int32)
 
     Public Sub New(ByVal c As islimcache2(Of Int32, Int32))
-        assert(c IsNot Nothing)
+        assert(Not c Is Nothing)
         m = New unordered_map(Of Int32, Int32)()
         Me.c = c
 

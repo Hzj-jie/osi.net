@@ -35,7 +35,7 @@ Public Class remote_property
                                 ByVal name As String,
                                 ByRef o As remote_property) As Boolean
         Return Not String.IsNullOrEmpty(target) AndAlso
-               q IsNot Nothing AndAlso
+               Not q Is Nothing AndAlso
                eva(o, New remote_property(target, q, name, path))
     End Function
 
@@ -69,7 +69,7 @@ Public Class remote_property
     Public Function [get](ByVal i As ref(Of Byte())) As event_comb Implements iproperty.get
         Return q(get_command(),
                  Function(c As command) As Boolean
-                     Return c IsNot Nothing AndAlso
+                     Return Not c Is Nothing AndAlso
                             c.parameter(Of parameter)(parameter.buff, i)
                  End Function)
     End Function

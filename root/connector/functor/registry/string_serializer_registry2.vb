@@ -10,22 +10,22 @@ Imports osi.root.constants
 Friend NotInheritable Class string_serializer_registry2
     Shared Sub New()
         string_serializer.register(Sub(ByVal i As String, ByVal o As StringWriter)
-                                       assert(o IsNot Nothing)
+                                       assert(Not o Is Nothing)
                                        o.Write(i)
                                    End Sub,
                                    Function(ByVal i As StringReader, ByRef o As String) As Boolean
-                                       assert(i IsNot Nothing)
+                                       assert(Not i Is Nothing)
                                        o = i.ReadToEnd()
                                        Return True
                                    End Function)
         json_serializer.register(Sub(ByVal i As String, ByVal o As StringWriter)
-                                     assert(o IsNot Nothing)
+                                     assert(Not o Is Nothing)
                                      o.Write("""")
                                      o.Write(i)
                                      o.Write("""")
                                  End Sub)
         json_serializer.register(Sub(ByVal i As Char, ByVal o As StringWriter)
-                                     assert(o IsNot Nothing)
+                                     assert(Not o Is Nothing)
                                      o.Write("""")
                                      o.Write(i)
                                      o.Write("""")

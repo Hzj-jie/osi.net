@@ -44,7 +44,7 @@ Public Class calculator(Of T)
     Private priority_level As UInt32
 
     Public Sub New(ByVal b As ibinary_calculator(Of T))
-        assert(b IsNot Nothing)
+        assert(Not b Is Nothing)
         os = New stack(Of priority_operator)()
         ts = New stack(Of T)()
         bc = b

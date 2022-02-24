@@ -36,7 +36,7 @@ Partial Public Class device_pool(Of T)
             Return False
         Else
             While get_device(r)
-                If assert(r IsNot Nothing) AndAlso r.is_valid() Then
+                If assert(Not r Is Nothing) AndAlso r.is_valid() Then
                     Return True
                 Else
                     assert(Not release(r))

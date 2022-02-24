@@ -150,7 +150,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal m As trie(Of KEY_T, VALUE_T, _CHILD_COUNT, _KEY_TO_INDEX))
-            assert(m IsNot Nothing)
+            assert(Not m Is Nothing)
             it = m.begin()
         End Sub
 
@@ -205,9 +205,9 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
             Dim p As node = Nothing
             p = Me.p
             Dim this_index As UInt32 = uint32_0
-            While p IsNot Nothing
+            While Not p Is Nothing
                 For i As Int32 = CInt(this_index) To p.child.Length() - 1
-                    If p.child(i) IsNot Nothing Then
+                    If Not p.child(i) Is Nothing Then
                         p = p.child(i)
                         Exit While
                     End If

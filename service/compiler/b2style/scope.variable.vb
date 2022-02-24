@@ -15,7 +15,7 @@ Partial Public NotInheritable Class b2style
             Private ReadOnly m As New unordered_map(Of String, String)()
 
             Public Function define(ByVal n As typed_node) As Boolean
-                assert(n IsNot Nothing)
+                assert(Not n Is Nothing)
                 assert(n.child_count() >= 2)
                 If m.emplace(_namespace.of(n.child(1).input_without_ignored()),
                              _namespace.of(n.child(0).input_without_ignored())).second() Then
@@ -39,7 +39,7 @@ Partial Public NotInheritable Class b2style
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
-                assert(s IsNot Nothing)
+                assert(Not s Is Nothing)
                 Me.s = s
             End Sub
 
@@ -56,7 +56,7 @@ Partial Public NotInheritable Class b2style
             Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
                 assert(Not name.null_or_whitespace())
                 Dim s As scope = Me.s
-                While s IsNot Nothing
+                While Not s Is Nothing
                     If s.v.resolve(name, type) Then
                         Return True
                     End If

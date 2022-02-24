@@ -17,7 +17,7 @@ Partial Public NotInheritable Class b2style
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(b IsNot Nothing)
+            assert(Not b Is Nothing)
             Me.l = b
         End Sub
 
@@ -25,9 +25,9 @@ Partial Public NotInheritable Class b2style
                               ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean
             assert(Not name.null_or_whitespace())
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
-            assert(o IsNot Nothing)
+            assert(Not o Is Nothing)
             If scope.current().variables().resolve(name, Nothing) Then
                 ' This should be a delegate function call.
                 Return l.of_all_children(n).build(o)
@@ -64,8 +64,8 @@ Partial Public NotInheritable Class b2style
 
         Public Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
                              Implements code_gen(Of typed_node_writer).build
-            assert(n IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
             Return build(n.child(0).input_without_ignored(), n, o)
         End Function

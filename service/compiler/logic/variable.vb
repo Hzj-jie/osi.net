@@ -76,7 +76,7 @@ Namespace logic
                 End If
                 Return with_size(name, [optional].empty(Of variable)(), r.type, o)
             Else
-                assert(v IsNot Nothing)
+                assert(Not v Is Nothing)
                 If Not name.EndsWith(character.right_mid_bracket) Then
                     errors.invalid_variable_name(name, "Closing bracket is not at the end of the name.")
                     Return False
@@ -134,7 +134,7 @@ Namespace logic
         End Function
 
         Public Function is_assignable_from(ByVal source As variable) As Boolean
-            assert(source IsNot Nothing)
+            assert(Not source Is Nothing)
             If is_assignable_from_size(source.size) Then
                 Return True
             End If

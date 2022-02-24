@@ -29,7 +29,7 @@ Public Class process_io_manual_test
                 If assertion.is_true(io.start()) Then
                     Dim s As String = Nothing
                     s = Console.ReadLine()
-                    While s IsNot Nothing
+                    While Not s Is Nothing
                         assertion.is_true(io.input_received(s))
                         s = Console.ReadLine()
                     End While

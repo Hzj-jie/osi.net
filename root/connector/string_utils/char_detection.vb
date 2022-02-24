@@ -29,14 +29,14 @@ Public Module _char_detection
 
     <Extension()> Public Function empty_or_whitespace(ByVal s As String) As Boolean
 #If Not NO_REFERENCE Then
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
 #End If
         Return null_or_whitespace(s)
     End Function
 
     <Extension()> Public Function is_empty(ByVal s As String) As Boolean
 #If Not NO_REFERENCE Then
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
 #End If
         Return s.Length() = 0
     End Function

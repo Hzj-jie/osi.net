@@ -15,12 +15,12 @@ Public Class action_adapter
     End Sub
 
     Public Sub run() Implements iaction.run
-        assert(v IsNot Nothing)
+        assert(Not v Is Nothing)
         v()
     End Sub
 
     Public Function valid() As Boolean Implements iaction.valid
-        Return v IsNot Nothing
+        Return Not v Is Nothing
     End Function
 End Class
 
@@ -31,12 +31,12 @@ Public Class delegate_wrapper(Of AT As idelegate, PARA_T)
     Protected ReadOnly p As iparameter_action(Of PARA_T)
 
     Public Sub New(ByVal a As AT)
-        assert(a IsNot Nothing)
+        assert(Not a Is Nothing)
         Me.a = a
     End Sub
 
     Public Sub New(ByVal p As iparameter_action(Of PARA_T))
-        assert(p IsNot Nothing)
+        assert(Not p Is Nothing)
         Me.p = p
     End Sub
 

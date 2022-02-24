@@ -113,13 +113,13 @@ Public Class ref(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function hash(ByVal i As T) As Int32
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return i.GetHashCode()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function str(ByVal i As T) As String
-        assert(i IsNot Nothing)
+        assert(Not i Is Nothing)
         Return i.ToString()
     End Function
 'finish single_obj_ref_operator.vbp --------
@@ -301,7 +301,7 @@ finish:
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Widening Operator CType(ByVal this As ref(Of T)) As Boolean
-        Return this IsNot Nothing AndAlso Not this.empty()
+        Return Not this Is Nothing AndAlso Not this.empty()
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

@@ -40,7 +40,7 @@ Public NotInheritable Class command_test
     End Class
 
     Private Shared Function command_validation(ByVal c As command, ByVal constants As constants) As Boolean
-        assert(constants IsNot Nothing)
+        assert(Not constants Is Nothing)
         If Not assertion.is_not_null(c) Then
             Return False
         End If

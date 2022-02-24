@@ -15,7 +15,7 @@ Public Class system_perf_test
     End Function
 
     Private Overloads Shared Sub run(ByVal d As Action, ByVal name As String, ByRef acc As Int64)
-        assert(d IsNot Nothing)
+        assert(Not d Is Nothing)
         assert(Not String.IsNullOrEmpty(name))
         Const round As Int32 = 128
         Dim min As Int64 = max_int64

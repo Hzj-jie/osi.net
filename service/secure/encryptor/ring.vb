@@ -76,7 +76,7 @@ Namespace encrypt
                                      ByVal count As Int32,
                                      ByRef o() As Byte,
                                      ByVal r As _do_val_val_ref(Of Byte, Byte, Byte, Boolean)) As Boolean
-            assert(r IsNot Nothing)
+            assert(Not r Is Nothing)
             If array_size(i) < offset + count OrElse
                isemptyarray(key) Then
                 Return False

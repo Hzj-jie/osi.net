@@ -9,8 +9,8 @@ Public NotInheritable Class device_adapter
 
     Public Shared Function [New](Of IT, OT) _
                                 (ByVal input As idevice(Of IT), ByVal c As Func(Of IT, OT)) As device_adapter(Of IT, OT)
-        assert(input IsNot Nothing)
-        assert(c IsNot Nothing)
+        assert(Not input Is Nothing)
+        assert(Not c Is Nothing)
         Return [New](input, c(input.get()))
     End Function
 
@@ -22,8 +22,8 @@ Public NotInheritable Class device_adapter
     Public Shared Function [New](Of IT, OT) _
                                 (ByVal input As idevice(Of async_getter(Of IT)), ByVal c As Func(Of IT, OT)) _
                                 As device_adapter(Of async_getter(Of IT), async_getter(Of OT))
-        assert(input IsNot Nothing)
-        assert(c IsNot Nothing)
+        assert(Not input Is Nothing)
+        assert(Not c Is Nothing)
         Return [New](Of IT, OT)(input, async_getter_adapter.new_async_getter(input.get(), c))
     End Function
 
@@ -57,7 +57,7 @@ Public Class device_adapter(Of IT, OT)
 
     Public Sub New(ByVal input As idevice(Of IT), ByVal output As OT)
         MyBase.New(output)
-        assert(input IsNot Nothing)
+        assert(Not input Is Nothing)
         Me.input = input
         Me.id = strcat(input.identity(), "_", type_info(Of OT).name, "_adapter")
     End Sub

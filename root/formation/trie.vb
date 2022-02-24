@@ -131,7 +131,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         If it Is Nothing Then
             Return False
         End If
-        While it.child(CInt(child_count - uint32_1)) IsNot Nothing
+        While Not it.child(CInt(child_count - uint32_1)) Is Nothing
             it = it.child(CInt(child_count - uint32_1))
         End While
 
@@ -142,7 +142,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         If it Is Nothing Then
             Return False
         End If
-        While it.child(0) IsNot Nothing
+        While Not it.child(0) Is Nothing
             it = it.child(0)
         End While
 
@@ -202,9 +202,9 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         Dim index As Int32 = 0
 
         Dim update_working_node As Action = Sub()
-                                                If w IsNot Nothing AndAlso w.has_value Then
+                                                If Not w Is Nothing AndAlso w.has_value Then
                                                     l = w
-                                                    If find_front_action IsNot Nothing Then
+                                                    If Not find_front_action Is Nothing Then
                                                         find_front_action(l)
                                                     End If
                                                 End If
@@ -287,7 +287,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         copy(dest, source)
         Dim i As Int32
         For i = 0 To CInt(child_count) - 1
-            If source.child(i) IsNot Nothing Then
+            If Not source.child(i) Is Nothing Then
                 copy_node(dest.child(i), source.child(i))
                 dest.child(i).father = dest
             End If

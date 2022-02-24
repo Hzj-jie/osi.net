@@ -66,7 +66,7 @@ Public Module _prime_divisors
         End If
         Return t.stream().
                  map(Function(ByVal x As pair(Of UInt32, Int32)) As UInt32
-                         assert(x IsNot Nothing)
+                         assert(Not x Is Nothing)
                          Return x.first
                      End Function).
                  collect_to(Of vector(Of UInt32))()

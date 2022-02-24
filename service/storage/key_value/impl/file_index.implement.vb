@@ -15,7 +15,7 @@ Partial Public Class file_index
                                     ByVal value() As Byte,
                                     ByVal result As ref(Of Boolean)) As event_comb _
                                    Implements ikeyvt2(Of atom).append_existing
-        assert(key IsNot Nothing)
+        assert(Not key Is Nothing)
         Return write_file(key.full_file_path(), value, result, True)
     End Function
 
@@ -30,7 +30,7 @@ Partial Public Class file_index
     Public Function delete_existing(ByVal key As atom,
                                     ByVal result As ref(Of Boolean)) As event_comb _
                                    Implements ikeyvt2(Of atom).delete_existing
-        assert(key IsNot Nothing)
+        assert(Not key Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If result Is Nothing Then
@@ -62,7 +62,7 @@ Partial Public Class file_index
     Public Function delete_existing_timestamp(ByVal key As atom,
                                               ByVal result As ref(Of Boolean)) As event_comb _
                                              Implements ikeyvt2(Of atom).delete_existing_timestamp
-        assert(key IsNot Nothing)
+        assert(Not key Is Nothing)
         Return index.delete(key.ts_key, result)
     End Function
 
@@ -103,7 +103,7 @@ Partial Public Class file_index
     Public Function read_existing(ByVal key As atom,
                                   ByVal result As ref(Of Byte())) As event_comb _
                                  Implements ikeyvt2(Of atom).read_existing
-        assert(key IsNot Nothing)
+        assert(Not key Is Nothing)
         Return read_file(key.full_file_path(), result)
     End Function
 
@@ -144,7 +144,7 @@ Partial Public Class file_index
     Public Function sizeof_existing(ByVal key As atom,
                                     ByVal result As ref(Of Int64)) As event_comb _
                                    Implements ikeyvt2(Of atom).sizeof_existing
-        assert(key IsNot Nothing)
+        assert(Not key Is Nothing)
         Return file_size(key.full_file_path(), result)
     End Function
 

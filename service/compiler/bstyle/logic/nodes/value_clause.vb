@@ -18,7 +18,7 @@ Partial Public NotInheritable Class bstyle
 
         <inject_constructor>
         Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(b IsNot Nothing)
+            assert(Not b Is Nothing)
             Me.l = b
         End Sub
 
@@ -27,11 +27,11 @@ Partial Public NotInheritable Class bstyle
                                ByVal struct_copy As Func(Of vector(Of String), Boolean),
                                ByVal single_data_slot_copy As Func(Of String, Boolean),
                                ByVal o As logic_writer) As Boolean
-            assert(name IsNot Nothing)
-            assert(value IsNot Nothing)
-            assert(struct_copy IsNot Nothing)
-            assert(single_data_slot_copy IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not name Is Nothing)
+            assert(Not value Is Nothing)
+            assert(Not struct_copy Is Nothing)
+            assert(Not single_data_slot_copy Is Nothing)
+            assert(Not o Is Nothing)
             Dim type As String = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
             If Not scope.current().variables().resolve(name.input_without_ignored(), type, delegate_definition) Then
@@ -76,7 +76,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Function build(ByVal name As typed_node, ByVal value As typed_node, ByVal o As logic_writer) As Boolean
-            assert(name IsNot Nothing)
+            assert(Not name Is Nothing)
             ' TODO: If the value on the right is a temporary value (rvalue), move can be used to reduce memory copy.
             Return build(name,
                          value,
@@ -91,8 +91,8 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(n IsNot Nothing)
-            assert(o IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
             assert(n.child_count() = 3)
             If Not n.child(0).child().type_name.Equals("heap-name") Then
                 Return build(n.child(0).child(), n.child(2), o)

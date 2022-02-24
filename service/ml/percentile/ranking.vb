@@ -13,8 +13,8 @@ Partial Public NotInheritable Class percentile
         Private cmp As Func(Of T, T, Int32)
 
         Public Sub New(ByVal v As vector(Of T), ByVal sample_count As UInt32, ByVal cmp As Func(Of T, T, Int32))
-            assert(v IsNot Nothing)
-            assert(cmp IsNot Nothing)
+            assert(Not v Is Nothing)
+            assert(Not cmp Is Nothing)
             assert(sample_count > 0)
             samples = +(v.stream().collect_by(stream(Of T).collectors.samples(sample_count)))
             SysArray.Sort(samples, icomparer_delegator.of(cmp))

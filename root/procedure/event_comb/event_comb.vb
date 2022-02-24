@@ -50,7 +50,7 @@ Partial Public Class event_comb
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal d() As Func(Of Boolean), ByVal callstack As String)
-        assert(callstack IsNot Nothing)
+        assert(Not callstack Is Nothing)
 #If USE_LOCK_T Then
         _l = New lock_t(Me)
 #End If
@@ -121,7 +121,7 @@ Partial Public Class event_comb
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Protected Sub attach_suspending(ByVal v As suspendingEventHandler)
-        If v IsNot Nothing Then
+        If Not v Is Nothing Then
             AddHandler suspending, v
         End If
     End Sub

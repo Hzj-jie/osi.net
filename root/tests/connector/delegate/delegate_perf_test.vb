@@ -99,7 +99,7 @@ Public Class delegate_perf_test
     End Sub
 
     Private Shared Sub run_case(ByVal name As String, ByVal v As Action)
-        assert(v IsNot Nothing)
+        assert(Not v Is Nothing)
         Dim start_ms As Int64 = 0
         raise_error("start ", name)
         start_ms = nowadays.high_res_milliseconds()

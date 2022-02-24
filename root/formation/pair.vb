@@ -93,7 +93,7 @@ Public NotInheritable Class pair(Of FT, ST)
                                        Return True
                                    End Function,
                                    Function(ByVal sr As StringReader, ByRef o As pair(Of FT, ST)) As Boolean
-                                       assert(sr IsNot Nothing)
+                                       assert(Not sr Is Nothing)
                                        Dim i As String = sr.ReadToEnd()
                                        Dim pos As Int32 = i.strindexof(":")
                                        If pos = npos Then
@@ -124,7 +124,7 @@ Public NotInheritable Class pair(Of FT, ST)
 
     Public Shared ReadOnly first_getter As Func(Of pair(Of FT, ST), FT) =
         Function(ByVal p As pair(Of FT, ST)) As FT
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             Return p.first
         End Function
 
@@ -138,7 +138,7 @@ Public NotInheritable Class pair(Of FT, ST)
 
     Public Shared ReadOnly second_getter As Func(Of pair(Of FT, ST), ST) =
         Function(ByVal p As pair(Of FT, ST)) As ST
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             Return p.second
         End Function
 
@@ -153,24 +153,24 @@ Public NotInheritable Class pair(Of FT, ST)
     Public Shared ReadOnly first_comparer As Func(Of pair(Of FT, ST), pair(Of FT, ST), Int32) =
         Function(ByVal l As pair(Of FT, ST),
                  ByVal r As pair(Of FT, ST)) As Int32
-            assert(l IsNot Nothing)
-            assert(r IsNot Nothing)
+            assert(Not l Is Nothing)
+            assert(Not r Is Nothing)
             Return compare(l.first, r.first)
         End Function
 
     Public Shared ReadOnly second_comparer As Func(Of pair(Of FT, ST), pair(Of FT, ST), Int32) =
         Function(ByVal l As pair(Of FT, ST),
                  ByVal r As pair(Of FT, ST)) As Int32
-            assert(l IsNot Nothing)
-            assert(r IsNot Nothing)
+            assert(Not l Is Nothing)
+            assert(Not r Is Nothing)
             Return compare(l.second, r.second)
         End Function
 
     Public Shared ReadOnly second_first_comparer As Func(Of pair(Of FT, ST), pair(Of FT, ST), Int32) =
         Function(ByVal l As pair(Of FT, ST),
                  ByVal r As pair(Of FT, ST)) As Int32
-            assert(l IsNot Nothing)
-            assert(r IsNot Nothing)
+            assert(Not l Is Nothing)
+            assert(Not r Is Nothing)
             Dim cmp As Int32 = 0
             cmp = compare(l.second, r.second)
             If cmp <> 0 Then

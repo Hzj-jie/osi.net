@@ -45,8 +45,8 @@ Partial Public NotInheritable Class b2style
         End Class
 
         Private Sub New(ByVal n As typed_node, ByVal name_node As typed_node, ByVal types As vector(Of String))
-            assert(n IsNot Nothing)
-            assert(name_node IsNot Nothing)
+            assert(Not n Is Nothing)
+            assert(Not name_node Is Nothing)
             assert(n.type_name.Equals("template-body"))
             n = n.child()
             assert(Not types.null_or_empty())
@@ -56,8 +56,8 @@ Partial Public NotInheritable Class b2style
                                     Return New ref(Of String)()
                                 End Function)
             n.dfs(Sub(ByVal node As typed_node, ByVal stop_navigating_sub_nodes As Action)
-                      assert(node IsNot Nothing)
-                      assert(stop_navigating_sub_nodes IsNot Nothing)
+                      assert(Not node Is Nothing)
+                      assert(Not stop_navigating_sub_nodes Is Nothing)
                       If Object.ReferenceEquals(name_node, node) Then
                           assert(w.append(AddressOf _extended_type_name.str))
                           stop_navigating_sub_nodes()
@@ -76,20 +76,20 @@ Partial Public NotInheritable Class b2style
                       Next
                   End Sub,
                   Sub(ByVal leaf As typed_node)
-                      assert(leaf IsNot Nothing)
+                      assert(Not leaf Is Nothing)
                       assert(w.append(leaf.word().str()))
                   End Sub)
         End Sub
 
         Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
             Return strcat(n.input_without_ignored(), "__", type_count)
         End Function
 
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
                                     ByVal n As typed_node,
                                     ByRef o As template_template) As Boolean
-            assert(n IsNot Nothing)
+            assert(Not n Is Nothing)
             assert(n.type_name.Equals("template"))
             assert(n.child_count() = 5)
             Dim name_node As typed_node = n.child(4).child()
@@ -125,7 +125,7 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Public Function apply(ByVal types As vector(Of String), ByRef impl As String) As Boolean
-            assert(types IsNot Nothing)
+            assert(Not types Is Nothing)
             assert(types.size() = Me.type_refs.size())
             assert(types.size() > 0)
             _extended_type_name.apply(types)

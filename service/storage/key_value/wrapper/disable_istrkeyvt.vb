@@ -29,8 +29,8 @@ Public Class disable_istrkeyvt
     Private ReadOnly impl As istrkeyvt
 
     Public Sub New(ByVal v As var, ByVal impl As istrkeyvt)
-        assert(v IsNot Nothing)
-        assert(impl IsNot Nothing)
+        assert(Not v Is Nothing)
+        assert(Not impl Is Nothing)
         Const append As String = "append"
         Const capacity As String = "capacity"
         Const delete As String = "delete"
@@ -99,7 +99,7 @@ Public Class disable_istrkeyvt
                    ByVal disable_unique_write As Boolean,
                    ByVal disable_valuesize As Boolean,
                    ByVal impl As istrkeyvt)
-        assert(impl IsNot Nothing)
+        assert(Not impl Is Nothing)
         Me.disable_append = disable_append
         Me.disable_capacity = disable_capacity
         Me.disable_delete = disable_delete
@@ -121,7 +121,7 @@ Public Class disable_istrkeyvt
 
     Private Function work(ByVal d As Boolean,
                           ByVal w As Func(Of event_comb)) As event_comb
-        assert(w IsNot Nothing)
+        assert(Not w Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If d Then

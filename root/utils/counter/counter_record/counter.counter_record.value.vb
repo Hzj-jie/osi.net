@@ -24,7 +24,7 @@ Namespace counter
         End Function
 
         Private Function last_average_count() As Int64
-            assert(last_averages IsNot Nothing AndAlso last_averages.Length() > 0,
+            assert(Not last_averages Is Nothing AndAlso last_averages.Length() > 0,
                    "last_averages is not initialized, the counter may not enabled last_average.")
             Dim c As Int64 = 0
             For i As Int32 = 0 To CInt(min(last_averages.Length(), calltimes)) - 1
@@ -52,7 +52,7 @@ Namespace counter
         End Function
 
         Public Function last_rate() As Int64
-            assert(last_times_ticks IsNot Nothing AndAlso last_times_ticks.Length() > 0,
+            assert(Not last_times_ticks Is Nothing AndAlso last_times_ticks.Length() > 0,
                    "last_times_ticks is not initialized, the counter may not enabled last_rate.")
             Dim c As Int64 = 0
             Dim oldest As Int64 = 0

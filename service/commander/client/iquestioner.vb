@@ -96,7 +96,7 @@ Public MustInherit Class iquestioner(Of _ENABLE_AUTO_PING As _boolean)
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso
-                                         (+o) IsNot Nothing AndAlso
+                                         Not (+o) Is Nothing AndAlso
                                          (+o).action_is(response.success) AndAlso
                                          goto_end()
                               End Function)

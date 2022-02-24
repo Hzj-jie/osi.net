@@ -14,7 +14,7 @@ Partial Public NotInheritable Class bstyle
         Implements statement
 
         Public Shared Sub register(ByVal p As statements)
-            assert(p IsNot Nothing)
+            assert(Not p Is Nothing)
             p.register(New main())
         End Sub
 

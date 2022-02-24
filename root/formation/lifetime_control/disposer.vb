@@ -30,7 +30,7 @@ Public Class disposer
     End Sub
 
     Protected Overridable Sub disposer()
-        assert(_disposer IsNot Nothing)
+        assert(Not _disposer Is Nothing)
         _disposer()
     End Sub
 

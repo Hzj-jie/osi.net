@@ -34,7 +34,7 @@ Public Class stream_text_dev_T_adapter(Of T)
                                   Dim s As String = Nothing
                                   s = string_serializer.to_str(i)
                                   If memory_stream.[New](s, enc, ms) Then
-                                      assert(ms IsNot Nothing)
+                                      assert(Not ms Is Nothing)
                                       ec = underlying_device.send(ms)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
@@ -43,7 +43,7 @@ Public Class stream_text_dev_T_adapter(Of T)
                                   End If
                               End Function,
                               Function() As Boolean
-                                  assert(ms IsNot Nothing)
+                                  assert(Not ms Is Nothing)
                                   ms.Close()
                                   ms.Dispose()
                                   Return ec.end_result() AndAlso

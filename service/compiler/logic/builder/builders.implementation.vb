@@ -23,7 +23,7 @@ Namespace logic
             Private ReadOnly paragraph_1 As Func(Of logic_writer, Boolean)
 
             Public Sub New(ByVal paragraph_1 As Func(Of logic_writer, Boolean))
-                assert(paragraph_1 IsNot Nothing)
+                assert(Not paragraph_1 Is Nothing)
                 Me.paragraph_1 = paragraph_1
             End Sub
 
@@ -454,9 +454,9 @@ Namespace logic
                 Me.string_1 = string_1
                 assert(Not string_2.null_or_whitespace())
                 Me.string_2 = string_2
-                assert(typed_parameters_3 IsNot Nothing)
+                assert(Not typed_parameters_3 Is Nothing)
                 Me.typed_parameters_3 = typed_parameters_3
-                assert(paragraph_4 IsNot Nothing)
+                assert(Not paragraph_4 Is Nothing)
                 Me.paragraph_4 = paragraph_4
             End Sub
 
@@ -490,7 +490,7 @@ Namespace logic
                 Me.string_1 = string_1
                 assert(Not string_2.null_or_whitespace())
                 Me.string_2 = string_2
-                assert(parameters_3 IsNot Nothing)
+                assert(Not parameters_3 Is Nothing)
                 Me.parameters_3 = parameters_3
             End Sub
 
@@ -518,7 +518,7 @@ Namespace logic
             Public Sub New(ByVal string_1 As String, ByVal parameters_2 As vector(Of String))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
-                assert(parameters_2 IsNot Nothing)
+                assert(Not parameters_2 Is Nothing)
                 Me.parameters_2 = parameters_2
             End Sub
 
@@ -548,7 +548,7 @@ Namespace logic
                 Me.string_1 = string_1
                 assert(Not string_2.null_or_whitespace())
                 Me.string_2 = string_2
-                assert(parameters_3 IsNot Nothing)
+                assert(Not parameters_3 Is Nothing)
                 Me.parameters_3 = parameters_3
             End Sub
 
@@ -579,7 +579,7 @@ Namespace logic
                 Me.string_1 = string_1
                 assert(Not string_2.null_or_whitespace())
                 Me.string_2 = string_2
-                assert(parameters_3 IsNot Nothing)
+                assert(Not parameters_3 Is Nothing)
                 Me.parameters_3 = parameters_3
             End Sub
 
@@ -607,7 +607,7 @@ Namespace logic
             Public Sub New(ByVal string_1 As String, ByVal parameters_2 As vector(Of String))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
-                assert(parameters_2 IsNot Nothing)
+                assert(Not parameters_2 Is Nothing)
                 Me.parameters_2 = parameters_2
             End Sub
 
@@ -805,9 +805,9 @@ Namespace logic
             Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean), ByVal paragraph_4 As Func(Of logic_writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
-                assert(paragraph_2 IsNot Nothing)
+                assert(Not paragraph_2 Is Nothing)
                 Me.paragraph_2 = paragraph_2
-                assert(paragraph_4 IsNot Nothing)
+                assert(Not paragraph_4 Is Nothing)
                 Me.paragraph_4 = paragraph_4
             End Sub
 
@@ -838,7 +838,7 @@ Namespace logic
             Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
-                assert(paragraph_2 IsNot Nothing)
+                assert(Not paragraph_2 Is Nothing)
                 Me.paragraph_2 = paragraph_2
             End Sub
 
@@ -890,7 +890,7 @@ Namespace logic
             Public Sub New(ByVal string_1 As String, ByVal data_block_2 As data_block)
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
-                assert(data_block_2 IsNot Nothing)
+                assert(Not data_block_2 Is Nothing)
                 Me.data_block_2 = data_block_2
             End Sub
 
@@ -969,7 +969,7 @@ Namespace logic
             Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
-                assert(paragraph_2 IsNot Nothing)
+                assert(Not paragraph_2 Is Nothing)
                 Me.paragraph_2 = paragraph_2
             End Sub
 
@@ -996,7 +996,7 @@ Namespace logic
             Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
-                assert(paragraph_2 IsNot Nothing)
+                assert(Not paragraph_2 Is Nothing)
                 Me.paragraph_2 = paragraph_2
             End Sub
 
@@ -1224,7 +1224,7 @@ Namespace logic
             Public Sub New(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean))
                 assert(Not string_1.null_or_whitespace())
                 Me.string_1 = string_1
-                assert(paragraph_2 IsNot Nothing)
+                assert(Not paragraph_2 Is Nothing)
                 Me.paragraph_2 = paragraph_2
             End Sub
 

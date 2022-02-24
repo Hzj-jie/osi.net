@@ -14,7 +14,7 @@ Partial Public NotInheritable Class bstyle
             Private ReadOnly s As New unordered_map(Of String, function_signature)()
 
             Public Function define(ByVal name As String, ByVal signature As function_signature) As Boolean
-                assert(signature IsNot Nothing)
+                assert(Not signature Is Nothing)
                 assert(Not name.null_or_whitespace())
                 If s.emplace(name, signature).second() Then
                     Return True
@@ -33,17 +33,17 @@ Partial Public NotInheritable Class bstyle
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
-                assert(s IsNot Nothing)
+                assert(Not s Is Nothing)
                 Me.s = s
             End Sub
 
             Public Function define(ByVal return_type As String,
                                    ByVal name As String,
                                    ByVal parameters() As builders.parameter_type) As Boolean
-                assert(parameters IsNot Nothing)
+                assert(Not parameters Is Nothing)
                 assert(return_type.Equals(s.type_alias()(return_type)))
                 For Each parameter As builders.parameter_type In parameters
-                    assert(parameter IsNot Nothing)
+                    assert(Not parameter Is Nothing)
                     assert(parameter.type.Equals(s.type_alias()(parameter.type)))
                 Next
                 Return s.de.define(name, New function_signature(name, return_type, parameters))
@@ -51,7 +51,7 @@ Partial Public NotInheritable Class bstyle
 
             Public Function retrieve(ByVal name As String, ByRef o As function_signature) As Boolean
                 Dim s As scope = Me.s
-                While s IsNot Nothing
+                While Not s Is Nothing
                     If s.de.retrieve(name, o) Then
                         Return True
                     End If

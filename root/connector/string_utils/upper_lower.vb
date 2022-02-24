@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 
 Public Module _upper_lower
     <Extension()> Public Function strtolower(ByRef s As String) As String
-        If s IsNot Nothing Then
+        If Not s Is Nothing Then
             s = s.ToLower()
         End If
 
@@ -11,7 +11,7 @@ Public Module _upper_lower
     End Function
 
     <Extension()> Public Function strtoupper(ByRef s As String) As String
-        If s IsNot Nothing Then
+        If Not s Is Nothing Then
             s = s.ToUpper()
         End If
 

@@ -28,7 +28,7 @@ Public NotInheritable Class type_bytes_serializer
         If Not implemented Then
             Return False
         End If
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Return s.append_to(i, o)
     End Function
 
@@ -49,7 +49,7 @@ Public NotInheritable Class type_bytes_serializer
         If Not implemented Then
             Return False
         End If
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Return s.write_to(i, o)
     End Function
 
@@ -70,7 +70,7 @@ Public NotInheritable Class type_bytes_serializer
         If Not implemented Then
             Return False
         End If
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Return s.consume_from(i, o)
     End Function
 
@@ -91,7 +91,7 @@ Public NotInheritable Class type_bytes_serializer
         If Not implemented Then
             Return False
         End If
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         Return s.read_from(i, o)
     End Function
 

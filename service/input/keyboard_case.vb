@@ -55,7 +55,7 @@ Public Module _keyboard_case
                                    ByRef o As vector(Of [case])) As Boolean
         Dim v As vector(Of keyinfo) = Nothing
         If c.keycode(v) Then
-            assert((v IsNot Nothing OrElse v.empty()))
+            assert(Not (v Is Nothing OrElse v.empty()))
             Dim min_steps As Int32 = 0
             Dim min_case As Int32 = 0
             min_steps = max_int32
@@ -133,7 +133,7 @@ Public Module _keyboard_case
     End Function
 
     <Extension()> Public Function valid_keyboard_case(ByVal c As [case]) As Boolean
-        Return c IsNot Nothing AndAlso
+        Return Not c Is Nothing AndAlso
                c.mode = mode.keyboard AndAlso
                valid_keyboard_action(c.action) AndAlso
                valid_keyboard_meta(c.meta)

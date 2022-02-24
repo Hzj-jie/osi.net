@@ -16,7 +16,7 @@ Partial Public Class rlexer
         Public Sub New(ByVal g As matching_group)
             MyBase.New(g)
             Dim sg As string_matching_group = Nothing
-            If cast(g, sg) AndAlso assert(sg IsNot Nothing) Then
+            If cast(g, sg) AndAlso assert(Not sg Is Nothing) Then
                 Me.consumes = sg.max_length
             ElseIf cast(g, [default](Of any_character_matching_group).null) Then
                 Me.consumes = uint32_1

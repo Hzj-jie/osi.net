@@ -31,9 +31,9 @@ Public Module _assert
             ' won't work here.
             assert_break()
         End If
-        assert(d IsNot Nothing)
-        assert(not_reach IsNot Nothing)
-        assert(check_exception IsNot Nothing)
+        assert(Not d Is Nothing)
+        assert(Not not_reach Is Nothing)
+        assert(Not check_exception Is Nothing)
         ignore_assertion_failure = True
         Try
             d()

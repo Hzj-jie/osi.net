@@ -19,8 +19,8 @@ Partial Public Class struct(Of T)
                 MyBase.New(assert_which.of(fs).is_not_null().FieldType(), assert_which.of(fs).is_not_null().Name())
                 getter = AddressOf fs.GetValue
                 setter = AddressOf fs.SetValue
-                assert(getter IsNot Nothing)
-                assert(setter IsNot Nothing)
+                assert(Not getter Is Nothing)
+                assert(Not setter Is Nothing)
             End Sub
 
             Public Function variable_of(ByVal i As Object, ByRef o As struct.variable) As Boolean
@@ -37,7 +37,7 @@ Partial Public Class struct(Of T)
                                                   ByVal definitions() As definition,
                                                   ByVal o As RT) As Boolean
                 assert(array_size(vs) = array_size(definitions))
-                assert(o IsNot Nothing)
+                assert(Not o Is Nothing)
                 For i As Int32 = 0 To array_size_i(definitions) - 1
                     Try
                         definitions(i).setter(o, vs(i))

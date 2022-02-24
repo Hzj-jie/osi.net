@@ -20,7 +20,7 @@ Partial Public NotInheritable Class case2
         Private Shared Function append_method_name(ByVal t As Type,
                                                    ByVal method_name As String,
                                                    ByVal id As Int32) As String
-            assert(t IsNot Nothing)
+            assert(Not t Is Nothing)
             Dim base_name As String = Nothing
             If id = 0 Then
                 base_name = t.FullName()
@@ -66,7 +66,7 @@ Partial Public NotInheritable Class case2
         End Function
 
         Public Overrides Function run() As Boolean
-            assert(_run IsNot Nothing)
+            assert(Not _run Is Nothing)
             Return _run(obj)
         End Function
 

@@ -24,8 +24,8 @@ Partial Public NotInheritable Class case2
             For i As UInt32 = 0 To randoms.size() - uint32_1
                 Dim f As random_function_info = Nothing
                 f = randoms(i)
-                assert(f IsNot Nothing)
-                assert(f.f IsNot Nothing)
+                assert(Not f Is Nothing)
+                assert(Not f.f Is Nothing)
                 r.insert_call(f.percentage,
                               Function() As Boolean
                                   Return f.f(obj)

@@ -57,22 +57,22 @@ Namespace logic
             End Function
 
             Public Function map_type(ByVal f As Func(Of String, String)) As parameter_type
-                assert(f IsNot Nothing)
+                assert(Not f Is Nothing)
                 Return New parameter_type(f(type), ref)
             End Function
 
             Public Shared Function from(ByVal ParamArray parameters() As String) As parameter_type()
-                assert(parameters IsNot Nothing)
+                assert(Not parameters Is Nothing)
                 Return streams.of(parameters).
                                map(Function(ByVal p As String) As parameter_type
-                                       assert(p IsNot Nothing)
+                                       assert(Not p Is Nothing)
                                        Return New parameter_type(p)
                                    End Function).
                                to_array()
             End Function
 
             Public Shared Function from(ByVal parameters As vector(Of String)) As parameter_type()
-                assert(parameters IsNot Nothing)
+                assert(Not parameters Is Nothing)
                 Return from(+parameters)
             End Function
 
@@ -106,17 +106,17 @@ Namespace logic
             End Function
 
             Public Shadows Function map_type(ByVal f As Func(Of String, String)) As parameter
-                assert(f IsNot Nothing)
+                assert(Not f Is Nothing)
                 Return New parameter(f(type), ref, name)
             End Function
 
             Public Function map_name(ByVal f As Func(Of String, String)) As parameter
-                assert(f IsNot Nothing)
+                assert(Not f Is Nothing)
                 Return New parameter(type, ref, f(name))
             End Function
 
             Public Shared Function to_ref(ByVal p As parameter) As parameter
-                assert(p IsNot Nothing)
+                assert(Not p Is Nothing)
                 assert(Not p.ref)
                 Return New parameter(p.type, True, p.name)
             End Function
@@ -126,10 +126,10 @@ Namespace logic
             End Function
 
             Public Shared Shadows Function from(ByVal parameters() As pair(Of String, String)) As parameter()
-                assert(parameters IsNot Nothing)
+                assert(Not parameters Is Nothing)
                 Return streams.of(parameters).
                                map(Function(ByVal p As pair(Of String, String)) As parameter
-                                       assert(p IsNot Nothing)
+                                       assert(Not p Is Nothing)
                                        Return New parameter(p.second, p.first)
                                    End Function).
                                to_array()
@@ -144,7 +144,7 @@ Namespace logic
                              type,
                              parameters.stream().
                                         map(Function(ByVal i As parameter) As pair(Of String, String)
-                                                assert(i IsNot Nothing)
+                                                assert(Not i Is Nothing)
                                                 Return pair.emplace_of(i.name, i.logic_type())
                                             End Function).
                                         collect_to(Of vector(Of pair(Of String, String)))(),
@@ -155,7 +155,7 @@ Namespace logic
             Private ReadOnly o As logic_writer
 
             Public Sub New(ByVal o As logic_writer)
-                assert(o IsNot Nothing)
+                assert(Not o Is Nothing)
                 Me.o = o
             End Sub
 

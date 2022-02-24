@@ -54,7 +54,7 @@ Public NotInheritable Class ##THREADPOOL_TYPE##_test
     Public Overrides Function prepare() As Boolean
         If MyBase.prepare() Then
             t = ##NEW_INSTANCE##
-            assert(t IsNot Nothing)
+            assert(Not t Is Nothing)
             inserted.set(0)
             executed.set(0)
             Return True

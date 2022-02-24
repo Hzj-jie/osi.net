@@ -38,8 +38,8 @@ Public MustInherit Class complete_io_test2(Of T As flow)
     Private Shared Function start_receive(ByVal f As T,
                                           ByVal b() As Byte,
                                           ByVal finished As ManualResetEvent) As Boolean
-        assert(f IsNot Nothing)
-        assert(finished IsNot Nothing)
+        assert(Not f Is Nothing)
+        assert(Not finished Is Nothing)
         Dim ec As event_comb = Nothing
         assert_begin(New event_comb(Function() As Boolean
                                         ec = DirectCast(f, flow).receive(b)
@@ -64,7 +64,7 @@ Public MustInherit Class complete_io_test2(Of T As flow)
         assertion.is_true(start_receive(create_receive_flow(), b2, finished))
         Dim s As flow = Nothing
         s = create_send_flow()
-        assert(s IsNot Nothing)
+        assert(Not s Is Nothing)
         assertion.is_true(async_sync(s.send(b1), minutes_to_milliseconds(1)))
         assertion.is_true(finished.WaitOne(CInt(minutes_to_milliseconds(1))))
         finished.Close()

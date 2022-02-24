@@ -35,7 +35,7 @@ Public Module _ifs
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() AndAlso
-                                     (+n) IsNot Nothing Then
+                                     Not (+n) Is Nothing Then
                                       ec = (+n).subnodes(r)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
