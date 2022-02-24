@@ -63,7 +63,7 @@ Public Structure [optional](Of T)
 
         Me.b = b
         Me.v = v
-        assert(b OrElse Not v IsNot Nothing)
+        assert(Not b OrElse v IsNot Nothing)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
