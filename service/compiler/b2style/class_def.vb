@@ -28,7 +28,7 @@ Partial Public NotInheritable Class b2style
             Public ReadOnly bases As New vector(Of String)()
             Public ReadOnly vfuncs As New StringBuilder()
 
-            Public Function function_body() As String
+            Public Function body() As String
                 Return bases.str(character.newline) + vfuncs.ToString()
             End Function
         End Class
@@ -209,7 +209,7 @@ Partial Public NotInheritable Class b2style
         Public Function check() As Boolean
             with_func(init_func_def.with_content(New StringBuilder().Append(init_func_def.declaration()).
                                                                      Append("{").
-                                                                     Append(init_func.function_body()).
+                                                                     Append(init_func.body()).
                                                                      Append("}").ToString()))
             Return check_vars_duplicate() AndAlso check_funcs_duplicate()
         End Function
