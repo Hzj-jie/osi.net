@@ -71,57 +71,12 @@ Partial Public NotInheritable Class b2style
                 Return New function_def(class_def, return_type, signature, type, content)
             End Function
 
-            Public Function with_name(ByVal name As String) As function_def
-                Dim signature As vector(Of name_with_namespace) = Me.signature.CloneT()
-                signature(0) = name_of(name)
-                Return New function_def(class_def, return_type, signature, type, content)
-            End Function
-
-            Public Function virtual_declaration(ByVal param_names As vector(Of String)) As String
-                Return declaration(virtual_name(), class_def, param_names)
-            End Function
-
-            Public Function virtual_declaration(ByVal class_def As class_def) As String
-                Return declaration(virtual_name(), class_def, default_param_names())
-            End Function
-
-            Public Function virtual_name() As String
-                Return class_def.name.in_global_namespace() + delegate_name()
-            End Function
-
             Public Function is_virtual() As Boolean
                 Return type <> type_t.pure
             End Function
 
             Public Function is_override() As Boolean
                 Return type = type_t.override
-            End Function
-
-            Public Function delegate_type() As String
-                Dim content As New StringBuilder()
-                content.Append(_namespace.in_b2style_namespace("function")).
-                        Append("<").
-                        Append(class_def.name.in_global_namespace() + "&")
-                Dim i As UInt32 = 1
-                While i < signature.size()
-                    content.Append(",").
-                            Append(signature(i).in_global_namespace())
-                End While
-                content.Append(",").
-                        Append(return_type.in_global_namespace()).
-                        Append(">")
-                Return content.ToString()
-            End Function
-
-            Public Function delegate_name() As String
-                Return "_virtual_" + signature.stream().
-                                               map(Function(ByVal n As name_with_namespace) As String
-                                                       ' Note, the :: is not allowed to be part of the variable name, so
-                                                       ' use the bstyle-format.
-                                                       Return "_" + n.bstyle_format()
-                                                   End Function).
-                                               collect_by(stream(Of String).collectors.to_str()).
-                                               ToString()
             End Function
 
             Private Function default_param_names() As vector(Of String)
@@ -153,18 +108,14 @@ Partial Public NotInheritable Class b2style
                 Return content.ToString()
             End Function
 
-            Private Function declaration(ByVal func_name As String,
-                                         ByVal class_def As class_def,
-                                         ByVal param_names As vector(Of String)) As String
-                assert(Not func_name.null_or_whitespace())
-                assert(Not class_def Is Nothing)
+            Public Function declaration(ByVal param_names As vector(Of String)) As String
                 assert(Not param_names Is Nothing)
                 assert(param_names.size() = signature.size() - uint32_1)
                 ' No namespace is necessary, the first parameter contains namespace.
                 Dim content As New StringBuilder()
                 content.Append(return_type.in_global_namespace()).
                         Append(" ").
-                        Append(func_name).
+                        Append(name().in_global_namespace()).
                         Append("(").
                         Append(class_def.name.in_global_namespace()).
                         Append("& this")
@@ -178,10 +129,6 @@ Partial Public NotInheritable Class b2style
                 End While
                 content.Append(")")
                 Return content.ToString()
-            End Function
-
-            Public Function declaration(ByVal param_names As vector(Of String)) As String
-                Return declaration(name().in_global_namespace(), class_def, param_names)
             End Function
 
             Public Function declaration() As String

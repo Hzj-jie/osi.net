@@ -37,10 +37,7 @@ Partial Public NotInheritable Class b2style
                        assert(Not f Is Nothing)
                        f = f.with_class(Me)
                        scope.current().call_hierarchy().to(f.name().in_global_namespace())
-                       Return f.with_content(New StringBuilder().Append(f.declaration()).
-                                                                 Append("{").
-                                                                 Append(f.forward_to(other)).
-                                                                 Append("}").ToString())
+                       Return f.with_content(f.declaration() + "{" + f.forward_to(other) + "}")
                    End Function
         End Function
 
