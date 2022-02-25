@@ -93,6 +93,10 @@ Partial Public NotInheritable Class b2style
                 Return type <> type_t.pure
             End Function
 
+            Public Function is_override() As Boolean
+                Return type = type_t.override
+            End Function
+
             Public Function delegate_type() As String
                 Dim content As New StringBuilder()
                 content.Append(_namespace.in_b2style_namespace("function")).
@@ -153,8 +157,8 @@ Partial Public NotInheritable Class b2style
                                          ByVal class_def As class_def,
                                          ByVal param_names As vector(Of String)) As String
                 assert(Not func_name.null_or_whitespace())
-                assert(class_def IsNot Nothing)
-                assert(param_names IsNot Nothing)
+                assert(Not class_def Is Nothing)
+                assert(Not param_names Is Nothing)
                 assert(param_names.size() = signature.size() - uint32_1)
                 ' No namespace is necessary, the first parameter contains namespace.
                 Dim content As New StringBuilder()

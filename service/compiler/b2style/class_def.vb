@@ -12,6 +12,8 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class class_def
+        Private Const construct As String = "construct"
+        Private Const destruct As String = "destruct"
         Private ReadOnly name As name_with_namespace
         ' The type-name pair directly passes to bstyle/struct.
         Private ReadOnly _vars As New vector(Of builders.parameter)()
@@ -24,41 +26,50 @@ Partial Public NotInheritable Class b2style
         Public Function inherit_from(ByVal other As class_def) As class_def
             assert(Not other Is Nothing)
             _vars.emplace_back(other._vars)
-            inherit_non_existing_funcs(other)
+            inherit_non_overrides(other)
+            inherit_overrides(other)
             Return Me
         End Function
 
-        Private Sub inherit_overrides(ByVal other As class_def)
-            assert(other IsNot Nothing)
-            other.funcs().
-                  filter(Function(ByVal f As function_def) As Boolean
-                             assert(f IsNot Nothing)
-                             Return f.is_virtual()
-                         End Function).
-                  intersect(funcs()).
-                  foreach(Sub(ByVal f As function_def)
-                              Dim myf As function_def = f.with_class(Me)
-                              with_func(myf.with_name(myf.virtual_name()).
-                                            with_content(myf.virtual_declaration(other) +
-                                                         "{" +
-                                                         myf.with_name(myf.virtual_name()).forward_to(Me) +
-                                                         "}"))
-                          End Sub)
-        End Sub
+        Private Function forward_to(ByVal other As class_def) As Func(Of function_def, function_def)
+            assert(Not other Is Nothing)
+            Return Function(ByVal f As function_def) As function_def
+                       assert(Not f Is Nothing)
+                       f = f.with_class(Me)
+                       scope.current().call_hierarchy().to(f.name().in_global_namespace())
+                       Return f.with_content(New StringBuilder().Append(f.declaration()).
+                                                                 Append("{").
+                                                                 Append(f.forward_to(other)).
+                                                                 Append("}").ToString())
+                   End Function
+        End Function
 
-        Private Sub inherit_non_existing_funcs(ByVal other As class_def)
+        Private Sub inherit_non_overrides(ByVal other As class_def)
             assert(Not other Is Nothing)
             _funcs.emplace_back(other.funcs().
-                                      except(funcs()).
-                                      map(Function(ByVal f As function_def) As function_def
-                                              assert(Not f Is Nothing)
-                                              f = f.with_class(Me)
-                                              scope.current().call_hierarchy().to(f.name().in_global_namespace())
-                                              Return f.with_content(New StringBuilder().Append(f.declaration()).
-                                                                                        Append("{").
-                                                                                        Append(f.forward_to(other)).
-                                                                                        Append("}").ToString())
-                                          End Function).
+                                      filter(Function(ByVal f As function_def) As Boolean
+                                                 assert(Not f Is Nothing)
+                                                 ' Never directly forward constructor and destructor.
+                                                 Return Not f.is_virtual() AndAlso
+                                                        Not f.name().name().Equals(construct) AndAlso
+                                                        Not f.name().name().Equals(destruct)
+                                             End Function).
+                                      map(forward_to(other)).
+                                      collect_to(Of vector(Of function_def))())
+        End Sub
+
+        Private Sub inherit_overrides(ByVal other As class_def)
+            assert(Not other Is Nothing)
+            _funcs.emplace_back(other.funcs().
+                                      filter(Function(ByVal f As function_def) As Boolean
+                                                 assert(Not f Is Nothing)
+                                                 Return f.is_virtual()
+                                             End Function).
+                                      except(funcs().filter(Function(ByVal f As function_def) As Boolean
+                                                                assert(Not f Is Nothing)
+                                                                Return f.is_override()
+                                                            End Function)).
+                                      map(forward_to(other)).
                                       collect_to(Of vector(Of function_def))())
         End Sub
 
@@ -104,9 +115,9 @@ Partial Public NotInheritable Class b2style
                           Dim node As typed_node = t.first()
                           assert(Not node Is Nothing)
                           assert(node.child_count() = 5 OrElse node.child_count() = 6)
-                          If node.child(1).input().Equals("construct") Then
+                          If node.child(1).input().Equals(construct) Then
                               has_constructor = True
-                          ElseIf node.child(1).input().Equals("destruct") Then
+                          ElseIf node.child(1).input().Equals(destruct) Then
                               has_destructor = True
                           End If
                           Dim signature As New vector(Of name_with_namespace)()
@@ -128,26 +139,15 @@ Partial Public NotInheritable Class b2style
                                                     signature,
                                                     t.second(),
                                                     "// This content should never be used.")
-                          If Not f.is_virtual() Then
-                              with_func(f.with_content(f.declaration(param_names) + node.last_child().input()))
-                          Else
-                              If t.second() = function_def.type_t.overridable Then
-                                  with_var(builders.parameter.no_ref(f.delegate_type(), f.delegate_name()))
-                              Else
-                                  assert(t.second() = function_def.type_t.override)
-                                  ' NVM, the one with base& this will be added during inherit_from.
-                              End If
-                              scope.current().call_hierarchy().to(f.virtual_name())
-                              with_func(f.with_content(f.virtual_declaration(param_names) + node.last_child().input()))
-                          End If
+                          with_func(f.with_content(f.declaration(param_names) + node.last_child().input()))
                       End Sub)
             If Not has_constructor Then
                 with_func(New function_def(Me,
                                            function_def.type_of("void"),
-                                           function_def.name_of("construct"),
+                                           function_def.name_of(construct),
                                            function_def.type_t.pure,
                                            New StringBuilder().Append("void ").
-                                                               Append(_namespace.with_global_namespace("construct")).
+                                                               Append(_namespace.with_global_namespace(construct)).
                                                                Append("(").
                                                                Append(name.name()).
                                                                Append("& this){}").ToString()))
@@ -155,10 +155,10 @@ Partial Public NotInheritable Class b2style
             If Not has_destructor Then
                 with_func(New function_def(Me,
                                            function_def.type_of("void"),
-                                           function_def.name_of("destruct"),
+                                           function_def.name_of(destruct),
                                            function_def.type_t.pure,
                                            New StringBuilder().Append("void ").
-                                                               Append(_namespace.with_global_namespace("destruct")).
+                                                               Append(_namespace.with_global_namespace(destruct)).
                                                                Append("(").
                                                                Append(name.name()).
                                                                Append("& this){}").ToString()))
