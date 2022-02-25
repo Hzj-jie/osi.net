@@ -12,33 +12,10 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class class_def
-        Public Const init_func_name As String = "b2style_init"
         Private ReadOnly name As name_with_namespace
         ' The type-name pair directly passes to bstyle/struct.
         Private ReadOnly _vars As New vector(Of builders.parameter)()
         Private ReadOnly _funcs As New vector(Of function_def)()
-        Private ReadOnly init_func As New init_func_t()
-        Private ReadOnly init_func_def As New function_def(Me,
-                                                           name_with_namespace.of("void"),
-                                                           name_with_namespace.of_global_namespace(init_func_name),
-                                                           function_def.type_t.pure,
-                                                           "// This content should never be used.")
-
-        Private NotInheritable Class init_func_t
-            Public ReadOnly bases As New vector(Of String)()
-            Private ReadOnly vfuncs As New StringBuilder()
-
-            Public Function body() As String
-                Return bases.str(character.newline) + vfuncs.ToString()
-            End Function
-
-            Public Function with_vfunc(ByVal f As function_def, ByVal class_def As class_def) As init_func_t
-                assert(f IsNot Nothing)
-                vfuncs.Append(
-                    "this." + f.delegate_name() + "=" + f.with_class(class_def).virtual_name() + ";")
-                Return Me
-            End Function
-        End Class
 
         Public Sub New(ByVal name As String)
             Me.name = name_with_namespace.of(name)
@@ -48,8 +25,6 @@ Partial Public NotInheritable Class b2style
             assert(Not other Is Nothing)
             _vars.emplace_back(other._vars)
             inherit_non_existing_funcs(other)
-            inherit_overrides(other)
-            init_func.bases.emplace_back(init_func_def.forward_to(other))
             Return Me
         End Function
 
@@ -68,7 +43,6 @@ Partial Public NotInheritable Class b2style
                                                          "{" +
                                                          myf.with_name(myf.virtual_name()).forward_to(Me) +
                                                          "}"))
-                              init_func.with_vfunc(f, Me)
                           End Sub)
         End Sub
 
@@ -76,10 +50,6 @@ Partial Public NotInheritable Class b2style
             assert(Not other Is Nothing)
             _funcs.emplace_back(other.funcs().
                                       except(funcs()).
-                                      filter(Function(ByVal f As function_def) As Boolean
-                                                 assert(f IsNot Nothing)
-                                                 Return Not f.name().name().Equals(init_func_name)
-                                             End Function).
                                       map(Function(ByVal f As function_def) As function_def
                                               assert(Not f Is Nothing)
                                               f = f.with_class(Me)
@@ -163,7 +133,6 @@ Partial Public NotInheritable Class b2style
                           Else
                               If t.second() = function_def.type_t.overridable Then
                                   with_var(builders.parameter.no_ref(f.delegate_type(), f.delegate_name()))
-                                  init_func.with_vfunc(f, Me)
                               Else
                                   assert(t.second() = function_def.type_t.override)
                                   ' NVM, the one with base& this will be added during inherit_from.
@@ -234,10 +203,6 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Public Function check() As Boolean
-            with_func(init_func_def.with_content(New StringBuilder().Append(init_func_def.declaration()).
-                                                                     Append("{").
-                                                                     Append(init_func.body()).
-                                                                     Append("}").ToString()))
             Return check_vars_duplicate() AndAlso check_funcs_duplicate()
         End Function
     End Class
