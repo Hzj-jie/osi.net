@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Text
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class b2style
@@ -14,16 +15,19 @@ Partial Public NotInheritable Class b2style
 
             Public Enum type_t
                 pure
-                virtual
+                [overridable]
                 override
             End Enum
 
-            Private ReadOnly c As class_def
+            Private ReadOnly class_def As class_def
             Private ReadOnly return_type As name_with_namespace
+            ' TODO: Move name out of signature
             Private ReadOnly signature As vector(Of name_with_namespace)
             Private ReadOnly type As type_t
             Public ReadOnly content As String
 
+            ' TODO: Using names with global namespace does not provide extra benefit, may consider to use string and
+            ' always prefix with global namespace.
             Public Function name() As name_with_namespace
                 Return signature(0)
             End Function
@@ -36,35 +40,51 @@ Partial Public NotInheritable Class b2style
                 Return name_with_namespace.of(type)
             End Function
 
-            Public Sub New(ByVal c As class_def,
+            Public Sub New(ByVal class_def As class_def,
                            ByVal return_type As name_with_namespace,
                            ByVal signature As vector(Of name_with_namespace),
                            ByVal type As type_t,
                            ByVal content As String)
-                assert(Not c Is Nothing)
+                assert(Not class_def Is Nothing)
                 assert(Not signature.null_or_empty())
                 assert(Not content.null_or_whitespace())
-                Me.c = c
+                Me.class_def = class_def
                 Me.return_type = return_type
                 Me.signature = signature
                 Me.type = type
                 Me.content = content
             End Sub
 
-            Public Sub New(ByVal c As class_def,
+            Public Sub New(ByVal class_def As class_def,
                            ByVal return_type As name_with_namespace,
                            ByVal name As name_with_namespace,
                            ByVal type As type_t,
                            ByVal content As String)
-                Me.New(c, return_type, vector.emplace_of(name), type, content)
+                Me.New(class_def, return_type, vector.emplace_of(name), type, content)
             End Sub
 
             Public Function with_content(ByVal content As String) As function_def
-                Return New function_def(c, return_type, signature, type, content)
+                Return New function_def(class_def, return_type, signature, type, content)
             End Function
 
-            Public Function with_class(ByVal c As class_def) As function_def
-                Return New function_def(c, return_type, signature, type, content)
+            Public Function with_class(ByVal class_def As class_def) As function_def
+                Return New function_def(class_def, return_type, signature, type, content)
+            End Function
+
+            Public Function is_virtual() As Boolean
+                Return type <> type_t.pure
+            End Function
+
+            Public Function is_override() As Boolean
+                Return type = type_t.override
+            End Function
+
+            Private Function default_param_names() As vector(Of String)
+                Return streams.range(0, signature.size() - uint32_1).
+                               map(Function(ByVal index As Int32) As String
+                                       Return "i" + index.ToString()
+                                   End Function).
+                               collect_to(Of vector(Of String))()
             End Function
 
             Public Function forward_to(ByVal other As class_def) As String
@@ -78,34 +98,41 @@ Partial Public NotInheritable Class b2style
                     content.Append("return ")
                 End If
                 content.Append(name().in_global_namespace()).
-                    Append("(this")
-                For i As Int32 = 2 To CInt(signature.size()) - 1
-                    content.Append(",").
-                            Append("i").
-                            Append(i - 2)
-                Next
+                        Append("(this").
+                        Append(default_param_names().stream().
+                                                     map(Function(ByVal s As String) As String
+                                                             Return "," + s
+                                                         End Function).
+                                                     collect_by(stream(Of String).collectors.to_str()))
                 content.Append(");")
                 Return content.ToString()
             End Function
 
-            ' TODO: Add parameter names to avoid duplicating with class_def.
-            Public Function declaration() As String
+            Public Function declaration(ByVal param_names As vector(Of String)) As String
+                assert(Not param_names Is Nothing)
+                assert(param_names.size() = signature.size() - uint32_1)
                 ' No namespace is necessary, the first parameter contains namespace.
                 Dim content As New StringBuilder()
                 content.Append(return_type.in_global_namespace()).
                         Append(" ").
                         Append(name().in_global_namespace()).
                         Append("(").
-                        Append(c.name.in_global_namespace()).
+                        Append(class_def.name.in_global_namespace()).
                         Append("& this")
-                For i As Int32 = 2 To CInt(signature.size()) - 1
+                Dim i As UInt32 = 1
+                While i < signature.size()
                     content.Append(",").
-                            Append(signature(CUInt(i)).in_global_namespace()).
-                            Append("i").
-                            Append(i - 2)
-                Next
+                            Append(signature(i).in_global_namespace()).
+                            Append(" ").
+                            Append(param_names(i - uint32_1))
+                    i += uint32_1
+                End While
                 content.Append(")")
                 Return content.ToString()
+            End Function
+
+            Public Function declaration() As String
+                Return declaration(default_param_names())
             End Function
 
             Public Overrides Function Equals(ByVal obj As Object) As Boolean
