@@ -148,6 +148,7 @@
     <Content Include="b2style\self-test\self-health.txt" />
     <Content Include="b2style\self-test\struct_member_type_with_namespace.txt" />
     <Content Include="b2style\self-test\template-in-namespace.txt" />
+    <Content Include="b2style\self-test\template-override.txt" />
     <Content Include="b2style\self-test\template_class_with_ref.txt" />
     <Content Include="b2style\self-test\two-closing-angle-brackets.txt" />
     <Content Include="b2style\self-test\use-base-class-function.txt" />
