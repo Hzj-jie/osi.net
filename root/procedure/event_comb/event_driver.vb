@@ -9,7 +9,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.threadpool
 
-Friend Class event_driver
+Public NotInheritable Class event_driver
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function event_comb_valid(ByVal ec As event_comb) As Boolean
         Return Not ec Is Nothing AndAlso ec.not_pending()
@@ -53,4 +53,7 @@ Friend Class event_driver
         End If
         Return assert(begin(ec))
     End Function
+
+    Private Sub New()
+    End Sub
 End Class
