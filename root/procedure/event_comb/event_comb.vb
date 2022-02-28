@@ -3,19 +3,12 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-#Const USE_LOCK_T = False
-#Const DISALLOW_REENTERABLE_LOCK = True
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.threadpool
-#If DEBUG Then
-Imports lock_t = osi.root.lock.monitorlock
-#Else
-Imports lock_t = osi.root.lock.slimlock.monitorlock
-#End If
 
 Partial Public Class event_comb
     Public Const end_step As Int32 = max_int32
@@ -33,9 +26,6 @@ Partial Public Class event_comb
     Private pends As UInt32
     Private _begin_ticks As Int64
     Private _end_ticks As Int64
-#If USE_LOCK_T Then
-    Private _l As lock_t
-#End If
 
     Public Shared Property current() As event_comb
         <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -51,23 +41,20 @@ Partial Public Class event_comb
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal d() As Func(Of Boolean), ByVal callstack As String)
         assert(Not callstack Is Nothing)
-#If USE_LOCK_T Then
-        _l = New lock_t(Me)
-#End If
         ds = d
-        ds_len = array_size(ds)
+        ds_len = ds.array_size()
         assert(ds_len > 0)
         _callstack = callstack
         cancellation_control = New cancellation_controller(Me)
         _end_result = ternary.unknown
         cb = Nothing
         'following functions are all assert_in_lock protected
-        debug_reenterable_locked(Sub()
-                                     assert_goto_not_started()
-                                     clear_pends()
-                                     begin_ticks() = npos
-                                     end_ticks() = npos
-                                 End Sub)
+        debug_locked(Sub()
+                         assert_goto_not_started()
+                         clear_pends()
+                         begin_ticks() = npos
+                         end_ticks() = npos
+                     End Sub)
     End Sub
 
 #If DEBUG Then
@@ -186,11 +173,8 @@ Partial Public Class event_comb
         End If
 
         If _not_started() Then
-            If ds_len = uint32_0 Then
-                assert_goto_end()
-            Else
-                assert_goto_begin()
-            End If
+            assert(ds_len > 0)
+            assert_goto_begin()
             begin_ticks() = nowadays.ticks()
         End If
 
@@ -241,28 +225,24 @@ Partial Public Class event_comb
         If cb Is Nothing Then
             Return
         End If
-#If DISALLOW_REENTERABLE_LOCK Then
         thread_pool.push(AddressOf cb.resume)
-#Else
-        cb.resume()
-#End If
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub [resume]()
-        reenterable_locked(Sub()
-                               If pending() Then
-                                   dec_pends()
-                                   If not_pending() Then
-                                       _do()
-                                   End If
-                               End If
-                           End Sub)
+        locked(Sub()
+                   If pending() Then
+                       dec_pends()
+                       If not_pending() Then
+                           _do()
+                       End If
+                   End If
+               End Sub)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Friend Sub [do]()
-        reenterable_locked(AddressOf _do)
+        locked(AddressOf _do)
     End Sub
 
     'ATTENTION, the cancel function does not try to cancel all the event_combs / callback_actions / void it waits for
@@ -279,19 +259,19 @@ Partial Public Class event_comb
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub suspend(ByVal action As String)
-        reenterable_locked(Sub()
-                               If _end() Then
-                                   Return
-                               End If
-                               If event_comb_trace Then
-                                   raise_error(error_type.warning, "event ", callstack(), " ", action)
-                               End If
-                               RaiseEvent suspending()
-                               assert_goto_end()
-                               mark_as_failed()
-                               clear_pends()
-                               _do()
-                               assert(_end())
-                           End Sub)
+        locked(Sub()
+                   If _end() Then
+                       Return
+                   End If
+                   If event_comb_trace Then
+                       raise_error(error_type.warning, "event ", callstack(), " ", action)
+                   End If
+                   RaiseEvent suspending()
+                   assert_goto_end()
+                   mark_as_failed()
+                   clear_pends()
+                   _do()
+                   assert(_end())
+               End Sub)
     End Sub
 End Class

@@ -20,14 +20,14 @@ Partial Public Class event_comb
         If ec Is Nothing OrElse object_compare(Me, ec) = 0 Then
             Return False
         End If
-        Return ec.reenterable_locked(Function() As Boolean
-                                         If ec._started() OrElse Not ec.cb Is Nothing Then
-                                             Return False
-                                         End If
-                                         inc_pends()
-                                         ec.cb = Me
-                                         Return True
-                                     End Function) AndAlso
+        Return ec.locked(Function() As Boolean
+                             If ec._started() OrElse Not ec.cb Is Nothing Then
+                                 Return False
+                             End If
+                             inc_pends()
+                             ec.cb = Me
+                             Return True
+                         End Function) AndAlso
                begin()
     End Function
 
