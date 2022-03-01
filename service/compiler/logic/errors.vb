@@ -157,6 +157,14 @@ Namespace logic
             raise("Variable name ", name, " is invalid. ", msgs)
         End Sub
 
+        Public Shared Sub not_a_heap_ptr(ByVal name As String)
+            raise("Variable ", name, " is not a heap pointer.")
+        End Sub
+
+        Public Shared Sub not_a_heap_ptr(ByVal name As String, ByVal type As String)
+            raise("Variable ", name, " is not a heap pointer, but it's a variable of ", type)
+        End Sub
+
         Private Sub New()
         End Sub
     End Class

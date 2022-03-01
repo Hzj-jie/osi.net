@@ -139,6 +139,14 @@ define	string	string
 #  define_heap my_heap_ptr uint my_size
 define_heap	string	string	string
 
+# avoid the heap memory block from being automatically deallocated.
+#  unmanage_heap my_heap_ptr
+unmanage_heap	string
+
+# deallocate the heap memory block.
+#  dealloc_heap my_heap_ptr
+dealloc_heap	string
+
 # execute the paragraph until the variable is true:
 #  do_until a-bool-value { }
 do_until	string	paragraph

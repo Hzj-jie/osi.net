@@ -65,7 +65,7 @@ public static class Program {
             parameter = "vector(Of pair(Of String, String))";
             break;
           case "paragraph":
-            parameter = "Func(Of writer, Boolean)";
+            parameter = "Func(Of logic_writer, Boolean)";
             break;
           default:
             parameter = null;
@@ -116,7 +116,7 @@ public static class Program {
         wl("            End Sub");
         wl();
       }
-      wl("            Public Function [to](ByVal o As writer) As Boolean");
+      wl("            Public Function [to](ByVal o As logic_writer) As Boolean");
       wl("                Return _");
       wl("                    o.append(\"" + ss[0] + "\") AndAlso");
       for (int i = 0; i < append_parameters.Count; i++) {

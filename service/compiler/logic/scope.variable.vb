@@ -101,6 +101,10 @@ Namespace logic
                 Return assert(stack.emplace(name, f(size() + uint32_1, type)).second())
             End Function
 
+            Public Function undefine(ByVal name As String) As Boolean
+                Return stack.erase(name)
+            End Function
+
             Public Function define_stack(ByVal name As String, ByVal type As String) As Boolean
                 Return define(name, type, AddressOf ref.of_stack)
             End Function

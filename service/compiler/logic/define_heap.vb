@@ -40,7 +40,10 @@ Namespace logic
             o.emplace_back(command_str(command.push))
             o.emplace_back(instruction_builder.str(command.alloc, "rel0", size))
             scope.current().when_end_scope(Sub()
-                                               o.emplace_back(instruction_builder.str(command.dealloc, "rel0"))
+                                               If variable.of(name, Nothing, Nothing) Then
+                                                   ' The heap ptr has not been removed.
+                                                   o.emplace_back(instruction_builder.str(command.dealloc, "rel0"))
+                                               End If
                                                o.emplace_back(command_str(command.pop))
                                            End Sub)
             Return True
