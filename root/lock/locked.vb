@@ -95,9 +95,8 @@ Public Module _locked
         assert(Not d Is Nothing)
         If this.held_in_thread() Then
             Return do_(d, false_value)
-        Else
-            Return this.locked(d, false_value)
         End If
+        Return this.locked(d, false_value)
     End Function
 
     <Extension()> Public Sub reenterable_locked(ByRef this As slimlock.monitorlock, ByVal d As Action)
