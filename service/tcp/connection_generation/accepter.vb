@@ -1,10 +1,15 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
-Imports osi.root.formation
 Imports osi.root.connector
+Imports osi.root.constants
+Imports osi.root.formation
 
 'public for test, do not try to use it directly
-Partial Public Class accepter
+Partial Public NotInheritable Class accepter
     Private Const port_count As Int32 = IPEndPoint.MaxPort - IPEndPoint.MinPort + 1
     Private Shared ReadOnly adapters As arrayless(Of adapter)
 
@@ -12,9 +17,9 @@ Partial Public Class accepter
         adapters = New arrayless(Of adapter)(port_count)
     End Sub
 
-    Public Shared Function attached_powerpoint_count() As Int64
-        Dim o As Int64 = 0
-        For i As Int32 = 0 To adapters.size() - 1
+    Public Shared Function attached_powerpoint_count() As UInt32
+        Dim o As UInt32 = 0
+        For i As UInt32 = 0 To adapters.size() - uint32_1
             Dim a As adapter = Nothing
             If adapters.get(i, a) AndAlso Not a Is Nothing Then
                 o += a.attached_powerpoint_count()
@@ -23,13 +28,12 @@ Partial Public Class accepter
         Return o
     End Function
 
-    Public Shared Function port_attached(ByVal p As Int32) As Boolean
+    Public Shared Function port_attached(ByVal p As UInt32) As Boolean
         Dim a As adapter = Nothing
-        If adapters.get(p, a) Then
-            Return Not a Is Nothing AndAlso a.attached_powerpoint_count() > 0
-        Else
+        If Not adapters.get(p, a) Then
             Return False
         End If
+        Return Not a Is Nothing AndAlso a.attached_powerpoint_count() > 0
     End Function
 
     Public Shared Sub listen(ByVal p As powerpoint)

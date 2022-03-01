@@ -1,4 +1,8 @@
 ﻿
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Net
 Imports System.Net.Sockets
 Imports osi.root.connector
@@ -6,8 +10,8 @@ Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.service.commander
 
-Partial Public Class accepter
-    Private Class adapter
+Partial Public NotInheritable Class accepter
+    Private NotInheritable Class adapter
         Private ReadOnly d As itoken_defender(Of powerpoint, TcpClient)
         Private ReadOnly v4 As listener
         Private ReadOnly v6 As listener
@@ -38,7 +42,7 @@ Partial Public Class accepter
                                                                          End Sub
         End Sub
 
-        Public Function attached_powerpoint_count() As Int32
+        Public Function attached_powerpoint_count() As UInt32
             Return d.attached_powerpoint_count()
         End Function
 

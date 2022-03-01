@@ -20,7 +20,7 @@ Public NotInheritable Class cancellation_controller
     End Function
 
     Public Function manual(ByVal when_cancel As Action) As flip_events.manual_flip_event
-        replace(manual_ref, flip_events.manual(), when_cancel)
+        replace(manual_ref, flip_events.manual(), Nothing, when_cancel)
         Return manual()
     End Function
 
@@ -34,23 +34,49 @@ Public NotInheritable Class cancellation_controller
 
     Public Function ref_counted(Of T)(ByVal init_value As UInt32,
                                       ByVal obj As T,
+                                      ByVal when_start As Action(Of T),
                                       ByVal when_cancel As Action(Of T)) As flip_events.ref_counted_flip_event
-        Return ref_counted(init_value, weak_ref_delegate.bind(obj, when_cancel))
+        Return ref_counted(init_value,
+                           If(when_start Is Nothing, Nothing, weak_ref_delegate.bind(obj, when_start)),
+                           weak_ref_delegate.bind(obj, when_cancel))
+    End Function
+
+    Public Function ref_counted(Of T)(ByVal init_value As UInt32,
+                                      ByVal obj As T,
+                                      ByVal when_cancel As Action(Of T)) As flip_events.ref_counted_flip_event
+        Return ref_counted(init_value, obj, Nothing, when_cancel)
+    End Function
+
+    Public Function ref_counted(ByVal init_value As UInt32,
+                                ByVal when_start As Action,
+                                ByVal when_cancel As Action) As flip_events.ref_counted_flip_event
+        replace(ref_counted_ref, flip_events.ref_counted(init_value), when_start, when_cancel)
+        Return ref_counted()
     End Function
 
     Public Function ref_counted(ByVal init_value As UInt32,
                                 ByVal when_cancel As Action) As flip_events.ref_counted_flip_event
-        replace(ref_counted_ref, flip_events.ref_counted(init_value), when_cancel)
-        Return ref_counted()
+        Return ref_counted(init_value, Nothing, when_cancel)
+    End Function
+
+    Public Function ref_counted(Of T)(ByVal obj As T,
+                                      ByVal when_start As Action(Of T),
+                                      ByVal when_cancel As Action(Of T)) As flip_events.ref_counted_flip_event
+        Return ref_counted(uint32_1, obj, when_start, when_cancel)
     End Function
 
     Public Function ref_counted(Of T)(ByVal obj As T,
                                       ByVal when_cancel As Action(Of T)) As flip_events.ref_counted_flip_event
-        Return ref_counted(uint32_1, obj, when_cancel)
+        Return ref_counted(obj, Nothing, when_cancel)
+    End Function
+
+    Public Function ref_counted(ByVal when_start As Action,
+                                ByVal when_cancel As Action) As flip_events.ref_counted_flip_event
+        Return ref_counted(uint32_1, when_start, when_cancel)
     End Function
 
     Public Function ref_counted(ByVal when_cancel As Action) As flip_events.ref_counted_flip_event
-        Return ref_counted(uint32_1, when_cancel)
+        Return ref_counted([default](Of Action).null, when_cancel)
     End Function
 
     Public Function ref_counted() As flip_events.ref_counted_flip_event
@@ -66,7 +92,7 @@ Public NotInheritable Class cancellation_controller
     End Function
 
     Public Function timeout(ByVal ms As UInt32, ByVal when_cancel As Action) As flip_event
-        replace(timeout_ref, flip_events.timeout(ms), when_cancel)
+        replace(timeout_ref, flip_events.timeout(ms), Nothing, when_cancel)
         Return timeout()
     End Function
 
@@ -80,17 +106,18 @@ Public NotInheritable Class cancellation_controller
 
     Private Sub replace(Of T As flip_event)(ByVal ref As atomic_ref(Of T),
                                             ByVal f As flip_event.[New](Of T),
+                                            ByVal when_start As Action,
                                             ByVal when_cancel As Action)
         assert(Not ref Is Nothing)
         assert(Not f Is Nothing)
         assert(Not when_cancel Is Nothing)
-        Dim old As T = Nothing
-        old = ref.exchange(f(flip_event.events.of_to_low(Sub()
-                                                             when_cancel()
-                                                             cancel_if_not(manual_ref, ref)
-                                                             cancel_if_not(ref_counted_ref, ref)
-                                                             cancel_if_not(timeout_ref, ref)
-                                                         End Sub)))
+        Dim old As T = ref.exchange(f(flip_event.events.of(when_start,
+                                                           Sub()
+                                                               when_cancel()
+                                                               cancel_if_not(manual_ref, ref)
+                                                               cancel_if_not(ref_counted_ref, ref)
+                                                               cancel_if_not(timeout_ref, ref)
+                                                           End Sub)))
         If Not old Is Nothing Then
             old.cancel()
         End If

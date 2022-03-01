@@ -8,10 +8,9 @@ Imports System.Net
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.procedure
-Imports osi.root.formation
 
-Partial Public Class accepter
-    Private Class listener
+Partial Public NotInheritable Class accepter
+    Private NotInheritable Class listener
         Inherits reference_count_event_comb_1
 
         Shared Sub New()

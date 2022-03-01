@@ -13,12 +13,11 @@ Imports osi.root.utils
 Partial Public Class event_comb
     Public NotInheritable Class cancellation_controller
         Private ReadOnly e As event_comb
-        Private ReadOnly cc As utils.cancellation_controller
+        Private ReadOnly cc As New utils.cancellation_controller()
 
         Public Sub New(ByVal e As event_comb)
             assert(Not e Is Nothing)
             Me.e = e
-            Me.cc = New utils.cancellation_controller()
         End Sub
 
         Public Function manual() As flip_events.manual_flip_event
@@ -30,11 +29,11 @@ Partial Public Class event_comb
         End Sub
 
         Public Function ref_counted(ByVal init_value As UInt32) As flip_events.ref_counted_flip_event
-            Return cc.ref_counted(init_value, e, AddressOf cancel_event_comb)
+            Return cc.ref_counted(init_value, e, AddressOf assert_begin, AddressOf cancel_event_comb)
         End Function
 
         Public Function ref_counted() As flip_events.ref_counted_flip_event
-            Return cc.ref_counted(e, AddressOf cancel_event_comb)
+            Return cc.ref_counted(e, AddressOf assert_begin, AddressOf cancel_event_comb)
         End Function
 
         Public Sub cancel_ref_counted()

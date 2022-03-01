@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 
 ' A delegate without binding the target object.
 Public NotInheritable Class weak_ref_delegate
@@ -28,8 +27,7 @@ Public NotInheritable Class weak_ref_delegate
     Public Shared Function bind(Of T)(ByVal i As T, ByVal f As Action(Of T)) As Action
         assert(Not i Is Nothing)
         assert(Not f Is Nothing)
-        Dim o As weak_ref(Of T) = Nothing
-        o = weak_ref.of(i)
+        Dim o As weak_ref(Of T) = weak_ref.of(i)
         Return Sub()
                    Dim x As T = Nothing
                    x = o.get()
