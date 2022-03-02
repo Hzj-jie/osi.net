@@ -67,7 +67,7 @@ Partial Public NotInheritable Class bstyle
 
             Private Shared Function heap_name_of(ByVal name As String) As String
                 assert(Not name.null_or_whitespace())
-                Return strcat(name, "@")
+                Return name + "@"
             End Function
 
             Public Function define(ByVal type As String, ByVal name As String) As Boolean
