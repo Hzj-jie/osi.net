@@ -74,7 +74,10 @@ Partial Public NotInheritable Class bstyle
                 Return s.v.define(type, name)
             End Function
 
-            Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
+            Private Function redefine(ByVal type As String,
+                                      ByVal name As String,
+                                      ByVal d As Func(Of scope, Boolean)) As Boolean
+                assert(Not d Is Nothing)
                 If variable.is_heap_name(name) Then
                     raise_error(error_type.user,
                                 "Redefine works for heap name without index, but got ",
@@ -86,7 +89,7 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    If s.v.redefine(type, name) OrElse s.v.redefine(type, heap_name_of(name)) Then
+                    If d(s) Then
                         Return True
                     End If
                     s = s.parent
@@ -98,6 +101,25 @@ Partial Public NotInheritable Class bstyle
                             type,
                             ") has not been defined yet.")
                 Return False
+            End Function
+
+            Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
+                Return redefine(type,
+                                name,
+                                Function(ByVal s As scope) As Boolean
+                                    assert(Not s Is Nothing)
+                                    Return s.v.redefine(type, name) OrElse s.v.redefine(type, heap_name_of(name))
+                                End Function)
+            End Function
+
+            Public Function redefine_heap(ByVal type As String, ByVal name As String) As Boolean
+                Return redefine(type,
+                                name,
+                                Function(ByVal s As scope) As Boolean
+                                    assert(Not s Is Nothing)
+                                    Return s.v.redefine(compiler.logic.scope.type_t.ptr_type, name) AndAlso
+                                           s.v.define(type, heap_name_of(name))
+                                End Function)
             End Function
 
             Public Function define_heap(ByVal type As String, ByVal name As String) As Boolean
