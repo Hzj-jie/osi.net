@@ -23,8 +23,8 @@ void main() {
   s[0].x = -10;
   s[0].print();
   S2__struct__type__id__type s.S2__struct__type__id[1];
-  reinterpret_cast(s, S2[]);
+  reinterpret_cast(s, S2);
   s[0].f();
-  reinterpret_cast(s, S[]);
+  reinterpret_cast(s, S);
   s[0].print();
 }

@@ -21,7 +21,7 @@ Partial Public NotInheritable Class bstyle
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            assert(n.child_count() = 6 OrElse n.child_count() = 7)
+            assert(n.child_count() = 6)
             Dim type As String =
                 scope.current().type_alias()(builders.parameter_type.remove_ref(n.child(4).input_without_ignored()))
             Dim name As String = n.child(2).input_without_ignored()
