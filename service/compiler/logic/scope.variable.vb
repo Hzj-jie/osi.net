@@ -61,6 +61,10 @@ Namespace logic
                 Public Shared Function of_heap(ByVal offset As UInt64, ByVal type As String) As ref
                     Return New ref(offset, type_t.ptr_type, [optional].of(type))
                 End Function
+
+                Public Shared Function with_type(ByVal this As ref, ByVal type As String) As ref
+
+                End Function
             End Class
 
             Public NotInheritable Class exported_ref
@@ -109,8 +113,16 @@ Namespace logic
                 Return define(name, type, AddressOf ref.of_stack)
             End Function
 
+            Public Function redefine_stack(ByVal name As String, ByVal type As String) As Boolean
+
+            End Function
+
             Public Function define_heap(ByVal name As String, ByVal type As String) As Boolean
                 Return define(name, type, AddressOf ref.of_heap)
+            End Function
+
+            Public Function redefine_heap(ByVal name As String, ByVal type As String) As Boolean
+
             End Function
 
             Public Function size() As UInt32

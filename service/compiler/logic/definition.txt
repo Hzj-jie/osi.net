@@ -135,9 +135,19 @@ copy_const	string	data_block
 #  define variable uint
 define	string	string
 
+# redefine a variable into a different type:
+#  redefine variable uint
+# this command does not generate runtime instructions.
+redefine	string	string
+
 # define a heap memory block with name, type and size
 #  define_heap my_heap_ptr uint my_size
 define_heap	string	string	string
+
+# redefine a variable as a heap memory block with a type:
+#  redefine_heap variable uint
+# this command does not generate runtime instructions.
+redefine_heap	string	string
 
 # avoid the heap memory block from being automatically deallocated.
 #  unmanage_heap my_heap_ptr
