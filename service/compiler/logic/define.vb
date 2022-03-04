@@ -45,7 +45,7 @@ Namespace logic
             If Not scope.current().types().retrieve(type, Nothing) Then
                 Return False
             End If
-            If Not scope.current().variables().define_stack(name, type) Then
+            If Not scope.current().variables().define(name, type) Then
                 Return False
             End If
             If push Then

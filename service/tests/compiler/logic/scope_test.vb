@@ -37,7 +37,7 @@ Namespace logic
                 Do
                     name = rnd_name()
                     type = rnd_name()
-                Loop Until s.variables().define_stack(name, type)
+                Loop Until s.variables().define(name, type)
                 stack.emplace_back(pair.emplace_of(name, type))
             Next
 

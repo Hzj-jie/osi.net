@@ -928,36 +928,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_redefine(ByVal string_1 As String, ByVal string_2 As String) As redefine_builder_33
-            Return New redefine_builder_33(string_1, string_2)
+        Public Shared Function of_define_heap(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As define_heap_builder_33
+            Return New define_heap_builder_33(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class redefine_builder_33
-
-            Private ReadOnly string_1 As String
-            Private ReadOnly string_2 As String
-
-            Public Sub New(ByVal string_1 As String, ByVal string_2 As String)
-                assert(Not string_1.null_or_whitespace())
-                Me.string_1 = string_1
-                assert(Not string_2.null_or_whitespace())
-                Me.string_2 = string_2
-            End Sub
-
-            Public Function [to](ByVal o As logic_writer) As Boolean
-                Return _
-                    o.append("redefine") AndAlso
-                    o.append(string_1) AndAlso
-                    o.append(string_2) AndAlso
-                    o.append(newline.incode())
-            End Function
-        End Class
-
-        Public Shared Function of_define_heap(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As define_heap_builder_34
-            Return New define_heap_builder_34(string_1, string_2, string_3)
-        End Function
-
-        Public NotInheritable Class define_heap_builder_34
+        Public NotInheritable Class define_heap_builder_33
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -982,11 +957,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_redefine_heap(ByVal string_1 As String, ByVal string_2 As String) As redefine_heap_builder_35
-            Return New redefine_heap_builder_35(string_1, string_2)
+        Public Shared Function of_redefine(ByVal string_1 As String, ByVal string_2 As String) As redefine_builder_34
+            Return New redefine_builder_34(string_1, string_2)
         End Function
 
-        Public NotInheritable Class redefine_heap_builder_35
+        Public NotInheritable Class redefine_builder_34
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1000,18 +975,18 @@ Namespace logic
 
             Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
-                    o.append("redefine_heap") AndAlso
+                    o.append("redefine") AndAlso
                     o.append(string_1) AndAlso
                     o.append(string_2) AndAlso
                     o.append(newline.incode())
             End Function
         End Class
 
-        Public Shared Function of_unmanage_heap(ByVal string_1 As String) As unmanage_heap_builder_36
-            Return New unmanage_heap_builder_36(string_1)
+        Public Shared Function of_unmanage_heap(ByVal string_1 As String) As unmanage_heap_builder_35
+            Return New unmanage_heap_builder_35(string_1)
         End Function
 
-        Public NotInheritable Class unmanage_heap_builder_36
+        Public NotInheritable Class unmanage_heap_builder_35
 
             Private ReadOnly string_1 As String
 
@@ -1028,11 +1003,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_dealloc_heap(ByVal string_1 As String) As dealloc_heap_builder_37
-            Return New dealloc_heap_builder_37(string_1)
+        Public Shared Function of_dealloc_heap(ByVal string_1 As String) As dealloc_heap_builder_36
+            Return New dealloc_heap_builder_36(string_1)
         End Function
 
-        Public NotInheritable Class dealloc_heap_builder_37
+        Public NotInheritable Class dealloc_heap_builder_36
 
             Private ReadOnly string_1 As String
 
@@ -1049,11 +1024,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_do_until(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean)) As do_until_builder_38
-            Return New do_until_builder_38(string_1, paragraph_2)
+        Public Shared Function of_do_until(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean)) As do_until_builder_37
+            Return New do_until_builder_37(string_1, paragraph_2)
         End Function
 
-        Public NotInheritable Class do_until_builder_38
+        Public NotInheritable Class do_until_builder_37
 
             Private ReadOnly string_1 As String
             Private ReadOnly paragraph_2 As Func(Of logic_writer, Boolean)
@@ -1076,11 +1051,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_do_while(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean)) As do_while_builder_39
-            Return New do_while_builder_39(string_1, paragraph_2)
+        Public Shared Function of_do_while(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean)) As do_while_builder_38
+            Return New do_while_builder_38(string_1, paragraph_2)
         End Function
 
-        Public NotInheritable Class do_while_builder_39
+        Public NotInheritable Class do_while_builder_38
 
             Private ReadOnly string_1 As String
             Private ReadOnly paragraph_2 As Func(Of logic_writer, Boolean)
@@ -1103,11 +1078,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_interrupt(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As interrupt_builder_40
-            Return New interrupt_builder_40(string_1, string_2, string_3)
+        Public Shared Function of_interrupt(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As interrupt_builder_39
+            Return New interrupt_builder_39(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class interrupt_builder_40
+        Public NotInheritable Class interrupt_builder_39
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1132,11 +1107,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_move(ByVal string_1 As String, ByVal string_2 As String) As move_builder_41
-            Return New move_builder_41(string_1, string_2)
+        Public Shared Function of_move(ByVal string_1 As String, ByVal string_2 As String) As move_builder_40
+            Return New move_builder_40(string_1, string_2)
         End Function
 
-        Public NotInheritable Class move_builder_41
+        Public NotInheritable Class move_builder_40
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1157,11 +1132,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_return(ByVal string_1 As String) As return_builder_42
-            Return New return_builder_42(string_1)
+        Public Shared Function of_return(ByVal string_1 As String) As return_builder_41
+            Return New return_builder_41(string_1)
         End Function
 
-        Public NotInheritable Class return_builder_42
+        Public NotInheritable Class return_builder_41
 
             Private ReadOnly string_1 As String
 
@@ -1179,11 +1154,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_return(ByVal string_1 As String, ByVal string_2 As String) As return_builder_43
-            Return New return_builder_43(string_1, string_2)
+        Public Shared Function of_return(ByVal string_1 As String, ByVal string_2 As String) As return_builder_42
+            Return New return_builder_42(string_1, string_2)
         End Function
 
-        Public NotInheritable Class return_builder_43
+        Public NotInheritable Class return_builder_42
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1204,11 +1179,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_append(ByVal string_1 As String, ByVal string_2 As String) As append_builder_44
-            Return New append_builder_44(string_1, string_2)
+        Public Shared Function of_append(ByVal string_1 As String, ByVal string_2 As String) As append_builder_43
+            Return New append_builder_43(string_1, string_2)
         End Function
 
-        Public NotInheritable Class append_builder_44
+        Public NotInheritable Class append_builder_43
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1229,11 +1204,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_not(ByVal string_1 As String, ByVal string_2 As String) As not_builder_45
-            Return New not_builder_45(string_1, string_2)
+        Public Shared Function of_not(ByVal string_1 As String, ByVal string_2 As String) As not_builder_44
+            Return New not_builder_44(string_1, string_2)
         End Function
 
-        Public NotInheritable Class not_builder_45
+        Public NotInheritable Class not_builder_44
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1254,11 +1229,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_sizeof(ByVal string_1 As String, ByVal string_2 As String) As sizeof_builder_46
-            Return New sizeof_builder_46(string_1, string_2)
+        Public Shared Function of_sizeof(ByVal string_1 As String, ByVal string_2 As String) As sizeof_builder_45
+            Return New sizeof_builder_45(string_1, string_2)
         End Function
 
-        Public NotInheritable Class sizeof_builder_46
+        Public NotInheritable Class sizeof_builder_45
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1279,11 +1254,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_empty(ByVal string_1 As String, ByVal string_2 As String) As empty_builder_47
-            Return New empty_builder_47(string_1, string_2)
+        Public Shared Function of_empty(ByVal string_1 As String, ByVal string_2 As String) As empty_builder_46
+            Return New empty_builder_46(string_1, string_2)
         End Function
 
-        Public NotInheritable Class empty_builder_47
+        Public NotInheritable Class empty_builder_46
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1304,11 +1279,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_while_then(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean)) As while_then_builder_48
-            Return New while_then_builder_48(string_1, paragraph_2)
+        Public Shared Function of_while_then(ByVal string_1 As String, ByVal paragraph_2 As Func(Of logic_writer, Boolean)) As while_then_builder_47
+            Return New while_then_builder_47(string_1, paragraph_2)
         End Function
 
-        Public NotInheritable Class while_then_builder_48
+        Public NotInheritable Class while_then_builder_47
 
             Private ReadOnly string_1 As String
             Private ReadOnly paragraph_2 As Func(Of logic_writer, Boolean)
@@ -1331,11 +1306,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_stop() As stop_builder_49
-            Return New stop_builder_49()
+        Public Shared Function of_stop() As stop_builder_48
+            Return New stop_builder_48()
         End Function
 
-        Public NotInheritable Class stop_builder_49
+        Public NotInheritable Class stop_builder_48
 
             Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
@@ -1344,11 +1319,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_float_add(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_add_builder_50
-            Return New float_add_builder_50(string_1, string_2, string_3)
+        Public Shared Function of_float_add(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_add_builder_49
+            Return New float_add_builder_49(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class float_add_builder_50
+        Public NotInheritable Class float_add_builder_49
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1373,11 +1348,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_float_subtract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_subtract_builder_51
-            Return New float_subtract_builder_51(string_1, string_2, string_3)
+        Public Shared Function of_float_subtract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_subtract_builder_50
+            Return New float_subtract_builder_50(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class float_subtract_builder_51
+        Public NotInheritable Class float_subtract_builder_50
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1402,11 +1377,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_float_multiply(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_multiply_builder_52
-            Return New float_multiply_builder_52(string_1, string_2, string_3)
+        Public Shared Function of_float_multiply(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_multiply_builder_51
+            Return New float_multiply_builder_51(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class float_multiply_builder_52
+        Public NotInheritable Class float_multiply_builder_51
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1431,11 +1406,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_float_divide(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_divide_builder_53
-            Return New float_divide_builder_53(string_1, string_2, string_3)
+        Public Shared Function of_float_divide(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_divide_builder_52
+            Return New float_divide_builder_52(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class float_divide_builder_53
+        Public NotInheritable Class float_divide_builder_52
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1460,11 +1435,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_float_extract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_extract_builder_54
-            Return New float_extract_builder_54(string_1, string_2, string_3)
+        Public Shared Function of_float_extract(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_extract_builder_53
+            Return New float_extract_builder_53(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class float_extract_builder_54
+        Public NotInheritable Class float_extract_builder_53
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1489,11 +1464,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_float_power(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_power_builder_55
-            Return New float_power_builder_55(string_1, string_2, string_3)
+        Public Shared Function of_float_power(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_power_builder_54
+            Return New float_power_builder_54(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class float_power_builder_55
+        Public NotInheritable Class float_power_builder_54
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1518,11 +1493,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_float_less(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_less_builder_56
-            Return New float_less_builder_56(string_1, string_2, string_3)
+        Public Shared Function of_float_less(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_less_builder_55
+            Return New float_less_builder_55(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class float_less_builder_56
+        Public NotInheritable Class float_less_builder_55
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1547,11 +1522,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_float_more(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_more_builder_57
-            Return New float_more_builder_57(string_1, string_2, string_3)
+        Public Shared Function of_float_more(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_more_builder_56
+            Return New float_more_builder_56(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class float_more_builder_57
+        Public NotInheritable Class float_more_builder_56
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1576,11 +1551,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_float_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_equal_builder_58
-            Return New float_equal_builder_58(string_1, string_2, string_3)
+        Public Shared Function of_float_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_equal_builder_57
+            Return New float_equal_builder_57(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class float_equal_builder_58
+        Public NotInheritable Class float_equal_builder_57
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1605,11 +1580,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_float_less_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_less_or_equal_builder_59
-            Return New float_less_or_equal_builder_59(string_1, string_2, string_3)
+        Public Shared Function of_float_less_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_less_or_equal_builder_58
+            Return New float_less_or_equal_builder_58(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class float_less_or_equal_builder_59
+        Public NotInheritable Class float_less_or_equal_builder_58
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1634,11 +1609,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_float_more_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_more_or_equal_builder_60
-            Return New float_more_or_equal_builder_60(string_1, string_2, string_3)
+        Public Shared Function of_float_more_or_equal(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As float_more_or_equal_builder_59
+            Return New float_more_or_equal_builder_59(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class float_more_or_equal_builder_60
+        Public NotInheritable Class float_more_or_equal_builder_59
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1663,11 +1638,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_left_shift(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As left_shift_builder_61
-            Return New left_shift_builder_61(string_1, string_2, string_3)
+        Public Shared Function of_left_shift(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As left_shift_builder_60
+            Return New left_shift_builder_60(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class left_shift_builder_61
+        Public NotInheritable Class left_shift_builder_60
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String
@@ -1692,11 +1667,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_right_shift(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As right_shift_builder_62
-            Return New right_shift_builder_62(string_1, string_2, string_3)
+        Public Shared Function of_right_shift(ByVal string_1 As String, ByVal string_2 As String, ByVal string_3 As String) As right_shift_builder_61
+            Return New right_shift_builder_61(string_1, string_2, string_3)
         End Function
 
-        Public NotInheritable Class right_shift_builder_62
+        Public NotInheritable Class right_shift_builder_61
 
             Private ReadOnly string_1 As String
             Private ReadOnly string_2 As String

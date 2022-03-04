@@ -11,28 +11,17 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     Partial Public NotInheritable Class scope
         Public Class typed_ref
-            ' TODO: Merge type with ref_type and remove redefine_heap.
             Public ReadOnly type As String
-            Public ReadOnly ref_type As [optional](Of String)
 
-            Protected Sub New(ByVal type As String, ByVal ref_type As [optional](Of String))
+            Protected Sub New(ByVal type As String)
                 assert(Not type.null_or_whitespace())
                 Me.type = type
-                Me.ref_type = ref_type
             End Sub
 
             Protected Sub New(ByVal other As typed_ref)
                 assert(Not other Is Nothing)
                 Me.type = other.type
-                Me.ref_type = other.ref_type
             End Sub
-
-            Public Function debug_type_str() As String
-                If ref_type Then
-                    Return strcat(type, "[", +ref_type, "]")
-                End If
-                Return type
-            End Function
         End Class
 
         Public NotInheritable Class ref
@@ -40,25 +29,13 @@ Namespace logic
             'Starts from 1 to allow size()-top.offset=0.
             Public ReadOnly offset As UInt64
 
-            Private Sub New(ByVal offset As UInt64, ByVal type As String, ByVal ref_type As [optional](Of String))
-                MyBase.New(type, ref_type)
+            Public Sub New(ByVal offset As UInt64, ByVal type As String)
+                MyBase.New(type)
                 Me.offset = offset
             End Sub
 
-            Public Shared Function of_stack(ByVal offset As UInt64, ByVal type As String) As ref
-                Return New ref(offset, type, [optional].empty(Of String)())
-            End Function
-
-            Public Shared Function of_heap(ByVal offset As UInt64, ByVal type As String) As ref
-                Return New ref(offset, type_t.ptr_type, [optional].of(type))
-            End Function
-
-            Public Function of_stack(ByVal type As String) As ref
-                Return New ref(offset, type, [optional].empty(Of String)())
-            End Function
-
-            Public Function of_heap(ByVal type As String) As ref
-                Return New ref(offset, type, [optional].of(type))
+            Public Function [with](ByVal type As String) As ref
+                Return New ref(offset, type)
             End Function
         End Class
 
@@ -90,42 +67,22 @@ Namespace logic
                 Return stack.size()
             End Function
 
-            Private Function define(ByVal name As String,
-                                    ByVal type As String,
-                                    ByVal f As Func(Of UInt32, String, ref)) As Boolean
+            Public Function define(ByVal name As String, ByVal type As String) As Boolean
                 assert(Not name.null_or_whitespace())
                 assert(Not type.null_or_whitespace())
-                assert(Not f Is Nothing)
                 If stack.find(name) <> stack.end() Then
-                    errors.redefine(name, type, stack(name).debug_type_str())
+                    errors.redefine(name, type, stack(name).type)
                     Return False
                 End If
-                Return assert(stack.emplace(name, f(size() + uint32_1, type)).second())
+                Return assert(stack.emplace(name, New ref(size() + uint32_1, type)).second())
             End Function
 
-            Public Function define_stack(ByVal name As String, ByVal type As String) As Boolean
-                Return define(name, type, AddressOf ref.of_stack)
-            End Function
-
-            Public Function define_heap(ByVal name As String, ByVal type As String) As Boolean
-                Return define(name, type, AddressOf ref.of_heap)
-            End Function
-
-            Public Function redefine_stack(ByVal name As String, ByVal type As String) As Boolean
+            Public Function redefine(ByVal name As String, ByVal type As String) As Boolean
                 Dim it As unordered_map(Of String, ref).iterator = stack.find(name)
                 If it = stack.end() Then
                     Return False
                 End If
-                stack(name) = (+it).second.of_stack(type)
-                Return True
-            End Function
-
-            Public Function redefine_heap(ByVal name As String, ByVal type As String) As Boolean
-                Dim it As unordered_map(Of String, ref).iterator = stack.find(name)
-                If it = stack.end() Then
-                    Return False
-                End If
-                stack(name) = (+it).second.of_heap(type)
+                stack(name) = (+it).second.with(type)
                 Return True
             End Function
         End Class
@@ -138,12 +95,8 @@ Namespace logic
                 Me.s = s
             End Sub
 
-            Public Function define_stack(ByVal name As String, ByVal type As String) As Boolean
-                Return s.v.define_stack(name, type)
-            End Function
-
-            Public Function define_heap(ByVal name As String, ByVal type As String) As Boolean
-                Return s.v.define_heap(name, type)
+            Public Function define(ByVal name As String, ByVal type As String) As Boolean
+                Return s.v.define(name, type)
             End Function
 
             Public Function undefine(ByVal name As String) As Boolean
@@ -158,22 +111,10 @@ Namespace logic
                 Return False
             End Function
 
-            Public Function redefine_stack(ByVal name As String, ByVal type As String) As Boolean
+            Public Function redefine(ByVal name As String, ByVal type As String) As Boolean
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    If s.v.redefine_stack(name, type) Then
-                        Return True
-                    End If
-                    s = s.parent
-                End While
-                raise_error(error_type.user, "Cannot find variable ", name)
-                Return False
-            End Function
-
-            Public Function redefine_heap(ByVal name As String, ByVal type As String) As Boolean
-                Dim s As scope = Me.s
-                While Not s Is Nothing
-                    If s.v.redefine_heap(name, type) Then
+                    If s.v.redefine(name, type) Then
                         Return True
                     End If
                     s = s.parent

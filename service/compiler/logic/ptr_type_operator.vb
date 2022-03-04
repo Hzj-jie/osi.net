@@ -30,10 +30,6 @@ Namespace logic
                 Return False
             End If
             ' Note, the variable name is not necessary to be a ptr_type.
-            If Not ptr.type.Equals(scope.type_t.ptr_type) Then
-                errors.not_a_heap_ptr(name, ptr.type)
-                Return False
-            End If
             Return process(ptr, o)
         End Function
     End Class

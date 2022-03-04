@@ -34,7 +34,7 @@ Namespace logic
             If Not variable.of(Me.size, o, size) Then
                 Return False
             End If
-            If Not scope.current().variables().define_heap(name, type) Then
+            If Not scope.current().variables().define(name, type) Then
                 Return False
             End If
             o.emplace_back(command_str(command.push))

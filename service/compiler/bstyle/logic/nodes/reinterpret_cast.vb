@@ -26,25 +26,15 @@ Partial Public NotInheritable Class bstyle
                 scope.current().type_alias()(builders.parameter_type.remove_ref(n.child(4).input_without_ignored()))
             Dim name As String = n.child(2).input_without_ignored()
             Dim s As [optional](Of struct_def) = scope.current().structs().resolve(type, name)
-            Dim f As Func(Of String, String, Boolean) = Nothing
-            If n.child_count() = 6 Then
-                f = Function(ByVal x As String, ByVal y As String) As Boolean
-                        Return builders.of_redefine(x, y).to(o)
-                    End Function
-            Else
-                f = Function(ByVal x As String, ByVal y As String) As Boolean
-                        Return builders.of_redefine_heap(x, y).to(o)
-                    End Function
-            End If
             If s.empty() Then
-                If Not f(name, type) Then
+                If Not builders.of_redefine(name, type).to(o) Then
                     Return False
                 End If
             Else
                 If Not (+s).primitives().
                             map(Function(ByVal p As builders.parameter) As Boolean
                                     assert(Not p Is Nothing)
-                                    Return f(p.name, p.type)
+                                    Return builders.of_redefine(p.name, p.type).to(o)
                                 End Function).
                             aggregate(bool_stream.aggregators.all_true) Then
                     Return False

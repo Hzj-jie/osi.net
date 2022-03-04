@@ -21,7 +21,7 @@ Namespace logic
         End Sub
 
         Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
-            Return scope.current().variables().redefine_stack(name, type)
+            Return scope.current().variables().redefine(name, type)
         End Function
     End Class
 End Namespace
