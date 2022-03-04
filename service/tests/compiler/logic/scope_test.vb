@@ -42,7 +42,7 @@ Namespace logic
             Next
 
             For i As Int32 = 0 To CInt(stack.size()) - 1
-                Dim var As scope.variable_t.exported_ref = Nothing
+                Dim var As scope.exported_ref = Nothing
                 If Not assertion.is_true(s.variables().export(stack(CUInt(i)).first, var)) Then
                     Continue For
                 End If
@@ -64,7 +64,7 @@ Namespace logic
 
             For i As Int32 = 0 To 1000
                 Dim name As String = rnd_name()
-                Dim var As scope.variable_t.exported_ref = Nothing
+                Dim var As scope.exported_ref = Nothing
                 If Not s.variables().export(name, var) Then
                     Continue For
                 End If

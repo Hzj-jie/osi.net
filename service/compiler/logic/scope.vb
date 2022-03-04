@@ -12,7 +12,7 @@ Namespace logic
     Partial Public NotInheritable Class scope
         Inherits scope(Of scope)
 
-        Private ReadOnly v As New variable_t(Me)
+        Private ReadOnly v As New variable_t()
         Private ReadOnly t As type_t
         Private ReadOnly a As anchor_t
         Private ReadOnly ar As New anchor_ref_t()

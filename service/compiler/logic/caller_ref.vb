@@ -34,9 +34,9 @@ Namespace logic
         End Sub
 
         Protected Overrides Function retrieve_anchor(ByRef anchor As scope.anchor) As Boolean
-            Dim f As Func(Of scope.variable_t.exported_ref) =
-                Function() As scope.variable_t.exported_ref
-                    Dim d As scope.variable_t.exported_ref = Nothing
+            Dim f As Func(Of scope.exported_ref) =
+                Function() As scope.exported_ref
+                    Dim d As scope.exported_ref = Nothing
                     If Not scope.current().variables().export(name, d) Then
                         Return Nothing
                     End If
