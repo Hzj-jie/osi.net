@@ -11,6 +11,7 @@ Imports osi.service.interpreter.primitive
 Namespace logic
     Partial Public NotInheritable Class scope
         Public Class typed_ref
+            ' TODO: Merge type with ref_type and remove redefine_heap.
             Public ReadOnly type As String
             Public ReadOnly ref_type As [optional](Of String)
 
