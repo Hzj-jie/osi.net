@@ -102,6 +102,10 @@ Namespace logic
                     errors.variable_undefined(name.Substring(0, index_start))
                     Return False
                 End If
+                If Not r.ref_type Then
+                    errors.not_a_heap_ptr(name.Substring(0, index_start))
+                    Return False
+                End If
                 v.emplace_back(instruction_builder.str(
                     command.add,
                     d,

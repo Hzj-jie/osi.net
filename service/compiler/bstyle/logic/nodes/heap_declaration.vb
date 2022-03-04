@@ -53,7 +53,7 @@ Partial Public NotInheritable Class bstyle
                                                         ByVal o As logic_writer) As Boolean
             assert(Not scope.current().structs().defined(type))
             assert(Not o Is Nothing)
-            Return scope.current().variables().define_heap(type, name) AndAlso
+            Return scope.current().variables().define(type, name) AndAlso
                    builders.of_define_heap(name,
                                            scope.current().type_alias()(type),
                                            length).

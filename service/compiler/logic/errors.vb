@@ -145,14 +145,6 @@ Namespace logic
                   callee_name)
         End Sub
 
-        Public Shared Sub unexpected_macro(ByVal n As String)
-            raise("Unexpected format of macro ", n)
-        End Sub
-
-        Public Shared Sub unknown_macro(ByVal n As String, ByVal s As String)
-            raise("Unknown macro ", n, " against ", s)
-        End Sub
-
         Public Shared Sub invalid_variable_name(ByVal name As String, ByVal ParamArray msgs() As Object)
             raise("Variable name ", name, " is invalid. ", msgs)
         End Sub

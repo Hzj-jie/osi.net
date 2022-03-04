@@ -97,10 +97,19 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End Function
 
+            Public Function resolve(ByVal type As String, ByVal name As String) As [optional](Of struct_def)
+                Dim s As struct_def = Nothing
+                If resolve(type, name, s) Then
+                    Return [optional].of(s)
+                End If
+                Return [optional].empty(Of struct_def)()
+            End Function
+
             Public Function defined(ByVal type As String) As Boolean
                 Return resolve(type, Nothing, Nothing)
             End Function
 
+            ' TODO: This is not right, a struct should not use the type defined after its declaration.
             Public Function resolve(ByVal name As String, ByRef o As struct_def) As Boolean
                 Dim type As String = Nothing
                 If Not s.variables().resolve(name, type) Then

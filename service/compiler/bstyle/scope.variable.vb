@@ -13,7 +13,7 @@ Partial Public NotInheritable Class bstyle
         Private NotInheritable Class variable_t
             Private ReadOnly s As New unordered_map(Of String, String)()
 
-            Public Function define(ByVal type As String, ByVal name As String) As Boolean
+            Public Function try_define(ByVal type As String, ByVal name As String) As Boolean
                 assert(Not type.null_or_whitespace())
                 assert(Not name.null_or_whitespace())
                 ' Types are always resolved during the define / build stage, so scope.current() equals to the scope
@@ -22,7 +22,11 @@ Partial Public NotInheritable Class bstyle
                 assert(Not builders.parameter_type.is_ref_type(type))
                 ' The name should not be an array with index.
                 assert(Not variable.is_heap_name(name))
-                If s.emplace(name, type).second() Then
+                Return s.emplace(name, type).second()
+            End Function
+
+            Public Function define(ByVal type As String, ByVal name As String) As Boolean
+                If try_define(type, name) Then
                     Return True
                 End If
                 raise_error(error_type.user,
@@ -65,19 +69,11 @@ Partial Public NotInheritable Class bstyle
                 Me.s = s
             End Sub
 
-            Private Shared Function heap_name_of(ByVal name As String) As String
-                assert(Not name.null_or_whitespace())
-                Return name + "@"
-            End Function
-
             Public Function define(ByVal type As String, ByVal name As String) As Boolean
                 Return s.v.define(type, name)
             End Function
 
-            Private Function redefine(ByVal type As String,
-                                      ByVal name As String,
-                                      ByVal d As Func(Of scope, Boolean)) As Boolean
-                assert(Not d Is Nothing)
+            Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
                 If variable.is_heap_name(name) Then
                     raise_error(error_type.user,
                                 "Redefine works for heap name without index, but got ",
@@ -89,7 +85,7 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    If d(s) Then
+                    If s.v.redefine(type, name) Then
                         Return True
                     End If
                     s = s.parent
@@ -101,30 +97,6 @@ Partial Public NotInheritable Class bstyle
                             type,
                             ") has not been defined yet.")
                 Return False
-            End Function
-
-            Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
-                Return redefine(type,
-                                name,
-                                Function(ByVal s As scope) As Boolean
-                                    assert(Not s Is Nothing)
-                                    Return s.v.redefine(type, name) OrElse s.v.redefine(type, heap_name_of(name))
-                                End Function)
-            End Function
-
-            Public Function redefine_heap(ByVal type As String, ByVal name As String) As Boolean
-                Return redefine(type,
-                                name,
-                                Function(ByVal s As scope) As Boolean
-                                    assert(Not s Is Nothing)
-                                    Return s.v.redefine(compiler.logic.scope.type_t.ptr_type, name) AndAlso
-                                           s.v.define(type, heap_name_of(name))
-                                End Function)
-            End Function
-
-            Public Function define_heap(ByVal type As String, ByVal name As String) As Boolean
-                Return define(compiler.logic.scope.type_t.ptr_type, name) AndAlso
-                       define(type, heap_name_of(name))
             End Function
 
             Public Function define(ByVal vs As vector(Of builders.parameter)) As Boolean
@@ -150,7 +122,7 @@ Partial Public NotInheritable Class bstyle
                                          ByVal signature As ref(Of function_signature)) As Boolean
                 ' logic_name.of_function_call requires type of the parameter to set function name.
                 If variable.is_heap_name(name) Then
-                    name = heap_name_of(name.Substring(0, name.IndexOf(character.left_mid_bracket)))
+                    name = name.Substring(0, name.IndexOf(character.left_mid_bracket))
                 End If
 
                 Dim s As scope = Me.s
