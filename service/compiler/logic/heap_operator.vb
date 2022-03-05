@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace logic
-    Public MustInherit Class ptr_type_operator
+    Public MustInherit Class heap_operator
         Implements instruction_gen
 
         Private ReadOnly name As String

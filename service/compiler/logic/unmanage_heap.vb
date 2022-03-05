@@ -8,7 +8,7 @@ Imports osi.root.formation
 
 Namespace logic
     Public NotInheritable Class _unmanage_heap
-        Inherits ptr_type_operator
+        Inherits heap_operator
 
         Public Sub New(ByVal name As String)
             MyBase.New(name)

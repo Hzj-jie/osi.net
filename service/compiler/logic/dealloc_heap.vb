@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Namespace logic
     Public NotInheritable Class _dealloc_heap
-        Inherits ptr_type_operator
+        Inherits heap_operator
 
         Public Sub New(ByVal name As String)
             MyBase.New(name)

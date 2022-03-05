@@ -148,7 +148,7 @@
     <Compile Include="logic\callee_ref.vb" />
     <Compile Include="logic\caller_ref.vb" />
     <Compile Include="logic\dealloc_heap.vb" />
-    <Compile Include="logic\ptr_type_operator.vb" />
+    <Compile Include="logic\heap_operator.vb" />
     <Compile Include="logic\redefine.vb" />
     <Compile Include="logic\scope.anchor_ref.vb" />
     <Compile Include="logic\scope.variable.vb" />
