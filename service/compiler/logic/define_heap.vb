@@ -34,13 +34,16 @@ Namespace logic
             If Not variable.of(Me.size, o, size) Then
                 Return False
             End If
-            If Not scope.current().variables().define_heap(name, type) Then
+            If Not scope.current().variables().define(name, type) Then
                 Return False
             End If
             o.emplace_back(command_str(command.push))
             o.emplace_back(instruction_builder.str(command.alloc, "rel0", size))
             scope.current().when_end_scope(Sub()
-                                               o.emplace_back(instruction_builder.str(command.dealloc, "rel0"))
+                                               If scope.current().variables().defined_in_current_scope(name) Then
+                                                   ' The heap ptr has not been removed.
+                                                   o.emplace_back(instruction_builder.str(command.dealloc, "rel0"))
+                                               End If
                                                o.emplace_back(command_str(command.pop))
                                            End Sub)
             Return True

@@ -15,7 +15,7 @@ Namespace logic
         <test>
         Private Shared Sub primitive()
             Using s As New scope()
-                assertion.is_true(s.variables().define_stack("abc", scope.type_t.variable_type))
+                assertion.is_true(s.variables().define("abc", scope.type_t.variable_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of("abc", v, o))
@@ -31,7 +31,7 @@ Namespace logic
         <test>
         Private Shared Sub heap_ptr()
             Using s As New scope()
-                assertion.is_true(s.variables().define_heap("abc", scope.type_t.variable_type))
+                assertion.is_true(s.variables().define("abc", scope.type_t.variable_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of("abc", v, o))
@@ -39,16 +39,16 @@ Namespace logic
                 assertion.is_true(v.empty())
                 assertion.equal(o.name, "abc")
                 assertions.of(o.index).is_empty()
-                assertions.of(o.size).equal(scope.current().types()(scope.type_t.ptr_type))
-                assertion.equal(o.type, scope.type_t.ptr_type)
+                assertions.of(o.size).equal(scope.current().types()(scope.type_t.variable_type))
+                assertion.equal(o.type, scope.type_t.variable_type)
             End Using
         End Sub
 
         <test>
         Private Shared Sub heap()
             Using s As New scope()
-                assertion.is_true(s.variables().define_heap("abc", scope.type_t.variable_type))
-                assertion.is_true(s.variables().define_stack("i", scope.type_t.ptr_type))
+                assertion.is_true(s.variables().define("abc", scope.type_t.variable_type))
+                assertion.is_true(s.variables().define("i", scope.type_t.ptr_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of("abc[i]", v, o))
@@ -71,9 +71,9 @@ Namespace logic
         <test>
         Private Shared Sub nested_heap()
             Using s As New scope()
-                assertion.is_true(s.variables().define_heap("abc", scope.type_t.variable_type))
-                assertion.is_true(s.variables().define_heap("def", scope.type_t.variable_type))
-                assertion.is_true(s.variables().define_stack("i", scope.type_t.ptr_type))
+                assertion.is_true(s.variables().define("abc", scope.type_t.variable_type))
+                assertion.is_true(s.variables().define("def", scope.type_t.variable_type))
+                assertion.is_true(s.variables().define("i", scope.type_t.ptr_type))
                 Dim v As New vector(Of String)()
                 Dim o As variable = Nothing
                 assertion.is_true(variable.of("abc[def[i]]", v, o))

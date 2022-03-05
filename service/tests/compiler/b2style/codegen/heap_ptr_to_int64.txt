@@ -19,7 +19,9 @@ void main() {
   o[0] = 102;
   b2style::std_out(y);
   b2style::std_out(" ");
+  reinterpret_cast(l, type_ptr);
   b2style::std_out(from_ptr(l));
   b2style::std_out(" ");
+  reinterpret_cast(o, type_ptr);
   b2style::std_out(o);
 }

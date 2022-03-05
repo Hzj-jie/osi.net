@@ -139,6 +139,20 @@ define	string	string
 #  define_heap my_heap_ptr uint my_size
 define_heap	string	string	string
 
+# redefine a variable into a different type:
+#  redefine variable uint
+# this command does not generate runtime instructions and works for both stack and heap variables.
+redefine	string	string
+
+# undefine a variable, it will not be accessible after this statement:
+#  undefine variable
+# this command does not generate runtime instructions and works for both stack and heap variables.
+undefine	string
+
+# deallocate the heap memory block.
+#  dealloc_heap my_heap_ptr
+dealloc_heap	string
+
 # execute the paragraph until the variable is true:
 #  do_until a-bool-value { }
 do_until	string	paragraph

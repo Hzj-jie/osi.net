@@ -69,7 +69,7 @@ Namespace logic
                     errors.invalid_variable_name(name, "Unexpected closing bracket.")
                     Return False
                 End If
-                Dim r As scope.variable_t.exported_ref = Nothing
+                Dim r As scope.exported_ref = Nothing
                 If Not scope.current().variables().export(name, r) Then
                     errors.variable_undefined(name)
                     Return False
@@ -97,7 +97,7 @@ Namespace logic
                 Dim ptr_name As String = scope.current().variables().unique_name()
                 assert(_define.export(ptr_name, scope.type_t.ptr_type, v))
                 Dim d As data_ref = scope.current().variables().export(ptr_name).data_ref
-                Dim r As scope.variable_t.exported_ref = Nothing
+                Dim r As scope.exported_ref = Nothing
                 If Not scope.current().variables().export(name.Substring(0, index_start), r) Then
                     errors.variable_undefined(name.Substring(0, index_start))
                     Return False
@@ -107,7 +107,7 @@ Namespace logic
                     d,
                     r.data_ref.ToString(),
                     index.ToString()))
-                Return with_size(ptr_name, [optional].of(index), +r.ref_type, o)
+                Return with_size(ptr_name, [optional].of(index), r.type, o)
             End If
         End Function
 
