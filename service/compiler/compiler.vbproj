@@ -59,6 +59,7 @@
     <Compile Include="b2style\b2style_lib.vb" />
     <Compile Include="b2style\class_def.vb" />
     <Compile Include="b2style\function_def.vb" />
+    <None Include="b2style\lib\std\vector" />
     <Compile Include="b2style\name_with_namespace.ext.vb" />
     <Compile Include="b2style\name_with_namespace.vb" />
     <Compile Include="b2style\rewriter\nodes\class.vb" />
@@ -275,6 +276,7 @@
     <Content Include="b2style\lib\b2style_stdio.h" />
     <Content Include="b2style\lib\b2style_types.h" />
     <Content Include="b2style\lib\b2style_ufloat.h" />
+    <Content Include="b2style\lib\std\types.h" />
     <Content Include="b2style\lib\testing\assert.h" />
     <Content Include="b2style\lib\testing.h" />
     <Content Include="b2style\lib\testing\types.h" />

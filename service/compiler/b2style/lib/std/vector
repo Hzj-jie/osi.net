@@ -1,0 +1,35 @@
+﻿
+#ifndef STD_VECTOR
+#define STD_VECTOR
+
+#include <b2style.h>
+#include <std/types.h>
+
+namespace std {
+
+template <T>
+class vector {
+  T _a;
+
+  void construct(int size) {
+    T x[size];
+    this._a = x;
+    logic "undefine x";
+  }
+
+  void destruct() {
+    logic "dealloc_heap this._a";
+  }
+
+  T get(int index) {
+    return this._a[index]; 
+  }
+
+  void set(int index, T v) {
+    this._a[index] = v;
+  }
+};
+
+}  // namespace std
+
+#endif  // STD_VECTOR
