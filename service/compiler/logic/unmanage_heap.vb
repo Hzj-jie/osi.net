@@ -7,8 +7,8 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace logic
-    Public NotInheritable Class _unmanage_heap
-        Inherits heap_operator
+    Public NotInheritable Class _undefine
+        Inherits stack_var_operator
 
         Public Sub New(ByVal name As String)
             MyBase.New(name)

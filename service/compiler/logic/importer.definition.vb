@@ -1204,13 +1204,13 @@ Namespace logic
             Return True
         End Function
 
-        Private Function parse_unmanage_heap_34(
+        Private Function parse_undefine_34(
                 ByVal v As vector(Of String),
                 ByRef p As UInt32,
                 ByRef o As instruction_gen) As Boolean
             assert(Not v Is Nothing)
             assert(v.size() > p)
-            If Not v(p).Equals("unmanage_heap") Then
+            If Not v(p).Equals("undefine") Then
                 Return False
             End If
             Dim start As UInt32 = p
@@ -1220,7 +1220,7 @@ Namespace logic
             End If
             Dim p1 As String = v(p)
             p += uint32_1
-            o = New _unmanage_heap(
+            o = New _undefine(
                 p1
             )
             o = instruction_gen_wrapper.maybe_wrap(v, start, p, o)
@@ -2308,7 +2308,7 @@ Namespace logic
             End Using
             Using code_block
                 Dim pos As UInt32 = p
-                If parse_unmanage_heap_34(v, pos, o) Then
+                If parse_undefine_34(v, pos, o) Then
                     p = pos
                     Return True
                 End If

@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Namespace logic
-    Public MustInherit Class heap_operator
+    Public MustInherit Class stack_var_operator
         Implements instruction_gen
 
         Private ReadOnly name As String
@@ -23,7 +23,7 @@ Namespace logic
             assert(Not o Is Nothing)
             Dim ptr As variable = Nothing
             If variable.is_heap_name(name) Then
-                errors.not_a_heap_ptr(name)
+                errors.not_a_stack_var(name)
                 Return False
             End If
             If Not variable.of(name, Nothing, ptr) Then

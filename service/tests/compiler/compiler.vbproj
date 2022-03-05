@@ -152,6 +152,7 @@
     <Content Include="b2style\self-test\template-override.txt" />
     <Content Include="b2style\self-test\template_class_with_ref.txt" />
     <Content Include="b2style\self-test\two-closing-angle-brackets.txt" />
+    <Content Include="b2style\self-test\unmanaged_heap.txt" />
     <Content Include="b2style\self-test\use-base-class-function.txt" />
     <Content Include="b2style\self-test\virtual-function-compile-only.txt" />
     <Content Include="bstyle\codegen\delegate.txt" />

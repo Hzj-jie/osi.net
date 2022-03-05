@@ -982,11 +982,11 @@ Namespace logic
             End Function
         End Class
 
-        Public Shared Function of_unmanage_heap(ByVal string_1 As String) As unmanage_heap_builder_35
-            Return New unmanage_heap_builder_35(string_1)
+        Public Shared Function of_undefine(ByVal string_1 As String) As undefine_builder_35
+            Return New undefine_builder_35(string_1)
         End Function
 
-        Public NotInheritable Class unmanage_heap_builder_35
+        Public NotInheritable Class undefine_builder_35
 
             Private ReadOnly string_1 As String
 
@@ -997,7 +997,7 @@ Namespace logic
 
             Public Function [to](ByVal o As logic_writer) As Boolean
                 Return _
-                    o.append("unmanage_heap") AndAlso
+                    o.append("undefine") AndAlso
                     o.append(string_1) AndAlso
                     o.append(newline.incode())
             End Function
