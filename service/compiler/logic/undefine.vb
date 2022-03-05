@@ -15,6 +15,7 @@ Namespace logic
         End Sub
 
         Protected Overrides Function process(ByVal ptr As variable, ByVal o As vector(Of String)) As Boolean
+            assert(Not ptr Is Nothing)
             assert(scope.current().variables().undefine(ptr.name))
             Return True
         End Function

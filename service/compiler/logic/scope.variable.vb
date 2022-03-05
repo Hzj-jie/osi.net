@@ -99,6 +99,10 @@ Namespace logic
                 Return s.v.define(name, type)
             End Function
 
+            Public Function defined_in_current_scope(ByVal name As String) As Boolean
+                Return s.v.find(name, Nothing)
+            End Function
+
             Public Function undefine(ByVal name As String) As Boolean
                 Dim s As scope = Me.s
                 While Not s Is Nothing

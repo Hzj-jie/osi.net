@@ -8,20 +8,20 @@ Imports osi.root.formation
 
 Namespace logic
     Public NotInheritable Class _redefine
-        Implements instruction_gen
+        Inherits stack_var_operator
 
-        Private ReadOnly name As String
         Private ReadOnly type As String
 
         Public Sub New(ByVal name As String, ByVal type As String)
-            assert(Not name.null_or_whitespace())
+            MyBase.New(name)
             assert(Not type.null_or_whitespace())
-            Me.name = name
             Me.type = type
         End Sub
 
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
-            Return scope.current().variables().redefine(name, type)
+        Protected Overrides Function process(ByVal ptr As variable, ByVal o As vector(Of String)) As Boolean
+            assert(Not ptr Is Nothing)
+            assert(scope.current().variables().redefine(ptr.name, type))
+            Return True
         End Function
     End Class
 End Namespace

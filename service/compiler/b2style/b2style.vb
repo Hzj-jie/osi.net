@@ -170,8 +170,7 @@ Partial Public NotInheritable Class b2style
                                "delegate",
                                "paramtypelist",
                                "paramtype",
-                               "struct-body",
-                               "heap-type-suffix").
+                               "struct-body").
                            with_of_names(
                                "add",
                                "minus",
