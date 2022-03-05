@@ -22,8 +22,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 6)
-            Dim type As String =
-                scope.current().type_alias()(builders.parameter_type.remove_ref(n.child(4).input_without_ignored()))
+            Dim type As String = scope.current().type_alias()(n.child(4).input_without_ignored())
             Dim name As String = n.child(2).input_without_ignored()
             Dim s As [optional](Of struct_def) = scope.current().structs().resolve(type, name)
             If s.empty() Then
