@@ -17,7 +17,7 @@ class C : B {
   }
 
   void f3() {
-    reinterpret_cast(this, B&);
+    reinterpret_cast(this, B);
 	this.f();
     f(this);
   }
