@@ -54,17 +54,22 @@ Namespace logic
         Private NotInheritable Class variable_t
             ' This stack can be a real stack, but using map with offset can provide a better lookup performance.
             Private ReadOnly stack As New unordered_map(Of String, ref)()
+            Private undefined As UInt32 = 0
 
             Public Function find(ByVal name As String, ByRef o As ref) As Boolean
                 Return stack.find(name, o)
             End Function
 
-            Public Function [erase](ByVal name As String) As Boolean
+            ' Removing items from the stack will cause the calculation of location of the references to be off, since
+            ' variable_proxy.export function uses variable_t.size to decide the depth of stacks. So besides removing
+            ' the items from the map, the count of removed items also needs to be tracked.
+            Public Function undefine(ByVal name As String) As Boolean
+                undefined += uint32_1
                 Return stack.erase(name)
             End Function
 
             Public Function size() As UInt32
-                Return stack.size()
+                Return stack.size() + undefined
             End Function
 
             Public Function define(ByVal name As String, ByVal type As String) As Boolean
@@ -106,7 +111,7 @@ Namespace logic
             Public Function undefine(ByVal name As String) As Boolean
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    If s.v.erase(name) Then
+                    If s.v.undefine(name) Then
                         Return True
                     End If
                     s = s.parent

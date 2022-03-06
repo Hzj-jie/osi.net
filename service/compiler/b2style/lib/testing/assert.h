@@ -1,6 +1,6 @@
 ﻿
-#ifndef TESTING_ASSERT_H
-#define TESTING_ASSERT_H
+#ifndef B2STYLE_LIB_TESTING_ASSERT_H
+#define B2STYLE_LIB_TESTING_ASSERT_H
 
 #include <bstyle.h>
 #include <testing/types.h>
@@ -48,4 +48,4 @@ void assert_equal(T t, T t2) {
 }  // namespace testing
 }  // namespace b2style
 
-#endif  // TESTING_ASSERT_H
+#endif  // B2STYLE_LIB_TESTING_ASSERT_H
