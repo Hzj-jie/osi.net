@@ -270,6 +270,7 @@
   <ItemGroup>
     <Content Include="b2style\codegen\nlexer_rule.txt" />
     <Content Include="b2style\codegen\syntaxer_rule.txt" />
+    <Content Include="b2style\lib\assert.h" />
     <Content Include="b2style\lib\b2style.h" />
     <Content Include="b2style\lib\b2style_delegates.h" />
     <Content Include="b2style\lib\b2style_operators.h" />

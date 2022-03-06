@@ -1,6 +1,6 @@
 ﻿
-#ifndef STD_TYPES_H
-#define STD_TYPES_H
+#ifndef B2STYLE_LIB_STD_TYPES_H
+#define B2STYLE_LIB_STD_TYPES_H
 
 #include <bstyle.h>
 
@@ -17,5 +17,4 @@ typedef ::ufloat ufloat;
 
 }  // namespace std
 
-#endif  // STD_TYPES_H
-
+#endif  // B2STYLE_LIB_STD_TYPES_H

@@ -1,6 +1,6 @@
 
-#ifndef TESTING_TYPES_H
-#define TESTING_TYPES_H
+#ifndef B2STYLE_LIB_TESTING_TYPES_H
+#define B2STYLE_LIB_TESTING_TYPES_H
 
 namespace b2style {
 namespace testing {
@@ -14,4 +14,4 @@ typedef ::int int;
 }  // namespace testing
 }  // naemspace b2style
 
-#endif  // TESTING_TYPES_H
+#endif  // B2STYLE_LIB_TESTING_TYPES_H

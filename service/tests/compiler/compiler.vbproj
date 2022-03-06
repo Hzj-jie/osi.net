@@ -65,8 +65,10 @@
     <Compile Include="b2style\b2style_self_test_runner.vb" />
     <Compile Include="b2style\b2style_test.vb" />
     <Compile Include="b2style\b2style_test_data.vb" />
+    <Content Include="b2style\codegen\assert_.txt" />
     <Content Include="b2style\codegen\class-constructor.txt" />
     <Content Include="b2style\codegen\delegate.txt" />
+    <Content Include="b2style\self-test\ref_value_clause.txt" />
     <Content Include="b2style\self-test\access-biguint-as-heap.txt" />
     <Content Include="b2style\self-test\delegate-functions-with-same-name.txt" />
     <Compile Include="b2style\template_template_test.vb" />
@@ -154,6 +156,7 @@
     <Content Include="b2style\self-test\two-closing-angle-brackets.txt" />
     <Content Include="b2style\self-test\unmanaged_heap.txt" />
     <Content Include="b2style\self-test\use-base-class-function.txt" />
+    <Content Include="b2style\self-test\vector-test.txt" />
     <Content Include="b2style\self-test\virtual-function-compile-only.txt" />
     <Content Include="bstyle\codegen\delegate.txt" />
     <Content Include="bstyle\codegen\func_name_with_dot.txt" />

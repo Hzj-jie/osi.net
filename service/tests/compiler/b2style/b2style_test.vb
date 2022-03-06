@@ -766,6 +766,17 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), "3f2")
     End Sub
 
+    <test>
+    Private Shared Sub assert_()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.assert_.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "This assertion should not pass.")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
