@@ -34,10 +34,17 @@ class vector {
     this._a[index] = v;
   }
 
+  void destruct() {
+    logic "dealloc_heap std__this._a";
+  }
+
   void reserve(int size) {
     T x[size];
     for (int i = 0; i < this.size(); i++) {
       x[i] = this.get(i);
+    }
+	if (this._a != -1) {
+	  this.destruct();
     }
     this._a = x;
     logic "undefine std__x";
@@ -45,15 +52,12 @@ class vector {
   }
 
   void construct(int size) {
+    this._a = -1;
     this.reserve(size);
   }
 
   void construct() {
-    this.reserve(4);
-  }
-
-  void destruct() {
-    logic "dealloc_heap std__this._a";
+    this.construct(4);
   }
 
   void push_back(T v) {

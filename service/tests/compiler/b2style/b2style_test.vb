@@ -777,6 +777,21 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), "This assertion should not pass.")
     End Sub
 
+    <test>
+    Private Shared Sub vector_destructor()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.vector_destructor.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.array_equal(assertion.catch_thrown(Of executor_stop_error) _
+                                                        (Sub()
+                                                             direct_cast(Of simulator)(e).access_heap(0)
+                                                         End Sub).error_types,
+                              {executor.error_type.heap_access_out_of_boundary})
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
