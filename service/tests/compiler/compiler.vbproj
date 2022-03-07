@@ -70,6 +70,7 @@
     <Content Include="b2style\codegen\delegate.txt" />
     <Content Include="b2style\codegen\vector_destructor.txt" />
     <Content Include="b2style\self-test\bool_array.txt" />
+    <Content Include="b2style\self-test\mod_equals_to_1.txt" />
     <Content Include="b2style\self-test\ref_value_clause.txt" />
     <Content Include="b2style\self-test\access-biguint-as-heap.txt" />
     <Content Include="b2style\self-test\delegate-functions-with-same-name.txt" />
