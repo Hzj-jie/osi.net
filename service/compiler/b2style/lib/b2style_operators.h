@@ -23,6 +23,11 @@ bool not(bool i) {
   return true;
 }
 
+// TODO: Consider to avoid adding "_pre" for operator !.
+bool not_pre(bool i) {
+  return not(i);
+}
+
 // TODO: Use a better way to compare strings, treating them as big_uints is not accurate or efficient.
 bool equal(string i, string j) {
   bool result;
@@ -62,6 +67,16 @@ bool equal(int i, int j) {
 
 bool not_equal(int i, int j) {
   return not_equal(::bstyle::to_biguint(i), ::bstyle::to_biguint(j));
+}
+
+bool equal(bool i, bool j) {
+  if (i) return j;
+  return !j;
+}
+
+bool not_equal(bool i, bool j) {
+  if (i) return !j;
+  return j;
 }
 
 bool greater_than(biguint i, biguint j) {

@@ -182,6 +182,7 @@ Partial Public NotInheritable Class b2style
                                "bit-or",
                                "and",
                                "or",
+                               "not",
                                "left-shift",
                                "right-shift",
                                "less-than",
