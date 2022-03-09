@@ -2,7 +2,7 @@
 #ifndef B2STYLE_LIB_B2STYLE_DELEGATES_H
 #define B2STYLE_LIB_B2STYLE_DELEGATES_H
 
-#include <b2style_types.h>
+#include <b2style/types.h>
 
 namespace b2style {
 

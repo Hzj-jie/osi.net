@@ -161,6 +161,7 @@
     <Content Include="b2style\self-test\use-base-class-function.txt" />
     <Content Include="b2style\self-test\vector-test.txt" />
     <Content Include="b2style\self-test\virtual-function-compile-only.txt" />
+    <Content Include="b2style\self-test\void-variable.txt" />
     <Content Include="bstyle\codegen\delegate.txt" />
     <Content Include="bstyle\codegen\func_name_with_dot.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />

@@ -2,6 +2,8 @@
 #ifndef B2STYLE_LIB_TESTING_TYPES_H
 #define B2STYLE_LIB_TESTING_TYPES_H
 
+#include <bstyle/types.h>
+
 namespace b2style {
 namespace testing {
 

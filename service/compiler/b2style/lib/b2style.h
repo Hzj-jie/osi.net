@@ -4,11 +4,11 @@
 
 #include <bstyle.h>
 
-#include <b2style_stdio.h>
-#include <b2style_operators.h>
-#include <b2style_ufloat.h>
-#include <b2style_types.h>
-#include <b2style_delegates.h>
-#include <b2style_stdlib.h>
+// TODO: Limit the default includes to the essential ones only.
+#include <b2style/stdio.h>
+#include <b2style/operators.h>
+#include <b2style/ufloat.h>
+#include <b2style/types.h>
+#include <b2style/delegates.h>
 
 #endif  // B2STYLE_LIB_B2STYLE_H
