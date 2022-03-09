@@ -12,6 +12,10 @@ template <T>
 class ref {
   ::bstyle::heap_ptr _a;
 
+  void destruct() {
+    ::bstyle::dealloc(this._a);
+  }
+
   void set(T v) {
     this.destruct();
     ::bstyle::alloc(this._a, 1);
@@ -23,6 +27,12 @@ class ref {
     return this._a[0];
   }
 
+  ::bstyle::heap_ptr release() {
+    ::bstyle::heap_ptr r = this._a;
+    this._a = ::bstyle::npos();
+    return r;
+  }
+
   void construct() {
     this._a = ::bstyle::npos();
   }
@@ -31,8 +41,12 @@ class ref {
     set(v);
   }
 
-  void destruct() {
-    ::bstyle::dealloc(this._a);
+  void construct(::bstyle::heap_ptr p) {
+    this._a = p;
+  }
+
+  void construct(ref& other) {
+    this.construct(other.release());
   }
 };
 
