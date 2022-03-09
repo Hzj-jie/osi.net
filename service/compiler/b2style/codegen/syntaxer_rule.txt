@@ -37,7 +37,7 @@ pre-operation-value [not, self-inc, self-dec] value
 # Should support post-operation-value value [self-inc, self-dec]
 post-operation-value raw-value [self-inc, self-dec]
 # Should support binary-operation-value value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, less-than, greater-than, less-or-equal, greater-or-equal, equal, not-equal] value
-binary-operation-value raw-value [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, left-shift, right-shift, less-than, greater-than, less-or-equal, greater-or-equal, equal, not-equal] value
+binary-operation-value [value-with-bracket, raw-value] [add, minus, multiply, divide, mod, power, bit-and, bit-or, and, or, left-shift, right-shift, less-than, greater-than, less-or-equal, greater-or-equal, equal, not-equal] value
 variable-name [heap-struct-name, heap-name, name]
 heap-struct-name heap-name dot name
 ignore-result-heap-struct-function-call heap-struct-function-call

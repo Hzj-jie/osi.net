@@ -3,6 +3,7 @@
 #include <testing.h>
 
 void main() {
-  b2style::testing::assert_false<bool>((10 % 2) == 1);
-  b2style::testing::assert_true<bool>((11 % 2) == 1);
+  b2style::testing::assert_false(((10 % 2) == 1));
+  b2style::testing::assert_true(((11 % 2) == 1));
+  b2style::testing::finished();
 }
