@@ -272,11 +272,14 @@
     <Content Include="b2style\codegen\syntaxer_rule.txt" />
     <Content Include="b2style\lib\assert.h" />
     <Content Include="b2style\lib\b2style.h" />
+    <Content Include="b2style\lib\b2style_const.h" />
     <Content Include="b2style\lib\b2style_delegates.h" />
     <Content Include="b2style\lib\b2style_operators.h" />
     <Content Include="b2style\lib\b2style_stdio.h" />
+    <Content Include="b2style\lib\b2style_stdlib.h" />
     <Content Include="b2style\lib\b2style_types.h" />
     <Content Include="b2style\lib\b2style_ufloat.h" />
+    <Content Include="b2style\lib\ref.h" />
     <Content Include="b2style\lib\std\types.h" />
     <Content Include="b2style\lib\testing\assert.h" />
     <Content Include="b2style\lib\testing.h" />

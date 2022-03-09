@@ -9,5 +9,6 @@
 #include <b2style_ufloat.h>
 #include <b2style_types.h>
 #include <b2style_delegates.h>
+#include <b2style_stdlib.h>
 
 #endif  // B2STYLE_LIB_B2STYLE_H
