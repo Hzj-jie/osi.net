@@ -43,8 +43,8 @@ class vector {
     for (int i = 0; i < this.size(); i++) {
       x[i] = this.get(i);
     }
-	if (this._a != -1) {
-	  this.destruct();
+    if (this._a != -1) {
+      this.destruct();
     }
     this._a = x;
     logic "undefine std__x";
