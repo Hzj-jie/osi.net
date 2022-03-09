@@ -10,7 +10,7 @@ namespace std {
 
 template <T>
 class vector {
-  T _a;
+  int _a;
   int _s;
   int _c;
 
@@ -25,12 +25,14 @@ class vector {
   T get(int index) {
     ::assert(index >= 0, "get");
     ::assert(index < this.size(), "get");
+    reinterpret_cast(this._a, T);
     return this._a[index]; 
   }
 
   void set(int index, T v) {
     ::assert(index >= 0, "set");
     ::assert(index < this.size(), "set");
+    reinterpret_cast(this._a, T);
     this._a[index] = v;
   }
 
