@@ -74,7 +74,7 @@ Partial Public NotInheritable Class syntaxer
             If v Is Nothing OrElse v.size() <= p Then
                 Return result.failure(p)
             End If
-            Dim r As best_match_result = If(prefer_best_match Or False, best_match(v, p), first_match(v, p))
+            Dim r As best_match_result = If(prefer_best_match Or True, best_match(v, p), first_match(v, p))
             If r.result.failed() Then
                 log_unmatched(v, r.result.fal.pos, Me)
             Else

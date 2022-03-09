@@ -27,6 +27,14 @@ void assert_true(bool v) {
   assert_true(v, "no extra information.");
 }
 
+void assert_false(bool v, string msg) {
+  assert_true(!v, msg);
+}
+
+void assert_false(bool v) {
+  assert_true(!v);
+}
+
 /*
 TODO: Make this work. Currently assert_equal__2 conflicts with the following one.
 template <T, T2>
