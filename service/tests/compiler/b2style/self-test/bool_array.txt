@@ -6,16 +6,13 @@ void main() {
   bool a[100];
   bool b;
   for (int i = 0; i < 100; i++) {
-    // TODO: Why a[i] = ((i % 2) == 1) does not work?
-    int j = i % 2;
-    a[i] = (j == 1);
+    a[i] = ((i % 2) == 1);
   }
   reinterpret_cast(b, int);
   b = a;
   reinterpret_cast(b, bool);
   for (int i = 0; i < 100; i++) {
-    int j = i % 2;
-    b2style::testing::assert_equal<bool>(b[i], (j == 1));
+    b2style::testing::assert_equal<bool>(b[i], (i % 2) == 1);
   }
   b2style::testing::finished();
 }
