@@ -13,13 +13,20 @@ void dealloc(T p) {
   logic "dealloc_heap b2style__p";
 }
 
-template <T, RT>
+void dealloc(int p) {
+  dealloc<int>(p);
+}
+
+template <T>
 void alloc(T& p, int size) {
-  dealloc<T>(p);
-  RT x[size];
+  T x[size];
   reinterpret_cast(p, int);
   p = x;
   logic "undefine b2style__x";
+}
+
+void alloc(int& p, int size) {
+  alloc<int>(p, size);
 }
 
 }  // namespace b2style

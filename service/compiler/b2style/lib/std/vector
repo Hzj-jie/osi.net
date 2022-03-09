@@ -37,11 +37,12 @@ class vector {
   }
 
   void destruct() {
-    logic "dealloc_heap std__this._a";
+    ::b2style::dealloc(this._a);
   }
 
   void reserve(int size) {
-    T x[size];
+    int x = this._a;
+    ::b2style::alloc(x, size);
     for (int i = 0; i < this.size(); i++) {
       x[i] = this.get(i);
     }
@@ -54,7 +55,7 @@ class vector {
   }
 
   void construct(int size) {
-    this._a = -1;
+    this._a = ::b2style::npos;
     this.reserve(size);
   }
 
