@@ -3,22 +3,36 @@
 #define B2STYLE_LIB_REF_H
 
 #include <b2style.h>
+#include <assert.h>
+#include <bstyle/heap.h>
 
 namespace b2style {
 
 template <T>
 class ref {
-  int _a;
+  ::bstyle::heap_ptr _a;
+
+  void set(T v) {
+    this.destruct();
+    ::bstyle::alloc(this._a, 1);
+    this._a[0] = v;
+  }
+
+  T get() {
+    ::assert(this._a != ::bstyle::npos());
+    return this._a[0];
+  }
 
   void construct() {
-    this._a = -1;
+    this._a = ::bstyle::npos();
   }
 
   void construct(T v) {
-    
+    set(v);
   }
 
-  void set(T v) {
+  void destruct() {
+    ::bstyle::dealloc(this._a);
   }
 };
 
