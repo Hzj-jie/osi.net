@@ -1,0 +1,14 @@
+﻿
+#include <b2style.h>
+#include <b2style/ref.h>
+#include <testing.h>
+
+void main() {
+  b2style::ref<string> s();
+  b2style::ref<string> s2("abc");
+  b2style::ref<string> s3(s2);
+
+  b2style::testing::assert_equal<string>(s3.get(), "abc");
+
+  b2style::testing::finished();
+}

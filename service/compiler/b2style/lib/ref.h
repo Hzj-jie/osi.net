@@ -22,8 +22,12 @@ class ref {
     this._a[0] = v;
   }
 
+  bool empty() {
+    return this._a == ::bstyle::npos();
+  }
+
   T get() {
-    ::assert(this._a != ::bstyle::npos());
+    ::assert(!this.empty());
     return this._a[0];
   }
 
@@ -44,11 +48,12 @@ class ref {
   void construct(::bstyle::heap_ptr p) {
     this._a = p;
   }
-
-  void construct(ref& other) {
-    this.construct(other.release());
-  }
 };
+
+template <T>
+void ::construct(ref<T>& this, ref<T>& other) {
+  this.construct(other.release());
+}
 
 }  // namespace b2style
 
