@@ -2,8 +2,9 @@
 #ifndef BSTYLE_LIB_BSTYLE_H
 #define BSTYLE_LIB_BSTYLE_H
 
-#include <bstyle_types.h>
-#include <bstyle_constants.h>
+// TODO: Limit the default includes to the essential ones only.
+#include <bstyle/types.h>
+#include <bstyle/const.h>
 
 // Use double-underscore to allow bstyle to access these functions with bstyle:: namespace format.
 int bstyle__getchar() {

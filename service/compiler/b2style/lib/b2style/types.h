@@ -1,10 +1,11 @@
 ﻿
-#ifndef B2STYLE_LIB_STD_TYPES_H
-#define B2STYLE_LIB_STD_TYPES_H
+#ifndef B2STYLE_LIB_B2STYLE_TYPES_H
+#define B2STYLE_LIB_B2STYLE_TYPES_H
 
 #include <bstyle/types.h>
 
-namespace std {
+// TODO: Search types in parent scopes.
+namespace b2style {
 
 typedef ::string string;
 typedef ::void void;
@@ -14,8 +15,7 @@ typedef ::long long;
 typedef ::int int;
 typedef ::byte byte;
 typedef ::ufloat ufloat;
-typedef ::heap_ptr heap_ptr;
 
-}  // namespace std
+}  // namespace b2style
 
-#endif  // B2STYLE_LIB_STD_TYPES_H
+#endif  // B2STYLE_LIB_B2STYLE_TYPES_H

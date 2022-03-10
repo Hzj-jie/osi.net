@@ -4,13 +4,14 @@
 
 #include <b2style.h>
 #include <assert.h>
+#include <bstyle/heap.h>
 #include <std/types.h>
 
 namespace std {
 
 template <T>
 class vector {
-  int _a;
+  heap_ptr _a;
   int _s;
   int _c;
 
@@ -37,24 +38,22 @@ class vector {
   }
 
   void destruct() {
-    logic "dealloc_heap std__this._a";
+    ::bstyle::dealloc(this._a);
   }
 
   void reserve(int size) {
-    T x[size];
+    heap_ptr x;
+    ::bstyle::alloc(x, size);
     for (int i = 0; i < this.size(); i++) {
       x[i] = this.get(i);
     }
-    if (this._a != -1) {
-      this.destruct();
-    }
+	::bstyle::dealloc(this._a);
     this._a = x;
-    logic "undefine std__x";
     this._c = size;
   }
 
   void construct(int size) {
-    this._a = -1;
+    this._a = ::bstyle::npos();
     this.reserve(size);
   }
 
