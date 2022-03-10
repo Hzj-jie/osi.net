@@ -6,7 +6,7 @@ void main( /* LOL */ ) { /* Comments can be added here as well.
 * This is a multi line comment.
 */
   int i = getchar();
-  while (i != EOF) {
+  while (i != eof()) {
 	putchar(i);  // comment can be placed here as well.
 	i = getchar();
   }

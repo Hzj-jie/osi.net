@@ -199,7 +199,7 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
             Return Nothing
         Catch ex As Exception
             is_true(ex.GetType().is(GetType(EXCEPTION_TYPE)), msg)
-            Return direct_cast(Of EXCEPTION_TYPE)(ex)
+            Return direct_cast(Of EXCEPTION_TYPE)(ex, False)
         End Try
     End Function
 

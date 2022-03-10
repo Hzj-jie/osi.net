@@ -2,8 +2,9 @@
 #ifndef B2STYLE_LIB_B2STYLE_OPERATORS_H
 #define B2STYLE_LIB_B2STYLE_OPERATORS_H
 
-#include <bstyle.h>
 #include <b2style/types.h>
+#include <bstyle/int.h>
+#include <bstyle/str.h>
 
 namespace b2style {
 
@@ -149,6 +150,10 @@ int add(int i, int j) {
 byte add(byte i, byte j) {
   logic "add b2style__i b2style__i b2style__j";
   return ::bstyle::fit_in_byte(i);
+}
+
+string add(string i, string j) {
+  return ::bstyle::str_concat(i, j);
 }
 
 biguint minus(biguint i, biguint j) {

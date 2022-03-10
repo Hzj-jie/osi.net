@@ -2,8 +2,8 @@
 #ifndef B2STYLE_LIB_B2STYLE_UFLOAT_H
 #define B2STYLE_LIB_B2STYLE_UFLOAT_H
 
-#include <bstyle.h>
 #include <b2style/types.h>
+#include <b2style/loaded_method.h>
 
 namespace b2style {
 
@@ -66,10 +66,8 @@ ufloat power(ufloat i, ufloat j) {
 }
 
 string ufloat_to_str(ufloat i) {
-  ::bstyle::load_method("big_udec_to_str");
-  string result;
-  logic "interrupt execute_loaded_method b2style__i b2style__result";
-  return result;
+  load_method("big_udec_to_str");
+  return execute_loaded_method<ufloat, string>(i);
 }
 
 void std_out(ufloat i) {
@@ -103,10 +101,8 @@ ufloat self_dec_pre(ufloat& x) {
 }
 
 ufloat ufloat__from(biguint i) {
-  ::bstyle::load_method("big_uint_to_big_udec");
-  ufloat result;
-  logic "interrupt execute_loaded_method b2style__i b2style__result";
-  return result;
+  load_method("big_uint_to_big_udec");
+  return execute_loaded_method<biguint, ufloat>(i);
 }
 
 ufloat ufloat__from(int i) {
