@@ -158,7 +158,8 @@ Partial Public NotInheritable Class b2style
                 raise_error(error_type.user,
                             "Template [",
                             template_t.template_name(n),
-                            "] has not been defined.")
+                            "] has not been defined for ",
+                            n.input())
                 Return False
             End Function
         End Structure

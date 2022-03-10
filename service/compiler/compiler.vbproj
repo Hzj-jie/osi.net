@@ -277,7 +277,7 @@
     <Content Include="b2style\lib\b2style\stdio.h" />
     <Content Include="b2style\lib\b2style\types.h" />
     <Content Include="b2style\lib\b2style\ufloat.h" />
-    <Content Include="b2style\lib\ref.h" />
+    <Content Include="b2style\lib\b2style\ref.h" />
     <Content Include="b2style\lib\std\types.h" />
     <Content Include="b2style\lib\testing\assert.h" />
     <Content Include="b2style\lib\testing.h" />

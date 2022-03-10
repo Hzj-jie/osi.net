@@ -16,18 +16,25 @@ class ref {
     ::bstyle::dealloc(this._a);
   }
 
-  void set(T v) {
-    this.destruct();
-    ::bstyle::alloc(this._a, 1);
-    this._a[0] = v;
-  }
-
   bool empty() {
     return this._a == ::bstyle::npos();
   }
 
+  void set(T v) {
+    this.destruct();
+    ::bstyle::alloc(this._a, 1);
+    reinterpret_cast(this._a, T);
+    this._a[0] = v;
+  }
+
+  void alloc() {
+    T v;
+    this.set(v);
+  }
+
   T get() {
     ::assert(!this.empty());
+    reinterpret_cast(this._a, T);
     return this._a[0];
   }
 
@@ -42,18 +49,18 @@ class ref {
   }
 
   void construct(T v) {
-    set(v);
+    this.construct();
+    this.set(v);
   }
 
   void construct(::bstyle::heap_ptr p) {
     this._a = p;
   }
-};
 
-template <T>
-void ::construct(ref<T>& this, ref<T>& other) {
-  this.construct(other.release());
-}
+  void construct(ref<T>& other) {
+    this.construct(other.release());
+  }
+};
 
 }  // namespace b2style
 
