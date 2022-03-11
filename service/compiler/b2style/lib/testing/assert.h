@@ -2,6 +2,7 @@
 #ifndef B2STYLE_LIB_TESTING_ASSERT_H
 #define B2STYLE_LIB_TESTING_ASSERT_H
 
+#include <b2style/stdio.h>
 #include <bstyle.h>
 #include <testing/types.h>
 

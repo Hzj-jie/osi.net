@@ -1,5 +1,6 @@
 ﻿
 #include <b2style.h>
+#include <b2style/stdio.h>
 
 void main() {
   b2style::std_out(true && true);

@@ -2,8 +2,9 @@
 #ifndef B2STYLE_LIB_B2STYLE_UFLOAT_H
 #define B2STYLE_LIB_B2STYLE_UFLOAT_H
 
-#include <b2style/types.h>
 #include <b2style/loaded_method.h>
+#include <b2style/stdio.h>
+#include <b2style/types.h>
 
 namespace b2style {
 

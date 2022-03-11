@@ -2,6 +2,7 @@
 #ifndef TESTING_TESTING_H
 #define TESTING_TESTING_H
 
+#include <b2style/stdio.h>
 #include <testing/types.h>
 #include <testing/assert.h>
 
