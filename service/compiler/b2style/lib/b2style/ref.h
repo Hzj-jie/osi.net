@@ -3,6 +3,7 @@
 #define B2STYLE_LIB_REF_H
 
 #include <b2style.h>
+#include <b2style/types.h>
 #include <assert.h>
 #include <bstyle/heap.h>
 
