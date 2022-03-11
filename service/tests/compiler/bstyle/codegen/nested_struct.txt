@@ -1,5 +1,6 @@
 ﻿
 #include <bstyle.h>
+#include <stdio.h>
 
 struct S1 {
   int x;
@@ -11,12 +12,12 @@ struct S2 {
 };
 
 void print(S1 s) {
-  bstyle__putchar(s.x);
+  putchar(s.x);
 }
 
 void print(S2 s) {
   print(s.x);
-  bstyle__putchar(s.y);
+  putchar(s.y);
 }
 
 void main() {

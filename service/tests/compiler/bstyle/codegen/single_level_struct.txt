@@ -1,5 +1,6 @@
 ﻿
 #include <bstyle.h>
+#include <stdio.h>
 
 struct s {
   int i;
@@ -10,6 +11,6 @@ void main() {
   s x;
   x.i = 100;
   x.s = "abc";
-  bstyle__putchar(x.i);
+  putchar(x.i);
   logic "interrupt stdout x.s @@prefixes@temps@string";
 }

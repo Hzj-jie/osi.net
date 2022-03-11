@@ -1,14 +1,15 @@
 ﻿
 #include <bstyle.h>
+#include <stdio.h>
 
 delegate void func();
 
 void f() {
-  bstyle__putchar(102);
+  putchar(102);
 }
 
 void g() {
-  bstyle__putchar(103);
+  putchar(103);
 }
 
 void main() {
