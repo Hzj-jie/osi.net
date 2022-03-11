@@ -1,5 +1,6 @@
 ﻿
 #include <b2style.h>
+#include <stdio.h>
 
 void main() {
   int i = 0;

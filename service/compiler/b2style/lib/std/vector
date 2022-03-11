@@ -11,7 +11,7 @@ namespace std {
 
 template <T>
 class vector {
-  heap_ptr _a;
+  ::bstyle::heap_ptr _a;
   int _s;
   int _c;
 
@@ -42,7 +42,7 @@ class vector {
   }
 
   void reserve(int size) {
-    heap_ptr x;
+    ::bstyle::heap_ptr x;
     ::bstyle::alloc(x, size);
     for (int i = 0; i < this.size(); i++) {
       x[i] = this.get(i);

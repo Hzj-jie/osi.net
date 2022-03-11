@@ -1,5 +1,6 @@
 ﻿
 #include <b2style.h>
+#include <bstyle/const.h>
 
 long loaded_current_ms() {
   bstyle::load_method("current_ms");
