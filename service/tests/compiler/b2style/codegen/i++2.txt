@@ -1,14 +1,15 @@
 ﻿
 #include <b2style.h>
+#include <stdio.h>
 
 void main() {
   int i = 0;
   i++;
-  bstyle::putchar(i);
+  putchar(i);
   i++;
-  bstyle::putchar(i);
+  putchar(i);
   i++;
-  bstyle::putchar(i);
+  putchar(i);
   i++;
-  bstyle::putchar(i);
+  putchar(i);
 }

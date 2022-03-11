@@ -1,8 +1,9 @@
 ﻿
 #include <bstyle.h>
+#include <stdio.h>
 
 void f.f(int x) {
-  bstyle__putchar(x);
+  putchar(x);
 }
 
 void main() {

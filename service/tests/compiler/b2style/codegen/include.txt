@@ -11,7 +11,7 @@ int main() {
   x = getchar();
   putchar(x);
   x = getchar();
-  if (x == EOF) {
+  if (x == eof()) {
     b2style::std_out("EOF");
   }
 }

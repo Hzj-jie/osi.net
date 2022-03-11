@@ -1,5 +1,6 @@
 ﻿
 #include <b2style.h>
+#include <bstyle/time.h>
 
 bool is_even(long i) {
   long _2 = 2;

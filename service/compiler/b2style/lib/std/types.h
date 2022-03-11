@@ -14,7 +14,6 @@ typedef ::long long;
 typedef ::int int;
 typedef ::byte byte;
 typedef ::ufloat ufloat;
-typedef ::heap_ptr heap_ptr;
 
 }  // namespace std
 
