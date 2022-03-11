@@ -2,6 +2,7 @@
 #ifndef BSTYLE_LIB_STDIO_H
 #define BSTYLE_LIB_STDIO_H
 
+#include <bstyle/const.h>
 #include <bstyle/types.h>
 
 int getchar() {
