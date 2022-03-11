@@ -1,7 +1,7 @@
 ﻿
 #include <b2style.h>
-#include <b2style/stdio.h>
 #include <bstyle/const.h>
+#include <b2style/stdio.h>
 
 long loaded_current_ms() {
   bstyle::load_method("current_ms");
