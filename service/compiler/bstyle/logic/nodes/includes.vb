@@ -64,10 +64,11 @@ Partial Public NotInheritable Class bstyle
 
     Public NotInheritable Class include_with_string
         Inherits code_gens(Of logic_writer).include_with_string(Of parser,
-                                                             default_includes.folders,
-                                                             default_includes.ignore_default_folder,
-                                                             default_includes.default_folder,
-                                                             _false)
+                                                                   default_includes.folders,
+                                                                   default_includes.ignore_default_folder,
+                                                                   default_includes.default_folder,
+                                                                   _false,
+                                                                   scope)
         Public Shared ReadOnly instance As New include_with_string()
 
         Private Sub New()
@@ -76,10 +77,11 @@ Partial Public NotInheritable Class bstyle
 
     Public NotInheritable Class include_with_file
         Inherits code_gens(Of logic_writer).include_with_file(Of parser,
-                                                           default_includes.folders,
-                                                           default_includes.ignore_default_folder,
-                                                           default_includes.default_folder,
-                                                           _false)
+                                                                 default_includes.folders,
+                                                                 default_includes.ignore_default_folder,
+                                                                 default_includes.default_folder,
+                                                                 _false,
+                                                                 scope)
         Public Shared ReadOnly instance As New include_with_file()
 
         Private Sub New()

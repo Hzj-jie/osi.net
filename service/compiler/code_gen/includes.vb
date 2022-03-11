@@ -15,7 +15,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                                          _FOLDERS As __do(Of vector(Of String)),
                                          _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                          _DEFAULT_FOLDER As __do(Of String),
-                                         _IGNORE_INCLUDE_ERROR As __do(Of Boolean))
+                                         _IGNORE_INCLUDE_ERROR As __do(Of Boolean),
+                                         SCOPE_T As scope(Of SCOPE_T))
         Inherits reparser(Of PARSER)
 
         Private Shared ReadOnly folders As _FOLDERS = alloc(Of _FOLDERS)()
@@ -49,6 +50,10 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
 
         Protected Shared Function include_file(ByVal s As String, ByRef o As String) As Boolean
+            If Not scope(Of SCOPE_T).current().includes().included(s) AndAlso
+               (scope_arguments.do_not_include_twice Or True) Then
+                Return True
+            End If
             If include_file(+folders, s, o) Then
                 Return True
             End If
@@ -66,8 +71,9 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                                                     FOLDERS As __do(Of vector(Of String)),
                                                     IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                     DEFAULT_FOLDER As __do(Of String),
-                                                    IGNORE_INCLUDE_ERROR As __do(Of Boolean))
-        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR)
+                                                    IGNORE_INCLUDE_ERROR As __do(Of Boolean),
+                                                    SCOPE_T As scope(Of SCOPE_T))
+        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR, SCOPE_T)
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
             assert(Not n Is Nothing)
@@ -80,8 +86,9 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                                                   FOLDERS As __do(Of vector(Of String)),
                                                   IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                   DEFAULT_FOLDER As __do(Of String),
-                                                  IGNORE_INCLUDE_ERROR As __do(Of Boolean))
-        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR)
+                                                  IGNORE_INCLUDE_ERROR As __do(Of Boolean),
+                                                  SCOPE_T As scope(Of SCOPE_T))
+        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR, SCOPE_T)
 
         Private Const kw_include As String = "#include"
 

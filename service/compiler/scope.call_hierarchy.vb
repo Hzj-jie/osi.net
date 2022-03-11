@@ -5,15 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.formation
-
-Public NotInheritable Class scope_arguments
-    Public Shared remove_unused_functions As argument(Of Boolean)
-
-    Private Sub New()
-    End Sub
-End Class
 
 Partial Public Class scope(Of T As scope(Of T))
     Public MustInherit Class call_hierarchy

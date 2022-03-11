@@ -16,11 +16,13 @@ Partial Public Class scope(Of T As scope(Of T))
     Private child As T = Nothing
     Public ReadOnly root As lazier(Of T) = lazier.of(AddressOf get_root)
     Private ReadOnly ds As New vector(Of Action)()
+    Private ReadOnly incs As includes_t
 
     Protected Sub New(ByVal parent As T)
         Me.parent = parent
         If parent Is Nothing Then
             assert(in_thread Is Nothing)
+            incs = New includes_t()
         Else
             assert(object_compare(in_thread, parent) = 0)
         End If
