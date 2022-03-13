@@ -51,7 +51,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
 
         Protected Shared Function include_file(ByVal s As String, ByRef o As String) As Boolean
             If Not scope(Of SCOPE_T).current().includes().included(s) AndAlso
-               (scope_arguments.do_not_include_twice Or True) Then
+               (scope_arguments.include_once Or True) Then
                 Return True
             End If
             If include_file(+folders, s, o) Then
