@@ -42,3 +42,6 @@ Rule of Thumb
 1. Never rely on the format of ToString(), it should be used for debugging
    purpose only. If a certain format is required, use a different function
    with more meaningful name.
+
+1. Avoid using reserved keywords in class or function names, use a prefix
+   underscore instead.

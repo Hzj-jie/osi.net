@@ -75,6 +75,7 @@
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\multi_sentence_paragraph.vb" />
     <Compile Include="b2style\rewriter\nodes\paramtype_with_comma.vb" />
+    <Compile Include="b2style\rewriter\nodes\root_type.vb" />
     <Compile Include="b2style\rewriter\nodes\template.vb" />
     <Compile Include="b2style\rewriter\nodes\template_type_name.vb" />
     <Compile Include="b2style\scope.class.vb" />

@@ -18,7 +18,6 @@ Partial Public NotInheritable Class b2style
             Private NotInheritable Class definition
                 Public ReadOnly template As template_template
                 Public ReadOnly injected_types As New unordered_set(Of vector(Of String))()
-                Public ReadOnly injector As New typed_node_writer()
 
                 Public Sub New(ByVal t As template_template)
                     assert(Not t Is Nothing)
@@ -38,6 +37,7 @@ Partial Public NotInheritable Class b2style
                 End Sub
 
                 Public Function with_types(ByVal types As vector(Of String)) As template_body_reparser
+                    assert(Not types.null_or_empty())
                     assert(Me.types.set(types))
                     Return Me
                 End Function
@@ -74,22 +74,10 @@ Partial Public NotInheritable Class b2style
                 Return name_with_namespace.of(template_template.template_name(n.child(0), n.child(2).child_count()))
             End Function
 
-            Private Shared Function template_types(ByVal l As code_gens(Of typed_node_writer),
-                                                   ByVal n As typed_node,
-                                                   ByRef o As vector(Of String)) As Boolean
-                assert(Not l Is Nothing)
+            Public Function define(ByVal type_param_list As vector(Of String), ByVal n As typed_node) As Boolean
                 assert(Not n Is Nothing)
-                assert(n.child_count() = 4)
-                Return l.of_all_children(n.child(2)).dump(o)
-            End Function
-
-            Public Function define(ByVal l As code_gens(Of typed_node_writer),
-                                   ByVal n As typed_node,
-                                   ByVal o As typed_node_writer) As Boolean
-                assert(Not n Is Nothing)
-                assert(Not o Is Nothing)
                 Dim t As template_template = Nothing
-                If Not template_template.of(l, n, t) Then
+                If Not template_template.of(type_param_list, n, t) Then
                     Return False
                 End If
                 assert(Not t Is Nothing)
@@ -101,31 +89,31 @@ Partial Public NotInheritable Class b2style
                                 "] has been defined already.")
                     Return False
                 End If
-                o.append(d.injector)
                 Return True
             End Function
 
-            Public Function resolve(ByVal l As code_gens(Of typed_node_writer),
+            Public Function resolve(ByVal paramtypelist As vector(Of String),
                                     ByVal n As typed_node,
                                     ByRef extended_type_name As String) As [optional](Of Boolean)
+                assert(Not paramtypelist Is Nothing)
                 assert(Not n Is Nothing)
                 Dim name As name_with_namespace = template_name(n)
+                If paramtypelist.empty() Then
+                    raise_error(error_type.user, "Template instance ", name, " has empty type parameter list.")
+                    Return [optional].of(False)
+                End If
                 Dim d As definition = Nothing
                 If Not m.find(name, d) Then
                     Return [optional].empty(Of Boolean)()
                 End If
                 assert(Not d Is Nothing)
-                Dim types As vector(Of String) = Nothing
-                If Not template_types(l, n, types) Then
-                    Return [optional].of(False)
-                End If
-                If Not tbr.with_types(types).build(n, d.injector) Then
+                If Not tbr.with_types(paramtypelist).build(n, scope.current().root_type_injector().current()) Then
                     Return [optional].of(False)
                 End If
                 ' TODO: Should return b2style name with namespace rather than bstyle.
                 extended_type_name = _namespace.bstyle_format.with_namespace(
                                          name.namespace(),
-                                         d.template.extended_type_name(types))
+                                         d.template.extended_type_name(paramtypelist))
                 Return [optional].of(True)
             End Function
         End Class
@@ -138,18 +126,24 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
-            Public Function define(ByVal l As code_gens(Of typed_node_writer),
-                                   ByVal n As typed_node,
-                                   ByVal o As typed_node_writer) As Boolean
-                Return s.t.define(l, n, o)
+            Public Function define(ByVal l As code_gens(Of typed_node_writer), ByVal n As typed_node) As Boolean
+                assert(Not l Is Nothing)
+                assert(Not n Is Nothing)
+                assert(n.child_count() = 5)
+                Dim type_param_list As vector(Of String) = l.of_all_children(n.child(2)).dump()
+                Return s.t.define(type_param_list, n)
             End Function
 
             Public Function resolve(ByVal l As code_gens(Of typed_node_writer),
                                     ByVal n As typed_node,
                                     ByRef extended_type_name As String) As Boolean
+                assert(Not l Is Nothing)
+                assert(Not n Is Nothing)
+                assert(n.child_count() = 4)
+                Dim paramtypelist As vector(Of String) = l.of_all_children(n.child(2)).dump()
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    Dim r As [optional](Of Boolean) = s.t.resolve(l, n, extended_type_name)
+                    Dim r As [optional](Of Boolean) = s.t.resolve(paramtypelist, n, extended_type_name)
                     If r Then
                         Return +r
                     End If
