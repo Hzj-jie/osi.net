@@ -1,0 +1,13 @@
+﻿
+// ERROR: 
+
+#include <b2style.h>
+
+struct S {
+  int x;
+};
+
+void main() {
+  int x = 100;
+  S s = x;
+}

@@ -71,7 +71,14 @@ Partial Public NotInheritable Class bstyle
             Using r As read_scoped(Of scope.value_target_t.target).ref(Of String) =
                            bstyle.value.read_target_single_data_slot()
                 ' The type check of single-data-slot-target will be handled by logic.
-                Return single_data_slot_copy(+r)
+                assert(Not r Is Nothing)
+                Dim s As String = Nothing
+                If Not r.retrieve(s) Then
+                    raise_error(error_type.user,
+                                "Failed to retrieve a single data slot from the r-value, received a struct?")
+                    Return False
+                End If
+                Return single_data_slot_copy(s)
             End Using
         End Function
 
