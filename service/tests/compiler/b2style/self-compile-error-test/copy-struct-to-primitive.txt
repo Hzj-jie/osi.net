@@ -1,0 +1,13 @@
+﻿
+// ERROR: Failed to retrieve a single data slot from the r-value, received a struct?
+
+#include <b2style.h>
+
+struct S {
+  int x;
+};
+
+void main() {
+  S s;
+  int y = s;
+}
