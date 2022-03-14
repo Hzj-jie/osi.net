@@ -95,13 +95,9 @@ Partial Public NotInheritable Class b2style
             Public Function resolve(ByVal paramtypelist As vector(Of String),
                                     ByVal n As typed_node,
                                     ByRef extended_type_name As String) As [optional](Of Boolean)
-                assert(Not paramtypelist Is Nothing)
+                assert(Not paramtypelist.null_or_empty())
                 assert(Not n Is Nothing)
                 Dim name As name_with_namespace = template_name(n)
-                If paramtypelist.empty() Then
-                    raise_error(error_type.user, "Template instance ", name, " has empty type parameter list.")
-                    Return [optional].of(False)
-                End If
                 Dim d As definition = Nothing
                 If Not m.find(name, d) Then
                     Return [optional].empty(Of Boolean)()

@@ -97,7 +97,7 @@ Partial Public NotInheritable Class b2style
         Public Shared Function [of](ByVal type_param_list As vector(Of String),
                                     ByVal n As typed_node,
                                     ByRef o As template_template) As Boolean
-            assert(Not type_param_list Is Nothing)
+            assert(Not type_param_list.null_or_empty())
             assert(Not n Is Nothing)
             assert(n.type_name.Equals("template"))
             assert(n.child_count() = 5)
@@ -108,13 +108,6 @@ Partial Public NotInheritable Class b2style
                 name_node = name_node.child(0).child(2)
             Else
                 assert(False)
-            End If
-            If type_param_list.empty() Then
-                raise_error(error_type.user,
-                            "Template ",
-                            name_node.input_without_ignored(),
-                            " has an empty type parameter list.")
-                Return False
             End If
             If type_param_list.size() >
                type_param_list.stream().collect_by(stream(Of String).collectors.unique()).size() Then
@@ -134,22 +127,21 @@ Partial Public NotInheritable Class b2style
             Return _extended_type_name.name
         End Function
 
-        Public Function extended_type_name(ByVal types As vector(Of String)) As String
-            _extended_type_name.apply(types)
+        Public Function extended_type_name(ByVal paramtypelist As vector(Of String)) As String
+            _extended_type_name.apply(paramtypelist)
             Return _extended_type_name.str()
         End Function
 
-        Public Function apply(ByVal types As vector(Of String), ByRef impl As String) As Boolean
-            assert(Not types Is Nothing)
-            assert(types.size() = Me.type_refs.size())
-            assert(types.size() > 0)
-            _extended_type_name.apply(types)
-            For i As UInt32 = 0 To types.size() - uint32_1
+        Public Function apply(ByVal paramtypelist As vector(Of String), ByRef impl As String) As Boolean
+            assert(Not paramtypelist.null_or_empty())
+            assert(paramtypelist.size() = Me.type_refs.size())
+            _extended_type_name.apply(paramtypelist)
+            For i As UInt32 = 0 To paramtypelist.size() - uint32_1
                 assert(Not Me.type_refs(i))
-                Me.type_refs(i).set(types(i))
+                Me.type_refs(i).set(paramtypelist(i))
             Next
             impl = w.dump()
-            For i As UInt32 = 0 To types.size() - uint32_1
+            For i As UInt32 = 0 To paramtypelist.size() - uint32_1
                 Me.type_refs(i).set(Nothing)
             Next
             Return True
