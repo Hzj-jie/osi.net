@@ -1,5 +1,5 @@
 ﻿
-// ERROR: 
+// ERROR: Type S of s does not match the rvalue Integer
 
 #include <b2style.h>
 
