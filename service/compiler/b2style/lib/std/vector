@@ -44,10 +44,12 @@ class vector {
   void reserve(int size) {
     ::bstyle::heap_ptr x;
     ::bstyle::alloc(x, size);
+    reinterpret_cast(x, T);
     for (int i = 0; i < this.size(); i++) {
       x[i] = this.get(i);
     }
 	::bstyle::dealloc(this._a);
+    reinterpret_cast(x, ::bstyle::heap_ptr);
     this._a = x;
     this._c = size;
   }
