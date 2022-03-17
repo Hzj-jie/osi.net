@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 
@@ -24,22 +23,9 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() = 6)
             Dim type As String = scope.current().type_alias()(n.child(4).input_without_ignored())
             Dim name As String = n.child(2).input_without_ignored()
-            Dim s As [optional](Of struct_def) = scope.current().structs().resolve(type, name)
-            If s.empty() Then
-                If Not builders.of_redefine(name, type).to(o) Then
-                    Return False
-                End If
-            Else
-                If Not (+s).primitives().
-                            map(Function(ByVal p As builders.parameter) As Boolean
-                                    assert(Not p Is Nothing)
-                                    Return builders.of_redefine(p.name, p.type).to(o)
-                                End Function).
-                            aggregate(bool_stream.aggregators.all_true) Then
-                    Return False
-                End If
-            End If
-            Return scope.current().variables().redefine(type, name)
+            Return (struct.redefine(name, type, o) OrElse
+                    builders.of_redefine(name, type).to(o)) AndAlso
+                   scope.current().variables().redefine(type, name)
         End Function
     End Class
 End Class

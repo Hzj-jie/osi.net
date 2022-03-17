@@ -118,8 +118,9 @@ Partial Public NotInheritable Class bstyle
                                         End Function,
                                         Function(ByVal r As String) As Boolean
                                             Return builders.of_copy(
-                                                       variable.name_of(n.child(0).child().child(0).input_without_ignored(),
-                                                                        indexstr),
+                                                       variable.name_of(
+                                                           n.child(0).child().child(0).input_without_ignored(),
+                                                           indexstr),
                                                    r).to(o)
                                         End Function,
                                  o)

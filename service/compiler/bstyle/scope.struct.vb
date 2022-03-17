@@ -97,25 +97,36 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End Function
 
-            Public Function resolve(ByVal type As String, ByVal name As String) As [optional](Of struct_def)
-                Dim s As struct_def = Nothing
-                If resolve(type, name, s) Then
-                    Return [optional].of(s)
-                End If
-                Return [optional].empty(Of struct_def)()
-            End Function
-
             Public Function defined(ByVal type As String) As Boolean
                 Return resolve(type, Nothing, Nothing)
             End Function
 
-            ' TODO: This is not right, a struct should not use the type defined after its declaration.
-            Public Function resolve(ByVal name As String, ByRef o As struct_def) As Boolean
-                Dim type As String = Nothing
-                If Not s.variables().resolve(name, type) Then
+            Public Function resolve(ByVal name As String, ByRef o As tuple(Of String, struct_def)) As Boolean
+                Dim s As scope = Me.s
+                While Not s Is Nothing
+                    Dim type As String = Nothing
+                    If Not s.v.resolve(name, type) Then
+                        s = s.parent
+                        Continue While
+                    End If
+                    Dim v As struct_def = Nothing
+                    If Not s.structs().resolve(type, name, v) Then
+                        raise_error(error_type.user, "Failed to resolve struct ", name, " with type ", type)
+                        Return False
+                    End If
+                    o = tuple.of(type, v)
+                    Return True
+                End While
+                Return False
+            End Function
+
+            Public Function resolve(ByVal name As String, ByRef v As struct_def) As Boolean
+                Dim o As tuple(Of String, struct_def) = Nothing
+                If Not resolve(name, o) Then
                     Return False
                 End If
-                Return resolve(type, name, o)
+                v = o.second()
+                Return True
             End Function
         End Structure
 
