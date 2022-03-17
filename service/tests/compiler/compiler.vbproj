@@ -155,6 +155,7 @@
     <Content Include="b2style\self-test\function-template.txt" />
     <Content Include="b2style\self-test\more-closing-angle-brackets.txt" />
     <Content Include="b2style\self-test\self-health.txt" />
+    <Content Include="b2style\self-compile-error-test\struct-with-myself.txt" />
     <Content Include="b2style\self-test\struct_member_type_with_namespace.txt" />
     <Content Include="b2style\self-test\template-in-namespace.txt" />
     <Content Include="b2style\self-test\template-override.txt" />
