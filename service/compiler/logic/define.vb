@@ -9,6 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
     ' Define a variable with @name.
+    ' VisibleForTesting
     Public NotInheritable Class _define
         Implements instruction_gen
 

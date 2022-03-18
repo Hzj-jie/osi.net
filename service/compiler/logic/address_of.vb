@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
-    Public NotInheritable Class _address_of
+    Private NotInheritable Class _address_of
         Implements instruction_gen
 
         Private ReadOnly target As String

@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public NotInheritable Class logic
-    Public NotInheritable Class _callee_ref
+    Private NotInheritable Class _callee_ref
         Implements instruction_gen
 
         Private ReadOnly name As String

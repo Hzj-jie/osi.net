@@ -5,12 +5,11 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.service.automata
-Imports osi.service.compiler
 Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class paramtype_with_comma
+    Private NotInheritable Class paramtype_with_comma
         Implements code_gen(Of typed_node_writer)
 
         Private ReadOnly l As code_gens(Of typed_node_writer)

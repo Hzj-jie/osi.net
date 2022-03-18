@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
-    Public NotInheritable Class _append_slice
+    Private NotInheritable Class _append_slice
         Inherits unary_operator
 
         Public Sub New(ByVal result As String, ByVal parameter As String)
@@ -29,7 +29,7 @@ Partial Public NotInheritable Class logic
         End Function
     End Class
 
-    Public NotInheritable Class _cut_slice
+    Private NotInheritable Class _cut_slice
         Inherits binary_operator
 
         Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
@@ -58,7 +58,7 @@ Partial Public NotInheritable Class logic
         End Function
     End Class
 
-    Public NotInheritable Class _cut
+    Private NotInheritable Class _cut
         Inherits binary_operator
 
         Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
@@ -87,6 +87,7 @@ Partial Public NotInheritable Class logic
         End Function
     End Class
 
+    ' VisibleForTesting
     Public NotInheritable Class _cut_len
         Inherits ternary_operator
 
@@ -122,7 +123,7 @@ Partial Public NotInheritable Class logic
         End Function
     End Class
 
-    Public NotInheritable Class _clear
+    Private NotInheritable Class _clear
         Inherits unary_subroutine
 
         Public Sub New(ByVal parameter As String)

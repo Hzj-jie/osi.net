@@ -12,7 +12,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class _delegate
+    Private NotInheritable Class _delegate
         Implements code_gen(Of logic_writer)
 
         Private ReadOnly l As code_gens(Of logic_writer)

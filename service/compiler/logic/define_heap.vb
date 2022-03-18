@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
     ' Define an array with @name, @type and @size
-    Public NotInheritable Class _define_heap
+    Private NotInheritable Class _define_heap
         Implements instruction_gen
 
         Private ReadOnly name As String

@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
-    Public NotInheritable Class _append
+    Private NotInheritable Class _append
         Inherits unary_operator
 
         Public Sub New(ByVal result As String, ByVal parameter As String)
@@ -28,7 +28,7 @@ Partial Public NotInheritable Class logic
         End Function
     End Class
 
-    Public NotInheritable Class _not
+    Private NotInheritable Class _not
         Inherits unary_operator
 
         Public Sub New(ByVal result As String, ByVal parameter As String)
@@ -49,6 +49,7 @@ Partial Public NotInheritable Class logic
         End Function
     End Class
 
+    ' VisibleForTesting
     Public NotInheritable Class _sizeof
         Inherits unary_operator
 
@@ -70,7 +71,7 @@ Partial Public NotInheritable Class logic
         End Function
     End Class
 
-    Public NotInheritable Class _empty
+    Private NotInheritable Class _empty
         Inherits unary_operator
 
         Public Sub New(ByVal result As String, ByVal parameter As String)

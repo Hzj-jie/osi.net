@@ -8,7 +8,7 @@ Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
     ' Move a variable from @source to @target.
-    Public NotInheritable Class _move
+    Private NotInheritable Class _move
         Inherits copy_move
 
         Public Sub New(ByVal target As String, ByVal source As String)

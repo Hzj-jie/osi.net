@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
-    Public NotInheritable Class _caller_ref
+    Private NotInheritable Class _caller_ref
         Inherits anchor_caller
         Implements instruction_gen
 

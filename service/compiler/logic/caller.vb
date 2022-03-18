@@ -8,6 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
+    ' VisibleForTesting
     Public NotInheritable Class _caller
         Inherits anchor_caller
 

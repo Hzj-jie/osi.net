@@ -9,6 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
     ' Copy (instead of moving) a @data to @target
+    ' VisibleForTesting
     Public NotInheritable Class _copy_const
         Implements instruction_gen
 

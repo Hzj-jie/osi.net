@@ -11,7 +11,7 @@ Imports osi.service.automata
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class logic_name
+    Private NotInheritable Class logic_name
         Public Shared Function temp_variable(ByVal n As typed_node) As String
             assert(Not n Is Nothing)
             Return strcat("temp_value_@",

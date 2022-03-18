@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
-    Public NotInheritable Class _dealloc_heap
+    Private NotInheritable Class _dealloc_heap
         Inherits stack_var_operator
 
         Public Sub New(ByVal name As String)

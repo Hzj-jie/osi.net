@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
-    Public NotInheritable Class _divide
+    Private NotInheritable Class _divide
         Inherits pair_result_binary_operator
 
         Public Sub New(ByVal result1 As String,
@@ -32,7 +32,7 @@ Partial Public NotInheritable Class logic
         End Function
     End Class
 
-    Public NotInheritable Class _extract
+    Private NotInheritable Class _extract
         Inherits pair_result_binary_operator
 
         Public Sub New(ByVal result1 As String,

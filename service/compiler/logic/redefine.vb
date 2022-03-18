@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public NotInheritable Class logic
-    Public NotInheritable Class _redefine
+    Private NotInheritable Class _redefine
         Inherits stack_var_operator
 
         Private ReadOnly type As String

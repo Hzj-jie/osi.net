@@ -9,6 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
     ' do { do() } while (var)
+    ' VisibleForTesting
     Public NotInheritable Class _do_while
         Implements instruction_gen
 

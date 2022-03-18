@@ -11,7 +11,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class _namespace
+    Private NotInheritable Class _namespace
         Implements code_gen(Of typed_node_writer)
 
         Private Const namespace_separator As String = "::"

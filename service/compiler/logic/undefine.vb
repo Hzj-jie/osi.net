@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public NotInheritable Class logic
-    Public NotInheritable Class _undefine
+    Private NotInheritable Class _undefine
         Inherits stack_var_operator
 
         Public Sub New(ByVal name As String)

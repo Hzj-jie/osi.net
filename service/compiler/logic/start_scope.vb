@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public NotInheritable Class logic
-    Public NotInheritable Class _start_scope
+    Private NotInheritable Class _start_scope
         Implements instruction_gen
 
         Private ReadOnly p As paragraph

@@ -9,7 +9,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class self_value_clause
+    Private NotInheritable Class self_value_clause
         Implements code_gen(Of typed_node_writer)
 
         Private Const self_prefix As String = "self-"

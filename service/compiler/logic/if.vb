@@ -9,6 +9,7 @@ Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
+    ' VisibleForTesting
     Public NotInheritable Class _if
         Implements instruction_gen
 

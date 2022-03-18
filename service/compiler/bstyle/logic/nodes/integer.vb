@@ -11,7 +11,7 @@ Imports osi.service.constructor
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class _integer
+    Private NotInheritable Class _integer
         Implements code_gen(Of logic_writer)
 
         Private ReadOnly l As code_gens(Of logic_writer)

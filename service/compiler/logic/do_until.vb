@@ -9,7 +9,7 @@ Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
     ' do { do() } until(var)
-    Public NotInheritable Class _do_until
+    Private NotInheritable Class _do_until
         Implements instruction_gen
 
         Private ReadOnly v As String
