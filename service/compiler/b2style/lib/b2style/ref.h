@@ -14,7 +14,7 @@ class ref {
   ::bstyle::heap_ptr _a;
 
   void destruct() {
-    ::bstyle::dealloc(this._a);
+    dealloc(this._a);
   }
 
   bool empty() {

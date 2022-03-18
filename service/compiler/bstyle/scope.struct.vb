@@ -110,8 +110,10 @@ Partial Public NotInheritable Class bstyle
                         Continue While
                     End If
                     Dim v As struct_def = Nothing
-                    ' The definition of the struct should be checked when the variable was defined.
-                    assert(s.structs().resolve(type, name, v), "Failed to resolve struct ", name, " with type ", type)
+                    ' The type may not be a struct at all.
+                    If Not s.structs().resolve(type, name, v) Then
+                        Return False
+                    End If
                     o = tuple.of(type, v)
                     Return True
                 End While

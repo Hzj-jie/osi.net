@@ -38,7 +38,7 @@ class vector {
   }
 
   void destruct() {
-    ::bstyle::dealloc(this._a);
+    dealloc(this._a);
   }
 
   void reserve(int size) {
@@ -47,7 +47,7 @@ class vector {
     for (int i = 0; i < this.size(); i++) {
       x[i] = this.get(i);
     }
-	::bstyle::dealloc(this._a);
+	dealloc(this._a);
     this._a = x;
     this._c = size;
   }
