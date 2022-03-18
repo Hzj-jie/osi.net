@@ -58,7 +58,10 @@ typedef kw-typedef typedef-type typedef-type
 struct-body [value-declaration]? semi-colon
 struct kw-struct type-name start-paragraph [struct-body]* end-paragraph semi-colon
 
+# Function-like instructions.
 reinterpret-cast kw-reinterpret-cast start-bracket variable-name comma type-name end-bracket
+undefine kw-undefine start-bracket variable-name end-bracket
+dealloc kw-dealloc start-bracket variable-name end-bracket
 
 root-type-with-semi-colon [value-definition, heap-declaration, value-declaration, logic, typedef, delegate]? semi-colon
 base-root-type [root-type-with-semi-colon, function, include, define, ifndef-wrapped, struct]
