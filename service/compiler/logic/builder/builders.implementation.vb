@@ -11,7 +11,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Partial Public NotInheritable Class builders
 
         Public Shared Function of_start_scope(ByVal paragraph_1 As Func(Of logic_writer, Boolean)) As start_scope_builder_1
@@ -1696,4 +1696,4 @@ Namespace logic
             End Function
         End Class
     End Class
-End Namespace
+End Class

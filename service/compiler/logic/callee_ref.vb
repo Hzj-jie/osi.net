@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class _callee_ref
         Implements instruction_gen
 
@@ -34,4 +34,4 @@ Namespace logic
             Return scope.current().anchor_refs().decl(name, return_type, parameters)
         End Function
     End Class
-End Namespace
+End Class

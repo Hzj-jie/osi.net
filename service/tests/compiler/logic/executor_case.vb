@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
+Imports osi.service.compiler
 Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
 

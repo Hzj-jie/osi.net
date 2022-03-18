@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     ' Copy a variable from @source to @target.
     Public NotInheritable Class _copy
         Inherits copy_move
@@ -21,4 +21,4 @@ Namespace logic
             Return copy_move.export(command.cp, target, source, o)
         End Function
     End Class
-End Namespace
+End Class

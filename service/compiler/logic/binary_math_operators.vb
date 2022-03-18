@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class _add
         Inherits binary_math_operator
 
@@ -210,4 +210,4 @@ Namespace logic
             Return command.rfs
         End Function
     End Class
-End Namespace
+End Class

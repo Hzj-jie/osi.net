@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class _append_slice
         Inherits unary_operator
 
@@ -138,4 +138,4 @@ Namespace logic
             Return parameter.is_variable_size()
         End Function
     End Class
-End Namespace
+End Class

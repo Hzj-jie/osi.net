@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Partial Public NotInheritable Class scope
         ' Defines primitive types, i.e. basic data types a language can handle, such as byte, int, byte array, etc. So
         ' the types instance won't be impacted by the source code or in another word, user input, of a language.
@@ -83,4 +83,4 @@ Namespace logic
             Return (+root).types()
         End Function
     End Class
-End Namespace
+End Class

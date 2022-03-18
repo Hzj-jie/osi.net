@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public MustInherit Class binary_math_operator
         Inherits binary_operator
 
@@ -23,4 +23,4 @@ Namespace logic
             Return True
         End Function
     End Class
-End Namespace
+End Class

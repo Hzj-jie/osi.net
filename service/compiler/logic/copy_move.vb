@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public MustInherit Class copy_move
         Implements instruction_gen
 
@@ -47,4 +47,4 @@ Namespace logic
                    export(cmd, t, s, o)
         End Function
     End Class
-End Namespace
+End Class

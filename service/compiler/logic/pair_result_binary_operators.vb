@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class _divide
         Inherits pair_result_binary_operator
 
@@ -56,4 +56,4 @@ Namespace logic
             Return command.ext
         End Function
     End Class
-End Namespace
+End Class

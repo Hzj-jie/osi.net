@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class _undefine
         Inherits stack_var_operator
 
@@ -20,4 +20,4 @@ Namespace logic
             Return True
         End Function
     End Class
-End Namespace
+End Class

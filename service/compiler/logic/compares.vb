@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class _less
         Inherits compare
 
@@ -125,4 +125,4 @@ Namespace logic
             Return command.fless
         End Function
     End Class
-End Namespace
+End Class

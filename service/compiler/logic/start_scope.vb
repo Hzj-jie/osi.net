@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class _start_scope
         Implements instruction_gen
 
@@ -21,4 +21,4 @@ Namespace logic
             Return p.build(o)
         End Function
     End Class
-End Namespace
+End Class

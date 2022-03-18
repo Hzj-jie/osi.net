@@ -31,7 +31,7 @@ public static class Program {
     wl("Imports osi.root.formation");
     wl("Imports osi.service.interpreter.primitive");
     wl();
-    wl("Namespace logic");
+    wl("Public Partial NotInheritable Class logic");
     wl("    Partial Public NotInheritable Class importer");
     List<string> keys = new List<string>();
     string s;
@@ -139,6 +139,6 @@ public static class Program {
     wl("            Return False");
     wl("        End Function");
     wl("    End Class");
-    wl("End Namespace");
+    wl("End Class");
   }
 }

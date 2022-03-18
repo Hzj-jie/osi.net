@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class _append
         Inherits unary_operator
 
@@ -90,4 +90,4 @@ Namespace logic
             Return result.is_assignable_from_bool()
         End Function
     End Class
-End Namespace
+End Class
