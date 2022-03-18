@@ -785,11 +785,11 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.vector_destructor.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.array_equal(assertion.catch_thrown(Of executor_stop_error) _
-                                                        (Sub()
-                                                             direct_cast(Of simulator)(e).access_heap(0)
-                                                         End Sub).error_types,
-                              {executor.error_type.heap_access_out_of_boundary})
+        assertion.equal(assertion.catch_thrown(Of executor_stop_error) _
+                                                  (Sub()
+                                                       direct_cast(Of simulator)(e).access_heap(0)
+                                                   End Sub).error_type,
+                        executor.error_type.heap_access_out_of_boundary)
     End Sub
 
     Private Sub New()

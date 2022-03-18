@@ -12,11 +12,8 @@ Namespace logic
     Public NotInheritable Class executor_stop_error_test
         <test>
         Private Shared Sub to_string()
-            assertions.of(New executor_stop_error(executor.error_type.instruction_ref_overflow,
-                                                  executor.error_type.interrupt_failure).
-                                                 ToString()).
-                       contains(executor.error_type.instruction_ref_overflow.ToString(),
-                                executor.error_type.interrupt_failure.ToString())
+            assertions.of(New executor_stop_error(executor.error_type.instruction_ref_overflow).ToString()).
+                       contains(executor.error_type.instruction_ref_overflow.ToString())
         End Sub
 
         Private Sub New()

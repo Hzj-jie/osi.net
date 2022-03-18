@@ -86,11 +86,11 @@ Namespace primitive
             End If
 
             assertion.equal(sim.access_as_uint32(data_ref.abs(0)), CUInt(100))
-            assertion.array_equal(assertion.catch_thrown(Of executor_stop_error) _
+            assertion.equal(assertion.catch_thrown(Of executor_stop_error) _
                                                         (Sub()
                                                              sim.access(data_ref.habs(1))
-                                                         End Sub).error_types,
-                                  {executor.error_type.heap_access_out_of_boundary})
+                                                         End Sub).error_type,
+                            executor.error_type.heap_access_out_of_boundary)
             Return True
         End Function
 

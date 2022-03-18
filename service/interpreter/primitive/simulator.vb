@@ -223,7 +223,7 @@ Namespace primitive
 
         Private Sub halt(ByVal ex As executor_stop_error)
             assert(Not ex Is Nothing)
-            _errors.emplace_back(ex.error_types)
+            _errors.emplace_back(ex.error_type)
             _halt = True
         End Sub
 
