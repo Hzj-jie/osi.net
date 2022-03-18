@@ -34,30 +34,39 @@ Partial Public Class scope(Of T As scope(Of T))
             End If
         End Sub
 
+        Private Function _can_reach_root(ByVal f As String, ByVal visited As unordered_set(Of String)) As Boolean
+            assert(Not f.null_or_whitespace())
+            assert(Not visited Is Nothing)
+            If f.Equals(main_name) Then
+                Return True
+            End If
+            If Not visited.emplace(f).second() Then
+                ' This function name has been detected before, no need to move forward.
+                Return False
+            End If
+            Dim it As unordered_map(Of String, Boolean).iterator = tm.find(f)
+            If it <> tm.end() Then
+                Return (+it).second
+            End If
+            Dim r As Boolean = False
+            Dim it2 As unordered_map(Of String, vector(Of String)).iterator = m.find(f)
+            If it2 <> m.end() Then
+                Dim v As vector(Of String) = (+it2).second
+                assert(Not v.null_or_empty())
+                For i As UInt32 = 0 To v.size() - uint32_1
+                    If _can_reach_root(v(i), visited) Then
+                        r = True
+                        Exit For
+                    End If
+                Next
+            End If
+            assert(tm.emplace(f, r).second())
+            Return r
+        End Function
+
         Default Public ReadOnly Property can_reach_root(ByVal f As String) As Boolean
             Get
-                assert(Not f.null_or_whitespace())
-                If f.Equals(main_name) Then
-                    Return True
-                End If
-                Dim it As unordered_map(Of String, Boolean).iterator = tm.find(f)
-                If it <> tm.end() Then
-                    Return (+it).second
-                End If
-                Dim r As Boolean = False
-                Dim it2 As unordered_map(Of String, vector(Of String)).iterator = m.find(f)
-                If it2 <> m.end() Then
-                    Dim v As vector(Of String) = (+it2).second
-                    assert(Not v.null_or_empty())
-                    For i As UInt32 = 0 To v.size() - uint32_1
-                        If can_reach_root(v(i)) Then
-                            r = True
-                            Exit For
-                        End If
-                    Next
-                End If
-                tm(f) = r
-                Return r
+                Return _can_reach_root(f, New unordered_set(Of String)())
             End Get
         End Property
 
