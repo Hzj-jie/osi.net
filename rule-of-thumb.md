@@ -44,4 +44,4 @@ Rule of Thumb
    with more meaningful name.
 
 1. Do not use namespace within a project, use class. Namespaces live in project
-   level only. (?)
+   level only. Unlike classes, namespaces have no visibility control.
