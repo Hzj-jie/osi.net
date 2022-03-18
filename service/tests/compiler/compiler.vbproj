@@ -72,6 +72,8 @@
     <Content Include="b2style\self-compile-error-test\copy-primitive-to-struct.txt" />
     <Content Include="b2style\self-compile-error-test\copy-struct-to-primitive.txt" />
     <Content Include="b2style\self-test\bool_array.txt" />
+    <Content Include="b2style\self-test\heap.txt" />
+    <Content Include="b2style\self-test\heap_ptr_test.txt" />
     <Content Include="b2style\self-test\mod_equals_to_1.txt" />
     <Content Include="b2style\self-test\ref_test.txt" />
     <Content Include="b2style\self-test\ref_value_clause.txt" />

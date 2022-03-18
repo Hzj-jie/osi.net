@@ -26,6 +26,9 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                 Return False
             End If
             Using wrapper(n)
+                If n.input_without_ignored().Equals("b2style::testing::assert_equal<string>") Then
+                    attach_debugger()
+                End If
                 If Not parser(s, o) Then
                     raise_error(error_type.user, "Failed to parse ", n)
                     Return False

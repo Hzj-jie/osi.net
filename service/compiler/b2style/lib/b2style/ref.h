@@ -1,6 +1,6 @@
 ﻿
-#ifndef B2STYLE_LIB_REF_H
-#define B2STYLE_LIB_REF_H
+#ifndef B2STYLE_LIB_B2STYLE_REF_H
+#define B2STYLE_LIB_B2STYLE_REF_H
 
 #include <b2style.h>
 #include <b2style/types.h>
@@ -65,4 +65,4 @@ class ref {
 
 }  // namespace b2style
 
-#endif  // B2STYLE_LIB_REF_H
+#endif  // B2STYLE_LIB_B2STYLE_REF_H

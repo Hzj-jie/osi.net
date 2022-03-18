@@ -60,6 +60,7 @@ Public Class lazy_list_writer
 
     Public Function append(ByVal w As lazy_list_writer) As Boolean
         assert(Not w Is Nothing)
+        assert(Not Object.ReferenceEquals(Me, w))
         Return append(AddressOf w.str)
     End Function
 
