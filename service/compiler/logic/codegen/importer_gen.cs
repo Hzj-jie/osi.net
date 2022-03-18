@@ -31,7 +31,7 @@ public static class Program {
     wl("Imports osi.root.formation");
     wl("Imports osi.service.interpreter.primitive");
     wl();
-    wl("Public Partial NotInheritable Class logic");
+    wl("Partial Public NotInheritable Class logic");
     wl("    Partial Public NotInheritable Class importer");
     List<string> keys = new List<string>();
     string s;
