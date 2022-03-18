@@ -23,5 +23,6 @@ void main() {
     b2style::testing::assert_equal<int>(s[i].x, i + 1);
     b2style::testing::assert_equal<string>(s[i].y, b2style::int_to_str(i + 2));
   }
+  dealloc(s);
   b2style::testing::finished();
 }

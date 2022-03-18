@@ -54,7 +54,7 @@ class heap_ptr {
   void set(int index, T v) {
     ::assert(index >= 0);
     ::assert(index < this.size());
-    this._a = v;
+    this._a[index] = v;
   }
 };
 

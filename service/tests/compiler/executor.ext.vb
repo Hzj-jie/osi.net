@@ -9,13 +9,12 @@ Imports osi.root.utt
 Imports osi.service.interpreter.primitive
 
 Public Module _executor_ext
-    ' TODO: Remove
     <MethodImpl(MethodImplOptions.NoInlining)>
     <Extension()> Public Function assert_execute_without_errors(ByVal this As executor) As Boolean
         Return assert_execute_without_errors(this, backtrace())
     End Function
 
-    <Extension()> Public Function assert_execute_without_errors(ByVal this As executor, ByVal msg As String) As Boolean
+    <Extension()> Public Function assert_execute_without_errors(ByVal this As executor, ByVal msg As Object) As Boolean
         If Not assertion.is_not_null(this, msg) Then
             Return False
         End If
