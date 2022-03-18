@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.service.automata
 
-Namespace rewriters
+Partial Public NotInheritable Class rewriters
     Public NotInheritable Class leaf
         Implements code_gen(Of typed_node_writer)
 
@@ -33,4 +33,4 @@ Namespace rewriters
             Return True
         End Function
     End Class
-End Namespace
+End Class
