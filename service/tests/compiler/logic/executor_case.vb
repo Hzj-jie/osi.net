@@ -46,8 +46,7 @@ Namespace logic
                 Return False
             End If
             e.execute()
-            assertion.is_false(e.halt())
-            assertion.is_true(e.errors().empty())
+            assertion.is_false(e.halt(), lazier.of(AddressOf e.halt_error))
             Try
                 check_result(not_null.[New](e))
             Catch ex As executor_stop_error

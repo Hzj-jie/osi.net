@@ -26,9 +26,7 @@ Namespace primitive
                 assertion.is_true(s.import(sim6.as_text()))
                 s.execute()
                 assertion.is_true(s.halt())
-                If assertion.equal(s.errors().size(), uint32_1) Then
-                    assertion.equal(s.errors()(uint32_0), executor.error_type.stack_access_out_of_boundary)
-                End If
+                assertion.equal(s.halt_error(), executor.error_type.stack_access_out_of_boundary)
                 Return True
             End Function
         End Class

@@ -28,8 +28,7 @@ Namespace primitive
             End If
             assertion.is_true(sim.import(s))
             sim.execute()
-            assertion.is_false(sim.halt())
-            assertion.is_true(sim.errors().empty())
+            assertion.is_false(sim.halt(), lazier.of(AddressOf sim.halt_error))
             Return True
         End Function
 

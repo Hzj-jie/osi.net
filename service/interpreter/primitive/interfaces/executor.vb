@@ -68,7 +68,7 @@ Namespace primitive
         Function states_size() As UInt64
 
         Function halt() As Boolean
-        Function errors() As vector(Of error_type)
+        Function halt_error() As error_type
 
         Sub execute()
     End Interface
