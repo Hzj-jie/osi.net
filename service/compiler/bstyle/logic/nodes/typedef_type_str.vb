@@ -9,7 +9,7 @@ Imports osi.service.automata
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class typedef_type_str
+    Private NotInheritable Class typedef_type_str
         Implements code_gen(Of logic_writer)
 
         Public Shared ReadOnly instance As New typedef_type_str()

@@ -7,8 +7,8 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
-    Public NotInheritable Class _address_of
+Partial Public NotInheritable Class logic
+    Private NotInheritable Class _address_of
         Implements instruction_gen
 
         Private ReadOnly target As String
@@ -39,4 +39,4 @@ Namespace logic
             Return True
         End Function
     End Class
-End Namespace
+End Class

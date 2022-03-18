@@ -7,9 +7,9 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     ' do { do() } until(var)
-    Public NotInheritable Class _do_until
+    Private NotInheritable Class _do_until
         Implements instruction_gen
 
         Private ReadOnly v As String
@@ -41,4 +41,4 @@ Namespace logic
             Return True
         End Function
     End Class
-End Namespace
+End Class

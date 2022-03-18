@@ -7,7 +7,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class ifndef_wrapped
+    Private NotInheritable Class ifndef_wrapped
         Inherits ifndef_wrapped(Of logic_writer)
 
         <inject_constructor>
@@ -18,7 +18,7 @@ Partial Public NotInheritable Class bstyle
         End Sub
     End Class
 
-    Public NotInheritable Class define
+    Private NotInheritable Class define
         Inherits define(Of logic_writer)
 
         Public Shared ReadOnly instance As New define()

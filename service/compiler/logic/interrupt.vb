@@ -7,7 +7,8 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
+    ' VisibleForTesting
     Public NotInheritable Class _interrupt
         Implements instruction_gen
 
@@ -51,4 +52,4 @@ Namespace logic
             Return True
         End Function
     End Class
-End Namespace
+End Class

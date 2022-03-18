@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.service.constructor
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Partial Public NotInheritable Class scope
         Inherits scope(Of scope)
 
@@ -46,4 +46,4 @@ Namespace logic
             Return (+root).functions()
         End Function
     End Class
-End Namespace
+End Class

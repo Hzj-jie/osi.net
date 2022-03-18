@@ -12,6 +12,7 @@ Imports osi.service.interpreter.primitive
 Imports _sizeof = osi.service.compiler.logic._sizeof
 
 Namespace logic
+    ' TODO: Avoid using constructors directly.
     Public NotInheritable Class interrupt_test
         Inherits executor_case
 

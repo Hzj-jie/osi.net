@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Partial Public NotInheritable Class builders
         Public Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("compiler", "debug", "dump"))
 
@@ -171,4 +171,4 @@ Namespace logic
         Private Sub New()
         End Sub
     End Class
-End Namespace
+End Class

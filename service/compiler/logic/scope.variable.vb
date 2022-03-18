@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Partial Public NotInheritable Class scope
         Public Class typed_ref
             Public ReadOnly type As String
@@ -174,4 +174,4 @@ Namespace logic
             Return New variable_proxy(Me)
         End Function
     End Class
-End Namespace
+End Class

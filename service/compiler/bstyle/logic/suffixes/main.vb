@@ -10,7 +10,7 @@ Imports statement = osi.service.compiler.statement(Of osi.service.compiler.logic
 Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.logic_writer)
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class main
+    Private NotInheritable Class main
         Implements statement
 
         Public Shared Sub register(ByVal p As statements)

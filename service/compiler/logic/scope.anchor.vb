@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Partial Public NotInheritable Class scope
         Public NotInheritable Class anchor
             Inherits function_signature
@@ -66,4 +66,4 @@ Namespace logic
             Return (+root).anchors()
         End Function
     End Class
-End Namespace
+End Class

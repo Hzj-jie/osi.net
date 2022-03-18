@@ -11,7 +11,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class _function
+    Private NotInheritable Class _function
         Implements code_gen(Of logic_writer)
 
         Private Shared remove_unused_functions As argument(Of Boolean)
