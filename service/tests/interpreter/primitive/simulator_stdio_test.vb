@@ -6,6 +6,7 @@ Option Strict On
 Imports System.IO
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.interpreter.primitive
 Imports osi.service.resource
@@ -15,18 +16,15 @@ Namespace primitive
         Inherits [case]
 
         Private Shared Function output_case() As Boolean
-            Dim s As simulator = Nothing
-            Dim io As console_io = Nothing
-            io = New console_io()
-            s = New simulator(New interrupts(io))
+            Dim io As New console_io()
+            Dim s As New simulator(New interrupts(io))
             assertion.is_true(s.import(sim3.as_text()))
             Using out As TextWriter = New StringWriter(),
                   err As TextWriter = New StringWriter()
                 io.redirect_output(out)
                 io.redirect_error(err)
                 s.execute()
-                assertion.is_false(s.halt())
-                assertion.is_true(s.errors().empty())
+                assertion.is_false(s.halt(), lazier.of(AddressOf s.halt_error))
                 assertion.equal(Convert.ToString(out),
                              "hello world" + character.newline + "hello world" + character.newline)
                 assertion.equal(Convert.ToString(err),
@@ -47,8 +45,7 @@ Namespace primitive
                 io.redirect_output(out)
                 io.redirect_error(err)
                 s.execute()
-                assertion.is_false(s.halt())
-                assertion.is_true(s.errors().empty())
+                assertion.is_false(s.halt(), lazier.of(AddressOf s.halt_error))
                 assertion.equal(Convert.ToString(out), strcat(input, input))
                 assertion.equal(Convert.ToString(err), strcat(input, input))
             End Using
@@ -60,8 +57,7 @@ Namespace primitive
             Dim s As New simulator(New interrupts(+io))
             assertion.is_true(s.import(sim8.as_text()))
             s.execute()
-            assertion.is_false(s.halt())
-            assertion.is_true(s.errors().empty())
+            assertion.is_false(s.halt(), lazier.of(AddressOf s.halt_error))
             assertion.equal(io.output().Length(), 4)
             assertion.equal(Convert.ToInt32(io.output()(0)), 1)
             assertion.equal(Convert.ToInt32(io.output()(1)), 2)

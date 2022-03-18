@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
+Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.interpreter.primitive
 
@@ -13,6 +14,6 @@ Public Module _executor_ext
             Return False
         End If
         this.execute()
-        Return assertion.is_false(this.halt()) And assertions.of(this.errors()).empty()
+        Return assertion.is_false(this.halt(), lazier.of(AddressOf this.halt_error))
     End Function
 End Module

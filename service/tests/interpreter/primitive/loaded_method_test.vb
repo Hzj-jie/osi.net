@@ -77,10 +77,10 @@ Namespace primitive
             l.load(str_bytes(strcat("osi.tests.service.interpreter.primitive.loaded_method_test, ",
                                     "osi.tests.service.interpreter",
                                     ":thrown_action")))
-            assertion.array_equal(assertion.catch_thrown(Of executor_stop_error)(Sub()
-                                                                                     l.execute(str_bytes("abc"))
-                                                                                 End Sub).error_types,
-                                  {executor.error_type.interrupt_failure})
+            assertion.equal(assertion.catch_thrown(Of executor_stop_error)(Sub()
+                                                                               l.execute(str_bytes("abc"))
+                                                                           End Sub).error_type,
+                            executor.error_type.interrupt_failure)
         End Sub
 
         Private Shared Sub unsatisfied_signature_1(ByVal i() As Byte)

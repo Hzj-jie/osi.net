@@ -108,8 +108,7 @@ Namespace logic
                     Return False
                 End If
                 e.execute()
-                assertion.is_false(e.halt())
-                assertion.equal(e.errors().size(), uint32_0)
+                assertion.is_false(e.halt(), lazier.of(AddressOf e.halt_error))
                 For j As UInt32 = 0 To array_size(cases(CInt(i)).second) - uint32_1
                     Dim x() As Byte = Nothing
                     Try

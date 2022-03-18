@@ -14,9 +14,9 @@ Namespace primitive
     Public NotInheritable Class simulator
         Implements imitation
 
-        Private Shared ReadOnly bit_count_in_uint32 As Int32 = CInt(root.constants.bit_count_in_byte * sizeof_uint32)
+        Private Shared ReadOnly bit_count_in_uint32 As Int32 = CInt(bit_count_in_byte * sizeof_uint32)
 
-        Private ReadOnly _errors As New vector(Of executor.error_type)()
+        Private ReadOnly _error As New ref(Of executor.error_type)()
         Private ReadOnly _instructions As New vector(Of instruction)()
         Private ReadOnly _stack As New vector(Of ref(Of Byte()))()
         Private ReadOnly _states As New vector(Of executor.state)()
@@ -64,8 +64,9 @@ Namespace primitive
             _imaginary_number = v
         End Sub
 
-        Public Function errors() As vector(Of executor.error_type) Implements executor.errors
-            Return _errors
+        Public Function halt_error() As executor.error_type Implements executor.halt_error
+            assert(Not _error.empty())
+            Return _error.get()
         End Function
 
         Public Function halt() As Boolean Implements executor.halt
@@ -223,7 +224,7 @@ Namespace primitive
 
         Private Sub halt(ByVal ex As executor_stop_error)
             assert(Not ex Is Nothing)
-            _errors.emplace_back(ex.error_types)
+            _error.set(ex.error_type)
             _halt = True
         End Sub
 

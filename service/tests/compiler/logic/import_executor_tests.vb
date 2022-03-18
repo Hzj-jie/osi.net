@@ -129,11 +129,11 @@ Namespace logic
         Protected Overrides Sub check_result(ByVal e As not_null(Of simulator))
             MyBase.check_result(e)
             assertion.equal(io.output(), Convert.ToChar(99))
-            assertion.array_equal(assertion.catch_thrown(Of executor_stop_error) _
+            assertion.equal(assertion.catch_thrown(Of executor_stop_error) _
                                                         (Sub()
                                                              e.get().access_heap(0)
-                                                         End Sub).error_types,
-                                  {executor.error_type.heap_access_out_of_boundary})
+                                                         End Sub).error_type,
+                            executor.error_type.heap_access_out_of_boundary)
         End Sub
     End Class
 

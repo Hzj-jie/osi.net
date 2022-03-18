@@ -4,40 +4,31 @@ Option Infer Off
 Option Strict On
 
 Imports System.Runtime.CompilerServices
-Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.service.math
 
 Namespace primitive
     Public NotInheritable Class executor_stop_error
         Inherits Exception
 
-        Public ReadOnly error_types() As executor.error_type
+        Public ReadOnly error_type As executor.error_type
 
-        Public Sub New(ByVal ParamArray error_types() As executor.error_type)
-            Me.error_types = error_types
-        End Sub
-
-        Public Shared Sub [throw](ByVal ParamArray error_types() As executor.error_type)
-            Throw New executor_stop_error(error_types)
+        Public Sub New(ByVal error_type As executor.error_type)
+            Me.error_type = error_type
         End Sub
 
         Public Shared Sub [throw](ByVal error_type As executor.error_type)
-            [throw]({error_type})
+            Throw New executor_stop_error(error_type)
         End Sub
 
         Public Shared Sub [throw](ByVal error_type As executor.error_type, ByVal ParamArray log_msg() As Object)
             raise_error(root.constants.error_type.user, log_msg)
-            [throw]({error_type})
+            [throw](error_type)
         End Sub
 
         Public Overrides Function ToString() As String
-            Return streams.of(error_types).
-                           collect(stream(Of executor.error_type).collectors.to_str(),
-                                   New StringBuilder("executor_stop_error: ")).
-                           ToString()
+            Return "executor_stop_error: " + error_type.ToString()
         End Function
     End Class
 
@@ -77,7 +68,7 @@ Namespace primitive
         Function states_size() As UInt64
 
         Function halt() As Boolean
-        Function errors() As vector(Of error_type)
+        Function halt_error() As error_type
 
         Sub execute()
     End Interface
