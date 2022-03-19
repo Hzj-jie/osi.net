@@ -2,6 +2,11 @@
 #include <b2style.h>
 #include <testing.h>
 
+struct S {
+  int x;
+  string y;
+};
+
 template <T>
 class ref {
   T _a;
@@ -31,11 +36,6 @@ class ref {
   void construct(ref<T>& other) {
     this.construct(other.release());
   }
-};
-
-struct S {
-  int x;
-  string y;
 };
 
 void main() {
