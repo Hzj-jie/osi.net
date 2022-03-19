@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.formation
 
 Public Module _queue
     <Extension()> Public Function null_or_empty(Of T)(ByVal this As queue(Of T)) As Boolean
@@ -26,46 +27,64 @@ Public Module _queue
     End Function
 End Module
 
-Public Class queue(Of T)
-    Implements ICloneable
+Public NotInheritable Class queue(Of T)
+    Implements ICloneable, ICloneable(Of queue(Of T))
 
-    Private ReadOnly data As list(Of T)
+    Private ReadOnly d As list(Of T)
+
+    Private Sub New(ByVal that As list(Of T))
+        assert(Not that Is Nothing)
+        d = that.CloneT()
+    End Sub
+
+    <copy_constructor>
+    Public Sub New(ByVal that As queue(Of T))
+        Me.New(assert_which.of(that).is_not_null().d)
+    End Sub
+
+    Public Sub New()
+        d = New list(Of T)()
+    End Sub
 
     Public Sub clear()
-        data.clear()
+        d.clear()
     End Sub
 
     Public Function empty() As Boolean
-        Return data.empty()
+        Return d.empty()
     End Function
 
     Public Function size() As UInt32
-        Return data.size()
+        Return d.size()
     End Function
 
     Public Function front() As T
-        Return data.front()
+        Return d.front()
     End Function
 
     Public Function back() As T
-        Return data.back()
+        Return d.back()
     End Function
 
-    Public Function push(ByVal dataNew As T) As Boolean
-        Return data.push_back(dataNew)
+    Public Function push(ByVal v As T) As Boolean
+        Return d.push_back(v)
     End Function
 
     Public Function pop() As Boolean
-        Return data.pop_front()
+        Return d.pop_front()
     End Function
 
-    Public Overridable Function Clone() As Object Implements ICloneable.Clone
-        Return New queue(Of T)(data)
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
+    End Function
+
+    Public Function CloneT() As queue(Of T) Implements ICloneable(Of queue(Of T)).Clone
+        Return New queue(Of T)(d)
     End Function
 
     'in fact, there should be no such function, but it's here, so leave them
     Public Function [erase](ByVal start As UInt32, ByVal [end] As UInt32) As Boolean
-        While start < [end] AndAlso data.erase(start) <> data.end()
+        While start < [end] AndAlso d.erase(start) <> d.end()
             start += uint32_1
         End While
 
@@ -75,16 +94,4 @@ Public Class queue(Of T)
     Public Function [erase](ByVal start As UInt32) As Boolean
         Return [erase](start, start + uint32_1)
     End Function
-
-    Public Sub New(ByVal that As queue(Of T))
-        copy(data, that.data)
-    End Sub
-
-    Public Sub New(ByVal that As list(Of T))
-        copy(data, that)
-    End Sub
-
-    Public Sub New()
-        data = New list(Of T)()
-    End Sub
 End Class

@@ -5,59 +5,70 @@ Option Strict On
 
 Imports osi.root.connector
 
-Public NotInheritable Class unique_queue(Of T As IComparable(Of T))
-    Implements ICloneable
+Public NotInheritable Class unique_queue(Of T)
+    Implements ICloneable, ICloneable(Of unique_queue(Of T))
 
-    Private queue As queue(Of T) = Nothing
-    Private [set] As [set](Of T) = Nothing
+    Private ReadOnly q As queue(Of T)
+    Private ReadOnly s As [set](Of T)
+
+    Private Sub New(ByVal q As queue(Of T), ByVal s As [set](Of T))
+        assert(Not q Is Nothing)
+        assert(Not s Is Nothing)
+        Me.q = q.CloneT()
+        Me.s = s.CloneT()
+    End Sub
+
+    Public Sub New()
+        q = New queue(Of T)()
+        s = New [set](Of T)()
+    End Sub
+
+    <copy_constructor>
+    Public Sub New(ByVal other As unique_queue(Of T))
+        Me.New(assert_which.of(other).is_not_null().q, other.s)
+    End Sub
 
     Public Sub clear()
-        queue.clear()
-        [set].clear()
+        q.clear()
+        s.clear()
     End Sub
 
     Public Function size() As Int64
-        assert(queue.size() = [set].size(), "queue does not coincide with set.")
-        Return queue.size()
+        assert(q.size() = s.size(), "queue does not coincide with set.")
+        Return q.size()
     End Function
 
     Public Function empty() As Boolean
-        assert(queue.empty() = [set].empty(), "queue does not coincide with set.")
-        Return queue.empty()
+        assert(q.empty() = s.empty(), "queue does not coincide with set.")
+        Return q.empty()
     End Function
 
     Public Sub push(ByVal v As T)
-        If [set].find(v) = [set].end() Then
-            queue.push(v)
-            [set].insert(v)
+        If s.find(v) = s.end() Then
+            q.push(v)
+            s.insert(v)
         End If
     End Sub
 
     Public Sub pop()
-        Dim v As T = queue.front()
-        queue.pop()
-        assert([set].erase(v), "queue does not coincide with set.")
+        Dim v As T = q.front()
+        q.pop()
+        assert(s.erase(v), "queue does not coincide with set.")
     End Sub
 
     Public Function front() As T
-        Return queue.front()
+        Return q.front()
     End Function
 
     Public Function back() As T
-        Return queue.back()
+        Return q.back()
     End Function
 
-    Public Sub New()
-        queue = New queue(Of T)()
-        [set] = New [set](Of T)()
-    End Sub
-
     Public Function Clone() As Object Implements System.ICloneable.Clone
-        Dim that As unique_queue(Of T) = Nothing
-        that = New unique_queue(Of T)()
-        copy(that.queue, queue)
-        copy(that.set, [set])
+        Return CloneT()
+    End Function
 
-        Return that
+    Public Function CloneT() As unique_queue(Of T) Implements ICloneable(Of unique_queue(Of T)).Clone
+        Return New unique_queue(Of T)(q, s)
     End Function
 End Class
