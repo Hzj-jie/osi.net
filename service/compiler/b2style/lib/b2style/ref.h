@@ -3,29 +3,26 @@
 #define B2STYLE_LIB_B2STYLE_REF_H
 
 #include <b2style.h>
-#include <b2style/types.h>
+#include <b2style/heap_ptr.h>
 #include <assert.h>
-#include <bstyle/heap.h>
 
 namespace b2style {
 
 template <T>
 class ref {
-  ::bstyle::heap_ptr _a;
+  heap_ptr<T> _a;
 
   void destruct() {
-    dealloc(this._a);
+    this._a.destruct();
   }
 
   bool empty() {
-    return this._a == ::bstyle::npos();
+    return this._a.empty();
   }
 
   void set(T v) {
-    this.destruct();
-    ::bstyle::alloc(this._a, 1);
-    reinterpret_cast(this._a, T);
-    this._a[0] = v;
+    if (this.empty()) this._a.alloc(1);
+    this._a.set(0, v);
   }
 
   void alloc() {
@@ -35,27 +32,21 @@ class ref {
 
   T get() {
     ::assert(!this.empty());
-    reinterpret_cast(this._a, T);
-    return this._a[0];
+    return this._a.get(0);
   }
 
-  ::bstyle::heap_ptr release() {
-    ::bstyle::heap_ptr r = this._a;
-    this._a = ::bstyle::npos();
+  T release() {
+    ::assert(!this.empty());
+    T r = this.get();
+	this.destruct();
     return r;
   }
 
-  void construct() {
-    this._a = ::bstyle::npos();
-  }
+  void construct() {}
 
   void construct(T v) {
     this.construct();
     this.set(v);
-  }
-
-  void construct(::bstyle::heap_ptr p) {
-    this._a = p;
   }
 
   void construct(ref<T>& other) {

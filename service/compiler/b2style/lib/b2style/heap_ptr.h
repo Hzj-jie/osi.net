@@ -56,6 +56,10 @@ class heap_ptr {
     ::assert(index < this.size());
     this._a[index] = v;
   }
+
+  void release() {
+    this.construct();
+  }
 };
 
 }  // namespace b2style
