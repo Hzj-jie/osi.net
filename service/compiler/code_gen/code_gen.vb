@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
@@ -73,10 +74,12 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             Me.n = n
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function build(ByVal o As WRITER) As Boolean
             Return b.build(n, o)
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function build() As Boolean
             Return build(Nothing)
         End Function
@@ -91,6 +94,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             Return True
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function dump() As String
             Dim r As String = Nothing
             assert(dump(r))
@@ -134,6 +138,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             Return True
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function dump() As vector(Of String)
             Dim r As vector(Of String) = Nothing
             assert(dump(r))
