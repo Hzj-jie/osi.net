@@ -25,7 +25,7 @@ class vector {
   T get(int index) {
     ::assert(index >= 0, "get");
     ::assert(index < this.size(), "get");
-    return this._a.get(index); 
+    return this._a.get(index);
   }
 
   void set(int index, T v) {
