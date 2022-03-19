@@ -36,7 +36,6 @@ class ref {
   }
 
   T release() {
-    ::assert(!this.empty());
     T r = this.get();
 	this.destruct();
     return r;
