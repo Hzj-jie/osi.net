@@ -20,6 +20,6 @@ Public Module _executor_ext
             Return False
         End If
         this.execute()
-        Return assertion.is_false(this.halt(), lazier.of(AddressOf this.halt_error), msg)
+        Return assertion.is_false(this.halt(), lazier.of(AddressOf this.halt_error), ": ", msg)
     End Function
 End Module
