@@ -1,0 +1,18 @@
+﻿
+#include <b2style.h>
+#include <testing.h>
+
+void f(int x) {
+  x++;
+}
+
+void f() {}
+
+int g() {
+  return 100;
+}
+
+void main() {
+  f(g());
+  b2style::testing::finished();
+}
