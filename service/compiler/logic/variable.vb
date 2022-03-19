@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class variable
         Public ReadOnly name As String
         ' This field is not necessary, the "name" is a calculated stack variable to represent the heap location.
@@ -196,4 +196,4 @@ Namespace logic
             Return d.ToString()
         End Function
     End Class
-End Namespace
+End Class

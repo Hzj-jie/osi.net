@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.interpreter.primitive
 
@@ -19,6 +20,6 @@ Public Module _executor_ext
             Return False
         End If
         this.execute()
-        Return assertion.is_false(this.halt(), msg) And assertions.of(this.errors()).empty(msg)
+        Return assertion.is_false(this.halt(), lazier.of(AddressOf this.halt_error), msg)
     End Function
 End Module

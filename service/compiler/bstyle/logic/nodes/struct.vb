@@ -11,6 +11,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
+    ' TODO: Avoid publicizing struct to b2style.
     Public NotInheritable Class struct
         Implements code_gen(Of logic_writer)
 

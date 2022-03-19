@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class read_scoped(Of T)
         Private ReadOnly s As New stack(Of T)()
         Private pending_dispose As UInt32 = 0
@@ -84,4 +84,4 @@ Namespace logic
             Return s.size()
         End Function
     End Class
-End Namespace
+End Class

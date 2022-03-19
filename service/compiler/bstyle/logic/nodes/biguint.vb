@@ -12,7 +12,7 @@ Imports osi.service.interpreter.primitive
 Imports osi.service.math
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class biguint
+    Private NotInheritable Class biguint
         Implements code_gen(Of logic_writer)
 
         Private ReadOnly l As code_gens(Of logic_writer)

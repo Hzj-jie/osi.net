@@ -9,7 +9,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class _function
+    Private NotInheritable Class _function
         Implements code_gen(Of typed_node_writer)
 
         Private ReadOnly l As code_gens(Of typed_node_writer)

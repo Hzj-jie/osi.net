@@ -9,7 +9,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class heap_struct_function_call
+    Private NotInheritable Class heap_struct_function_call
         Implements code_gen(Of typed_node_writer)
 
         Private ReadOnly l As code_gens(Of typed_node_writer)

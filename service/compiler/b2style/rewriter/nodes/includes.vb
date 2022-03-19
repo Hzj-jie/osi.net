@@ -63,7 +63,7 @@ Partial Public NotInheritable Class b2style
     End Class
 
     ' TODO: Consider to include bstyle headers into b2style.
-    Public NotInheritable Class include_with_string
+    Private NotInheritable Class include_with_string
         Inherits code_gens(Of typed_node_writer).include_with_string(Of parser,
                                                                         default_includes.folders,
                                                                         default_includes.ignore_default_folder,
@@ -84,7 +84,7 @@ Partial Public NotInheritable Class b2style
         End Function
     End Class
 
-    Public NotInheritable Class include_with_file
+    Private NotInheritable Class include_with_file
         Inherits code_gens(Of typed_node_writer).include_with_file(Of parser,
                                                                       default_includes.folders,
                                                                       default_includes.ignore_default_folder,

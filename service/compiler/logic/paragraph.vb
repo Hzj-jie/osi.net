@@ -7,7 +7,7 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class paragraph
         Implements instruction_gen
 
@@ -45,4 +45,4 @@ Namespace logic
             Return True
         End Function
     End Class
-End Namespace
+End Class

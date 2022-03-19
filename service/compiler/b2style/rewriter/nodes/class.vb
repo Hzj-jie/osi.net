@@ -12,7 +12,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class _class
+    Private NotInheritable Class _class
         Inherits code_gens(Of typed_node_writer).reparser(Of b2style.parser)
         Implements code_gen(Of typed_node_writer)
 

@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Partial Public NotInheritable Class importer
         Private Const comment_start As String = "##"
         Private Const comment_end As String = character.newline
@@ -90,4 +90,4 @@ Namespace logic
             Return o
         End Function
     End Class
-End Namespace
+End Class

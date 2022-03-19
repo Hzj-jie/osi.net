@@ -7,8 +7,8 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
-    Public NotInheritable Class _dealloc_heap
+Partial Public NotInheritable Class logic
+    Private NotInheritable Class _dealloc_heap
         Inherits stack_var_operator
 
         Public Sub New(ByVal name As String)
@@ -22,4 +22,4 @@ Namespace logic
             Return True
         End Function
     End Class
-End Namespace
+End Class
