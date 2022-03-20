@@ -53,10 +53,9 @@ Partial Public Class scope(Of T As scope(Of T))
                         assert(tm.emplace(f, True).second())
                         Return True
                     End If
-                    If Not r Then
-                        Continue For
+                    If r Then
+                        q.emplace(fs(i))
                     End If
-                    q.emplace(fs(i))
                 Next
             End While
             Return False
