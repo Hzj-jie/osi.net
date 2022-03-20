@@ -69,6 +69,8 @@
     <Content Include="b2style\codegen\class-constructor.txt" />
     <Content Include="b2style\codegen\delegate.txt" />
     <Content Include="b2style\codegen\vector_destructor.txt" />
+    <Content Include="b2style\self-compile-error-test\empty_template_paramtypelist.txt" />
+    <Content Include="b2style\self-compile-error-test\empty_template_type_param_list.txt" />
     <Content Include="b2style\self-compile-error-test\copy-primitive-to-struct.txt" />
     <Content Include="b2style\self-compile-error-test\copy-struct-to-primitive.txt" />
     <Content Include="b2style\self-test\bool_array.txt" />
@@ -162,6 +164,7 @@
     <Content Include="b2style\self-test\struct_member_type_with_namespace.txt" />
     <Content Include="b2style\self-test\template-in-namespace.txt" />
     <Content Include="b2style\self-test\template-override.txt" />
+    <Content Include="b2style\self-test\template_before_type.txt" />
     <Content Include="b2style\self-test\template_class_with_ref.txt" />
     <Content Include="b2style\self-test\two-closing-angle-brackets.txt" />
     <Content Include="b2style\self-test\unmanaged_heap.txt" />

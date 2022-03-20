@@ -95,9 +95,9 @@ Partial Public NotInheritable Class b2style
                            with(Of paramtype_with_comma)().
                            with(Of class_initializer)().
                            with(code_gen.of_ignore(Of typed_node_writer)("colon")).
+                           with(Of root_type)().
                            with_of_only_childs(
                                "base-root-type",
-                               "root-type",
                                "paragraph",
                                "sentence-with-semi-colon",
                                "ignore-result-function-call",
