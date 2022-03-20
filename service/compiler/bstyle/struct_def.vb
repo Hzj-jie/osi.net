@@ -33,7 +33,9 @@ Partial Public NotInheritable Class bstyle
                foreach(Sub(ByVal p As builders.parameter)
                            assert(Not p Is Nothing)
                            assert(Not p.ref)
-                           assert(Not scope.current().structs().defined(p.type))
+                           ' The definition of the struct should only rely on the scope it's defined, but not the
+                           ' current one.
+                           ' assert(Not scope.current().structs().defined(p.type))
                        End Sub)
         End Sub
 
