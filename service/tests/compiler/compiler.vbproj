@@ -72,6 +72,8 @@
     <Content Include="b2style\self-compile-error-test\copy-primitive-to-struct.txt" />
     <Content Include="b2style\self-compile-error-test\copy-struct-to-primitive.txt" />
     <Content Include="b2style\self-test\bool_array.txt" />
+    <Content Include="b2style\self-test\heap.txt" />
+    <Content Include="b2style\self-test\heap_ptr_test.txt" />
     <Content Include="b2style\self-test\mod_equals_to_1.txt" />
     <Content Include="b2style\self-test\ref_test.txt" />
     <Content Include="b2style\self-test\ref_value_clause.txt" />
@@ -156,6 +158,7 @@
     <Content Include="b2style\self-test\function-template.txt" />
     <Content Include="b2style\self-test\more-closing-angle-brackets.txt" />
     <Content Include="b2style\self-test\self-health.txt" />
+    <Content Include="b2style\self-compile-error-test\struct-with-myself.txt" />
     <Content Include="b2style\self-test\struct_member_type_with_namespace.txt" />
     <Content Include="b2style\self-test\template-in-namespace.txt" />
     <Content Include="b2style\self-test\template-override.txt" />

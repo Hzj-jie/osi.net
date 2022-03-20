@@ -35,8 +35,8 @@ Partial Public NotInheritable Class b2style
             ' But add another one to avoid potential risk.
             If Not (o.append(_namespace.bstyle_format.in_global_namespace("construct")) AndAlso
                     o.append("(") AndAlso
-                    o.append(n.child(1)) AndAlso
-                    If(n.child_count() = 5, o.append(",") AndAlso o.append(n.child(3)), True) AndAlso
+                    o.append(_namespace.bstyle_format.of(n.child(1))) AndAlso
+                    If(n.child_count() = 5, o.append(",") AndAlso l.of(n.child(3)).build(o), True) AndAlso
                     o.append(");")) Then
                 Return False
             End If
@@ -44,7 +44,7 @@ Partial Public NotInheritable Class b2style
                 Sub()
                     assert(o.append(_namespace.bstyle_format.in_global_namespace("destruct")) AndAlso
                            o.append("(") AndAlso
-                           o.append(n.child(1)) AndAlso
+                           o.append(_namespace.bstyle_format.of(n.child(1))) AndAlso
                            o.append(");"))
                 End Sub)
             scope.current().call_hierarchy().to(_namespace.with_global_namespace("construct"))

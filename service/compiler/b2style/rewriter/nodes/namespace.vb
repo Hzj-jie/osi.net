@@ -52,6 +52,11 @@ Partial Public NotInheritable Class b2style
                                ToString()
             End Function
 
+            Public Shared Function [of](ByVal n As typed_node) As String
+                assert(Not n Is Nothing)
+                Return [of](n.input_without_ignored())
+            End Function
+
             ' TODO: The use case of this function is not valid, may consider to remove it.
             Public Shared Function with_namespace(ByVal ns As String, ByVal i As String) As String
                 Return [of](_namespace.with_namespace(ns, i))

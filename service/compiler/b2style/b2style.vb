@@ -120,6 +120,8 @@ Partial Public NotInheritable Class b2style
                                "kw-break",
                                "kw-logic",
                                "kw-reinterpret-cast",
+                               "kw-undefine",
+                               "kw-dealloc",
                                "start-square-bracket",
                                "end-square-bracket",
                                "bool",
@@ -170,7 +172,9 @@ Partial Public NotInheritable Class b2style
                                "delegate",
                                "paramtypelist",
                                "paramtype",
-                               "struct-body").
+                               "struct-body",
+                               "undefine",
+                               "dealloc").
                            with_of_names(
                                "add",
                                "minus",
