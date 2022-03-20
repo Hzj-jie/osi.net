@@ -8,7 +8,7 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class logic
     ' Shared between callee, caller and return.
-    Public NotInheritable Class return_value
+    Private NotInheritable Class return_value
         Public Shared Function define(ByVal name As String, ByVal type As String) As Boolean
             Return scope.current().variables().define(variable_name(name), type)
         End Function

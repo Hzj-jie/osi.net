@@ -13,6 +13,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
+    ' VisibleForTesting
     Public NotInheritable Class template_template
         Private Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("template", "template", "dump"))
         Private ReadOnly w As New template_writer()
