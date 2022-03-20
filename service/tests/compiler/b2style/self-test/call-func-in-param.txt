@@ -2,50 +2,17 @@
 #include <b2style.h>
 #include <testing.h>
 
-template <T>
-class ref {
-  T _a;
+void f(int x) {}
 
-  void set(T v) {
-    this._a = v;
-  }
+void g() {
+  f(1);
+}
 
-  T get() {
-    return this._a;
-  }
-
-  T release() {
-    T r = this.get();
-	T x;
-	this.set(x);
-    return r;
-  }
-
-  void construct() {}
-
-  void construct(T v) {
-    this.construct();
-    this.set(v);
-  }
-
-  void construct(ref<T>& other) {
-    this.construct(other.release());
-  }
-};
-
-struct S {
-  int x;
-  string y;
-};
+void f() {
+  g();
+}
 
 void main() {
-  ref<S> s1();
-  s1._a.x = 1;
-  s1._a.y = "abc";
-  ref<S> s2(s1);
-  b2style::testing::assert_equal<int>(s1._a.x, 0);
-  b2style::testing::assert_equal<string>(s1._a.y, "");
-  b2style::testing::assert_equal<int>(s2._a.x, 1);
-  b2style::testing::assert_equal<string>(s2._a.y, "abc");
+  f();
   b2style::testing::finished();
 }

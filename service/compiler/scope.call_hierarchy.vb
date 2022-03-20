@@ -34,39 +34,45 @@ Partial Public Class scope(Of T As scope(Of T))
             End If
         End Sub
 
-        Private Function _can_reach_root(ByVal f As String, ByVal visited As unordered_set(Of String)) As Boolean
-            assert(Not f.null_or_whitespace())
-            assert(Not visited Is Nothing)
-            If f.Equals(main_name) Then
-                Return True
-            End If
-            If Not visited.emplace(f).second() Then
-                ' This function name has been detected before, no need to move forward.
-                Return False
-            End If
-            Dim it As unordered_map(Of String, Boolean).iterator = tm.find(f)
-            If it <> tm.end() Then
-                Return (+it).second
-            End If
-            Dim r As Boolean = False
-            Dim it2 As unordered_map(Of String, vector(Of String)).iterator = m.find(f)
-            If it2 <> m.end() Then
-                Dim v As vector(Of String) = (+it2).second
-                assert(Not v.null_or_empty())
-                For i As UInt32 = 0 To v.size() - uint32_1
-                    If _can_reach_root(v(i), visited) Then
-                        r = True
-                        Exit For
+        Private Function _can_reach_root(ByVal f As String) As Boolean
+            Dim q As New queue(Of String)()
+            Dim v As New unordered_set(Of String)()
+            q.emplace(f)
+            assert(v.emplace(f).second())
+            While q.pop(f)
+                Dim it As unordered_map(Of String, vector(Of String)).iterator = m.find(f)
+                If it = m.end() Then
+                    Continue While
+                End If
+                Dim fs As vector(Of String) = (+it).second
+                assert(Not fs.null_or_empty())
+                For i As UInt32 = 0 To fs.size() - uint32_1
+                    Dim r As Boolean = True
+                    If fs(i).Equals(main_name) OrElse
+                       (tm.find(fs(i), r) AndAlso r) Then
+                        assert(tm.emplace(f, True).second())
+                        Return True
                     End If
+                    If Not r Then
+                        Continue For
+                    End If
+                    q.emplace(fs(i))
                 Next
-            End If
-            assert(tm.emplace(f, r).second())
-            Return r
+            End While
+            Return False
         End Function
 
         Default Public ReadOnly Property can_reach_root(ByVal f As String) As Boolean
             Get
-                Return _can_reach_root(f, New unordered_set(Of String)())
+                assert(Not f.null_or_whitespace())
+                If f.Equals(main_name) Then
+                    Return True
+                End If
+                Dim it As unordered_map(Of String, Boolean).iterator = tm.find(f)
+                If it <> tm.end() Then
+                    Return (+it).second
+                End If
+                Return _can_reach_root(f)
             End Get
         End Property
 
