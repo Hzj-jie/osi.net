@@ -70,8 +70,20 @@ Public NotInheritable Class queue(Of T)
         Return d.push_back(v)
     End Function
 
+    Public Function emplace(ByVal v As T) As Boolean
+        Return d.emplace_back(v)
+    End Function
+
     Public Function pop() As Boolean
         Return d.pop_front()
+    End Function
+
+    Public Function pop(ByRef v As T) As Boolean
+        If empty() Then
+            Return False
+        End If
+        v = d.front()
+        Return assert(d.pop_front())
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone
