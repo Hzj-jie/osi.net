@@ -76,7 +76,11 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function build(ByVal o As WRITER) As Boolean
-            Return b.build(n, o)
+            If b.build(n, o) Then
+                Return True
+            End If
+            raise_error(error_type.user, "Failed to build node ", n.input())
+            Return False
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>

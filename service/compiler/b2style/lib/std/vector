@@ -31,8 +31,7 @@ class vector {
   void set(int index, T v) {
     ::assert(index >= 0, "set");
     ::assert(index < this.size(), "set");
-    reinterpret_cast(this._a, T);
-    this._a[index] = v;
+    this._a.set(index, v);
   }
 
   void destruct() {
