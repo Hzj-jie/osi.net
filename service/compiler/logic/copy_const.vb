@@ -7,8 +7,9 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     ' Copy (instead of moving) a @data to @target
+    ' VisibleForTesting
     Public NotInheritable Class _copy_const
         Implements instruction_gen
 
@@ -32,4 +33,4 @@ Namespace logic
             Return False
         End Function
     End Class
-End Namespace
+End Class

@@ -4,12 +4,10 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
-Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utils
-Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.resource
 
@@ -62,7 +60,7 @@ Partial Public NotInheritable Class bstyle
         End Sub
     End Class
 
-    Public NotInheritable Class include_with_string
+    Private NotInheritable Class include_with_string
         Inherits code_gens(Of logic_writer).include_with_string(Of parser,
                                                                    default_includes.folders,
                                                                    default_includes.ignore_default_folder,
@@ -75,7 +73,7 @@ Partial Public NotInheritable Class bstyle
         End Sub
     End Class
 
-    Public NotInheritable Class include_with_file
+    Private NotInheritable Class include_with_file
         Inherits code_gens(Of logic_writer).include_with_file(Of parser,
                                                                  default_includes.folders,
                                                                  default_includes.ignore_default_folder,

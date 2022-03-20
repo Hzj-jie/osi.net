@@ -9,6 +9,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
 
 Namespace logic
+    ' TODO: Avoid using constructors directly.
     Public NotInheritable Class caller_test
         Inherits executor_case
 

@@ -11,6 +11,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
+    ' TODO: Avoid publicizing struct to b2style.
     Public NotInheritable Class struct
         Implements code_gen(Of logic_writer)
 
@@ -111,14 +112,11 @@ Partial Public NotInheritable Class bstyle
                            aggregate(bool_stream.aggregators.all_true)
         End Function
 
-        Private Shared Function resolve(ByVal type As String,
-                                        ByVal name As String,
-                                        ByRef v As struct_def) As Boolean
+        Private Shared Function define(ByVal type As String,
+                                       ByVal name As String,
+                                       ByVal v As struct_def) As Boolean
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
-            If Not scope.current().structs().resolve(type, name, v) Then
-                Return False
-            End If
             assert(Not v Is Nothing)
             Return streams.of(struct_def.nested(type, name)).
                            concat(v.nesteds()).
@@ -132,44 +130,26 @@ Partial Public NotInheritable Class bstyle
 
         ' Forward the definition of, or declare the {type, name} pair in the scope.variable in stack.
         Public Shared Sub forward_in_stack(ByVal type As String, ByVal name As String)
-            resolve(type, name, Nothing)
-        End Sub
-
-        Private Shared Function after_resolved(ByVal type As String,
-                                               ByVal name As String,
-                                               ByVal f As Func(Of struct_def, Boolean)) As Boolean
-            assert(Not f Is Nothing)
             Dim v As struct_def = Nothing
-            If Not resolve(type, name, v) Then
-                Return False
+            If scope.current().structs().resolve(type, name, v) Then
+                define(type, name, v)
             End If
-            assert(Not v Is Nothing)
-            Return f(v)
-        End Function
-
-        Private Shared Function for_each_primitive(ByVal type As String,
-                                                   ByVal name As String,
-                                                   ByVal f As Func(Of builders.parameter, Boolean)) As Boolean
-            assert(Not f Is Nothing)
-            Return after_resolved(type,
-                                  name,
-                                  Function(ByVal v As struct_def) As Boolean
-                                      Return v.primitives().
-                                               map(f).
-                                               aggregate(bool_stream.aggregators.all_true, True)
-                                  End Function)
-        End Function
+        End Sub
 
         Public Shared Function define_in_stack(ByVal type As String,
                                                ByVal name As String,
                                                ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
-            Return for_each_primitive(type,
-                                      name,
-                                      Function(ByVal m As builders.parameter) As Boolean
-                                          assert(Not m Is Nothing)
-                                          Return value_declaration.declare_single_data_slot(m.type, m.name, o)
-                                      End Function)
+            Dim v As struct_def = Nothing
+            If Not scope.current().structs().resolve(type, name, v) OrElse
+               Not define(type, name, v) Then
+                Return False
+            End If
+            assert(Not v Is Nothing)
+            Return v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
+                                            assert(Not m Is Nothing)
+                                            Return value_declaration.declare_single_data_slot(m.type, m.name, o)
+                                        End Function)
         End Function
 
         Public Function define_in_heap(ByVal type As String,
@@ -178,47 +158,63 @@ Partial Public NotInheritable Class bstyle
                                        ByVal o As logic_writer) As Boolean
             assert(Not length Is Nothing)
             assert(Not o Is Nothing)
-            Return after_resolved(type,
-                                  name,
-                                  Function(ByVal v As struct_def) As Boolean
-                                      assert(Not v Is Nothing)
-                                      Return l.typed(Of heap_name).build(
-                                                 length,
-                                                 o,
-                                                 Function(ByVal len_name As String) As Boolean
-                                                     Return v.primitives().
-                                                              map(Function(ByVal m As builders.parameter) As Boolean
-                                                                      assert(Not m Is Nothing)
-                                                                      Return heap_declaration.declare_single_data_slot(
-                                                                                 m.type, m.name, len_name, o)
-                                                                  End Function).
-                                                              aggregate(bool_stream.aggregators.all_true)
-                                                 End Function)
-                                  End Function)
+            Dim v As struct_def = Nothing
+            If Not scope.current().structs().resolve(type, name, v) OrElse
+               Not define(type, name, v) Then
+                Return False
+            End If
+            assert(Not v Is Nothing)
+            Return l.typed(Of heap_name).build(length,
+                                               o,
+                                               Function(ByVal len_name As String) As Boolean
+                                                   assert(Not v Is Nothing)
+                                                   Return v.for_each_primitive(
+                                                              Function(ByVal m As builders.parameter) As Boolean
+                                                                  assert(Not m Is Nothing)
+                                                                  Return heap_declaration.declare_single_data_slot(
+                                                                             m.type, m.name, len_name, o)
+                                                              End Function)
+                                               End Function)
         End Function
 
-        Public Shared Function dealloc_from_heap(ByVal type As String,
-                                                 ByVal name As String,
-                                                 ByVal o As logic_writer) As Boolean
+        Public Shared Function dealloc_from_heap(ByVal name As String, ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
-            Return for_each_primitive(type,
-                                      name,
-                                      Function(ByVal m As builders.parameter) As Boolean
-                                          assert(Not m Is Nothing)
-                                          Return builders.of_dealloc_heap(m.name).to(o)
-                                      End Function)
+            Dim v As struct_def = Nothing
+            If Not scope.current().structs().resolve(name, v) Then
+                Return False
+            End If
+            assert(Not v Is Nothing)
+            Return v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
+                                            assert(Not m Is Nothing)
+                                            Return builders.of_dealloc_heap(m.name).to(o)
+                                        End Function)
         End Function
 
-        Public Shared Function undefine(ByVal type As String,
-                                        ByVal name As String,
-                                        ByVal o As logic_writer) As Boolean
+        Public Shared Function undefine(ByVal name As String, ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
-            Return for_each_primitive(type,
-                                      name,
-                                      Function(ByVal m As builders.parameter) As Boolean
-                                          assert(Not m Is Nothing)
-                                          Return builders.of_undefine(m.name).to(o)
-                                      End Function)
+            Dim v As struct_def = Nothing
+            If Not scope.current().structs().resolve(name, v) Then
+                Return False
+            End If
+            assert(Not v Is Nothing)
+            Return v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
+                                            assert(Not m Is Nothing)
+                                            Return builders.of_undefine(m.name).to(o)
+                                        End Function)
+        End Function
+
+        Public Shared Function redefine(ByVal name As String, ByVal type As String, ByVal o As logic_writer) As Boolean
+            assert(Not o Is Nothing)
+            Dim v As struct_def = Nothing
+            ' Note: the variable name should be suffixed by the variables in "type" struct.
+            If Not scope.current().structs().resolve(type, name, v) Then
+                Return False
+            End If
+            assert(Not v Is Nothing)
+            Return v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
+                                            assert(Not m Is Nothing)
+                                            Return builders.of_redefine(m.name, m.type).to(o)
+                                        End Function)
         End Function
 
         Public Shared Function create_id(ByVal name As String) As builders.parameter

@@ -34,6 +34,33 @@ Partial Public Class scope(Of T As scope(Of T))
             End If
         End Sub
 
+        Private Function _can_reach_root(ByVal f As String) As Boolean
+            Dim q As New queue(Of String)()
+            Dim v As New unordered_set(Of String)()
+            q.emplace(f)
+            assert(v.emplace(f).second())
+            While q.pop(f)
+                Dim it As unordered_map(Of String, vector(Of String)).iterator = m.find(f)
+                If it = m.end() Then
+                    Continue While
+                End If
+                Dim fs As vector(Of String) = (+it).second
+                assert(Not fs.null_or_empty())
+                For i As UInt32 = 0 To fs.size() - uint32_1
+                    Dim r As Boolean = True
+                    If fs(i).Equals(main_name) OrElse
+                       (tm.find(fs(i), r) AndAlso r) Then
+                        assert(tm.emplace(f, True).second())
+                        Return True
+                    End If
+                    If r Then
+                        q.emplace(fs(i))
+                    End If
+                Next
+            End While
+            Return False
+        End Function
+
         Default Public ReadOnly Property can_reach_root(ByVal f As String) As Boolean
             Get
                 assert(Not f.null_or_whitespace())
@@ -44,20 +71,7 @@ Partial Public Class scope(Of T As scope(Of T))
                 If it <> tm.end() Then
                     Return (+it).second
                 End If
-                Dim r As Boolean = False
-                Dim it2 As unordered_map(Of String, vector(Of String)).iterator = m.find(f)
-                If it2 <> m.end() Then
-                    Dim v As vector(Of String) = (+it2).second
-                    assert(Not v.null_or_empty())
-                    For i As UInt32 = 0 To v.size() - uint32_1
-                        If can_reach_root(v(i)) Then
-                            r = True
-                            Exit For
-                        End If
-                    Next
-                End If
-                tm(f) = r
-                Return r
+                Return _can_reach_root(f)
             End Get
         End Property
 

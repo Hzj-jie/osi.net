@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public MustInherit Class unary_subroutine
         Inherits data_ref_operator
 
@@ -25,4 +25,4 @@ Namespace logic
             End Select
         End Function
     End Class
-End Namespace
+End Class

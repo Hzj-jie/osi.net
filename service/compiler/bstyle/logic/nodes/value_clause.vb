@@ -11,7 +11,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class value_clause
+    Private NotInheritable Class value_clause
         Implements code_gen(Of logic_writer)
 
         Private ReadOnly l As code_gens(Of logic_writer)
@@ -118,8 +118,9 @@ Partial Public NotInheritable Class bstyle
                                         End Function,
                                         Function(ByVal r As String) As Boolean
                                             Return builders.of_copy(
-                                                       variable.name_of(n.child(0).child().child(0).input_without_ignored(),
-                                                                        indexstr),
+                                                       variable.name_of(
+                                                           n.child(0).child().child(0).input_without_ignored(),
+                                                           indexstr),
                                                    r).to(o)
                                         End Function,
                                  o)

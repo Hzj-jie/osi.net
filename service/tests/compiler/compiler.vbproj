@@ -74,11 +74,14 @@
     <Content Include="b2style\self-compile-error-test\copy-primitive-to-struct.txt" />
     <Content Include="b2style\self-compile-error-test\copy-struct-to-primitive.txt" />
     <Content Include="b2style\self-test\bool_array.txt" />
+    <Content Include="b2style\self-test\heap.txt" />
+    <Content Include="b2style\self-test\heap_ptr_test.txt" />
     <Content Include="b2style\self-test\mod_equals_to_1.txt" />
     <Content Include="b2style\self-test\ref_test.txt" />
     <Content Include="b2style\self-test\ref_value_clause.txt" />
     <Content Include="b2style\self-test\access-biguint-as-heap.txt" />
     <Content Include="b2style\self-test\delegate-functions-with-same-name.txt" />
+    <Content Include="b2style\self-test\call-func-in-param.txt" />
     <Compile Include="b2style\template_template_test.vb" />
     <Compile Include="bstyle\bstyle_compiler_error_test.vb" />
     <Compile Include="bstyle\bstyle_test.vb" />

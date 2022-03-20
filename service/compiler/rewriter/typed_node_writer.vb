@@ -9,7 +9,7 @@ Imports osi.root.envs
 Imports osi.root.template
 Imports osi.service.automata
 
-Namespace rewriters
+Partial Public NotInheritable Class rewriters
     Public Class typed_node_writer(Of DEBUG_DUMP As __void(Of String))
         Inherits lazy_list_writer(Of DEBUG_DUMP)
 
@@ -36,5 +36,8 @@ Namespace rewriters
             End Sub
         End Class
     End Class
-End Namespace
+
+    Private Sub New()
+    End Sub
+End Class
 

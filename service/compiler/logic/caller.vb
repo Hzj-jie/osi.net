@@ -7,7 +7,8 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
+    ' VisibleForTesting
     Public NotInheritable Class _caller
         Inherits anchor_caller
 
@@ -36,4 +37,4 @@ Namespace logic
             Return False
         End Function
     End Class
-End Namespace
+End Class

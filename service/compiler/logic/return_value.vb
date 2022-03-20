@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 
-Namespace logic
+Partial Public NotInheritable Class logic
     ' Shared between callee, caller and return.
     Public NotInheritable Class return_value
         Public Shared Function define(ByVal name As String, ByVal type As String) As Boolean
@@ -32,4 +32,4 @@ Namespace logic
         Private Sub New()
         End Sub
     End Class
-End Namespace
+End Class

@@ -45,7 +45,7 @@ Public NotInheritable Class list
 End Class
 
 Partial Public NotInheritable Class list(Of T)
-    Implements IComparable(Of list(Of T)), IComparable, ICloneable
+    Implements IComparable(Of list(Of T)), IComparable, ICloneable, ICloneable(Of list(Of T))
 
     Friend NotInheritable Class node
         Inherits ref_node(Of T)
@@ -362,17 +362,19 @@ Partial Public NotInheritable Class list(Of T)
         _size = 0
     End Sub
 
-    Public Function Clone() As Object Implements ICloneable.Clone
-        Dim rtn As list(Of T) = Nothing
-        Dim it As list(Of T).node
-        rtn = New list(Of T)()
-        it = _front
+    Public Function CloneT() As list(Of T) Implements ICloneable(Of list(Of T)).Clone
+        Dim rtn As New list(Of T)()
+        Dim it As node = _front
         While Not it Is Nothing
             rtn.push_back(it.data)
             it = it.next
         End While
 
         Return rtn
+    End Function
+
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return CloneT()
     End Function
 
     Public Sub New()

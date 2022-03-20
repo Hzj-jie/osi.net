@@ -9,7 +9,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class name
+    Private NotInheritable Class name
         Implements code_gen(Of typed_node_writer)
 
         Private ReadOnly l As code_gens(Of typed_node_writer)
@@ -39,7 +39,7 @@ Partial Public NotInheritable Class b2style
                 ' Local type name should be used when expanding templates.
                 o.append(_namespace.with_global_namespace(_namespace.of(n.input_without_ignored())))
             Else
-                o.append(_namespace.bstyle_format.of(n.input_without_ignored()))
+                o.append(_namespace.bstyle_format.of(n))
             End If
             Return True
         End Function

@@ -102,5 +102,12 @@ Partial Public NotInheritable Class bstyle
             _nesteds.emplace_back(r._nesteds)
             _primitives.emplace_back(r._primitives)
         End Sub
+
+        Public Function for_each_primitive(ByVal f As Func(Of builders.parameter, Boolean)) As Boolean
+            assert(Not f Is Nothing)
+            Return primitives().
+                   map(f).
+                   aggregate(bool_stream.aggregators.all_true, True)
+        End Function
     End Class
 End Class

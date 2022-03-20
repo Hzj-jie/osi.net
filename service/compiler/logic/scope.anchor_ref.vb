@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Partial Public NotInheritable Class scope
         Public NotInheritable Class anchor_ref
             Inherits function_signature
@@ -104,4 +104,4 @@ Namespace logic
             Return New anchor_ref_proxy(Me)
         End Function
     End Class
-End Namespace
+End Class

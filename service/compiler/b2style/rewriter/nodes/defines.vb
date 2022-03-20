@@ -7,7 +7,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class ifndef_wrapped
+    Private NotInheritable Class ifndef_wrapped
         Inherits ifndef_wrapped(Of typed_node_writer)
 
         <inject_constructor>
@@ -18,7 +18,7 @@ Partial Public NotInheritable Class b2style
         End Sub
     End Class
 
-    Public NotInheritable Class define
+    Private NotInheritable Class define
         Inherits define(Of typed_node_writer)
 
         Public Shared ReadOnly instance As New define()

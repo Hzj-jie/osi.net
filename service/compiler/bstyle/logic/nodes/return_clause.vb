@@ -10,7 +10,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class return_clause
+    Private NotInheritable Class return_clause
         Implements code_gen(Of logic_writer)
 
         Private ReadOnly l As code_gens(Of logic_writer)

@@ -6,8 +6,8 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
-Namespace logic
-    Public NotInheritable Class _append
+Partial Public NotInheritable Class logic
+    Private NotInheritable Class _append
         Inherits unary_operator
 
         Public Sub New(ByVal result As String, ByVal parameter As String)
@@ -28,7 +28,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class _not
+    Private NotInheritable Class _not
         Inherits unary_operator
 
         Public Sub New(ByVal result As String, ByVal parameter As String)
@@ -49,6 +49,7 @@ Namespace logic
         End Function
     End Class
 
+    ' VisibleForTesting
     Public NotInheritable Class _sizeof
         Inherits unary_operator
 
@@ -70,7 +71,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class _empty
+    Private NotInheritable Class _empty
         Inherits unary_operator
 
         Public Sub New(ByVal result As String, ByVal parameter As String)
@@ -90,4 +91,4 @@ Namespace logic
             Return result.is_assignable_from_bool()
         End Function
     End Class
-End Namespace
+End Class

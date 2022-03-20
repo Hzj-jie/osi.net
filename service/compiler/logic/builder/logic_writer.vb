@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class logic_writer
         Inherits lazy_list_writer(Of debug_dump)
 
@@ -21,4 +21,4 @@ Namespace logic
             End Sub
         End Class
     End Class
-End Namespace
+End Class

@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
+Imports osi.service.compiler
 Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
 
@@ -46,8 +47,7 @@ Namespace logic
                 Return False
             End If
             e.execute()
-            assertion.is_false(e.halt())
-            assertion.is_true(e.errors().empty())
+            assertion.is_false(e.halt(), lazier.of(AddressOf e.halt_error))
             Try
                 check_result(not_null.[New](e))
             Catch ex As executor_stop_error

@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.service.interpreter.primitive
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Public NotInheritable Class errors
         Public Shared Sub raise(ByVal ParamArray msg() As Object)
             raise_error(error_type.user, "[Logic] ", msg)
@@ -156,4 +156,4 @@ Namespace logic
         Private Sub New()
         End Sub
     End Class
-End Namespace
+End Class

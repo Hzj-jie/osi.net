@@ -88,10 +88,12 @@
     <Compile Include="b2style\scope.vb" />
     <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
+    <Compile Include="bstyle\logic\nodes\dealloc.vb" />
     <Compile Include="bstyle\logic\nodes\delegate.vb" />
     <Compile Include="bstyle\logic\nodes\reinterpret_cast.vb" />
     <Compile Include="bstyle\logic\nodes\typedef_type_name.vb" />
     <Compile Include="bstyle\logic\nodes\typedef_type_str.vb" />
+    <Compile Include="bstyle\logic\nodes\undefine.vb" />
     <Compile Include="bstyle\scope.delegate.vb" />
     <Compile Include="bstyle\scope.params.vb" />
     <Compile Include="bstyle\scope.value_target.vb" />
@@ -277,6 +279,7 @@
     <Content Include="b2style\lib\assert.h" />
     <Content Include="b2style\lib\b2style.h" />
     <Content Include="b2style\lib\b2style\delegates.h" />
+    <Content Include="b2style\lib\b2style\heap_ptr.h" />
     <Content Include="b2style\lib\b2style\loaded_method.h" />
     <Content Include="b2style\lib\b2style\operators.h" />
     <Content Include="b2style\lib\b2style\stdio.h" />
@@ -289,7 +292,6 @@
     <Content Include="b2style\lib\testing\types.h" />
     <Content Include="bstyle\lib\bstyle.h" />
     <Content Include="bstyle\lib\bstyle\const.h" />
-    <Content Include="bstyle\lib\bstyle\heap.h" />
     <Content Include="bstyle\lib\bstyle\int.h" />
     <Content Include="bstyle\lib\bstyle\load_method.h" />
     <Content Include="bstyle\lib\bstyle\str.h" />

@@ -6,8 +6,8 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.service.interpreter.primitive
 
-Namespace logic
-    Public NotInheritable Class _divide
+Partial Public NotInheritable Class logic
+    Private NotInheritable Class _divide
         Inherits pair_result_binary_operator
 
         Public Sub New(ByVal result1 As String,
@@ -32,7 +32,7 @@ Namespace logic
         End Function
     End Class
 
-    Public NotInheritable Class _extract
+    Private NotInheritable Class _extract
         Inherits pair_result_binary_operator
 
         Public Sub New(ByVal result1 As String,
@@ -56,4 +56,4 @@ Namespace logic
             Return command.ext
         End Function
     End Class
-End Namespace
+End Class

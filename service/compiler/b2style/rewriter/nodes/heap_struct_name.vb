@@ -4,13 +4,12 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class heap_struct_name
+    Private NotInheritable Class heap_struct_name
         Implements code_gen(Of typed_node_writer)
 
         Public Shared ReadOnly instance As New heap_struct_name()

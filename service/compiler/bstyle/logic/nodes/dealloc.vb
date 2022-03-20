@@ -6,18 +6,14 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class value_definition
+    Public NotInheritable Class dealloc
         Implements code_gen(Of logic_writer)
 
-        Private ReadOnly l As code_gens(Of logic_writer)
+        Public Shared ReadOnly instance As New dealloc()
 
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
+        Private Sub New()
         End Sub
 
         Public Function build(ByVal n As typed_node,
@@ -25,8 +21,9 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4)
-            Return value_declaration.build(n.child(0), n.child(1), o) AndAlso
-                   l.typed(Of value_clause)().build(n.child(1), n.child(3), o)
+            Dim name As String = n.child(2).input_without_ignored()
+            Return struct.dealloc_from_heap(name, o) OrElse
+                   builders.of_dealloc_heap(name).to(o)
         End Function
     End Class
 End Class

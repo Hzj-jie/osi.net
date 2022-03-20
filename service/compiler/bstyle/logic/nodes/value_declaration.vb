@@ -9,7 +9,7 @@ Imports osi.service.automata
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class value_declaration
+    Private NotInheritable Class value_declaration
         Implements code_gen(Of logic_writer)
 
         Public Shared ReadOnly instance As New value_declaration()

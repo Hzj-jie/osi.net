@@ -7,7 +7,7 @@ Imports osi.root.constants
 Imports osi.root.connector
 Imports osi.root.formation
 
-Namespace logic
+Partial Public NotInheritable Class logic
     Partial Public NotInheritable Class importer
         Public Structure place_holder
         End Structure
@@ -89,4 +89,4 @@ Namespace logic
             Return False
         End Function
     End Class
-End Namespace
+End Class

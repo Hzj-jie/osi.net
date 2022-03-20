@@ -11,7 +11,7 @@ Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class _namespace
+    Private NotInheritable Class _namespace
         Implements code_gen(Of typed_node_writer)
 
         Private Const namespace_separator As String = "::"
@@ -50,6 +50,11 @@ Partial Public NotInheritable Class b2style
                                    End Function).
                                collect_by(stream(Of String).collectors.to_str(".")).
                                ToString()
+            End Function
+
+            Public Shared Function [of](ByVal n As typed_node) As String
+                assert(Not n Is Nothing)
+                Return [of](n.input_without_ignored())
             End Function
 
             ' TODO: The use case of this function is not valid, may consider to remove it.
