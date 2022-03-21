@@ -4,56 +4,51 @@
 
 #include <b2style.h>
 #include <assert.h>
-#include <bstyle/heap.h>
+#include <b2style/heap_ptr.h>
 #include <std/types.h>
 
 namespace std {
 
 template <T>
 class vector {
-  ::bstyle::heap_ptr _a;
+  ::b2style::heap_ptr<T> _a;
   int _s;
-  int _c;
 
   int size() {
     return this._s;
   }
 
   int capacity() {
-    return this._c;
+    return this._a.size();
   }
 
   T get(int index) {
     ::assert(index >= 0, "get");
     ::assert(index < this.size(), "get");
-    reinterpret_cast(this._a, T);
-    return this._a[index]; 
+    return this._a.get(index);
   }
 
   void set(int index, T v) {
     ::assert(index >= 0, "set");
     ::assert(index < this.size(), "set");
-    reinterpret_cast(this._a, T);
-    this._a[index] = v;
+    this._a.set(index, v);
   }
 
   void destruct() {
-    ::bstyle::dealloc(this._a);
+    this._a.destruct();
   }
 
   void reserve(int size) {
-    ::bstyle::heap_ptr x;
-    ::bstyle::alloc(x, size);
+    ::b2style::heap_ptr<T> x(size);
     for (int i = 0; i < this.size(); i++) {
-      x[i] = this.get(i);
+      x.set(i, this.get(i));
     }
-	::bstyle::dealloc(this._a);
+	this.destruct();
     this._a = x;
-    this._c = size;
+	x.release();
   }
 
   void construct(int size) {
-    this._a = ::bstyle::npos();
     this.reserve(size);
   }
 

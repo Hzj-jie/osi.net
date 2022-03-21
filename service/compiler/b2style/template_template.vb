@@ -13,6 +13,7 @@ Imports osi.service.compiler.logic
 Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
+    ' VisibleForTesting
     Public NotInheritable Class template_template
         Private Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("template", "template", "dump"))
         Private ReadOnly w As New template_writer()
@@ -86,9 +87,18 @@ Partial Public NotInheritable Class b2style
             Return strcat(n.input_without_ignored(), "__", type_count)
         End Function
 
+        ' @VisibleForTesting
+        ' TODO: Remove this function.
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
                                     ByVal n As typed_node,
                                     ByRef o As template_template) As Boolean
+            Return [of](l.of_all_children(n.child(2)).dump(), n, o)
+        End Function
+
+        Public Shared Function [of](ByVal type_param_list As vector(Of String),
+                                    ByVal n As typed_node,
+                                    ByRef o As template_template) As Boolean
+            assert(Not type_param_list.null_or_empty())
             assert(Not n Is Nothing)
             assert(n.type_name.Equals("template"))
             assert(n.child_count() = 5)
@@ -100,18 +110,17 @@ Partial Public NotInheritable Class b2style
             Else
                 assert(False)
             End If
-            Dim v As vector(Of String) = l.of_all_children(n.child(2)).dump()
-            assert(Not v.null_or_empty())
-            If v.size() > v.stream().collect_by(stream(Of String).collectors.unique()).size() Then
+            If type_param_list.size() >
+               type_param_list.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
                             "Template ",
                             name_node.input_without_ignored(),
                             " has duplicated template type parameters: [",
-                            v.str(", "),
+                            type_param_list.str(", "),
                             "]")
                 Return False
             End If
-            o = New template_template(n.child(4), name_node, v)
+            o = New template_template(n.child(4), name_node, type_param_list)
             Return True
         End Function
 
@@ -119,22 +128,21 @@ Partial Public NotInheritable Class b2style
             Return _extended_type_name.name
         End Function
 
-        Public Function extended_type_name(ByVal types As vector(Of String)) As String
-            _extended_type_name.apply(types)
+        Public Function extended_type_name(ByVal paramtypelist As vector(Of String)) As String
+            _extended_type_name.apply(paramtypelist)
             Return _extended_type_name.str()
         End Function
 
-        Public Function apply(ByVal types As vector(Of String), ByRef impl As String) As Boolean
-            assert(Not types Is Nothing)
-            assert(types.size() = Me.type_refs.size())
-            assert(types.size() > 0)
-            _extended_type_name.apply(types)
-            For i As UInt32 = 0 To types.size() - uint32_1
+        Public Function apply(ByVal paramtypelist As vector(Of String), ByRef impl As String) As Boolean
+            assert(Not paramtypelist.null_or_empty())
+            assert(paramtypelist.size() = Me.type_refs.size())
+            _extended_type_name.apply(paramtypelist)
+            For i As UInt32 = 0 To paramtypelist.size() - uint32_1
                 assert(Not Me.type_refs(i))
-                Me.type_refs(i).set(types(i))
+                Me.type_refs(i).set(paramtypelist(i))
             Next
             impl = w.dump()
-            For i As UInt32 = 0 To types.size() - uint32_1
+            For i As UInt32 = 0 To paramtypelist.size() - uint32_1
                 Me.type_refs(i).set(Nothing)
             Next
             Return True

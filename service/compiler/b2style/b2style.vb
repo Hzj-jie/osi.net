@@ -95,9 +95,9 @@ Partial Public NotInheritable Class b2style
                            with(Of paramtype_with_comma)().
                            with(Of class_initializer)().
                            with(code_gen.of_ignore(Of typed_node_writer)("colon")).
+                           with(Of root_type)().
                            with_of_only_childs(
                                "base-root-type",
-                               "root-type",
                                "paragraph",
                                "sentence-with-semi-colon",
                                "ignore-result-function-call",
@@ -120,6 +120,8 @@ Partial Public NotInheritable Class b2style
                                "kw-break",
                                "kw-logic",
                                "kw-reinterpret-cast",
+                               "kw-undefine",
+                               "kw-dealloc",
                                "start-square-bracket",
                                "end-square-bracket",
                                "bool",
@@ -170,7 +172,9 @@ Partial Public NotInheritable Class b2style
                                "delegate",
                                "paramtypelist",
                                "paramtype",
-                               "struct-body").
+                               "struct-body",
+                               "undefine",
+                               "dealloc").
                            with_of_names(
                                "add",
                                "minus",

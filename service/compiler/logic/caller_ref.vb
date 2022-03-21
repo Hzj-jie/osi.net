@@ -14,10 +14,9 @@ Partial Public NotInheritable Class logic
 
         Private ReadOnly name As String
 
-        ' @VisibleForTesting
-        Public Sub New(ByVal name As String,
-                       ByVal result As String,
-                       ParamArray ByVal parameters() As String)
+        Private Sub New(ByVal name As String,
+                        ByVal result As String,
+                        ParamArray ByVal parameters() As String)
             MyBase.New(command.jmpr, result, parameters)
             assert(Not name.null_or_whitespace())
             Me.name = name

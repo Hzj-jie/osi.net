@@ -43,5 +43,8 @@ Rule of Thumb
    purpose only. If a certain format is required, use a different function
    with more meaningful name.
 
+1. Avoid using reserved keywords in class or function names, use a prefix
+   underscore instead.
+
 1. Do not use namespace within a project, use class. Namespaces live in project
    level only. Unlike classes, namespaces have no visibility control.

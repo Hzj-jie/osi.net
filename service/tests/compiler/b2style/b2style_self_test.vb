@@ -37,7 +37,7 @@ Public NotInheritable Class b2style_self_test
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(content, e), name)
         assertion.is_not_null(e, name)
-        e.assert_execute_without_errors()
+        e.assert_execute_without_errors(name)
         Dim v As vector(Of String) = streams.of(io.output().Trim().Split(character.newline)).
                                              collect_to(Of vector(Of String))()
         If Not assertions.of(v).not_empty(name) Then
