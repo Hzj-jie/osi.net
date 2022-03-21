@@ -39,26 +39,31 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         register(Of T)(code_gen_name(Of T)())
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function code_gen_of(ByVal name As String) As code_gen(Of WRITER)
         Dim it As unordered_map(Of String, code_gen(Of WRITER)).iterator = m.find(name)
         assert(it <> m.end(), "Cannot find code_gen of ", name)
         Return (+it).second
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function code_gen_of(ByVal n As typed_node) As code_gen(Of WRITER)
         assert(Not n Is Nothing)
         Return code_gen_of(n.type_name)
     End Function
 
     ' Limit the use of this function, prefer code_gen_proxy.dump if possible.
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function typed(Of T As code_gen(Of WRITER))() As T
         Return direct_cast(Of T)(code_gen_of(code_gen_name(Of T)()))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [of](ByVal n As typed_node) As code_gen_proxy
         Return New code_gen_proxy(code_gen_of(n), n)
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function of_all_children(ByVal n As typed_node) As code_gen_all_children_proxy
         Return New code_gen_all_children_proxy(Me, n)
     End Function
@@ -67,6 +72,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Private ReadOnly b As code_gen(Of WRITER)
         Private ReadOnly n As typed_node
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal b As code_gen(Of WRITER), ByVal n As typed_node)
             assert(Not b Is Nothing)
             assert(Not n Is Nothing)
@@ -89,6 +95,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
 
         ' TODO: Consider to avoid using ToString(), use lazy_list_writer.str() instead.
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function dump(ByRef o As String) As Boolean
             Dim w As New WRITER()
             If Not build(w) Then
@@ -110,6 +117,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Private ReadOnly l As code_gens(Of WRITER)
         Private ReadOnly n As typed_node
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub New(ByVal l As code_gens(Of WRITER), ByVal n As typed_node)
             assert(Not l Is Nothing)
             assert(Not n Is Nothing)
@@ -117,6 +125,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             Me.n = n
         End Sub
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function build(ByVal o As WRITER) As Boolean
             Dim i As UInt32 = 0
             While i < n.child_count()
@@ -128,6 +137,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             Return True
         End Function
 
+        <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function dump(ByRef o As vector(Of String)) As Boolean
             o.renew()
             Dim i As UInt32 = 0
