@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public Class scope(Of T As scope(Of T))
-    Public MustInherit Class call_hierarchy
+    Public MustInherit Class call_hierarchy_t
         Private ReadOnly main_name As String
         ' From -> To
         Private ReadOnly m As New unordered_map(Of String, vector(Of String))()
@@ -86,11 +86,11 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Private NotInheritable Class filtered_writer
-            Private ReadOnly ch As call_hierarchy
+            Private ReadOnly ch As call_hierarchy_t
             Private ReadOnly f As String
             Private ReadOnly o As Func(Of String)
 
-            Public Sub New(ByVal ch As call_hierarchy, ByVal f As String, ByVal o As Func(Of String))
+            Public Sub New(ByVal ch As call_hierarchy_t, ByVal f As String, ByVal o As Func(Of String))
                 assert(Not ch Is Nothing)
                 assert(Not f.null_or_whitespace())
                 assert(Not o Is Nothing)
@@ -107,4 +107,13 @@ Partial Public Class scope(Of T As scope(Of T))
             End Function
         End Class
     End Class
+
+    Public Shadows Function call_hierarchy() As call_hierarchy_t
+        If is_root() Then
+            assert(Not fc Is Nothing)
+            Return fc
+        End If
+        assert(fc Is Nothing)
+        Return (+root).call_hierarchy()
+    End Function
 End Class
