@@ -10,9 +10,9 @@ Imports osi.root.formation
 Partial Public Class scope(Of T As scope(Of T))
     Public MustInherit Class call_hierarchy
         Private ReadOnly main_name As String
-        ' To -> From
+        ' From -> To
         Private ReadOnly m As New unordered_map(Of String, vector(Of String))()
-        Private ReadOnly tm As New unordered_map(Of String, Boolean)()
+        Private tm As unordered_set(Of String) = Nothing
 
         Protected Sub New(ByVal main_name As String)
             assert(Not main_name.null_or_whitespace())
@@ -30,7 +30,7 @@ Partial Public Class scope(Of T As scope(Of T))
             Dim from As String = current_function_name().or_else(main_name)
             assert(Not from.null_or_whitespace())
             If Not name.Equals(from) Then
-                m(name).emplace_back(from)
+                m(from).emplace_back(name)
             End If
         End Sub
 
@@ -61,19 +61,25 @@ Partial Public Class scope(Of T As scope(Of T))
             Return False
         End Function
 
+        Private Sub calculate()
+            assert(tm Is Nothing)
+            tm = New unordered_set(Of String)()
+        End Sub
+
         Default Public ReadOnly Property can_reach_root(ByVal f As String) As Boolean
             Get
-                assert(Not f.null_or_whitespace())
-                If f.Equals(main_name) Then
-                    Return True
-                End If
-                Dim it As unordered_map(Of String, Boolean).iterator = tm.find(f)
-                If it <> tm.end() Then
-                    Return (+it).second
-                End If
-                Return _can_reach_root(f)
+                assert(Not tm Is Nothing)
+                Return tm.find(f) <> tm.end()
             End Get
         End Property
+
+        Public NotInheritable Class calculator(Of WRITER)
+            Implements statement(Of WRITER)
+
+            Public Sub export(ByVal o As WRITER) Implements statement(Of WRITER).export
+
+            End Sub
+        End Class
 
         Public Function filter(ByVal f As String, ByVal o As Func(Of String)) As Func(Of String)
             Return AddressOf New filtered_writer(Me, f, o).str
