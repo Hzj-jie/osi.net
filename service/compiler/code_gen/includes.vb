@@ -16,7 +16,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                                          _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                          _DEFAULT_FOLDER As __do(Of String),
                                          _IGNORE_INCLUDE_ERROR As __do(Of Boolean),
-                                         SCOPE_T As scope(Of SCOPE_T))
+                                         SCOPE_T As scope_b(Of SCOPE_T))
         Inherits reparser(Of PARSER)
 
         Private Shared ReadOnly folders As _FOLDERS = alloc(Of _FOLDERS)()
@@ -72,7 +72,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                                                     IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                     DEFAULT_FOLDER As __do(Of String),
                                                     IGNORE_INCLUDE_ERROR As __do(Of Boolean),
-                                                    SCOPE_T As scope(Of SCOPE_T))
+                                                    SCOPE_T As scope_b(Of SCOPE_T))
         Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR, SCOPE_T)
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
@@ -87,7 +87,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                                                   IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                   DEFAULT_FOLDER As __do(Of String),
                                                   IGNORE_INCLUDE_ERROR As __do(Of Boolean),
-                                                  SCOPE_T As scope(Of SCOPE_T))
+                                                  SCOPE_T As scope_b(Of SCOPE_T))
         Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR, SCOPE_T)
 
         Private Const kw_include As String = "#include"
