@@ -17,14 +17,14 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                                          _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                          _DEFAULT_FOLDER As __do(Of String),
                                          _IGNORE_INCLUDE_ERROR As __do(Of Boolean),
-                                         _INCLUDED As __do(Of String, Boolean))
+                                         _SHOULD_INCLUDE As __do(Of String, Boolean))
         Inherits reparser(Of PARSER)
 
         Private Shared ReadOnly folders As _FOLDERS = alloc(Of _FOLDERS)()
         Private Shared ReadOnly ignore_default_folder As _IGNORE_DEFAULT_FOLDER = alloc(Of _IGNORE_DEFAULT_FOLDER)()
         Private Shared ReadOnly default_folder As _DEFAULT_FOLDER = alloc(Of _DEFAULT_FOLDER)()
         Private Shared ReadOnly ignore_include_error As _IGNORE_INCLUDE_ERROR = alloc(Of _IGNORE_INCLUDE_ERROR)()
-        Private Shared ReadOnly included As _do(Of String, Boolean) = -alloc(Of _INCLUDED)()
+        Private Shared ReadOnly should_include As _do(Of String, Boolean) = -alloc(Of _SHOULD_INCLUDE)()
 
         Private Shared Function include_file(ByVal p As String,
                                              ByVal s As String,
@@ -52,7 +52,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
 
         Protected Shared Function include_file(ByVal s As String, ByRef o As String) As Boolean
-            If Not included(s) AndAlso (scope_arguments.include_once Or True) Then
+            If Not should_include(s) AndAlso (scope_arguments.include_once Or True) Then
                 Return True
             End If
             If include_file(+folders, s, o) Then
@@ -73,8 +73,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                                                     IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                     DEFAULT_FOLDER As __do(Of String),
                                                     IGNORE_INCLUDE_ERROR As __do(Of Boolean),
-                                                    INCLUDED As __do(Of String, Boolean))
-        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR, INCLUDED)
+                                                    SHOULD_INCLUDE As __do(Of String, Boolean))
+        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR, SHOULD_INCLUDE)
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
             assert(Not n Is Nothing)
@@ -88,8 +88,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                                                   IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                   DEFAULT_FOLDER As __do(Of String),
                                                   IGNORE_INCLUDE_ERROR As __do(Of Boolean),
-                                                  INCLUDED As __do(Of String, Boolean))
-        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR, INCLUDED)
+                                                  SHOULD_INCLUDE As __do(Of String, Boolean))
+        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR, SHOULD_INCLUDE)
 
         Private Const kw_include As String = "#include"
 

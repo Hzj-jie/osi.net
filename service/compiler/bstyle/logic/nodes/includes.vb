@@ -60,11 +60,11 @@ Partial Public NotInheritable Class bstyle
         End Sub
     End Class
 
-    Public NotInheritable Class included_t
+    Public NotInheritable Class should_include_t
         Inherits __do(Of String, Boolean)
 
         Public Overrides Function at(ByRef k As String) As Boolean
-            Return scope.current().includes().included(k)
+            Return scope.current().includes().should_include(k)
         End Function
     End Class
 
@@ -74,7 +74,7 @@ Partial Public NotInheritable Class bstyle
                                                                    default_includes.ignore_default_folder,
                                                                    default_includes.default_folder,
                                                                    _false,
-                                                                   included_t)
+                                                                   should_include_t)
         Public Shared ReadOnly instance As New include_with_string()
 
         Private Sub New()
@@ -87,7 +87,7 @@ Partial Public NotInheritable Class bstyle
                                                                  default_includes.ignore_default_folder,
                                                                  default_includes.default_folder,
                                                                  _false,
-                                                                 included_t)
+                                                                 should_include_t)
         Public Shared ReadOnly instance As New include_with_file()
 
         Private Sub New()
