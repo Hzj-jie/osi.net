@@ -60,13 +60,21 @@ Partial Public NotInheritable Class bstyle
         End Sub
     End Class
 
+    Public NotInheritable Class included_t
+        Inherits __do(Of String, Boolean)
+
+        Public Overrides Function at(ByRef k As String) As Boolean
+            Return scope.current().includes().included(k)
+        End Function
+    End Class
+
     Private NotInheritable Class include_with_string
         Inherits code_gens(Of logic_writer).include_with_string(Of parser,
                                                                    default_includes.folders,
                                                                    default_includes.ignore_default_folder,
                                                                    default_includes.default_folder,
                                                                    _false,
-                                                                   scope)
+                                                                   included_t)
         Public Shared ReadOnly instance As New include_with_string()
 
         Private Sub New()
@@ -79,7 +87,7 @@ Partial Public NotInheritable Class bstyle
                                                                  default_includes.ignore_default_folder,
                                                                  default_includes.default_folder,
                                                                  _false,
-                                                                 scope)
+                                                                 included_t)
         Public Shared ReadOnly instance As New include_with_file()
 
         Private Sub New()

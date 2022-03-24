@@ -4,27 +4,20 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 
-Partial Public Class scope_b(Of T As scope_b(Of T))
-    Public NotInheritable Class call_hierarchy_t
-        Private ReadOnly main_name As String
-        Private ReadOnly current_function_name As Func(Of [optional](Of String))
+Partial Public MustInherit Class scope_b(Of CH As {call_hierarchy_t, New}, T As scope_b(Of CH, T))
+    Public MustInherit Class call_hierarchy_t
         ' From -> To
         Private ReadOnly m As New unordered_map(Of String, vector(Of String))()
         Private tm As unordered_set(Of String) = Nothing
 
-        Public Sub New(ByVal main_name As String, ByVal current_function_name As Func(Of [optional](Of String)))
-            assert(Not main_name.null_or_whitespace())
-            assert(Not current_function_name Is Nothing)
-            Me.main_name = main_name
-            Me.current_function_name = current_function_name
-        End Sub
+        ' TODO: Is it possible to use scope.current().current_function().name() directly?
+        Protected MustOverride Function current_function_name() As [optional](Of String)
 
         Public Sub [to](ByVal name As String)
             assert(Not name.null_or_whitespace())
-            Dim from As String = current_function_name().or_else(main_name)
+            Dim from As String = current_function_name().or_else("main")
             assert(Not from.null_or_whitespace())
             If Not name.Equals(from) Then
                 m(from).emplace_back(name)
@@ -46,11 +39,21 @@ Partial Public Class scope_b(Of T As scope_b(Of T))
             End Get
         End Property
 
-        Public NotInheritable Class calculator(Of WRITER)
+        Protected NotInheritable Class calculator(Of WRITER)
             Implements statement(Of WRITER)
+
+            Private Shared ReadOnly instance As New calculator(Of WRITER)()
+
+            Public Shared Sub register(ByVal p As statements(Of WRITER))
+                assert(Not p Is Nothing)
+                p.register(instance)
+            End Sub
 
             Public Sub export(ByVal o As WRITER) Implements statement(Of WRITER).export
                 scope(Of T).current().call_hierarchy().calculate()
+            End Sub
+
+            Private Sub New()
             End Sub
         End Class
 

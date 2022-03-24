@@ -4,20 +4,19 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 
 ' A scope implementation for bstyle and b2style
-Public MustInherit Class scope_b(Of T As scope_b(Of T))
+Partial Public MustInherit Class scope_b(Of CH As {call_hierarchy_t, New}, T As scope_b(Of CH, T))
     Inherits scope(Of T)
 
     Private ReadOnly incs As includes_t
-    Private ReadOnly fc As call_hierarchy_t
+    Private ReadOnly fc As CH
 
     Protected Sub New(ByVal parent As T)
         MyBase.New(parent)
         If parent Is Nothing Then
             incs = New includes_t()
-            fc = New call_hierarchy_t("main", AddressOf current_function_name)
+            fc = New CH()
         End If
     End Sub
 
@@ -30,7 +29,7 @@ Public MustInherit Class scope_b(Of T As scope_b(Of T))
         Return (+root).includes()
     End Function
 
-    Public Shadows Function call_hierarchy() As call_hierarchy_t
+    Public Function call_hierarchy() As CH
         If is_root() Then
             assert(Not fc Is Nothing)
             Return fc
@@ -38,6 +37,4 @@ Public MustInherit Class scope_b(Of T As scope_b(Of T))
         assert(fc Is Nothing)
         Return (+root).call_hierarchy()
     End Function
-
-    Protected MustOverride Function current_function_name() As [optional](Of String)
 End Class

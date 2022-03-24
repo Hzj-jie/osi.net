@@ -13,9 +13,11 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class main
         Implements statement
 
+        Private Shared ReadOnly instance As New main()
+
         Public Shared Sub register(ByVal p As statements)
             assert(Not p Is Nothing)
-            p.register(New main())
+            p.register(instance)
         End Sub
 
         Public Sub export(ByVal o As logic_writer) Implements statement.export

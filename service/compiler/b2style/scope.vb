@@ -7,7 +7,7 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
-        Inherits scope_b(Of scope)
+        Inherits scope_b(Of call_hierarchy_t, scope)
 
         Private ReadOnly fc As call_hierarchy_t
         Private ReadOnly cn As current_namespace_t
