@@ -9,12 +9,12 @@ Imports osi.service.automata
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
+        Protected Overrides Function current_function_name() As [optional](Of String)
+            Return scope.current().current_function().name()
+        End Function
+
         Public NotInheritable Class call_hierarchy_t
             Inherits scope(Of scope).call_hierarchy
-
-            Protected Overrides Function current_function_name() As [optional](Of String)
-                Return scope.current().current_function().name()
-            End Function
 
             Public Shared Function from_value_clause() As Func(Of typed_node, Boolean)
                 Return Function(ByVal n As typed_node) As Boolean
