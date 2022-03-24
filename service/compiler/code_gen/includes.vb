@@ -74,7 +74,12 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                                                     DEFAULT_FOLDER As __do(Of String),
                                                     IGNORE_INCLUDE_ERROR As __do(Of Boolean),
                                                     SHOULD_INCLUDE As __do(Of String, Boolean))
-        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR, SHOULD_INCLUDE)
+        Inherits includes(Of PARSER,
+                             FOLDERS,
+                             IGNORE_DEFAULT_FOLDER,
+                             DEFAULT_FOLDER,
+                             IGNORE_INCLUDE_ERROR,
+                             SHOULD_INCLUDE)
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
             assert(Not n Is Nothing)
@@ -89,7 +94,12 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                                                   DEFAULT_FOLDER As __do(Of String),
                                                   IGNORE_INCLUDE_ERROR As __do(Of Boolean),
                                                   SHOULD_INCLUDE As __do(Of String, Boolean))
-        Inherits includes(Of PARSER, FOLDERS, IGNORE_DEFAULT_FOLDER, DEFAULT_FOLDER, IGNORE_INCLUDE_ERROR, SHOULD_INCLUDE)
+        Inherits includes(Of PARSER,
+                             FOLDERS,
+                             IGNORE_DEFAULT_FOLDER,
+                             DEFAULT_FOLDER,
+                             IGNORE_INCLUDE_ERROR,
+                             SHOULD_INCLUDE)
 
         Private Const kw_include As String = "#include"
 
