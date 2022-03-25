@@ -8,6 +8,7 @@ Imports osi.root.formation
 
 Partial Public MustInherit Class scope_b(Of CH As {call_hierarchy_t, New}, T As scope_b(Of CH, T))
     Public MustInherit Class call_hierarchy_t
+        Private Const main_name As String = "main"
         ' From -> To
         Private ReadOnly m As New unordered_map(Of String, vector(Of String))()
         Private tm As unordered_set(Of String) = Nothing
@@ -16,8 +17,9 @@ Partial Public MustInherit Class scope_b(Of CH As {call_hierarchy_t, New}, T As 
         Protected MustOverride Function current_function_name() As [optional](Of String)
 
         Public Sub [to](ByVal name As String)
+            assert(tm Is Nothing)
             assert(Not name.null_or_whitespace())
-            Dim from As String = current_function_name().or_else("main")
+            Dim from As String = current_function_name().or_else(main_name)
             assert(Not from.null_or_whitespace())
             If Not name.Equals(from) Then
                 m(from).emplace_back(name)
@@ -27,14 +29,31 @@ Partial Public MustInherit Class scope_b(Of CH As {call_hierarchy_t, New}, T As 
         Private Sub calculate()
             assert(tm Is Nothing)
             tm = New unordered_set(Of String)()
-            ' TODO: Implement
+            Dim q As New queue(Of String)()
+            q.emplace(main_name)
+            assert(tm.emplace(main_name).second())
+            Dim f As String = Nothing
+            While q.pop(f)
+                Dim fs As vector(Of String) = Nothing
+                If Not m.find(f, fs) Then
+                    Continue While
+                End If
+                assert(Not fs Is Nothing)
+                fs.stream().
+                   filter(Function(ByVal other As String) As Boolean
+                              ' filter requires stateless operations.
+                              Return tm.find(other) = tm.end()
+                          End Function).
+                   foreach(Sub(ByVal other As String)
+                               q.emplace(other)
+                               assert(tm.emplace(other).second())
+                           End Sub)
+            End While
         End Sub
 
         Default Public ReadOnly Property can_reach_root(ByVal f As String) As Boolean
             Get
                 assert(Not tm Is Nothing)
-                ' TODO: Implement
-                Return True
                 Return tm.find(f) <> tm.end()
             End Get
         End Property
