@@ -28,7 +28,7 @@ Partial Public NotInheritable Class b2style
             fc = New call_hierarchy_t()
             cn = New current_namespace_t()
             d = New define_t()
-            i = New root_type_injector_t
+            i = New root_type_injector_t()
         End Sub
 
         Public Shared Function wrap() As scope
