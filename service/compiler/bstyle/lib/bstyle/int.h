@@ -2,6 +2,7 @@
 #ifndef BSTYLE_LIB_BSTYLE_INT_H
 #define BSTYLE_LIB_BSTYLE_INT_H
 
+#include <bstyle/const.h>
 #include <bstyle/types.h>
 
 biguint bstyle__to_biguint(int i) {

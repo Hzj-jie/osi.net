@@ -29,6 +29,32 @@ Public NotInheritable Class stream_filter_test
                               {0})
     End Sub
 
+    <test>
+    Private Shared Sub filter_then_foreach()
+        Dim r As Int32 = 0
+        streams.of(1, 2, 3, 4, 5, 6).
+                filter(Function(ByVal i As Int32) As Boolean
+                           Return (i Mod 2) = 0
+                       End Function).
+                foreach(Sub(ByVal i As Int32)
+                            r += i
+                        End Sub)
+        assertion.equal(r, 12)
+    End Sub
+
+    <test>
+    Private Shared Sub filter_then_foreach_str()
+        Dim r As New vector(Of String)()
+        streams.of("aa", "ab", "bc", "ad", "bc").
+                filter(Function(ByVal i As String) As Boolean
+                           Return i.StartsWith("a")
+                       End Function).
+                foreach(Sub(ByVal i As String)
+                            r.emplace_back(i)
+                        End Sub)
+        assertion.equal(r, vector.of("aa", "ab", "ad"))
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

@@ -62,6 +62,14 @@ Partial Public NotInheritable Class b2style
         End Sub
     End Class
 
+    Public NotInheritable Class should_include_t
+        Inherits __do(Of String, Boolean)
+
+        Public Overrides Function at(ByRef k As String) As Boolean
+            Return scope.current().includes().should_include(k)
+        End Function
+    End Class
+
     ' TODO: Consider to include bstyle headers into b2style.
     Private NotInheritable Class include_with_string
         Inherits code_gens(Of typed_node_writer).include_with_string(Of parser,
@@ -69,7 +77,7 @@ Partial Public NotInheritable Class b2style
                                                                         default_includes.ignore_default_folder,
                                                                         default_includes.default_folder,
                                                                         _true,
-                                                                        scope)
+                                                                        should_include_t)
         Public Shared ReadOnly instance As New include_with_string()
 
         Private Sub New()
@@ -90,7 +98,7 @@ Partial Public NotInheritable Class b2style
                                                                       default_includes.ignore_default_folder,
                                                                       default_includes.default_folder,
                                                                       _true,
-                                                                      scope)
+                                                                      should_include_t)
         Public Shared ReadOnly instance As New include_with_file()
 
         Private Sub New()

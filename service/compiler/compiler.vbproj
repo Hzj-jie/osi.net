@@ -87,6 +87,7 @@
     <Compile Include="b2style\scope.variable.vb" />
     <Compile Include="b2style\scope.vb" />
     <Compile Include="b2style\template_template.vb" />
+    <Compile Include="scope_b.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
     <Compile Include="bstyle\logic\nodes\dealloc.vb" />
     <Compile Include="bstyle\logic\nodes\delegate.vb" />

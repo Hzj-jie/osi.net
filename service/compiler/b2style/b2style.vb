@@ -16,7 +16,7 @@ Partial Public NotInheritable Class b2style
     Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
                                       syntaxer_rule_t,
                                       __do.default_of(Of vector(Of Action(Of statements))),
-                                      __do.default_of(Of vector(Of Action(Of statements))),
+                                      suffixes_t,
                                       rewriter_gens_t,
                                       scope)
 
@@ -47,6 +47,14 @@ Partial Public NotInheritable Class b2style
 
         Protected Overrides Function at() As String
             Return file
+        End Function
+    End Class
+
+    Public NotInheritable Class suffixes_t
+        Inherits __do(Of vector(Of Action(Of statements)))
+
+        Protected Overrides Function at() As vector(Of Action(Of statements))
+            Return vector.emplace_of(Of Action(Of statements))(AddressOf scope.call_hierarchy_t.calculator.register)
         End Function
     End Class
 
@@ -224,7 +232,7 @@ Partial Public NotInheritable Class b2style
         Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
                                           syntaxer_rule_t,
                                           __do.default_of(Of vector(Of Action(Of statements))),
-                                          __do.default_of(Of vector(Of Action(Of statements))),
+                                          suffixes_t,
                                           rewriter_gens_t,
                                           scope).parse_wrapper
 

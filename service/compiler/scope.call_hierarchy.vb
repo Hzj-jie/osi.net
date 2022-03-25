@@ -4,87 +4,88 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 
-Partial Public Class scope(Of T As scope(Of T))
-    Public MustInherit Class call_hierarchy
-        Private ReadOnly main_name As String
-        ' To -> From
+Partial Public MustInherit Class scope_b(Of CH As {call_hierarchy_t, New}, T As scope_b(Of CH, T))
+    Public MustInherit Class call_hierarchy_t
+        Private Const main_name As String = "main"
+        ' From -> To
         Private ReadOnly m As New unordered_map(Of String, vector(Of String))()
-        Private ReadOnly tm As New unordered_map(Of String, Boolean)()
+        Private tm As unordered_set(Of String) = Nothing
 
-        Protected Sub New(ByVal main_name As String)
-            assert(Not main_name.null_or_whitespace())
-            Me.main_name = main_name
-        End Sub
-
-        Protected Sub New()
-            Me.New("main")
-        End Sub
-
+        ' TODO: Is it possible to use scope.current().current_function().name() directly?
         Protected MustOverride Function current_function_name() As [optional](Of String)
 
         Public Sub [to](ByVal name As String)
+            assert(tm Is Nothing)
             assert(Not name.null_or_whitespace())
             Dim from As String = current_function_name().or_else(main_name)
             assert(Not from.null_or_whitespace())
             If Not name.Equals(from) Then
-                m(name).emplace_back(from)
+                m(from).emplace_back(name)
             End If
         End Sub
 
-        Private Function _can_reach_root(ByVal f As String) As Boolean
+        Private Sub calculate()
+            assert(tm Is Nothing)
+            tm = New unordered_set(Of String)()
             Dim q As New queue(Of String)()
-            Dim v As New unordered_set(Of String)()
-            q.emplace(f)
-            assert(v.emplace(f).second())
+            q.emplace(main_name)
+            assert(tm.emplace(main_name).second())
+            Dim f As String = Nothing
             While q.pop(f)
-                Dim it As unordered_map(Of String, vector(Of String)).iterator = m.find(f)
-                If it = m.end() Then
+                Dim fs As vector(Of String) = Nothing
+                If Not m.find(f, fs) Then
                     Continue While
                 End If
-                Dim fs As vector(Of String) = (+it).second
-                assert(Not fs.null_or_empty())
-                For i As UInt32 = 0 To fs.size() - uint32_1
-                    Dim r As Boolean = True
-                    If fs(i).Equals(main_name) OrElse
-                       (tm.find(fs(i), r) AndAlso r) Then
-                        assert(tm.emplace(f, True).second())
-                        Return True
-                    End If
-                    If r Then
-                        q.emplace(fs(i))
-                    End If
-                Next
+                assert(Not fs Is Nothing)
+                fs.stream().
+                   filter(Function(ByVal other As String) As Boolean
+                              ' filter requires stateless operations.
+                              Return tm.find(other) = tm.end()
+                          End Function).
+                   foreach(Sub(ByVal other As String)
+                               q.emplace(other)
+                               assert(tm.emplace(other).second())
+                           End Sub)
             End While
-            Return False
-        End Function
+        End Sub
 
         Default Public ReadOnly Property can_reach_root(ByVal f As String) As Boolean
             Get
-                assert(Not f.null_or_whitespace())
-                If f.Equals(main_name) Then
-                    Return True
-                End If
-                Dim it As unordered_map(Of String, Boolean).iterator = tm.find(f)
-                If it <> tm.end() Then
-                    Return (+it).second
-                End If
-                Return _can_reach_root(f)
+                assert(Not tm Is Nothing)
+                Return tm.find(f) <> tm.end()
             End Get
         End Property
+
+        Protected NotInheritable Class calculator(Of WRITER)
+            Implements statement(Of WRITER)
+
+            Private Shared ReadOnly instance As New calculator(Of WRITER)()
+
+            Public Shared Sub register(ByVal p As statements(Of WRITER))
+                assert(Not p Is Nothing)
+                p.register(instance)
+            End Sub
+
+            Public Sub export(ByVal o As WRITER) Implements statement(Of WRITER).export
+                scope(Of T).current().call_hierarchy().calculate()
+            End Sub
+
+            Private Sub New()
+            End Sub
+        End Class
 
         Public Function filter(ByVal f As String, ByVal o As Func(Of String)) As Func(Of String)
             Return AddressOf New filtered_writer(Me, f, o).str
         End Function
 
         Private NotInheritable Class filtered_writer
-            Private ReadOnly ch As call_hierarchy
+            Private ReadOnly ch As call_hierarchy_t
             Private ReadOnly f As String
             Private ReadOnly o As Func(Of String)
 
-            Public Sub New(ByVal ch As call_hierarchy, ByVal f As String, ByVal o As Func(Of String))
+            Public Sub New(ByVal ch As call_hierarchy_t, ByVal f As String, ByVal o As Func(Of String))
                 assert(Not ch Is Nothing)
                 assert(Not f.null_or_whitespace())
                 assert(Not o Is Nothing)
