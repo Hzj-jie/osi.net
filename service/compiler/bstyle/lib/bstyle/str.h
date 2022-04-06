@@ -3,6 +3,7 @@
 #define BSTYLE_LIB_BSTYLE_STR_H
 
 #include <bstyle/types.h>
+#include <bstyle/int.h>
 
 string bstyle__str_concat(string i, string j) {
   logic "append i j";
@@ -27,10 +28,13 @@ int bstyle__str_len(string s) {
 
 bool bstyle__str_empty(string s) {
   // Note, empty means the s == null rather than s.length == 0.
-  int r = bstyle__str_len(s);
+  return bstyle__equal(bstyle__str_len(s), 0);
+}
+
+// TODO: Use a better way to compare strings, treating them as big_uints is not accurate or efficient.
+bool bstyle__str_equal(string i, string j) {
   bool result;
-  int zero = 0;
-  logic "equal result r zero";
+  logic "equal result i j";
   return result;
 }
 
