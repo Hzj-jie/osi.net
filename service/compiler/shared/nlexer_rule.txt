@@ -18,6 +18,10 @@ kw-reinterpret-cast reinterpret_cast
 kw-delegate delegate
 kw-undefine undefine
 kw-dealloc dealloc
+kw-file __FILE__
+kw-func __func__
+kw-line __LINE__
+kw-statement __STATEMENT__
 
 single-line-comment //[*|\n]*
 multi-line-comment /\*[*|\*/]*\*/

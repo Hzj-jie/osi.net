@@ -104,6 +104,7 @@ Partial Public NotInheritable Class b2style
                            with(Of class_initializer)().
                            with(code_gen.of_ignore(Of typed_node_writer)("colon")).
                            with(Of root_type)().
+                           with(kw_statement.instance).
                            with_of_only_childs(
                                "base-root-type",
                                "paragraph",
@@ -182,7 +183,10 @@ Partial Public NotInheritable Class b2style
                                "paramtype",
                                "struct-body",
                                "undefine",
-                               "dealloc").
+                               "dealloc",
+                               "kw-file",
+                               "kw-func",
+                               "kw-line").
                            with_of_names(
                                "add",
                                "minus",

@@ -200,4 +200,27 @@ Partial Public NotInheritable Class typed_node
         End While
         Return assert(False)
     End Function
+
+    Public Function ancestor_of(ByVal name As String, ByRef o As typed_node) As Boolean
+        assert(Not name.null_or_empty())
+        Dim n As typed_node = Me
+        While True
+            assert(Not n Is Nothing)
+            If n.type_name.Equals(name) Then
+                o = n
+                Return True
+            End If
+            If n.root() Then
+                Return False
+            End If
+            n = n.parent
+        End While
+        Return assert(False)
+    End Function
+
+    Public Function ancestor_of(ByVal name As String) As typed_node
+        Dim o As typed_node = Nothing
+        assert(ancestor_of(name, o))
+        Return o
+    End Function
 End Class
