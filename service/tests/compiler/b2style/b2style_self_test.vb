@@ -55,7 +55,7 @@ Public NotInheritable Class b2style_self_test
         assertion.equal(exp_assertions, v.size() - uint32_1, name)
         Dim i As UInt32 = 0
         While i < v.size() - uint32_1
-            assertions.of(v(i)).starts_with(success, name)
+            assertions.of(v(i)).starts_with(success, name, "@", i)
             i += uint32_1
         End While
     End Sub

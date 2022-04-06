@@ -20,7 +20,7 @@ Partial Public NotInheritable Class bstyle
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Return assert(o.append("""" + n.ancestor_of("sentence").input() + """"))
+            Return assert(o.append("""" + n.ancestor_of("sentence").input().c_escape() + """"))
         End Function
     End Class
 End Class
