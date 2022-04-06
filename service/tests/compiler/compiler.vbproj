@@ -66,6 +66,7 @@
     <Compile Include="b2style\b2style_test.vb" />
     <Compile Include="b2style\b2style_test_data.vb" />
     <Content Include="b2style\codegen\assert_.txt" />
+    <Content Include="b2style\codegen\assert_with_statement.txt" />
     <Content Include="b2style\codegen\class-constructor.txt" />
     <Content Include="b2style\codegen\delegate.txt" />
     <Content Include="b2style\codegen\vector_destructor.txt" />
