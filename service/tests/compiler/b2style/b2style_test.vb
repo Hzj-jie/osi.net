@@ -803,6 +803,26 @@ Public NotInheritable Class b2style_test
         assertion.equal(io.output(), "assert ( __STATEMENT__ , i < 100 , ""line 8"" ) ;: line 8")
     End Sub
 
+    <test>
+    Private Shared Sub __func__()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(b2style.with_functions(New interrupts(+io)).
+                                  parse(_b2style_test_data.__func__.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), streams.of(
+            "type0 main([])",
+            "type0 std_out:C__struct__type__id__type([this.C__struct__type__id: C__struct__type__id__type&])",
+            "type0 N__print([])",
+            "type0 N__f2:Integer:String([N__x: Integer, N__s: String])").
+            map(Function(ByVal x As String) As String
+                    Return x + character.newline
+                End Function).
+            collect_by(stream(Of String).collectors.to_str("")).
+            ToString())
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
