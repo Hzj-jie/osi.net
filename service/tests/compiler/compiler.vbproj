@@ -275,6 +275,7 @@
     <Content Include="bstyle\codegen\return_struct.txt" />
     <Content Include="bstyle\codegen\single_level_struct.txt" />
     <Content Include="bstyle\codegen\empty_struct_overloads.txt" />
+    <Content Include="bstyle\codegen\statement.txt" />
     <Content Include="dotnet\codegen\from_source1.cs" />
     <Content Include="logic\codegen\address_of.txt" />
     <Content Include="logic\codegen\address_of_address_of_param.txt" />
