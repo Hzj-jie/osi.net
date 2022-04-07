@@ -31,7 +31,7 @@ Partial Public NotInheritable Class rewriters
                 If debug_dump Then
                     raise_error(error_type.user,
                                 "Debug dump of typed_node_writer ",
-                                r.Replace(";", ";" + newline.incode()).Replace("}", "}" + newline.incode()))
+                                r)
                 End If
             End Sub
         End Class

@@ -9,6 +9,7 @@ Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
+        ' TODO: Consider to merge it with function_signature.
         Private NotInheritable Class current_function_t
             Public ReadOnly name As String
             Public ReadOnly return_type As String
@@ -27,6 +28,10 @@ Partial Public NotInheritable Class bstyle
 
             Public Function allow_return_value() As Boolean
                 Return Not return_type.Equals(compiler.logic.scope.type_t.zero_type)
+            End Function
+
+            Public Function signature() As String
+                Return return_type + " " + name + "(" + const_array.of(+params).ToString() + ")"
             End Function
         End Class
 
@@ -54,15 +59,15 @@ Partial Public NotInheritable Class bstyle
                 Return s.cf
             End Function
 
-            Public Function is_defined() As Boolean
+            Private Function current_function_opt() As [optional](Of current_function_t)
                 Dim s As scope = Me.s
                 While s.cf Is Nothing
                     s = s.parent
                     If s Is Nothing Then
-                        Return False
+                        Return [optional].empty(Of current_function_t)()
                     End If
                 End While
-                Return True
+                Return [optional].of(s.cf)
             End Function
 
             Public Function allow_return_value() As Boolean
@@ -73,6 +78,13 @@ Partial Public NotInheritable Class bstyle
                 Return current_function().name
             End Function
 
+            Public Function name_opt() As [optional](Of String)
+                Return current_function_opt().map(Function(ByVal x As current_function_t) As String
+                                                      assert(Not x Is Nothing)
+                                                      Return x.name
+                                                  End Function)
+            End Function
+
             Public Function return_struct() As Boolean
                 Return s.structs().defined(return_type())
             End Function
@@ -80,6 +92,13 @@ Partial Public NotInheritable Class bstyle
             Public Function return_type() As String
                 assert(allow_return_value())
                 Return current_function().return_type
+            End Function
+
+            Public Function signature() As String
+                Return current_function_opt().map(Function(ByVal x As current_function_t) As String
+                                                      Return x.signature()
+                                                  End Function).
+                                              or_else("unknown_function")
             End Function
         End Structure
 

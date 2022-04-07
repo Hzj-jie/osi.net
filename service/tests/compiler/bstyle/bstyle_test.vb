@@ -162,6 +162,17 @@ Public NotInheritable Class bstyle_test
         assertion.equal(io.output(), "fg")
     End Sub
 
+    <test>
+    Private Shared Sub statement()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(bstyle.with_functions(New interrupts(+io)).
+                                 parse(_bstyle_test_data.statement.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "std_out ( __STATEMENT__ ) ;string s = __STATEMENT__ ;")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

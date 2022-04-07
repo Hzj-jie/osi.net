@@ -21,7 +21,7 @@ Public Class lazy_list_writer
     End Function
 
     Public Function append(ByVal v As UInt32) As Boolean
-        Return append(Convert.ToString(v))
+        Return append(v.ToString())
     End Function
 
     Public Function append(ByVal d As data_block) As Boolean

@@ -50,4 +50,18 @@ byte bstyle__to_byte(int x) {
   return y;
 }
 
+bool bstyle__equal(biguint i, biguint j) {
+  bool result;
+  logic "equal result i j";
+  return result;
+}
+
+bool bstyle__equal(long i, long j) {
+  return bstyle__equal(bstyle__to_biguint(i), bstyle__to_biguint(j));
+}
+
+bool bstyle__equal(int i, int j) {
+  return bstyle__equal(bstyle__to_biguint(i), bstyle__to_biguint(j));
+}
+
 #endif  // BSTYLE_LIB_BSTYLE_INT_H

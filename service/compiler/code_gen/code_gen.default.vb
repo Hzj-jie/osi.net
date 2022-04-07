@@ -225,7 +225,6 @@ Public NotInheritable Class code_gen
                    End Function)
     End Function
 
-    ' TODO: Use in b2style.operations.
     Public Shared Function of_name(Of WRITER As {lazy_list_writer, New}) _
                                   (ByVal name As String) As Action(Of code_gens(Of WRITER))
         Return code_gen_delegate(Of WRITER).of(

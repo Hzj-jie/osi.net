@@ -66,20 +66,20 @@ Public NotInheritable Class bstyle
 
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of logic_writer)))
             Return New code_gens_registrar(Of logic_writer)().
-                           with(Of bool)().
+                           with(bool.instance).
                            with(Of condition)().
                            with(Of for_loop)().
-                           with(Of ufloat)().
+                           with(ufloat.instance).
                            with(Of _function)().
                            with(Of function_call)().
                            with(Of ignore_result_function_call)().
-                           with(Of _integer)().
-                           with(Of biguint)().
+                           with(_integer.instance).
+                           with(biguint.instance).
                            with(Of logic)().
                            with(Of multi_sentence_paragraph)().
                            with(Of param)().
                            with(Of return_clause)().
-                           with(Of _string)().
+                           with(_string.instance).
                            with(Of value)().
                            with(Of value_clause)().
                            with(value_declaration.instance).
@@ -123,7 +123,11 @@ Public NotInheritable Class bstyle
                            with(code_gen.of_ignore_last_child(Of logic_writer)("base-sentence-with-semi-colon")).
                            with(code_gen.of_input_without_ignored(Of logic_writer)("paramtype")).
                            with_of_all_childrens("paramtypelist").
-                           with(code_gen.of_first_child(Of logic_writer)("paramtype-with-comma"))
+                           with(code_gen.of_first_child(Of logic_writer)("paramtype-with-comma")).
+                           with(kw_file.instance).
+                           with(kw_func.instance).
+                           with(kw_line.instance).
+                           with(kw_statement.instance)
         End Function
     End Class
 

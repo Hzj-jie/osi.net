@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 Imports osi.service.interpreter.primitive
 Imports osi.service.math
 
@@ -15,12 +14,9 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class biguint
         Implements code_gen(Of logic_writer)
 
-        Private ReadOnly l As code_gens(Of logic_writer)
+        Public Shared ReadOnly instance As New biguint()
 
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
+        Private Sub New()
         End Sub
 
         Public Function build(ByVal n As typed_node,
@@ -28,8 +24,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.leaf())
-            Dim s As String = Nothing
-            s = n.word().str()
+            Dim s As String = n.word().str()
             s = strmid(s, 0, strlen(s) - uint32_1)
             Dim i As big_uint = Nothing
             If Not big_uint.parse(s, i) Then

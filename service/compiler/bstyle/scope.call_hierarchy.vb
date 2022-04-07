@@ -11,8 +11,7 @@ Partial Public NotInheritable Class bstyle
             Inherits scope_b(Of call_hierarchy_t, scope).call_hierarchy_t
 
             Protected Overrides Function current_function_name() As [optional](Of String)
-                Return [optional].optionally(scope.current().current_function().is_defined(),
-                                             AddressOf scope.current().current_function().name)
+                Return scope.current().current_function().name_opt()
             End Function
 
             Public NotInheritable Class calculator

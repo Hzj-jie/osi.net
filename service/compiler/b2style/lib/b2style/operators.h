@@ -29,45 +29,36 @@ bool not_pre(bool i) {
   return not(i);
 }
 
-// TODO: Use a better way to compare strings, treating them as big_uints is not accurate or efficient.
 bool equal(string i, string j) {
-  bool result;
-  logic "equal b2style__result b2style__i b2style__j";
-  return result;
+  return ::bstyle::str_equal(i, j);
 }
 
 bool not_equal(string i, string j) {
-  bool result;
-  logic "equal b2style__result b2style__i b2style__j";
-  return not(result);
+  return not(equal(i, j));
 }
 
 bool equal(biguint i, biguint j) {
-  bool result;
-  logic "equal b2style__result b2style__i b2style__j";
-  return result;
+  return ::bstyle::equal(i, j);
 }
 
 bool not_equal(biguint i, biguint j) {
-  bool result;
-  logic "equal b2style__result b2style__i b2style__j";
-  return not(result);
+  return not(equal(i, j));
 }
 
 bool equal(long i, long j) {
-  return equal(::bstyle::to_biguint(i), ::bstyle::to_biguint(j));
+  return ::bstyle::equal(i, j);
 }
 
 bool not_equal(long i, long j) {
-  return not_equal(::bstyle::to_biguint(i), ::bstyle::to_biguint(j));
+  return not(equal(i, j));
 }
 
 bool equal(int i, int j) {
-  return equal(::bstyle::to_biguint(i), ::bstyle::to_biguint(j));
+  return ::bstyle::equal(i, j);
 }
 
 bool not_equal(int i, int j) {
-  return not_equal(::bstyle::to_biguint(i), ::bstyle::to_biguint(j));
+  return not(equal(i, j));
 }
 
 bool equal(bool i, bool j) {
@@ -76,8 +67,7 @@ bool equal(bool i, bool j) {
 }
 
 bool not_equal(bool i, bool j) {
-  if (i) return !j;
-  return j;
+  return not(equal(i, j));
 }
 
 bool greater_than(biguint i, biguint j) {

@@ -66,9 +66,11 @@
     <Compile Include="b2style\b2style_test.vb" />
     <Compile Include="b2style\b2style_test_data.vb" />
     <Content Include="b2style\codegen\assert_.txt" />
+    <Content Include="b2style\codegen\assert_with_statement.txt" />
     <Content Include="b2style\codegen\class-constructor.txt" />
     <Content Include="b2style\codegen\delegate.txt" />
     <Content Include="b2style\codegen\vector_destructor.txt" />
+    <Content Include="b2style\codegen\__func__.txt" />
     <Content Include="b2style\self-compile-error-test\empty_template_paramtypelist.txt" />
     <Content Include="b2style\self-compile-error-test\empty_template_type_param_list.txt" />
     <Content Include="b2style\self-compile-error-test\copy-primitive-to-struct.txt" />
@@ -147,6 +149,7 @@
     <Content Include="b2style\self-test\class-inheritance-compile-only.txt" />
     <Content Include="b2style\self-test\class-inheritance-template-variables.txt" />
     <Content Include="b2style\self-test\reinterpret_cast_ref.txt" />
+    <Content Include="b2style\self-test\str-operators.txt" />
     <Content Include="b2style\self-test\struct-and-primitive-type-with-same-name.txt" />
     <Content Include="b2style\self-test\redefine-struct-member-type.txt" />
     <Content Include="b2style\self-compile-error-test\struct-reference-member.txt" />
@@ -172,6 +175,7 @@
     <Content Include="b2style\self-test\vector-test.txt" />
     <Content Include="b2style\self-test\virtual-function-compile-only.txt" />
     <Content Include="b2style\self-test\void-variable.txt" />
+    <Content Include="b2style\self-test\__file__.txt" />
     <Content Include="bstyle\codegen\delegate.txt" />
     <Content Include="bstyle\codegen\func_name_with_dot.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />
@@ -272,6 +276,7 @@
     <Content Include="bstyle\codegen\return_struct.txt" />
     <Content Include="bstyle\codegen\single_level_struct.txt" />
     <Content Include="bstyle\codegen\empty_struct_overloads.txt" />
+    <Content Include="bstyle\codegen\statement.txt" />
     <Content Include="dotnet\codegen\from_source1.cs" />
     <Content Include="logic\codegen\address_of.txt" />
     <Content Include="logic\codegen\address_of_address_of_param.txt" />
