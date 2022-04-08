@@ -29,7 +29,7 @@ Partial Public NotInheritable Class syntaxer
             Me.collection = collection
         End Sub
 
-        Public Sub New(ByVal token_str_type As map(Of String, UInt32))
+        Public Sub New(ByVal token_str_type As unordered_map(Of String, UInt32))
             Me.New(New syntax_collection(token_str_type))
         End Sub
 

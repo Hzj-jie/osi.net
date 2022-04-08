@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
-Imports osi.service.automata.syntaxer
 
 ' TODO: Merge with matching_group
 Partial Public NotInheritable Class nlexer
@@ -31,16 +30,21 @@ Partial Public NotInheritable Class nlexer
     Private Sub New(ByVal rs As vector(Of pair(Of String, rule)))
         assert(Not rs.null_or_empty())
         Me.rs = rs
-        Me.sc = New syntax_collection(map.emplace_index(
-                        rs.stream().
-                           map(Function(ByVal i As pair(Of String, rule)) As String
-                                   assert(Not i Is Nothing)
-                                   If dump_rules Then
-                                       raise_error(error_type.user, "Rule ", i.first, ": ", i.second)
-                                   End If
-                                   Return i.first
-                               End Function).
-                           to_array()))
+        Me.sc = New syntax_collection(rs.stream().
+                                         map(Function(ByVal i As pair(Of String, rule)) As String
+                                                 assert(Not i Is Nothing)
+                                                 If dump_rules Then
+                                                     raise_error(error_type.user, "Rule ", i.first, ": ", i.second)
+                                                 End If
+                                                 Return i.first
+                                             End Function).
+                                         with_index().
+                                         map(Function(ByVal x As tuple(Of UInt32, String)) As _
+                                                     first_const_pair(Of UInt32, String)
+                                                 Return x.to_first_const_pair()
+                                             End Function).
+                                         map(first_const_pair(Of UInt32, String).emplace_reverse).
+                                         collect_to(Of unordered_map(Of String, UInt32))())
     End Sub
 
     Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of result)

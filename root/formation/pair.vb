@@ -150,6 +150,18 @@ Public NotInheritable Class pair(Of FT, ST)
             Return p.second
         End Function
 
+    Public Shared ReadOnly reverse As Func(Of pair(Of FT, ST), pair(Of ST, FT)) =
+        Function(ByVal p As pair(Of FT, ST)) As pair(Of ST, FT)
+            assert(Not p Is Nothing)
+            Return pair.[of](p.second, p.first)
+        End FUnction
+
+    Public Shared ReadOnly emplace_reverse As Func(Of pair(Of FT, ST), pair(Of ST, FT)) =
+        Function(ByVal p As pair(Of FT, ST)) As pair(Of ST, FT)
+            assert(Not p Is Nothing)
+            Return pair.emplace_of(p.second, p.first)
+        End FUnction
+
     Public Shared ReadOnly first_comparer As Func(Of pair(Of FT, ST), pair(Of FT, ST), Int32) =
         Function(ByVal l As pair(Of FT, ST),
                  ByVal r As pair(Of FT, ST)) As Int32

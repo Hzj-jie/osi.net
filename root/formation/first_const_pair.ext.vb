@@ -9,6 +9,7 @@ Imports osi.root.constants
 Imports osi.root.template
 
 Partial Public NotInheritable Class first_const_pair
+    ' TODO: Remove
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function first_compare(Of T1, T2)(ByVal this As first_const_pair(Of T1, T2),
                                                     ByVal that As first_const_pair(Of T1, T2)) As Int32
@@ -21,6 +22,7 @@ Partial Public NotInheritable Class first_const_pair
         Return compare(this.first, that.first)
     End Function
 
+    ' TODO: Move to pair
     Public NotInheritable Class first_hasher(Of T1, T2, _HASHER As _to_uint32(Of T1))
         Inherits _to_uint32(Of first_const_pair(Of T1, T2))
 
@@ -37,6 +39,7 @@ Partial Public NotInheritable Class first_const_pair
         End Function
     End Class
 
+    ' TODO: Move to pair
     Public NotInheritable Class first_equaler(Of T1, T2, _EQUALER As _equaler(Of T1))
         Inherits _equaler(Of first_const_pair(Of T1, T2))
 
@@ -54,6 +57,7 @@ Partial Public NotInheritable Class first_const_pair
         End Function
     End Class
 
+    ' TODO: Remove
     Public NotInheritable Class first_comparer(Of T1, T2, _COMPARER As _comparer(Of T1))
         Inherits _comparer(Of first_const_pair(Of T1, T2))
 

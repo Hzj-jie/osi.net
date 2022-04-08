@@ -96,6 +96,7 @@ Public Module _map
         Return this
     End Function
 
+    ' TODO: Remove
     Private Function reverse(Of KEY_T, VALUE_T)(ByVal i As map(Of KEY_T, VALUE_T),
                                                 ByRef o As map(Of VALUE_T, KEY_T),
                                                 ByVal copy_required As Boolean) As Boolean
@@ -197,6 +198,7 @@ Public NotInheritable Class map
         Return create_index(vs, True)
     End Function
 
+    ' TODO: Remove
     Public Shared Function emplace_index(Of KEY_T)(ByVal ParamArray vs() As KEY_T) As map(Of KEY_T, UInt32)
         Return create_index(vs, False)
     End Function

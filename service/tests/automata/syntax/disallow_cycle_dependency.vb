@@ -15,10 +15,9 @@ Namespace syntaxer
     Public NotInheritable Class disallow_cycle_dependency
         <test>
         Private Shared Sub run()
-            Dim r As rule = Nothing
-            r = New rule(New syntax_collection(map.of(pair.emplace_of("self-inc", uint32_1),
-                                                      pair.emplace_of("self-dec", uint32_2),
-                                                      pair.emplace_of("variable-name", uint32_3))))
+            Dim r As New rule(New syntax_collection(unordered_map.of(pair.emplace_of("self-inc", uint32_1),
+                                                                     pair.emplace_of("self-dec", uint32_2),
+                                                                     pair.emplace_of("variable-name", uint32_3))))
             assertion.is_true(r.parse_content(syntaxer_test_rule_files.cycle_dependency_syntaxer))
             assertion.is_false(r.export().syntaxer.match(typed_word.fakes(uint32_3, uint32_1)))
         End Sub
