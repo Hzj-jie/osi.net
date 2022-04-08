@@ -21,8 +21,8 @@ Partial Public Class unordered_map( _
     Inherits hasharray( _
                  Of first_const_pair(Of KEY_T, VALUE_T),
                     _true,
-                    first_const_pair.first_hasher(Of KEY_T, VALUE_T, _HASHER),
-                    first_const_pair.first_equaler(Of KEY_T, VALUE_T, _EQUALER))
+                    first_const_pair(Of KEY_T, VALUE_T).first_hasher(Of _HASHER),
+                    first_const_pair(Of KEY_T, VALUE_T).first_equaler(Of _EQUALER))
     Implements ICloneable, ICloneable(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))
 
 

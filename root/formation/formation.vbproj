@@ -84,7 +84,6 @@
     <Compile Include="stream\streams.enumerators.vb" />
     <Compile Include="threadsafe\waitable_qless.vb" />
     <Compile Include="unordered_map.ext.vb" />
-    <Compile Include="first_const_pair.ext.vb" />
     <Compile Include="hasharray\hasharray.ext.vb" />
     <Compile Include="hasharray\hasharray.implements.vb" />
     <Compile Include="hasharray\hasharray.iterator.vb" />

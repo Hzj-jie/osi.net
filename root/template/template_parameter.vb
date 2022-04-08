@@ -18,6 +18,7 @@ Public NotInheritable Class __do
     End Sub
 End Class
 
+' TODO: Should be an interface to use structures in favor of classes.
 Public MustInherit Class __do(Of T)
     Protected MustOverride Function at() As T
 

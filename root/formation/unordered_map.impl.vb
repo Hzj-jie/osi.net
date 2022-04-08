@@ -13,11 +13,11 @@ Partial Public Class unordered_map( _
                             VALUE_T,
                             _HASHER As _to_uint32(Of KEY_T),
                             _EQUALER As _equaler(Of KEY_T))
-    Inherits hasharray( _
+    Inherits hasharray(
                  Of first_const_pair(Of KEY_T, VALUE_T),
                     _true,
-                    first_const_pair.first_hasher(Of KEY_T, VALUE_T, _HASHER),
-                    first_const_pair.first_equaler(Of KEY_T, VALUE_T, _EQUALER))
+                    first_const_pair(Of KEY_T, VALUE_T).first_hasher(Of _HASHER),
+                    first_const_pair(Of KEY_T, VALUE_T).first_equaler(Of _EQUALER))
     Implements ICloneable, ICloneable(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -44,8 +44,8 @@ Partial Public Class unordered_map( _
                                        As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER)
         Return hasharray(Of first_const_pair(Of KEY_T, VALUE_T),
                             _true,
-                            first_const_pair.first_hasher(Of KEY_T, VALUE_T, _HASHER),
-                            first_const_pair.first_equaler(Of KEY_T, VALUE_T, _EQUALER)) _
+                            first_const_pair(Of KEY_T, VALUE_T).first_hasher(Of _HASHER),
+                            first_const_pair(Of KEY_T, VALUE_T).first_equaler(Of _EQUALER)) _
                    .move(Of unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER))(v)
     End Function
 
@@ -53,8 +53,8 @@ Partial Public Class unordered_map( _
                                         ByVal that As unordered_map(Of KEY_T, VALUE_T, _HASHER, _EQUALER)) As Boolean
         Return hasharray(Of first_const_pair(Of KEY_T, VALUE_T),
                             _true,
-                            first_const_pair.first_hasher(Of KEY_T, VALUE_T, _HASHER),
-                            first_const_pair.first_equaler(Of KEY_T, VALUE_T, _EQUALER)) _
+                            first_const_pair(Of KEY_T, VALUE_T).first_hasher(Of _HASHER),
+                            first_const_pair(Of KEY_T, VALUE_T).first_equaler(Of _EQUALER)) _
                    .swap(this, that)
     End Function
 
@@ -132,19 +132,18 @@ Partial Public NotInheritable Class unordered_map(Of KEY_T, VALUE_T)
     Public Shared Shadows Function move(ByVal v As unordered_map(Of KEY_T, VALUE_T)) _
                                        As unordered_map(Of KEY_T, VALUE_T)
         Return hasharray(Of first_const_pair(Of KEY_T, VALUE_T),
-                                _true,
-                                first_const_pair.first_hasher(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T)),
-                                first_const_pair.first_equaler(Of KEY_T, VALUE_T, default_equaler(Of KEY_T))) _
+                            _true,
+                            first_const_pair(Of KEY_T, VALUE_T).first_hasher(Of fast_to_uint32(Of KEY_T)),
+                            first_const_pair(Of KEY_T, VALUE_T).first_equaler(Of default_equaler(Of KEY_T))) _
                    .move(Of unordered_map(Of KEY_T, VALUE_T))(v)
     End Function
 
     Public Shared Shadows Function swap(ByVal this As unordered_map(Of KEY_T, VALUE_T),
                                         ByVal that As unordered_map(Of KEY_T, VALUE_T)) As Boolean
         Return hasharray(Of first_const_pair(Of KEY_T, VALUE_T),
-                                _true,
-                                first_const_pair.first_hasher(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T)),
-                                first_const_pair.first_equaler(Of KEY_T, VALUE_T, default_equaler(Of KEY_T))) _
+                            _true,
+                            first_const_pair(Of KEY_T, VALUE_T).first_hasher(Of fast_to_uint32(Of KEY_T)),
+                            first_const_pair(Of KEY_T, VALUE_T).first_equaler(Of default_equaler(Of KEY_T))) _
                    .swap(this, that)
     End Function
 End Class
-'finish unordered_map.vbp --------

@@ -247,7 +247,7 @@ Public NotInheritable Class map(Of KEY_T, VALUE_T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
-        MyBase.New(AddressOf first_const_pair.first_compare(Of KEY_T, VALUE_T))
+        MyBase.New(first_const_pair(Of KEY_T, VALUE_T).first_comparer)
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
