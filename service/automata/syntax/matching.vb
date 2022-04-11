@@ -127,12 +127,8 @@ Partial Public NotInheritable Class syntaxer
                                ByVal type As UInt32,
                                ByVal pos As UInt32,
                                ByVal f As Func(Of result)) As result
-<<<<<<< HEAD
-            If disable_cycle_dependency_check Or False Then
-=======
             If disable_cycle_dependency_check Or
                thread_static_argument_default(Of disable_cycle_dependency_check_protector).of(False) Then
->>>>>>> master
                 Return f()
             End If
             assert(Not f Is Nothing)
