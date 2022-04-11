@@ -49,11 +49,6 @@ Public NotInheritable Class thread_static_implementation_of(Of T)
             Return thread_static_resolver(Of Func(Of T), impl).resolve(r)
         End Function
 
-        Public Shared Shadows Operator +(ByVal this As impl) As impl
-            assert(object_compare([default], this) = 0 OrElse this Is Nothing)
-            Return [default]
-        End Operator
-
         Private Sub New()
         End Sub
     End Class
