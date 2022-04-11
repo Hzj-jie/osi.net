@@ -26,15 +26,13 @@ Partial Public NotInheritable Class rlexer
             Public ReadOnly type_choice As match_choice
             Public ReadOnly word_choice As match_choice
             Private ReadOnly str_type As unordered_map(Of String, UInt32)
-            Private ReadOnly type_str As unordered_map(Of UInt32, String)
 
             Private Sub New(ByVal rlexer As rlexer,
                             ByVal macros As macros,
                             ByVal words() As regex,
                             ByVal type_choice As match_choice,
                             ByVal word_choice As match_choice,
-                            ByVal str_type As unordered_map(Of String, UInt32),
-                            ByVal type_str As unordered_map(Of UInt32, String))
+                            ByVal str_type As unordered_map(Of String, UInt32))
                 assert(Not rlexer Is Nothing)
                 Me.rlexer = rlexer
                 assert(Not macros Is Nothing)
@@ -45,8 +43,6 @@ Partial Public NotInheritable Class rlexer
                 Me.word_choice = word_choice
                 assert(Not str_type Is Nothing)
                 Me.str_type = str_type
-                assert(Not type_str Is Nothing)
-                Me.type_str = type_str
             End Sub
 
             Public Shared Function create(ByVal i As rule, ByRef o As exporter) As Boolean
@@ -57,7 +53,6 @@ Partial Public NotInheritable Class rlexer
                 Dim type_choice As match_choice = Nothing
                 Dim word_choice As match_choice = Nothing
                 Dim str_type As New unordered_map(Of String, UInt32)()
-                Dim type_str As New unordered_map(Of UInt32, String)()
                 If Not i.macros.empty() Then
                     macros.define(i.macros)
                 End If
@@ -91,84 +86,15 @@ Partial Public NotInheritable Class rlexer
                         assert(rlexer.define(words(CInt(j))))
                         assert(Not String.IsNullOrEmpty(i.words(j).first))
                         str_type(i.words(j).first) = rlexer.regex_count() - uint32_1
-                        type_str(rlexer.regex_count() - uint32_1) = i.words(j).first
                     Next
                 End If
 
-                o = New exporter(rlexer, macros, words, type_choice, word_choice, str_type, type_str)
+                o = New exporter(rlexer, macros, words, type_choice, word_choice, str_type)
                 Return True
-            End Function
-
-            Public Function str_to_type(ByVal i As String, ByRef o As UInt32) As Boolean
-                Dim it As unordered_map(Of String, UInt32).iterator = str_type.find(i)
-                If it = str_type.end() Then
-                    Return False
-                End If
-                o = (+it).second
-                Return True
-            End Function
-
-            Public Function str_to_type(ByVal i As String) As UInt32
-                Dim o As UInt32 = 0
-                If str_to_type(i, o) Then
-                    Return o
-                End If
-                Return typed_word.unknown_type
-            End Function
-
-            Public Function type_to_str(ByVal i As UInt32, ByRef o As String) As Boolean
-                Dim it As unordered_map(Of UInt32, String).iterator = type_str.find(i)
-                If it = type_str.end() Then
-                    Return False
-                End If
-                o = (+it).second
-                Return True
-            End Function
-
-            Public Function type_to_str(ByVal i As UInt32) As String
-                Dim o As String = Nothing
-                If type_to_str(i, o) Then
-                    Return o
-                End If
-                Return Nothing
             End Function
 
             Public Function str_type_mapping() As unordered_map(Of String, UInt32)
                 Return copy(str_type)
-            End Function
-
-            Public Function types_to_strs(ByVal v As vector(Of typed_word), ByRef o As vector(Of String)) As Boolean
-                If v.null_or_empty() Then
-                    Return True
-                End If
-                o.renew()
-                o.resize(v.size())
-                For i As UInt32 = 0 To v.size() - uint32_1
-                    Dim s As String = Nothing
-                    If Not v(i) Is Nothing AndAlso type_to_str(v(i).type, s) Then
-                        o(i) = s
-                    Else
-                        Return False
-                    End If
-                Next
-                Return True
-            End Function
-
-            Public Function strs_to_types(ByVal v As vector(Of String), ByRef o As vector(Of UInt32)) As Boolean
-                If v.null_or_empty() Then
-                    Return True
-                End If
-                o.renew()
-                o.resize(v.size())
-                For i As UInt32 = 0 To v.size() - uint32_1
-                    Dim u As UInt32 = Nothing
-                    If str_to_type(v(i), u) Then
-                        o(i) = u
-                    Else
-                        Return False
-                    End If
-                Next
-                Return True
             End Function
         End Class
     End Class

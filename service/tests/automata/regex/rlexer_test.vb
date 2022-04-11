@@ -1,15 +1,17 @@
 ﻿
-Imports osi.root.constants
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.automata
 Imports osi.service.automata.rlexer
 Imports lexer = osi.service.automata.rlexer
 
 Namespace rlexer
-    Public Class rlexer_test
+    Public NotInheritable Class rlexer_test
         Inherits [case]
 
         Private Shared ReadOnly cases() As pair(Of String, String())
@@ -41,21 +43,30 @@ Namespace rlexer
             assert(Not isemptyarray(cases))
             assert(Not r Is Nothing)
             Dim e As rule.exporter = Nothing
-            If assertion.is_true(r.export(e)) AndAlso assertion.is_not_null(e) Then
-                Dim l As lexer = Nothing
-                l = e.rlexer
-                If assertion.is_not_null(l) Then
-                    For i As UInt32 = 0 To array_size(cases) - uint32_1
-                        assert(Not cases(i) Is Nothing)
-                        Dim v As vector(Of typed_word) = Nothing
-                        Dim o As vector(Of String) = Nothing
-                        If assertion.is_true(l.match(cases(i).first, v)) AndAlso
-                           e.types_to_strs(v, o) AndAlso
-                           assertion.is_not_null(o) Then
-                            assertion.array_equal(+o, cases(i).second)
-                        End If
-                    Next
-                End If
+            If Not assertion.is_true(r.export(e)) OrElse Not assertion.is_not_null(e) Then
+                Return False
+            End If
+            Dim l As lexer = e.rlexer
+            If assertion.is_not_null(l) Then
+                For i As Int32 = 0 To cases.array_size_i() - 1
+                    Dim c As pair(Of String, String()) = cases(i)
+                    assert(Not c Is Nothing)
+                    Dim v As vector(Of typed_word) = Nothing
+                    Dim type_to_str As unordered_map(Of UInt32, String) =
+                        e.str_type_mapping().
+                          stream().
+                          map(first_const_pair(Of String, UInt32).emplace_reverse).
+                          collect_to(Of unordered_map(Of UInt32, String))()
+                    If assertion.is_true(l.match(c.first, v)) Then
+                        assertion.array_equal(v.stream().
+                                                map(Function(ByVal w As typed_word) As String
+                                                        assert(Not w Is Nothing)
+                                                        Return type_to_str(w.type)
+                                                    End Function).
+                                                to_array(),
+                                              c.second)
+                    End If
+                Next
             End If
             Return True
         End Function
