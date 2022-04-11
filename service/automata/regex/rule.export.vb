@@ -16,42 +16,35 @@ Partial Public NotInheritable Class rlexer
         End Function
 
         Public Function export(ByRef o As exporter) As Boolean
-            Return exporter.create(Me, o)
+            Return exporter.create(Me, o, Nothing)
+        End Function
+
+        ' @VisibleForTesting
+        Public Function export(ByRef o As exporter, ByRef macros As macros) As Boolean
+            Return exporter.create(Me, o, macros)
         End Function
 
         Public NotInheritable Class exporter
             Public ReadOnly rlexer As rlexer
-            Public ReadOnly macros As macros
-            Public ReadOnly type_choice As match_choice
-            Public ReadOnly word_choice As match_choice
             Public ReadOnly str_types As const_array(Of String)
 
-            Private Sub New(ByVal rlexer As rlexer,
-                            ByVal macros As macros,
-                            ByVal type_choice As match_choice,
-                            ByVal word_choice As match_choice,
-                            ByVal str_types As const_array(Of String))
+            Private Sub New(ByVal rlexer As rlexer, ByVal str_types As const_array(Of String))
                 assert(Not rlexer Is Nothing)
                 Me.rlexer = rlexer
-                assert(Not macros Is Nothing)
-                Me.macros = macros
-                Me.type_choice = type_choice
-                Me.word_choice = word_choice
                 assert(Not str_types Is Nothing)
                 Me.str_types = str_types
             End Sub
 
-            Public Shared Function create(ByVal i As rule, ByRef o As exporter) As Boolean
+            Public Shared Function create(ByVal i As rule, ByRef o As exporter, ByRef macros As macros) As Boolean
                 If i Is Nothing Then
                     Return False
                 End If
-                Dim macros As New macros()
-                Dim type_choice As match_choice = Nothing
-                Dim word_choice As match_choice = Nothing
+                macros = New macros()
                 If Not i.macros.empty() Then
                     macros.define(i.macros)
                 End If
 
+                Dim type_choice As match_choice = Nothing
                 If i.type_choice Is Nothing Then
                     type_choice = match_choice.first_defined
                 ElseIf Not enum_def.from(i.type_choice, type_choice) Then
@@ -59,6 +52,7 @@ Partial Public NotInheritable Class rlexer
                     Return False
                 End If
 
+                Dim word_choice As match_choice = Nothing
                 If i.word_choice Is Nothing Then
                     word_choice = match_choice.greedy
                 ElseIf Not enum_def.from(i.word_choice, word_choice) Then
@@ -83,7 +77,7 @@ Partial Public NotInheritable Class rlexer
                     Next
                 End If
 
-                o = New exporter(rlexer, macros, type_choice, word_choice, const_array.of(+str_type))
+                o = New exporter(rlexer, const_array.of(+str_type))
                 Return True
             End Function
 
