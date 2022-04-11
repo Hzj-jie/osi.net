@@ -53,9 +53,10 @@ Namespace rlexer
                     assert(Not c Is Nothing)
                     Dim v As vector(Of typed_word) = Nothing
                     Dim type_to_str As unordered_map(Of UInt32, String) =
-                        e.str_type_mapping().
+                        e.str_type.
                           stream().
-                          map(first_const_pair(Of String, UInt32).emplace_reverse).
+                          with_index().
+                          map(AddressOf tuple(Of UInt32, String).to_first_const_pair).
                           collect_to(Of unordered_map(Of UInt32, String))()
                     If assertion.is_true(l.match(c.first, v)) Then
                         assertion.array_equal(v.stream().

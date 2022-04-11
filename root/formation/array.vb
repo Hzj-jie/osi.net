@@ -104,4 +104,10 @@ Public NotInheritable Class array(Of T)
         End If
         Return this.as_array()
     End Operator
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shadows Function stream() As stream(Of T)
+        ' Do not copy elements as const_array.
+        Return streams.of(v)
+    End Function
 End Class

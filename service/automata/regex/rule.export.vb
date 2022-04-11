@@ -93,11 +93,11 @@ Partial Public NotInheritable Class rlexer
             End Function
 
             Public Function str_type_mapping() As unordered_map(Of String, UInt32)
-                Return streams.of(str_type.as_array()).
-                               with_index().
-                               map(AddressOf tuple(Of UInt32, String).to_first_const_pair).
-                               map(first_const_pair(Of UInt32, String).emplace_reverse).
-                               collect_to(Of unordered_map(Of String, UInt32))()
+                Return str_type.stream().
+                                with_index().
+                                map(AddressOf tuple(Of UInt32, String).to_first_const_pair).
+                                map(first_const_pair(Of UInt32, String).emplace_reverse).
+                                collect_to(Of unordered_map(Of String, UInt32))()
             End Function
         End Class
     End Class
