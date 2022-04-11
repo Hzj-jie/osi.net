@@ -53,7 +53,7 @@ Namespace rlexer
                     assert(Not c Is Nothing)
                     Dim v As vector(Of typed_word) = Nothing
                     Dim type_to_str As unordered_map(Of UInt32, String) =
-                        e.str_type.
+                        e.str_types.
                           stream().
                           with_index().
                           map(AddressOf tuple(Of UInt32, String).to_first_const_pair).
