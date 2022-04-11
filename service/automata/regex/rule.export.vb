@@ -137,16 +137,6 @@ Partial Public NotInheritable Class rlexer
                 Return copy(str_type)
             End Function
 
-            Public Function type_str_mapping() As unordered_map(Of UInt32, String)
-                Return copy(type_str)
-            End Function
-
-            Public Sub types_mapping(ByRef str_type As unordered_map(Of String, UInt32),
-                                     ByRef type_str As unordered_map(Of UInt32, String))
-                str_type = str_type_mapping()
-                type_str = type_str_mapping()
-            End Sub
-
             Public Function types_to_strs(ByVal v As vector(Of typed_word), ByRef o As vector(Of String)) As Boolean
                 If v.null_or_empty() Then
                     Return True
