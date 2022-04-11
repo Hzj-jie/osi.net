@@ -119,6 +119,7 @@
     <Compile Include="functor\string_serializer\uri_serializer.vb" />
     <Compile Include="garbage_collector.vb" />
     <Compile Include="GlobalSuppressions.vb" />
+    <Compile Include="implementation_of\thread_static_argument_default.vb" />
     <Compile Include="managed_thread_pool.vb" />
     <Compile Include="mono.vb" />
     <Compile Include="ref\array_ref.vb" />

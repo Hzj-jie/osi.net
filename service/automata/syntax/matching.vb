@@ -13,6 +13,9 @@ Partial Public NotInheritable Class syntaxer
     Public MustInherit Class matching
         Implements IComparable, IComparable(Of matching)
 
+        Private Interface disable_cycle_dependency_check_protector
+        End Interface
+
         Private Shared disable_cycle_dependency_check As argument(Of Boolean)
 
         <ThreadStatic> Private Shared s As map(Of UInt32, UInt32)
@@ -22,6 +25,11 @@ Partial Public NotInheritable Class syntaxer
             assert(Not c Is Nothing)
             Me.c = c
         End Sub
+
+        Public Shared Function disable_cycle_dependency_check_in_thread() As IDisposable
+            Return thread_static_argument_default(Of Boolean, disable_cycle_dependency_check_protector).
+                       scoped_register(True)
+        End Function
 
         Public Structure result
             Public NotInheritable Class suc_t
@@ -119,7 +127,12 @@ Partial Public NotInheritable Class syntaxer
                                ByVal type As UInt32,
                                ByVal pos As UInt32,
                                ByVal f As Func(Of result)) As result
+<<<<<<< HEAD
             If disable_cycle_dependency_check Or False Then
+=======
+            If disable_cycle_dependency_check Or
+               thread_static_argument_default(Of disable_cycle_dependency_check_protector).of(False) Then
+>>>>>>> master
                 Return f()
             End If
             assert(Not f Is Nothing)

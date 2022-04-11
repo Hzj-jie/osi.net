@@ -120,7 +120,9 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
 
     Public Shared Function parse(ByVal input As String, ByVal o As WRITER) As Boolean
         Using thread_static_implementation_of(Of builder).scoped_register(New builder())
-            Return thread_static_implementation_of(Of builder).resolve().build(input, o)
+            Using syntaxer.matching.disable_cycle_dependency_check_in_thread()
+                Return thread_static_implementation_of(Of builder).resolve().build(input, o)
+            End Using
         End Using
     End Function
 
