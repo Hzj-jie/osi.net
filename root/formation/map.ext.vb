@@ -5,7 +5,6 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
-Imports osi.root.constants
 
 Public Module _map
     <Extension()> Public Function null_or_empty(Of KT, VT)(ByVal this As map(Of KT, VT)) As Boolean
@@ -96,56 +95,6 @@ Public Module _map
         Return this
     End Function
 
-    Private Function reverse(Of KEY_T, VALUE_T)(ByVal i As map(Of KEY_T, VALUE_T),
-                                                ByRef o As map(Of VALUE_T, KEY_T),
-                                                ByVal copy_required As Boolean) As Boolean
-        If i Is Nothing Then
-            o = Nothing
-            Return True
-        End If
-
-        o.renew()
-        Dim it As map(Of KEY_T, VALUE_T).iterator = i.begin()
-        While it <> i.end()
-            Dim k As KEY_T = (+it).first
-            Dim v As VALUE_T = (+it).second
-            If copy_required Then
-                k = copy(k)
-                v = copy(v)
-            End If
-            If o.find(v) <> o.end() Then
-                Return False
-            End If
-            o.emplace(v, k)
-            it += 1
-        End While
-        Return True
-    End Function
-
-    <Extension()> Public Function emplace_reverse(Of KEY_T, VALUE_T)(ByVal i As map(Of KEY_T, VALUE_T),
-                                                                     ByRef o As map(Of VALUE_T, KEY_T)) As Boolean
-        Return reverse(i, o, False)
-    End Function
-
-    <Extension()> Public Function emplace_reverse(Of KEY_T, VALUE_T) _
-                                                 (ByVal i As map(Of KEY_T, VALUE_T)) As map(Of VALUE_T, KEY_T)
-        Dim o As map(Of VALUE_T, KEY_T) = Nothing
-        assert(emplace_reverse(i, o))
-        Return o
-    End Function
-
-    <Extension()> Public Function reverse(Of KEY_T, VALUE_T)(ByVal i As map(Of KEY_T, VALUE_T),
-                                                             ByRef o As map(Of VALUE_T, KEY_T)) As Boolean
-        Return reverse(i, o, True)
-    End Function
-
-    <Extension()> Public Function reverse(Of KEY_T, VALUE_T) _
-                                         (ByVal i As map(Of KEY_T, VALUE_T)) As map(Of VALUE_T, KEY_T)
-        Dim o As map(Of VALUE_T, KEY_T) = Nothing
-        assert(reverse(i, o))
-        Return o
-    End Function
-
     <Extension()> Public Function stream(Of K, V)(ByVal i As map(Of K, V)) As stream(Of first_const_pair(Of K, V))
         Return New stream(Of first_const_pair(Of K, V)).container(Of map(Of K, V))(i)
     End Function
@@ -175,30 +124,6 @@ Public NotInheritable Class map
     Public Shared Function emplace_of(Of KEY_T, VALUE_T) _
                                      (ByVal ParamArray vs() As pair(Of KEY_T, VALUE_T)) As map(Of KEY_T, VALUE_T)
         Return create(vs, False)
-    End Function
-
-    Private Shared Function create_index(Of KEY_T)(ByVal vs() As KEY_T,
-                                                   ByVal require_copy As Boolean) As map(Of KEY_T, UInt32)
-        Dim r As New map(Of KEY_T, UInt32)()
-        Dim i As UInt32 = 0
-        While i < array_size(vs)
-            Dim v As KEY_T = Nothing
-            v = vs(CInt(i))
-            If require_copy Then
-                v = copy(v)
-            End If
-            r.emplace(v, i)
-            i += uint32_1
-        End While
-        Return r
-    End Function
-
-    Public Shared Function index(Of KEY_T)(ByVal ParamArray vs() As KEY_T) As map(Of KEY_T, UInt32)
-        Return create_index(vs, True)
-    End Function
-
-    Public Shared Function emplace_index(Of KEY_T)(ByVal ParamArray vs() As KEY_T) As map(Of KEY_T, UInt32)
-        Return create_index(vs, False)
     End Function
 
     Public Shared Function move(Of K, V)(ByVal i As map(Of K, V)) As map(Of K, V)

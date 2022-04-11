@@ -5,12 +5,15 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utils
 
 Partial Public NotInheritable Class syntaxer
     Public MustInherit Class matching
         Implements IComparable, IComparable(Of matching)
+
+        Private Shared disable_cycle_dependency_check As argument(Of Boolean)
 
         <ThreadStatic> Private Shared s As map(Of UInt32, UInt32)
         Protected ReadOnly c As syntax_collection
@@ -116,6 +119,9 @@ Partial Public NotInheritable Class syntaxer
                                ByVal type As UInt32,
                                ByVal pos As UInt32,
                                ByVal f As Func(Of result)) As result
+            If disable_cycle_dependency_check Or False Then
+                Return f()
+            End If
             assert(Not f Is Nothing)
             If s Is Nothing Then
                 s = New map(Of UInt32, UInt32)()

@@ -22,6 +22,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.template
 
 Partial Public NotInheritable Class const_pair
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -116,6 +117,39 @@ Public NotInheritable Class const_pair(Of FT, ST)
                                    End Function)
     End Sub
 
+    Public NotInheritable Class first_hasher(Of _HASHER As _to_uint32(Of FT))
+        Inherits _to_uint32(Of const_pair(Of FT, ST))
+
+        Private Shared ReadOnly hasher As _HASHER = alloc(Of _HASHER)()
+
+        Public Overrides Function at(ByRef k As const_pair(Of FT, ST)) As UInt32
+            assert(Not k Is Nothing)
+            Return hasher(k.first)
+        End Function
+
+        Public Overrides Function reverse(ByVal i As UInt32) As const_pair(Of FT, ST)
+            assert(False)
+            Return Nothing
+        End Function
+    End Class
+
+    Public NotInheritable Class first_equaler(Of _EQUALER As _equaler(Of FT))
+        Inherits _equaler(Of const_pair(Of FT, ST))
+
+        Private Shared ReadOnly equaler As _EQUALER = alloc(Of _EQUALER)()
+
+        Public Overrides Function at(ByRef i As const_pair(Of FT, ST),
+                                     ByRef j As const_pair(Of FT, ST)) As Boolean
+            Dim c As Int32
+            If object_compare(i, j, c) Then
+                Return c = 0
+            End If
+            assert(Not i Is Nothing)
+            assert(Not j Is Nothing)
+            Return equaler(i.first, j.first)
+        End Function
+    End Class
+
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Sub New(ByVal first As FT, ByVal second As ST)
         Me.first = first
@@ -155,6 +189,18 @@ Public NotInheritable Class const_pair(Of FT, ST)
             End If
             Return p.second
         End Function
+
+    Public Shared ReadOnly reverse As Func(Of const_pair(Of FT, ST), const_pair(Of ST, FT)) =
+        Function(ByVal p As const_pair(Of FT, ST)) As const_pair(Of ST, FT)
+            assert(Not p Is Nothing)
+            Return const_pair.[of](p.second, p.first)
+        End FUnction
+
+    Public Shared ReadOnly emplace_reverse As Func(Of const_pair(Of FT, ST), const_pair(Of ST, FT)) =
+        Function(ByVal p As const_pair(Of FT, ST)) As const_pair(Of ST, FT)
+            assert(Not p Is Nothing)
+            Return const_pair.emplace_of(p.second, p.first)
+        End FUnction
 
     Public Shared ReadOnly first_comparer As Func(Of const_pair(Of FT, ST), const_pair(Of FT, ST), Int32) =
         Function(ByVal l As const_pair(Of FT, ST),
