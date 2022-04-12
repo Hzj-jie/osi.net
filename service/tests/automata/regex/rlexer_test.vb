@@ -49,23 +49,16 @@ Namespace rlexer
             Dim l As lexer = e.rlexer
             If assertion.is_not_null(l) Then
                 For i As Int32 = 0 To cases.array_size_i() - 1
-                    Dim c As pair(Of String, String()) = cases(i)
-                    assert(Not c Is Nothing)
+                    assert(Not cases(i) Is Nothing)
                     Dim v As vector(Of typed_word) = Nothing
-                    Dim type_to_str As unordered_map(Of UInt32, String) =
-                        e.str_types.
-                          stream().
-                          with_index().
-                          map(AddressOf tuple(Of UInt32, String).to_first_const_pair).
-                          collect_to(Of unordered_map(Of UInt32, String))()
-                    If assertion.is_true(l.match(c.first, v)) Then
+                    If assertion.is_true(l.match(cases(i).first, v)) Then
                         assertion.array_equal(v.stream().
                                                 map(Function(ByVal w As typed_word) As String
                                                         assert(Not w Is Nothing)
-                                                        Return type_to_str(w.type)
+                                                        Return e.str_types(w.type)
                                                     End Function).
                                                 to_array(),
-                                              c.second)
+                                              cases(i).second)
                     End If
                 Next
             End If
