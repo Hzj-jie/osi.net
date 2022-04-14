@@ -28,4 +28,7 @@ void main() {
   c.y=2;
   b2style::std_out(c.f());
   c.f2();
+  reinterpret_cast(c, B);
+  b2style::std_out(c.f());
+  c.f2();
 }

@@ -763,7 +763,7 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.class_inheritance.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "3f2")
+        assertion.equal(io.output(), "3f21f2")
     End Sub
 
     <test>
