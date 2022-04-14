@@ -32,7 +32,7 @@ Partial Public NotInheritable Class syntaxer
         End Function
 
         Public Structure result
-            Public NotInheritable Class suc_t
+            Public Structure suc_t
                 Public ReadOnly pos As UInt32
                 Public ReadOnly nodes As vector(Of typed_node)
 
@@ -42,15 +42,19 @@ Partial Public NotInheritable Class syntaxer
                     Me.nodes = nodes
                 End Sub
 
+                Public Function null() As Boolean
+                    Return nodes Is Nothing
+                End Function
+
                 Public Shared Operator Or(ByVal this As suc_t, ByVal that As suc_t) As suc_t
-                    assert(Not this Is Nothing)
-                    assert(Not that Is Nothing)
+                    assert(Not this.null())
+                    assert(Not that.null())
                     If this.pos >= that.pos Then
                         Return this
                     End If
                     Return that
                 End Operator
-            End Class
+            End Structure
 
             ' Not null
             Public Structure fal_t
@@ -77,7 +81,7 @@ Partial Public NotInheritable Class syntaxer
             End Sub
 
             Public Function succeeded() As Boolean
-                Return Not suc Is Nothing
+                Return Not suc.null()
             End Function
 
             Public Function failed() As Boolean
@@ -101,13 +105,13 @@ Partial Public NotInheritable Class syntaxer
             End Function
 
             Public Shared Operator Or(ByVal this As result, ByVal that As result) As result
-                If this.suc Is Nothing AndAlso that.suc Is Nothing Then
+                If this.suc.null() AndAlso that.suc.null() Then
                     Return New result(Nothing, this.fal Or that.fal)
                 End If
-                If this.suc Is Nothing Then
+                If this.suc.null() Then
                     Return New result(that.suc, this.fal Or that.fal)
                 End If
-                If that.suc Is Nothing Then
+                If that.suc.null() Then
                     Return New result(this.suc, this.fal Or that.fal)
                 End If
                 Return New result(this.suc Or that.suc, this.fal Or that.fal)
