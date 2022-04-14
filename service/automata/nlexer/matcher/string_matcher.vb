@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 
 Partial Public NotInheritable Class nlexer
@@ -20,7 +19,8 @@ Partial Public NotInheritable Class nlexer
         End Sub
 
         Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32) Implements matcher.match
-            If strsame(i, pos, s, uint32_0, l) Then
+            assert(Not i Is Nothing)
+            If i.Length() >= pos + l AndAlso String.Compare(i, CInt(pos), s, 0, CInt(l)) = 0 Then
                 Return [optional].of(pos + l)
             End If
             Return [optional].empty(Of UInt32)()

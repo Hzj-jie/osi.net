@@ -18,6 +18,7 @@ Partial Public Class big_uint
 Private NotInheritable Class adaptive_array_uint32
     Implements ICloneable, ICloneable(Of adaptive_array_uint32), IComparable(Of adaptive_array_uint32), IComparable
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32
         assert(n < max_array_size)
         If n <= 2 Then
@@ -30,14 +31,17 @@ Private NotInheritable Class adaptive_array_uint32
     Private d() As UInt32
     Private s As UInt32
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()
         ReDim d(-1)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New(ByVal n As UInt32)
         reserve(n)
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function move(ByVal that As adaptive_array_uint32) As adaptive_array_uint32
         If that Is Nothing Then
             Return Nothing
@@ -52,6 +56,7 @@ Private NotInheritable Class adaptive_array_uint32
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function swap(ByVal this As adaptive_array_uint32, ByVal that As adaptive_array_uint32) As Boolean
         If this Is Nothing OrElse that Is Nothing Then
             Return False
@@ -61,6 +66,7 @@ Private NotInheritable Class adaptive_array_uint32
         Return True
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function replace_by(ByVal d() As UInt32, ByVal s As UInt32) As Boolean
         If array_size(d) >= s Then
             Me.d = d
@@ -70,6 +76,7 @@ Private NotInheritable Class adaptive_array_uint32
         Return False
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub replace_by(ByVal d() As UInt32)
         assert(replace_by(d, array_size(d)))
     End Sub
@@ -150,6 +157,7 @@ Private NotInheritable Class adaptive_array_uint32
 #End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub reserve(ByVal n As UInt32)
         If capacity() >= n Then
             Return
@@ -164,6 +172,7 @@ Private NotInheritable Class adaptive_array_uint32
         End If
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub resize(ByVal n As UInt32)
         If capacity() < n Then
             reserve(n)
@@ -173,6 +182,7 @@ Private NotInheritable Class adaptive_array_uint32
         s = n
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function shrink_to_fit() As Boolean
         assert(capacity() >= size())
         If capacity() = size() Then
@@ -204,13 +214,14 @@ Private NotInheritable Class adaptive_array_uint32
         s = i.s
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CloneT() As adaptive_array_uint32 Implements ICloneable(Of adaptive_array_uint32).Clone
-        Dim r As adaptive_array_uint32 = Nothing
-        r = New adaptive_array_uint32()
+        Dim r As New adaptive_array_uint32()
         r.copy_from(Me)
         Return r
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Function compare(ByVal this As adaptive_array_uint32, ByVal that As adaptive_array_uint32) As Int32
         Dim c As Int32 = 0
         c = object_compare(this, that)
@@ -228,10 +239,12 @@ Private NotInheritable Class adaptive_array_uint32
         Return this.d.deep_compare(that.d, this.size())
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
         Return CompareTo(cast(Of adaptive_array_uint32)(obj, False))
     End Function
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function CompareTo(ByVal other As adaptive_array_uint32) As Int32 Implements IComparable(Of adaptive_array_uint32).CompareTo
         Return compare(Me, other)
     End Function

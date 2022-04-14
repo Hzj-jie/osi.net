@@ -107,7 +107,7 @@ Partial Public NotInheritable Class syntaxer
                 Return [optional].empty(Of typed_node)()
             End If
             Dim r As matching.result.suc_t = m.suc
-            assert(Not r Is Nothing)
+            assert(Not r.null())
             If p = r.pos Then
                 Return [optional].empty(Of typed_node)()
             End If

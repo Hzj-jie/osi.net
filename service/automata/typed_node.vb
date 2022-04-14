@@ -17,7 +17,7 @@ Partial Public NotInheritable Class typed_node
     Public ReadOnly type_name As String
     Public ReadOnly word_start As UInt32
     Public ReadOnly word_end As UInt32 'exclusive
-    Public ReadOnly subnodes As New vector(Of typed_node)()
+    Public ReadOnly subnodes As New vector(Of typed_node)(0)
     Private ReadOnly ref As vector(Of typed_word)
     Private parent As typed_node
 
