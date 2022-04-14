@@ -156,6 +156,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
 
         ' @VisibleForTesting
         Public Shared Function with_current_file(ByVal filename As String) As IDisposable
+            assert(Not filename.empty_or_whitespace())
             cf = filename
             Return defer.to(Sub()
                                 cf = Nothing
