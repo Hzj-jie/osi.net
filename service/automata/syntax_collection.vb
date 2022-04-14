@@ -14,19 +14,17 @@ Public NotInheritable Class syntax_collection
     Implements IComparable, IComparable(Of syntax_collection), ICloneable, ICloneable(Of syntax_collection)
 
     Private ReadOnly token_str_type As unordered_map(Of String, UInt32)
-    Private ReadOnly str_token_type As unordered_map(Of UInt32, String)
+    Private ReadOnly str_token_type As const_array(Of String)
     Private ReadOnly syntax_str_type As unordered_map(Of String, UInt32)
-    Private ReadOnly str_syntax_type As unordered_map(Of UInt32, String)
+    Private ReadOnly str_syntax_type As vector(Of String)
     Private ReadOnly v As vector(Of syntax)
-    Private next_type As UInt32
 
     <copy_constructor>
     Private Sub New(ByVal token_str_type As unordered_map(Of String, UInt32),
-                    ByVal str_token_type As unordered_map(Of UInt32, String),
+                    ByVal str_token_type As const_array(Of String),
                     ByVal syntax_str_type As unordered_map(Of String, UInt32),
-                    ByVal str_syntax_type As unordered_map(Of UInt32, String),
-                    ByVal v As vector(Of syntax),
-                    ByVal next_type As UInt32)
+                    ByVal str_syntax_type As vector(Of String),
+                    ByVal v As vector(Of syntax))
         assert(Not token_str_type Is Nothing)
         assert(Not str_token_type Is Nothing)
         assert(Not syntax_str_type Is Nothing)
@@ -37,12 +35,6 @@ Public NotInheritable Class syntax_collection
         Me.syntax_str_type = syntax_str_type
         Me.str_syntax_type = str_syntax_type
         Me.v = v
-        Me.next_type = next_type
-    End Sub
-
-    Private Sub New(ByVal private_constructor As Boolean)
-        syntax_str_type = New unordered_map(Of String, UInt32)()
-        v = New vector(Of syntax)()
     End Sub
 
     ' test only
@@ -52,40 +44,35 @@ Public NotInheritable Class syntax_collection
 
     ' test only
     Public Sub New(ByVal token_str_types() As String, ByVal syntax_str_types() As String)
-        Me.New(True)
         token_str_type = New unordered_map(Of String, UInt32)()
-        next_type = 0
-        If Not isemptyarray(token_str_types) Then
+        syntax_str_type = New unordered_map(Of String, UInt32)()
+        v = New vector(Of syntax)()
+        If Not token_str_types.isemptyarray() Then
             For i As UInt32 = 0 To array_size(token_str_types) - uint32_1
-                assert(define(token_str_type, token_str_types(CInt(i))))
+                assert(characters.valid_type_str(token_str_types(CInt(i))))
+                assert(token_str_type.emplace(token_str_types(CInt(i)), i).second())
             Next
         End If
-        If Not isemptyarray(syntax_str_types) Then
+        str_token_type = const_array.of(token_str_types)
+        If Not syntax_str_types.isemptyarray() Then
             For i As UInt32 = 0 To array_size(syntax_str_types) - uint32_1
-                assert(define(syntax_str_type, syntax_str_types(CInt(i))))
+                assert(characters.valid_type_str(syntax_str_types(CInt(i))))
+                assert(syntax_str_type.emplace(syntax_str_types(CInt(i)), i).second())
             Next
         End If
-
-        str_token_type = token_str_type.stream().
-                                        map(first_const_pair(Of String, UInt32).emplace_reverse).
-                                        collect_to(Of unordered_map(Of UInt32, String))()
-        str_syntax_type = syntax_str_type.stream().
-                                          map(first_const_pair(Of String, UInt32).emplace_reverse).
-                                          collect_to(Of unordered_map(Of UInt32, String))()
+        str_syntax_type = vector.emplace_of(syntax_str_types)
     End Sub
 
     Public Sub New(ByVal token_str_type As unordered_map(Of String, UInt32))
-        Me.New(True)
         assert(Not token_str_type Is Nothing)
-        copy(Me.token_str_type, token_str_type)
-        next_type = find_next_type()
-
-        str_token_type = token_str_type.stream().
-                                        map(first_const_pair(Of String, UInt32).emplace_reverse).
-                                        collect_to(Of unordered_map(Of UInt32, String))()
-        str_syntax_type = syntax_str_type.stream().
-                                          map(first_const_pair(Of String, UInt32).emplace_reverse).
-                                          collect_to(Of unordered_map(Of UInt32, String))()
+        Me.token_str_type = token_str_type.CloneT()
+        Me.syntax_str_type = New unordered_map(Of String, UInt32)()
+        Me.str_token_type = const_array.of(token_str_type.stream().
+                                                          sort(first_const_pair(Of String, UInt32).second_comparer).
+                                                          map(first_const_pair(Of String, UInt32).first_getter).
+                                                          to_array())
+        Me.str_syntax_type = New vector(Of String)()
+        Me.v = New vector(Of syntax)()
 
         If syntaxer.dump_rules Then
             Dim it As unordered_map(Of String, UInt32).iterator = token_str_type.begin()
@@ -96,25 +83,14 @@ Public NotInheritable Class syntax_collection
         End If
     End Sub
 
-    Private Function find_next_type() As UInt32
-        assert(Not token_str_type Is Nothing)
-        Dim max As UInt32 = 0
-        Dim it As unordered_map(Of String, UInt32).iterator = token_str_type.begin()
-        While it <> token_str_type.end()
-            If (+it).second > max Then
-                max = (+it).second
-            End If
-            it += 1
-        End While
-        assert(max < max_uint32)
-        Return max + uint32_1
+    Private Function next_type() As UInt32
+        Return str_token_type.size() + str_syntax_type.size()
     End Function
 
     Public Sub clear()
         syntax_str_type.clear()
         str_syntax_type.clear()
         v.clear()
-        next_type = find_next_type()
     End Sub
 
     Private Function define(ByVal m As unordered_map(Of String, UInt32),
@@ -126,9 +102,8 @@ Public NotInheritable Class syntax_collection
         End If
         Dim it As unordered_map(Of String, UInt32).iterator = m.find(name)
         If it = m.end() Then
-            o = next_type
+            o = next_type()
             m.emplace(name, o)
-            next_type += uint32_1
         Else
             o = (+it).second
         End If
@@ -140,7 +115,7 @@ Public NotInheritable Class syntax_collection
         If Not define(syntax_str_type, name, o) Then
             Return False
         End If
-        str_syntax_type.emplace(o, name)
+        str_syntax_type.emplace_back(name)
         If syntaxer.dump_rules AndAlso o = next_type - uint32_1 Then
             raise_error(error_type.user, "Define syntax type ", name, ": ", o)
         End If
@@ -168,19 +143,6 @@ Public NotInheritable Class syntax_collection
         Return True
     End Function
 
-    Private Shared Function type_str(ByVal m As unordered_map(Of UInt32, String),
-                                     ByVal id As UInt32,
-                                     ByRef o As String) As Boolean
-        assert(Not m Is Nothing)
-        Dim it As unordered_map(Of UInt32, String).iterator = m.find(id)
-        If it = m.end() Then
-            Return False
-        End If
-        o = (+it).second
-        assert(characters.valid_type_str(o))
-        Return True
-    End Function
-
     Public Function token_type(ByVal name As String, ByRef o As UInt32) As Boolean
         Return str_type(token_str_type, name, o)
     End Function
@@ -190,11 +152,19 @@ Public NotInheritable Class syntax_collection
     End Function
 
     Public Function type_token(ByVal id As UInt32, ByRef o As String) As Boolean
-        Return type_str(str_token_type, id, o)
+        If id < str_token_type.size() Then
+            o = str_token_type(id)
+            Return True
+        End If
+        Return False
     End Function
 
     Public Function type_syntax(ByVal id As UInt32, ByRef o As String) As Boolean
-        Return type_str(str_syntax_type, id, o)
+        If id >= str_token_type.size() AndAlso id < next_type() Then
+            o = str_syntax_type(id - str_token_type.size())
+            Return True
+        End If
+        Return False
     End Function
 
     Public Function type_id(ByVal name As String, ByRef o As UInt32) As Boolean
@@ -295,8 +265,7 @@ Public NotInheritable Class syntax_collection
 
     Public Function CompareTo(ByVal other As syntax_collection) As Int32 _
                              Implements IComparable(Of syntax_collection).CompareTo
-        Dim c As Int32 = 0
-        c = object_compare(Me, other)
+        Dim c As Int32 = object_compare(Me, other)
         If c = object_compare_undetermined Then
             Return compare(Me.v, other.v)
         End If
@@ -312,7 +281,6 @@ Public NotInheritable Class syntax_collection
                                                                 str_token_type,
                                                                 syntax_str_type,
                                                                 str_syntax_type,
-                                                                v,
-                                                                next_type)
+                                                                v)
     End Function
 End Class
