@@ -17,7 +17,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            Return _string.build(n, "unknown_file", o)
+            Return _string.build(n, bstyle.parse_wrapper.current_file(), o)
         End Function
     End Class
 End Class

@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
@@ -127,6 +128,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
     End Function
 
     Public MustInherit Class parse_wrapper
+        <ThreadStatic()> Private Shared cf As String
         Protected ReadOnly functions As interrupts
 
         Public Sub New(ByVal functions As interrupts)
@@ -141,6 +143,37 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             End If
             e = Nothing
             Return False
+        End Function
+
+        Public Shared Function current_file() As String
+            Dim r As String = cf
+            If r Is Nothing Then
+                Return "unknown_file"
+            End If
+            assert(Not r.empty_or_whitespace())
+            Return r
+        End Function
+
+        ' @VisibleForTesting
+        Public Shared Function with_current_file(ByVal filename As String) As IDisposable
+            assert(Not filename.empty_or_whitespace())
+            cf = filename
+            Return defer.to(Sub()
+                                cf = Nothing
+                            End Sub)
+        End Function
+
+        Public Function parse_file(ByVal filename As String, ByRef e As executor) As Boolean
+            Dim s As String
+            Try
+                s = File.ReadAllText(filename)
+            Catch ex As IOException
+                raise_error(error_type.user, "Cannot read content from ", filename, ", ex ", ex)
+                Return False
+            End Try
+            Using with_current_file(filename)
+                Return parse(s, e)
+            End Using
         End Function
 
         Public Function parse(ByVal input As String, ByVal e As exportable) As Boolean

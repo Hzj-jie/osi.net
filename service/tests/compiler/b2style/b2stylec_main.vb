@@ -18,21 +18,28 @@ Public NotInheritable Class b2stylec_main
     <command_line_specified>
     <test>
     Private Shared Sub run()
-        Dim source As String = Nothing
+        Dim e As executor = Nothing
+        Using code_block
+            Dim parser As b2style.parse_wrapper = b2style.with_default_functions()
+            Dim p As _do(Of executor, Boolean) = Nothing
+            If (+input).empty_or_whitespace() Then
+                p = Function(ByRef o As executor) As Boolean
+                        Return parser.parse(Console.In().ReadToEnd(), o)
+                    End Function
+            Else
+                p = Function(ByRef o As executor) As Boolean
+                        Return parser.parse_file(+input, o)
+                    End Function
+            End If
+            assert(p(e))
+        End Using
         Dim text_output As TextWriter = Nothing
         Dim binary_output As Stream = Nothing
-        If (+input).empty_or_whitespace() Then
-            source = Console.In().ReadToEnd()
-        Else
-            source = File.ReadAllText(+input)
-        End If
         If (+output).empty_or_whitespace() Then
             text_output = Console.Out()
         Else
             binary_output = New FileStream(+output, FileMode.Create)
         End If
-        Dim e As executor = Nothing
-        assert(b2style.with_default_functions().parse(source, e))
         If Not text_output Is Nothing Then
             Dim s As String = Nothing
             assert(e.export(s))

@@ -105,7 +105,7 @@ Partial Public NotInheritable Class b2style
                            with(code_gen.of_ignore(Of typed_node_writer)("colon")).
                            with(Of root_type)().
                            with(kw_statement.instance).
-                           with(code_gen.of_input(Of typed_node_writer)("kw-file")).
+                           with(kw_file.instance).
                            with(code_gen.of_input(Of typed_node_writer)("kw-func")).
                            with(code_gen.of_input(Of typed_node_writer)("kw-line")).
                            with_of_only_childs(

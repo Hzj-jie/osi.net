@@ -79,6 +79,7 @@
     <Content Include="b2style\self-test\heap.txt" />
     <Content Include="b2style\self-test\heap_ptr_test.txt" />
     <Content Include="b2style\self-test\mod_equals_to_1.txt" />
+    <Content Include="b2style\self-test\real__file__.txt" />
     <Content Include="b2style\self-test\ref_test.txt" />
     <Content Include="b2style\self-test\ref_value_clause.txt" />
     <Content Include="b2style\self-test\access-biguint-as-heap.txt" />
@@ -273,6 +274,7 @@
     <Content Include="b2style\codegen\heap.txt" />
     <Content Include="bstyle\codegen\nested_struct.txt" />
     <Content Include="bstyle\codegen\overload_function.txt" />
+    <Content Include="bstyle\codegen\real__file__.txt" />
     <Content Include="bstyle\codegen\return_struct.txt" />
     <Content Include="bstyle\codegen\single_level_struct.txt" />
     <Content Include="bstyle\codegen\empty_struct_overloads.txt" />
