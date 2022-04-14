@@ -21,7 +21,7 @@ Public NotInheritable Class b2style_main
         If (+input).empty_or_whitespace() Then
             assert(c.parse(Console.In().ReadToEnd(), e))
         Else
-            assert(c.parse(IO.File.ReadAllText(+input), e))
+            assert(c.parse_file(+input, e))
         End If
         e.execute()
     End Sub

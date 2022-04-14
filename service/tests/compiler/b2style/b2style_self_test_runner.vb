@@ -9,6 +9,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
+Imports osi.service.compiler
 Imports osi.service.resource
 
 Public MustInherit Class b2style_self_test_runner
@@ -36,7 +37,9 @@ Public MustInherit Class b2style_self_test_runner
                                        Return
                                    End If
                                    raise_error(error_type.user, "Execute test case ", name)
-                                   execute(name, text)
+                                   Using b2style.parse_wrapper.with_current_file(name)
+                                       execute(name, text)
+                                   End Using
                                End Sub)
             End Sub)
         assertions.of(a).not_empty()
