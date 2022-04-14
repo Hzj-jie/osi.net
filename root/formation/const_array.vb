@@ -207,4 +207,10 @@ Public Class const_array(Of T)
     Public NotOverridable Overrides Function ToString() As String
         Return "["c + v.to_string(size()) + "]"c
     End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function stream() As stream(Of T)
+        ' Make a copy of each element.
+        Return streams.of(as_array())
+    End Function
 End Class

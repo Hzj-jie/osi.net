@@ -9,8 +9,10 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class rlexer
     Private ReadOnly rs As vector(Of regex)
-    Private ReadOnly type_choice As match_choice
-    Private ReadOnly word_choice As match_choice
+    ' @VisibleForTesting
+    Public ReadOnly type_choice As match_choice
+    ' @VisibleForTesting
+    Public ReadOnly word_choice As match_choice
 
     Public Sub New(ByVal rs As vector(Of regex),
                    ByVal type_choice As match_choice,

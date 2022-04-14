@@ -233,7 +233,7 @@ End Module
 
 Public NotInheritable Class vector
     Private Shared Function create(Of T)(ByVal vs() As T, ByVal require_copy As Boolean) As vector(Of T)
-        Dim r As New vector(Of T)()
+        Dim r As New vector(Of T)(vs.array_size())
         If require_copy Then
             assert(r.push_back(vs))
         Else

@@ -25,12 +25,24 @@ Partial Public Structure tuple(Of T1, T2)
         Return pair.of(_1(), _2())
     End Function
 
+    Public Shared Function to_pair(ByVal x As tuple(Of T1, T2)) As pair(Of T1, T2)
+        Return x.to_pair()
+    End Function
+
     Public Function to_const_pair() As const_pair(Of T1, T2)
         Return const_pair.of(_1(), _2())
     End Function
 
+    Public Shared Function to_const_pair(ByVal x As tuple(Of T1, T2)) As const_pair(Of T1, T2)
+        Return x.to_const_pair()
+    End Function
+
     Public Function to_first_const_pair() As first_const_pair(Of T1, T2)
         Return first_const_pair.of(_1(), _2())
+    End Function
+
+    Public Shared Function to_first_const_pair(ByVal x As tuple(Of T1, T2)) As first_const_pair(Of T1, T2)
+        Return x.to_first_const_pair()
     End Function
 
     Public Shared Function from_pair(ByVal p As pair(Of T1, T2)) As tuple(Of T1, T2)
