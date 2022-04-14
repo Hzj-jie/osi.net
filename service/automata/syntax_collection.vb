@@ -57,7 +57,7 @@ Public NotInheritable Class syntax_collection
         If Not syntax_str_types.isemptyarray() Then
             For i As UInt32 = 0 To array_size(syntax_str_types) - uint32_1
                 assert(characters.valid_type_str(syntax_str_types(CInt(i))))
-                assert(syntax_str_type.emplace(syntax_str_types(CInt(i)), i).second())
+                assert(syntax_str_type.emplace(syntax_str_types(CInt(i)), i + str_token_type.size()).second())
             Next
         End If
         str_syntax_type = vector.emplace_of(syntax_str_types)
