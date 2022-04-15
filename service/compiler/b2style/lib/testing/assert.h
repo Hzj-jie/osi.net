@@ -11,6 +11,11 @@ namespace testing {
 
 int _assertion_count = 0;
 
+// TODO: Find a better way to test the __FILE__ in included files.
+string assert__FILE__() {
+  return __FILE__;
+}
+
 void assert_true(bool v, string msg) {
   _assertion_count++;
   string prefix;

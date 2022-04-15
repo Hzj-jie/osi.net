@@ -15,11 +15,18 @@ Partial Public NotInheritable Class bstyle
     Private Shared include_folders As argument(Of vector(Of String))
     Private Shared ignore_default_include As argument(Of Boolean)
 
-    Public NotInheritable Class parser
+    Public NotInheritable Class file_parser
         Inherits __do(Of String, logic_writer, Boolean)
 
         Public Overrides Function at(ByRef i As String, ByRef j As logic_writer) As Boolean
-            Return code_builder.current().build(i, j)
+            If i Is Nothing Then
+                ' The file has been included already.
+                Return True
+            End If
+            Dim o As logic_writer = j
+            Return parse_wrapper.with_current_file(i, Function(ByVal s As String) As Boolean
+                                                          Return code_builder.current().build(s, o)
+                                                      End Function)
         End Function
     End Class
 
@@ -69,7 +76,7 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Private NotInheritable Class include_with_string
-        Inherits code_gens(Of logic_writer).include_with_string(Of parser,
+        Inherits code_gens(Of logic_writer).include_with_string(Of file_parser,
                                                                    default_includes.folders,
                                                                    default_includes.ignore_default_folder,
                                                                    default_includes.default_folder,
@@ -82,7 +89,7 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Private NotInheritable Class include_with_file
-        Inherits code_gens(Of logic_writer).include_with_file(Of parser,
+        Inherits code_gens(Of logic_writer).include_with_file(Of file_parser,
                                                                  default_includes.folders,
                                                                  default_includes.ignore_default_folder,
                                                                  default_includes.default_folder,

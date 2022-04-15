@@ -128,7 +128,6 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
     End Function
 
     Public MustInherit Class parse_wrapper
-        <ThreadStatic()> Private Shared cf As String
         Protected ReadOnly functions As interrupts
 
         Public Sub New(ByVal functions As interrupts)
@@ -146,24 +145,26 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         End Function
 
         Public Shared Function current_file() As String
-            Dim r As String = cf
-            If r Is Nothing Then
-                Return "unknown_file"
+            Dim r As String = Nothing
+            If instance_stack(Of String, parse_wrapper).back(r) Then
+                Return r
             End If
-            assert(Not r.empty_or_whitespace())
-            Return r
+            Return "unknown_file"
         End Function
 
         ' @VisibleForTesting
         Public Shared Function with_current_file(ByVal filename As String) As IDisposable
             assert(Not filename.empty_or_whitespace())
-            cf = filename
+            instance_stack(Of String, parse_wrapper).current() = filename
             Return defer.to(Sub()
-                                cf = Nothing
+                                instance_stack(Of String, parse_wrapper).current() = Nothing
                             End Sub)
         End Function
 
-        Public Function parse_file(ByVal filename As String, ByRef e As executor) As Boolean
+        Public Shared Function with_current_file(ByVal filename As String,
+                                                 ByVal parse As Func(Of String, Boolean)) As Boolean
+            assert(Not filename.empty_or_whitespace())
+            assert(Not parse Is Nothing)
             Dim s As String
             Try
                 s = File.ReadAllText(filename)
@@ -172,8 +173,19 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
                 Return False
             End Try
             Using with_current_file(filename)
-                Return parse(s, e)
+                Return parse(s)
             End Using
+        End Function
+
+        Public Function parse_file(ByVal filename As String, ByRef e As executor) As Boolean
+            Dim o As executor = Nothing
+            If Not with_current_file(filename, Function(ByVal s As String) As Boolean
+                                                   Return parse(s, o)
+                                               End Function) Then
+                Return False
+            End If
+            e = o
+            Return True
         End Function
 
         Public Function parse(ByVal input As String, ByVal e As exportable) As Boolean

@@ -17,14 +17,6 @@ Partial Public NotInheritable Class b2style
     Private Shared include_folders As argument(Of vector(Of String))
     Private Shared ignore_default_include As argument(Of Boolean)
 
-    Public NotInheritable Class parser
-        Inherits __do(Of String, typed_node_writer, Boolean)
-
-        Public Overrides Function at(ByRef i As String, ByRef j As typed_node_writer) As Boolean
-            Return code_builder.current().build(i, j)
-        End Function
-    End Class
-
     Public NotInheritable Class default_includes
         Private Shared ReadOnly folder As String = create_inc_folder()
 
@@ -72,7 +64,7 @@ Partial Public NotInheritable Class b2style
 
     ' TODO: Consider to include bstyle headers into b2style.
     Private NotInheritable Class include_with_string
-        Inherits code_gens(Of typed_node_writer).include_with_string(Of parser,
+        Inherits code_gens(Of typed_node_writer).include_with_string(Of file_parser,
                                                                         default_includes.folders,
                                                                         default_includes.ignore_default_folder,
                                                                         default_includes.default_folder,
@@ -93,7 +85,7 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Private NotInheritable Class include_with_file
-        Inherits code_gens(Of typed_node_writer).include_with_file(Of parser,
+        Inherits code_gens(Of typed_node_writer).include_with_file(Of file_parser,
                                                                       default_includes.folders,
                                                                       default_includes.ignore_default_folder,
                                                                       default_includes.default_folder,
