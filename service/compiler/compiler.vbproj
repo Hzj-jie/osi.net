@@ -291,6 +291,7 @@
     <Content Include="b2style\lib\b2style\loaded_method.h" />
     <Content Include="b2style\lib\b2style\operators.h" />
     <Content Include="b2style\lib\b2style\stdio.h" />
+    <Content Include="b2style\lib\b2style\str.h" />
     <Content Include="b2style\lib\b2style\types.h" />
     <Content Include="b2style\lib\b2style\ufloat.h" />
     <Content Include="b2style\lib\b2style\ref.h" />
