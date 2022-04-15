@@ -12,13 +12,13 @@ Imports osi.root.template
 Imports osi.service.automata
 
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
-    Public MustInherit Class includes(Of PARSER As __do(Of String, WRITER, Boolean),
+    Public MustInherit Class includes(Of FILE_PARSER As __do(Of String, WRITER, Boolean),
                                          _FOLDERS As __do(Of vector(Of String)),
                                          _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                          _DEFAULT_FOLDER As __do(Of String),
                                          _IGNORE_INCLUDE_ERROR As __do(Of Boolean),
                                          _SHOULD_INCLUDE As __do(Of String, Boolean))
-        Inherits reparser(Of PARSER)
+        Inherits reparser(Of FILE_PARSER)
 
         Private Shared ReadOnly folders As _FOLDERS = alloc(Of _FOLDERS)()
         Private Shared ReadOnly ignore_default_folder As _IGNORE_DEFAULT_FOLDER = alloc(Of _IGNORE_DEFAULT_FOLDER)()
@@ -32,7 +32,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             'Dim f As String = Path.Combine(p, s).Replace("/"c, Path.PathSeparator).Replace("\"c, Path.PathSeparator)
             Dim f As String = Path.Combine(p, s)
             If File.Exists(f) Then
-                o = File.ReadAllText(f)
+                o = f
                 Return True
             End If
             Return False
@@ -68,13 +68,13 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
     End Class
 
-    Public MustInherit Class include_with_string(Of PARSER As __do(Of String, WRITER, Boolean),
+    Public MustInherit Class include_with_string(Of FILE_PARSER As __do(Of String, WRITER, Boolean),
                                                     FOLDERS As __do(Of vector(Of String)),
                                                     IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                     DEFAULT_FOLDER As __do(Of String),
                                                     IGNORE_INCLUDE_ERROR As __do(Of Boolean),
                                                     SHOULD_INCLUDE As __do(Of String, Boolean))
-        Inherits includes(Of PARSER,
+        Inherits includes(Of FILE_PARSER,
                              FOLDERS,
                              IGNORE_DEFAULT_FOLDER,
                              DEFAULT_FOLDER,
@@ -88,13 +88,13 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
     End Class
 
-    Public MustInherit Class include_with_file(Of PARSER As __do(Of String, WRITER, Boolean),
+    Public MustInherit Class include_with_file(Of FILE_PARSER As __do(Of String, WRITER, Boolean),
                                                   FOLDERS As __do(Of vector(Of String)),
                                                   IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                   DEFAULT_FOLDER As __do(Of String),
                                                   IGNORE_INCLUDE_ERROR As __do(Of Boolean),
                                                   SHOULD_INCLUDE As __do(Of String, Boolean))
-        Inherits includes(Of PARSER,
+        Inherits includes(Of FILE_PARSER,
                              FOLDERS,
                              IGNORE_DEFAULT_FOLDER,
                              DEFAULT_FOLDER,
