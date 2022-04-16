@@ -170,7 +170,7 @@ Partial Public NotInheritable Class logic
         End Function
 
         Public Function is_assignable_from_bool() As Boolean
-            If is_assignable_from_size(sizeof_bool_implementation) Then
+            If is_assignable_from_size(sizeof_bool) Then
                 Return True
             End If
             errors.unassignable_from_bool(Me)

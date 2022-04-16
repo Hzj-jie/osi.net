@@ -8,7 +8,6 @@ Imports System.Runtime.InteropServices
 Imports osi.root.constants
 
 Public Module _sizeof
-    Public Const sizeof_bool_implementation As UInt32 = 1
     Public ReadOnly sizeof_bool As UInt32 = type_info(Of Boolean).size_uint32()
     Public ReadOnly sizeof_sbyte As UInt32 = type_info(Of SByte).size_uint32()
     Public ReadOnly sizeof_byte As UInt32 = type_info(Of Byte).size_uint32()
