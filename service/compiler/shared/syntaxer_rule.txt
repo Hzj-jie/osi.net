@@ -60,12 +60,13 @@ struct kw-struct type-name start-paragraph [struct-body]* end-paragraph semi-col
 
 # Function-like instructions.
 reinterpret-cast kw-reinterpret-cast start-bracket variable-name comma type-name end-bracket
+static-cast kw-static-cast start-bracket variable-name comma type-name end-bracket
 undefine kw-undefine start-bracket variable-name end-bracket
 dealloc kw-dealloc start-bracket variable-name end-bracket
 
 root-type-with-semi-colon [value-definition, heap-declaration, value-declaration, logic, typedef, delegate]? semi-colon
 base-root-type [root-type-with-semi-colon, function, include, define, ifndef-wrapped, struct]
-base-sentence-with-semi-colon [ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, typedef, reinterpret-cast, delegate, undefine, dealloc]? semi-colon
+base-sentence-with-semi-colon [ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, typedef, reinterpret-cast, static-cast, delegate, undefine, dealloc]? semi-colon
 
 delegate kw-delegate type-name name start-bracket [paramtypelist]? end-bracket
 paramtype type-name [reference]?

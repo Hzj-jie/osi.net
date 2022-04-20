@@ -22,6 +22,7 @@ kw-file __FILE__
 kw-func __func__
 kw-line __LINE__
 kw-statement __STATEMENT__
+kw-static-cast static_cast
 
 single-line-comment //[*|\n]*
 multi-line-comment /\*[*|\*/]*\*/
