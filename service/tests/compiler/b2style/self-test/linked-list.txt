@@ -1,0 +1,36 @@
+﻿
+#include <b2style.h>
+#include <testing.h>
+#include <assert.h>
+
+template <T>
+class linked_node {
+  T v;
+  type_ptr _next;
+
+  void construct() {
+    this._next = 0;
+  }
+
+  void create_next(T v) {
+    linked_node n[1];
+    n[0].v = v;
+    static_cast(n, type_ptr);
+    this._next = n;
+    undefine(n);
+  }
+
+  linked_node<T> next() {
+    assert(__STATEMENT__ + " @" + __FILE__, this._next != 0);
+    type_ptr copy = this._next;
+    static_cast(copy, linked_node);
+    return copy[0];
+  }
+};
+
+void main() {
+  linked_node<int> l();
+  linked_node<int> c = l;
+  for (int i = 0; i < 10; i++) {
+  }
+}

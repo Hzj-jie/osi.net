@@ -15,12 +15,10 @@ void f(S s) {
   }
 }
 
-/*
 void f(type_ptr p) {
   static_cast(p, S);
   f(p);
 }
-*/
 
 void main() {
   S s[10];
@@ -28,7 +26,7 @@ void main() {
     s[i].x = i;
     s[i].y = b2style::int_to_str(i);
   }
-  // static_cast(s, type_ptr);
+  static_cast(s, type_ptr);
   f(s);
   b2style::testing::finished();
 }
