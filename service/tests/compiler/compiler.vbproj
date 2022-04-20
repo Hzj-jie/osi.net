@@ -151,7 +151,7 @@
     <Content Include="b2style\self-test\class-inheritance-base-variables.txt" />
     <Content Include="b2style\self-test\class-inheritance-compile-only.txt" />
     <Content Include="b2style\self-test\class-inheritance-template-variables.txt" />
-    <Content Include="b2style\self-test\reinterpret_cast_ptr_type.txt" />
+    <Content Include="b2style\self-test\static_cast_ptr_type.txt" />
     <Content Include="b2style\self-test\reinterpret_cast_ref.txt" />
     <Content Include="b2style\self-test\str-operators.txt" />
     <Content Include="b2style\self-test\struct-and-primitive-type-with-same-name.txt" />

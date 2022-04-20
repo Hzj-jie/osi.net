@@ -17,7 +17,7 @@ void f(S s) {
 
 /*
 void f(type_ptr p) {
-  reinterpret_cast(p, S);
+  static_cast(p, S);
   f(p);
 }
 */
@@ -28,7 +28,7 @@ void main() {
     s[i].x = i;
     s[i].y = b2style::int_to_str(i);
   }
-  // reinterpret_cast(s, type_ptr);
+  // static_cast(s, type_ptr);
   f(s);
   b2style::testing::finished();
 }
