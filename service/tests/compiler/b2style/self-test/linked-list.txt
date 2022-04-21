@@ -11,20 +11,50 @@ class linked_node {
   void construct() {
     this._next = 0;
   }
+};
+
+template <T>
+class linked_iterator {
+  type_ptr p;
+
+  void construct(type_ptr p) {
+    assert(__STATEMENT__ + " @" + __FILE__, p != 0);
+	this.p = p;
+  }
+
+  void set(T v) {
+    type_ptr t = this.p;
+	static_cast(t, linked_node<T>);
+	t[0] = v;
+  }
+
+  T get() {
+    type_ptr t = this.p;
+	static_cast(t, linked_node<T>);
+	return t[0].v;
+  }
+};
+
+template <T>
+class linked_list {
+  T v;
+  type_ptr _next;
+
+  void construct() {
+    this._next = 0;
+  }
 
   void create_next(T v) {
-    linked_node n[1];
+    T n[1];
     n[0].v = v;
     static_cast(n, type_ptr);
     this._next = n;
     undefine(n);
   }
 
-  linked_node<T> next() {
-    assert(__STATEMENT__ + " @" + __FILE__, this._next != 0);
-    type_ptr copy = this._next;
-    static_cast(copy, linked_node);
-    return copy[0];
+  linked_iterator<T> next() {
+    linked_iterator<T> it(this._next);
+	return it;
   }
 };
 
