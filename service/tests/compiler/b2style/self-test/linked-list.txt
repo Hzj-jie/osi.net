@@ -25,7 +25,7 @@ class linked_iterator {
   void set(T v) {
     type_ptr t = this.p;
 	static_cast(t, linked_node<T>);
-	t[0] = v;
+	t[0].v = v;
   }
 
   T get() {
@@ -37,30 +37,16 @@ class linked_iterator {
 
 template <T>
 class linked_list {
-  T v;
-  type_ptr _next;
+  type_ptr head;
+  type_ptr tail;
 
   void construct() {
-    this._next = 0;
-  }
-
-  void create_next(T v) {
-    T n[1];
-    n[0].v = v;
-    static_cast(n, type_ptr);
-    this._next = n;
-    undefine(n);
-  }
-
-  linked_iterator<T> next() {
-    linked_iterator<T> it(this._next);
-	return it;
+    this.head = 0;
+    this.tail = 0;
   }
 };
 
 void main() {
-  linked_node<int> l();
-  linked_node<int> c = l;
   for (int i = 0; i < 10; i++) {
   }
 }
