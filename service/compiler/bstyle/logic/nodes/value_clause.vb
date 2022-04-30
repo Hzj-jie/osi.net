@@ -53,7 +53,7 @@ Partial Public NotInheritable Class bstyle
             If Not l.of(value).build(o) Then
                 Return False
             End If
-            If scope.current().structs().defined(type) Then
+            If scope.current().structs().types().defined(type) Then
                 Using r As read_scoped(Of scope.value_target_t.target).ref = bstyle.value.read_target()
                     If Not (+r).type.Equals(type) Then
                         raise_error(error_type.user,

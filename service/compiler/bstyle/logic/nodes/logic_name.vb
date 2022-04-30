@@ -50,7 +50,7 @@ Partial Public NotInheritable Class bstyle
             End If
             Dim ta As scope.type_alias_proxy = scope.current().type_alias()
             Return builders.of_callee(name,
-                                      If(scope.current().structs().defined(return_type),
+                                      If(scope.current().structs().types().defined(return_type),
                                          compiler.logic.scope.type_t.variable_type,
                                          scope.current().type_alias()(return_type)),
                                       parameters.stream().

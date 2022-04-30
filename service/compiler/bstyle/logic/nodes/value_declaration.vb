@@ -39,7 +39,7 @@ Partial Public NotInheritable Class bstyle
                                                         ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
 
-            If Not scope.current().structs().defined(type) AndAlso
+            If Not scope.current().structs().types().defined(type) AndAlso
                scope.current().variables().define(type, name) AndAlso
                builders.of_define(name,
                                   scope.current().type_alias()(type)).

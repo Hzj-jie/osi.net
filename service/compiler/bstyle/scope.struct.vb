@@ -97,36 +97,66 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End Function
 
-            Public Function defined(ByVal type As String) As Boolean
-                Return resolve(type, Nothing, Nothing)
+            Public Structure type_proxy
+                Private ReadOnly s As scope
+
+                Public Sub New(ByVal s As scope)
+                    assert(Not s Is Nothing)
+                    Me.s = s
+                End Sub
+
+                Public Function defined(ByVal type As String) As Boolean
+                    Return s.structs().resolve(type, Nothing, Nothing)
+                End Function
+            End Structure
+
+            Public Function types() As type_proxy
+                Return New type_proxy(s)
             End Function
 
-            Public Function resolve(ByVal name As String, ByRef o As tuple(Of String, struct_def)) As Boolean
-                Dim s As scope = Me.s
-                While Not s Is Nothing
-                    Dim type As String = Nothing
-                    If Not s.v.resolve(name, type) Then
-                        s = s.parent
-                        Continue While
-                    End If
-                    Dim v As struct_def = Nothing
-                    ' The type may not be a struct at all.
-                    If Not s.structs().resolve(type, name, v) Then
+            Public Structure variable_proxy
+                Private ReadOnly s As scope
+
+                Public Sub New(ByVal s As scope)
+                    assert(Not s Is Nothing)
+                    Me.s = s
+                End Sub
+
+                Public Function resolve(ByVal name As String, ByRef o As tuple(Of String, struct_def)) As Boolean
+                    Dim s As scope = Me.s
+                    While Not s Is Nothing
+                        Dim type As String = Nothing
+                        If Not s.v.resolve(name, type) Then
+                            s = s.parent
+                            Continue While
+                        End If
+                        Dim v As struct_def = Nothing
+                        ' The type may not be a struct at all.
+                        If Not s.structs().resolve(type, name, v) Then
+                            Return False
+                        End If
+                        o = tuple.of(type, v)
+                        Return True
+                    End While
+                    Return False
+                End Function
+
+                Public Function resolve(ByVal name As String, ByRef v As struct_def) As Boolean
+                    Dim o As tuple(Of String, struct_def) = Nothing
+                    If Not resolve(name, o) Then
                         Return False
                     End If
-                    o = tuple.of(type, v)
+                    v = o.second()
                     Return True
-                End While
-                Return False
-            End Function
+                End Function
 
-            Public Function resolve(ByVal name As String, ByRef v As struct_def) As Boolean
-                Dim o As tuple(Of String, struct_def) = Nothing
-                If Not resolve(name, o) Then
-                    Return False
-                End If
-                v = o.second()
-                Return True
+                Public Function defined(ByVal name As String) As Boolean
+                    Return resolve(name, [default](Of struct_def).null)
+                End Function
+            End Structure
+
+            Public Function variables() As variable_proxy
+                Return New variable_proxy(s)
             End Function
         End Structure
 
