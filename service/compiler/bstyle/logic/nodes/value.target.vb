@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
                                                                ByVal o As logic_writer)
             assert(Not o Is Nothing)
             type = scope.current().type_alias()(type)
-            assert(Not scope.current().structs().defined(type))
+            assert(Not scope.current().structs().types().defined(type))
             Dim existing_type As String = Nothing
             If scope.current().variables().try_resolve(name, existing_type) Then
                 assert(type.Equals(existing_type))

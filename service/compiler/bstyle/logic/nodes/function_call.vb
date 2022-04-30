@@ -84,7 +84,7 @@ Partial Public NotInheritable Class bstyle
                                If Not return_type_of(name, return_type) Then
                                    Return False
                                End If
-                               If scope.current().structs().defined(return_type) Then
+                               If scope.current().structs().types().defined(return_type) Then
                                    ' TODO: Check the type consistency between function_call and variable receiver.
                                    Dim return_value As String =
                                          strcat(logic_name.temp_variable(n), "@", name, "@return_value")

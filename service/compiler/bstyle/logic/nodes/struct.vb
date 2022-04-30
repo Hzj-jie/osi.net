@@ -31,7 +31,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not target.null_or_whitespace())
             assert(Not target_naming Is Nothing)
             Dim vs As struct_def = Nothing
-            If Not scope.current().structs().resolve(target, vs) Then
+            If Not scope.current().structs().variables().resolve(target, vs) Then
                 Return False
             End If
             assert(Not vs Is Nothing)
@@ -180,7 +180,7 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function dealloc_from_heap(ByVal name As String, ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
             Dim v As struct_def = Nothing
-            If Not scope.current().structs().resolve(name, v) Then
+            If Not scope.current().structs().variables().resolve(name, v) Then
                 Return False
             End If
             assert(Not v Is Nothing)
@@ -193,7 +193,7 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function undefine(ByVal name As String, ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
             Dim v As struct_def = Nothing
-            If Not scope.current().structs().resolve(name, v) Then
+            If Not scope.current().structs().variables().resolve(name, v) Then
                 Return False
             End If
             assert(Not v Is Nothing)

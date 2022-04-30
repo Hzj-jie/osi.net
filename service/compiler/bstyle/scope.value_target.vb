@@ -47,7 +47,7 @@ Partial Public NotInheritable Class bstyle
                     ' Allow empty struct, so the names can be empty.
                     assert(Not names Is Nothing)
                     type = scope.current().type_alias()(type)
-                    If Not scope.current().structs().defined(type) Then
+                    If Not scope.current().structs().types().defined(type) Then
                         assert(names.size() = 1)
                     End If
 

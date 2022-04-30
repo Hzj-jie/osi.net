@@ -86,7 +86,7 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Function return_struct() As Boolean
-                Return s.structs().defined(return_type())
+                Return s.structs().types().defined(return_type())
             End Function
 
             Public Function return_type() As String
