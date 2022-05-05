@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 
@@ -23,9 +24,18 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() = 6)
             Dim name As String = n.child(2).input_without_ignored()
             Dim type As String = scope.current().type_alias()(n.child(4).input_without_ignored())
-            Return (struct.redefine(name, type, o) OrElse
-                    builders.of_redefine(name, type).to(o)) AndAlso
-                   scope.current().variables().redefine(type, name)
+            If scope.current().structs().types().defined(type) AndAlso
+               scope.current().structs().variables().defined(name) Then
+                ' Convert from struct ptr to struct ptr
+            End If
+            If scope.current().structs().types().defined(type) Then
+                ' Convert from type_ptr to struct ptr
+            End If
+            If scope.current().structs().variables().defined(name) Then
+                ' Convert from struct ptr to type_ptr
+            End If
+            ' Convert from type_ptr to type_ptr
+            Return scope.current().variables().redefine(type, name)
         End Function
     End Class
 End Class
