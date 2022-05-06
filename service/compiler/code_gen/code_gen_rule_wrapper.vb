@@ -34,7 +34,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
 
     Public NotInheritable Class code_builder
         Private Shared ReadOnly code_gens As code_gens(Of WRITER) = new_code_gens()
-        Private Shared nested As UInt32 = 0
+        <ThreadStatic> Private Shared nested As UInt32
 
         Public Shared Function nested_build_level() As UInt32
             Return nested
@@ -143,6 +143,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             Return False
         End Function
 
+        ' TODO: Move to scope?
         Public Shared Function current_file() As String
             Dim r As String = Nothing
             If instance_stack(Of String, parse_wrapper).back(r) Then
