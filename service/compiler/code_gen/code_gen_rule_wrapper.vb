@@ -65,7 +65,6 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         End Sub
     End Class
 
-    ' TODO: builder and code_builder should be a singleton.
     Private NotInheritable Class builder
         Private Shared ReadOnly p As New statements(Of WRITER)()
         Private Shared ReadOnly s As New statements(Of WRITER)()
