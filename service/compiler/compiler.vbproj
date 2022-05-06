@@ -95,7 +95,6 @@
     <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\logic\nodes\kw_statement.vb" />
     <Compile Include="bstyle\logic\nodes\raw_value.vb" />
-    <Compile Include="bstyle\scope.temp_logic_name.vb" />
     <Compile Include="scope_b.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
     <Compile Include="bstyle\logic\nodes\dealloc.vb" />

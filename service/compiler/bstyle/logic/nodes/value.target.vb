@@ -44,17 +44,21 @@ Partial Public NotInheritable Class bstyle
         End Sub
 
         Public Shared Function with_single_data_slot_temp_target(ByVal type As String,
+                                                                 ByVal n As typed_node,
                                                                  ByVal o As logic_writer) As String
-            Dim value_name As String = scope.current().temp_logic_name().variable()
+            Dim value_name As String = logic_name.temp_variable(n)
             define_single_data_slot_temp_target(type, value_name, o)
             with_single_data_slot_target(type, value_name)
             Return value_name
         End Function
 
-        Public Shared Function with_temp_target(ByVal type As String, ByVal o As logic_writer) As vector(Of String)
+        Public Shared Function with_temp_target(ByVal type As String,
+                                                ByVal n As typed_node,
+                                                ByVal o As logic_writer) As vector(Of String)
+            assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             Dim params As struct_def = Nothing
-            assert(scope.current().structs().resolve(type, scope.current().temp_logic_name().variable(), params))
+            assert(scope.current().structs().resolve(type, logic_name.temp_variable(n), params))
             assert(Not params Is Nothing)
             params.primitives.
                    foreach(Sub(ByVal p As builders.parameter)

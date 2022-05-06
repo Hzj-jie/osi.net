@@ -33,32 +33,43 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
     End Function
 
     Public NotInheritable Class code_builder
+<<<<<<< HEAD
         Private Shared ReadOnly code_gens As code_gens(Of WRITER) = new_code_gens()
+        Private Shared nested As UInt32
+
+        Public Shared Function nested_build_level() As UInt32
+            Return nested
+        End Function
 
         Public Shared Function build(ByVal input As String, ByVal o As WRITER) As Boolean
-            assert(Not o Is Nothing)
-            If input.null_or_whitespace() Then
-                Return True
-            End If
-            Dim root As typed_node = Nothing
-            If Not nlp().parse(input, root:=root) Then
-                Return False
-            End If
-            assert(Not root Is Nothing)
-            assert(root.type = typed_node.root_type)
-            assert(root.type_name.Equals(typed_node.root_type_name))
-            If root.leaf() Then
-                Return False
-            End If
-            assert(root.child_count() > 0)
-            Dim i As UInt32 = 0
-            While i < root.child_count()
-                If Not code_gens.of(root.child(i)).build(o) Then
+            nested += uint32_1
+            Using defer.to(Sub()
+                               nested -= uint32_1
+                           End Sub)
+                assert(Not o Is Nothing)
+                If input.null_or_whitespace() Then
+                    Return True
+                End If
+                Dim root As typed_node = Nothing
+                If Not nlp().parse(input, root:=root) Then
                     Return False
                 End If
-                i += uint32_1
-            End While
-            Return True
+                assert(Not root Is Nothing)
+                assert(root.type = typed_node.root_type)
+                assert(root.type_name.Equals(typed_node.root_type_name))
+                If root.leaf() Then
+                    Return False
+                End If
+                assert(root.child_count() > 0)
+                Dim i As UInt32 = 0
+                While i < root.child_count()
+                    If Not code_gens.of(root.child(i)).build(o) Then
+                        Return False
+                    End If
+                    i += uint32_1
+                End While
+                Return True
+            End Using
         End Function
 
         Private Sub New()
