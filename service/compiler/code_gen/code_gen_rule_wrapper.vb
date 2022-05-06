@@ -33,9 +33,8 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
     End Function
 
     Public NotInheritable Class code_builder
-<<<<<<< HEAD
         Private Shared ReadOnly code_gens As code_gens(Of WRITER) = new_code_gens()
-        Private Shared nested As UInt32
+        Private Shared nested As UInt32 = 0
 
         Public Shared Function nested_build_level() As UInt32
             Return nested

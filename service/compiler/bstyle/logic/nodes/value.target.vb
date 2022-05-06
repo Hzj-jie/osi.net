@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports target = osi.service.compiler.bstyle.scope.value_target_t.target
 
