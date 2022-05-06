@@ -135,6 +135,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             Return False
         End Function
 
+        ' TODO: Move to scope?
         Public Shared Function current_file() As String
             Dim r As String = Nothing
             If instance_stack(Of String, parse_wrapper).back(r) Then
