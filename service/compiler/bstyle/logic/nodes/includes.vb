@@ -25,7 +25,7 @@ Partial Public NotInheritable Class bstyle
             End If
             Dim o As logic_writer = j
             Return parse_wrapper.with_current_file(i, Function(ByVal s As String) As Boolean
-                                                          Return code_builder.current().build(s, o)
+                                                          Return code_builder.build(s, o)
                                                       End Function)
         End Function
     End Class
