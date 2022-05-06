@@ -87,16 +87,16 @@ Partial Public NotInheritable Class bstyle
                                If scope.current().structs().types().defined(return_type) Then
                                    ' TODO: Check the type consistency between function_call and variable receiver.
                                    Dim return_value As String =
-                                         scope.current().temp_logic_name().variable() + "@" + name + "@return_value"
+                                         strcat(logic_name.temp_variable(n), "@", name, "@return_value")
                                    assert(value_declaration.declare_single_data_slot(
                                             compiler.logic.scope.type_t.variable_type, return_value, o))
                                    Return builder(name, return_value, parameters) AndAlso
                                           struct.unpack(return_value,
-                                                        value.with_temp_target(return_type, o),
+                                                        value.with_temp_target(return_type, n, o),
                                                         o)
                                End If
                                Return builder(name,
-                                              value.with_single_data_slot_temp_target(return_type, o),
+                                              value.with_single_data_slot_temp_target(return_type, n, o),
                                               parameters)
                            End Function
                 End Function
