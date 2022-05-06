@@ -33,14 +33,14 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
     End Function
 
     Public NotInheritable Class code_builder
-        Private ReadOnly code_gens As code_gens(Of WRITER) = new_code_gens()
-        Private nested As UInt32
+        Private Shared ReadOnly code_gens As code_gens(Of WRITER) = new_code_gens()
+        <ThreadStatic> Private Shared nested As UInt32
 
-        Public Function nested_build_level() As UInt32
+        Public Shared Function nested_build_level() As UInt32
             Return nested
         End Function
 
-        Public Function build(ByVal input As String, ByVal o As WRITER) As Boolean
+        Public Shared Function build(ByVal input As String, ByVal o As WRITER) As Boolean
             nested += uint32_1
             Using defer.to(Sub()
                                nested -= uint32_1
@@ -71,28 +71,26 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             End Using
         End Function
 
-        Public Shared Function current() As code_builder
-            Return thread_static_implementation_of(Of builder).resolve().cb
-        End Function
+        Private Sub New()
+        End Sub
     End Class
 
     Private NotInheritable Class builder
-        Public ReadOnly cb As New code_builder()
-        Private ReadOnly p As New statements(Of WRITER)()
-        Private ReadOnly s As New statements(Of WRITER)()
+        Private Shared ReadOnly p As New statements(Of WRITER)()
+        Private Shared ReadOnly s As New statements(Of WRITER)()
 
-        Public Sub New()
+        Shared Sub New()
             init_prefixes()
             init_suffixes()
         End Sub
 
-        Public Function build(ByVal input As String, ByVal o As WRITER) As Boolean
+        Public Shared Function build(ByVal input As String, ByVal o As WRITER) As Boolean
             assert(Not o Is Nothing)
-            ' Do not run the end_scope operations if currently it's in the root scope, the interpreter/primitive will be
-            ' freed anyway.
+            ' Do not run the end_scope operations if currently it's in the root scope, the interpreter/primitive will
+            ' be freed anyway.
             Using New SCOPE_T().without_end_scope()
                 p.export(o)
-                If Not cb.build(input, o) Then
+                If Not code_builder.build(input, o) Then
                     Return False
                 End If
                 s.export(o)
@@ -110,20 +108,21 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             End While
         End Sub
 
-        Private Sub init_prefixes()
+        Private Shared Sub init_prefixes()
             init_statements(Of _prefixes)(p)
         End Sub
 
-        Private Sub init_suffixes()
+        Private Shared Sub init_suffixes()
             init_statements(Of _suffixes)(s)
+        End Sub
+
+        Private Sub New()
         End Sub
     End Class
 
     Public Shared Function parse(ByVal input As String, ByVal o As WRITER) As Boolean
-        Using thread_static_implementation_of(Of builder).scoped_register(New builder())
-            Using syntaxer.matching.disable_cycle_dependency_check_in_thread()
-                Return thread_static_implementation_of(Of builder).resolve().build(input, o)
-            End Using
+        Using syntaxer.matching.disable_cycle_dependency_check_in_thread()
+            Return builder.build(input, o)
         End Using
     End Function
 
@@ -144,6 +143,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             Return False
         End Function
 
+        ' TODO: Move to scope?
         Public Shared Function current_file() As String
             Dim r As String = Nothing
             If instance_stack(Of String, parse_wrapper).back(r) Then

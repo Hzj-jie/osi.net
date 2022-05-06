@@ -15,7 +15,7 @@ Partial Public NotInheritable Class bstyle
         Public Shared Function temp_variable(ByVal n As typed_node) As String
             assert(Not n Is Nothing)
             Return strcat("temp_value_@",
-                          code_builder.current().nested_build_level(),
+                          code_builder.nested_build_level(),
                           "@",
                           n.char_start(),
                           "-",

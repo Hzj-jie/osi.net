@@ -22,9 +22,7 @@ Partial Public NotInheritable Class bstyle
 
         Protected MustOverride Function parse(ByVal n As typed_node, ByRef o As data_block) As Boolean
 
-        Protected Function build(ByVal n As typed_node,
-                                 ByVal i As data_block,
-                                 ByVal o As logic_writer) As Boolean
+        Protected Function build(ByVal n As typed_node, ByVal i As data_block, ByVal o As logic_writer) As Boolean
             assert(Not n Is Nothing)
             assert(Not i Is Nothing)
             assert(Not o Is Nothing)
