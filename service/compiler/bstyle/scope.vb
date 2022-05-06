@@ -18,7 +18,6 @@ Partial Public NotInheritable Class bstyle
         Private ReadOnly ps As New params_t()
         Private cf As current_function_t
         Private ReadOnly de As New delegate_t()
-        Private ReadOnly t As temp_logic_name_t
 
         <inject_constructor>
         Public Sub New(ByVal parent As scope)
@@ -29,7 +28,6 @@ Partial Public NotInheritable Class bstyle
             Me.New(Nothing)
             d = New define_t()
             f = New function_t()
-            t = New temp_logic_name_t()
         End Sub
     End Class
 End Class
