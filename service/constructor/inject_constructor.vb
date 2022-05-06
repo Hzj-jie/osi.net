@@ -27,15 +27,10 @@ End Class
 
 ' For an implementation to use predefined inject constructor.
 Public NotInheritable Class inject_constructor(Of T)
-    Private Shared ReadOnly info As ConstructorInfo
-    Private Shared ReadOnly f As Func(Of Object(), T)
-
-    Shared Sub New()
-        info = type_info(Of T).annotated_constructor_info(Of inject_constructor)()
-        f = type_info(Of T).annotated_constructor(Of inject_constructor)()
-        assert(Not info Is Nothing)
-        assert(Not f Is Nothing)
-    End Sub
+    Private Shared ReadOnly info As ConstructorInfo =
+        type_info(Of T).annotated_constructor_info(Of inject_constructor)()
+    Private Shared ReadOnly f As Func(Of Object(), T) =
+        type_info(Of T).annotated_constructor(Of inject_constructor)()
 
     Public Shared Function invoke(ByRef o As T, ByVal ParamArray args() As Object) As Boolean
         Try
