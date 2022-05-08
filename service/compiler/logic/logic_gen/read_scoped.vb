@@ -35,7 +35,11 @@ Partial Public NotInheritable Class logic
             End Sub
 
             Private Sub assert_stack_order()
-                assert(equal(current, r.s.back()))
+                If type_info(Of T).is_valuetype Then
+                    assert(equal(current, r.s.back()))
+                Else
+                    assert(Object.ReferenceEquals(current, r.s.back()))
+                End If
             End Sub
 
             Public Sub Dispose() Implements IDisposable.Dispose
