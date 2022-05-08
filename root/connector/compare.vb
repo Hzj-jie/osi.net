@@ -324,6 +324,7 @@ Public Module _compare
         Return False
     End Function
 
+    ' TODO: Remove non-extension versions.
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function non_null_compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
         Try
@@ -334,6 +335,12 @@ Public Module _compare
         End Try
     End Function
 
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function non_null_compare_to(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
+        Return non_null_compare(this, that, o)
+    End Function
+
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
         If object_compare(this, that, o) Then
@@ -342,9 +349,21 @@ Public Module _compare
         Return non_null_compare(this, that, o)
     End Function
 
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function compare_to(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
+        Return compare(this, that, o)
+    End Function
+
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function comparable(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
         Return compare(this, that, 0)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function comparable_to(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
+        Return comparable(this, that)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -361,9 +380,21 @@ Public Module _compare
         Return o
     End Function
 
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function compare_to(Of T, T2)(ByVal this As T, ByVal that As T2) As Int32
+        Return compare(this, that)
+    End Function
+
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function cast_compare(Of T, T2, CompT)(ByVal this As T, ByVal that As T2) As Int32
         Return compare(this, cast(Of CompT)(that))
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function cast_compare_to(Of T, T2, CompT)(ByVal this As T, ByVal that As T2) As Int32
+        Return cast_compare(Of T, T2, CompT)(this, that)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -371,12 +402,25 @@ Public Module _compare
         Return compare(this, cast(Of CompT)(that))
     End Function
 
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function compare_to(Of T, T2 As CompT, CompT)(ByVal this As T, ByVal that As T2) As Int32
+        Return compare(Of T, T2, CompT)(this, that)
+    End Function
+
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(Of T)(ByVal this As T, ByVal that As Object) As Int32
         Return compare(Of T, Object)(this, that)
     End Function
 
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function compare_to(Of T)(ByVal this As T, ByVal that As Object) As Int32
+        Return compare(this, that)
+    End Function
+
     'speed up
+    ' TODO: Remove
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function compare(ByVal this As Byte, ByVal that As Byte) As Int32
         Return this.CompareTo(that)

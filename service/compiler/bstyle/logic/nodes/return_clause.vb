@@ -56,10 +56,10 @@ Partial Public NotInheritable Class bstyle
                                     (+r).type)
                         Return False
                     End If
-                    Dim return_value As String = strcat(logic_name.temp_variable(n),
-                                                        "@",
-                                                        scope.current().current_function().name(),
-                                                        "@return_value")
+                    Dim return_value As String = scope.current().temp_logic_name().variable() +
+                                                 "@" +
+                                                 scope.current().current_function().name() +
+                                                 "@return_value"
                     assert(value_declaration.declare_single_data_slot(
                                compiler.logic.scope.type_t.variable_type, return_value, o))
                     Return struct.pack((+r).names, return_value, o) AndAlso

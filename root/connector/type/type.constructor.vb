@@ -37,8 +37,7 @@ Public Module _constructor
         If t Is Nothing Then
             Return Nothing
         End If
-        Dim constructors() As ConstructorInfo = Nothing
-        constructors = t.constructors()
+        Dim constructors() As ConstructorInfo = t.constructors()
         For i As Int32 = 0 To array_size_i(constructors) - 1
             If constructors(i).has_custom_attribute(Of ATTR)() Then
                 Return constructors(i)
@@ -48,8 +47,7 @@ Public Module _constructor
     End Function
 
     <Extension()> Public Function annotated_constructor(Of ATTR)(ByVal t As Type) As Func(Of Object(), Object)
-        Dim info As ConstructorInfo = Nothing
-        info = annotated_constructor_info(Of ATTR)(t)
+        Dim info As ConstructorInfo = annotated_constructor_info(Of ATTR)(t)
         If info Is Nothing Then
             Return Nothing
         End If
@@ -62,8 +60,7 @@ Public Module _constructor
             Return False
         End If
 
-        Dim cs() As ConstructorInfo = Nothing
-        cs = t.constructors()
+        Dim cs() As ConstructorInfo = t.constructors()
         For i As Int32 = 0 To array_size_i(cs) - 1
             If isemptyarray(cs(i).GetParameters()) AndAlso
                    (accept_private_constructor OrElse cs(i).IsPublic()) Then

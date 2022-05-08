@@ -11,7 +11,7 @@ Partial Public NotInheritable Class b2style
         Inherits __do(Of String, typed_node_writer, Boolean)
 
         Public Overrides Function at(ByRef i As String, ByRef j As typed_node_writer) As Boolean
-            Return code_builder.current().build(i, j)
+            Return code_builder.build(i, j)
         End Function
     End Class
 
@@ -25,7 +25,7 @@ Partial Public NotInheritable Class b2style
             End If
             Dim o As typed_node_writer = j
             Return parse_wrapper.with_current_file(i, Function(ByVal s As String) As Boolean
-                                                          Return code_builder.current().build(s, o)
+                                                          Return code_builder.build(s, o)
                                                       End Function)
         End Function
     End Class

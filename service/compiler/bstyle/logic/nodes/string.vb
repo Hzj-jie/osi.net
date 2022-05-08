@@ -19,10 +19,8 @@ Partial Public NotInheritable Class bstyle
             MyBase.New(code_types.string)
         End Sub
 
-        Public Overloads Shared Function build(ByVal n As typed_node,
-                                               ByVal s As String,
-                                               ByVal o As logic_writer) As Boolean
-            Return instance.build(n, New data_block(s), o)
+        Public Overloads Shared Function build(ByVal s As String, ByVal o As logic_writer) As Boolean
+            Return instance.build(New data_block(s), o)
         End Function
 
         Protected Overrides Function parse(ByVal n As typed_node, ByRef o As data_block) As Boolean

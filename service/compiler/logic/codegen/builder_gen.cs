@@ -97,7 +97,7 @@ public static class Program {
                         "(" + string.Join(", ", passed_parameters) + ")");
       wl("        End Function");
       wl();
-      wl("        Public NotInheritable Class " + ss[0] + "_builder_" + keys_count.ToString());
+      wl("        Public Structure " + ss[0] + "_builder_" + keys_count.ToString());
       wl();
       for (int i = 0; i < parameters.Count; i++) {
         wl("            Private ReadOnly " + passed_parameters[i] + " As " + parameter_types[i]);
@@ -124,7 +124,7 @@ public static class Program {
       }
       wl("                    o.append(newline.incode())");
       wl("            End Function");
-      wl("        End Class");
+      wl("        End Structure");
     }
     wl("    End Class");
     wl("End Class");
