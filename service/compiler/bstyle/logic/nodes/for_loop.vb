@@ -53,8 +53,19 @@ Partial Public NotInheritable Class bstyle
             End Sub
         End Class
 
-        Private Function condition_value(ByVal n As ref, ByVal o As logic_writer) As Boolean
-            Return n.second Is Nothing OrElse l.of(n.second).build(o)
+        Private Function condition_value(ByVal n As ref, ByVal o As logic_writer, ByRef condition As String) As Boolean
+            If Not n.second Is Nothing AndAlso Not l.of(n.second).build(o) Then
+                Return False
+            End If
+            Using read_target As read_scoped(Of scope.value_target_t.target).ref(Of String) =
+                                       value.read_target_single_data_slot()
+                ' TODO: May want to restrict the type of condition.
+                If Not read_target.retrieve(condition) Then
+                    raise_error(error_type.user, "Condition of for-loop cannot be a struct.")
+                    Return False
+                End If
+                Return True
+            End Using
         End Function
 
         Public Function build(ByVal n As typed_node,
@@ -67,25 +78,19 @@ Partial Public NotInheritable Class bstyle
                                If Not ref.first Is Nothing AndAlso Not l.of(ref.first).build(o) Then
                                    Return False
                                End If
-                               If Not condition_value(ref, o) Then
+                               Dim condition As String = Nothing
+                               If Not condition_value(ref, o, condition) Then
                                    Return False
                                End If
-                               Using read_target As read_scoped(Of scope.value_target_t.target).ref(Of String) =
-                                       value.read_target_single_data_slot()
-                                   Dim condition As String = Nothing
-                                   ' TODO: May want to restrict the type of condition.
-                                   If Not read_target.retrieve(condition) Then
-                                       raise_error(error_type.user, "Condition of for-loop cannot be a struct.")
-                                       Return False
-                                   End If
-                                   Return builders.of_while_then(condition,
-                                                                 Function() As Boolean
-                                                                     Return l.of(ref.paragraph).build(o) AndAlso
-                                                                            (ref.third Is Nothing OrElse
-                                                                             l.of(ref.third).build(o)) AndAlso
-                                                                            condition_value(ref, o)
-                                                                 End Function).to(o)
-                               End Using
+                               Return builders.of_while_then(condition,
+                                                             Function() As Boolean
+                                                                 Dim cur_condition As String = Nothing
+                                                                 Return l.of(ref.paragraph).build(o) AndAlso
+                                                                        (ref.third Is Nothing OrElse
+                                                                         l.of(ref.third).build(o)) AndAlso
+                                                                        condition_value(ref, o, cur_condition) AndAlso
+                                                                        builders.of_copy(condition, cur_condition).to(o)
+                                                             End Function).to(o)
                            End Using
                        End Function)
         End Function
