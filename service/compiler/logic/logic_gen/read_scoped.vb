@@ -36,7 +36,7 @@ Partial Public NotInheritable Class logic
 
             Private Sub assert_stack_order()
                 If type_info(Of T).is_valuetype Then
-                    assert(equal(current, r.s.back()))
+                    assert(current.equal_to(r.s.back()))
                 Else
                     assert(Object.ReferenceEquals(current, r.s.back()))
                 End If
