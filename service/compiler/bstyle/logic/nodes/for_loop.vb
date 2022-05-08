@@ -58,7 +58,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Using read_target As read_scoped(Of scope.value_target_t.target).ref(Of String) =
-                                       value.read_target_single_data_slot()
+                    value.read_target_single_data_slot()
                 ' TODO: May want to restrict the type of condition.
                 If Not read_target.retrieve(condition) Then
                     raise_error(error_type.user, "Condition of for-loop cannot be a struct.")
@@ -75,14 +75,10 @@ Partial Public NotInheritable Class bstyle
                        Function() As Boolean
                            Using scope.current().start_scope()
                                Dim ref As New ref(n)
-                               If Not ref.first Is Nothing AndAlso Not l.of(ref.first).build(o) Then
-                                   Return False
-                               End If
                                Dim condition As String = Nothing
-                               If Not condition_value(ref, o, condition) Then
-                                   Return False
-                               End If
-                               Return builders.of_while_then(condition,
+                               Return (ref.first Is Nothing OrElse l.of(ref.first).build(o)) AndAlso
+                                      condition_value(ref, o, condition) AndAlso
+                                      builders.of_while_then(condition,
                                                              Function() As Boolean
                                                                  Dim cur_condition As String = Nothing
                                                                  Return l.of(ref.paragraph).build(o) AndAlso

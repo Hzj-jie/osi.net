@@ -44,10 +44,8 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(n.child_count() = 5)
             Dim condition As String = Nothing
-            If Not while_value(n, o, condition) Then
-                Return False
-            End If
-            Return builders.of_while_then(condition,
+            Return while_value(n, o, condition) AndAlso
+                   builders.of_while_then(condition,
                                           Function() As Boolean
                                               Dim cur_condition As String = Nothing
                                               Return l.of(n.child(4)).build(o) AndAlso
