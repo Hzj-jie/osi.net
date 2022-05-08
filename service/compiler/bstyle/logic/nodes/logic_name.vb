@@ -7,21 +7,10 @@ Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.service.automata
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class logic_name
-        Public Shared Function temp_variable(ByVal n As typed_node) As String
-            assert(Not n Is Nothing)
-            Return strcat("temp_value_@",
-                          code_builder.nested_build_level(),
-                          "@",
-                          n.char_start(),
-                          "-",
-                          n.char_end())
-        End Function
-
         Public Shared Function of_function(Of T As builders.parameter_type) _
                                           (ByVal raw_name As String,
                                            ByVal ParamArray params() As T) As String

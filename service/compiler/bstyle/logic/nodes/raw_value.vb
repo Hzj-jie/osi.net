@@ -22,11 +22,10 @@ Partial Public NotInheritable Class bstyle
 
         Protected MustOverride Function parse(ByVal n As typed_node, ByRef o As data_block) As Boolean
 
-        Protected Function build(ByVal n As typed_node, ByVal i As data_block, ByVal o As logic_writer) As Boolean
-            assert(Not n Is Nothing)
+        Protected Function build(ByVal i As data_block, ByVal o As logic_writer) As Boolean
             assert(Not i Is Nothing)
             assert(Not o Is Nothing)
-            Return builders.of_copy_const(value.with_single_data_slot_temp_target(code_type, n, o), i).to(o)
+            Return builders.of_copy_const(value.with_single_data_slot_temp_target(code_type, o), i).to(o)
         End Function
 
         Public Function build(ByVal n As typed_node,
@@ -39,7 +38,7 @@ Partial Public NotInheritable Class bstyle
                 raise_error(error_type.user, "Cannot parse data to ", code_type, " ", n.trace_back_str())
                 Return False
             End If
-            Return build(n, d, o)
+            Return build(d, o)
         End Function
     End Class
 End Class
