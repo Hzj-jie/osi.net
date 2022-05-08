@@ -21,8 +21,21 @@ Partial Public NotInheritable Class bstyle
             Me.l = b
         End Sub
 
-        Private Function while_value(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
-            Return l.of(n.child(2)).build(o)
+        Private Function while_value(ByVal n As typed_node,
+                                     ByVal o As logic_writer,
+                                     ByRef condition As String) As Boolean
+            If Not l.of(n.child(2)).build(o) Then
+                Return False
+            End If
+            Using value_target As read_scoped(Of scope.value_target_t.target).ref(Of String) =
+                    value.read_target_single_data_slot()
+                ' TODO: May want to restrict the type of condition.
+                If Not value_target.retrieve(condition) Then
+                    raise_error(error_type.user, "Condition of while cannot be a struct.")
+                    Return False
+                End If
+                Return True
+            End Using
         End Function
 
         Public Function build(ByVal n As typed_node,
@@ -30,22 +43,17 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 5)
-            If Not while_value(n, o) Then
+            Dim condition As String = Nothing
+            If Not while_value(n, o, condition) Then
                 Return False
             End If
-            Using value_target As read_scoped(Of scope.value_target_t.target).ref(Of String) =
-                    value.read_target_single_data_slot()
-                Dim condition As String = Nothing
-                ' TODO: May want to restrict the type of condition.
-                If Not value_target.retrieve(condition) Then
-                    raise_error(error_type.user, "Condition of while cannot be a struct.")
-                    Return False
-                End If
-                Return builders.of_while_then(condition,
-                                              Function() As Boolean
-                                                  Return l.of(n.child(4)).build(o) AndAlso while_value(n, o)
-                                              End Function).to(o)
-            End Using
+            Return builders.of_while_then(condition,
+                                          Function() As Boolean
+                                              Dim cur_condition As String = Nothing
+                                              Return l.of(n.child(4)).build(o) AndAlso
+                                                     while_value(n, o, cur_condition) AndAlso
+                                                     builders.of_copy(condition, cur_condition).to(o)
+                                          End Function).to(o)
         End Function
     End Class
 End Class
