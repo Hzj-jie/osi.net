@@ -1,14 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}</ProjectGuid>
     <SccProjectName>$/geminibranch/osi/root/codegen</SccProjectName>
     <SccAuxPath>https://tfs.codeplex.com/tfs/tfs02</SccAuxPath>
     <SccLocalPath>.</SccLocalPath>
     <SccProvider>{4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}</SccProvider>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <ItemGroup>
     <None Include="++--\++--.cpp" />
+    <None Include="app.config" />
     <None Include="buildInfoGen\buildInfoGen.cpp" />
     <None Include="++--\++--.exe" />
     <None Include="buildInfoGen\buildInfoGen.exe" />
