@@ -26,13 +26,27 @@ Partial Public NotInheritable Class bstyle
             Dim type As String = scope.current().type_alias()(n.child(4).input_without_ignored())
             If scope.current().structs().types().defined(type) AndAlso
                scope.current().structs().variables().defined(name) Then
-                ' Convert from struct ptr to struct ptr
+                ' Convert from struct ptr to struct ptr.
+                raise_error(error_type.user,
+                            "Cannot static_cast a struct instance of ",
+                            name,
+                            " to another struct type ",
+                            type,
+                            ", convert it to ",
+                            compiler.logic.scope.type_t.ptr_type,
+                            " first. ",
+                            "TODO: Implementing this ""shortcut"" is quite complicated since the struct fields need ",
+                            "to be carefully considered to avoid conflicting with the target type.")
+                Return False
             End If
             If scope.current().structs().types().defined(type) Then
-                ' Convert from type_ptr to struct ptr
-            End If
-            If scope.current().structs().variables().defined(name) Then
-                ' Convert from struct ptr to type_ptr
+                ' Convert from type_ptr to struct ptr.
+                Dim sdef As struct_def = Nothing
+                assert(scope.current().structs().resolve(type, name, sdef))
+                ' TODO: Implementation
+            ElseIf scope.current().structs().variables().defined(name) Then
+                ' Convert from struct ptr to type_ptr.
+                ' TODO: Implementation
             End If
             ' Convert from type_ptr to type_ptr
             Return scope.current().variables().redefine(type, name)
