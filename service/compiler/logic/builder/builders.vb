@@ -151,7 +151,7 @@ Partial Public NotInheritable Class logic
                              paragraph)
         End Function
 
-        Public NotInheritable Class start_scope_wrapper
+        Public Structure start_scope_wrapper
             Private ReadOnly o As logic_writer
 
             Public Sub New(ByVal o As logic_writer)
@@ -162,7 +162,14 @@ Partial Public NotInheritable Class logic
             Public Function [of](ByVal f As Func(Of logic_writer, Boolean)) As Boolean
                 Return of_start_scope(f).to(o)
             End Function
-        End Class
+
+            Public Function [of](ByVal f As Func(Of Boolean)) As Boolean
+                assert(Not f Is Nothing)
+                Return of_start_scope(Function(ByVal x As logic_writer) As Boolean
+                                          Return f()
+                                      End Function).to(o)
+            End Function
+        End Structure
 
         Public Shared Function start_scope(ByVal o As logic_writer) As start_scope_wrapper
             Return New start_scope_wrapper(o)
