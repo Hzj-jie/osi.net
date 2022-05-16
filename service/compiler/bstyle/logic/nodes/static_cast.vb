@@ -50,6 +50,7 @@ Partial Public NotInheritable Class bstyle
                 Return builders.start_scope(o).of(
                            Function() As Boolean
                                Dim offset_name As String = "@offset"
+                               ' TODO: Using builders.of_define is sufficient.
                                Return value_declaration.declare_single_data_slot(
                                           compiler.logic.scope.type_t.ptr_type,
                                           offset_name,
@@ -63,14 +64,15 @@ Partial Public NotInheritable Class bstyle
                                                                      "@@prefixes@constants@ptr_offset").to(o)
                                           End Function)
                            End Function) AndAlso
-                       builders.of_undefine(name).to(o)
+                       builders.of_undefine(name).to(o) AndAlso
+                       scope.current().variables().redefine(type, name)
             End If
             If scope.current().structs().variables().defined(name) Then
                 ' Convert from struct ptr to type_ptr.
                 Dim sdef As struct_def = Nothing
                 assert(scope.current().structs().variables().resolve(name, sdef))
                 assert(Not sdef Is Nothing)
-                Return value_declaration.declare_single_data_slot(compiler.logic.scope.type_t.ptr_type, name, o) AndAlso
+                Return builders.of_define(name, type).to(o) AndAlso
                        builders.of_copy(name, sdef.primitives().
                                               find_first().
                                               map(Function(ByVal x As builders.parameter) As String
@@ -78,7 +80,8 @@ Partial Public NotInheritable Class bstyle
                                                       Return x.name
                                                   End Function).
                                               or_assert()).to(o) AndAlso
-                       builders.of_undefine(name).to(o)
+                       struct.undefine(name, o) AndAlso
+                       scope.current().variables().redefine(type, name)
             End If
             raise_error(error_type.user, "Unsupported static_cast ", name, " to ", type)
             Return False
