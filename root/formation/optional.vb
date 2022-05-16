@@ -74,40 +74,46 @@ Public Structure [optional](Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function map(Of R)(ByVal f As Func(Of T, R)) As [optional](Of R)
         assert(Not f Is Nothing)
-        If Not Me Then
-            Return [optional].empty(Of R)()
+        If b Then
+            Return [optional].of(f(v))
         End If
-        Return [optional].of(f(+Me))
+        Return [optional].empty(Of R)()
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function or_else(ByVal r As T) As T
         assert(Not r Is Nothing)
-        If empty() Then
-            Return r
+        If b Then
+            Return v
         End If
-        Return +Me
+        Return r
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function or_else(ByVal f As Func(Of T)) As T
         assert(Not f Is Nothing)
-        If empty() Then
-            Return f()
+        If b Then
+            Return v
         End If
-        Return +Me
+        Return f()
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function or_assert() As T
+        assert(b)
+        Return v
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
-        Return Not Me
+        Return Not b
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub if_present(ByVal a As Action(Of T))
         assert(Not a Is Nothing)
-        If Not empty() Then
-            a(+Me)
+        If b Then
+            a(v)
         End If
     End Sub
 
@@ -123,8 +129,7 @@ Public Structure [optional](Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal this As [optional](Of T)) As T
-        assert(this)
-        Return this.v
+        Return this.or_assert()
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -136,9 +141,9 @@ Public Structure [optional](Of T)
     End Operator
 
     Public Overrides Function ToString() As String
-        If empty() Then
-            Return "optional.empty()"
+        If b Then
+            Return strcat("optional(", v, ")")
         End If
-        Return strcat("optional(", v, ")")
+        Return "optional.empty()"
     End Function
 End Structure
