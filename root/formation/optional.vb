@@ -99,6 +99,12 @@ Public Structure [optional](Of T)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function or_assert() As T
+        assert(Not empty())
+        Return v
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function empty() As Boolean
         Return Not Me
     End Function

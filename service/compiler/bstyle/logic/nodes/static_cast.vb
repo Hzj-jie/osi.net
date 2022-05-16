@@ -5,7 +5,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 
@@ -49,27 +48,40 @@ Partial Public NotInheritable Class bstyle
                 assert(Not sdef Is Nothing)
                 assert(sdef.primitive_count() > 0)
                 Return builders.start_scope(o).of(
-                    Function() As Boolean
-                        Dim offset_name As String = "@offset"
-                        Return value_declaration.declare_single_data_slot(
-                                   compiler.logic.scope.type_t.ptr_type,
-                                   offset_name,
-                                   o) AndAlso
-                               sdef.for_each_primitive(
-                                   Function(ByVal t As builders.parameter) As Boolean
-                                       ' TODO: Include bstyle/lib/const.h automatically.
-                                       Return builders.of_add(t.name, offset_name, name).to(o) AndAlso
-                                              builders.of_add(offset_name,
-                                                              offset_name,
-                                                              "@@prefixes@constants@ptr_offset").to(o)
-                                   End Function)
-                    End Function)
-            ElseIf scope.current().structs().variables().defined(name) Then
-                ' Convert from struct ptr to type_ptr.
-                ' TODO: Implementation
+                           Function() As Boolean
+                               Dim offset_name As String = "@offset"
+                               Return value_declaration.declare_single_data_slot(
+                                          compiler.logic.scope.type_t.ptr_type,
+                                          offset_name,
+                                          o) AndAlso
+                                      sdef.for_each_primitive(
+                                          Function(ByVal t As builders.parameter) As Boolean
+                                              ' TODO: Include bstyle/lib/const.h automatically.
+                                              Return builders.of_add(t.name, offset_name, name).to(o) AndAlso
+                                                     builders.of_add(offset_name,
+                                                                     offset_name,
+                                                                     "@@prefixes@constants@ptr_offset").to(o)
+                                          End Function)
+                           End Function) AndAlso
+                       builders.of_undefine(name).to(o)
             End If
-            ' Convert from type_ptr to type_ptr
-            Return scope.current().variables().redefine(type, name)
+            If scope.current().structs().variables().defined(name) Then
+                ' Convert from struct ptr to type_ptr.
+                Dim sdef As struct_def = Nothing
+                assert(scope.current().structs().variables().resolve(name, sdef))
+                assert(Not sdef Is Nothing)
+                Return value_declaration.declare_single_data_slot(compiler.logic.scope.type_t.ptr_type, name, o) AndAlso
+                       builders.of_copy(name, sdef.primitives().
+                                              find_first().
+                                              map(Function(ByVal x As builders.parameter) As String
+                                                      assert(Not x Is Nothing)
+                                                      Return x.name
+                                                  End Function).
+                                              or_assert()).to(o) AndAlso
+                       builders.of_undefine(name).to(o)
+            End If
+            raise_error(error_type.user, "Unsupported static_cast ", name, " to ", type)
+            Return False
         End Function
     End Class
 End Class
