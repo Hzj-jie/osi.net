@@ -2,8 +2,6 @@
 #ifndef BSTYLE_LIB_BSTYLE_CONSTANTS_H
 #define BSTYLE_LIB_BSTYLE_CONSTANTS_H
 
-#include <bstyle/types.h>
-
 logic "define @@prefixes@constants@int_0 Integer";
 logic "copy_const @@prefixes@constants@int_0 i0";
 
