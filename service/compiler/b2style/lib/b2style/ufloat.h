@@ -4,6 +4,7 @@
 
 #include <b2style/loaded_method.h>
 #include <b2style/stdio.h>
+#include <b2style/str.h>
 #include <b2style/types.h>
 
 namespace b2style {
@@ -64,11 +65,6 @@ ufloat divide(ufloat i, ufloat j) {
 ufloat power(ufloat i, ufloat j) {
   logic "float_power b2style__i b2style__i b2style__j";
   return i;
-}
-
-string ufloat_to_str(ufloat i) {
-  load_method("big_udec_to_str");
-  return execute_loaded_method<ufloat, string>(i);
 }
 
 void std_out(ufloat i) {
