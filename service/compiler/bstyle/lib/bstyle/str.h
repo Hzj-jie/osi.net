@@ -2,12 +2,16 @@
 #ifndef BSTYLE_LIB_BSTYLE_STR_H
 #define BSTYLE_LIB_BSTYLE_STR_H
 
-#include <bstyle/types.h>
 #include <bstyle/int.h>
+#include <bstyle/types.h>
 
 string bstyle__str_concat(string i, string j) {
   logic "append i j";
   return i;
+}
+
+string bstyle__str_concat(string i, string j, string k) {
+  return bstyle__str_concat(bstyle__str_concat(i, j), k);
 }
 
 string bstyle__str_concat(string i, byte j) {
