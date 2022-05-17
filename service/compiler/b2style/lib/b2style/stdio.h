@@ -4,7 +4,7 @@
 
 #include <b2style/loaded_method.h>
 #include <b2style/operators.h>
-#include <b2style/str.h>
+#include <b2style/to_str.h>
 #include <b2style/types.h>
 #include <bstyle/int.h>
 
