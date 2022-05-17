@@ -3,7 +3,9 @@
 #define B2STYLE_LIB_TESTING_ASSERT_H
 
 #include <b2style/stdio.h>
+#include <b2style/to_str.h>
 #include <bstyle.h>
+#include <bstyle/str.h>
 #include <testing/types.h>
 
 namespace b2style {
@@ -51,7 +53,7 @@ void assert_equal(T t, T2 t2, string msg) {
 
 template <T, T2>
 void assert_equal(T t, T2 t2) {
-  assert_true(t == t2);
+  assert_true(t == t2, ::bstyle::str_concat(::b2style::to_str(t), " != ", ::b2style::to_str(t2)));
 }
 
 template <T>
