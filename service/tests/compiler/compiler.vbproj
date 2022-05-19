@@ -82,6 +82,7 @@
     <Content Include="b2style\self-test\include__FILE__.txt" />
     <Content Include="b2style\self-test\linked-list.txt" />
     <Content Include="b2style\self-test\mod_equals_to_1.txt" />
+    <Content Include="b2style\self-test\ptr_offset.txt" />
     <Content Include="b2style\self-test\real__file__.txt" />
     <Content Include="b2style\self-test\ref_test.txt" />
     <Content Include="b2style\self-test\ref_value_clause.txt" />
