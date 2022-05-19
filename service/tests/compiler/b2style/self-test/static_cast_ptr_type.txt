@@ -8,7 +8,20 @@ struct S {
   string y;
 };
 
+void debug(S s) {
+  reinterpret_cast(s.x, biguint);
+  b2style::std_out(s.x);
+  b2style::std_out("\n");
+  reinterpret_cast(s.y, biguint);
+  b2style::std_out(s.y);
+  b2style::std_out("\n");
+  reinterpret_cast(s.S__struct__type__id, biguint);
+  b2style::std_out(s.S__struct__type__id);
+  b2style::std_out("\n");
+}
+
 void f(S s) {
+  debug(s);
   for (int i = 0; i < 10; i++) {
     b2style::testing::assert_equal<int>(s[i].x, i);
     b2style::testing::assert_equal<string>(s[i].y, b2style::int_to_str(i));
