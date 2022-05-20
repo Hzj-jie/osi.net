@@ -23,9 +23,8 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() = 6)
             Dim name As String = n.child(2).input_without_ignored()
             Dim type As String = scope.current().type_alias()(n.child(4).input_without_ignored())
-            Return (struct.redefine(name, type, o) OrElse
-                    builders.of_redefine(name, type).to(o)) AndAlso
-                   scope.current().variables().redefine(type, name)
+            Return struct.redefine(name, type, o) OrElse
+                   (builders.of_redefine(name, type).to(o) AndAlso scope.current().variables().redefine(type, name))
         End Function
     End Class
 End Class

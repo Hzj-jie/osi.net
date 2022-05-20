@@ -55,6 +55,13 @@ Partial Public NotInheritable Class bstyle
                 Return True
             End Function
 
+            Public Function undefine(ByVal name As String) As Boolean
+                assert(Not name.null_or_whitespace())
+                ' The name should not be an array with index.
+                assert(Not variable.is_heap_name(name))
+                Return s.erase(name)
+            End Function
+
             Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
                 assert(Not name.null_or_whitespace())
                 Return s.find(name, type)
@@ -96,6 +103,22 @@ Partial Public NotInheritable Class bstyle
                             " (new type ",
                             type,
                             ") has not been defined yet.")
+                Return False
+            End Function
+
+            Public Function undefine(ByVal name As String) As Boolean
+                If variable.is_heap_name(name) Then
+                    raise_error(error_type.user, "Undefine works for heap name without index, but got ", name)
+                    Return False
+                End If
+                Dim s As scope = Me.s
+                While Not s Is Nothing
+                    If s.v.undefine(name) Then
+                        Return True
+                    End If
+                    s = s.parent
+                End While
+                raise_error(error_type.user, "Variable ", name, " has not been defined yet.")
                 Return False
             End Function
 

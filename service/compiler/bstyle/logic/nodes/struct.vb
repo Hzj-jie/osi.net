@@ -197,9 +197,11 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
+            Return scope.current().variables().undefine(name) AndAlso
+                   v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
                                             assert(Not m Is Nothing)
-                                            Return builders.of_undefine(m.name).to(o)
+                                            Return scope.current().variables().undefine(m.name) AndAlso
+                                                   builders.of_undefine(m.name).to(o)
                                         End Function)
         End Function
 
@@ -211,9 +213,11 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
+            Return scope.current().variables().redefine(type, name) AndAlso
+                   v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
                                             assert(Not m Is Nothing)
-                                            Return builders.of_redefine(m.name, m.type).to(o)
+                                            Return scope.current().variables().redefine(m.type, m.name) AndAlso
+                                                   builders.of_redefine(m.name, m.type).to(o)
                                         End Function)
         End Function
 
