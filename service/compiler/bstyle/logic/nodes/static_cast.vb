@@ -41,13 +41,14 @@ Partial Public NotInheritable Class bstyle
             End If
             If scope.current().structs().types().defined(type) Then
                 ' Convert from type_ptr to struct ptr.
-                ' TODO: Try to avoid building the struct_def twice.
-                assert(struct.define_in_stack(type, name, o))
                 Dim sdef As struct_def = Nothing
                 assert(scope.current().structs().resolve(type, name, sdef))
                 assert(Not sdef Is Nothing)
                 assert(sdef.primitive_count() > 0)
-                Return builders.start_scope(o).of(
+                Return sdef.for_each_primitive(Function(ByVal t As builders.parameter) As Boolean
+                                                   Return value_declaration.declare_single_data_slot(t.type, t.name, o)
+                                               End Function) AndAlso
+                       builders.start_scope(o).of(
                            Function() As Boolean
                                Dim offset_name As String = "@offset"
                                ' TODO: Using builders.of_define is sufficient.
@@ -80,7 +81,10 @@ Partial Public NotInheritable Class bstyle
                                                       Return x.name
                                                   End Function).
                                               or_assert()).to(o) AndAlso
-                       struct.undefine(name, o) AndAlso
+                       sdef.for_each_primitive(Function(ByVal t As builders.parameter) As Boolean
+                                                   Return builders.of_undefine(t.name).to(o) AndAlso
+                                                          scope.current().variables().undefine(t.name)
+                                               End Function) AndAlso
                        scope.current().variables().redefine(type, name)
             End If
             raise_error(error_type.user, "Unsupported static_cast ", name, " to ", type)
