@@ -64,6 +64,7 @@ Partial Public NotInheritable Class logic
             ' variable_proxy.export function uses variable_t.size to decide the depth of stacks. So besides removing
             ' the items from the map, the count of removed items also needs to be tracked.
             Public Function undefine(ByVal name As String) As Boolean
+                ' TODO: The refs before this variable need to be updated.
                 undefined += uint32_1
                 Return stack.erase(name)
             End Function
