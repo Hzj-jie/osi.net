@@ -100,6 +100,7 @@ Public NotInheritable Class bstyle
                            with(reinterpret_cast.instance).
                            with(undefine.instance).
                            with(dealloc.instance).
+                           with(static_cast.instance).
                            with(Of _delegate)().
                            with_of_only_childs(
                                "base-root-type",

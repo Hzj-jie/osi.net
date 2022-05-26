@@ -25,7 +25,9 @@ Partial Public NotInheritable Class bstyle
             Return build(n.child(0), n.child(1), o)
         End Function
 
-        Public Shared Function build(ByVal type As typed_node, ByVal name As typed_node, ByVal o As logic_writer) As Boolean
+        Public Shared Function build(ByVal type As typed_node,
+                                     ByVal name As typed_node,
+                                     ByVal o As logic_writer) As Boolean
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
             Dim t As String = type.input_without_ignored()
