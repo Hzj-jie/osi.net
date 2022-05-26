@@ -89,7 +89,7 @@ Partial Public NotInheritable Class syntaxer
 
     Public Function match(ByVal v As vector(Of typed_word)) As [optional](Of typed_node)
         assert(Not root_types.null_or_empty())
-        If v.null_or_empty() Then
+        If v Is Nothing Then
             Return [optional].empty(Of typed_node)()
         End If
         v = v.stream().
@@ -98,6 +98,9 @@ Partial Public NotInheritable Class syntaxer
                          Return ignore_types.find(t.type) = ignore_types.end()
                      End Function).
               collect_to(Of vector(Of typed_word))()
+        If v.empty() Then
+            Return [optional].empty(Of typed_node)()
+        End If
         Dim root As typed_node = typed_node.of_root(v)
         Dim p As UInt32 = 0
         While p < v.size()
