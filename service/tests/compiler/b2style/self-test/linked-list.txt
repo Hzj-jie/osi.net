@@ -3,6 +3,7 @@
 #include <testing.h>
 #include <assert.h>
 
+/* TODO: Implement
 template <T>
 class linked_node {
   T v;
@@ -45,8 +46,8 @@ class linked_list {
     this.tail = 0;
   }
 };
+*/
 
 void main() {
-  for (int i = 0; i < 10; i++) {
-  }
+  b2style::testing::finished();
 }
