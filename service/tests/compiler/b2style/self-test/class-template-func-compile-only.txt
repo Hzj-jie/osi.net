@@ -1,0 +1,12 @@
+﻿
+#include <b2style.h>
+#include <testing.h>
+
+class C {
+  template <T>
+  void f() {}
+};
+
+void main() {
+  b2style::testing::finished();
+}
