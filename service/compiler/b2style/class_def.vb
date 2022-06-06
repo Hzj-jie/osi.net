@@ -91,6 +91,31 @@ Partial Public NotInheritable Class b2style
             Return Me
         End Function
 
+        Private Function parse_function(ByVal node As typed_node,
+                                        ByVal type As function_def.type_t) As function_def
+            assert(Not node Is Nothing)
+            Dim signature As New vector(Of name_with_namespace)()
+            signature.emplace_back(function_def.name_of(node.child(1).input()))
+            Dim param_names As New vector(Of String)()
+            If node.child_count() = 6 Then
+                For i As UInt32 = 0 To node.child(3).child_count() - uint32_1
+                    Dim p As typed_node = node.child(3).child(i)
+                    If i < node.child(3).child_count() - uint32_1 Then
+                        p = p.child(0)
+                    End If
+                    assert(p.type_name.Equals("param"))
+                    signature.emplace_back(function_def.type_of(p.child(0).input_without_ignored()))
+                    param_names.emplace_back(p.child(1).input())
+                Next
+            End If
+            Dim f As New function_def(Me,
+                                      function_def.type_of(node.child(0).input_without_ignored()),
+                                      signature,
+                                      type,
+                                      "// This content should never be used.")
+            Return f.with_content(f.declaration(param_names) + node.last_child().input())
+        End Function
+
         Public Function with_funcs(ByVal n As typed_node) As class_def
             assert(Not n Is Nothing)
             Dim has_constructor As Boolean = False
@@ -117,26 +142,7 @@ Partial Public NotInheritable Class b2style
                           ElseIf node.child(1).input().Equals(destruct) Then
                               has_destructor = True
                           End If
-                          Dim signature As New vector(Of name_with_namespace)()
-                          signature.emplace_back(function_def.name_of(node.child(1).input()))
-                          Dim param_names As New vector(Of String)()
-                          If node.child_count() = 6 Then
-                              For i As UInt32 = 0 To node.child(3).child_count() - uint32_1
-                                  Dim p As typed_node = node.child(3).child(i)
-                                  If i < node.child(3).child_count() - uint32_1 Then
-                                      p = p.child(0)
-                                  End If
-                                  assert(p.type_name.Equals("param"))
-                                  signature.emplace_back(function_def.type_of(p.child(0).input_without_ignored()))
-                                  param_names.emplace_back(p.child(1).input())
-                              Next
-                          End If
-                          Dim f As New function_def(Me,
-                                                    function_def.type_of(node.child(0).input_without_ignored()),
-                                                    signature,
-                                                    t.second(),
-                                                    "// This content should never be used.")
-                          with_func(f.with_content(f.declaration(param_names) + node.last_child().input()))
+                          with_func(parse_function(node, t.second()))
                       End Sub)
             If Not has_constructor Then
                 with_func(New function_def(Me,
