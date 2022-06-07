@@ -5,6 +5,14 @@
 class C {
   template <T>
   void f() {}
+
+  template <T>
+  overridable void g() {}
+};
+
+class D : C {
+  template <T>
+  override void g() {}
 };
 
 void main() {
