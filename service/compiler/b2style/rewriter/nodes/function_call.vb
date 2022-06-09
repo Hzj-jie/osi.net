@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 Imports osi.service.constructor
@@ -20,6 +21,25 @@ Partial Public NotInheritable Class b2style
             assert(Not b Is Nothing)
             Me.l = b
         End Sub
+
+        Public Shared Function split_struct_function(ByVal name As String,
+                                                     ByRef o As tuple(Of String, String)) As Boolean
+            assert(Not name.null_or_whitespace())
+            If Not name.Contains(".") Then
+                Return False
+            End If
+            Dim dot_pos As Int32 = name.LastIndexOf(".")
+            ' dot is not allowed to be the first or last character.
+            assert(dot_pos > 0 AndAlso dot_pos < name.Length() - 1)
+            o = tuple.emplace_of(name.Substring(0, dot_pos), name.Substring(dot_pos + 1))
+            Return True
+        End Function
+
+        Private Shared Function split_struct_function(ByVal name As String) As tuple(Of String, String)
+            Dim o As tuple(Of String, String) = Nothing
+            assert(split_struct_function(name, o))
+            Return o
+        End Function
 
         Public Function build(ByVal name As String,
                               ByVal n As typed_node,
@@ -44,14 +64,12 @@ Partial Public NotInheritable Class b2style
                 Return True
             End If
 
-            Dim dot_pos As Int32 = name.LastIndexOf(".")
-            ' dot is not allowed to be the first or last character.
-            assert(dot_pos > 0 AndAlso dot_pos < name.Length() - 1)
-            Dim function_name As String = _namespace.bstyle_format.in_global_namespace(name.Substring(dot_pos + 1))
+            Dim p As tuple(Of String, String) = split_struct_function(name)
+            Dim function_name As String = _namespace.bstyle_format.in_global_namespace(p.second())
             scope.current().call_hierarchy().to_bstyle_function(function_name)
             o.append(function_name)
             o.append("(")
-            o.append(_namespace.bstyle_format.of(name.Substring(0, dot_pos)))
+            o.append(_namespace.bstyle_format.of(p.first()))
             If n.child_count() = 4 Then
                 o.append(", ")
                 If Not l.of(n.child(2)).build(o) Then
