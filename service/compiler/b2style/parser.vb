@@ -10,6 +10,11 @@ Partial Public NotInheritable Class b2style
     Public NotInheritable Class parser
         Inherits __do(Of String, typed_node_writer, Boolean)
 
+        Public Shared ReadOnly instance As New parser()
+
+        Private Sub New()
+        End Sub
+
         Public Overrides Function at(ByRef i As String, ByRef j As typed_node_writer) As Boolean
             Return code_builder.build(i, j)
         End Function
@@ -17,6 +22,11 @@ Partial Public NotInheritable Class b2style
 
     Public NotInheritable Class file_parser
         Inherits __do(Of String, typed_node_writer, Boolean)
+
+        Public Shared ReadOnly instance As New file_parser()
+
+        Private Sub New()
+        End Sub
 
         Public Overrides Function at(ByRef i As String, ByRef j As typed_node_writer) As Boolean
             If i Is Nothing Then

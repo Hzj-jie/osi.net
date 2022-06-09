@@ -142,6 +142,7 @@ Public Module _equal
         Return False
     End Function
 
+    ' TODO: Remove non-extension versions.
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function runtime_equal(ByVal this As Object, ByVal that As Object) As Boolean
         Dim o As Boolean
@@ -158,6 +159,12 @@ Public Module _equal
             Return o
         End If
         Return Object.Equals(this, that)
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function runtime_equal_to(ByVal this As Object, ByVal that As Object) As Boolean
+        Return runtime_equal(this, that)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -204,11 +211,23 @@ Public Module _equal
         End Try
     End Function
 
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function non_null_equal_to(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
+        Return non_null_equal(this, that, o)
+    End Function
+
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function non_null_equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
         Dim o As Boolean
         assert(non_null_equal(this, that, o))
         Return o
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function non_null_equal_to(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
+        Return non_null_equal(this, that)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -222,10 +241,22 @@ Public Module _equal
         End Try
     End Function
 
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function equal_to(Of T, T2)(ByVal this As T, ByVal that As T2, ByRef o As Boolean) As Boolean
+        Return equal(this, that, o)
+    End Function
+
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function equal(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
         Dim o As Boolean
         assert(equal(this, that, o))
         Return o
+    End Function
+
+    <Extension()>
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function equal_to(Of T, T2)(ByVal this As T, ByVal that As T2) As Boolean
+        Return equal(this, that)
     End Function
 End Module

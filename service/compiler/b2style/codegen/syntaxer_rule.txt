@@ -58,4 +58,5 @@ type-param-with-comma type-param comma
 type-param raw-name
 delegate-with-semi-colon delegate semi-colon
 template-body [class, delegate-with-semi-colon, function]
-template kw-template less-than type-param-list greater-than template-body
+template-head kw-template less-than type-param-list greater-than
+template template-head template-body

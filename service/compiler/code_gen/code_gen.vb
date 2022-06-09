@@ -85,7 +85,10 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             If b.build(n, o) Then
                 Return True
             End If
-            raise_error(error_type.user, "Failed to build node ", n.input())
+            ' Only log the failed nodes not same as its child node.
+            If n.child_count() <> 1 Then
+                raise_error(error_type.user, "Failed to build node ", n.input())
+            End If
             Return False
         End Function
 

@@ -23,7 +23,7 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() = 4)
             Dim name As String = n.child(2).input_without_ignored()
             Return struct.undefine(name, o) OrElse
-                   builders.of_undefine(name).to(o)
+                   (builders.of_undefine(name).to(o) AndAlso scope.current().variables().undefine(name))
         End Function
     End Class
 End Class

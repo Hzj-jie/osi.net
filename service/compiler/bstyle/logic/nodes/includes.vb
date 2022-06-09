@@ -18,6 +18,11 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class file_parser
         Inherits __do(Of String, logic_writer, Boolean)
 
+        Public Shared ReadOnly instance As New file_parser()
+
+        Private Sub New()
+        End Sub
+
         Public Overrides Function at(ByRef i As String, ByRef j As logic_writer) As Boolean
             If i Is Nothing Then
                 ' The file has been included already.
@@ -76,8 +81,7 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Private NotInheritable Class include_with_string
-        Inherits code_gens(Of logic_writer).include_with_string(Of file_parser,
-                                                                   default_includes.folders,
+        Inherits code_gens(Of logic_writer).include_with_string(Of default_includes.folders,
                                                                    default_includes.ignore_default_folder,
                                                                    default_includes.default_folder,
                                                                    _false,
@@ -85,12 +89,12 @@ Partial Public NotInheritable Class bstyle
         Public Shared ReadOnly instance As New include_with_string()
 
         Private Sub New()
+            MyBase.new(file_parser.instance)
         End Sub
     End Class
 
     Private NotInheritable Class include_with_file
-        Inherits code_gens(Of logic_writer).include_with_file(Of file_parser,
-                                                                 default_includes.folders,
+        Inherits code_gens(Of logic_writer).include_with_file(Of default_includes.folders,
                                                                  default_includes.ignore_default_folder,
                                                                  default_includes.default_folder,
                                                                  _false,
@@ -98,6 +102,7 @@ Partial Public NotInheritable Class bstyle
         Public Shared ReadOnly instance As New include_with_file()
 
         Private Sub New()
+            MyBase.new(file_parser.instance)
         End Sub
     End Class
 End Class

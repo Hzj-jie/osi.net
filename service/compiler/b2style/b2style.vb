@@ -134,6 +134,7 @@ Partial Public NotInheritable Class b2style
                                "kw-reinterpret-cast",
                                "kw-undefine",
                                "kw-dealloc",
+                               "kw-static-cast",
                                "start-square-bracket",
                                "end-square-bracket",
                                "bool",
@@ -186,7 +187,8 @@ Partial Public NotInheritable Class b2style
                                "paramtype",
                                "struct-body",
                                "undefine",
-                               "dealloc").
+                               "dealloc",
+                               "static-cast").
                            with_of_names(
                                "add",
                                "minus",

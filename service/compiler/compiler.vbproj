@@ -75,6 +75,7 @@
     <Compile Include="b2style\b2style_rules.vb" />
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\kw_file.vb" />
+    <None Include="bstyle\lib\climits" />
     <Compile Include="bstyle\logic\nodes\kw_file.vb" />
     <Compile Include="bstyle\logic\nodes\kw_func.vb" />
     <Compile Include="bstyle\logic\nodes\kw_line.vb" />
@@ -95,6 +96,7 @@
     <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\logic\nodes\kw_statement.vb" />
     <Compile Include="bstyle\logic\nodes\raw_value.vb" />
+    <Compile Include="bstyle\logic\nodes\static_cast.vb" />
     <Compile Include="bstyle\scope.temp_logic_name.vb" />
     <Compile Include="scope_b.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
@@ -294,6 +296,7 @@
     <Content Include="b2style\lib\b2style\operators.h" />
     <Content Include="b2style\lib\b2style\stdio.h" />
     <Content Include="b2style\lib\b2style\str.h" />
+    <Content Include="b2style\lib\b2style\to_str.h" />
     <Content Include="b2style\lib\b2style\types.h" />
     <Content Include="b2style\lib\b2style\ufloat.h" />
     <Content Include="b2style\lib\b2style\ref.h" />
@@ -308,6 +311,7 @@
     <Content Include="bstyle\lib\bstyle\str.h" />
     <Content Include="bstyle\lib\bstyle\time.h" />
     <Content Include="bstyle\lib\bstyle\types.h" />
+    <Content Include="bstyle\lib\limits.h" />
     <Content Include="bstyle\lib\stdio.h" />
     <Content Include="bstyle\codegen\nlexer_rule.txt" />
     <Content Include="bstyle\codegen\syntaxer_rule.txt" />
