@@ -12,19 +12,22 @@ Imports osi.root.template
 Imports osi.service.automata
 
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
-    Public MustInherit Class includes(Of FILE_PARSER As __do(Of String, WRITER, Boolean),
-                                         _FOLDERS As __do(Of vector(Of String)),
+    Public MustInherit Class includes(Of _FOLDERS As __do(Of vector(Of String)),
                                          _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                          _DEFAULT_FOLDER As __do(Of String),
                                          _IGNORE_INCLUDE_ERROR As __do(Of Boolean),
                                          _SHOULD_INCLUDE As __do(Of String, Boolean))
-        Inherits reparser(Of FILE_PARSER)
+        Inherits reparser
 
         Private Shared ReadOnly folders As _FOLDERS = alloc(Of _FOLDERS)()
         Private Shared ReadOnly ignore_default_folder As _IGNORE_DEFAULT_FOLDER = alloc(Of _IGNORE_DEFAULT_FOLDER)()
         Private Shared ReadOnly default_folder As _DEFAULT_FOLDER = alloc(Of _DEFAULT_FOLDER)()
         Private Shared ReadOnly ignore_include_error As _IGNORE_INCLUDE_ERROR = alloc(Of _IGNORE_INCLUDE_ERROR)()
         Private Shared ReadOnly should_include As _do(Of String, Boolean) = -alloc(Of _SHOULD_INCLUDE)()
+
+        Protected Sub New(ByVal file_parser As __do(Of String, WRITER, Boolean))
+            MyBase.new(file_parser)
+        End Sub
 
         Private Shared Function include_file(ByVal p As String,
                                              ByVal s As String,
@@ -68,18 +71,20 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
     End Class
 
-    Public MustInherit Class include_with_string(Of FILE_PARSER As __do(Of String, WRITER, Boolean),
-                                                    FOLDERS As __do(Of vector(Of String)),
+    Public MustInherit Class include_with_string(Of FOLDERS As __do(Of vector(Of String)),
                                                     IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                     DEFAULT_FOLDER As __do(Of String),
                                                     IGNORE_INCLUDE_ERROR As __do(Of Boolean),
                                                     SHOULD_INCLUDE As __do(Of String, Boolean))
-        Inherits includes(Of FILE_PARSER,
-                             FOLDERS,
+        Inherits includes(Of FOLDERS,
                              IGNORE_DEFAULT_FOLDER,
                              DEFAULT_FOLDER,
                              IGNORE_INCLUDE_ERROR,
                              SHOULD_INCLUDE)
+
+        Protected Sub New(ByVal file_parser As __do(Of String, WRITER, Boolean))
+            MyBase.New(file_parser)
+        End Sub
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
             assert(Not n Is Nothing)
@@ -88,20 +93,22 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
     End Class
 
-    Public MustInherit Class include_with_file(Of FILE_PARSER As __do(Of String, WRITER, Boolean),
-                                                  FOLDERS As __do(Of vector(Of String)),
+    Public MustInherit Class include_with_file(Of FOLDERS As __do(Of vector(Of String)),
                                                   IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
                                                   DEFAULT_FOLDER As __do(Of String),
                                                   IGNORE_INCLUDE_ERROR As __do(Of Boolean),
                                                   SHOULD_INCLUDE As __do(Of String, Boolean))
-        Inherits includes(Of FILE_PARSER,
-                             FOLDERS,
+        Inherits includes(Of FOLDERS,
                              IGNORE_DEFAULT_FOLDER,
                              DEFAULT_FOLDER,
                              IGNORE_INCLUDE_ERROR,
                              SHOULD_INCLUDE)
 
         Private Const kw_include As String = "#include"
+
+        Protected Sub New(ByVal file_parser As __do(Of String, WRITER, Boolean))
+            MyBase.new(file_parser)
+        End Sub
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
             assert(Not n Is Nothing)

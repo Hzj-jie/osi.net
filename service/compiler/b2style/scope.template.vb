@@ -26,12 +26,13 @@ Partial Public NotInheritable Class b2style
             End Class
 
             Private NotInheritable Class template_body_reparser
-                Inherits code_gens(Of typed_node_writer).reparser(Of b2style.parser)
+                Inherits code_gens(Of typed_node_writer).reparser
 
                 Private ReadOnly m As unordered_map(Of name_with_namespace, definition)
                 Private ReadOnly types As New one_off(Of vector(Of String))()
 
                 Public Sub New(ByVal m As unordered_map(Of name_with_namespace, definition))
+                    MyBase.new(parser.instance)
                     assert(Not m Is Nothing)
                     Me.m = m
                 End Sub
