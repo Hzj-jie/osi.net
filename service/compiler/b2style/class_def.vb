@@ -18,6 +18,7 @@ Partial Public NotInheritable Class b2style
         ' The type-name pair directly passes to bstyle/struct.
         Private ReadOnly _vars As New vector(Of builders.parameter)()
         Private ReadOnly _funcs As New vector(Of function_def)()
+        Private ReadOnly _temps As New vector(Of pair(Of String, function_def))()
 
         Public Sub New(ByVal name As String)
             Me.name = name_with_namespace.of(name)
@@ -31,28 +32,49 @@ Partial Public NotInheritable Class b2style
             Return Me
         End Function
 
-        Private Function forward_to(ByVal other As class_def) As Func(Of function_def, function_def)
+        Private Function forward_to(ByVal other As class_def, ByVal f As function_def) As function_def
             assert(Not other Is Nothing)
+            assert(Not f Is Nothing)
+            f = f.with_class(Me)
+            scope.current().call_hierarchy().to(f.name().in_global_namespace())
+            Return f.with_content(f.declaration() + "{" + f.forward_to(other) + "}")
+        End Function
+
+        Private Function forward_to(ByVal other As class_def) As Func(Of function_def, function_def)
             Return Function(ByVal f As function_def) As function_def
-                       assert(Not f Is Nothing)
-                       f = f.with_class(Me)
-                       scope.current().call_hierarchy().to(f.name().in_global_namespace())
-                       Return f.with_content(f.declaration() + "{" + f.forward_to(other) + "}")
+                       Return forward_to(other, f)
                    End Function
+        End Function
+
+        Private Function forward_with_temp_to(ByVal other As class_def) _
+                         As Func(Of pair(Of  String, function_def), pair(Of String, function_def))
+            Return Function(ByVal p As pair(Of String, function_def)) As pair(Of String, function_def)
+                       assert(Not p Is Nothing)
+                       Return pair.emplace_of(p.first, forward_to(other, p.second))
+                   End Function
+        End Function
+
+        Private Shared Function filter_non_overrides(ByVal f As function_def) As Boolean
+            assert(Not f Is Nothing)
+            ' Never directly forward constructor and destructor.
+            Return Not f.is_virtual() AndAlso
+                   Not f.name().name().Equals(construct) AndAlso
+                   Not f.name().name().Equals(destruct)
         End Function
 
         Private Sub inherit_non_overrides(ByVal other As class_def)
             assert(Not other Is Nothing)
             _funcs.emplace_back(other.funcs().
-                                      filter(Function(ByVal f As function_def) As Boolean
-                                                 assert(Not f Is Nothing)
-                                                 ' Never directly forward constructor and destructor.
-                                                 Return Not f.is_virtual() AndAlso
-                                                        Not f.name().name().Equals(construct) AndAlso
-                                                        Not f.name().name().Equals(destruct)
-                                             End Function).
+                                      filter(AddressOf filter_non_overrides).
                                       map(forward_to(other)).
                                       collect_to(Of vector(Of function_def))())
+            _temps.emplace_back(other.temps().
+                                      filter(Function(ByVal p As pair(Of String, function_def)) As Boolean
+                                                 assert(Not p Is Nothing)
+                                                 Return filter_non_overrides(p.second)
+                                             End Function).
+                                      map(forward_with_temp_to(other)).
+                                      collect_to(Of vector(Of pair(Of String, function_def)))())
         End Sub
 
         Private Sub inherit_overrides(ByVal other As class_def)
@@ -68,6 +90,20 @@ Partial Public NotInheritable Class b2style
                                                             End Function)).
                                       map(forward_to(other)).
                                       collect_to(Of vector(Of function_def))())
+            _temps.emplace_back(other.temps().
+                                      filter(Function(ByVal p As pair(Of String, function_def)) As Boolean
+                                                 assert(Not p Is Nothing)
+                                                 assert(Not p.second Is Nothing)
+                                                 Return p.second.is_virtual()
+                                             End Function).
+                                      except(temps().filter(
+                                                 Function(ByVal p As pair(Of String, function_def)) As Boolean
+                                                     assert(Not p Is Nothing)
+                                                     assert(Not p.second Is Nothing)
+                                                     Return p.second.is_override()
+                                                 End Function)).
+                                      map(forward_with_temp_to(other)).
+                                      collect_to(Of vector(Of pair(Of String, function_def)))())
         End Sub
 
         Public Function vars() As stream(Of builders.parameter)
@@ -76,6 +112,10 @@ Partial Public NotInheritable Class b2style
 
         Public Function funcs() As stream(Of function_def)
             Return _funcs.stream()
+        End Function
+
+        Public Function temps() As stream(Of pair(Of String, function_def))
+            Return _temps.stream()
         End Function
 
         Public Function with_var(ByVal p As builders.parameter) As class_def
