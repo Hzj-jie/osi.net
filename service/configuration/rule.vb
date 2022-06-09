@@ -55,7 +55,7 @@ Public MustInherit Class rule
                 f = ls(i)
             End If
 
-            assert(Not String.IsNullOrEmpty(f))
+            assert(Not f.null_or_empty())
             Dim x As Func(Of String, Boolean) = Nothing
             If strsame(f, command_include) Then
                 x = AddressOf include

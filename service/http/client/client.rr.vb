@@ -406,7 +406,7 @@ Public Module _client_rr
                                  ByVal port As UInt16,
                                  Optional ByVal path_query As String = constants.uri.path_separator) As String
         Dim extra As String = Nothing
-        If Not String.IsNullOrEmpty(path_query) AndAlso path_query(0) <> constants.uri.path_separator Then
+        If Not path_query.null_or_empty() AndAlso path_query(0) <> constants.uri.path_separator Then
             extra = constants.uri.path_separator
         End If
         If port = constants.default_value.port Then
@@ -453,7 +453,7 @@ Public Module _client_rr
             o.clear()
         End If
         For i As Int32 = 0 To CInt(array_size(this)) - 1
-            If String.IsNullOrEmpty(this(i, 0)) Then
+            If this(i, 0).null_or_empty() Then
                 Return False
             End If
             o(this(i, 0)).push_back(this(i, 1))

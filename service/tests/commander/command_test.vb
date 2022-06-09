@@ -92,14 +92,14 @@ Public NotInheritable Class command_test
 
         Dim s As String = Nothing
         s = uri_serializer.to_str(c)
-        assertion.is_false(String.IsNullOrEmpty(s))
+        assertion.is_false(s.null_or_empty())
         assertion.is_true(uri_serializer.from_str(s, r))
         If Not command_validation(r, constants) Then
             Return False
         End If
 
         s = string_serializer.to_str(c)
-        assertion.is_false(String.IsNullOrEmpty(s))
+        assertion.is_false(s.null_or_empty())
         assertion.is_true(string_serializer.from_str(s, r))
         If Not command_validation(r, constants) Then
             Return False

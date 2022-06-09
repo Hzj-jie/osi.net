@@ -29,7 +29,7 @@ Public Module _binding_flags
     End Function
 
     <Extension()> Public Function from_str(ByRef bf As BindingFlags, ByVal s As String) As Boolean
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             bf = bf Or BindingFlags.Default
             Return True
         End If

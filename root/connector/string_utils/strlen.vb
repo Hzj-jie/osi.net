@@ -55,7 +55,7 @@ Public Module _strlen
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function last_char(ByVal input As String) As Char
-        assert(Not String.IsNullOrEmpty(input))
+        assert(Not input.null_or_empty())
         Return input(input.last_index())
     End Function
 

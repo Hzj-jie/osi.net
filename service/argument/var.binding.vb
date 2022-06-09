@@ -8,7 +8,7 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class var
     Private Function bind(ByVal i As String) As Boolean
-        If String.IsNullOrEmpty(i) Then
+        If i.null_or_empty() Then
             Return False
         End If
         Dim it As map(Of String, vector(Of String)).iterator = raw.begin()

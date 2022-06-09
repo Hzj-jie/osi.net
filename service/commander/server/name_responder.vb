@@ -19,7 +19,7 @@ Public Class name_responder(Of CONTINUOUS As _boolean)
                    ByVal stopping As Func(Of Boolean),
                    Optional ByVal device_change_check_interval_ms As Int64 = constants.device_change_check_interval_ms)
         MyBase.New(pending_request_timeout_ms, e, stopping)
-        assert(Not String.IsNullOrEmpty(name))
+        assert(Not name.null_or_empty())
         Me.n = name
         If device_change_check_interval_ms < 0 Then
             Me.device_change_check_interval_ms = constants.device_change_check_interval_ms

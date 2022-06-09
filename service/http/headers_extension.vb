@@ -174,12 +174,12 @@ Public Module _headers_extension
 
     <Extension()> Public Function range_series(ByVal i As String) As _
                                               pair(Of String, vector(Of pair(Of Int64, Int64)))
-        If String.IsNullOrEmpty(i) Then
+        If i.null_or_empty() Then
             Return Nothing
         End If
         Dim unit As String = Nothing
         If Not strsep(i, unit, i, constants.headers.patterns.range.unit_range_set_separator) OrElse
-           String.IsNullOrEmpty(i) Then
+           i.null_or_empty() Then
             Return Nothing
         End If
         Dim vs() As String = Nothing
@@ -199,12 +199,12 @@ Public Module _headers_extension
             If Not strsep(vs(j), f, s, constants.headers.patterns.range.range_value_separator) Then
                 Return Nothing
             End If
-            If String.IsNullOrEmpty(f) Then
+            If f.null_or_empty() Then
                 fi = constants.headers.values.range.not_presented
             ElseIf Not Int64.TryParse(f, fi) Then
                 Return Nothing
             End If
-            If String.IsNullOrEmpty(s) Then
+            If s.null_or_empty() Then
                 si = constants.headers.values.range.not_presented
             ElseIf Not Int64.TryParse(s, si) Then
                 Return Nothing

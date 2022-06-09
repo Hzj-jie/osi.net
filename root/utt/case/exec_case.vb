@@ -35,7 +35,7 @@ Public Class exec_case
                    Optional ByVal ignore_error As Boolean = default_ignore_error,
                    Optional ByVal expected_return As Int32 = default_expected_return,
                    Optional ByVal timeout_ms As Int64 = default_timeout_ms)
-        assert(Not String.IsNullOrEmpty(file))
+        assert(Not file.null_or_empty())
         Me.exec_file = file
         Me.exec_arg = arg
         Me.ignore_output = ignore_output
@@ -44,7 +44,7 @@ Public Class exec_case
         Me.timeout_ms = timeout_ms
         Me.process_name = strcat("process ",
                                  exec_file,
-                                 If(Not String.IsNullOrEmpty(exec_arg),
+                                 If(Not exec_arg.null_or_empty(),
                                     strcat(" with argument [", exec_arg, "]"),
                                     Nothing))
     End Sub

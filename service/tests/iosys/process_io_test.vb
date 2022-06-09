@@ -80,13 +80,13 @@ Public NotInheritable Class process_io_test
     End Function
 
     Private Sub assert_output(ByVal input As String)
-        If assertion.is_false(String.IsNullOrEmpty(last_input), input) AndAlso
+        If assertion.is_false(last_input.null_or_empty(), input) AndAlso
            assertion.equal(input, strcat(If(from_err.in_use(),
                                          process_io.error_prefix,
                                          process_io.out_prefix),
                                       strleft(last_input, 1))) Then
             last_input = strmid(last_input, 1)
-            If String.IsNullOrEmpty(last_input) Then
+            If last_input.null_or_empty() Then
                 received_times += 1
                 assert(are.Set())
             End If

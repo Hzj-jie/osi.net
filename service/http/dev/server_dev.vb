@@ -119,7 +119,7 @@ Public Class server_dev
                                           Dim s As String = Nothing
                                           s = strmid(ctx.Request().Url().PathAndQuery(), uint32_2)
                                           Return eva(r,
-                                                     If(String.IsNullOrEmpty(s),
+                                                     If(s.null_or_empty(),
                                                         s,
                                                         constants.dev_enc.GetString(
                                                             Convert.FromBase64String(s)))) AndAlso

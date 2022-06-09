@@ -67,7 +67,7 @@ Public Class istrkeyvt_container
 
     Public Function name(ByVal i As UInt32) As String
         assert(i < targets.size())
-        If String.IsNullOrEmpty(targets(i).second) Then
+        If targets(i).second.null_or_empty() Then
             Return unknown_istrkeyvt_name
         End If
         Return targets(i).second

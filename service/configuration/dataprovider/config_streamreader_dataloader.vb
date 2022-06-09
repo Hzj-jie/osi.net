@@ -41,12 +41,12 @@ Friend NotInheritable Class config_streamreader_dataloader
 
     Private Function split_filter_value(ByVal f As String,
                                         ByVal r As vector(Of pair(Of String, String))) As Boolean
-        assert(Not String.IsNullOrEmpty(f))
+        assert(Not f.null_or_empty())
         assert(Not r Is Nothing)
         Dim v As String = Nothing
         If strsep(f, f, v, c.filter_key_value_separator, False) AndAlso
-           Not String.IsNullOrEmpty(f) AndAlso
-           Not String.IsNullOrEmpty(v) Then
+           Not f.null_or_empty() AndAlso
+           Not v.null_or_empty() Then
             r.push_back(pair.of(f, v))
             Return True
         End If
@@ -55,13 +55,13 @@ Friend NotInheritable Class config_streamreader_dataloader
 
     Private Function split_filters(ByVal f As String,
                                    ByRef r As vector(Of pair(Of String, String))) As Boolean
-        If Not String.IsNullOrEmpty(f) Then
+        If Not f.null_or_empty() Then
             Dim ss() As String = Nothing
             ss = f.Split(c.filter_separator.c_str())
             assert(array_size(ss) > 0)
             r = New vector(Of pair(Of String, String))()
             For i As Int32 = 0 To array_size_i(ss) - 1
-                If Not String.IsNullOrEmpty(ss(i)) AndAlso
+                If Not ss(i).null_or_empty() AndAlso
                    Not split_filter_value(ss(i), r) Then
                     Return False
                 End If
@@ -77,7 +77,7 @@ Friend NotInheritable Class config_streamreader_dataloader
         Dim dfs As String = Nothing
         strsep(k, sfs, k, c.static_filter_mark, False)
         strsep(k, k, dfs, c.dynamic_filter_mark, False)
-        If String.IsNullOrEmpty(k) Then
+        If k.null_or_empty() Then
             Return False
         End If
 
@@ -86,7 +86,7 @@ Friend NotInheritable Class config_streamreader_dataloader
     End Function
 
     Private Sub load_line(ByVal l As String, ByVal s As session)
-        If String.IsNullOrEmpty(l) Then
+        If l.null_or_empty() Then
             Return
         End If
         If l.strstartwith(c.remark, False) Then
@@ -99,13 +99,13 @@ Friend NotInheritable Class config_streamreader_dataloader
             l = strmid(l,
                        strlen(c.section_left),
                        strlen(l) - strlen(c.section_left) - strlen(c.section_right))
-            If String.IsNullOrEmpty(l) Then
+            If l.null_or_empty() Then
                 raise_error(error_type.warning,
                             "a line with only section begin and section end, ignore")
                 Return
 
                 l = l.Trim()
-                If String.IsNullOrEmpty(l) Then
+                If l.null_or_empty() Then
                     raise_error(error_type.warning,
                                 "a line with only section begin, section end and blanks, ignore")
                     Return
@@ -116,8 +116,8 @@ Friend NotInheritable Class config_streamreader_dataloader
                 Return
             End If
             If strsep(l, l, v, c.key_value_separator, False) Then
-                If String.IsNullOrEmpty(l) Then
-                    If String.IsNullOrEmpty(v) Then
+                If l.null_or_empty() Then
+                    If v.null_or_empty() Then
                         raise_error(error_type.warning,
                                         "a line with only key value separator, ignore")
                     Else
@@ -126,12 +126,12 @@ Friend NotInheritable Class config_streamreader_dataloader
                     End If
                 End If
             Else
-                assert(Not String.IsNullOrEmpty(l))
+                assert(Not l.null_or_empty())
                 v = ""
             End If
         End If
 
-        assert(Not String.IsNullOrEmpty(l))
+        assert(Not l.null_or_empty())
         Dim sf As vector(Of pair(Of String, String)) = Nothing
         Dim df As vector(Of pair(Of String, String)) = Nothing
         If Not split_key(l, sf, df) Then

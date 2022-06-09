@@ -9,7 +9,7 @@ Public Module _config
         Dim config_file As String = "sider.ini"
         If Not My.Application().CommandLineArgs() Is Nothing AndAlso
            My.Application().CommandLineArgs().Count() > 0 AndAlso
-           Not String.IsNullOrEmpty(My.Application().CommandLineArgs()(0)) Then
+           Not My.Application(.null_or_empty().CommandLineArgs()(0)) Then
             config_file = My.Application().CommandLineArgs()(0)
         End If
         raise_error("using configuration file ", config_file)

@@ -12,7 +12,7 @@ Public Class localfile_datawatcher
 
     Private Sub New(ByVal filename As String)
         MyBase.New()
-        assert(Not String.IsNullOrEmpty(filename))
+        assert(Not filename.null_or_empty())
         assert(Path.IsPathRooted(filename))
         Try
             If File.Exists(filename) Then

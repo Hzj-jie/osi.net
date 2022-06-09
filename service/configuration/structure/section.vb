@@ -11,7 +11,7 @@ Friend Class raw_section
     Private ReadOnly rf As vector(Of pair(Of String, String))
 
     Public Sub New(ByVal name As String, ByVal rf As vector(Of pair(Of String, String)))
-        assert(Not String.IsNullOrEmpty(name))
+        assert(Not name.null_or_empty())
         Me.n = name
         Me.rf = rf
     End Sub

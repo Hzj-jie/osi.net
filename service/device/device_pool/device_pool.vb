@@ -17,7 +17,7 @@ Public Class device_pool
     Private exp As singleentry
 
     Private Sub New(ByVal max_count As UInt32, ByVal identity As String, ByVal register_counter As Boolean)
-        assert(Not String.IsNullOrEmpty(identity))
+        assert(Not identity.null_or_empty())
         Me.mc = max_count
         Me.count = New atomic_int32()
         Me.id = identity

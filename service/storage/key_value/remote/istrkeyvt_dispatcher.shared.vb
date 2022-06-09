@@ -182,7 +182,7 @@ Partial Public Class istrkeyvt_dispatcher
             Return False
         Else
             Return i.parameter(parameter.key, key) AndAlso
-                   Not String.IsNullOrEmpty(key) AndAlso
+                   Not key.null_or_empty() AndAlso
                    i.parameter(parameter.buff, buff) AndAlso
                    Not isemptyarray(buff) AndAlso
                    If(i.parameter(parameter.timestamp, ts), ts >= 0, eva(ts, now_as_timestamp()))

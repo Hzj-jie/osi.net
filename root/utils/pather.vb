@@ -68,12 +68,12 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
     End Sub
 
     Private Shared Function is_this_level_path(ByVal s As String) As Boolean
-        Return String.IsNullOrEmpty(s) OrElse
+        Return s.null_or_empty() OrElse
                this_level_paths.has(s)
     End Function
 
     Private Shared Function split_path(ByVal path As String) As String()
-        assert(Not String.IsNullOrEmpty(path))
+        assert(Not path.null_or_empty())
         Return path.Split(path_separators, StringSplitOptions.None)
     End Function
 
@@ -87,7 +87,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
         End If
 
         If array_size(parts) = 1 AndAlso is_this_level_path(parts(0)) Then
-            If String.IsNullOrEmpty(parts(0)) Then
+            If parts(0).null_or_empty() Then
                 path = path_separator()
             Else
                 path = parts(0)
@@ -127,7 +127,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
     End Function
 
     Public Function parent_path(ByVal path As String, ByRef o As String) As Boolean
-        If String.IsNullOrEmpty(path) Then
+        If path.null_or_empty() Then
             Return False
         End If
         Dim ss() As String = Nothing
@@ -146,7 +146,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
     End Function
 
     Public Function last_level_name(ByVal path As String, ByRef o As String) As Boolean
-        If String.IsNullOrEmpty(path) Then
+        If path.null_or_empty() Then
             Return False
         End If
         Dim v As vector(Of String) = Nothing
@@ -201,7 +201,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
     End Function
 
     Public Function split(ByVal path As String, ByRef o As vector(Of String)) As Boolean
-        Return Not String.IsNullOrEmpty(path) AndAlso
+        Return Not path.null_or_empty() AndAlso
                assert(normalize(split_path(path), o))
     End Function
 
@@ -270,7 +270,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
     End Property
 
     Public Function directory_name(ByVal p As String) As String
-        If String.IsNullOrEmpty(p) Then
+        If p.null_or_empty() Then
             Return p
         End If
         If path_separators.has(p.last_char()) Then

@@ -38,7 +38,7 @@ Partial Public NotInheritable Class invoker(Of delegate_t)
             End If
             Return False
         End If
-        If String.IsNullOrEmpty(name) Then
+        If name.null_or_empty() Then
             If Not suppress_error Then
                 raise_error(error_type.warning, "input method name is empty")
             End If

@@ -15,14 +15,14 @@ Public Module _component_generation
                                      ByVal self_close As Boolean,
                                      ByRef output As String,
                                      ByVal ParamArray attrs() As pair(Of String, String)) As Boolean
-        If String.IsNullOrEmpty(tag) Then
+        If tag.null_or_empty() Then
             Return False
         End If
         Dim r As New StringBuilder()
         r.Append(tag_leading).Append(HttpUtility.HtmlEncode(tag))
         If Not isemptyarray(attrs) Then
             For i As Int32 = 0 To attrs.array_size_i() - 1
-                If String.IsNullOrEmpty(attrs(i).first) Then
+                If attrs(i).first.null_or_empty() Then
                     Return False
                 End If
                 r.Append(attributes_separator).
@@ -105,7 +105,7 @@ Public Module _component_generation
     End Function
 
     Public Function create_end_tag(ByVal tag As String, ByRef o As String) As Boolean
-        If String.IsNullOrEmpty(tag) Then
+        If tag.null_or_empty() Then
             Return False
         Else
             o = strcat(tag_leading, tag_close_mark, HttpUtility.HtmlEncode(tag), tag_final)
@@ -120,7 +120,7 @@ Public Module _component_generation
     End Function
 
     Public Function create_text(ByVal i As String, ByRef o As String) As Boolean
-        If String.IsNullOrEmpty(i) Then
+        If i.null_or_empty() Then
             Return False
         Else
             o = HttpUtility.HtmlEncode(i)
@@ -135,7 +135,7 @@ Public Module _component_generation
     End Function
 
     Public Function create_comment(ByVal i As String, ByRef o As String) As Boolean
-        If String.IsNullOrEmpty(i) Then
+        If i.null_or_empty() Then
             Return False
         ElseIf strindexof(i, invalid_comment_text) <> npos Then
             Return False
@@ -162,7 +162,7 @@ Public Module _component_generation
     End Function
 
     Public Function create_cdata(ByVal i As String, ByRef o As String) As Boolean
-        If String.IsNullOrEmpty(i) Then
+        If i.null_or_empty() Then
             Return False
         ElseIf strindexof(i, invalid_cdata_text) <> npos Then
             Return False

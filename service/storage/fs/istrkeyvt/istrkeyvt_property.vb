@@ -14,8 +14,8 @@ Public Class istrkeyvt_property
 
     Public Sub New(ByVal path As String, ByVal name As String, ByVal accessor As istrkeyvt)
         assert(Not accessor Is Nothing)
-        assert(Not String.IsNullOrEmpty(path))
-        assert(Not String.IsNullOrEmpty(name))
+        assert(Not path.null_or_empty())
+        assert(Not name.null_or_empty())
         Me.accessor = accessor
         Me.p = path
         Me.n = name

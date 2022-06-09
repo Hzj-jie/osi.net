@@ -39,7 +39,7 @@ Partial Public NotInheritable Class accepter
     Public Shared Sub listen(ByVal p As powerpoint)
         assert(Not p Is Nothing)
         assert(Not p.is_outgoing)
-        assert(String.IsNullOrEmpty(p.host_or_ip))
+        assert(p.host_or_ip.null_or_empty())
         adapters.[New](p.port,
                        Function() As adapter
                            Return New adapter(p)

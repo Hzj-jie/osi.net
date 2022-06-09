@@ -45,7 +45,7 @@ Public Module _env_value
     End Function
 
     Public Function env_value(ByVal i As String, ByRef o As String) As Boolean
-        If String.IsNullOrEmpty(i) Then
+        If i.null_or_empty() Then
             Return False
         Else
             o = Environment.GetEnvironmentVariable(i)

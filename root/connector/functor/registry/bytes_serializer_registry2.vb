@@ -14,7 +14,7 @@ Friend NotInheritable Class bytes_serializer_registry2
                                                 Return str_byte_count(i)
                                             End Function,
                                             Function(ByVal i As String, ByVal o As MemoryStream) As Boolean
-                                                If String.IsNullOrEmpty(i) Then
+                                                If i.null_or_empty() Then
                                                     Return True
                                                 End If
                                                 Return o.write(str_bytes(i))

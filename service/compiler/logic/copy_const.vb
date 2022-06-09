@@ -17,7 +17,7 @@ Partial Public NotInheritable Class logic
         Private ReadOnly data As data_block
 
         Public Sub New(ByVal target As String, ByVal data As data_block)
-            assert(Not String.IsNullOrEmpty(target))
+            assert(Not target.null_or_empty())
             assert(Not data Is Nothing)
             Me.target = target
             Me.data = data

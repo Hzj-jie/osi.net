@@ -63,24 +63,24 @@ Public Class config
     End Function
 
     Private Function is_switcher_prefix(ByVal i As String) As Boolean
-        Return Not String.IsNullOrEmpty(i) AndAlso
-               Not String.IsNullOrEmpty(switcher_prefix) AndAlso
+        Return Not i.null_or_empty() AndAlso
+               Not switcher_prefix.null_or_empty() AndAlso
                strlen(i) > 1 AndAlso
                strindexof(switcher_prefix, i(0), case_sensitive) <> npos AndAlso
                is_not_any_prefix(i(1))
     End Function
 
     Private Function is_full_switcher_prefix(ByVal i As String) As Boolean
-        Return Not String.IsNullOrEmpty(i) AndAlso
-               Not String.IsNullOrEmpty(full_switcher_prefix) AndAlso
+        Return Not i.null_or_empty() AndAlso
+               Not full_switcher_prefix.null_or_empty() AndAlso
                strlen(i) > 1 AndAlso
                strindexof(full_switcher_prefix, i(0), case_sensitive) <> npos AndAlso
                is_not_any_prefix(i(1))
     End Function
 
     Private Function is_arg_prefix(ByVal i As String) As Boolean
-        Return Not String.IsNullOrEmpty(i) AndAlso
-               Not String.IsNullOrEmpty(arg_prefix) AndAlso
+        Return Not i.null_or_empty() AndAlso
+               Not arg_prefix.null_or_empty() AndAlso
                strlen(i) > strlen(arg_prefix) AndAlso
                strsame(i, arg_prefix, strlen(arg_prefix)) AndAlso
                is_not_any_prefix(i(strlen_i(arg_prefix)))

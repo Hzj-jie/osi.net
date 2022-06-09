@@ -59,7 +59,7 @@ Partial Public Class rlexer
         End Function
 
         Public Shared Function create(ByVal i As String, ByRef o As regex) As Boolean
-            If String.IsNullOrEmpty(i) Then
+            If i.null_or_empty() Then
                 Return False
             Else
                 Dim gs As vector(Of matching_group) = Nothing

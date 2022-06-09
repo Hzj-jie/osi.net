@@ -45,7 +45,7 @@ Partial Public NotInheritable Class dns_cache
         assert(Not c Is Nothing)
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  If String.IsNullOrEmpty(s) Then
+                                  If s.null_or_empty() Then
                                       Return False
                                   End If
                                   Dim add As IPAddress = Nothing

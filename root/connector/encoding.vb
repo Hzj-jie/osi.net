@@ -10,7 +10,7 @@ Imports osi.root.constants
 
 Public Module _encoding
     Public Function try_get_encoding(ByVal name As String, ByRef o As Encoding) As Boolean
-        If String.IsNullOrEmpty(name) Then
+        If name.null_or_empty() Then
             Return False
         End If
         Try

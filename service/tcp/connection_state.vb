@@ -131,7 +131,7 @@ Public Class connection_state
         Else
             Dim id As String = Nothing
             id = _socket.identity(local, remote)
-            assert(Not String.IsNullOrEmpty(id))
+            assert(Not id.null_or_empty())
             Dim it As map(Of String, TcpState).iterator = Nothing
             it = m.find(id)
             If it = m.end() Then

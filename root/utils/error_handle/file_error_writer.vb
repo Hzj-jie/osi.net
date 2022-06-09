@@ -41,7 +41,7 @@ Public NotInheritable Class file_error_writer
         AddHandler error_event.r6,
                    Sub(ByVal err_type As error_type, ByVal err_type_char As Char, ByVal msg As String)
                        If error_writer_ignore_types(Of file_error_writer).valued(err_type, err_type_char) AndAlso
-                          Not String.IsNullOrEmpty(msg) Then
+                          Not msg.null_or_empty() Then
                            msg = msg.Replace(character.newline, character.null) _
                                     .Replace(character.return, character.null)
                            Try

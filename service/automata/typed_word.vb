@@ -23,10 +23,10 @@ Public NotInheritable Class typed_word
                    ByVal [end] As UInt32,
                    ByVal type As UInt32,
                    ByVal type_name As String)
-        assert(Not String.IsNullOrEmpty(ref))
+        assert(Not ref.null_or_empty())
         assert(start < [end])
         assert(strlen(ref) >= [end])
-        assert(Not String.IsNullOrWhiteSpace(type_name))
+        assert(Not type_name.null_or_whitespace())
         Me.ref = ref
         Me.start = start
         Me.end = [end]

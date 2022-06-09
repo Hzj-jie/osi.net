@@ -22,9 +22,9 @@ Public Module _environment_transform
     <Extension()> Public Function env_transform(ByVal i As String,
                                                 Optional ByVal start_str As String = default_start_str,
                                                 Optional ByVal end_str As String = default_end_str) As String
-        assert(Not String.IsNullOrEmpty(start_str))
-        assert(Not String.IsNullOrEmpty(end_str))
-        If String.IsNullOrEmpty(i) Then
+        assert(Not start_str.null_or_empty())
+        assert(Not end_str.null_or_empty())
+        If i.null_or_empty() Then
             Return i
         End If
         Dim s As Int32 = strindexof(i, start_str)

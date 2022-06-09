@@ -62,7 +62,7 @@ Partial Public Class powerpoint
                     ByVal delay_connect As Boolean)
         assert(max_connecting > 0)
         assert(max_connecting <= max_connected OrElse max_connected = 0)
-        assert(is_outgoing Xor String.IsNullOrEmpty(host_or_ip))
+        assert(is_outgoing Xor host_or_ip.null_or_empty())
         assert(port <> socket_invalid_port)
 
         Me.token = token

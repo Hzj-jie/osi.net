@@ -44,7 +44,7 @@ Partial Public NotInheritable Class tar
             Me.New(fs,
                    max_size,
                    Function(ByVal i As UInt32) As String
-                       assert(Not String.IsNullOrWhiteSpace(output_base))
+                       assert(Not output_base.null_or_whitespace())
                        Return strcat(output_base, i)
                    End Function,
                    files)

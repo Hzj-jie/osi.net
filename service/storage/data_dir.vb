@@ -19,7 +19,7 @@ Public Class data_dir
                         ", the file_key will keep in invalid status.")
             Return
         End Try
-        assert(Not String.IsNullOrEmpty(base_dir))
+        assert(Not base_dir.null_or_empty())
         If base_dir.EndsWith(Path.DirectorySeparatorChar) Then
             base_dir = strleft(base_dir, strlen(base_dir) - strlen(Path.DirectorySeparatorChar))
         End If

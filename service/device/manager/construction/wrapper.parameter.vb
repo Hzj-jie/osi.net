@@ -7,7 +7,7 @@ Partial Public Class wrapper
     Public Shared Function parameter(Of T)(ByVal p As String,
                                            ByVal f As _do_val_val_val_ref(Of String, var, T, T, Boolean)) _
                                           As _do_val_val_ref(Of var, T, T, Boolean)
-        assert(Not String.IsNullOrEmpty(p))
+        assert(Not p.null_or_empty())
         If f Is Nothing Then
             Return Nothing
         Else

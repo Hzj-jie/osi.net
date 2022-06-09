@@ -17,7 +17,7 @@ Public Class file_datawatcher
 
     Private Sub New(ByVal filename As String, ByVal interval_ms As Int64)
         MyBase.New(interval_ms)
-        assert(Not String.IsNullOrEmpty(filename))
+        assert(Not filename.null_or_empty())
         assert(Path.IsPathRooted(filename))
         Me.filename = filename
     End Sub

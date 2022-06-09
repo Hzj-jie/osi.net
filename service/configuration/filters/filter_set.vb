@@ -36,7 +36,7 @@ Friend Class filter_set
             Return True
         Else
             For i As Int32 = 0 To variants.size() - 1
-                If Not String.IsNullOrEmpty(variants(i).first) Then
+                If Not variants(i).first.null_or_empty() Then
                     Dim j As map(Of String, vector(Of ifilter)).iterator = Nothing
                     j = filters.find(variants(i).first)
                     If j <> filters.end() AndAlso

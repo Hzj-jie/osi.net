@@ -17,7 +17,7 @@ Partial Public NotInheritable Class logic
         Private ReadOnly p As paragraph
 
         Public Sub New(ByVal v As String, ByVal p As paragraph)
-            assert(Not String.IsNullOrEmpty(v))
+            assert(Not v.null_or_empty())
             assert(Not p Is Nothing)
             Me.v = v
             Me.p = p

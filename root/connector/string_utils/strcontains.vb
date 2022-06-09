@@ -13,10 +13,10 @@ Public Module _strcontains
     <Extension()> Public Function strcontains(ByVal s As String,
                                               ByVal search As String,
                                               ByVal case_sensitive As Boolean) As Boolean
-        If String.IsNullOrEmpty(search) Then
+        If search.null_or_empty() Then
             Return True
         End If
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             Return False
         End If
         If case_sensitive Then

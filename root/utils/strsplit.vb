@@ -251,7 +251,7 @@ Public NotInheritable Class strsplitter
                                  ByVal ignore_empty_entity As Boolean,
                                  ByVal ignore_surround_strs As Boolean,
                                  ByVal case_sensitive As Boolean) As Boolean
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             Return False
         End If
 
