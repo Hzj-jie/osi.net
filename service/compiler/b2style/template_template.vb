@@ -92,7 +92,7 @@ Partial Public NotInheritable Class b2style
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
                                     ByVal n As typed_node,
                                     ByRef o As template_template) As Boolean
-            Return [of](l.of_all_children(n.child(2)).dump(), n, o)
+            Return [of](l.of_all_children(n.child(0).child(2)).dump(), n, o)
         End Function
 
         Public Shared Function [of](ByVal type_param_list As vector(Of String),
@@ -101,8 +101,8 @@ Partial Public NotInheritable Class b2style
             assert(Not type_param_list.null_or_empty())
             assert(Not n Is Nothing)
             assert(n.type_name.Equals("template"))
-            assert(n.child_count() = 5)
-            Dim name_node As typed_node = n.child(4).child()
+            assert(n.child_count() = 2)
+            Dim name_node As typed_node = n.child(1).child()
             If name_node.type_name.Equals("class") OrElse name_node.type_name.Equals("function") Then
                 name_node = name_node.child(1)
             ElseIf name_node.type_name.Equals("delegate-with-semi-colon") Then
@@ -120,7 +120,7 @@ Partial Public NotInheritable Class b2style
                             "]")
                 Return False
             End If
-            o = New template_template(n.child(4), name_node, type_param_list)
+            o = New template_template(n.child(1), name_node, type_param_list)
             Return True
         End Function
 
