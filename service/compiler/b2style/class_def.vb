@@ -18,7 +18,7 @@ Partial Public NotInheritable Class b2style
         ' The type-name pair directly passes to bstyle/struct.
         Private ReadOnly _vars As New vector(Of builders.parameter)()
         Private ReadOnly _funcs As New vector(Of function_def)()
-        Private ReadOnly _temps As New vector(Of pair(Of String, function_def))()
+        Private ReadOnly _temps As New vector(Of tuple(Of String, function_def))()
 
         Public Sub New(ByVal name As String)
             Me.name = name_with_namespace.of(name)
@@ -47,10 +47,9 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Private Function forward_with_temp_to(ByVal other As class_def) _
-                         As Func(Of pair(Of  String, function_def), pair(Of String, function_def))
-            Return Function(ByVal p As pair(Of String, function_def)) As pair(Of String, function_def)
-                       assert(Not p Is Nothing)
-                       Return pair.emplace_of(p.first, forward_to(other, p.second))
+                         As Func(Of tuple(Of String, function_def), tuple(Of String, function_def))
+            Return Function(ByVal p As tuple(Of String, function_def)) As tuple(Of String, function_def)
+                       Return tuple.emplace_of(p.first, forward_to(other, p.second))
                    End Function
         End Function
 
@@ -69,12 +68,11 @@ Partial Public NotInheritable Class b2style
                                       map(forward_to(other)).
                                       collect_to(Of vector(Of function_def))())
             _temps.emplace_back(other.temps().
-                                      filter(Function(ByVal p As pair(Of String, function_def)) As Boolean
-                                                 assert(Not p Is Nothing)
+                                      filter(Function(ByVal p As tuple(Of String, function_def)) As Boolean
                                                  Return filter_non_overrides(p.second)
                                              End Function).
                                       map(forward_with_temp_to(other)).
-                                      collect_to(Of vector(Of pair(Of String, function_def)))())
+                                      collect_to(Of vector(Of tuple(Of String, function_def)))())
         End Sub
 
         Private Sub inherit_overrides(ByVal other As class_def)
@@ -91,19 +89,17 @@ Partial Public NotInheritable Class b2style
                                       map(forward_to(other)).
                                       collect_to(Of vector(Of function_def))())
             _temps.emplace_back(other.temps().
-                                      filter(Function(ByVal p As pair(Of String, function_def)) As Boolean
-                                                 assert(Not p Is Nothing)
+                                      filter(Function(ByVal p As tuple(Of String, function_def)) As Boolean
                                                  assert(Not p.second Is Nothing)
                                                  Return p.second.is_virtual()
                                              End Function).
                                       except(temps().filter(
-                                                 Function(ByVal p As pair(Of String, function_def)) As Boolean
-                                                     assert(Not p Is Nothing)
+                                                 Function(ByVal p As tuple(Of String, function_def)) As Boolean
                                                      assert(Not p.second Is Nothing)
                                                      Return p.second.is_override()
                                                  End Function)).
                                       map(forward_with_temp_to(other)).
-                                      collect_to(Of vector(Of pair(Of String, function_def)))())
+                                      collect_to(Of vector(Of tuple(Of String, function_def)))())
         End Sub
 
         Public Function vars() As stream(Of builders.parameter)
@@ -114,7 +110,7 @@ Partial Public NotInheritable Class b2style
             Return _funcs.stream()
         End Function
 
-        Public Function temps() As stream(Of pair(Of String, function_def))
+        Public Function temps() As stream(Of tuple(Of String, function_def))
             Return _temps.stream()
         End Function
 
@@ -156,23 +152,26 @@ Partial Public NotInheritable Class b2style
             Return f.with_content(f.declaration(param_names) + node.last_child().input())
         End Function
 
+        Private Shared Function parse_class_function(ByVal node As typed_node) _
+                                As tuple(Of typed_node, function_def.type_t)
+            assert(Not node Is Nothing)
+            node = node.child()
+            If node.type_name.Equals("overridable-function") Then
+                Return tuple.of(node.child(1), function_def.type_t.overridable)
+            End If
+            If node.type_name.Equals("override-function") Then
+                Return tuple.of(node.child(1), function_def.type_t.override)
+            End If
+            Return tuple.of(node, function_def.type_t.pure)
+        End Function
+
         Public Function with_funcs(ByVal n As typed_node) As class_def
             assert(Not n Is Nothing)
             Dim has_constructor As Boolean = False
             Dim has_destructor As Boolean = False
             n.children_of("class-function").
               stream().
-              map(Function(ByVal node As typed_node) As tuple(Of typed_node, function_def.type_t)
-                      assert(Not node Is Nothing)
-                      node = node.child()
-                      If node.type_name.Equals("overridable-function") Then
-                          Return tuple.of(node.child(1), function_def.type_t.overridable)
-                      End If
-                      If node.type_name.Equals("override-function") Then
-                          Return tuple.of(node.child(1), function_def.type_t.override)
-                      End If
-                      Return tuple.of(node, function_def.type_t.pure)
-                  End Function).
+              map(AddressOf parse_class_function).
               foreach(Sub(ByVal t As tuple(Of typed_node, function_def.type_t))
                           Dim node As typed_node = t.first()
                           assert(Not node Is Nothing)
@@ -206,6 +205,22 @@ Partial Public NotInheritable Class b2style
                                                                Append(name.name()).
                                                                Append("& this){}").ToString()))
             End If
+
+            n.children_of("class-template-function").
+              stream().
+              map(Function(ByVal node As typed_node) As tuple(Of String, typed_node, function_def.type_t)
+                      assert(Not node Is Nothing)
+                      assert(node.child_count() = 5)
+                      Dim f As tuple(Of typed_node, function_def.type_t) = parse_class_function(node.child(4))
+                      Return tuple.emplace_of(streams.range(0, 4).
+                                                      map(Function(ByVal i As Int32) As String
+                                                              Return node.child(CUInt(i)).input()
+                                                          End Function).
+                                                      collect_by(stream(Of String).collectors.to_str(" ")).
+                                                      ToString(),
+                                              f.first(),
+                                              f.second())
+                  End Function)
             Return Me
         End Function
 

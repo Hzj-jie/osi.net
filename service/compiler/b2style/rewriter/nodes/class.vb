@@ -74,8 +74,7 @@ Partial Public NotInheritable Class b2style
                            o.Append(f.content)
                        End Sub)
             cd.temps().
-               foreach(Sub(ByVal f As pair(Of String, class_def.function_def))
-                           assert(Not f Is Nothing)
+               foreach(Sub(ByVal f As tuple(Of String, class_def.function_def))
                            assert(Not String.IsNullOrWhiteSpace(f.first))
                            assert(Not f.second Is Nothing)
                            o.Append(f.first + f.second.content)
