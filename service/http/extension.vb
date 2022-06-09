@@ -9,7 +9,7 @@ Imports osi.root.connector
 Public Module _extension
     <Extension()> Public Function parse_charset(ByVal content_type As String,
                                                 ByRef result As String) As Boolean
-        Return Not String.IsNullOrEmpty(content_type) AndAlso
+        Return Not content_type.null_or_empty() AndAlso
                strsep(content_type,
                       Nothing,
                       result,

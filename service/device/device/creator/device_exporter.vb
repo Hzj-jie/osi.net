@@ -27,7 +27,7 @@ Public Class device_exporter(Of T)
     End Sub
 
     Protected Sub New(ByVal id As String)
-        If String.IsNullOrEmpty(id) Then
+        If id.null_or_empty() Then
             id = type_info(Of T).name
         End If
         exped = New atomic_int()

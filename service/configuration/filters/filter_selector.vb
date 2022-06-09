@@ -54,7 +54,7 @@ Public NotInheritable Class filter_selector
     End Sub
 
     Public Shared Function register_filter(ByVal name As String, ByVal ctor As Func(Of String, ifilter)) As Boolean
-        If String.IsNullOrEmpty(name) OrElse ctor Is Nothing Then
+        If name.null_or_empty() OrElse ctor Is Nothing Then
             Return False
         End If
         types(name) = ctor

@@ -9,7 +9,7 @@ Imports osi.root.formation
 Public NotInheritable Class filtered_var
     Public Shared Function [New](ByVal v As var, ByVal filter As String) As var
         assert(Not v Is Nothing)
-        assert(Not String.IsNullOrEmpty(filter))
+        assert(Not filter.null_or_empty())
         Return v.filtered(filter)
     End Function
 

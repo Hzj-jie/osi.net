@@ -40,7 +40,7 @@ Friend Module input_validation
                            ByVal value() As Byte,
                            ByVal ts As Int64,
                            ByVal result As ref(Of Boolean)) As Boolean
-        Return Not String.IsNullOrEmpty(key) AndAlso
+        Return Not key.null_or_empty() AndAlso
                append(dummy_byte, value, ts, result)
     End Function
 
@@ -68,7 +68,7 @@ Friend Module input_validation
 
     Public Function delete(ByVal key As String,
                            ByVal result As ref(Of Boolean)) As Boolean
-        Return Not String.IsNullOrEmpty(key) AndAlso
+        Return Not key.null_or_empty() AndAlso
                delete(dummy_byte, result)
     End Function
 
@@ -141,7 +141,7 @@ Friend Module input_validation
                            ByVal value() As Byte,
                            ByVal ts As Int64,
                            ByVal result As ref(Of Boolean)) As Boolean
-        Return Not String.IsNullOrEmpty(key) AndAlso
+        Return Not key.null_or_empty() AndAlso
                modify(dummy_byte, value, ts, result)
     End Function
 
@@ -169,7 +169,7 @@ Friend Module input_validation
     Public Function read(ByVal key As String,
                          ByVal result As ref(Of Byte()),
                          ByVal ts As ref(Of Int64)) As Boolean
-        Return Not String.IsNullOrEmpty(key) AndAlso
+        Return Not key.null_or_empty() AndAlso
                read(dummy_byte, result, ts)
     End Function
 
@@ -188,7 +188,7 @@ Friend Module input_validation
 
     Public Function seek(ByVal key As String,
                          ByVal result As ref(Of Boolean)) As Boolean
-        Return Not String.IsNullOrEmpty(key) AndAlso
+        Return Not key.null_or_empty() AndAlso
                seek(dummy_byte, result)
     End Function
 
@@ -207,7 +207,7 @@ Friend Module input_validation
 
     Public Function sizeof(ByVal key As String,
                            ByVal result As ref(Of Int64)) As Boolean
-        Return Not String.IsNullOrEmpty(key) AndAlso
+        Return Not key.null_or_empty() AndAlso
                sizeof(dummy_byte, result)
     End Function
 
@@ -222,7 +222,7 @@ Friend Module input_validation
                                  ByVal value() As Byte,
                                  ByVal ts As Int64,
                                  ByVal result As ref(Of Boolean)) As Boolean
-        Return Not String.IsNullOrEmpty(key) AndAlso
+        Return Not key.null_or_empty() AndAlso
                unique_write(dummy_byte, value, ts, result)
     End Function
 

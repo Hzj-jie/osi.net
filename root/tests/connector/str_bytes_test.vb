@@ -32,7 +32,7 @@ Public Class str_bytes_test
             b = str_bytes(s)
             assertion.equal(str_byte_count(s), array_size(b))
             assertion.is_not_null(b)
-            If String.IsNullOrEmpty(s) Then
+            If s.null_or_empty() Then
                 assertion.is_null(bytes_str(b))
             Else
                 assertion.equal(bytes_str(b), s)
@@ -42,7 +42,7 @@ Public Class str_bytes_test
             i = rnd_int(1, strlen(s) + 1)
             If i = strlen(s) Then
                 assertion.is_not_null(bytes_str(str_bytes(s, i)))
-                assertion.is_true(String.IsNullOrEmpty(bytes_str(str_bytes(s, i))))
+                assertion.is_true(bytes_str(str_bytes(s, i)).null_or_empty())
                 assertion.equal(bytes_str(str_bytes(s), str_byte_count(s)), "")
             Else
                 assertion.equal(bytes_str(str_bytes(s, i)), strmid(s, i))
@@ -53,7 +53,7 @@ Public Class str_bytes_test
             j = rnd_int(i, strlen(s) + 1)
             If i = j Then
                 assertion.is_not_null(bytes_str(str_bytes(s, i, uint32_0)))
-                assertion.is_true(String.IsNullOrEmpty(bytes_str(str_bytes(s, i, uint32_0))))
+                assertion.is_true(bytes_str(str_bytes(s, i, uint32_0)).null_or_empty())
                 assertion.equal(bytes_str(str_bytes(s), str_byte_count(strleft(s, i)), uint32_0), "")
             Else
                 assertion.equal(bytes_str(str_bytes(s, i, j - i)), strmid(s, i, j - i))

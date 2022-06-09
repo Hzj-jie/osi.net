@@ -36,8 +36,8 @@ Partial Public Class rlexer
         End Sub
 
         Public Sub define(ByVal macro As String, ByVal expanded As String)
-            assert(Not String.IsNullOrEmpty(macro))
-            assert(Not String.IsNullOrEmpty(expanded))
+            assert(Not macro.null_or_empty())
+            assert(Not expanded.null_or_empty())
             vs.emplace_back(pair.emplace_of(characters.macro_escape + macro, expanded))
         End Sub
 
@@ -66,7 +66,7 @@ Partial Public Class rlexer
         End Sub
 
         Public Function expand(ByVal s As String) As String
-            If String.IsNullOrEmpty(s) OrElse vs.empty() Then
+            If s.null_or_empty() OrElse vs.empty() Then
                 Return s
             End If
             Dim matched As Int32 = 0
@@ -102,7 +102,7 @@ Partial Public Class rlexer
         End Function
 
         Public Function defined(ByVal macro As String) As Boolean
-            If String.IsNullOrEmpty(macro) Then
+            If macro.null_or_empty() Then
                 Return False
             End If
             If strlen(macro) = uint32_1 OrElse Not macro.StartsWith(characters.macro_escape) Then

@@ -55,7 +55,7 @@ Public Module _variants
     <Extension()> Public Function append_variant(ByVal r As vector(Of pair(Of String, String)),
                                                  ByVal key As String,
                                                  ByVal value As String) As Boolean
-        If r Is Nothing OrElse String.IsNullOrEmpty(key) OrElse String.IsNullOrEmpty(value) Then
+        If r Is Nothing OrElse key.null_or_empty() OrElse value.null_or_empty() Then
             Return False
         Else
             r.emplace_back(pair.of(key, value))

@@ -14,7 +14,7 @@ Public Class rreceiver(Of CASE_T)
     Private ReadOnly q As target_questioner
 
     Private Shared Function create_target_questioner(ByVal name As String, ByVal q As questioner) As target_questioner
-        assert(Not String.IsNullOrEmpty(name))
+        assert(Not name.null_or_empty())
         Return target_questioner.ctor(name, q)
     End Function
 

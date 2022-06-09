@@ -20,7 +20,7 @@ Public Class name_questioner(Of ENABLE_AUTO_PING As _boolean)
 
     Public Sub New(ByVal name As String, ByVal timeout_ms As Int64)
         MyBase.New(timeout_ms)
-        assert(Not String.IsNullOrEmpty(name))
+        assert(Not name.null_or_empty())
         Me.n = name
     End Sub
 

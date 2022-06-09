@@ -105,7 +105,7 @@ Partial Public NotInheritable Class client
         Dim ec As event_comb = Nothing
         Dim r As HttpWebRequest = Nothing
         Return New event_comb(Function() As Boolean
-                                  If String.IsNullOrEmpty(url) Then
+                                  If url.null_or_empty() Then
                                       Return False
                                   Else
                                       If request_comm Is Nothing Then

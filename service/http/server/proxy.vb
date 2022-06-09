@@ -98,7 +98,7 @@ Public Module _proxy
         Dim ec As event_comb = Nothing
         Return New event_comb(
                         Function() As Boolean
-                            If i Is Nothing OrElse String.IsNullOrEmpty(o) Then
+                            If i Is Nothing OrElse o.null_or_empty() Then
                                 Return False
                             Else
                                 If request_comm Is Nothing Then

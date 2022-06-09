@@ -13,7 +13,7 @@ Partial Public Class device_pool(Of T)
 
     Protected Sub New(ByVal max_count As UInt32, ByVal identity As String)
         MyBase.New(max_count,
-                   strcat(If(String.IsNullOrEmpty(identity), type_info(Of T).name, identity), "_DEVICE_POOL"))
+                   strcat(If(identity.null_or_empty(), type_info(Of T).name, identity), "_DEVICE_POOL"))
         _closer = New closer(Me)
     End Sub
 

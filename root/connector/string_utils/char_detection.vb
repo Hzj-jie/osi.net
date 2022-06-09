@@ -6,7 +6,7 @@ Imports osi.root.constants
 
 Public Module _char_detection
     <Extension()> Public Function null_or_empty(ByVal s As String) As Boolean
-        Return String.IsNullOrEmpty(s)
+        Return s.null_or_empty()
     End Function
 
     <Extension()> Public Function null_or_whitespace(ByVal s As String) As Boolean

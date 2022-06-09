@@ -23,7 +23,7 @@ Public Class remote_fs
     End Sub
 
     Private Sub New(ByVal target As String, ByVal q As questioner)
-        assert(Not String.IsNullOrEmpty(target))
+        assert(Not target.null_or_empty())
         Me.target = target
         Me.q = target_questioner.ctor(target, q)
     End Sub
@@ -31,7 +31,7 @@ Public Class remote_fs
     Public Shared Function ctor(ByVal target As String,
                                 ByVal q As questioner,
                                 ByRef o As remote_fs) As Boolean
-        Return Not String.IsNullOrEmpty(target) AndAlso
+        Return Not target.null_or_empty() AndAlso
                Not q Is Nothing AndAlso
                eva(o, New remote_fs(target, q))
     End Function

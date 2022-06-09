@@ -17,7 +17,7 @@ Public MustInherit Class string_based_filter(Of case_sensitive As _boolean)
     End Sub
 
     Protected Sub New(ByVal base As String)
-        assert(Not String.IsNullOrEmpty(base))
+        assert(Not base.null_or_empty())
         copy(Me.base, base)
     End Sub
 

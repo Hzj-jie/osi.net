@@ -88,7 +88,7 @@ Public Module _slimparser
             result.clear()
         End If
 
-        If String.IsNullOrEmpty(text) Then
+        If text.null_or_empty() Then
             Return False
         Else
             Dim i As UInt32 = 0

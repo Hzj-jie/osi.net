@@ -128,7 +128,7 @@ Public Class valuer(Of VT)
             If Not suppress_error Then
                 raise_error(error_type.warning, "input type is nothing")
             End If
-        ElseIf String.IsNullOrEmpty(name) Then
+        ElseIf name.null_or_empty() Then
             If Not suppress_error Then
                 raise_error(error_type.warning, "input field name is empty")
             End If

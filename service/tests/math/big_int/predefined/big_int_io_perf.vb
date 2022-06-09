@@ -22,7 +22,7 @@ Public NotInheritable Class big_int_io_perf
         End Sub
 
         Private Sub run_case(ByVal r As String)
-            If String.IsNullOrEmpty(r) Then
+            If r.null_or_empty() Then
                 invalid_input()
             Else
                 Dim v As big_int = Nothing

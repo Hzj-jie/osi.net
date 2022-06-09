@@ -14,7 +14,7 @@ Partial Public NotInheritable Class module_binder
                                  ByVal assembly As String,
                                  ByVal binding_flags As BindingFlags,
                                  ByVal function_name As String) As module_handle.named_module
-        If String.IsNullOrEmpty(function_name) Then
+        If function_name.null_or_empty() Then
             function_name = "process"
         End If
 

@@ -63,7 +63,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                                                     ByVal name As String,
                                                     ByRef id As UInt32) As Boolean
         assert(Not status_name_id Is Nothing)
-        assert(Not String.IsNullOrEmpty(name))
+        assert(Not name.null_or_empty())
         assert(id >= parser(Of MAX_TYPE, RESULT_T).first_user_status)
         If Not strsame(name, start_status_name) AndAlso
            Not strsame(name, end_status_name) AndAlso
@@ -103,7 +103,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                                                ByVal name As String,
                                                ByRef o As T) As Boolean
         assert(Not m Is Nothing)
-        assert(Not String.IsNullOrEmpty(name))
+        assert(Not name.null_or_empty())
         Dim it As map(Of String, T).iterator = Nothing
         it = m.find(name)
         If it = m.end() Then
@@ -129,7 +129,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
     Private Function retrieve_action(ByVal method_type As Type,
                                      ByVal name As String,
                                      ByRef a As Func(Of lexer.typed_word(), UInt32, RESULT_T, Boolean)) As Boolean
-        If String.IsNullOrEmpty(name) Then
+        If name.null_or_empty() Then
             a = Nothing
             Return True
         Else
@@ -145,21 +145,20 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
     End Function
 
     Private Function retrieve_method_type(ByRef t As Type) As Boolean
-        If String.IsNullOrEmpty(i.method_type()) Then
+        If i.method_type().null_or_empty() Then
             Return False
-        Else
-            Try
-                t = Type.GetType(i.method_type())
-                Return Not t Is Nothing
-            Catch ex As Exception
-                raise_error(error_type.warning,
-                            "failed to retrieve type ",
-                            i.method_type(),
-                            ", ex ",
-                            ex.Message())
-                Return False
-            End Try
         End If
+        Try
+            t = Type.GetType(i.method_type())
+            Return Not t Is Nothing
+        Catch ex As Exception
+            raise_error(error_type.warning,
+                        "failed to retrieve type ",
+                        i.method_type(),
+                        ", ex ",
+                        ex.Message())
+            Return False
+        End Try
     End Function
 
     Private Function define_parser(ByVal type_name_id As map(Of String, Int32),

@@ -52,7 +52,7 @@ Partial Public NotInheritable Class var
                           ByVal n As String,
                           ByRef o As vector(Of String)) As Boolean
         assert(Not m Is Nothing)
-        assert(Not String.IsNullOrEmpty(n))
+        assert(Not n.null_or_empty())
         Dim it As map(Of String, vector(Of String)).iterator = m.find(n)
         If it = m.end() Then
             Return False
@@ -62,7 +62,7 @@ Partial Public NotInheritable Class var
     End Function
 
     Public Function value(ByVal n As String, ByRef o As vector(Of String)) As Boolean
-        If String.IsNullOrEmpty(n) Then
+        If n.null_or_empty() Then
             Return False
         End If
         If Not c.case_sensitive Then

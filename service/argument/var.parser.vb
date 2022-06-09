@@ -9,7 +9,7 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class var
     Private Sub parse_one(ByVal s As String)
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             Return
         End If
         Dim a As String = Nothing
@@ -49,11 +49,11 @@ Partial Public NotInheritable Class var
         If Not args Is Nothing Then
             For i As UInt32 = uint32_0 To args.size() - uint32_1
                 assert(Not args(i) Is Nothing)
-                assert(Not (String.IsNullOrEmpty(args(i).first) AndAlso
-                            String.IsNullOrEmpty(args(i).second)))
-                If String.IsNullOrEmpty(args(i).second) Then
+                assert(Not (args(i).first.null_or_empty() AndAlso
+                            args(i).second.null_or_empty()))
+                If args(i).second.null_or_empty() Then
                     parse_one(args(i).first)
-                ElseIf String.IsNullOrEmpty(args(i).first) Then
+                ElseIf args(i).first.null_or_empty() Then
                     parse_one(args(i).second)
                 Else
                     parse_one(c.create_arg(args(i).first, args(i).second))
@@ -63,7 +63,7 @@ Partial Public NotInheritable Class var
     End Sub
 
     Public Sub parse(ByVal i As String)
-        If Not String.IsNullOrEmpty(i) Then
+        If Not i.null_or_empty() Then
             Dim ss() As String = Nothing
             ss = i.Split({c.argument_separator}, StringSplitOptions.RemoveEmptyEntries)
             parse(ss)

@@ -29,7 +29,7 @@ Public Module tcp_bridge
         Dim config_file As String = "tcp_bridge.ini"
         If Not My.Application().CommandLineArgs() Is Nothing AndAlso
            My.Application().CommandLineArgs().Count() > 0 AndAlso
-           Not String.IsNullOrEmpty(My.Application().CommandLineArgs()(0)) Then
+           Not My.Application(.null_or_empty().CommandLineArgs()(0)) Then
             config_file = My.Application().CommandLineArgs()(0)
         End If
         raise_error("using configuration file ", config_file)
@@ -148,7 +148,7 @@ Public Module tcp_bridge
             End If
             assert(Not p Is Nothing)
             assert(connection_manager.register(name, p))
-            If Not String.IsNullOrEmpty(target) Then
+            If Not target.null_or_empty() Then
                 Dim cid As Int64 = 0
                 cid = counter.register(strtoupper(strcat(name,
                                                          "_to_",

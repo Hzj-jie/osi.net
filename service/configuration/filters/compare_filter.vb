@@ -55,7 +55,7 @@ Public Class compare_filter(Of T)
     End Function
 
     Protected NotOverridable Overrides Function parse(ByVal s As String, ByRef o As s) As Boolean
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             Return False
         Else
             Dim cm As compare_method

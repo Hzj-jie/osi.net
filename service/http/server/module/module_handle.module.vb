@@ -54,7 +54,7 @@ Partial Public Class module_handle
         Const p_function_name As String = "function"
         v.bind(p_type, p_assembly, p_binding_flags, p_function_name)
         Dim bf As BindingFlags = Nothing
-        If String.IsNullOrEmpty(v(p_binding_flags)) Then
+        If v(p_binding_flags).null_or_empty() Then
             bf = binding_flags.static_all_method
         ElseIf Not bf.method_from_str(v(p_binding_flags)) Then
             Return Nothing

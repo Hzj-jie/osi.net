@@ -10,7 +10,7 @@ Friend NotInheritable Class case_info
     Public finished As Boolean
 
     Public Sub New(ByVal name As String, ByVal [case] As [case])
-        assert(Not String.IsNullOrEmpty(name))
+        assert(Not name.null_or_empty())
         assert(Not [case] Is Nothing, name)
         Me.case = [case]
     End Sub

@@ -259,7 +259,7 @@ Public Module _strcat
         If c = 1 Then
             Return s
         End If
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             Return s
         End If
         Dim r As StringBuilder = Nothing

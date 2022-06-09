@@ -44,10 +44,10 @@ Public Module _strindexof
                                  ByVal index_of_index As UInt32,
                                  ByVal indexcall As _do_val_val_ref(Of String, String, UInt32, Int32),
                                  ByVal case_sensitive As Boolean) As Int32
-        If String.IsNullOrEmpty(search) Then
+        If search.null_or_empty() Then
             Return 0
         End If
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             Return npos
         End If
         If index_of_index = 0 Then
@@ -120,7 +120,7 @@ Public Module _strindexof
                                                  Optional ByVal case_sensitive As Boolean = True) As Int32
         Return strlastindexof(s,
                               search,
-                              If(String.IsNullOrEmpty(s), max_uint32, strlen(s) - uint32_1),
+                              If(s.null_or_empty(), max_uint32, strlen(s) - uint32_1),
                               index_of_index,
                               case_sensitive)
     End Function
@@ -134,7 +134,7 @@ Public Module _strindexof
     End Function
 
     <Extension()> Public Function contains_any(ByVal s As String, ByVal ParamArray a() As Char) As Boolean
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             Return False
         ElseIf isemptyarray(a) Then
             Return True
@@ -144,7 +144,7 @@ Public Module _strindexof
     End Function
 
     <Extension()> Public Function contains_any(ByVal s As String, ByVal ParamArray a()() As Char) As Boolean
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             Return False
         ElseIf isemptyarray(a) Then
             Return True
@@ -159,7 +159,7 @@ Public Module _strindexof
     End Function
 
     <Extension()> Public Function contains_any(ByVal s As String, ByVal ParamArray a() As String) As Boolean
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             Return False
         End If
         If isemptyarray(a) Then
@@ -174,7 +174,7 @@ Public Module _strindexof
     End Function
 
     <Extension()> Public Function contains_any(ByVal s As String, ByVal ParamArray a()() As String) As Boolean
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             Return False
         End If
         If isemptyarray(a) Then

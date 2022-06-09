@@ -108,10 +108,10 @@ Public Module _strcmp
         If len = 0 Then
             Return True
         End If
-        If String.IsNullOrEmpty(input1) AndAlso String.IsNullOrEmpty(input2) Then
+        If input1.null_or_empty() AndAlso input2.null_or_empty() Then
             Return True
         End If
-        If String.IsNullOrEmpty(input1) OrElse String.IsNullOrEmpty(input2) Then
+        If input1.null_or_empty() OrElse input2.null_or_empty() Then
             Return False
         End If
         If start1 >= input1.Length() OrElse start2 >= input2.Length() Then

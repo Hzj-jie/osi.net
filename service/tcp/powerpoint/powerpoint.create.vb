@@ -83,7 +83,7 @@ Partial Public Class powerpoint
         Public Function valid() As Boolean
             Return max_connecting > 0 AndAlso
                    (max_connecting <= max_connected OrElse max_connected = 0) AndAlso
-                   (is_outgoing Xor String.IsNullOrEmpty(host_or_ip)) AndAlso
+                   (is_outgoing Xor host_or_ip.null_or_empty()) AndAlso
                    port <> socket_invalid_port
         End Function
 
@@ -98,7 +98,7 @@ Partial Public Class powerpoint
 
         Public Function with_host_or_ip(ByVal host_or_ip As String) As creator
             Me.host_or_ip = host_or_ip
-            is_outgoing = Not String.IsNullOrEmpty(host_or_ip)
+            is_outgoing = Not host_or_ip.null_or_empty()
             Return Me
         End Function
 
@@ -283,7 +283,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function with_is_outgoing_str(ByVal is_outgoing As String) As creator
-            If is_outgoing.to(Of Boolean)(Not String.IsNullOrEmpty(host_or_ip)) Then
+            If is_outgoing.to(Of Boolean)(Not host_or_ip.null_or_empty()) Then
                 Return with_outgoing()
             Else
                 Return with_incoming()
@@ -291,7 +291,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function without_is_outgoing() As creator
-            If Not String.IsNullOrEmpty(host_or_ip) Then
+            If Not host_or_ip.null_or_empty() Then
                 Return with_outgoing()
             Else
                 Return with_incoming()

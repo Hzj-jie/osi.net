@@ -33,7 +33,7 @@ Public Module _console_key_info_mapping
                                                 cmaxs = y
                                             End If
                                         End Sub)
-        assert(Not String.IsNullOrEmpty(cmins) AndAlso Not String.IsNullOrEmpty(cmaxs))
+        assert(Not cmins.null_or_empty() AndAlso Not cmaxs.null_or_empty())
         console_key_min = cmin
         console_key_min_str = cmins
         console_key_max = cmax

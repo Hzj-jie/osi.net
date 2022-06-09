@@ -19,7 +19,7 @@ Public Module _tfver_parser
 
     Private Function next_token(ByRef i As String, ByRef s As String) As Boolean
         While strsep(i, s, i, character.blank)
-            If Not String.IsNullOrEmpty(s) Then
+            If Not s.null_or_empty() Then
                 Return True
             End If
         End While
@@ -32,7 +32,7 @@ Public Module _tfver_parser
         If next_token(t, tf_latest_changeset_id) Then
             If next_token(t, tf_latest_changeset_user) Then
                 If next_token(t, tf_latest_changeset_date) Then
-                    If Not String.IsNullOrEmpty(t) Then
+                    If Not t.null_or_empty() Then
                         tf_latest_changeset_comment = t.Trim()
                     End If
                 End If
@@ -43,7 +43,7 @@ Public Module _tfver_parser
         If next_token(t, tf_current_changeset_id) Then
             If next_token(t, tf_current_changeset_user) Then
                 If next_token(t, tf_current_changeset_date) Then
-                    If Not String.IsNullOrEmpty(t) Then
+                    If Not t.null_or_empty() Then
                         tf_current_changeset_comment = t.Trim()
                     End If
                 End If

@@ -9,7 +9,7 @@ Imports osi.root.constants
 
 Public Module _type
     Private Function pure_assembly_name(ByVal name As String) As String
-        assert(Not String.IsNullOrEmpty(name))
+        assert(Not name.null_or_empty())
         Dim index As Int32 = 0
         index = name.IndexOf(character.comma)
         If index = npos Then
@@ -40,7 +40,7 @@ Public Module _type
     <Extension()> Public Function [New](ByRef o As Type,
                                         ByVal assembly As Assembly,
                                         ByVal type_name As String) As Boolean
-        If String.IsNullOrEmpty(type_name) Then
+        If type_name.null_or_empty() Then
             Return False
         End If
 
@@ -65,11 +65,11 @@ Public Module _type
                                         ByVal assembly As Assembly,
                                         ByVal type_name As String,
                                         ByVal assembly_name As String) As Boolean
-        If String.IsNullOrEmpty(type_name) Then
+        If type_name.null_or_empty() Then
             Return False
         End If
 
-        If String.IsNullOrEmpty(assembly_name) Then
+        If assembly_name.null_or_empty() Then
             Return [New](o, assembly, type_name)
         End If
 

@@ -15,7 +15,7 @@ Public Class istrkeyvt_node
 
     Public Sub New(ByVal path As String, ByVal accessor As istrkeyvt)
         assert(Not accessor Is Nothing)
-        assert(Not String.IsNullOrEmpty(path))
+        assert(Not path.null_or_empty())
         Me.accessor = accessor
         Me.p = path
         Me.properties_property = istrkeyvt_property.create_properties_property(path, accessor)

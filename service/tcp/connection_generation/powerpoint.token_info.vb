@@ -62,7 +62,7 @@ Partial Public Class powerpoint
             assert(Not p Is Nothing)
             If strsame(p.tokener, constants.bypass_tokener) Then
                 Return bypass_token_challenger.[New](token_info.instance, p, c)
-            ElseIf strsame(p.tokener, constants.token1) OrElse String.IsNullOrEmpty(p.token) Then
+            ElseIf strsame(p.tokener, constants.token1) OrElse p.token.null_or_empty() Then
                 Return token_challenger.[New](token_info.instance, p, c)
             Else
                 Return token2_challenger.[New](token_info.instance, p, c)
@@ -78,7 +78,7 @@ Partial Public Class powerpoint
             assert(Not p Is Nothing)
             If strsame(p.tokener, constants.bypass_tokener) Then
                 Return bypass_token_defender.[New](token_info.instance)
-            ElseIf strsame(p.tokener, constants.token1) OrElse String.IsNullOrEmpty(p.token) Then
+            ElseIf strsame(p.tokener, constants.token1) OrElse p.token.null_or_empty() Then
                 Return token_defender.[New](token_info.instance)
             Else
                 Return token2_defender.[New](token_info.instance)

@@ -37,7 +37,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
         End Function
 
         Private Shared Function parse_section_name(ByVal i As String) As String
-            assert(Not String.IsNullOrEmpty(i))
+            assert(Not i.null_or_empty())
             assert(Not i.strstartwith(value_start))
             Return i.Split(section_name_separators)(0)
         End Function
@@ -90,31 +90,29 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                 Return True
             End If
             For i As UInt32 = 0 To s.size() - uint32_1
-                assert(Not String.IsNullOrEmpty(s(i)))
-                Dim ss() As String = Nothing
-                ss = s(i).Split(value_separators, StringSplitOptions.RemoveEmptyEntries)
+                assert(Not s(i).null_or_empty())
+                Dim ss() As String = s(i).Split(value_separators, StringSplitOptions.RemoveEmptyEntries)
                 If array_size(ss) <= 1 Then
                     Return False
-                Else
-                    Dim type_name As String = Nothing
-                    Dim ignore As Boolean = False
-                    If ss(0).strstartwith(type_ignore_mask) Then
-                        ignore = True
-                        type_name = strmid(ss(0), strlen(type_ignore_mask))
-                    Else
-                        ignore = False
-                        type_name = ss(0)
-                    End If
-                    If String.IsNullOrEmpty(type_name) Then
-                        Return False
-                    End If
-                    For j As Int32 = 1 To array_size_i(ss) - 1
-                        ss(j).c_unescape(ss(j))
-                    Next
-                    types(type_name).first.renew()
-                    assert(types(type_name).first.emplace_back(ss, 1))
-                    types(type_name).second = ignore
                 End If
+                Dim type_name As String = Nothing
+                Dim ignore As Boolean = False
+                If ss(0).strstartwith(type_ignore_mask) Then
+                    ignore = True
+                    type_name = strmid(ss(0), strlen(type_ignore_mask))
+                Else
+                    ignore = False
+                    type_name = ss(0)
+                End If
+                If type_name.null_or_empty() Then
+                    Return False
+                End If
+                For j As Int32 = 1 To array_size_i(ss) - 1
+                    ss(j).c_unescape(ss(j))
+                Next
+                types(type_name).first.renew()
+                assert(types(type_name).first.emplace_back(ss, 1))
+                types(type_name).second = ignore
             Next
             Return True
         End Function
@@ -127,9 +125,8 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                 Return True
             End If
             For i As UInt32 = 0 To s.size() - uint32_1
-                assert(Not String.IsNullOrEmpty(s(i)))
-                Dim ss() As String = Nothing
-                ss = s(i).Split(value_separators, StringSplitOptions.RemoveEmptyEntries)
+                assert(Not s(i).null_or_empty())
+                Dim ss() As String = s(i).Split(value_separators, StringSplitOptions.RemoveEmptyEntries)
                 If array_size(ss) < 3 OrElse array_size(ss) > 4 Then
                     Return False
                 End If

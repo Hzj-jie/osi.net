@@ -79,7 +79,7 @@ Public Module _create
                                                            ByRef o As bytes_transformer_block_wrapper) As Boolean
         Dim e As encryptor = Nothing
         If create(mode, v, e) Then
-            If String.IsNullOrEmpty(token) Then
+            If token.null_or_empty() Then
                 Return False
             Else
                 Dim key() As Byte = Nothing

@@ -92,12 +92,12 @@ Public Module _array_ext
         Dim s As New StringBuilder()
         Dim i As Int32 = 0
         For i = 0 To min(array_size_i(this), CInt(limited_length)) - 1
-            If i > 0 AndAlso Not String.IsNullOrEmpty(separator) Then
+            If i > 0 AndAlso Not separator.null_or_empty() Then
                 s.Append(separator)
             End If
             s.Append(Convert.ToString(this(i)))
         Next
-        If i < array_size(this) AndAlso Not String.IsNullOrEmpty(ellipsis) Then
+        If i < array_size(this) AndAlso Not ellipsis.null_or_empty() Then
             s.Append(ellipsis)
         End If
         Return Convert.ToString(s)

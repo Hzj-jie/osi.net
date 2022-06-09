@@ -44,7 +44,7 @@ Public Module _tagparser
                               ByRef self_close As Boolean,
                               ByRef close_tag As Boolean,
                               ByVal remove_attribute_surroundings As Boolean) As Boolean
-        If String.IsNullOrEmpty(line) Then
+        If line.null_or_empty() Then
             Return False
         Else
             line = line.Trim()
@@ -53,12 +53,12 @@ Public Module _tagparser
                 line = strmid(line,
                               constants.tag_leading_len,
                               strlen(line) - constants.tag_leading_len - constants.tag_final_len)
-                If String.IsNullOrEmpty(line) Then
+                If line.null_or_empty() Then
                     'line = <>
                     Return False
                 Else
                     line = line.Trim()
-                    If String.IsNullOrEmpty(line) OrElse
+                    If line.null_or_empty() OrElse
                        strstartwith(line, constants.tag_leading_str) OrElse
                        strendwith(line, constants.tag_final_str) Then
                         'line = <    > or line = <<abc ...
@@ -93,11 +93,11 @@ Public Module _tagparser
                                         If Not s Is Nothing Then
                                             s = s.Trim()
                                         End If
-                                        If String.IsNullOrEmpty(f) Then
+                                        If f.null_or_empty() Then
                                             Return False
                                         Else
                                             If remove_attribute_surroundings AndAlso
-                                               Not String.IsNullOrEmpty(s) Then
+                                               Not s.null_or_empty() Then
                                                 assert(array_size(attribute_surrounding) = 2)
                                                 If strstartwith(s, constants.value_leading_str) AndAlso
                                                    strendwith(s, constants.value_final_str) Then

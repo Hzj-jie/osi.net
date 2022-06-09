@@ -18,8 +18,8 @@ Partial Public NotInheritable Class logic
         Public Sub New(ByVal target As String,
                        ByVal source As String,
                        ByVal cmd As command)
-            assert(Not String.IsNullOrEmpty(target))
-            assert(Not String.IsNullOrEmpty(source))
+            assert(Not target.null_or_empty())
+            assert(Not source.null_or_empty())
             Me.target = target
             Me.source = source
             Me.cmd = cmd

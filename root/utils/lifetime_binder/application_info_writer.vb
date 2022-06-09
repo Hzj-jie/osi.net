@@ -13,10 +13,10 @@ Public Class application_info_writer
     Private ReadOnly w As streamwriter_auto_disposer
 
     Protected Sub New(ByVal folder As String, ByVal file As String, ByVal extension As String)
-        assert(Not String.IsNullOrEmpty(folder))
-        assert(Not String.IsNullOrEmpty(extension))
+        assert(Not folder.null_or_empty())
+        assert(Not extension.null_or_empty())
         assert(Not strstartwith(extension, filesystem.extension_prefix))
-        If String.IsNullOrEmpty(file) Then
+        If file.null_or_empty() Then
             file = strcat(application_info_output_filename(), filesystem.extension_prefix, extension)
         End If
         If Not Path.IsPathRooted(file) Then

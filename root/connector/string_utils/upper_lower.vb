@@ -27,7 +27,7 @@ Public Module _upper_lower
     End Function
 
     <Extension()> Public Function str_initial_upper(ByRef s As String) As String
-        If Not String.IsNullOrEmpty(s) Then
+        If Not s.null_or_empty() Then
             Dim a() As Char = Nothing
             a = s.ToCharArray()
             a(0) = Char.ToUpper(a(0))
