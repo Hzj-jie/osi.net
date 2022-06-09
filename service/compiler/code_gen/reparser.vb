@@ -9,10 +9,15 @@ Imports osi.root.template
 Imports osi.service.automata
 
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
-    Public MustInherit Class reparser(Of _PARSER As __do(Of String, WRITER, Boolean))
+    Public MustInherit Class reparser
         Implements code_gen(Of WRITER)
 
-        Private Shared ReadOnly parser As _PARSER = alloc(Of _PARSER)()
+        Private ReadOnly parser As __do(Of String, WRITER, Boolean)
+
+        Protected Sub New(ByVal parser As __do(Of String, WRITER, Boolean))
+            assert(Not parser Is Nothing)
+            Me.parser = parser
+        End Sub
 
         Public Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
             assert(Not n Is Nothing)

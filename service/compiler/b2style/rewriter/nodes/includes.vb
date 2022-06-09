@@ -64,8 +64,7 @@ Partial Public NotInheritable Class b2style
 
     ' TODO: Consider to include bstyle headers into b2style.
     Private NotInheritable Class include_with_string
-        Inherits code_gens(Of typed_node_writer).include_with_string(Of file_parser,
-                                                                        default_includes.folders,
+        Inherits code_gens(Of typed_node_writer).include_with_string(Of default_includes.folders,
                                                                         default_includes.ignore_default_folder,
                                                                         default_includes.default_folder,
                                                                         _true,
@@ -73,6 +72,7 @@ Partial Public NotInheritable Class b2style
         Public Shared ReadOnly instance As New include_with_string()
 
         Private Sub New()
+            MyBase.new(file_parser.instance)
         End Sub
 
         ' Forward missing files to the bstyle.
@@ -85,8 +85,7 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Private NotInheritable Class include_with_file
-        Inherits code_gens(Of typed_node_writer).include_with_file(Of file_parser,
-                                                                      default_includes.folders,
+        Inherits code_gens(Of typed_node_writer).include_with_file(Of default_includes.folders,
                                                                       default_includes.ignore_default_folder,
                                                                       default_includes.default_folder,
                                                                       _true,
@@ -94,6 +93,7 @@ Partial Public NotInheritable Class b2style
         Public Shared ReadOnly instance As New include_with_file()
 
         Private Sub New()
+            MyBase.New(file_parser.instance)
         End Sub
 
         ' Forward missing files to the bstyle.
