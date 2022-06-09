@@ -78,6 +78,7 @@ Partial Public NotInheritable Class b2style
                            assert(Not f Is Nothing)
                            assert(Not String.IsNullOrWhiteSpace(f.first))
                            assert(Not f.second Is Nothing)
+                           o.Append(f.first + f.second.content)
                        End Sub)
             s = o.ToString()
             Return True
