@@ -7,24 +7,15 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class _while
         Implements code_gen(Of logic_writer)
 
-        Private ReadOnly l As code_gens(Of logic_writer)
-
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
-        End Sub
-
         Private Function while_value(ByVal n As typed_node,
                                      ByVal o As logic_writer,
                                      ByRef condition As String) As Boolean
-            If Not l.of(n.child(2)).build(o) Then
+            If Not code_gen_of(n.child(2)).build(o) Then
                 Return False
             End If
             Using value_target As read_scoped(Of scope.value_target_t.target).ref(Of String) =
@@ -48,7 +39,7 @@ Partial Public NotInheritable Class bstyle
                    builders.of_while_then(condition,
                                           Function() As Boolean
                                               Dim cur_condition As String = Nothing
-                                              Return l.of(n.child(4)).build(o) AndAlso
+                                              Return code_gen_of(n.child(4)).build(o) AndAlso
                                                      while_value(n, o, cur_condition) AndAlso
                                                      builders.of_copy(condition, cur_condition).to(o)
                                           End Function).to(o)

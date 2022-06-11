@@ -86,10 +86,8 @@ Partial Public NotInheritable Class bstyle
                                                                    default_includes.default_folder,
                                                                    _false,
                                                                    should_include_t)
-        Public Shared ReadOnly instance As New include_with_string()
-
-        Private Sub New()
-            MyBase.new(file_parser.instance)
+        Public Sub New()
+            MyBase.New(file_parser.instance)
         End Sub
     End Class
 
@@ -99,10 +97,8 @@ Partial Public NotInheritable Class bstyle
                                                                  default_includes.default_folder,
                                                                  _false,
                                                                  should_include_t)
-        Public Shared ReadOnly instance As New include_with_file()
-
-        Private Sub New()
-            MyBase.new(file_parser.instance)
+        Public Sub New()
+            MyBase.New(file_parser.instance)
         End Sub
     End Class
 End Class

@@ -8,19 +8,10 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class value_clause
         Implements code_gen(Of logic_writer)
-
-        Private ReadOnly l As code_gens(Of logic_writer)
-
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
-        End Sub
 
         Private Function build(ByVal name As typed_node,
                                ByVal value As typed_node,
@@ -50,7 +41,7 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Return builders.of_copy(name.input_without_ignored(), value.input_without_ignored()).to(o)
             End If
-            If Not l.of(value).build(o) Then
+            If Not code_gen_of(value).build(o) Then
                 Return False
             End If
             If scope.current().structs().types().defined(type) Then
@@ -104,7 +95,7 @@ Partial Public NotInheritable Class bstyle
             If Not n.child(0).child().type_name.Equals("heap-name") Then
                 Return build(n.child(0).child(), n.child(2), o)
             End If
-            Return l.typed(Of heap_name).build(
+            Return code_gens().typed(Of heap_name).build(
                        n.child(0).child().child(2),
                        o,
                        Function(ByVal indexstr As String) As Boolean

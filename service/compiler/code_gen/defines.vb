@@ -10,13 +10,14 @@ Imports osi.service.automata
 Public Class ifndef_wrapped(Of WRITER As New)
     Implements code_gen(Of WRITER)
 
-    Private ReadOnly l As code_gens(Of WRITER)
+    Private ReadOnly code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy)
     Private ReadOnly is_defined As Func(Of String, Boolean)
 
-    Protected Sub New(ByVal b As code_gens(Of WRITER), ByVal is_defined As Func(Of String, Boolean))
-        assert(Not b Is Nothing)
+    Protected Sub New(ByVal code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy),
+                      ByVal is_defined As Func(Of String, Boolean))
+        assert(Not code_gen_of Is Nothing)
         assert(Not is_defined Is Nothing)
-        Me.l = b
+        Me.code_gen_of = code_gen_of
         Me.is_defined = is_defined
     End Sub
 
@@ -27,7 +28,7 @@ Public Class ifndef_wrapped(Of WRITER As New)
             Return True
         End If
         For i As UInt32 = 2 To n.child_count() - uint32_2
-            If Not l.of(n.child(i)).build(o) Then
+            If Not code_gen_of(n.child(i)).build(o) Then
                 Return False
             End If
         Next

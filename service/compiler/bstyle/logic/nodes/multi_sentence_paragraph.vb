@@ -7,19 +7,10 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class multi_sentence_paragraph
         Implements code_gen(Of logic_writer)
-
-        Private ReadOnly l As code_gens(Of logic_writer)
-
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
-        End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
@@ -30,7 +21,7 @@ Partial Public NotInheritable Class bstyle
                            Using scope.current().start_scope()
                                Dim i As UInt32 = 1
                                While i < n.child_count() - uint32_1
-                                   If Not l.of(n.child(i)).build(o) Then
+                                   If Not code_gen_of(n.child(i)).build(o) Then
                                        Return False
                                    End If
                                    i += uint32_1

@@ -13,9 +13,7 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class biguint
         Inherits raw_value
 
-        Public Shared ReadOnly instance As New biguint()
-
-        Private Sub New()
+        Public Sub New()
             MyBase.New(code_types.biguint)
         End Sub
 

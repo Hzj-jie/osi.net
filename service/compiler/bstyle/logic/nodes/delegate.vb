@@ -9,19 +9,10 @@ Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class _delegate
         Implements code_gen(Of logic_writer)
-
-        Private ReadOnly l As code_gens(Of logic_writer)
-
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
-        End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
@@ -31,7 +22,7 @@ Partial Public NotInheritable Class bstyle
             If n.child_count() = 5 Then
                 ps = New vector(Of String)()
             Else
-                ps = l.of_all_children(n.child(4)).dump()
+                ps = code_gens().of_all_children(n.child(4)).dump()
             End If
             Dim ta As scope.type_alias_proxy = scope.current().type_alias()
             Dim return_type As String = ta(n.child(1).input_without_ignored())
