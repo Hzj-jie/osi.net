@@ -8,19 +8,10 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class for_loop
         Implements code_gen(Of logic_writer)
-
-        Private ReadOnly l As code_gens(Of logic_writer)
-
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
-        End Sub
 
         Private NotInheritable Class ref
             Public ReadOnly first As typed_node
@@ -54,7 +45,7 @@ Partial Public NotInheritable Class bstyle
         End Class
 
         Private Function condition_value(ByVal n As ref, ByVal o As logic_writer, ByRef condition As String) As Boolean
-            If Not n.second Is Nothing AndAlso Not l.of(n.second).build(o) Then
+            If Not n.second Is Nothing AndAlso Not code_gen_of(n.second).build(o) Then
                 Return False
             End If
             Using read_target As read_scoped(Of scope.value_target_t.target).ref(Of String) =
@@ -76,14 +67,14 @@ Partial Public NotInheritable Class bstyle
                            Using scope.current().start_scope()
                                Dim ref As New ref(n)
                                Dim condition As String = Nothing
-                               Return (ref.first Is Nothing OrElse l.of(ref.first).build(o)) AndAlso
+                               Return (ref.first Is Nothing OrElse code_gen_of(ref.first).build(o)) AndAlso
                                       condition_value(ref, o, condition) AndAlso
                                       builders.of_while_then(condition,
                                                              Function() As Boolean
                                                                  Dim cur_condition As String = Nothing
-                                                                 Return l.of(ref.paragraph).build(o) AndAlso
+                                                                 Return code_gen_of(ref.paragraph).build(o) AndAlso
                                                                         (ref.third Is Nothing OrElse
-                                                                         l.of(ref.third).build(o)) AndAlso
+                                                                         code_gen_of(ref.third).build(o)) AndAlso
                                                                         condition_value(ref, o, cur_condition) AndAlso
                                                                         builders.of_copy(condition, cur_condition).to(o)
                                                              End Function).to(o)

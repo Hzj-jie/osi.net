@@ -11,12 +11,11 @@ Public NotInheritable Class typed_node_writer_code_gens_registrar
     Inherits lazy_list_writer_code_gens_registrar(Of typed_node_writer, typed_node_writer_code_gens_registrar)
 
     Public Function with_of_leaf_nodes(ByVal ParamArray names() As String) As typed_node_writer_code_gens_registrar
-        v.emplace_back(streams.of(names).
-                       map(Function(ByVal name As String) As Action(Of code_gens(Of typed_node_writer))
-                               Return code_gen.of_leaf_node(name)
-                           End Function).
-                       to_array())
-        Return Me
+        Return [with](streams.of(names).
+                      map(Function(ByVal name As String) As Action(Of code_gens(Of typed_node_writer))
+                              Return code_gen.of_leaf_node(name)
+                          End Function).
+                      to_array())
     End Function
 End Class
 
@@ -29,12 +28,11 @@ Public Class lazy_list_writer_code_gens_registrar(Of WRITER As {lazy_list_writer
     Inherits code_gens_registrar(Of WRITER, RT)
 
     Public Function with_of_names(ByVal ParamArray names() As String) As RT
-        v.emplace_back(streams.of(names).
-                       map(Function(ByVal name As String) As Action(Of code_gens(Of WRITER))
-                               Return code_gen.of_name(Of WRITER)(name)
-                           End Function).
-                       to_array())
-        Return this()
+        Return [with](streams.of(names).
+                      map(Function(ByVal name As String) As Action(Of code_gens(Of WRITER))
+                              Return code_gen.of_name(Of WRITER)(name)
+                          End Function).
+                      to_array())
     End Function
 End Class
 
@@ -43,50 +41,41 @@ Public NotInheritable Class code_gens_registrar(Of WRITER As New)
 End Class
 
 Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of WRITER, RT))
-    Protected ReadOnly v As New vector(Of Action(Of code_gens(Of WRITER)))()
+    Private ReadOnly v As New vector(Of Action(Of code_gens(Of WRITER)))()
 
-    Protected Function this() As RT
+    Public Function [with](ByVal actions() As Action(Of code_gens(Of WRITER))) As RT
+        assert(Not actions Is Nothing)
+        For Each a As Action(Of code_gens(Of WRITER)) In actions
+            v.emplace_back(a)
+        Next
         Return direct_cast(Of RT)(Me)
     End Function
 
     Public Function [with](ByVal a As Action(Of code_gens(Of WRITER))) As RT
-        assert(Not a Is Nothing)
-        v.emplace_back(a)
-        Return this()
+        Return [with]({a})
     End Function
 
-    Public Function [with](Of T As code_gen(Of WRITER))(ByVal instance As T) As RT
-        v.emplace_back(Sub(ByVal b As code_gens(Of WRITER))
-                           assert(Not b Is Nothing)
-                           b.register(instance)
-                       End Sub)
-        Return this()
-    End Function
-
-    Public Function [with](Of T As code_gen(Of WRITER))() As RT
-        v.emplace_back(Sub(ByVal b As code_gens(Of WRITER))
-                           assert(Not b Is Nothing)
-                           b.register(Of T)()
-                       End Sub)
-        Return this()
+    Public Function [with](Of T As {code_gen(Of WRITER), New})() As RT
+        Return [with](Sub(ByVal b As code_gens(Of WRITER))
+                          assert(Not b Is Nothing)
+                          b.register(code_gens(Of WRITER).code_gen_name(Of T)(), New T())
+                      End Sub)
     End Function
 
     Public Function with_of_only_childs(ByVal ParamArray names() As String) As RT
-        v.emplace_back(streams.of(names).
-                       map(Function(ByVal name As String) As Action(Of code_gens(Of WRITER))
-                               Return code_gen.of_only_child(Of WRITER)(name)
-                           End Function).
-                       to_array())
-        Return this()
+        Return [with](streams.of(names).
+                              map(Function(ByVal name As String) As Action(Of code_gens(Of WRITER))
+                                      Return code_gen.of_only_child(Of WRITER)(name)
+                                  End Function).
+                              to_array())
     End Function
 
     Public Function with_of_all_childrens(ByVal ParamArray names() As String) As RT
-        v.emplace_back(streams.of(names).
-                       map(Function(ByVal name As String) As Action(Of code_gens(Of WRITER))
-                               Return code_gen.of_all_children(Of WRITER)(name)
-                           End Function).
-                       to_array())
-        Return this()
+        Return [with](streams.of(names).
+                      map(Function(ByVal name As String) As Action(Of code_gens(Of WRITER))
+                              Return code_gen.of_all_children(Of WRITER)(name)
+                          End Function).
+                      to_array())
     End Function
 
     Public Shared Widening Operator CType(ByVal this As code_gens_registrar(Of WRITER, RT)) _

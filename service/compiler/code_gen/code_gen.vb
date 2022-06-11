@@ -8,7 +8,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
-Imports osi.service.constructor
 
 Public Interface code_gen(Of WRITER As New)
     Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean
@@ -17,7 +16,7 @@ End Interface
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
     Private ReadOnly m As New unordered_map(Of String, code_gen(Of WRITER))()
 
-    Private Shared Function code_gen_name(Of T As code_gen(Of WRITER))() As String
+    Public Shared Function code_gen_name(Of T As code_gen(Of WRITER))() As String
         Return GetType(T).Name().TrimStart("_"c).Replace("_"c, "-"c)
     End Function
 
@@ -27,29 +26,11 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         assert(m.emplace(s, b).second(), s)
     End Sub
 
-    Public Sub register(Of T As code_gen(Of WRITER))(ByVal b As T)
-        register(code_gen_name(Of T)(), b)
-    End Sub
-
-    Public Sub register(Of T As code_gen(Of WRITER))(ByVal name As String)
-        register(name, inject_constructor(Of T).invoke(Me))
-    End Sub
-
-    Public Sub register(Of T As code_gen(Of WRITER))()
-        register(Of T)(code_gen_name(Of T)())
-    End Sub
-
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function code_gen_of(ByVal name As String) As code_gen(Of WRITER)
         Dim it As unordered_map(Of String, code_gen(Of WRITER)).iterator = m.find(name)
         assert(it <> m.end(), "Cannot find code_gen of ", name)
         Return (+it).second
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function code_gen_of(ByVal n As typed_node) As code_gen(Of WRITER)
-        assert(Not n Is Nothing)
-        Return code_gen_of(n.type_name)
     End Function
 
     ' Limit the use of this function, prefer code_gen_proxy.dump if possible.
@@ -60,7 +41,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [of](ByVal n As typed_node) As code_gen_proxy
-        Return New code_gen_proxy(code_gen_of(n), n)
+        assert(Not n Is Nothing)
+        Return New code_gen_proxy(code_gen_of(n.type_name), n)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

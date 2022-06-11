@@ -8,20 +8,11 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     ' TODO: Avoid publicizing struct to b2style.
     Public NotInheritable Class struct
         Implements code_gen(Of logic_writer)
-
-        Private ReadOnly l As code_gens(Of logic_writer)
-
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
-        End Sub
 
         Private Shared Function copy(ByVal sources As vector(Of String),
                                      ByVal target As String,
@@ -164,17 +155,18 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return l.typed(Of heap_name).build(length,
-                                               o,
-                                               Function(ByVal len_name As String) As Boolean
-                                                   assert(Not v Is Nothing)
-                                                   Return v.for_each_primitive(
-                                                              Function(ByVal m As builders.parameter) As Boolean
-                                                                  assert(Not m Is Nothing)
-                                                                  Return heap_declaration.declare_single_data_slot(
-                                                                             m.type, m.name, len_name, o)
-                                                              End Function)
-                                               End Function)
+            Return code_gens().typed(Of heap_name).
+                               build(length,
+                                     o,
+                                     Function(ByVal len_name As String) As Boolean
+                                         assert(Not v Is Nothing)
+                                         Return v.for_each_primitive(
+                                                    Function(ByVal m As builders.parameter) As Boolean
+                                                        assert(Not m Is Nothing)
+                                                        Return heap_declaration.declare_single_data_slot(
+                                                                   m.type, m.name, len_name, o)
+                                                    End Function)
+                                     End Function)
         End Function
 
         Public Shared Function dealloc_from_heap(ByVal name As String, ByVal o As logic_writer) As Boolean

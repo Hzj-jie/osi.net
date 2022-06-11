@@ -13,14 +13,12 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class _string
         Inherits raw_value
 
-        Public Shared ReadOnly instance As New _string()
-
-        Private Sub New()
+        Public Sub New()
             MyBase.New(code_types.string)
         End Sub
 
         Public Overloads Shared Function build(ByVal s As String, ByVal o As logic_writer) As Boolean
-            Return instance.build(New data_block(s), o)
+            Return code_gens().typed(Of _string)().build(New data_block(s), o)
         End Function
 
         Protected Overrides Function parse(ByVal n As typed_node, ByRef o As data_block) As Boolean

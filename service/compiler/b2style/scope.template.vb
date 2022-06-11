@@ -123,22 +123,19 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
-            Public Function define(ByVal l As code_gens(Of typed_node_writer), ByVal n As typed_node) As Boolean
-                assert(Not l Is Nothing)
+            Public Function define(ByVal n As typed_node) As Boolean
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 2)
                 assert(n.child(0).child_count() = 4)
-                Dim type_param_list As vector(Of String) = l.of_all_children(n.child(0).child(2)).dump()
+                Dim type_param_list As vector(Of String) = code_gens().of_all_children(n.child(0).child(2)).dump()
                 Return s.t.define(type_param_list, n)
             End Function
 
-            Public Function resolve(ByVal l As code_gens(Of typed_node_writer),
-                                    ByVal n As typed_node,
+            Public Function resolve(ByVal n As typed_node,
                                     ByRef extended_type_name As String) As Boolean
-                assert(Not l Is Nothing)
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
-                Dim paramtypelist As vector(Of String) = l.of_all_children(n.child(2)).dump()
+                Dim paramtypelist As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
                 Dim s As scope = Me.s
                 While Not s Is Nothing
                     Dim r As [optional](Of Boolean) = s.t.resolve(paramtypelist, n, extended_type_name)
