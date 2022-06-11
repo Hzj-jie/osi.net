@@ -7,6 +7,7 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports osi.root.utils
 Imports osi.service.automata
 Imports osi.service.constructor
 
@@ -27,15 +28,16 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         assert(m.emplace(s, b).second(), s)
     End Sub
 
+    ' TODO: Remove
     Public Sub register(Of T As code_gen(Of WRITER))(ByVal b As T)
         register(code_gen_name(Of T)(), b)
     End Sub
 
-    Public Sub register(Of T As code_gen(Of WRITER))(ByVal name As String)
-        register(name, inject_constructor(Of T).invoke(Me))
+    Public Sub register(Of T As {code_gen(Of WRITER), New})(ByVal name As String)
+        register(name, New T())
     End Sub
 
-    Public Sub register(Of T As code_gen(Of WRITER))()
+    Public Sub register(Of T As {code_gen(Of WRITER), New})()
         register(Of T)(code_gen_name(Of T)())
     End Sub
 

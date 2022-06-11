@@ -32,8 +32,16 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         Return l
     End Function
 
-    Public NotInheritable Class code_builder
-        Private Shared ReadOnly code_gens As code_gens(Of WRITER) = new_code_gens()
+    Protected Shared Function code_gens() As code_gens(Of WRITER)
+        Return code_builder.code_gens
+    End Function
+
+    Protected Shared Function code_gen_of(ByVal n As typed_node) As code_gens(Of WRITER).code_gen_proxy
+        Return code_gens().of(n)
+    End Function
+
+    Protected NotInheritable Class code_builder
+        Public Shared ReadOnly code_gens As code_gens(Of WRITER) = new_code_gens()
 
         Public Shared Function build(ByVal input As String, ByVal o As WRITER) As Boolean
             assert(Not o Is Nothing)

@@ -55,6 +55,7 @@ Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of 
         Return this()
     End Function
 
+    ' TODO: Remove
     Public Function [with](Of T As code_gen(Of WRITER))(ByVal instance As T) As RT
         v.emplace_back(Sub(ByVal b As code_gens(Of WRITER))
                            assert(Not b Is Nothing)
@@ -63,7 +64,7 @@ Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of 
         Return this()
     End Function
 
-    Public Function [with](Of T As code_gen(Of WRITER))() As RT
+    Public Function [with](Of T As {code_gen(Of WRITER), New})() As RT
         v.emplace_back(Sub(ByVal b As code_gens(Of WRITER))
                            assert(Not b Is Nothing)
                            b.register(Of T)()

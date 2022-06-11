@@ -4,17 +4,16 @@ Option Infer Off
 Option Strict On
 
 Imports osi.service.compiler.rewriters
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class ifndef_wrapped
         Inherits ifndef_wrapped(Of typed_node_writer)
 
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            MyBase.New(b, Function(ByVal s As String) As Boolean
-                              Return scope.current().defines().is_defined(s)
-                          End Function)
+        Public Sub New()
+            MyBase.New(AddressOf code_gen_of,
+                       Function(ByVal s As String) As Boolean
+                           Return scope.current().defines().is_defined(s)
+                       End Function)
         End Sub
     End Class
 

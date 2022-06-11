@@ -9,19 +9,10 @@ Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class function_call
         Implements code_gen(Of logic_writer)
-
-        Private ReadOnly l As code_gens(Of logic_writer)
-
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
-        End Sub
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer,
@@ -48,7 +39,7 @@ Partial Public NotInheritable Class bstyle
             If n.child_count() = 3 Then
                 Return bc(vector.of(Of String)())
             End If
-            If Not l.of(n.child(2)).build(o) Then
+            If Not code_gen_of(n.child(2)).build(o) Then
                 Return False
             End If
             Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()

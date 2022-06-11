@@ -8,19 +8,10 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value_list
         Implements code_gen(Of logic_writer)
-
-        Private ReadOnly l As code_gens(Of logic_writer)
-
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of logic_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
-        End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
@@ -30,7 +21,7 @@ Partial Public NotInheritable Class bstyle
             Dim v As New vector(Of String)()
             Dim i As UInt32 = 0
             While i < n.child_count()
-                If Not l.of(n.child(i)).build(o) Then
+                If Not code_gen_of(n.child(i)).build(o) Then
                     Return False
                 End If
                 Using r As read_scoped(Of scope.value_target_t.target).ref = value.read_target()
