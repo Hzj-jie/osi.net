@@ -73,13 +73,13 @@ Public NotInheritable Class bstyle
                            with(Of _function)().
                            with(Of function_call)().
                            with(Of ignore_result_function_call)().
-                           with(_integer.instance).
+                           with(Of _integer)().
                            with(Of biguint)().
                            with(Of logic)().
                            with(Of multi_sentence_paragraph)().
                            with(Of param)().
                            with(Of return_clause)().
-                           with(_string.instance).
+                           with(Of _string)().
                            with(Of value)().
                            with(Of value_clause)().
                            with(Of value_declaration)().
@@ -102,6 +102,10 @@ Public NotInheritable Class bstyle
                            with(Of dealloc)().
                            with(Of static_cast)().
                            with(Of _delegate)().
+                           with(Of kw_file)().
+                           with(Of kw_func)().
+                           with(Of kw_line)().
+                           with(Of kw_statement)().
                            with_of_only_childs(
                                "base-root-type",
                                "root-type",
@@ -124,11 +128,7 @@ Public NotInheritable Class bstyle
                            with(code_gen.of_ignore_last_child(Of logic_writer)("base-sentence-with-semi-colon")).
                            with(code_gen.of_input_without_ignored(Of logic_writer)("paramtype")).
                            with_of_all_childrens("paramtypelist").
-                           with(code_gen.of_first_child(Of logic_writer)("paramtype-with-comma")).
-                           with(kw_file.instance).
-                           with(kw_func.instance).
-                           with(kw_line.instance).
-                           with(kw_statement.instance)
+                           with(code_gen.of_first_child(Of logic_writer)("paramtype-with-comma"))
         End Function
     End Class
 

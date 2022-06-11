@@ -11,15 +11,10 @@ Partial Public NotInheritable Class b2style
     Private NotInheritable Class name
         Implements code_gen(Of typed_node_writer)
 
-        Public Shared ReadOnly instance As New name()
-
-        Private Sub New()
-        End Sub
-
         Public Shared Function [of](ByVal name As String) As Action(Of code_gens(Of typed_node_writer))
             Return Sub(ByVal b As code_gens(Of typed_node_writer))
                        assert(Not b Is Nothing)
-                       b.register(name, instance)
+                       b.register(name, b.typed(Of name)())
                    End Sub
         End Function
 

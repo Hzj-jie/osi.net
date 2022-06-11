@@ -33,12 +33,6 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Return (+it).second
     End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function code_gen_of(ByVal n As typed_node) As code_gen(Of WRITER)
-        assert(Not n Is Nothing)
-        Return code_gen_of(n.type_name)
-    End Function
-
     ' Limit the use of this function, prefer code_gen_proxy.dump if possible.
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function typed(Of T As code_gen(Of WRITER))() As T
@@ -47,7 +41,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function [of](ByVal n As typed_node) As code_gen_proxy
-        Return New code_gen_proxy(code_gen_of(n), n)
+        assert(Not n Is Nothing)
+        Return New code_gen_proxy(code_gen_of(n.type_name), n)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

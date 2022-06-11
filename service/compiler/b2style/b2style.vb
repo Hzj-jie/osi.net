@@ -83,7 +83,7 @@ Partial Public NotInheritable Class b2style
                            with(Of template).
                            with(Of template_type_name).
                            with(Of function_call_with_template).
-                           with(name.instance).
+                           with(Of name)().
                            with(name.of("raw-type-name")).
                            with(Of _function)().
                            with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).

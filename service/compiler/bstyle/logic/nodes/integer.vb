@@ -11,14 +11,12 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class _integer
         Inherits raw_value
 
-        Public Shared ReadOnly instance As New _integer()
-
-        Private Sub New()
+        Public Sub New()
             MyBase.New(code_types.int)
         End Sub
 
         Public Overloads Shared Function build(ByVal i As Int32, ByVal o As logic_writer) As Boolean
-            Return instance.build(New data_block(i), o)
+            Return code_gens().typed(Of _integer)().build(New data_block(i), o)
         End Function
 
         Protected Overrides Function parse(ByVal n As typed_node, ByRef o As data_block) As Boolean

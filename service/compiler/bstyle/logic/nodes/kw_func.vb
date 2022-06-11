@@ -10,11 +10,6 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class kw_func
         Implements code_gen(Of logic_writer)
 
-        Public Shared ReadOnly instance As New kw_func()
-
-        Private Sub New()
-        End Sub
-
         Public Function build(ByVal n As typed_node,
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             Return _string.build(scope.current().current_function().signature(), o)
