@@ -12,11 +12,6 @@ Partial Public NotInheritable Class b2style
     Private NotInheritable Class heap_struct_name
         Implements code_gen(Of typed_node_writer)
 
-        Public Shared ReadOnly instance As New heap_struct_name()
-
-        Private Sub New()
-        End Sub
-
         Private Shared Function bstyle_format(ByVal n As typed_node) As String
             assert(n.child_count() = 3)
             assert(n.child(0).child_count() = 4)

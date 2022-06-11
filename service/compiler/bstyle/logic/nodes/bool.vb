@@ -11,9 +11,7 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class bool
         Inherits raw_value
 
-        Public Shared ReadOnly instance As New bool()
-
-        Private Sub New()
+        Public Sub New()
             MyBase.New(code_types.bool)
         End Sub
 

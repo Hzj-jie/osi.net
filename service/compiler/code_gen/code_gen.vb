@@ -7,9 +7,7 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.utils
 Imports osi.service.automata
-Imports osi.service.constructor
 
 Public Interface code_gen(Of WRITER As New)
     Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean
@@ -18,7 +16,7 @@ End Interface
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
     Private ReadOnly m As New unordered_map(Of String, code_gen(Of WRITER))()
 
-    Private Shared Function code_gen_name(Of T As code_gen(Of WRITER))() As String
+    Public Shared Function code_gen_name(Of T As code_gen(Of WRITER))() As String
         Return GetType(T).Name().TrimStart("_"c).Replace("_"c, "-"c)
     End Function
 
@@ -26,19 +24,6 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         assert(Not s.null_or_whitespace())
         assert(Not b Is Nothing)
         assert(m.emplace(s, b).second(), s)
-    End Sub
-
-    ' TODO: Remove
-    Public Sub register(Of T As code_gen(Of WRITER))(ByVal b As T)
-        register(code_gen_name(Of T)(), b)
-    End Sub
-
-    Public Sub register(Of T As {code_gen(Of WRITER), New})(ByVal name As String)
-        register(name, New T())
-    End Sub
-
-    Public Sub register(Of T As {code_gen(Of WRITER), New})()
-        register(Of T)(code_gen_name(Of T)())
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

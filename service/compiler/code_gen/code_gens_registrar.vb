@@ -55,29 +55,26 @@ Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of 
         Return this()
     End Function
 
-    ' TODO: Remove
-    Public Function [with](Of T As code_gen(Of WRITER))(ByVal instance As T) As RT
-        v.emplace_back(Sub(ByVal b As code_gens(Of WRITER))
-                           assert(Not b Is Nothing)
-                           b.register(instance)
-                       End Sub)
-        Return this()
+    Public Function [with](Of T As {code_gen(Of WRITER), New})() As RT
+        Return [with](Sub(ByVal b As code_gens(Of WRITER))
+                          assert(Not b Is Nothing)
+                          b.register(code_gens(Of WRITER).code_gen_name(Of T)(), New T())
+                      End Sub)
     End Function
 
-    Public Function [with](Of T As {code_gen(Of WRITER), New})() As RT
-        v.emplace_back(Sub(ByVal b As code_gens(Of WRITER))
-                           assert(Not b Is Nothing)
-                           b.register(Of T)()
-                       End Sub)
-        Return this()
+    Public Function [with](Of T As code_gen(Of WRITER))(ByVal i As T) As RT
+        Return [with](Sub(ByVal b As code_gens(Of WRITER))
+                          assert(Not b Is Nothing)
+                          b.register(code_gens(Of WRITER).code_gen_name(Of T)(), i)
+                      End Sub)
     End Function
 
     Public Function with_of_only_childs(ByVal ParamArray names() As String) As RT
         v.emplace_back(streams.of(names).
-                       map(Function(ByVal name As String) As Action(Of code_gens(Of WRITER))
-                               Return code_gen.of_only_child(Of WRITER)(name)
-                           End Function).
-                       to_array())
+                               map(Function(ByVal name As String) As Action(Of code_gens(Of WRITER))
+                                       Return code_gen.of_only_child(Of WRITER)(name)
+                                   End Function).
+                               to_array())
         Return this()
     End Function
 

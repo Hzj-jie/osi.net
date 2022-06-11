@@ -20,9 +20,7 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class define
         Inherits define(Of logic_writer)
 
-        Public Shared ReadOnly instance As New define()
-
-        Private Sub New()
+        Public Sub New()
             MyBase.New(Sub(ByVal s As String)
                            scope.current().defines().define(s)
                        End Sub)

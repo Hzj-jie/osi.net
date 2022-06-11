@@ -6,16 +6,20 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class name
         Implements code_gen(Of typed_node_writer)
 
+        Public Shared ReadOnly instance As New name()
+
+        Private Sub New()
+        End Sub
+
         Public Shared Function [of](ByVal name As String) As Action(Of code_gens(Of typed_node_writer))
             Return Sub(ByVal b As code_gens(Of typed_node_writer))
                        assert(Not b Is Nothing)
-                       b.register(Of name)(name)
+                       b.register(name, instance)
                    End Sub
         End Function
 
