@@ -136,16 +136,16 @@ Partial Public NotInheritable Class b2style
             Return _extended_type_name.str()
         End Function
 
-        Public Function apply(ByVal paramtypelist As vector(Of String), ByRef impl As String) As Boolean
-            assert(Not paramtypelist.null_or_empty())
-            assert(paramtypelist.size() = Me.type_refs.size())
-            _extended_type_name.apply(paramtypelist)
-            For i As UInt32 = 0 To paramtypelist.size() - uint32_1
+        Public Function apply(ByVal types As vector(Of String), ByRef impl As String) As Boolean
+            assert(Not types.null_or_empty())
+            assert(types.size() = Me.type_refs.size())
+            _extended_type_name.apply(types)
+            For i As UInt32 = 0 To types.size() - uint32_1
                 assert(Not Me.type_refs(i))
-                Me.type_refs(i).set(paramtypelist(i))
+                Me.type_refs(i).set(types(i))
             Next
             impl = w.dump()
-            For i As UInt32 = 0 To paramtypelist.size() - uint32_1
+            For i As UInt32 = 0 To types.size() - uint32_1
                 Me.type_refs(i).set(Nothing)
             Next
             Return True

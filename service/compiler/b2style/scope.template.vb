@@ -37,21 +37,6 @@ Partial Public NotInheritable Class b2style
                 End Function
             End Class
 
-            Private Shared Function reparse(ByVal types As vector(Of String),
-                                            ByVal name As name_with_namespace,
-                                            ByVal d As definition) As Boolean
-                Using If(name.namespace().empty_or_whitespace(),
-                         empty_idisposable.instance,
-                         scope.current().current_namespace().define(name.namespace()))
-                    Dim s As String = Nothing
-                    If Not d.apply(types, s) Then
-                        Return False
-                    End If
-                    assert(s Is Nothing OrElse Not s.empty_or_whitespace())
-                    Return parser.instance(s, scope.current().root_type_injector().current())
-                End Using
-            End Function
-
             Public Function define(ByVal type_param_list As vector(Of String), ByVal n As typed_node) As Boolean
                 assert(Not n Is Nothing)
                 Dim t As template_template = Nothing
@@ -71,22 +56,33 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public Function resolve(ByVal input_name As String,
-                                    ByVal paramtypelist As vector(Of String),
+                                    ByVal types As vector(Of String),
                                     ByRef extended_type_name As String) As ternary
-                assert(Not paramtypelist.null_or_empty())
+                assert(Not types.null_or_empty())
                 Dim name As name_with_namespace = name_with_namespace.of(input_name)
                 Dim d As definition = Nothing
                 If Not m.find(name, d) Then
                     Return ternary.unknown
                 End If
                 assert(Not d Is Nothing)
-                If Not reparse(paramtypelist, name, d) Then
+                Dim s As String = Nothing
+                If Not d.apply(types, s) Then
                     Return ternary.false
+                End If
+                assert(s Is Nothing OrElse Not s.empty_or_whitespace())
+                If Not s Is Nothing Then
+                    Using If(name.namespace().empty_or_whitespace(),
+                             empty_idisposable.instance,
+                             scope.current().current_namespace().define(name.namespace()))
+                        If Not parser.instance(s, scope.current().root_type_injector().current()) Then
+                            Return ternary.false
+                        End If
+                    End Using
                 End If
                 ' TODO: Should return b2style name with namespace rather than bstyle.
                 extended_type_name = _namespace.bstyle_format.with_namespace(
                                          name.namespace(),
-                                         d.extended_type_name(paramtypelist))
+                                         d.extended_type_name(types))
                 Return ternary.true
             End Function
         End Class
