@@ -84,7 +84,10 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
             assert(Not n Is Nothing)
-            Return strcat(n.input_without_ignored(), "__", type_count)
+            assert(type_count > 0)
+            Dim name As String = n.input_without_ignored()
+            assert(Not name.null_or_whitespace())
+            Return String.Concat(name, "__", type_count)
         End Function
 
         ' @VisibleForTesting

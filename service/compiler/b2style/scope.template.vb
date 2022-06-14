@@ -52,12 +52,6 @@ Partial Public NotInheritable Class b2style
                 End Using
             End Function
 
-            Public Shared Function template_name(ByVal n As typed_node) As name_with_namespace
-                assert(Not n Is Nothing)
-                assert(n.child_count() = 4)
-                Return name_with_namespace.of(template_template.template_name(n.child(0), n.child(2).child_count()))
-            End Function
-
             Public Function define(ByVal type_param_list As vector(Of String), ByVal n As typed_node) As Boolean
                 assert(Not n Is Nothing)
                 Dim t As template_template = Nothing
@@ -76,12 +70,11 @@ Partial Public NotInheritable Class b2style
                 Return True
             End Function
 
-            Public Function resolve(ByVal paramtypelist As vector(Of String),
-                                    ByVal n As typed_node,
+            Public Function resolve(ByVal input_name As String,
+                                    ByVal paramtypelist As vector(Of String),
                                     ByRef extended_type_name As String) As ternary
                 assert(Not paramtypelist.null_or_empty())
-                assert(Not n Is Nothing)
-                Dim name As name_with_namespace = template_name(n)
+                Dim name As name_with_namespace = name_with_namespace.of(input_name)
                 Dim d As definition = Nothing
                 If Not m.find(name, d) Then
                     Return ternary.unknown
@@ -117,10 +110,11 @@ Partial Public NotInheritable Class b2style
             Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
-                Dim paramtypelist As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
+                Dim name As String = template_template.template_name(n.child(0), n.child(2).child_count())
+                Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    Dim r As ternary = s.t.resolve(paramtypelist, n, extended_type_name)
+                    Dim r As ternary = s.t.resolve(name, types, extended_type_name)
                     If Not r.unknown_() Then
                         Return r
                     End If
@@ -128,7 +122,7 @@ Partial Public NotInheritable Class b2style
                 End While
                 raise_error(error_type.user,
                             "Template [",
-                            template_t.template_name(n),
+                            name,
                             "] has not been defined for ",
                             n.input())
                 Return False
