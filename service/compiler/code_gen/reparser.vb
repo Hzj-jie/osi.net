@@ -9,6 +9,7 @@ Imports osi.root.template
 Imports osi.service.automata
 
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
+    ' Do not add extra functionalities into this class, uses out of the current function set should use parser directly.
     Public MustInherit Class reparser
         Implements code_gen(Of WRITER)
 
@@ -30,21 +31,14 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
                 raise_error(error_type.user, "Failed to dump ", n)
                 Return False
             End If
-            Using wrapper(n)
-                If Not parser(s, o) Then
-                    raise_error(error_type.user, "Failed to parse ", n)
-                    Return False
-                End If
-                Return True
-            End Using
+            If Not parser(s, o) Then
+                raise_error(error_type.user, "Failed to parse ", n)
+                Return False
+            End If
+            Return True
         End Function
 
         Protected MustOverride Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
-
-        Protected Overridable Function wrapper(ByVal n As typed_node) As IDisposable
-            Return defer.to(Sub()
-                            End Sub)
-        End Function
 
         Protected Overridable Function handle_not_dumpable(ByVal n As typed_node, ByVal o As WRITER) As Boolean
             Return False
