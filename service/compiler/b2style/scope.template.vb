@@ -114,8 +114,7 @@ Partial Public NotInheritable Class b2style
                 Return s.t.define(type_param_list, n)
             End Function
 
-            Public Function resolve(ByVal n As typed_node,
-                                    ByRef extended_type_name As String) As Boolean
+            Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
                 Dim paramtypelist As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
