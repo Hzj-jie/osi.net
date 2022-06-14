@@ -26,10 +26,12 @@ Public Structure ternary
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As ternary) As Boolean
+        assert(this.notunknown())
         Return this.true_()
     End Operator
 
     Public Shared Operator Not(ByVal this As ternary) As Boolean
+        assert(this.notunknown())
         Return this.false_()
     End Operator
 
@@ -72,11 +74,11 @@ Public Structure ternary
     Public Function reverse() As ternary
         If d = _true Then
             Return ternary.false
-        ElseIf d = _false Then
-            Return ternary.true
-        Else
-            Return ternary.unknown
         End If
+        If d = _false Then
+            Return ternary.true
+        End If
+        Return ternary.unknown
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone
