@@ -71,7 +71,7 @@ Partial Public NotInheritable Class b2style
                foreach(Sub(ByVal f As tuple(Of String, class_def.function_def))
                            assert(Not f.first.null_or_whitespace())
                            assert(Not f.second Is Nothing)
-                           o.Append(f.first + f.second.content)
+                           o.Append(f.first + " " + f.second.content)
                        End Sub)
             s = o.ToString()
             Return True

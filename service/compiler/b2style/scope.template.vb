@@ -112,7 +112,9 @@ Partial Public NotInheritable Class b2style
                 assert(n.child_count() = 4)
                 Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
                 Dim name As String = Nothing
-                If Not name_override(name) Then
+                If name_override(name) Then
+                    name = template_template.template_name(name, n.child(2).child_count())
+                Else
                     name = template_template.template_name(n.child(0), n.child(2).child_count())
                 End If
                 Dim s As scope = Me.s

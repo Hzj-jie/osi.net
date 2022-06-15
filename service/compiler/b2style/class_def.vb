@@ -213,7 +213,10 @@ Partial Public NotInheritable Class b2style
                       assert(node.child_count() = 2)
                       Dim f As tuple(Of typed_node, function_def.type_t) = parse_class_function(node.child(1))
                       Return tuple.emplace_of(node.child(0).input(), f.first(), f.second())
-                  End Function)
+                  End Function).
+              foreach(Sub(ByVal t As tuple(Of String, typed_node, function_def.type_t))
+                          _temps.emplace_back(tuple.of(t._1(), parse_function(t._2(), t._3())))
+                      End Sub)
             Return Me
         End Function
 

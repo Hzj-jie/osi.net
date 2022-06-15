@@ -13,6 +13,12 @@ Partial Public NotInheritable Class b2style
     Private NotInheritable Class function_call
         Implements code_gen(Of typed_node_writer)
 
+        Public Shared Function build_struct_function(ByVal this As String, ByVal name As String) As String
+            assert(Not this.null_or_whitespace())
+            assert(Not name.null_or_whitespace())
+            Return String.Concat(this, ".", name)
+        End Function
+
         Public Shared Function split_struct_function(ByVal name As String,
                                                      ByRef o As tuple(Of String, String)) As Boolean
             assert(Not name.null_or_whitespace())
