@@ -209,16 +209,16 @@ Partial Public NotInheritable Class b2style
 
             n.children_of("class-template-function").
               stream().
-              map(Function(ByVal node As typed_node) As tuple(Of String, typed_node, function_def.type_t)
+              map(Function(ByVal node As typed_node) As tuple(Of typed_node, typed_node, function_def.type_t)
                       assert(Not node Is Nothing)
                       assert(node.child_count() = 2)
                       Dim f As tuple(Of typed_node, function_def.type_t) = parse_class_function(node.child(1))
-                      Return tuple.emplace_of(node.child(0).input(), f.first(), f.second())
+                      Return tuple.emplace_of(node.child(0), f.first(), f.second())
                   End Function).
-              foreach(Sub(ByVal t As tuple(Of String, typed_node, function_def.type_t))
+              foreach(Sub(ByVal t As tuple(Of typed_node, typed_node, function_def.type_t))
                           Dim template_types As unordered_set(Of String) =
-                                  unordered_set.emplace_of(+code_gens().of_all_children(t._2().child(2)).dump())
-                          _temps.emplace_back(tuple.of(t._1(), parse_function(t._2(), t._3(), template_types)))
+                                  unordered_set.emplace_of(+code_gens().of_all_children(t._1().child(2)).dump())
+                          _temps.emplace_back(tuple.of(t._1().input(), parse_function(t._2(), t._3(), template_types)))
                       End Sub)
             Return Me
         End Function
