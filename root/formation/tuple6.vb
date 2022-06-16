@@ -399,6 +399,31 @@ Partial Public Structure tuple(Of T1, T2, T3, T4, T5, T6)
                            Implements IEquatable(Of tuple(Of T1, T2, T3, T4, T5, T6)).Equals
         Return CompareTo(that) = 0
     End Function
+
+    ' tuple is a value-type, but if the template types are nullable, this function can be used to check if the struct
+    ' itself has been initialized.
+    Public Function is_null() As Boolean
+        Dim r As Boolean = (__1 Is Nothing) AndAlso (__2 Is Nothing)
+#If 6 > 2 Then
+        r = r AndAlso (__3 Is Nothing)
+#End If
+#If 6 > 3 Then
+        r = r AndAlso (__4 Is Nothing)
+#End If
+#If 6 > 4 Then
+        r = r AndAlso (__5 Is Nothing)
+#End If
+#If 6 > 5 Then
+        r = r AndAlso (__6 Is Nothing)
+#End If
+#If 6 > 6 Then
+        r = r AndAlso (__7 Is Nothing)
+#End If
+#If 6 > 7 Then
+        r = r AndAlso (__8 Is Nothing)
+#End If
+        Return r
+    End Function
 End Structure
 'finish tuple.vbp --------
 'finish tuple6.vbp --------

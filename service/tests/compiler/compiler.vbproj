@@ -79,12 +79,14 @@
     <Content Include="b2style\self-test\bool-heap.txt" />
     <Content Include="b2style\self-test\bool_array.txt" />
     <Content Include="b2style\self-test\class-func-use-own-type.txt" />
+    <Content Include="b2style\self-test\class-template-func-compile-only.txt" />
     <Content Include="b2style\self-test\empty-and-null.txt" />
     <Content Include="b2style\self-test\heap.txt" />
     <Content Include="b2style\self-test\heap_ptr_test.txt" />
     <Content Include="b2style\self-test\include__FILE__.txt" />
     <Content Include="b2style\self-test\linked-list.txt" />
     <Content Include="b2style\self-test\mod_equals_to_1.txt" />
+    <Content Include="b2style\self-test\non-overridable-class-template-function.txt" />
     <Content Include="b2style\self-test\ptr_offset.txt" />
     <Content Include="b2style\self-test\real__file__.txt" />
     <Content Include="b2style\self-test\ref_test.txt" />

@@ -50,7 +50,8 @@ class-inheritance colon inherited-types
 overridable-function kw-overridable function
 override-function kw-override function
 class-function [overridable-function, override-function, function]
-class kw-class type-name [class-inheritance]? start-paragraph [struct-body, class-function]* end-paragraph semi-colon
+class-template-function template-head class-function
+class kw-class type-name [class-inheritance]? start-paragraph [struct-body, class-function, class-template-function]* end-paragraph semi-colon
 
 template-type-name raw-type-name less-than paramtypelist greater-than
 type-param-list [type-param-with-comma]* type-param

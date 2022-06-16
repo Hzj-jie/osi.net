@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 
@@ -103,11 +104,19 @@ Partial Public NotInheritable Class b2style
                 Return s.t.define(type_param_list, n)
             End Function
 
-            Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
+            Public Function resolve(ByVal name_override As _do(Of String, Boolean),
+                                    ByVal n As typed_node,
+                                    ByRef extended_type_name As String) As Boolean
+                assert(Not name_override Is Nothing)
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
-                Dim name As String = template_template.template_name(n.child(0), n.child(2).child_count())
                 Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
+                Dim name As String = Nothing
+                If name_override(name) Then
+                    name = template_template.template_name(name, n.child(2).child_count())
+                Else
+                    name = template_template.template_name(n.child(0), n.child(2).child_count())
+                End If
                 Dim s As scope = Me.s
                 While Not s Is Nothing
                     Dim r As ternary = s.t.resolve(name, types, extended_type_name)
@@ -122,6 +131,14 @@ Partial Public NotInheritable Class b2style
                             "] has not been defined for ",
                             n.input())
                 Return False
+            End Function
+
+            Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
+                Return resolve(Function(ByRef o As String) As Boolean
+                                   Return False
+                               End Function,
+                               n,
+                               extended_type_name)
             End Function
         End Structure
 

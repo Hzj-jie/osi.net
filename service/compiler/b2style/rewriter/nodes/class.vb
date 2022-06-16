@@ -67,6 +67,12 @@ Partial Public NotInheritable Class b2style
                            assert(Not f Is Nothing)
                            o.Append(f.content)
                        End Sub)
+            cd.temps().
+               foreach(Sub(ByVal f As tuple(Of String, class_def.function_def))
+                           assert(Not f.first().null_or_whitespace())
+                           assert(Not f.second() Is Nothing)
+                           o.Append(f.first() + " " + f.second().content)
+                       End Sub)
             s = o.ToString()
             Return True
         End Function
