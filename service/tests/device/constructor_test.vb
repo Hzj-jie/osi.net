@@ -28,8 +28,8 @@ Public Class constructor_test
     Shared Sub New()
         t1 = GetType(protector1).AssemblyQualifiedName()
         t2 = GetType(protector2).AssemblyQualifiedName()
-        assert(Not String.IsNullOrEmpty(t1))
-        assert(Not String.IsNullOrEmpty(t2))
+        assert(Not t1.null_or_empty())
+        assert(Not t2.null_or_empty())
     End Sub
 
     Public Overrides Function prepare() As Boolean

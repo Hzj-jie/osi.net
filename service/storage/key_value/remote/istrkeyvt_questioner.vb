@@ -40,7 +40,7 @@ Partial Public Class istrkeyvt_questioner
     Public Shared Function ctor(ByVal name As String,
                                 ByVal q As questioner,
                                 ByRef o As istrkeyvt_questioner) As Boolean
-        Return Not String.IsNullOrEmpty(name) AndAlso
+        Return Not name.null_or_empty() AndAlso
                Not q Is Nothing AndAlso
                eva(o, New istrkeyvt_questioner(name, q))
     End Function

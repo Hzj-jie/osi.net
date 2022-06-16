@@ -21,8 +21,8 @@ Public NotInheritable Class dynamiclogic_dataloader
     Public Sub New(ByVal language As source_executor.language,
                    ByVal type_name As String,
                    ByVal function_name As String)
-        assert(Not String.IsNullOrWhiteSpace(type_name))
-        assert(Not String.IsNullOrWhiteSpace(function_name))
+        assert(Not type_name.null_or_whitespace())
+        assert(Not function_name.null_or_whitespace())
         Me.language = language
         Me.type_name = type_name
         Me.function_name = function_name

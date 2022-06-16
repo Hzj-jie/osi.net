@@ -28,7 +28,7 @@ Public Module deploys
     Private NotInheritable Class set_envs
         Private Shared Sub init()
             assert(Not strendwith(application_directory, Path.DirectorySeparatorChar, False))
-            assert(Not String.IsNullOrEmpty(service_name))
+            assert(Not service_name.null_or_empty())
 
             assert(set_env("deploys_root", deploys_root))
             assert(set_env("deploys_folder", deploys_folder))
@@ -68,7 +68,7 @@ Public Module deploys
         Else
             deploys_root = Path.GetPathRoot(application_directory)
         End If
-        assert(Not String.IsNullOrEmpty(deploys_root))
+        assert(Not deploys_root.null_or_empty())
         Return deploys_root
     End Function
 

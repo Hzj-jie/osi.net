@@ -14,7 +14,7 @@ Public NotInheritable Class url_path
                                  ByRef result As vector(Of String),
                                  Optional ByVal e As Text.Encoding = Nothing) As Boolean
         result.renew()
-        If Not String.IsNullOrEmpty(request_absolute_path) Then
+        If Not request_absolute_path.null_or_empty() Then
             Dim ss() As String = Nothing
             ss = request_absolute_path.Split(path_separators, StringSplitOptions.RemoveEmptyEntries)
             If isemptyarray(ss) Then

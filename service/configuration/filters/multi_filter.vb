@@ -8,7 +8,7 @@ Public Class multi_filter
     Private ReadOnly filters() As ifilter
 
     Protected Sub New(ByVal ctor As Func(Of String, ifilter), ByVal s As String)
-        assert(Not String.IsNullOrEmpty(s))
+        assert(Not s.null_or_empty())
         Dim ss() As String = Nothing
         ss = s.Split(separators, StringSplitOptions.RemoveEmptyEntries)
         ReDim filters(array_size(ss) - 1)

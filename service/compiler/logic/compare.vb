@@ -33,9 +33,9 @@ Partial Public NotInheritable Class logic
         Private ReadOnly right As String
 
         Public Sub New(ByVal result As String, ByVal left As String, ByVal right As String)
-            assert(Not String.IsNullOrEmpty(result))
-            assert(Not String.IsNullOrEmpty(left))
-            assert(Not String.IsNullOrEmpty(right))
+            assert(Not result.null_or_empty())
+            assert(Not left.null_or_empty())
+            assert(Not right.null_or_empty())
             Me.result = result
             Me.left = left
             Me.right = right

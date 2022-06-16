@@ -22,8 +22,8 @@ Public Module _app_info
     Public ReadOnly application_sign As String = strcat(application_name, character.minus_sign, application_version)
 
     Private Sub init()
-        assert(Not String.IsNullOrEmpty(application_full_path))
-        assert(Not String.IsNullOrEmpty(application_directory))
-        assert(Not String.IsNullOrEmpty(application_file_name))
+        assert(Not application_full_path.null_or_empty())
+        assert(Not application_directory.null_or_empty())
+        assert(Not application_file_name.null_or_empty())
     End Sub
 End Module

@@ -30,7 +30,7 @@ Partial Public NotInheritable Class logic
 
         ' @VisibleForTesting
         Public Sub New(ByVal v As String, ByVal true_path As paragraph, ByVal false_path As paragraph)
-            assert(Not String.IsNullOrEmpty(v))
+            assert(Not v.null_or_empty())
             assert(Not true_path Is Nothing)
             Me.v = v
             Me.true_path = true_path

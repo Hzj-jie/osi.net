@@ -43,7 +43,7 @@ Public Module _callstack
         Dim r As StringBuilder = Nothing
         r = New StringBuilder()
         If isdebugmode() Then
-            If String.IsNullOrEmpty(s.GetFileName()) Then
+            If s.GetFileName().null_or_empty() Then
                 r.Append("##MISSING_PDB##")
             Else
                 r.Append(s.GetFileName())

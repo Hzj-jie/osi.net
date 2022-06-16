@@ -13,16 +13,16 @@ Public Module _kick
                                                ByVal right As String,
                                                Optional ByVal case_sensitive As Boolean = True,
                                                Optional ByVal recursive As Boolean = True) As String
-        If String.IsNullOrEmpty(content) Then
+        If content.null_or_empty() Then
             Return content
         Else
             Dim l As UInt32 = 0
             l = strlen(content)
             assert(l > 0)
-            If String.IsNullOrEmpty(left) Then
+            If left.null_or_empty() Then
                 left = content(0)
             End If
-            If String.IsNullOrEmpty(right) Then
+            If right.null_or_empty() Then
                 right = content(CInt(l - uint32_1))
             End If
 

@@ -34,7 +34,7 @@ Public Class http_client_test
             Dim it As map(Of String, vector(Of String)).iterator = Nothing
             it = m.find(headers(i, 0))
             assertion.is_true(it <> m.end())
-            assertion.is_false(String.IsNullOrEmpty((+it).first))
+            assertion.is_false((+it).first.null_or_empty())
             assertion.is_false((+it).second.empty())
             assertion.is_true((+((+it).second)).has(headers(i, 1)))
         Next

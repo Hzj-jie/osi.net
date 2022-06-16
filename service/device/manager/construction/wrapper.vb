@@ -51,7 +51,7 @@ Public Class wrapper(Of T)
     Public Shared Function register(ByVal type As String,
                                     ByVal v As _do_val_val_ref(Of var, T, T, Boolean),
                                     Optional ByRef index As UInt32 = uint32_0) As Boolean
-        If String.IsNullOrEmpty(type) OrElse
+        If type.null_or_empty() OrElse
            v Is Nothing Then
             Return False
         Else

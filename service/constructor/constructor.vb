@@ -36,7 +36,7 @@ Public NotInheritable Class constructor(Of T)
 
     Public Shared Function register(ByVal type As String,
                                     ByVal allocator As Func(Of var, ref(Of T), event_comb)) As Boolean
-        If String.IsNullOrEmpty(type) OrElse allocator Is Nothing Then
+        If type.null_or_empty() OrElse allocator Is Nothing Then
             Return False
         End If
         Return lt.set(type, allocator)

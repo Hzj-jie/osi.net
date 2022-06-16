@@ -20,9 +20,9 @@ Public MustInherit Class [case]
     Protected Sub New(ByVal full_name As String,
                       ByVal assembly_qualified_name As String,
                       ByVal name As String)
-        assert(Not String.IsNullOrEmpty(full_name))
-        assert(Not String.IsNullOrEmpty(assembly_qualified_name))
-        assert(Not String.IsNullOrEmpty(name))
+        assert(Not full_name.null_or_empty())
+        assert(Not assembly_qualified_name.null_or_empty())
+        assert(Not name.null_or_empty())
         Me.full_name = full_name
         Me.assembly_qualified_name = assembly_qualified_name
         Me.name = name

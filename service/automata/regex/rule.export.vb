@@ -72,7 +72,7 @@ Partial Public NotInheritable Class rlexer
                             Return False
                         End If
                         assert(rlexer.define(word))
-                        assert(Not String.IsNullOrEmpty(i.words(j).first))
+                        assert(Not i.words(j).first.null_or_empty())
                         str_type.emplace_back(i.words(j).first)
                     Next
                 End If

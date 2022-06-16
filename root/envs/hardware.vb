@@ -42,7 +42,7 @@ Public Module _hardware
                 For Each item As ManagementBaseObject In items
                     Using item
                         Dim s As String = item(item_name).ToString()
-                        If Not String.IsNullOrEmpty(s) Then
+                        If Not s.null_or_empty() Then
                             Return s
                         End If
                     End Using

@@ -11,7 +11,7 @@ Public Class redirect_dataloader(Of T)
 
     Public Sub New(ByVal l As idataloader(Of T), ByVal target As String)
         assert(Not l Is Nothing)
-        assert(Not String.IsNullOrEmpty(target))
+        assert(Not target.null_or_empty())
         Me.l = l
         Me.target = target
     End Sub

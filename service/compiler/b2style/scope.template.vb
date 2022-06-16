@@ -5,74 +5,38 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
-Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
         Private NotInheritable Class template_t
             Private ReadOnly m As New unordered_map(Of name_with_namespace, definition)()
-            Private ReadOnly tbr As New template_body_reparser(m)
 
             Private NotInheritable Class definition
-                Public ReadOnly template As template_template
-                Public ReadOnly injected_types As New unordered_set(Of vector(Of String))()
+                Private ReadOnly template As template_template
+                Private ReadOnly injected_types As New unordered_set(Of vector(Of String))()
 
                 Public Sub New(ByVal t As template_template)
                     assert(Not t Is Nothing)
                     template = t
                 End Sub
-            End Class
 
-            Private NotInheritable Class template_body_reparser
-                Inherits code_gens(Of typed_node_writer).reparser(Of b2style.parser)
-
-                Private ReadOnly m As unordered_map(Of name_with_namespace, definition)
-                Private ReadOnly types As New one_off(Of vector(Of String))()
-
-                Public Sub New(ByVal m As unordered_map(Of name_with_namespace, definition))
-                    assert(Not m Is Nothing)
-                    Me.m = m
-                End Sub
-
-                Public Function with_types(ByVal types As vector(Of String)) As template_body_reparser
-                    assert(Not types.null_or_empty())
-                    assert(Me.types.set(types))
-                    Return Me
-                End Function
-
-                Protected Overrides Function wrapper(ByVal n As typed_node) As IDisposable
-                    ' The definition should be searched already in resolve.
-                    Dim name As name_with_namespace = template_name(n)
-                    Dim d As definition = +m.find_opt(name)
-                    assert(Not d Is Nothing)
-                    If name.namespace().empty_or_whitespace() Then
-                        Return MyBase.wrapper(n)
-                    End If
-                    Return scope.current().current_namespace().define(name.namespace())
-                End Function
-
-                Protected Overrides Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
-                    ' The definition should be searched already in resolve.
-                    Dim d As definition = +m.find_opt(template_name(n))
-                    assert(Not d Is Nothing)
-                    Dim types As vector(Of String) = Me.types.get()
+                Public Function apply(ByVal types As vector(Of String), ByRef o As String) As Boolean
                     ' TODO: Should resolve type-aliases.
-                    If Not d.injected_types.emplace(types).second() Then
+                    If Not injected_types.emplace(types).second() Then
                         ' Injected already.
-                        s = ""
+                        o = Nothing
                         Return True
                     End If
-                    Return d.template.apply(types, s)
+                    Return template.apply(types, o)
+                End Function
+
+                Public Function extended_type_name(ByVal types As vector(Of String)) As String
+                    Return template.extended_type_name(types)
                 End Function
             End Class
-
-            Public Shared Function template_name(ByVal n As typed_node) As name_with_namespace
-                assert(Not n Is Nothing)
-                assert(n.child_count() = 4)
-                Return name_with_namespace.of(template_template.template_name(n.child(0), n.child(2).child_count()))
-            End Function
 
             Public Function define(ByVal type_param_list As vector(Of String), ByVal n As typed_node) As Boolean
                 assert(Not n Is Nothing)
@@ -92,25 +56,35 @@ Partial Public NotInheritable Class b2style
                 Return True
             End Function
 
-            Public Function resolve(ByVal paramtypelist As vector(Of String),
-                                    ByVal n As typed_node,
-                                    ByRef extended_type_name As String) As [optional](Of Boolean)
-                assert(Not paramtypelist.null_or_empty())
-                assert(Not n Is Nothing)
-                Dim name As name_with_namespace = template_name(n)
+            Public Function resolve(ByVal input_name As String,
+                                    ByVal types As vector(Of String),
+                                    ByRef extended_type_name As String) As ternary
+                assert(Not types.null_or_empty())
+                Dim name As name_with_namespace = name_with_namespace.of(input_name)
                 Dim d As definition = Nothing
                 If Not m.find(name, d) Then
-                    Return [optional].empty(Of Boolean)()
+                    Return ternary.unknown
                 End If
                 assert(Not d Is Nothing)
-                If Not tbr.with_types(paramtypelist).build(n, scope.current().root_type_injector().current()) Then
-                    Return [optional].of(False)
+                Dim s As String = Nothing
+                If Not d.apply(types, s) Then
+                    Return ternary.false
+                End If
+                assert(s Is Nothing OrElse Not s.empty_or_whitespace())
+                If Not s Is Nothing Then
+                    Using If(name.namespace().empty_or_whitespace(),
+                             empty_idisposable.instance,
+                             scope.current().current_namespace().define(name.namespace()))
+                        If Not parser.instance(s, scope.current().root_type_injector().current()) Then
+                            Return ternary.false
+                        End If
+                    End Using
                 End If
                 ' TODO: Should return b2style name with namespace rather than bstyle.
                 extended_type_name = _namespace.bstyle_format.with_namespace(
                                          name.namespace(),
-                                         d.template.extended_type_name(paramtypelist))
-                Return [optional].of(True)
+                                         d.extended_type_name(types))
+                Return ternary.true
             End Function
         End Class
 
@@ -122,35 +96,49 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
-            Public Function define(ByVal l As code_gens(Of typed_node_writer), ByVal n As typed_node) As Boolean
-                assert(Not l Is Nothing)
+            Public Function define(ByVal n As typed_node) As Boolean
                 assert(Not n Is Nothing)
-                assert(n.child_count() = 5)
-                Dim type_param_list As vector(Of String) = l.of_all_children(n.child(2)).dump()
+                assert(n.child_count() = 2)
+                assert(n.child(0).child_count() = 4)
+                Dim type_param_list As vector(Of String) = code_gens().of_all_children(n.child(0).child(2)).dump()
                 Return s.t.define(type_param_list, n)
             End Function
 
-            Public Function resolve(ByVal l As code_gens(Of typed_node_writer),
+            Public Function resolve(ByVal name_override As _do(Of String, Boolean),
                                     ByVal n As typed_node,
                                     ByRef extended_type_name As String) As Boolean
-                assert(Not l Is Nothing)
+                assert(Not name_override Is Nothing)
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
-                Dim paramtypelist As vector(Of String) = l.of_all_children(n.child(2)).dump()
+                Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
+                Dim name As String = Nothing
+                If name_override(name) Then
+                    name = template_template.template_name(name, n.child(2).child_count())
+                Else
+                    name = template_template.template_name(n.child(0), n.child(2).child_count())
+                End If
                 Dim s As scope = Me.s
                 While Not s Is Nothing
-                    Dim r As [optional](Of Boolean) = s.t.resolve(paramtypelist, n, extended_type_name)
-                    If r Then
-                        Return +r
+                    Dim r As ternary = s.t.resolve(name, types, extended_type_name)
+                    If Not r.unknown_() Then
+                        Return r
                     End If
                     s = s.parent
                 End While
                 raise_error(error_type.user,
                             "Template [",
-                            template_t.template_name(n),
+                            name,
                             "] has not been defined for ",
                             n.input())
                 Return False
+            End Function
+
+            Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
+                Return resolve(Function(ByRef o As String) As Boolean
+                                   Return False
+                               End Function,
+                               n,
+                               extended_type_name)
             End Function
         End Structure
 

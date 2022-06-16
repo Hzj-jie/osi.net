@@ -52,7 +52,7 @@ Partial Public Class powerpoint
         End Function
 
         Public Function remote_defined() As Boolean
-            Return Not String.IsNullOrEmpty(host_or_ip) AndAlso remote_port <> socket_invalid_port
+            Return Not host_or_ip.null_or_empty() AndAlso remote_port <> socket_invalid_port
         End Function
 
         Public Function local_defined() As Boolean

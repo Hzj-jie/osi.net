@@ -23,7 +23,7 @@ Public Class remote_property
                     ByVal q As questioner(Of _true),
                     ByVal path As String,
                     ByVal name As String)
-        assert(Not String.IsNullOrEmpty(target))
+        assert(Not target.null_or_empty())
         Me.q = target_questioner.ctor(target, q)
         Me.p = path
         Me.n = name
@@ -34,7 +34,7 @@ Public Class remote_property
                                 ByVal path As String,
                                 ByVal name As String,
                                 ByRef o As remote_property) As Boolean
-        Return Not String.IsNullOrEmpty(target) AndAlso
+        Return Not target.null_or_empty() AndAlso
                Not q Is Nothing AndAlso
                eva(o, New remote_property(target, q, name, path))
     End Function

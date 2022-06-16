@@ -82,9 +82,15 @@ Partial Public NotInheritable Class b2style
                   End Sub)
         End Sub
 
+        Public Shared Function template_name(ByVal name As String, ByVal type_count As UInt32) As String
+            assert(Not name.null_or_whitespace())
+            assert(type_count > 0)
+            Return String.Concat(name, "__", type_count)
+        End Function
+
         Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
             assert(Not n Is Nothing)
-            Return strcat(n.input_without_ignored(), "__", type_count)
+            Return template_name(n.input_without_ignored(), type_count)
         End Function
 
         ' @VisibleForTesting
@@ -92,7 +98,7 @@ Partial Public NotInheritable Class b2style
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
                                     ByVal n As typed_node,
                                     ByRef o As template_template) As Boolean
-            Return [of](l.of_all_children(n.child(2)).dump(), n, o)
+            Return [of](l.of_all_children(n.child(0).child(2)).dump(), n, o)
         End Function
 
         Public Shared Function [of](ByVal type_param_list As vector(Of String),
@@ -101,8 +107,8 @@ Partial Public NotInheritable Class b2style
             assert(Not type_param_list.null_or_empty())
             assert(Not n Is Nothing)
             assert(n.type_name.Equals("template"))
-            assert(n.child_count() = 5)
-            Dim name_node As typed_node = n.child(4).child()
+            assert(n.child_count() = 2)
+            Dim name_node As typed_node = n.child(1).child()
             If name_node.type_name.Equals("class") OrElse name_node.type_name.Equals("function") Then
                 name_node = name_node.child(1)
             ElseIf name_node.type_name.Equals("delegate-with-semi-colon") Then
@@ -120,7 +126,7 @@ Partial Public NotInheritable Class b2style
                             "]")
                 Return False
             End If
-            o = New template_template(n.child(4), name_node, type_param_list)
+            o = New template_template(n.child(1), name_node, type_param_list)
             Return True
         End Function
 
@@ -133,16 +139,16 @@ Partial Public NotInheritable Class b2style
             Return _extended_type_name.str()
         End Function
 
-        Public Function apply(ByVal paramtypelist As vector(Of String), ByRef impl As String) As Boolean
-            assert(Not paramtypelist.null_or_empty())
-            assert(paramtypelist.size() = Me.type_refs.size())
-            _extended_type_name.apply(paramtypelist)
-            For i As UInt32 = 0 To paramtypelist.size() - uint32_1
+        Public Function apply(ByVal types As vector(Of String), ByRef impl As String) As Boolean
+            assert(Not types.null_or_empty())
+            assert(types.size() = Me.type_refs.size())
+            _extended_type_name.apply(types)
+            For i As UInt32 = 0 To types.size() - uint32_1
                 assert(Not Me.type_refs(i))
-                Me.type_refs(i).set(paramtypelist(i))
+                Me.type_refs(i).set(types(i))
             Next
             impl = w.dump()
-            For i As UInt32 = 0 To paramtypelist.size() - uint32_1
+            For i As UInt32 = 0 To types.size() - uint32_1
                 Me.type_refs(i).set(Nothing)
             Next
             Return True

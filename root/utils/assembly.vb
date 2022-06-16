@@ -17,7 +17,7 @@ Public Module _assembly
         If this Is Nothing Then
             this = AppDomain.CurrentDomain()
         End If
-        If String.IsNullOrEmpty(file_pattern) Then
+        If file_pattern.null_or_empty() Then
             file_pattern = strcat(multi_pattern_matching_character,
                                   extension_prefix,
                                   extensions.dynamic_link_library)

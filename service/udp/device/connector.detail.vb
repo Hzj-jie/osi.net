@@ -81,7 +81,7 @@ Partial Public NotInheritable Class connector
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   result.clear()
-                                  If String.IsNullOrEmpty(p.host_or_ip) Then
+                                  If p.host_or_ip.null_or_empty() Then
                                       Dim r As vector(Of IPEndPoint) = Nothing
                                       r = New vector(Of IPEndPoint)()
                                       r.emplace_back({New IPEndPoint(IPAddress.Any, p.remote_port),
@@ -152,7 +152,7 @@ Partial Public NotInheritable Class connector
         Dim ec As event_comb = Nothing
         Dim result As ref(Of IPHostEntry) = Nothing
         Return New event_comb(Function() As Boolean
-                                  If String.IsNullOrEmpty(p.host_or_ip) Then
+                                  If p.host_or_ip.null_or_empty() Then
                                       Return eva(r, New delegator(Nothing, new_client(Nothing))) AndAlso
                                              goto_end()
                                   Else

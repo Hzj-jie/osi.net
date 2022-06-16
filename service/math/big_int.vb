@@ -552,7 +552,7 @@ Partial Public NotInheritable Class big_int
                                  Optional ByVal base As Byte = default_str_base) As Boolean
         Dim signal As Boolean = False
         signal = True
-        If Not String.IsNullOrEmpty(s) Then
+        If Not s.null_or_empty() Then
             If s(0) = negative_signal_mask Then
                 signal = False
                 s = s.Substring(1)

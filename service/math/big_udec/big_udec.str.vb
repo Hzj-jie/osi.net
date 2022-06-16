@@ -108,7 +108,7 @@ Partial Public NotInheritable Class big_udec
         If Not support_base(base) Then
             Return False
         End If
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             o = big_udec.zero()
             Return True
         End If
@@ -151,7 +151,7 @@ Partial Public NotInheritable Class big_udec
         If Not support_base(base) Then
             Return False
         End If
-        If String.IsNullOrEmpty(s) Then
+        If s.null_or_empty() Then
             o = big_udec.zero()
             Return True
         End If

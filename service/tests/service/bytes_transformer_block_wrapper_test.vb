@@ -106,7 +106,7 @@ Public Class bytes_transformer_block_wrapper_test
         End Function
 
         Public Overrides Function run() As Boolean
-            If String.IsNullOrEmpty(token) Then
+            If token.null_or_empty() Then
                 assertion.is_false(create_encrypt_bytes_transformer_block_wrapper(encryptor, token, v, block_dev, Nothing))
             Else
                 Dim p As bytes_transformer_block_wrapper = Nothing

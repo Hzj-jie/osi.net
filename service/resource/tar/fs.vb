@@ -34,7 +34,7 @@ Partial Public NotInheritable Class tar
         End Function
 
         Public Function read(ByVal file As String, ByVal o As MemoryStream) As Boolean Implements fs.read
-            If String.IsNullOrEmpty(file) Then
+            If file.null_or_empty() Then
                 Return False
             End If
             If Not exists(file) Then
@@ -44,7 +44,7 @@ Partial Public NotInheritable Class tar
         End Function
 
         Public Function write(ByVal file As String, ByVal i As MemoryStream) As Boolean Implements fs.write
-            If String.IsNullOrEmpty(file) Then
+            If file.null_or_empty() Then
                 Return False
             End If
             Return w(i, file)
@@ -89,7 +89,7 @@ Partial Public NotInheritable Class tar
         Private ReadOnly m As map(Of String, MemoryStream) = New map(Of String, MemoryStream)()
 
         Public Function stream_of(ByVal s As String) As MemoryStream
-            assert(Not String.IsNullOrEmpty(s))
+            assert(Not s.null_or_empty())
             Return memory_stream.of(s)
         End Function
 

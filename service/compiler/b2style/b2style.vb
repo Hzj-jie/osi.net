@@ -70,15 +70,15 @@ Partial Public NotInheritable Class b2style
                            with(code_gen.of_all_children_with_wrapper(Of scope, typed_node_writer) _
                                                                      (AddressOf scope.wrap, "struct")).
                            with(Of _namespace)().
-                           with(heap_struct_name.instance).
+                           with(Of heap_struct_name)().
                            with(Of self_value_clause)().
                            with(Of binary_operation_value)().
                            with(Of pre_operation_value)().
                            with(Of post_operation_value)().
                            with(Of function_call)().
                            with(Of heap_struct_function_call)().
-                           with(include_with_string.instance).
-                           with(include_with_file.instance).
+                           with(Of include_with_string)().
+                           with(Of include_with_file)().
                            with(Of _class)().
                            with(Of template).
                            with(Of template_type_name).
@@ -99,13 +99,13 @@ Partial Public NotInheritable Class b2style
                            with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
                                     scope.call_hierarchy_t.from_value_clause(), "value-clause")).
                            with(Of ifndef_wrapped)().
-                           with(define.instance).
+                           with(Of define)().
                            with(Of paramtype_with_comma)().
                            with(Of class_initializer)().
                            with(code_gen.of_ignore(Of typed_node_writer)("colon")).
                            with(Of root_type)().
-                           with(kw_statement.instance).
-                           with(kw_file.instance).
+                           with(Of kw_statement)().
+                           with(Of kw_file)().
                            with(code_gen.of_input(Of typed_node_writer)("kw-func")).
                            with(code_gen.of_input(Of typed_node_writer)("kw-line")).
                            with_of_only_childs(

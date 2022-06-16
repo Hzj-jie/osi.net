@@ -11,7 +11,7 @@ Partial Public NotInheritable Class struct
         Public Sub New(ByVal type As Type, ByVal name As String)
             static_constructor.once_execute(type)
             assert(Not type Is Nothing)
-            assert(Not String.IsNullOrEmpty(name))
+            assert(Not name.null_or_empty())
             Me.type = type
             Me.name = name
         End Sub

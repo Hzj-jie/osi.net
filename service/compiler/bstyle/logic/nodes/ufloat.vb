@@ -11,9 +11,7 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class ufloat
         Inherits raw_value
 
-        Public Shared ReadOnly instance As New ufloat()
-
-        Private Sub New()
+        Public Sub New()
             MyBase.New(code_types.ufloat)
         End Sub
 

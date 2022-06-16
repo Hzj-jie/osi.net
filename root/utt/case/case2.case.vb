@@ -30,7 +30,7 @@ Partial Public NotInheritable Class case2
                 assert(id = 2)
                 base_name = t.Name()
             End If
-            If Not String.IsNullOrEmpty(method_name) AndAlso Not strsame(method_name, "run") Then
+            If Not method_name.null_or_empty() AndAlso Not strsame(method_name, "run") Then
                 Return strcat(base_name, character.dot, method_name)
             Else
                 Return base_name

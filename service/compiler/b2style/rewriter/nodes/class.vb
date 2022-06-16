@@ -9,19 +9,14 @@ Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 Imports osi.service.compiler.rewriters
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class _class
-        Inherits code_gens(Of typed_node_writer).reparser(Of b2style.parser)
+        Inherits code_gens(Of typed_node_writer).reparser
         Implements code_gen(Of typed_node_writer)
 
-        Private ReadOnly l As code_gens(Of typed_node_writer)
-
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
+        Public Sub New()
+            MyBase.New(parser.instance)
         End Sub
 
         Protected Overrides Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
@@ -35,7 +30,7 @@ Partial Public NotInheritable Class b2style
             cd.with_funcs(n)
             Dim classes As scope.class_proxy = scope.current().classes()
             If n.child(2).type_name.Equals("class-inheritance") AndAlso
-               Not l.of_all_children(n.child(2).child(1)).
+               Not code_gens().of_all_children(n.child(2).child(1)).
                      dump().
                      stream().
                      with_index().
@@ -71,6 +66,12 @@ Partial Public NotInheritable Class b2style
                foreach(Sub(ByVal f As class_def.function_def)
                            assert(Not f Is Nothing)
                            o.Append(f.content)
+                       End Sub)
+            cd.temps().
+               foreach(Sub(ByVal f As tuple(Of String, class_def.function_def))
+                           assert(Not f.first().null_or_whitespace())
+                           assert(Not f.second() Is Nothing)
+                           o.Append(f.first() + " " + f.second().content)
                        End Sub)
             s = o.ToString()
             Return True

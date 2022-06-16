@@ -12,7 +12,7 @@ Public Class web_extension_test
 
     Private Shared Sub write_stream(ByVal i As MemoryStream, ByVal s As String)
         assert(Not i Is Nothing)
-        assert(Not String.IsNullOrEmpty(s))
+        assert(Not s.null_or_empty())
         i.Seek(0, SeekOrigin.Begin)
         Dim b() As Byte = Nothing
         b = Encoding.UTF8().GetBytes(s)

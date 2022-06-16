@@ -19,9 +19,9 @@ Partial Public NotInheritable Class logic
         Public Sub New(ByVal function_name As String,
                        ByVal parameter As String,
                        ByVal result As String)
-            assert(Not String.IsNullOrEmpty(function_name))
-            assert(Not String.IsNullOrEmpty(parameter))
-            assert(Not String.IsNullOrEmpty(result))
+            assert(Not function_name.null_or_empty())
+            assert(Not parameter.null_or_empty())
+            assert(Not result.null_or_empty())
             Me.function_name = function_name
             Me.parameter = parameter
             Me.result = result

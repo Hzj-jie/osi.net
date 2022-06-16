@@ -18,6 +18,7 @@ Partial Public NotInheritable Class b2style
         ' The type-name pair directly passes to bstyle/struct.
         Private ReadOnly _vars As New vector(Of builders.parameter)()
         Private ReadOnly _funcs As New vector(Of function_def)()
+        Private ReadOnly _temps As New vector(Of tuple(Of String, function_def))()
 
         Public Sub New(ByVal name As String)
             Me.name = name_with_namespace.of(name)
@@ -31,28 +32,47 @@ Partial Public NotInheritable Class b2style
             Return Me
         End Function
 
-        Private Function forward_to(ByVal other As class_def) As Func(Of function_def, function_def)
+        Private Function forward_to(ByVal other As class_def, ByVal f As function_def) As function_def
             assert(Not other Is Nothing)
+            assert(Not f Is Nothing)
+            f = f.with_class(Me)
+            scope.current().call_hierarchy().to(f.name().in_global_namespace())
+            Return f.with_content(f.declaration() + "{" + f.forward_to(other) + "}")
+        End Function
+
+        Private Function forward_to(ByVal other As class_def) As Func(Of function_def, function_def)
             Return Function(ByVal f As function_def) As function_def
-                       assert(Not f Is Nothing)
-                       f = f.with_class(Me)
-                       scope.current().call_hierarchy().to(f.name().in_global_namespace())
-                       Return f.with_content(f.declaration() + "{" + f.forward_to(other) + "}")
+                       Return forward_to(other, f)
                    End Function
+        End Function
+
+        Private Function forward_with_temp_to(ByVal other As class_def) _
+                         As Func(Of tuple(Of String, function_def), tuple(Of String, function_def))
+            Return Function(ByVal p As tuple(Of String, function_def)) As tuple(Of String, function_def)
+                       Return tuple.emplace_of(p.first, forward_to(other, p.second))
+                   End Function
+        End Function
+
+        Private Shared Function filter_non_overrides(ByVal f As function_def) As Boolean
+            assert(Not f Is Nothing)
+            ' Never directly forward constructor and destructor.
+            Return Not f.is_virtual() AndAlso
+                   Not f.name().name().Equals(construct) AndAlso
+                   Not f.name().name().Equals(destruct)
         End Function
 
         Private Sub inherit_non_overrides(ByVal other As class_def)
             assert(Not other Is Nothing)
             _funcs.emplace_back(other.funcs().
-                                      filter(Function(ByVal f As function_def) As Boolean
-                                                 assert(Not f Is Nothing)
-                                                 ' Never directly forward constructor and destructor.
-                                                 Return Not f.is_virtual() AndAlso
-                                                        Not f.name().name().Equals(construct) AndAlso
-                                                        Not f.name().name().Equals(destruct)
-                                             End Function).
+                                      filter(AddressOf filter_non_overrides).
                                       map(forward_to(other)).
                                       collect_to(Of vector(Of function_def))())
+            _temps.emplace_back(other.temps().
+                                      filter(Function(ByVal p As tuple(Of String, function_def)) As Boolean
+                                                 Return filter_non_overrides(p.second)
+                                             End Function).
+                                      map(forward_with_temp_to(other)).
+                                      collect_to(Of vector(Of tuple(Of String, function_def)))())
         End Sub
 
         Private Sub inherit_overrides(ByVal other As class_def)
@@ -68,6 +88,18 @@ Partial Public NotInheritable Class b2style
                                                             End Function)).
                                       map(forward_to(other)).
                                       collect_to(Of vector(Of function_def))())
+            _temps.emplace_back(other.temps().
+                                      filter(Function(ByVal p As tuple(Of String, function_def)) As Boolean
+                                                 assert(Not p.second Is Nothing)
+                                                 Return p.second.is_virtual()
+                                             End Function).
+                                      except(temps().filter(
+                                                 Function(ByVal p As tuple(Of String, function_def)) As Boolean
+                                                     assert(Not p.second Is Nothing)
+                                                     Return p.second.is_override()
+                                                 End Function)).
+                                      map(forward_with_temp_to(other)).
+                                      collect_to(Of vector(Of tuple(Of String, function_def)))())
         End Sub
 
         Public Function vars() As stream(Of builders.parameter)
@@ -76,6 +108,10 @@ Partial Public NotInheritable Class b2style
 
         Public Function funcs() As stream(Of function_def)
             Return _funcs.stream()
+        End Function
+
+        Public Function temps() As stream(Of tuple(Of String, function_def))
+            Return _temps.stream()
         End Function
 
         Public Function with_var(ByVal p As builders.parameter) As class_def
@@ -91,23 +127,52 @@ Partial Public NotInheritable Class b2style
             Return Me
         End Function
 
+        Private Function parse_function(ByVal node As typed_node,
+                                        ByVal type As function_def.type_t,
+                                        ByVal ignored_types As unordered_set(Of String)) As function_def
+            assert(Not node Is Nothing)
+            Dim signature As New vector(Of name_with_namespace)()
+            signature.emplace_back(function_def.name_of(node.child(1).input()))
+            Dim param_names As New vector(Of String)()
+            If node.child_count() = 6 Then
+                For i As UInt32 = 0 To node.child(3).child_count() - uint32_1
+                    Dim p As typed_node = node.child(3).child(i)
+                    If i < node.child(3).child_count() - uint32_1 Then
+                        p = p.child(0)
+                    End If
+                    assert(p.type_name.Equals("param"))
+                    signature.emplace_back(function_def.type_of(p.child(0).input_without_ignored()))
+                    param_names.emplace_back(p.child(1).input())
+                Next
+            End If
+            Dim f As New function_def(Me,
+                                      function_def.type_of(node.child(0).input_without_ignored()),
+                                      signature,
+                                      type,
+                                      "// This content should never be used.")
+            Return f.with_content(f.declaration(param_names, ignored_types) + node.last_child().input())
+        End Function
+
+        Private Shared Function parse_class_function(ByVal node As typed_node) _
+                                As tuple(Of typed_node, function_def.type_t)
+            assert(Not node Is Nothing)
+            node = node.child()
+            If node.type_name.Equals("overridable-function") Then
+                Return tuple.of(node.child(1), function_def.type_t.overridable)
+            End If
+            If node.type_name.Equals("override-function") Then
+                Return tuple.of(node.child(1), function_def.type_t.override)
+            End If
+            Return tuple.of(node, function_def.type_t.pure)
+        End Function
+
         Public Function with_funcs(ByVal n As typed_node) As class_def
             assert(Not n Is Nothing)
             Dim has_constructor As Boolean = False
             Dim has_destructor As Boolean = False
             n.children_of("class-function").
               stream().
-              map(Function(ByVal node As typed_node) As tuple(Of typed_node, function_def.type_t)
-                      assert(Not node Is Nothing)
-                      node = node.child()
-                      If node.type_name.Equals("overridable-function") Then
-                          Return tuple.of(node.child(1), function_def.type_t.overridable)
-                      End If
-                      If node.type_name.Equals("override-function") Then
-                          Return tuple.of(node.child(1), function_def.type_t.override)
-                      End If
-                      Return tuple.of(node, function_def.type_t.pure)
-                  End Function).
+              map(AddressOf parse_class_function).
               foreach(Sub(ByVal t As tuple(Of typed_node, function_def.type_t))
                           Dim node As typed_node = t.first()
                           assert(Not node Is Nothing)
@@ -117,26 +182,7 @@ Partial Public NotInheritable Class b2style
                           ElseIf node.child(1).input().Equals(destruct) Then
                               has_destructor = True
                           End If
-                          Dim signature As New vector(Of name_with_namespace)()
-                          signature.emplace_back(function_def.name_of(node.child(1).input()))
-                          Dim param_names As New vector(Of String)()
-                          If node.child_count() = 6 Then
-                              For i As UInt32 = 0 To node.child(3).child_count() - uint32_1
-                                  Dim p As typed_node = node.child(3).child(i)
-                                  If i < node.child(3).child_count() - uint32_1 Then
-                                      p = p.child(0)
-                                  End If
-                                  assert(p.type_name.Equals("param"))
-                                  signature.emplace_back(function_def.type_of(p.child(0).input_without_ignored()))
-                                  param_names.emplace_back(p.child(1).input())
-                              Next
-                          End If
-                          Dim f As New function_def(Me,
-                                                    function_def.type_of(node.child(0).input_without_ignored()),
-                                                    signature,
-                                                    t.second(),
-                                                    "// This content should never be used.")
-                          with_func(f.with_content(f.declaration(param_names) + node.last_child().input()))
+                          with_func(parse_function(node, t.second(), Nothing))
                       End Sub)
             If Not has_constructor Then
                 with_func(New function_def(Me,
@@ -160,6 +206,20 @@ Partial Public NotInheritable Class b2style
                                                                Append(name.name()).
                                                                Append("& this){}").ToString()))
             End If
+
+            n.children_of("class-template-function").
+              stream().
+              map(Function(ByVal node As typed_node) As tuple(Of typed_node, typed_node, function_def.type_t)
+                      assert(Not node Is Nothing)
+                      assert(node.child_count() = 2)
+                      Dim f As tuple(Of typed_node, function_def.type_t) = parse_class_function(node.child(1))
+                      Return tuple.emplace_of(node.child(0), f.first(), f.second())
+                  End Function).
+              foreach(Sub(ByVal t As tuple(Of typed_node, typed_node, function_def.type_t))
+                          Dim template_types As unordered_set(Of String) =
+                                  unordered_set.emplace_of(+code_gens().of_all_children(t._1().child(2)).dump())
+                          _temps.emplace_back(tuple.of(t._1().input(), parse_function(t._2(), t._3(), template_types)))
+                      End Sub)
             Return Me
         End Function
 

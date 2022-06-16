@@ -63,14 +63,14 @@ Public Module _path_name
 
     'can detect both valid inode name or iproperty name
     <Extension()> Public Function valid_name(ByVal this As String) As Boolean
-        Return Not String.IsNullOrEmpty(this) AndAlso
+        Return Not this.null_or_empty() AndAlso
                Not this.Contains(path_separator) AndAlso
                Not this.Contains(magic_char)
     End Function
 
     'detect whether this is a valid inode or normal property [exclude subnode / properties / lock] full path
     <Extension()> Public Function valid_path(ByVal this As String) As Boolean
-        Return Not String.IsNullOrEmpty(this) AndAlso
+        Return Not this.null_or_empty() AndAlso
                this.StartsWith(path_separator) AndAlso
                Not this.EndsWith(path_separator) AndAlso
                Not this.Contains(magic_char)

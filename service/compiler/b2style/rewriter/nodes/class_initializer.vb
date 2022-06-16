@@ -6,27 +6,18 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
-Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class class_initializer
         Implements code_gen(Of typed_node_writer)
-
-        Private ReadOnly l As code_gens(Of typed_node_writer)
-
-        <inject_constructor>
-        Public Sub New(ByVal b As code_gens(Of typed_node_writer))
-            assert(Not b Is Nothing)
-            Me.l = b
-        End Sub
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4 OrElse n.child_count() = 5)
-            If Not l.of(n.child(0)).build(o) OrElse
-               Not l.of(n.child(1)).build(o) OrElse
+            If Not code_gen_of(n.child(0)).build(o) OrElse
+               Not code_gen_of(n.child(1)).build(o) OrElse
                Not o.append(";") Then
                 Return False
             End If
@@ -36,7 +27,7 @@ Partial Public NotInheritable Class b2style
             If Not (o.append(_namespace.bstyle_format.in_global_namespace("construct")) AndAlso
                     o.append("(") AndAlso
                     o.append(_namespace.bstyle_format.of(n.child(1))) AndAlso
-                    If(n.child_count() = 5, o.append(",") AndAlso l.of(n.child(3)).build(o), True) AndAlso
+                    If(n.child_count() = 5, o.append(",") AndAlso code_gen_of(n.child(3)).build(o), True) AndAlso
                     o.append(");")) Then
                 Return False
             End If

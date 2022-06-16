@@ -47,7 +47,7 @@ Public NotInheritable Class ddos
 
         Public Function insert(ByVal s As String, ByVal r As ref(Of UInt64)) As event_comb
             Return New event_comb(Function() As Boolean
-                                      If String.IsNullOrEmpty(s) Then
+                                      If s.null_or_empty() Then
                                           Return False
                                       Else
                                           Return waitfor(l) AndAlso
@@ -102,7 +102,7 @@ Public NotInheritable Class ddos
 
         Public Function insert(ByVal s As String, ByVal r As ref(Of Double)) As event_comb
             Return New event_comb(Function() As Boolean
-                                      If String.IsNullOrEmpty(s) Then
+                                      If s.null_or_empty() Then
                                           Return False
                                       Else
                                           Return waitfor(l) AndAlso
@@ -127,7 +127,7 @@ Public NotInheritable Class ddos
 
         Public Function release(ByVal s As String) As event_comb
             Return New event_comb(Function() As Boolean
-                                      If String.IsNullOrEmpty(s) Then
+                                      If s.null_or_empty() Then
                                           Return False
                                       Else
                                           Return waitfor(l) AndAlso

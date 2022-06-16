@@ -80,7 +80,7 @@ Partial Public Class token_test
                                   'If with_empty_ppt Then
                                   '    If assertion.is_not_null(+selected_ppt) Then
                                   '        assertion.is_true(object_compare(+selected_ppt, ppt) OrElse
-                                  '                    String.IsNullOrEmpty((+selected_ppt).token))
+                                  '                    (+selected_ppt.null_or_empty().token))
                                   '    End If
                                   'Else
                                   If exp_accepted Then

@@ -21,7 +21,7 @@ Public Class manager(Of T)
     End Sub
 
     Public Shared Function [get](ByVal key As String, ByRef o As T) As Boolean
-        If String.IsNullOrEmpty(key) Then
+        If key.null_or_empty() Then
             Return False
         Else
             Return m.get(key, o)
@@ -46,7 +46,7 @@ Public Class manager(Of T)
     End Function
 
     Public Shared Function [erase](ByVal key As String, Optional ByRef o As T = Nothing) As Boolean
-        If String.IsNullOrEmpty(key) Then
+        If key.null_or_empty() Then
             Return False
         Else
             Return m.erase(key, o)
@@ -60,7 +60,7 @@ Public Class manager(Of T)
     End Function
 
     Public Shared Function register(ByVal key As String, ByVal p As T) As Boolean
-        If String.IsNullOrEmpty(key) OrElse p Is Nothing Then
+        If key.null_or_empty() OrElse p Is Nothing Then
             Return False
         Else
             Return m.set(key, p)

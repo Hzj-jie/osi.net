@@ -19,39 +19,37 @@ Public NotInheritable Class url_query
     Public Shared Function parse(ByVal input As String,
                                  ByRef result As map(Of String, vector(Of String)),
                                  Optional ByVal e As Encoding = Nothing) As Boolean
-        If String.IsNullOrEmpty(input) Then
+        If input.null_or_empty() Then
             Return False
-        Else
-            If result Is Nothing Then
-                result = New map(Of String, vector(Of String))()
-            End If
-            If e Is Nothing Then
-                e = default_encoding
-            End If
-            Dim ss() As String = Nothing
-            ss = input.Split(argument_separators, StringSplitOptions.RemoveEmptyEntries)
-            If isemptyarray(ss) Then
-                'odd, should not happen
-                Return False
-            Else
-                For i As Int32 = 0 To array_size_i(ss) - 1
-                    If Not String.IsNullOrEmpty(ss(i)) Then
-                        Dim k As String = Nothing
-                        Dim v As String = Nothing
-                        If strsep(ss(i), k, v, argument_name_value_separator, False) Then
-                            v = HttpUtility.UrlDecode(v, e)
-                        Else
-                            k = ss(i)
-                            v = Nothing
-                        End If
-                        assert(Not String.IsNullOrEmpty(k))
-                        k = HttpUtility.UrlDecode(k, e)
-                        result(k).emplace_back(v)
-                    End If
-                Next
-                Return True
-            End If
         End If
+        If result Is Nothing Then
+            result = New map(Of String, vector(Of String))()
+        End If
+        If e Is Nothing Then
+            e = default_encoding
+        End If
+        Dim ss() As String = Nothing
+        ss = input.Split(argument_separators, StringSplitOptions.RemoveEmptyEntries)
+        If isemptyarray(ss) Then
+            'odd, should not happen
+            Return False
+        End If
+        For i As Int32 = 0 To array_size_i(ss) - 1
+            If Not ss(i).null_or_empty() Then
+                Dim k As String = Nothing
+                Dim v As String = Nothing
+                If strsep(ss(i), k, v, argument_name_value_separator, False) Then
+                    v = HttpUtility.UrlDecode(v, e)
+                Else
+                    k = ss(i)
+                    v = Nothing
+                End If
+                assert(Not k.null_or_empty())
+                k = HttpUtility.UrlDecode(k, e)
+                result(k).emplace_back(v)
+            End If
+        Next
+        Return True
     End Function
 
     Public Shared Function parse(ByVal request As HttpListenerRequest,
@@ -59,11 +57,11 @@ Public NotInheritable Class url_query
                                  Optional ByVal e As Encoding = Nothing) As Boolean
         If request Is Nothing Then
             Return False
-        ElseIf String.IsNullOrEmpty(request.Url().Query()) Then
-            Return True
-        Else
-            Return parse(strmid(request.Url().Query(), strlen(constants.uri.query_mark)), result, e)
         End If
+        If request.Url().Query().null_or_empty() Then
+            Return True
+        End If
+        Return parse(strmid(request.Url().Query(), strlen(constants.uri.query_mark)), result, e)
     End Function
 
     Public Shared Function parse_www_form_urlencoded_request_body(

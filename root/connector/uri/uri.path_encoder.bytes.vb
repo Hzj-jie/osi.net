@@ -58,7 +58,7 @@ Namespace uri
                         Return False
                     End If
 
-                    If String.IsNullOrEmpty(s) Then
+                    If s.null_or_empty() Then
                         Return True
                     End If
 
@@ -112,7 +112,7 @@ Namespace uri
                         Return False
                     End If
 
-                    If String.IsNullOrEmpty(s) Then
+                    If s.null_or_empty() Then
                         Return True
                     End If
 

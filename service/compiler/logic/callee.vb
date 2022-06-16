@@ -29,8 +29,8 @@ Partial Public NotInheritable Class logic
                        ByVal type As String,
                        ByVal paragraph As paragraph,
                        ByVal ParamArray parameters() As pair(Of String, String))
-            assert(Not String.IsNullOrEmpty(name))
-            assert(Not String.IsNullOrEmpty(type))
+            assert(Not name.null_or_empty())
+            assert(Not type.null_or_empty())
             assert(Not paragraph Is Nothing)
             Me.name = name
             Me.type = type

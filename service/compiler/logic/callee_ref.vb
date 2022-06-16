@@ -17,8 +17,8 @@ Partial Public NotInheritable Class logic
         Public Sub New(ByVal name As String,
                        ByVal return_type As String,
                        ByVal ParamArray parameters As String())
-            assert(Not String.IsNullOrEmpty(name))
-            assert(Not String.IsNullOrEmpty(return_type))
+            assert(Not name.null_or_empty())
+            assert(Not return_type.null_or_empty())
             Me.name = name
             Me.return_type = return_type
             Me.parameters = builders.parameter_type.from(parameters)

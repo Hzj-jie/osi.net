@@ -145,7 +145,7 @@ Partial Public Class file_key
                                       'should never happen
                                       Return False
                                   End If
-                                  assert(Not String.IsNullOrEmpty(f))
+                                  assert(Not f.null_or_empty())
                                   ec = file_exists(f, result)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -180,7 +180,7 @@ Partial Public Class file_key
                                       'should never happen
                                       Return False
                                   End If
-                                  assert(Not String.IsNullOrEmpty(f))
+                                  assert(Not f.null_or_empty())
                                   ec = write_file(f, value, result, False)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
@@ -202,7 +202,7 @@ Partial Public Class file_key
                                       'should never happen
                                       Return False
                                   End If
-                                  assert(Not String.IsNullOrEmpty(f))
+                                  assert(Not f.null_or_empty())
                                   ec = set_timestamp(f, ts, result)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
