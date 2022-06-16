@@ -128,7 +128,8 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Private Function parse_function(ByVal node As typed_node,
-                                        ByVal type As function_def.type_t) As function_def
+                                        ByVal type As function_def.type_t,
+                                        ByVal ignored_types As unordered_set(Of String)) As function_def
             assert(Not node Is Nothing)
             Dim signature As New vector(Of name_with_namespace)()
             signature.emplace_back(function_def.name_of(node.child(1).input()))
@@ -149,7 +150,7 @@ Partial Public NotInheritable Class b2style
                                       signature,
                                       type,
                                       "// This content should never be used.")
-            Return f.with_content(f.declaration(param_names) + node.last_child().input())
+            Return f.with_content(f.declaration(param_names, ignored_types) + node.last_child().input())
         End Function
 
         Private Shared Function parse_class_function(ByVal node As typed_node) _
@@ -181,7 +182,7 @@ Partial Public NotInheritable Class b2style
                           ElseIf node.child(1).input().Equals(destruct) Then
                               has_destructor = True
                           End If
-                          with_func(parse_function(node, t.second()))
+                          with_func(parse_function(node, t.second(), Nothing))
                       End Sub)
             If Not has_constructor Then
                 with_func(New function_def(Me,
@@ -215,7 +216,9 @@ Partial Public NotInheritable Class b2style
                       Return tuple.emplace_of(node.child(0).input(), f.first(), f.second())
                   End Function).
               foreach(Sub(ByVal t As tuple(Of String, typed_node, function_def.type_t))
-                          _temps.emplace_back(tuple.of(t._1(), parse_function(t._2(), t._3())))
+                          Dim template_types As unordered_set(Of String) =
+                                  unordered_set.emplace_of(+code_gens().of_all_children(t._2().child(2)).dump())
+                          _temps.emplace_back(tuple.of(t._1(), parse_function(t._2(), t._3(), template_types)))
                       End Sub)
             Return Me
         End Function

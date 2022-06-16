@@ -11,7 +11,7 @@ Imports osi.root.formation
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class class_def
         Public NotInheritable Class function_def
-            Implements IEquatable(Of function_def)
+            Implements IComparable(Of function_def), IEquatable(Of function_def)
 
             Public Enum type_t
                 pure
@@ -108,12 +108,20 @@ Partial Public NotInheritable Class b2style
                 Return content.ToString()
             End Function
 
-            Public Function declaration(ByVal param_names As vector(Of String)) As String
+            Public Function declaration(ByVal param_names As vector(Of String),
+                                        ByVal ignored_types As unordered_set(Of String)) As String
                 assert(Not param_names Is Nothing)
                 assert(param_names.size() = signature.size() - uint32_1)
                 ' No namespace is necessary, the first parameter contains namespace.
                 Dim content As New StringBuilder()
-                content.Append(return_type.in_global_namespace()).
+                Dim get_type As Func(Of name_with_namespace, String) =
+                        Function(ByVal x As name_with_namespace) As String
+                            If ignored_types Is Nothing OrElse ignored_types.find(x.name()) = ignored_types.end() Then
+                                Return x.in_global_namespace()
+                            End If
+                            Return x.name()
+                        End Function
+                content.Append(get_type(return_type)).
                         Append(" ").
                         Append(name().in_global_namespace()).
                         Append("(").
@@ -122,7 +130,7 @@ Partial Public NotInheritable Class b2style
                 Dim i As UInt32 = 1
                 While i < signature.size()
                     content.Append(",").
-                            Append(signature(i).in_global_namespace()).
+                            Append(get_type(signature(i))).
                             Append(" ").
                             Append(param_names(i - uint32_1))
                     i += uint32_1
@@ -132,7 +140,7 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public Function declaration() As String
-                Return declaration(default_param_names())
+                Return declaration(default_param_names(), Nothing)
             End Function
 
             Public Overrides Function Equals(ByVal obj As Object) As Boolean
@@ -145,6 +153,13 @@ Partial Public NotInheritable Class b2style
                     Return False
                 End If
                 Return signature.Equals(other.signature)
+            End Function
+
+            Public Function CompareTo(ByVal other As function_def) As Int32 Implements IComparable(Of function_def).CompareTo
+                If other Is Nothing Then
+                    Return 1
+                End If
+                Return signature.CompareTo(other.signature)
             End Function
 
             Public Overrides Function GetHashCode() As Int32
