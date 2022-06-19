@@ -25,12 +25,12 @@ Partial Public NotInheritable Class b2style
 
                 Public Function apply(ByVal types As vector(Of String), ByRef o As String) As Boolean
                     ' TODO: Should resolve type-aliases.
-                    If Not injected_types.emplace(types).second() Then
-                        ' Injected already.
-                        o = Nothing
-                        Return True
+                    If injected_types.emplace(types).second() Then
+                        Return template.apply(types, o)
                     End If
-                    Return template.apply(types, o)
+                    ' Injected already.
+                    o = Nothing
+                    Return True
                 End Function
 
                 Public Function extended_type_name(ByVal types As vector(Of String)) As String
@@ -46,14 +46,14 @@ Partial Public NotInheritable Class b2style
                 End If
                 assert(Not t Is Nothing)
                 Dim d As New definition(t)
-                If Not m.emplace(name_with_namespace.of(t.name()), d).second() Then
-                    raise_error(error_type.user,
-                                "Template [",
-                                name_with_namespace.of(t.name()),
-                                "] has been defined already.")
-                    Return False
+                If m.emplace(name_with_namespace.of(t.name()), d).second() Then
+                    Return True
                 End If
-                Return True
+                raise_error(error_type.user,
+                            "Template [",
+                            name_with_namespace.of(t.name()),
+                            "] has been defined already.")
+                Return False
             End Function
 
             Public Function resolve(ByVal input_name As String,
