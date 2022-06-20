@@ -69,6 +69,8 @@ Partial Public NotInheritable Class b2style
                        End Sub)
             cd.temps().
                foreach(Sub(ByVal f As tuple(Of String, class_def.function_def))
+                           ' TODO: Avoid generating source code, directly define templates to allow including type
+                           ' names.
                            assert(Not f.first().null_or_whitespace())
                            assert(Not f.second() Is Nothing)
                            o.Append(f.first() + " " + f.second().content)

@@ -76,6 +76,7 @@
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\kw_file.vb" />
     <None Include="bstyle\lib\climits" />
+    <Compile Include="b2style\rewriter\nodes\template_head.vb" />
     <Compile Include="bstyle\logic\nodes\kw_file.vb" />
     <Compile Include="bstyle\logic\nodes\kw_func.vb" />
     <Compile Include="bstyle\logic\nodes\kw_line.vb" />

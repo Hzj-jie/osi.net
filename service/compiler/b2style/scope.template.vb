@@ -96,11 +96,10 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
-            Public Function define(ByVal n As typed_node) As Boolean
+            Public Function define(ByVal type_param_list As vector(Of String), ByVal n As typed_node) As Boolean
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 2)
                 assert(n.child(0).child_count() = 4)
-                Dim type_param_list As vector(Of String) = code_gens().of_all_children(n.child(0).child(2)).dump()
                 Return s.t.define(type_param_list, n)
             End Function
 
