@@ -45,41 +45,41 @@ Partial Public NotInheritable Class b2style
             End Function
         End Class
 
-        Private Sub New(ByVal n As typed_node, ByVal name_node As typed_node, ByVal types As vector(Of String))
-            assert(Not n Is Nothing)
+        Private Sub New(ByVal body As typed_node, ByVal name_node As typed_node, ByVal types As vector(Of String))
+            assert(Not body Is Nothing)
             assert(Not name_node Is Nothing)
-            assert(n.type_name.Equals("template-body"))
-            n = n.child()
+            assert(body.type_name.Equals("template-body"))
+            body = body.child()
             assert(Not types.null_or_empty())
             Me._extended_type_name = New extended_type_name_t(template_name(name_node, types.size()))
             Me.type_refs.resize(types.size(),
                                 Function() As ref(Of String)
                                     Return New ref(Of String)()
                                 End Function)
-            n.dfs(Sub(ByVal node As typed_node, ByVal stop_navigating_sub_nodes As Action)
-                      assert(Not node Is Nothing)
-                      assert(Not stop_navigating_sub_nodes Is Nothing)
-                      If Object.ReferenceEquals(name_node, node) Then
-                          assert(w.append(AddressOf _extended_type_name.str))
-                          stop_navigating_sub_nodes()
-                          Return
-                      End If
-                      If Not node.type_name.Equals("raw-type-name") Then
-                          Return
-                      End If
+            body.dfs(Sub(ByVal node As typed_node, ByVal stop_navigating_sub_nodes As Action)
+                         assert(Not node Is Nothing)
+                         assert(Not stop_navigating_sub_nodes Is Nothing)
+                         If Object.ReferenceEquals(name_node, node) Then
+                             assert(w.append(AddressOf _extended_type_name.str))
+                             stop_navigating_sub_nodes()
+                             Return
+                         End If
+                         If Not node.type_name.Equals("raw-type-name") Then
+                             Return
+                         End If
 
-                      For i As UInt32 = 0 To types.size() - uint32_1
-                          If node.input().Equals(types(i)) Then
-                              assert(w.append(type_refs(i)))
-                              stop_navigating_sub_nodes()
-                              Return
-                          End If
-                      Next
-                  End Sub,
-                  Sub(ByVal leaf As typed_node)
-                      assert(Not leaf Is Nothing)
-                      assert(w.append(leaf.word().str()))
-                  End Sub)
+                         For i As UInt32 = 0 To types.size() - uint32_1
+                             If node.input().Equals(types(i)) Then
+                                 assert(w.append(type_refs(i)))
+                                 stop_navigating_sub_nodes()
+                                 Return
+                             End If
+                         Next
+                     End Sub,
+                     Sub(ByVal leaf As typed_node)
+                         assert(Not leaf Is Nothing)
+                         assert(w.append(leaf.word().str()))
+                     End Sub)
         End Sub
 
         Public Shared Function template_name(ByVal name As String, ByVal type_count As UInt32) As String
@@ -102,14 +102,14 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Public Shared Function [of](ByVal type_param_list As vector(Of String),
-                                    ByVal n As typed_node,
+                                    ByVal body As typed_node,
                                     ByVal name_node As typed_node,
                                     ByRef o As template_template) As Boolean
             assert(Not type_param_list.null_or_empty())
-            assert(Not n Is Nothing)
+            assert(Not body Is Nothing)
             assert(Not name_node Is Nothing)
-            assert(n.type_name.Equals("template"))
-            assert(n.child_count() = 2)
+            assert(body.type_name.Equals("template-body"))
+            assert(body.child_count() = 1)
             If type_param_list.size() >
                type_param_list.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
@@ -120,7 +120,7 @@ Partial Public NotInheritable Class b2style
                             "]")
                 Return False
             End If
-            o = New template_template(n.child(1), name_node, type_param_list)
+            o = New template_template(body, name_node, type_param_list)
             Return True
         End Function
 

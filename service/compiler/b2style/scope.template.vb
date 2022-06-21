@@ -40,12 +40,12 @@ Partial Public NotInheritable Class b2style
 
             Public Function define(ByVal name As String,
                                    ByVal type_param_list As vector(Of String),
-                                   ByVal n As typed_node,
+                                   ByVal body As typed_node,
                                    ByVal name_node As typed_node) As Boolean
                 assert(Not name.null_or_whitespace())
-                assert(Not n Is Nothing)
+                assert(Not body Is Nothing)
                 Dim t As template_template = Nothing
-                If Not template_template.of(type_param_list, n, name_node, t) Then
+                If Not template_template.of(type_param_list, body, name_node, t) Then
                     Return False
                 End If
                 assert(Not t Is Nothing)
@@ -102,12 +102,10 @@ Partial Public NotInheritable Class b2style
 
             Public Function define(ByVal name As String,
                                    ByVal type_param_list As vector(Of String),
-                                   ByVal n As typed_node,
+                                   ByVal body As typed_node,
                                    ByVal name_node As typed_node) As Boolean
-                assert(Not n Is Nothing)
-                assert(n.child_count() = 2)
-                assert(n.child(0).child_count() = 4)
-                Return s.t.define(name, type_param_list, n, name_node)
+                assert(Not body Is Nothing)
+                Return s.t.define(name, type_param_list, body, name_node)
             End Function
 
             Public Function resolve(ByVal name_override As _do(Of String, Boolean),
