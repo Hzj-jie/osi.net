@@ -22,7 +22,7 @@ Partial Public NotInheritable Class b2style
         Private ReadOnly type_refs As New vector(Of ref(Of String))()
 
         Private NotInheritable Class extended_type_name_t
-            Public ReadOnly name As String
+            Private ReadOnly name As String
             Private ReadOnly types As New one_off(Of vector(Of String))()
 
             Public Sub New(ByVal name As String)
@@ -98,24 +98,18 @@ Partial Public NotInheritable Class b2style
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
                                     ByVal n As typed_node,
                                     ByRef o As template_template) As Boolean
-            Return [of](l.of_all_children(n.child(0).child(2)).dump(), n, o)
+            Return template.build(l, n, o)
         End Function
 
         Public Shared Function [of](ByVal type_param_list As vector(Of String),
                                     ByVal n As typed_node,
+                                    ByVal name_node As typed_node,
                                     ByRef o As template_template) As Boolean
             assert(Not type_param_list.null_or_empty())
             assert(Not n Is Nothing)
+            assert(Not name_node Is Nothing)
             assert(n.type_name.Equals("template"))
             assert(n.child_count() = 2)
-            Dim name_node As typed_node = n.child(1).child()
-            If name_node.type_name.Equals("class") OrElse name_node.type_name.Equals("function") Then
-                name_node = name_node.child(1)
-            ElseIf name_node.type_name.Equals("delegate-with-semi-colon") Then
-                name_node = name_node.child(0).child(2)
-            Else
-                assert(False)
-            End If
             If type_param_list.size() >
                type_param_list.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
@@ -130,12 +124,8 @@ Partial Public NotInheritable Class b2style
             Return True
         End Function
 
-        Public Function name() As String
-            Return _extended_type_name.name
-        End Function
-
-        Public Function extended_type_name(ByVal paramtypelist As vector(Of String)) As String
-            _extended_type_name.apply(paramtypelist)
+        Public Function extended_type_name(ByVal type_param_list As vector(Of String)) As String
+            _extended_type_name.apply(type_param_list)
             Return _extended_type_name.str()
         End Function
 

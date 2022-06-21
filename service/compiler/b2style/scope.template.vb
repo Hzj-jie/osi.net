@@ -38,20 +38,24 @@ Partial Public NotInheritable Class b2style
                 End Function
             End Class
 
-            Public Function define(ByVal type_param_list As vector(Of String), ByVal n As typed_node) As Boolean
+            Public Function define(ByVal name As String,
+                                   ByVal type_param_list As vector(Of String),
+                                   ByVal n As typed_node,
+                                   ByVal name_node As typed_node) As Boolean
+                assert(Not name.null_or_whitespace())
                 assert(Not n Is Nothing)
                 Dim t As template_template = Nothing
-                If Not template_template.of(type_param_list, n, t) Then
+                If Not template_template.of(type_param_list, n, name_node, t) Then
                     Return False
                 End If
                 assert(Not t Is Nothing)
                 Dim d As New definition(t)
-                If m.emplace(name_with_namespace.of(t.name()), d).second() Then
+                If m.emplace(name_with_namespace.of(name), d).second() Then
                     Return True
                 End If
                 raise_error(error_type.user,
                             "Template [",
-                            name_with_namespace.of(t.name()),
+                            name_with_namespace.of(name),
                             "] has been defined already.")
                 Return False
             End Function
@@ -96,11 +100,14 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
-            Public Function define(ByVal type_param_list As vector(Of String), ByVal n As typed_node) As Boolean
+            Public Function define(ByVal name As String,
+                                   ByVal type_param_list As vector(Of String),
+                                   ByVal n As typed_node,
+                                   ByVal name_node As typed_node) As Boolean
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 2)
                 assert(n.child(0).child_count() = 4)
-                Return s.t.define(type_param_list, n)
+                Return s.t.define(name, type_param_list, n, name_node)
             End Function
 
             Public Function resolve(ByVal name_override As _do(Of String, Boolean),
