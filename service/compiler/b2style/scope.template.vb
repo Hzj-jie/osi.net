@@ -117,9 +117,9 @@ Partial Public NotInheritable Class b2style
                 Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
                 Dim name As String = Nothing
                 If name_override(name) Then
-                    name = template_template.template_name(name, n.child(2).child_count())
+                    name = b2style.template.name_of(name, n.child(2).child_count())
                 Else
-                    name = template_template.template_name(n.child(0), n.child(2).child_count())
+                    name = b2style.template.name_of(n.child(0), n.child(2).child_count())
                 End If
                 Dim s As scope = Me.s
                 While Not s Is Nothing

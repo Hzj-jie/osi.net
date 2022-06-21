@@ -37,6 +37,17 @@ Partial Public NotInheritable Class b2style
             Return f(types, n.child(1), name_node, o)
         End Function
 
+        Public Shared Function name_of(ByVal name As String, ByVal type_count As UInt32) As String
+            assert(Not name.null_or_whitespace())
+            assert(type_count > 0)
+            Return String.Concat(name, "__", type_count)
+        End Function
+
+        Public Shared Function name_of(ByVal n As typed_node, ByVal type_count As UInt32) As String
+            assert(Not n Is Nothing)
+            Return name_of(n.input_without_ignored(), type_count)
+        End Function
+
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             Return build(code_gens(),
@@ -45,7 +56,7 @@ Partial Public NotInheritable Class b2style
                                   ByVal body As typed_node,
                                   ByVal name_node As typed_node,
                                   ByRef unused As Int32) As Boolean
-                             Dim name As String = template_template.template_name(name_node, types.size())
+                             Dim name As String = name_of(name_node, types.size())
                              Return scope.current().template().define(name,
                                                                       types,
                                                                       body,

@@ -82,17 +82,6 @@ Partial Public NotInheritable Class b2style
                      End Sub)
         End Sub
 
-        Public Shared Function template_name(ByVal name As String, ByVal type_count As UInt32) As String
-            assert(Not name.null_or_whitespace())
-            assert(type_count > 0)
-            Return String.Concat(name, "__", type_count)
-        End Function
-
-        Public Shared Function template_name(ByVal n As typed_node, ByVal type_count As UInt32) As String
-            assert(Not n Is Nothing)
-            Return template_name(n.input_without_ignored(), type_count)
-        End Function
-
         ' @VisibleForTesting
         ' TODO: Remove this function.
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
