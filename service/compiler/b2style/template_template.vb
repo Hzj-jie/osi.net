@@ -51,7 +51,7 @@ Partial Public NotInheritable Class b2style
             assert(body.type_name.Equals("template-body"))
             body = body.child()
             assert(Not types.null_or_empty())
-            Me._extended_type_name = New extended_type_name_t(template_name(name_node, types.size()))
+            Me._extended_type_name = New extended_type_name_t(name_node.input_without_ignored())
             Me.type_refs.resize(types.size(),
                                 Function() As ref(Of String)
                                     Return New ref(Of String)()
