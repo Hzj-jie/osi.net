@@ -15,11 +15,12 @@ Partial Public NotInheritable Class b2style
 
         Private Shared Function build(Of T)(ByVal l As code_gens(Of typed_node_writer),
                                             ByVal n As typed_node,
-                                            ByVal f As _do_val_val_val_ref(Of vector(Of String),
-                                                                              typed_node,
-                                                                              typed_node,
-                                                                              T,
-                                                                              Boolean),
+                                            ByVal f As _do_val_val_val_val_ref(Of String,
+                                                                                  vector(Of String),
+                                                                                  typed_node,
+                                                                                  typed_node,
+                                                                                  T,
+                                                                                  Boolean),
                                             ByRef o As T) As Boolean
             assert(Not l Is Nothing)
             assert(Not n Is Nothing)
@@ -34,7 +35,7 @@ Partial Public NotInheritable Class b2style
                 assert(False)
             End If
             Dim types As vector(Of String) = l.typed(Of template_head)().type_param_list(n.child(0))
-            Return f(types, n.child(1), name_node, o)
+            Return f(name_of(name_node, types.size()), types, n.child(1), name_node, o)
         End Function
 
         Public Shared Function name_of(ByVal name As String, ByVal type_count As UInt32) As String
@@ -52,11 +53,11 @@ Partial Public NotInheritable Class b2style
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             Return build(code_gens(),
                          n,
-                         Function(ByVal types As vector(Of String),
+                         Function(ByVal name As String,
+                                  ByVal types As vector(Of String),
                                   ByVal body As typed_node,
                                   ByVal name_node As typed_node,
                                   ByRef unused As Int32) As Boolean
-                             Dim name As String = name_of(name_node, types.size())
                              Return scope.current().template().define(name,
                                                                       types,
                                                                       body,
@@ -72,7 +73,8 @@ Partial Public NotInheritable Class b2style
                                      ByRef o As template_template) As Boolean
             Return build(l,
                          n,
-                         Function(ByVal types As vector(Of String),
+                         Function(ByVal name As String,
+                                  ByVal types As vector(Of String),
                                   ByVal body As typed_node,
                                   ByVal name_node As typed_node,
                                   ByRef x As template_template) As Boolean
