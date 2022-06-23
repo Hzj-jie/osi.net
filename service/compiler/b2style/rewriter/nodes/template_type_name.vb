@@ -11,8 +11,8 @@ Partial Public NotInheritable Class b2style
     Private NotInheritable Class template_type_name
         Implements code_gen(Of typed_node_writer), template.name
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not o Is Nothing)
             Dim extended_type As String = Nothing
             If Not scope.current().template().resolve(n, extended_type) Then

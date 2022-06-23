@@ -11,30 +11,26 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class heap_declaration
         Implements code_gen(Of logic_writer)
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 2)
             assert(n.child(1).child_count() = 4)
-            Return build(n.child(0), n.child(1).child(0), n.child(1).child(2), o)
-        End Function
-
-        Public Function build(ByVal type As typed_node,
-                              ByVal name As typed_node,
-                              ByVal length As typed_node,
-                              ByVal o As logic_writer) As Boolean
+            Dim type As typed_node = n.child(0)
+            Dim name As typed_node = n.child(1).child(0)
+            Dim length As typed_node = n.child(1).child(2)
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
             assert(Not length Is Nothing)
-            Dim t As String = type.input_without_ignored()
-            Dim n As String = name.input_without_ignored()
-            Return code_gens().typed(Of struct).define_in_heap(t, n, length, o) OrElse
+            Dim type_str As String = type.input_without_ignored()
+            Dim name_str As String = name.input_without_ignored()
+            Return code_gens().typed(Of struct).define_in_heap(type_str, name_str, length, o) OrElse
                    code_gens().typed(Of heap_name).build(
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean
-                           Return declare_single_data_slot(t, n, len_name, o)
+                           Return declare_single_data_slot(type_str, name_str, len_name, o)
                        End Function)
         End Function
 

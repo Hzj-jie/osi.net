@@ -39,7 +39,7 @@ Partial Public NotInheritable Class logic
             Return False
         End Function
 
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+        Private Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             Dim t As variable = Nothing
             Dim s As variable = Nothing
             Return variable.of(target, o, t) AndAlso

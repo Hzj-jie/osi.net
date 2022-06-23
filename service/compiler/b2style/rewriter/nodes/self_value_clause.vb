@@ -13,8 +13,8 @@ Partial Public NotInheritable Class b2style
 
         Private Const self_prefix As String = "self-"
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(n.child_count() = 3)
             If Not code_gen_of(n.child(0)).build(o) Then
                 Return False

@@ -21,7 +21,7 @@ Public Class ifndef_wrapped(Of WRITER As New)
         Me.is_defined = is_defined
     End Sub
 
-    Public Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
+    Private Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
         assert(Not n Is Nothing)
         assert(n.child_count() >= 3)
         If is_defined(n.child(1).word().str()) Then
@@ -46,7 +46,7 @@ Public Class define(Of WRITER As New)
         Me.define = define
     End Sub
 
-    Public Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
+    Private Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
         assert(Not n Is Nothing)
         assert(n.child_count() = 2)
         define(n.child(1).word().str())

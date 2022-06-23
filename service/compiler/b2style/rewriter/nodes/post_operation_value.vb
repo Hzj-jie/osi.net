@@ -11,8 +11,8 @@ Partial Public NotInheritable Class b2style
     Private NotInheritable Class post_operation_value
         Implements code_gen(Of typed_node_writer)
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(n.child_count() = 2)
             Dim function_name As String =
                     _namespace.bstyle_format.operator_function_name(code_gen_of(n.child(1)).dump()) + "_post"

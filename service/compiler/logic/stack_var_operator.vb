@@ -19,7 +19,7 @@ Partial Public NotInheritable Class logic
 
         Protected MustOverride Function process(ByVal ptr As variable, ByVal o As vector(Of String)) As Boolean
 
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+        Private Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             Dim ptr As variable = Nothing
             If variable.is_heap_name(name) Then

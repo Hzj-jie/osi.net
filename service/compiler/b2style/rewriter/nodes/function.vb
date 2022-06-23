@@ -11,8 +11,8 @@ Partial Public NotInheritable Class b2style
     Private NotInheritable Class _function
         Implements code_gen(Of typed_node_writer), template.name_node, template.name
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             Dim function_name As String = _namespace.bstyle_format.of(n.child(1))

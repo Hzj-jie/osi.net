@@ -20,7 +20,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             Me.parser = parser
         End Sub
 
-        Public Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
+        Private Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             Dim s As String = Nothing

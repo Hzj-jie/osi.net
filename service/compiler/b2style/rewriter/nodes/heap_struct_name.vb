@@ -38,7 +38,7 @@ Partial Public NotInheritable Class b2style
             Return strcat(s.Remove(start, e - start), last_part)
         End Function
 
-        Public Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
+        Private Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
                 Implements code_gen(Of typed_node_writer).build
             assert(Not o Is Nothing)
             o.append(bstyle_format(n))

@@ -63,7 +63,7 @@ Partial Public NotInheritable Class logic
                    scope.current().anchor_refs().define(type, name)
         End Function
 
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+        Private Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             If define_variable(type, o) OrElse define_callee_ref(o) Then
                 Return True
             End If

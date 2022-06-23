@@ -25,8 +25,8 @@ Partial Public NotInheritable Class rewriters
                    End Sub
         End Function
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(n.leaf())
             o.append(n)

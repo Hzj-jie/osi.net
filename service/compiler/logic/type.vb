@@ -19,7 +19,7 @@ Partial Public NotInheritable Class logic
             Me.size = size
         End Sub
 
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+        Private Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             Return scope.current().types().define(type, size)
         End Function
     End Class

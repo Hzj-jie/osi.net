@@ -17,7 +17,7 @@ Partial Public NotInheritable Class logic
             Me.p = p
         End Sub
 
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+        Private Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             Return p.build(o)
         End Function
     End Class
