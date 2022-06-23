@@ -37,7 +37,7 @@ Partial Public NotInheritable Class logic
             Me.false_path = false_path
         End Sub
 
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+        Private Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             Dim var As variable = Nothing
             If Not variable.of(v, o, var) Then

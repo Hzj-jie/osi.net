@@ -22,7 +22,7 @@ Partial Public NotInheritable Class logic
         End Sub
 
         ' TODO: Check the consistency of both signatures.
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+        Private Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             Dim t As variable = Nothing
             If Not variable.of(target, o, t) OrElse
                Not t.is_assignable_from_uint32() Then

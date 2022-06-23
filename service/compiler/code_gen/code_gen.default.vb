@@ -43,7 +43,7 @@ Public NotInheritable Class code_gen_delegate(Of WRITER As New)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
+    Private Function build(ByVal n As typed_node, ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
         assert(Not n Is Nothing)
         assert(Not o Is Nothing)
         Return f(n, o)

@@ -12,7 +12,7 @@ Partial Public NotInheritable Class b2style
     Private NotInheritable Class function_call_with_template
         Implements code_gen(Of typed_node_writer)
 
-        Public Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
+        Private Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
                 Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             Dim t As tuple(Of String, String) = Nothing
