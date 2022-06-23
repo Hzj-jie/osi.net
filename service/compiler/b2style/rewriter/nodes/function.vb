@@ -28,7 +28,7 @@ Partial Public NotInheritable Class b2style
             Return n.child(1)
         End Function
 
-        Private Function [of](ByVal n As typed_node) As String Implements template.name.of
+        Private Function name_of(ByVal n As typed_node) As String Implements template.name.of
             Return template.name_of(template.name_node_of(n), template.type_param_count(n))
         End Function
     End Class
