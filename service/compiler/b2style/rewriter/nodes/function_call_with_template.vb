@@ -20,16 +20,7 @@ Partial Public NotInheritable Class b2style
                 t = Nothing
             End If
             Dim extended_type As String = Nothing
-            Return scope.current().template().resolve(
-                       Function(ByRef name As String) As Boolean
-                           If t.is_null() Then
-                               Return False
-                           End If
-                           name = t.second()
-                           Return True
-                       End Function,
-                       n.child(0),
-                       extended_type) AndAlso
+            Return scope.current().template().resolve(n.child(0), extended_type) AndAlso
                    code_gens().typed(Of function_call).build(_namespace.with_global_namespace(
                        If(t.is_null(),
                           extended_type,

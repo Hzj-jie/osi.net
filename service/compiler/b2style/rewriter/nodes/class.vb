@@ -20,8 +20,7 @@ Partial Public NotInheritable Class b2style
         End Sub
 
         Private Function name_node_of(ByVal n As typed_node) As typed_node Implements template.name_node.of
-            assert(Not n Is Nothing)
-            Return n.child(1)
+            Return template.default_name_node_of(n).child(1)
         End Function
 
         Private Function [of](ByVal n As typed_node) As String Implements template.name.of

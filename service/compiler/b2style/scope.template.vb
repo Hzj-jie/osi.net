@@ -108,19 +108,11 @@ Partial Public NotInheritable Class b2style
                 Return s.t.define(name, type_param_list, body, name_node)
             End Function
 
-            Public Function resolve(ByVal name_override As _do(Of String, Boolean),
-                                    ByVal n As typed_node,
-                                    ByRef extended_type_name As String) As Boolean
-                assert(Not name_override Is Nothing)
+            Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
                 Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
-                Dim name As String = Nothing
-                If name_override(name) Then
-                    name = b2style.template.name_of(name, n.child(2).child_count())
-                Else
-                    name = b2style.template.name_of(n.child(0), n.child(2).child_count())
-                End If
+                Dim name As String = b2style.template.name_of(n)
                 Dim s As scope = Me.s
                 While Not s Is Nothing
                     Dim r As ternary = s.t.resolve(name, types, extended_type_name)
@@ -135,14 +127,6 @@ Partial Public NotInheritable Class b2style
                             "] has not been defined for ",
                             n.input())
                 Return False
-            End Function
-
-            Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
-                Return resolve(Function(ByRef o As String) As Boolean
-                                   Return False
-                               End Function,
-                               n,
-                               extended_type_name)
             End Function
         End Structure
 

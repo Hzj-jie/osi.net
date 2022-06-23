@@ -39,9 +39,11 @@ Partial Public NotInheritable Class b2style
 
         Private Shared Function signature_node_from(ByVal n As typed_node) As typed_node
             assert(Not n Is Nothing)
-            assert(n.type_name.Equals("template"))
-            assert(n.child_count() = 2)
-            Return n.child(1).child()
+            If n.type_name.Equals("template") Then
+                assert(n.child_count() = 2)
+                Return n.child(1).child()
+            End If
+            Return n
         End Function
 
         Private Shared Function type_param_list(ByVal l As code_gens(Of typed_node_writer),
@@ -58,10 +60,12 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Public Shared Function name_node_of(ByVal n As typed_node) As typed_node
-            Dim name_node As typed_node = signature_node_from(n)
-            Return code_gens().typed(Of name_node)(name_node.type_name).of(name_node)
+            assert(Not n Is Nothing)
+            assert(n.type_name.Equals("template"))
+            Return code_gens().typed(Of name_node)(signature_node_from(n).type_name).of(n)
         End Function
 
+        ' TODO: Remove
         Public Shared Function name_of(ByVal name As String, ByVal type_count As UInt32) As String
             assert(Not name.null_or_whitespace())
             assert(type_count > 0)
@@ -73,11 +77,17 @@ Partial Public NotInheritable Class b2style
             Return name_of(n.input_without_ignored(), type_count)
         End Function
 
+        ' TODO: Remove
         Public Shared Function default_name_of(ByVal n As typed_node) As String
             assert(Not n Is Nothing)
             assert(n.type_name.Equals("template"))
             assert(n.child_count() = 2)
             Return name_of(name_node_of(n), type_param_list(n).size())
+        End Function
+
+        ' TODO: Remove
+        Public Shared Function default_name_node_of(ByVal n As typed_node) As typed_node
+            Return signature_node_from(n)
         End Function
 
         Public Shared Function name_of(ByVal n As typed_node) As String

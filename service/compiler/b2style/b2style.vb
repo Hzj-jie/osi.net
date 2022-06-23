@@ -83,6 +83,7 @@ Partial Public NotInheritable Class b2style
                            with(Of template).
                            with(Of template_type_name).
                            with(Of function_call_with_template).
+                           with(Of function_name_with_template).
                            with(Of name)().
                            with(name.of("raw-type-name")).
                            with(Of _function)().

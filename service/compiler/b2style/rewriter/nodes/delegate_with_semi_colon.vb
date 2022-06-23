@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
 Imports osi.service.automata
 
 Partial Public NotInheritable Class b2style
@@ -11,8 +10,7 @@ Partial Public NotInheritable Class b2style
         Implements template.name_node, template.name
 
         Private Function name_node_of(ByVal n As typed_node) As typed_node Implements template.name_node.of
-            assert(Not n Is Nothing)
-            Return n.child(0).child(2)
+            Return template.default_name_node_of(n).child(0).child(2)
         End Function
 
         Private Function [of](ByVal n As typed_node) As String Implements template.name.of
