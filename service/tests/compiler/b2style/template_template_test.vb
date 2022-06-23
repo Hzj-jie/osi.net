@@ -26,7 +26,7 @@ Public NotInheritable Class template_template_test
             assertion.is_true(template_template.of(b2style.new_code_gens(), n.child().child(), t))
             Dim impl As String = Nothing
             assertion.is_true(t.apply(vector.of("int"), impl))
-            assertion.equal(impl, "class C__1__int { int x ; void f ( int y ) { } } ;")
+            assertion.equal(impl, "class C__int { int x ; void f ( int y ) { } } ;")
         End Using
     End Sub
 
@@ -69,7 +69,7 @@ Public NotInheritable Class template_template_test
             assertion.is_true(template_template.of(b2style.new_code_gens(), n.child().child(), t))
             Dim impl As String = Nothing
             assertion.is_true(t.apply(vector.of("int", "string"), impl))
-            assertion.equal(impl, "class C__2__int__string { int x ; string y ; void p ( int x , string y ) { } } ;")
+            assertion.equal(impl, "class C__int__string { int x ; string y ; void p ( int x , string y ) { } } ;")
         End Using
     End Sub
 

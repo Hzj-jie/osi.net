@@ -9,7 +9,7 @@ Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class _function
-        Implements code_gen(Of typed_node_writer)
+        Implements code_gen(Of typed_node_writer), template.name_node, template.name
 
         Public Function build(ByVal n As typed_node,
                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
@@ -21,6 +21,15 @@ Partial Public NotInheritable Class b2style
                 Return code_gens().of_all_children(n).build(fo) AndAlso
                        o.append(scope.current().call_hierarchy().filter(function_name, AddressOf fo.str))
             End Using
+        End Function
+
+        Private Function name_node_of(ByVal n As typed_node) As typed_node Implements template.name_node.of
+            assert(Not n Is Nothing)
+            Return n.child(1)
+        End Function
+
+        Private Function name_of(ByVal n As typed_node) As String Implements template.name.of
+            Return template.name_of(template.name_node_of(n), template.type_param_count(n))
         End Function
     End Class
 End Class
