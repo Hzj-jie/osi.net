@@ -13,11 +13,20 @@ Imports osi.service.compiler.rewriters
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class _class
         Inherits code_gens(Of typed_node_writer).reparser
-        Implements code_gen(Of typed_node_writer)
+        Implements code_gen(Of typed_node_writer), template.name_node, template.name
 
         Public Sub New()
             MyBase.New(parser.instance)
         End Sub
+
+        Private Function name_node_of(ByVal n As typed_node) As typed_node Implements template.name_node.of
+            assert(Not n Is Nothing)
+            Return n.child(1)
+        End Function
+
+        Private Function [of](ByVal n As typed_node) As String Implements template.name.of
+            Return template.default_name_of(n)
+        End Function
 
         Protected Overrides Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
             Dim o As New StringBuilder()

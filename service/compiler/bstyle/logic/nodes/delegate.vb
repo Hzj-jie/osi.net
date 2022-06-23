@@ -4,10 +4,8 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
-Imports osi.service.compiler
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle

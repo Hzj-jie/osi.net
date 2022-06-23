@@ -86,6 +86,7 @@ Partial Public NotInheritable Class b2style
                            with(Of name)().
                            with(name.of("raw-type-name")).
                            with(Of _function)().
+                           with(Of delegate_with_semi_colon)().
                            with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).
                            with(code_gen.of_first_child(Of typed_node_writer)("type-name-with-comma")).
                            with(code_gen.of_only_descendant_str(Of typed_node_writer)("type-param")).
