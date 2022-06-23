@@ -55,7 +55,7 @@ Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of 
         Return [with]({a})
     End Function
 
-    Public Function [with](Of T As {code_gen(Of WRITER), New})() As RT
+    Public Function [with](Of T As New)() As RT
         Return [with](Sub(ByVal b As code_gens(Of WRITER))
                           assert(Not b Is Nothing)
                           b.register(code_gens(Of WRITER).code_gen_name(Of T)(), New T())
