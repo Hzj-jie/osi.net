@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
@@ -50,6 +51,7 @@ Partial Public NotInheritable Class b2style
                      map(Function(ByVal param As String) As Boolean
                              Dim type As String = Nothing
                              If Not scope.current().variables().resolve(param, type) Then
+                                 raise_error(error_type.user, "Cannot find the type of parameter ", param)
                                  Return False
                              End If
                              v.emplace_back(type)

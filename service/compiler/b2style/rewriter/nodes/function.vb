@@ -55,7 +55,7 @@ Partial Public NotInheritable Class b2style
         Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean Implements template.name.of
             o = template_name_of(template.name_node_of(n).input_without_ignored(),
                                  template.type_param_count(n),
-                                 param_types(n))
+                                 param_types(template.body_of(n)))
             Return True
         End Function
 

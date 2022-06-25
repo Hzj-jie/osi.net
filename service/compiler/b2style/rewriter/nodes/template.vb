@@ -51,6 +51,12 @@ Partial Public NotInheritable Class b2style
             Return code_gens().typed(Of template_head)().type_param_count(n.child(0))
         End Function
 
+        Public Shared Function body_of(ByVal n As typed_node) As typed_node
+            assert(Not n Is Nothing)
+            assert(n.child_count() = 2)
+            Return n.child(1).child()
+        End Function
+
         Public Shared Function name_node_of(ByVal n As typed_node, ByRef o As typed_node) As Boolean
             assert(Not n Is Nothing)
             assert(n.child_count() = 2)
