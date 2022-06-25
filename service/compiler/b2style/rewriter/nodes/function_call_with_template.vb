@@ -31,25 +31,31 @@ Partial Public NotInheritable Class b2style
 
         Private Shared Function param_types(ByVal n As typed_node, ByRef o As vector(Of String)) As Boolean
             assert(Not n Is Nothing)
-            assert(n.child_count() = 3 OrElse n.child_count() = 4)
             o.renew()
-            Return True
             If n.child_count() = 3 Then
                 Return True
             End If
+            assert(n.child_count() = 4)
             Dim v As vector(Of String) = o
-            Return code_gens().of_all_children(n.child(2)).
-                               dump().
-                               stream().
-                               map(Function(ByVal param As String) As Boolean
-                                       Dim type As String = Nothing
-                                       If Not scope.current().variables().resolve(param, type) Then
-                                           Return False
-                                       End If
-                                       v.emplace_back(type)
-                                       Return True
-                                   End Function).
-                               aggregate(bool_stream.aggregators.all_true)
+            Return n.child(2).
+                     children().
+                     map(Function(ByVal node As typed_node) As String
+                             assert(Not node Is Nothing)
+                             If node.type_name.Equals("value-with-comma") Then
+                                 node = node.child(0)
+                             End If
+                             assert(node.type_name.Equals("value"))
+                             Return node.input_without_ignored()
+                         End Function).
+                     map(Function(ByVal param As String) As Boolean
+                             Dim type As String = Nothing
+                             If Not scope.current().variables().resolve(param, type) Then
+                                 Return False
+                             End If
+                             v.emplace_back(type)
+                             Return True
+                         End Function).
+                     aggregate(bool_stream.aggregators.all_true)
         End Function
 
         Public Shared Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean

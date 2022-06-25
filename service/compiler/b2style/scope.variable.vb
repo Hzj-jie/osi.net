@@ -55,6 +55,8 @@ Partial Public NotInheritable Class b2style
 
             Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
                 assert(Not name.null_or_whitespace())
+                name = name.Trim()
+                assert(Not name.null_or_whitespace())
                 Dim s As scope = Me.s
                 While Not s Is Nothing
                     If s.v.resolve(name, type) Then
