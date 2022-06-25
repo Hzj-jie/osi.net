@@ -112,7 +112,11 @@ Partial Public NotInheritable Class b2style
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
                 Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
-                Dim name As String = code_gens().typed(Of template.name)(n.type_name).of(n)
+                Dim name As String = Nothing
+                If Not code_gens().typed(Of template.name)(n.type_name).of(n, name) Then
+                    raise_error(error_type.user, "Cannot retrieve template name of ", n.input())
+                    Return False
+                End If
                 Dim s As scope = Me.s
                 While Not s Is Nothing
                     Dim r As ternary = s.t.resolve(name, types, extended_type_name)

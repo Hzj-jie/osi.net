@@ -26,15 +26,18 @@ Partial Public NotInheritable Class b2style
             End Using
         End Function
 
-        Private Function name_node_of(ByVal n As typed_node) As typed_node Implements template.name_node.of
+        Private Function name_node_of(ByVal n As typed_node,
+                                      ByRef o As typed_node) As Boolean Implements template.name_node.of
             assert(Not n Is Nothing)
-            Return n.child(1)
+            o = n.child(1)
+            Return True
         End Function
 
-        Private Function name_of(ByVal n As typed_node) As String Implements template.name.of
-            Return template_name_of(template.name_node_of(n).input_without_ignored(),
-                                    template.type_param_count(n),
-                                    New vector(Of String)())
+        Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean Implements template.name.of
+            o = template_name_of(template.name_node_of(n).input_without_ignored(),
+                                 template.type_param_count(n),
+                                 New vector(Of String)())
+            Return True
         End Function
 
         Public Shared Function template_name_of(ByVal function_name As String,

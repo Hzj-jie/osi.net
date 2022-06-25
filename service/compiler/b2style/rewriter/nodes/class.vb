@@ -19,13 +19,16 @@ Partial Public NotInheritable Class b2style
             MyBase.New(parser.instance)
         End Sub
 
-        Private Function name_node_of(ByVal n As typed_node) As typed_node Implements template.name_node.of
+        Private Function name_node_of(ByVal n As typed_node,
+                                      ByRef o As typed_node) As Boolean Implements template.name_node.of
             assert(Not n Is Nothing)
-            Return n.child(1)
+            o = n.child(1)
+            Return True
         End Function
 
-        Private Function name_of(ByVal n As typed_node) As String Implements template.name.of
-            Return template.name_of(template.name_node_of(n), template.type_param_count(n))
+        Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean Implements template.name.of
+            o = template.name_of(template.name_node_of(n), template.type_param_count(n))
+            Return True
         End Function
 
         Protected Overrides Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
