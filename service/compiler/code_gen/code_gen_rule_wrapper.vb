@@ -40,6 +40,11 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         Return code_gens().of(n)
     End Function
 
+    Protected Shared Function my_node(Of T)(ByVal n As typed_node) As typed_node
+        assert(Not n Is Nothing)
+        Return n.ancestor_of(compiler.code_gens(Of WRITER).code_gen_name(Of T)())
+    End Function
+
     Protected NotInheritable Class code_builder
         Public Shared ReadOnly code_gens As code_gens(Of WRITER) = new_code_gens()
 
