@@ -29,37 +29,48 @@ Partial Public NotInheritable Class b2style
                        o)
         End Function
 
-        Private Shared Function param_types(ByVal n As typed_node) As vector(Of String)
+        Private Shared Function param_types(ByVal n As typed_node, ByRef o As vector(Of String)) As Boolean
             assert(Not n Is Nothing)
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
-            Return New vector(Of String)()
+            o.renew()
+            Return True
             If n.child_count() = 3 Then
-                Return New vector(Of String)()
+                Return True
             End If
+            Dim v As vector(Of String) = o
             Return code_gens().of_all_children(n.child(2)).
                                dump().
                                stream().
-                               map(Function(ByVal param As String) As String
+                               map(Function(ByVal param As String) As Boolean
                                        Dim type As String = Nothing
-                                       If Not scope.current().variables().resolve(param, Type) Then
-                                           ' Should return a boolean.
-                                           type = "void"
+                                       If Not scope.current().variables().resolve(param, type) Then
+                                           Return False
                                        End If
-                                       Return type
+                                       v.emplace_back(type)
+                                       Return True
                                    End Function).
-                               collect_to(Of vector(Of String))()
+                               aggregate(bool_stream.aggregators.all_true)
         End Function
 
-        Public Shared Function name_of(ByVal n As typed_node) As String
+        Public Shared Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean
             assert(Not n Is Nothing)
             assert(n.child_count() = 4)
-            Dim param_types As vector(Of String) =
-                function_call_with_template.param_types(my_node(Of function_call_with_template)(n))
+            Dim param_types As vector(Of String) = Nothing
+            If Not function_call_with_template.param_types(my_node(Of function_call_with_template)(n), param_types) Then
+                Return False
+            End If
+            Dim f As Func(Of String, String) = Function(ByVal function_name As String) As String
+                                                   Return _function.template_name_of(function_name,
+                                                                                     n.child(2).child_count(),
+                                                                                     param_types)
+                                               End Function
             Dim t As tuple(Of String, String) = Nothing
             If function_call.split_struct_function(n.child(0).input_without_ignored(), t) Then
-                Return _function.template_name_of(t.second(), n.child(2).child_count(), param_types)
+                o = f(t.second())
+            Else
+                o = f(n.child(0).input_without_ignored())
             End If
-            Return _function.template_name_of(n.child(0).input_without_ignored(), n.child(2).child_count(), param_types)
+            Return True
         End Function
     End Class
 End Class
