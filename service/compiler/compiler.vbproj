@@ -69,6 +69,7 @@
     <Compile Include="b2style\rewriter\nodes\function.vb" />
     <Compile Include="b2style\rewriter\nodes\function_call.vb" />
     <Compile Include="b2style\rewriter\nodes\function_call_with_template.vb" />
+    <Compile Include="b2style\rewriter\nodes\function_name_with_template.vb" />
     <Compile Include="b2style\rewriter\nodes\heap_struct_function_call.vb" />
     <Compile Include="b2style\rewriter\nodes\heap_struct_name.vb" />
     <Compile Include="b2style\rewriter\nodes\includes.vb" />
@@ -76,6 +77,8 @@
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\kw_file.vb" />
     <None Include="bstyle\lib\climits" />
+    <Compile Include="b2style\rewriter\nodes\template_head.vb" />
+    <Compile Include="b2style\rewriter\nodes\delegate_with_semi_colon.vb" />
     <Compile Include="bstyle\logic\nodes\kw_file.vb" />
     <Compile Include="bstyle\logic\nodes\kw_func.vb" />
     <Compile Include="bstyle\logic\nodes\kw_line.vb" />

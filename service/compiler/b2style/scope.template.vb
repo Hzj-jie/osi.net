@@ -25,12 +25,12 @@ Partial Public NotInheritable Class b2style
 
                 Public Function apply(ByVal types As vector(Of String), ByRef o As String) As Boolean
                     ' TODO: Should resolve type-aliases.
-                    If Not injected_types.emplace(types).second() Then
-                        ' Injected already.
-                        o = Nothing
-                        Return True
+                    If injected_types.emplace(types).second() Then
+                        Return template.apply(types, o)
                     End If
-                    Return template.apply(types, o)
+                    ' Injected already.
+                    o = Nothing
+                    Return True
                 End Function
 
                 Public Function extended_type_name(ByVal types As vector(Of String)) As String
@@ -38,22 +38,26 @@ Partial Public NotInheritable Class b2style
                 End Function
             End Class
 
-            Public Function define(ByVal type_param_list As vector(Of String), ByVal n As typed_node) As Boolean
-                assert(Not n Is Nothing)
+            Public Function define(ByVal name As String,
+                                   ByVal type_param_list As vector(Of String),
+                                   ByVal body As typed_node,
+                                   ByVal name_node As typed_node) As Boolean
+                assert(Not name.null_or_whitespace())
+                assert(Not body Is Nothing)
                 Dim t As template_template = Nothing
-                If Not template_template.of(type_param_list, n, t) Then
+                If Not template_template.of(type_param_list, body, name_node, t) Then
                     Return False
                 End If
                 assert(Not t Is Nothing)
                 Dim d As New definition(t)
-                If Not m.emplace(name_with_namespace.of(t.name()), d).second() Then
-                    raise_error(error_type.user,
-                                "Template [",
-                                name_with_namespace.of(t.name()),
-                                "] has been defined already.")
-                    Return False
+                If m.emplace(name_with_namespace.of(name), d).second() Then
+                    Return True
                 End If
-                Return True
+                raise_error(error_type.user,
+                            "Template [",
+                            name_with_namespace.of(name),
+                            "] has been defined already.")
+                Return False
             End Function
 
             Public Function resolve(ByVal input_name As String,
@@ -96,26 +100,22 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
-            Public Function define(ByVal n As typed_node) As Boolean
-                assert(Not n Is Nothing)
-                assert(n.child_count() = 2)
-                assert(n.child(0).child_count() = 4)
-                Dim type_param_list As vector(Of String) = code_gens().of_all_children(n.child(0).child(2)).dump()
-                Return s.t.define(type_param_list, n)
+            Public Function define(ByVal name As String,
+                                   ByVal type_param_list As vector(Of String),
+                                   ByVal body As typed_node,
+                                   ByVal name_node As typed_node) As Boolean
+                assert(Not body Is Nothing)
+                Return s.t.define(name, type_param_list, body, name_node)
             End Function
 
-            Public Function resolve(ByVal name_override As _do(Of String, Boolean),
-                                    ByVal n As typed_node,
-                                    ByRef extended_type_name As String) As Boolean
-                assert(Not name_override Is Nothing)
+            Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
                 assert(Not n Is Nothing)
                 assert(n.child_count() = 4)
                 Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
                 Dim name As String = Nothing
-                If name_override(name) Then
-                    name = template_template.template_name(name, n.child(2).child_count())
-                Else
-                    name = template_template.template_name(n.child(0), n.child(2).child_count())
+                If Not code_gens().typed(Of template.name)(n.type_name).of(n, name) Then
+                    raise_error(error_type.user, "Cannot retrieve template name of ", n.input())
+                    Return False
                 End If
                 Dim s As scope = Me.s
                 While Not s Is Nothing
@@ -131,14 +131,6 @@ Partial Public NotInheritable Class b2style
                             "] has not been defined for ",
                             n.input())
                 Return False
-            End Function
-
-            Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
-                Return resolve(Function(ByRef o As String) As Boolean
-                                   Return False
-                               End Function,
-                               n,
-                               extended_type_name)
             End Function
         End Structure
 

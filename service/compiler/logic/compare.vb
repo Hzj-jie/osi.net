@@ -43,7 +43,7 @@ Partial Public NotInheritable Class logic
 
         Protected MustOverride Function compare() As command
 
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+        Private Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             Dim result_var As variable = Nothing
             If Not variable.of(result, o, result_var) OrElse
                Not result_var.is_assignable_from_bool() Then

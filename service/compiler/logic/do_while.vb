@@ -23,10 +23,9 @@ Partial Public NotInheritable Class logic
             Me.p = p
         End Sub
 
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+        Private Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
-            Dim start As UInt32 = 0
-            start = o.size()
+            Dim start As UInt32 = o.size()
             If Not p.build(o) Then
                 Return False
             End If

@@ -83,9 +83,11 @@ Partial Public NotInheritable Class b2style
                            with(Of template).
                            with(Of template_type_name).
                            with(Of function_call_with_template).
+                           with(Of function_name_with_template).
                            with(Of name)().
                            with(name.of("raw-type-name")).
                            with(Of _function)().
+                           with(Of delegate_with_semi_colon)().
                            with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).
                            with(code_gen.of_first_child(Of typed_node_writer)("type-name-with-comma")).
                            with(code_gen.of_only_descendant_str(Of typed_node_writer)("type-param")).
@@ -108,6 +110,7 @@ Partial Public NotInheritable Class b2style
                            with(Of kw_file)().
                            with(code_gen.of_input(Of typed_node_writer)("kw-func")).
                            with(code_gen.of_input(Of typed_node_writer)("kw-line")).
+                           with(Of template_head)().
                            with_of_only_childs(
                                "base-root-type",
                                "paragraph",

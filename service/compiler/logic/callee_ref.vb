@@ -30,7 +30,7 @@ Partial Public NotInheritable Class logic
             Me.New(name, return_type, +parameters)
         End Sub
 
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+        Private Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             Return scope.current().anchor_refs().decl(name, return_type, parameters)
         End Function
     End Class

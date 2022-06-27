@@ -32,8 +32,8 @@ Partial Public NotInheritable Class bstyle
             Return single_data_slot_handle(type, n.input_without_ignored())
         End Function
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() = 1)
             Return build(n.child(),

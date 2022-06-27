@@ -13,11 +13,23 @@ Imports osi.service.compiler.rewriters
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class _class
         Inherits code_gens(Of typed_node_writer).reparser
-        Implements code_gen(Of typed_node_writer)
+        Implements code_gen(Of typed_node_writer), template.name_node, template.name
 
         Public Sub New()
             MyBase.New(parser.instance)
         End Sub
+
+        Private Function name_node_of(ByVal n As typed_node,
+                                      ByRef o As typed_node) As Boolean Implements template.name_node.of
+            assert(Not n Is Nothing)
+            o = n.child(1)
+            Return True
+        End Function
+
+        Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean Implements template.name.of
+            o = template.name_of(template.name_node_of(n), template.type_param_count(n))
+            Return True
+        End Function
 
         Protected Overrides Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
             Dim o As New StringBuilder()
@@ -69,6 +81,8 @@ Partial Public NotInheritable Class b2style
                        End Sub)
             cd.temps().
                foreach(Sub(ByVal f As tuple(Of String, class_def.function_def))
+                           ' TODO: Avoid generating source code, directly define templates to allow including type
+                           ' names.
                            assert(Not f.first().null_or_whitespace())
                            assert(Not f.second() Is Nothing)
                            o.Append(f.first() + " " + f.second().content)

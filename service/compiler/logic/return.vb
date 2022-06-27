@@ -27,7 +27,7 @@ Partial Public NotInheritable Class logic
             Me.New(name, [default](Of String).null)
         End Sub
 
-        Public Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
+        Private Function build(ByVal o As vector(Of String)) As Boolean Implements instruction_gen.build
             assert(Not o Is Nothing)
             Dim r As variable = Nothing
             If Not logic.return_value.retrieve(name, o, r) Then

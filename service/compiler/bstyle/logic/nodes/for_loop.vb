@@ -59,8 +59,8 @@ Partial Public NotInheritable Class bstyle
             End Using
         End Function
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not o Is Nothing)
             Return builders.start_scope(o).of(
                        Function() As Boolean

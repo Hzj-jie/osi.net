@@ -14,29 +14,35 @@ Public Interface code_gen(Of WRITER As New)
 End Interface
 
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
-    Private ReadOnly m As New unordered_map(Of String, code_gen(Of WRITER))()
+    Private ReadOnly m As New unordered_map(Of String, Object)()
 
-    Public Shared Function code_gen_name(Of T As code_gen(Of WRITER))() As String
+    Public Shared Function code_gen_name(Of T)() As String
         Return GetType(T).Name().TrimStart("_"c).Replace("_"c, "-"c)
     End Function
 
-    Public Sub register(ByVal s As String, ByVal b As code_gen(Of WRITER))
+    Public Sub register(ByVal s As String, ByVal b As Object)
         assert(Not s.null_or_whitespace())
         assert(Not b Is Nothing)
         assert(m.emplace(s, b).second(), s)
     End Sub
 
+    ' Limit the use of this function, prefer code_gen_proxy.dump if possible.
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Function code_gen_of(ByVal name As String) As code_gen(Of WRITER)
-        Dim it As unordered_map(Of String, code_gen(Of WRITER)).iterator = m.find(name)
+    Public Function typed(Of T)(ByVal name As String) As T
+        Dim it As unordered_map(Of String, Object).iterator = m.find(name)
         assert(it <> m.end(), "Cannot find code_gen of ", name)
-        Return (+it).second
+        Return direct_cast(Of T)((+it).second)
     End Function
 
     ' Limit the use of this function, prefer code_gen_proxy.dump if possible.
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function typed(Of T As code_gen(Of WRITER))() As T
-        Return direct_cast(Of T)(code_gen_of(code_gen_name(Of T)()))
+    Public Function typed(Of T)() As T
+        Return typed(Of T)(code_gen_name(Of T)())
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Private Function code_gen_of(ByVal name As String) As code_gen(Of WRITER)
+        Return typed(Of code_gen(Of WRITER))(name)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

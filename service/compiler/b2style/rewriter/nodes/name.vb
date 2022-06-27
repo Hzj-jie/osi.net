@@ -18,8 +18,8 @@ Partial Public NotInheritable Class b2style
                    End Sub
         End Function
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             If n.type_name.Equals("name") AndAlso n.descentdant_of("value-declaration", "struct-body") Then
                 ' Ignore namespace prefix for variables within the structure.

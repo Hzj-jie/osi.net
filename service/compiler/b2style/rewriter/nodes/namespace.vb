@@ -93,8 +93,8 @@ Partial Public NotInheritable Class b2style
             Return strcat(n, namespace_separator, i)
         End Function
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() >= 4)
             Using scope.current().current_namespace().define([of](n.child(1).word().str()))
