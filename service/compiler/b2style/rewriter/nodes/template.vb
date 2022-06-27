@@ -14,11 +14,11 @@ Partial Public NotInheritable Class b2style
         Implements code_gen(Of typed_node_writer)
 
         Public Interface name
-            Function [of](ByVal n As typed_node) As String
+            Function [of](ByVal n As typed_node, ByRef o As String) As Boolean
         End Interface
 
         Public Interface name_node
-            Function [of](ByVal n As typed_node) As typed_node
+            Function [of](ByVal n As typed_node, ByRef o As typed_node) As Boolean
         End Interface
 
         Private Shared Function build(Of T)(ByVal l As code_gens(Of typed_node_writer),
@@ -34,10 +34,14 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(Not f Is Nothing)
             assert(n.child_count() = 2)
-            Return f(code_gens().typed(Of name)(n.child(1).child().type_name).of(n),
+            Dim name As String = Nothing
+            Dim name_node As typed_node = Nothing
+            Return code_gens().typed(Of name)(n.child(1).child().type_name).of(n, name) AndAlso
+                   name_node_of(n, name_node) AndAlso
+                   f(name,
                      l.typed(Of template_head)().type_param_list(n.child(0)),
                      n.child(1),
-                     name_node_of(n),
+                     name_node,
                      o)
         End Function
 
@@ -47,11 +51,23 @@ Partial Public NotInheritable Class b2style
             Return code_gens().typed(Of template_head)().type_param_count(n.child(0))
         End Function
 
-        Public Shared Function name_node_of(ByVal n As typed_node) As typed_node
+        Public Shared Function body_of(ByVal n As typed_node) As typed_node
+            assert(Not n Is Nothing)
+            assert(n.child_count() = 2)
+            Return n.child(1).child()
+        End Function
+
+        Public Shared Function name_node_of(ByVal n As typed_node, ByRef o As typed_node) As Boolean
             assert(Not n Is Nothing)
             assert(n.child_count() = 2)
             n = n.child(1).child()
-            Return code_gens().typed(Of name_node)(n.type_name).of(n)
+            Return code_gens().typed(Of name_node)(n.type_name).of(n, o)
+        End Function
+
+        Public Shared Function name_node_of(ByVal n As typed_node) As typed_node
+            Dim o As typed_node = Nothing
+            assert(name_node_of(n, o))
+            Return o
         End Function
 
         ' TODO: Remove

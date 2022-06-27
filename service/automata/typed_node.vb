@@ -98,6 +98,10 @@ Partial Public NotInheritable Class typed_node
         Return n.child()
     End Function
 
+    Public Function children() As stream(Of typed_node)
+        Return subnodes.stream()
+    End Function
+
     Public Function last_child() As typed_node
         assert(child_count() > 0, type_name)
         Return child(child_count() - uint32_1)
