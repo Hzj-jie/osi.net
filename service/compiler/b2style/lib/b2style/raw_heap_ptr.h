@@ -1,4 +1,5 @@
 ﻿
+/* TODO: Implementation
 #ifndef B2STYLE_LIB_B2STYLE_RAW_HEAP_PTR
 #define B2STYLE_LIB_B2STYLE_RAW_HEAP_PTR
 
@@ -48,3 +49,4 @@ class raw_heap_ptr {
 }  // namespace b2style
 
 #endif  // B2STYLE_LIB_B2STYLE_RAW_HEAP_PTR
+*/
