@@ -34,6 +34,11 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Private Shared Function param_types(ByVal n As typed_node) As vector(Of String)
+            Return New vector(Of String)()
+
+            ' Following implementation does not work, b2style has no information about the types, the
+            ' function_call_with_template cannot create correct parameter types.
+#If 0 Then
             assert(Not n Is Nothing)
             If n.child_count() = 5 Then
                 Return New vector(Of String)()
@@ -50,6 +55,7 @@ Partial Public NotInheritable Class b2style
                              Return node.child(0).input_without_ignored()
                          End Function).
                      collect_to(Of vector(Of String))()
+#End If
         End Function
 
         Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean Implements template.name.of

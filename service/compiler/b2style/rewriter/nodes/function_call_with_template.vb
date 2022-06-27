@@ -33,6 +33,11 @@ Partial Public NotInheritable Class b2style
         Private Shared Function param_types(ByVal n As typed_node, ByRef o As vector(Of String)) As Boolean
             assert(Not n Is Nothing)
             o.renew()
+            Return True
+
+            ' Following implementation does not work, b2style has no information about the types, the
+            ' function_call_with_template cannot create correct parameter types.
+#If 0 Then
             If n.child_count() = 3 Then
                 Return True
             End If
@@ -58,6 +63,7 @@ Partial Public NotInheritable Class b2style
                              Return True
                          End Function).
                      aggregate(bool_stream.aggregators.all_true)
+#End If
         End Function
 
         Public Shared Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean
