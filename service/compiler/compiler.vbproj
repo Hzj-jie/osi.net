@@ -297,6 +297,7 @@
     <Content Include="b2style\lib\b2style\heap_ptr.h" />
     <Content Include="b2style\lib\b2style\loaded_method.h" />
     <Content Include="b2style\lib\b2style\operators.h" />
+    <Content Include="b2style\lib\b2style\raw_heap_ptr.h" />
     <Content Include="b2style\lib\b2style\stdio.h" />
     <Content Include="b2style\lib\b2style\str.h" />
     <Content Include="b2style\lib\b2style\to_str.h" />
