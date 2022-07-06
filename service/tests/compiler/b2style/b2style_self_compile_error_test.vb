@@ -13,7 +13,7 @@ Imports osi.service.compiler
 
 <test>
 Public NotInheritable Class b2style_self_compile_error_test
-    Inherits b2style_self_test_runner
+    Inherits compiler_self_test_runner
 
     Private Const error_prefix As String = "// ERROR: "
     Private Shared filter As argument(Of String)

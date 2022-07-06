@@ -14,7 +14,7 @@ Imports osi.service.interpreter.primitive
 
 <test>
 Public NotInheritable Class b2style_self_test
-    Inherits b2style_self_test_runner
+    Inherits compiler_self_test_runner
 
     Public Const total_assertions As String = "Total assertions: "
     Public Const failure As String = "Failure: "

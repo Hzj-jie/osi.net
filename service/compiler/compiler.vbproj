@@ -76,9 +76,13 @@
     <Compile Include="b2style\b2style_rules.vb" />
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <Compile Include="b2style\rewriter\nodes\kw_file.vb" />
+    <None Include="b3style\codegen\run.cmd" />
+    <None Include="b3style\lib\run.cmd" />
     <None Include="bstyle\lib\climits" />
     <Compile Include="b2style\rewriter\nodes\template_head.vb" />
     <Compile Include="b2style\rewriter\nodes\delegate_with_semi_colon.vb" />
+    <Compile Include="b3style\b3style_rules.vb" />
+    <Compile Include="b3style\logic\b3style.vb" />
     <Compile Include="bstyle\logic\nodes\kw_file.vb" />
     <Compile Include="bstyle\logic\nodes\kw_func.vb" />
     <Compile Include="bstyle\logic\nodes\kw_line.vb" />
@@ -308,6 +312,8 @@
     <Content Include="b2style\lib\testing\assert.h" />
     <Content Include="b2style\lib\testing.h" />
     <Content Include="b2style\lib\testing\types.h" />
+    <Content Include="b3style\codegen\nlexer_rule.txt" />
+    <Content Include="b3style\codegen\syntaxer_rule.txt" />
     <Content Include="bstyle\lib\bstyle.h" />
     <Content Include="bstyle\lib\bstyle\const.h" />
     <Content Include="bstyle\lib\bstyle\int.h" />
@@ -330,7 +336,11 @@
     <Content Include="shared\syntaxer_rule.txt" />
     <Content Include="TODO.txt" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="b3style\logic\nodes\" />
+    <Folder Include="b3style\logic\prefixes\" />
+    <Folder Include="b3style\logic\suffixes\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="compiler.dep" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

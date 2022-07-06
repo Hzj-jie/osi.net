@@ -4,14 +4,14 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
-Imports osi.root.utils
 Imports osi.root.formation
 Imports osi.root.template
+Imports osi.root.utils
 Imports osi.service.compiler.logic
 Imports osi.service.resource
 Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.logic_writer)
 
-Public NotInheritable Class bstyle
+Partial Public NotInheritable Class bstyle
     Inherits logic_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, logic_gens_t, scope)
 
     Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "service/compiler/bstyle")

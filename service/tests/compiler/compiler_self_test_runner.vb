@@ -12,7 +12,7 @@ Imports osi.root.utt
 Imports osi.service.compiler
 Imports osi.service.resource
 
-Public MustInherit Class b2style_self_test_runner
+Public MustInherit Class compiler_self_test_runner
     Private ReadOnly filter As String
     Private ReadOnly data() As Byte
 
