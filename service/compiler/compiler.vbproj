@@ -110,7 +110,6 @@
     <Compile Include="logic\builder\raw_value.vb" />
     <Compile Include="logic\builder\string.vb" />
     <Compile Include="logic\builder\ufloat.vb" />
-    <Compile Include="scope_b.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
     <Compile Include="bstyle\logic\nodes\dealloc.vb" />
     <Compile Include="bstyle\logic\nodes\delegate.vb" />

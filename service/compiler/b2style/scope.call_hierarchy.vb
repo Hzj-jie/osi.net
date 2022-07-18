@@ -10,7 +10,7 @@ Imports osi.service.automata
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
         Public NotInheritable Shadows Class call_hierarchy_t
-            Inherits scope_b(Of call_hierarchy_t, scope).call_hierarchy_t
+            Inherits scope(Of scope).call_hierarchy_t
 
             Public Shared Function from_value_clause() As Func(Of typed_node, Boolean)
                 Return Function(ByVal n As typed_node) As Boolean
@@ -39,13 +39,21 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public NotInheritable Class calculator
-                Public Shared Sub register(ByVal p As statements(Of rewriters.typed_node_writer))
-                    calculator(Of rewriters.typed_node_writer).register(p)
-                End Sub
+                Inherits calculator(Of rewriters.typed_node_writer, calculator)
 
-                Private Sub New()
-                End Sub
+                Protected Overrides Function current() As scope(Of scope).call_hierarchy_t
+                    Return scope.current().call_hierarchy()
+                End Function
             End Class
         End Class
+
+        Public Function call_hierarchy() As call_hierarchy_t
+            If is_root() Then
+                assert(Not fc Is Nothing)
+                Return fc
+            End If
+            assert(fc Is Nothing)
+            Return (+root).call_hierarchy()
+        End Function
     End Class
 End Class

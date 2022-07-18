@@ -3,12 +3,14 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
-        Inherits scope_b(Of call_hierarchy_t, scope)
+        Inherits scope(Of scope)
 
+        Private ReadOnly incs As includes_t
         Private ReadOnly fc As call_hierarchy_t
         Private ReadOnly cn As current_namespace_t
         Private f As String
@@ -25,6 +27,7 @@ Partial Public NotInheritable Class b2style
 
         Public Sub New()
             Me.New(Nothing)
+            incs = New includes_t()
             fc = New call_hierarchy_t()
             cn = New current_namespace_t()
             d = New define_t()
@@ -33,6 +36,15 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Function wrap() As scope
             Return current().start_scope()
+        End Function
+
+        Public Function includes() As includes_t
+            If is_root() Then
+                assert(Not incs Is Nothing)
+                Return incs
+            End If
+            assert(incs Is Nothing)
+            Return (+root).includes()
         End Function
     End Class
 End Class

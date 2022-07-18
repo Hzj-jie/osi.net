@@ -3,12 +3,15 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
-        Inherits scope_b(Of call_hierarchy_t, scope)
+        Inherits scope(Of scope)
 
+        Private ReadOnly incs As includes_t
+        Private ReadOnly fc As call_hierarchy_t
         Private ReadOnly d As define_t
         Private ReadOnly ta As New type_alias_t()
         Private ReadOnly s As New struct_t()
@@ -27,9 +30,20 @@ Partial Public NotInheritable Class bstyle
 
         Public Sub New()
             Me.New(Nothing)
+            incs = New includes_t()
+            fc = New call_hierarchy_t()
             d = New define_t()
             f = New function_t()
             t = New temp_logic_name_t()
         End Sub
+
+        Public Function includes() As includes_t
+            If is_root() Then
+                assert(Not incs Is Nothing)
+                Return incs
+            End If
+            assert(incs Is Nothing)
+            Return (+root).includes()
+        End Function
     End Class
 End Class

@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 
-Partial Public MustInherit Class scope_b(Of CH As {call_hierarchy_t, New}, T As scope_b(Of CH, T))
+Partial Public Class scope(Of T As scope(Of T))
     Public MustInherit Class call_hierarchy_t
         Private Const main_name As String = "main"
         ' From -> To
@@ -58,27 +58,26 @@ Partial Public MustInherit Class scope_b(Of CH As {call_hierarchy_t, New}, T As 
             End Get
         End Property
 
-        Protected NotInheritable Class calculator(Of WRITER)
+        Public Function filter(ByVal f As String, ByVal o As Func(Of String)) As Func(Of String)
+            Return AddressOf New filtered_writer(Me, f, o).str
+        End Function
+
+        Public MustInherit Class calculator(Of WRITER, IMPL_T As {calculator(Of WRITER, IMPL_T), New})
             Implements statement(Of WRITER)
 
-            Private Shared ReadOnly instance As New calculator(Of WRITER)()
+            Private Shared ReadOnly instance As New IMPL_T()
 
             Public Shared Sub register(ByVal p As statements(Of WRITER))
                 assert(Not p Is Nothing)
                 p.register(instance)
             End Sub
 
-            Public Sub export(ByVal o As WRITER) Implements statement(Of WRITER).export
-                scope(Of T).current().call_hierarchy().calculate()
-            End Sub
+            Protected MustOverride Function current() As call_hierarchy_t
 
-            Private Sub New()
+            Public Sub export(ByVal o As WRITER) Implements statement(Of WRITER).export
+                current().calculate()
             End Sub
         End Class
-
-        Public Function filter(ByVal f As String, ByVal o As Func(Of String)) As Func(Of String)
-            Return AddressOf New filtered_writer(Me, f, o).str
-        End Function
 
         Private NotInheritable Class filtered_writer
             Private ReadOnly ch As call_hierarchy_t
