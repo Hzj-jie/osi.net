@@ -338,7 +338,6 @@
     <Content Include="shared\nlexer_rule.txt" />
     <Content Include="shared\nlexer_rule2.txt" />
     <Content Include="shared\syntaxer_rule.txt" />
-    <Content Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="b3style\logic\nodes\" />

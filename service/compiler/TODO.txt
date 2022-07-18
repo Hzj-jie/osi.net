@@ -1,5 +1,0 @@
-﻿resize, release, register array in logic
-use first match rather than longest match in syntaxer
-  - sort matches in matching_group
-kw-break
-inheritance
