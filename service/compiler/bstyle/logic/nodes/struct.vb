@@ -92,7 +92,7 @@ Partial Public NotInheritable Class bstyle
                 Return True
             End If
             Dim index As String = strcat(targets(0), "@index")
-            assert(value_declaration.declare_single_data_slot(code_types.int, index, o))
+            assert(value_declaration.declare_single_data_slot(_integer.type_name, index, o))
             Return targets.stream().
                            map(Function(ByVal target As String) As Boolean
                                    assert(Not target.null_or_whitespace())

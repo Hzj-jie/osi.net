@@ -16,18 +16,12 @@ Partial Public NotInheritable Class bstyle
     Public NotInheritable Class code_types
         Implements statement
 
-        Public Const int As String = "Integer"
-        Public Const biguint As String = "BigUnsignedInteger"
-        Public Const bool As String = "Boolean"
-        Public Const [string] As String = "String"
-        Public Const ufloat As String = "BigUnsignedFloat"
-
         Private Shared ReadOnly v As vector(Of pair(Of String, UInt32)) = vector.emplace_of(
-            type_of(int, 4),
-            type_of(bool, 1),
-            type_of(biguint, max_uint32 - 1),
-            type_of(ufloat, max_uint32 - 2),
-            type_of([string], max_uint32 - 3)
+            type_of(_integer.type_name, 4),
+            type_of(bool.type_name, 1),
+            type_of(biguint.type_name, max_uint32 - 1),
+            type_of(ufloat.type_name, max_uint32 - 2),
+            type_of(_string.type_name, max_uint32 - 3)
         )
 
         Private Shared ReadOnly instance As New code_types()

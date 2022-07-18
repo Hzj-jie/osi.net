@@ -102,9 +102,14 @@
     <Compile Include="b2style\scope.vb" />
     <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\logic\nodes\kw_statement.vb" />
-    <Compile Include="bstyle\logic\nodes\raw_value.vb" />
     <Compile Include="bstyle\logic\nodes\static_cast.vb" />
     <Compile Include="bstyle\scope.temp_logic_name.vb" />
+    <Compile Include="logic\builder\biguint.vb" />
+    <Compile Include="logic\builder\bool.vb" />
+    <Compile Include="logic\builder\integer.vb" />
+    <Compile Include="logic\builder\raw_value.vb" />
+    <Compile Include="logic\builder\string.vb" />
+    <Compile Include="logic\builder\ufloat.vb" />
     <Compile Include="scope_b.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
     <Compile Include="bstyle\logic\nodes\dealloc.vb" />

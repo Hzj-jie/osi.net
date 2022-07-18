@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.compiler.logic
 Imports target = osi.service.compiler.bstyle.scope.value_target_t.target
@@ -50,6 +51,15 @@ Partial Public NotInheritable Class bstyle
             with_single_data_slot_target(type, value_name)
             Return value_name
         End Function
+
+        Public Structure with_single_data_slot_temp_target_t
+            Implements func_t(Of String, logic_writer, String)
+
+            Public Function run(ByVal i As String, ByVal j As logic_writer) As String _
+                    Implements func_t(Of String, logic_writer, String).run
+                Return with_single_data_slot_temp_target(i, j)
+            End Function
+        End Structure
 
         Public Shared Function with_temp_target(ByVal type As String, ByVal o As logic_writer) As vector(Of String)
             assert(Not o Is Nothing)

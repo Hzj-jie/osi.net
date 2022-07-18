@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+' TODO: Remove
 Public Interface idelegate
     Function valid() As Boolean
 End Interface
