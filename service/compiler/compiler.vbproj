@@ -182,8 +182,8 @@
     <Compile Include="logic\scope.variable.vb" />
     <Compile Include="lazy_list_writer.vb" />
     <Compile Include="logic\undefine.vb" />
-    <Compile Include="scope.arguments.vb" />
-    <Compile Include="scope.call_hierarchy.vb" />
+    <Compile Include="arguments.vb" />
+    <Compile Include="scope\scope.call_hierarchy.vb" />
     <Compile Include="logic\define_heap.vb" />
     <Compile Include="logic\logic_gen\read_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />
@@ -224,8 +224,8 @@
     <Compile Include="logic\return_value.vb" />
     <Compile Include="logic\scope.vb" />
     <Compile Include="logic\start_scope.vb" />
-    <Compile Include="scope.includes.vb" />
-    <Compile Include="scope.vb" />
+    <Compile Include="scope\scope.includes.vb" />
+    <Compile Include="scope\scope.vb" />
     <Compile Include="logic\move.vb" />
     <Compile Include="logic\array_operators.vb" />
     <Compile Include="logic\stop.vb" />
