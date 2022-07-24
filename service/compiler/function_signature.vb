@@ -8,19 +8,41 @@ Imports osi.root.formation
 Imports osi.service.compiler.logic
 
 Public Class function_signature
-    Public ReadOnly name As String
-    Public ReadOnly return_type As String
-    Public ReadOnly parameters As const_array(Of builders.parameter_type)
+    Inherits function_signature(Of builders.parameter_type)
 
     Public Sub New(ByVal name As String,
                    ByVal return_type As String,
                    ByVal parameters() As builders.parameter_type)
-        Me.New(name, return_type, const_array.of(parameters))
+        MyBase.New(name, return_type, parameters)
     End Sub
 
     Public Sub New(ByVal name As String,
                    ByVal return_type As String,
                    ByVal parameters As const_array(Of builders.parameter_type))
+        MyBase.New(name, return_type, parameters)
+    End Sub
+End Class
+
+Public Class function_signature(Of T As builders.parameter_type)
+    Public ReadOnly name As String
+    Public ReadOnly return_type As String
+    Public ReadOnly parameters As const_array(Of T)
+
+    Public Sub New(ByVal name As String,
+                   ByVal return_type As String,
+                   ByVal parameters() As T)
+        Me.New(name, return_type, const_array.of(parameters))
+    End Sub
+
+    Public Sub New(ByVal name As String,
+                   ByVal return_type As String,
+                   ByVal parameters As vector(Of T))
+        Me.New(name, return_type, +parameters)
+    End Sub
+
+    Public Sub New(ByVal name As String,
+                   ByVal return_type As String,
+                   ByVal parameters As const_array(Of T))
         assert(Not name.null_or_whitespace())
         assert(Not return_type.null_or_whitespace())
         assert(Not parameters Is Nothing)
@@ -33,3 +55,4 @@ Public Class function_signature
         Return strcat(return_type, " ", name, "(", parameters, ")")
     End Function
 End Class
+

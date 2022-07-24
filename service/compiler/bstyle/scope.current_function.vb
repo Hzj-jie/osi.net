@@ -11,27 +11,16 @@ Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
         ' TODO: Consider to merge it with function_signature.
         Private NotInheritable Class current_function_t
-            Public ReadOnly name As String
-            Public ReadOnly return_type As String
-            Private ReadOnly params As vector(Of builders.parameter)
+            Inherits function_signature(Of builders.parameter)
 
             Public Sub New(ByVal name As String,
                            ByVal return_type As String,
                            ByVal params As vector(Of builders.parameter))
-                assert(Not name.null_or_whitespace())
-                assert(Not return_type.null_or_whitespace())
-                assert(Not params Is Nothing)
-                Me.name = name
-                Me.return_type = scope.current().type_alias()(return_type)
-                Me.params = params
+                MyBase.New(name, scope.current().type_alias()(return_type), params)
             End Sub
 
             Public Function allow_return_value() As Boolean
                 Return Not return_type.Equals(compiler.logic.scope.type_t.zero_type)
-            End Function
-
-            Public Function signature() As String
-                Return return_type + " " + name + "(" + const_array.of(+params).ToString() + ")"
             End Function
         End Class
 
@@ -96,7 +85,7 @@ Partial Public NotInheritable Class bstyle
 
             Public Function signature() As String
                 Return current_function_opt().map(Function(ByVal x As current_function_t) As String
-                                                      Return x.signature()
+                                                      Return x.ToString()
                                                   End Function).
                                               or_else("unknown_function")
             End Function
