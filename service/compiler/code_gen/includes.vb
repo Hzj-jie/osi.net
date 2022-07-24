@@ -55,7 +55,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
 
         Protected Shared Function include_file(ByVal s As String, ByRef o As String) As Boolean
-            If Not should_include(s) AndAlso (scope_arguments.include_once Or True) Then
+            If Not should_include(s) AndAlso (arguments.include_once Or True) Then
                 Return True
             End If
             If include_file(+folders, s, o) Then

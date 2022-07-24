@@ -94,7 +94,7 @@ Partial Public Class scope(Of T As scope(Of T))
             End Sub
 
             Public Function str() As String
-                If (scope_arguments.remove_unused_functions Or True) AndAlso Not ch(f) Then
+                If (arguments.remove_unused_functions Or True) AndAlso Not ch(f) Then
                     Return ""
                 End If
                 Return o()

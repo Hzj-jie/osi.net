@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.delegates
 
-Public NotInheritable Class scope_arguments
+Public NotInheritable Class arguments
     Public Shared remove_unused_functions As argument(Of Boolean)
     Public Shared include_once As argument(Of Boolean)
 
