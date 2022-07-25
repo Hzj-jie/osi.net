@@ -5,6 +5,10 @@ Option Strict On
 
 Imports osi.root.delegates
 
+' Stop using the following classes or anyone derived from them.
+' Use either Action or Func for function parameters,
+' or func_t as the type parameter (should be quite rare) or quite performance sensitive.
+' TODO: Remove the following classes and the entire template project.
 Public NotInheritable Class __do
     Public NotInheritable Class default_of(Of T As New)
         Inherits __do(Of T)
@@ -18,7 +22,6 @@ Public NotInheritable Class __do
     End Sub
 End Class
 
-' TODO: Should be an interface to use structures in favor of classes.
 Public MustInherit Class __do(Of T)
     Protected MustOverride Function at() As T
 
