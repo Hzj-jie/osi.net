@@ -25,3 +25,23 @@ End Interface
 Public Interface func_t(Of T1, T2, RT)
     Function run(ByVal i As T1, ByVal j As T2) As RT
 End Interface
+
+Public Interface func_t(Of T1, T2, T3, RT)
+    Function run(ByVal i As T1, ByVal j As T2, ByVal k As T3) As RT
+End Interface
+
+Public Interface action_t
+    Sub run()
+End Interface
+
+Public Interface action_t(Of T)
+    Sub run(ByVal i As T)
+End Interface
+
+Public Interface action_t(Of T1, T2)
+    Sub run(ByVal i As T1, ByVal j As T2)
+End Interface
+
+Public Interface action_t(Of T1, T2, T3)
+    Sub run(ByVal i As T1, ByVal j As T2, ByVal k As T3)
+End Interface

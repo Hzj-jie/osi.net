@@ -224,6 +224,7 @@
     <Compile Include="logic\return_value.vb" />
     <Compile Include="logic\scope.vb" />
     <Compile Include="logic\start_scope.vb" />
+    <Compile Include="scope\scope.current_function.vb" />
     <Compile Include="scope\scope.includes.vb" />
     <Compile Include="scope\scope.vb" />
     <Compile Include="logic\move.vb" />

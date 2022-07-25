@@ -4,95 +4,26 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
-Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
-        ' TODO: Consider to merge it with function_signature.
-        Private NotInheritable Class current_function_t
-            Inherits function_signature(Of builders.parameter)
-
-            Public Sub New(ByVal name As String,
-                           ByVal return_type As String,
-                           ByVal params As vector(Of builders.parameter))
-                MyBase.New(name, scope.current().type_alias()(return_type), params)
-            End Sub
-
-            Public Function allow_return_value() As Boolean
-                Return Not return_type.Equals(compiler.logic.scope.type_t.zero_type)
-            End Function
-        End Class
-
-        Public Structure current_function_proxy
-            Private ReadOnly s As scope
-
-            Public Sub New(ByVal s As scope)
-                assert(Not s Is Nothing)
-                Me.s = s
-            End Sub
-
-            Public Sub define(ByVal name As String,
-                              ByVal return_type As String,
-                              ByVal params As vector(Of builders.parameter))
-                assert(s.cf Is Nothing)
-                s.cf = New current_function_t(name, return_type, params)
-            End Sub
-
-            Private Function current_function() As current_function_t
-                Dim s As scope = Me.s
-                While s.cf Is Nothing
-                    s = s.parent
-                    assert(Not s Is Nothing)
-                End While
-                Return s.cf
-            End Function
-
-            Private Function current_function_opt() As [optional](Of current_function_t)
-                Dim s As scope = Me.s
-                While s.cf Is Nothing
-                    s = s.parent
-                    If s Is Nothing Then
-                        Return [optional].empty(Of current_function_t)()
-                    End If
-                End While
-                Return [optional].of(s.cf)
-            End Function
-
-            Public Function allow_return_value() As Boolean
-                Return current_function().allow_return_value()
-            End Function
-
-            Public Function name() As String
-                Return current_function().name
-            End Function
-
-            Public Function name_opt() As [optional](Of String)
-                Return current_function_opt().map(Function(ByVal x As current_function_t) As String
-                                                      assert(Not x Is Nothing)
-                                                      Return x.name
-                                                  End Function)
-            End Function
-
-            Public Function return_struct() As Boolean
-                Return s.structs().types().defined(return_type())
-            End Function
-
-            Public Function return_type() As String
-                assert(allow_return_value())
-                Return current_function().return_type
-            End Function
-
-            Public Function signature() As String
-                Return current_function_opt().map(Function(ByVal x As current_function_t) As String
-                                                      Return x.ToString()
-                                                  End Function).
-                                              or_else("unknown_function")
-            End Function
-        End Structure
-
         Public Function current_function() As current_function_proxy
-            Return New current_function_proxy(Me)
+            Return New current_function_proxy(Me,
+                                              current_function_t.ctor(Function(ByVal i As String) As String
+                                                                          Return scope.current().type_alias()(i)
+                                                                      End Function),
+                                              Sub(ByVal i As scope, ByVal j As current_function_t)
+                                                  assert(Not i Is Nothing)
+                                                  i.cf = j
+                                              End Sub,
+                                              Function(ByVal i As scope) As current_function_t
+                                                  assert(Not i Is Nothing)
+                                                  Return i.cf
+                                              End Function,
+                                              Function(ByVal i As scope, ByVal j As String) As Boolean
+                                                  assert(Not i Is Nothing)
+                                                  Return i.structs().types().defined(j)
+                                              End Function)
         End Function
     End Class
 End Class
