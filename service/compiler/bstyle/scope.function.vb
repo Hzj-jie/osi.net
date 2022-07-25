@@ -37,12 +37,10 @@ Partial Public NotInheritable Class bstyle
         End Class
 
         Public Function functions() As function_t
-            If is_root() Then
-                assert(Not f Is Nothing)
-                Return f
-            End If
-            assert(f Is Nothing)
-            Return (+root).functions()
+            Return from_root(Function(ByVal i As scope) As function_t
+                                 assert(Not i Is Nothing)
+                                 Return i.f
+                             End Function)
         End Function
     End Class
 End Class

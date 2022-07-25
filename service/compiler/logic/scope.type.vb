@@ -75,12 +75,10 @@ Partial Public NotInheritable Class logic
         End Class
 
         Public Function types() As type_t
-            If is_root() Then
-                assert(Not t Is Nothing)
-                Return t
-            End If
-            assert(t Is Nothing)
-            Return (+root).types()
+            Return from_root(Function(ByVal i As scope) As type_t
+                                 assert(Not i Is Nothing)
+                                 Return i.t
+                             End Function)
         End Function
     End Class
 End Class

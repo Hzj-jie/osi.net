@@ -39,12 +39,10 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Public Function includes() As includes_t
-            If is_root() Then
-                assert(Not incs Is Nothing)
-                Return incs
-            End If
-            assert(incs Is Nothing)
-            Return (+root).includes()
+            Return from_root(Function(ByVal i As scope) As includes_t
+                                 assert(Not i Is Nothing)
+                                 Return i.incs
+                             End Function)
         End Function
     End Class
 End Class

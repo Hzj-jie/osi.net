@@ -25,12 +25,10 @@ Partial Public NotInheritable Class b2style
         End Class
 
         Public Function root_type_injector() As root_type_injector_t
-            If is_root() Then
-                assert(Not i Is Nothing)
-                Return i
-            End If
-            assert(i Is Nothing)
-            Return (+root).root_type_injector()
+            Return from_root(Function(ByVal i As scope) As root_type_injector_t
+                                 assert(Not i Is Nothing)
+                                 Return i.i
+                             End Function)
         End Function
     End Class
 End Class

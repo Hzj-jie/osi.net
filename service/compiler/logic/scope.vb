@@ -38,12 +38,10 @@ Partial Public NotInheritable Class logic
         End Sub
 
         Public Function functions() As interrupts
-            If is_root() Then
-                assert(Not f Is Nothing)
-                Return f
-            End If
-            assert(f Is Nothing)
-            Return (+root).functions()
+            Return from_root(Function(ByVal i As scope) As interrupts
+                                 assert(Not i Is Nothing)
+                                 Return i.f
+                             End Function)
         End Function
     End Class
 End Class

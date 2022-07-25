@@ -18,12 +18,10 @@ Partial Public NotInheritable Class bstyle
         End Class
 
         Public Function temp_logic_name() As temp_logic_name_t
-            If is_root() Then
-                assert(Not t Is Nothing)
-                Return t
-            End If
-            assert(t Is Nothing)
-            Return (+root).temp_logic_name()
+            Return from_root(Function(ByVal i As scope) As temp_logic_name_t
+                                 assert(Not i Is Nothing)
+                                 Return i.t
+                             End Function)
         End Function
     End Class
 End Class

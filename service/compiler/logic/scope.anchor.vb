@@ -58,12 +58,10 @@ Partial Public NotInheritable Class logic
         End Class
 
         Public Function anchors() As anchor_t
-            If is_root() Then
-                assert(Not a Is Nothing)
-                Return a
-            End If
-            assert(a Is Nothing)
-            Return (+root).anchors()
+            Return from_root(Function(ByVal i As scope) As anchor_t
+                                 assert(Not i Is Nothing)
+                                 Return i.a
+                             End Function)
         End Function
     End Class
 End Class

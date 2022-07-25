@@ -48,12 +48,10 @@ Partial Public NotInheritable Class b2style
         End Class
 
         Public Function call_hierarchy() As call_hierarchy_t
-            If is_root() Then
-                assert(Not fc Is Nothing)
-                Return fc
-            End If
-            assert(fc Is Nothing)
-            Return (+root).call_hierarchy()
+            Return from_root(Function(ByVal i As scope) As call_hierarchy_t
+                                 assert(Not i Is Nothing)
+                                 Return i.fc
+                             End Function)
         End Function
     End Class
 End Class

@@ -21,12 +21,10 @@ Partial Public NotInheritable Class b2style
         End Class
 
         Public Function defines() As define_t
-            If is_root() Then
-                assert(Not d Is Nothing)
-                Return d
-            End If
-            assert(d Is Nothing)
-            Return (+root).defines()
+            Return from_root(Function(ByVal i As scope) As define_t
+                                 assert(Not i Is Nothing)
+                                 Return i.d
+                             End Function)
         End Function
     End Class
 End Class
