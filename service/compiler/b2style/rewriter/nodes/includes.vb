@@ -17,38 +17,37 @@ Partial Public NotInheritable Class b2style
     Private Shared include_folders As argument(Of vector(Of String))
     Private Shared ignore_default_include As argument(Of Boolean)
 
-    Public NotInheritable Class default_includes
-        Private Shared ReadOnly folder As String = create_inc_folder()
-
-        Private Shared Function create_inc_folder() As String
-            Dim folder As String = Path.Combine(temp_folder, "b2style-inc")
-            tar.gen.dump(b2style_lib.data, folder)
-            Return folder
+    Private NotInheritable Class includes
+        Public Shared Function file_parse(ByVal i As String, ByVal j As typed_node_writer) As Boolean
+            If i Is Nothing Then
+                ' The file has been included already.
+                Return True
+            End If
+            Dim o As typed_node_writer = j
+            Return parse_wrapper.with_current_file(i, Function(ByVal s As String) As Boolean
+                                                          Return code_builder.build(s, o)
+                                                      End Function)
         End Function
 
-        Public NotInheritable Class folders
-            Inherits __do(Of vector(Of String))
+        Public Shared ReadOnly folder As String = Function() As String
+                                                      Dim folder As String = Path.Combine(temp_folder, "b2style-inc")
+                                                      tar.gen.dump(b2style_lib.data, folder)
+                                                      Return folder
+                                                  End Function()
 
-            Protected Overrides Function at() As vector(Of String)
-                Return +include_folders
-            End Function
-        End Class
+        Public Shared Function should_include(ByVal i As String) As Boolean
+            Return scope.current().includes().should_include(i)
+        End Function
 
-        Public NotInheritable Class ignore_default_folder
-            Inherits __do(Of Boolean)
+        Public Shared Function include_folders() As vector(Of String)
+            Return +b2style.include_folders
+        End Function
 
-            Protected Overrides Function at() As Boolean
-                Return ignore_default_include Or False
-            End Function
-        End Class
+        Public Shared Function ignore_default_include() As Boolean
+            Return b2style.ignore_default_include Or False
+        End Function
 
-        Public NotInheritable Class default_folder
-            Inherits __do(Of String)
-
-            Protected Overrides Function at() As String
-                Return folder
-            End Function
-        End Class
+        Public Const ignore_include_error As Boolean = True
 
         Private Sub New()
         End Sub
@@ -64,14 +63,22 @@ Partial Public NotInheritable Class b2style
 
     ' TODO: Consider to include bstyle headers into b2style.
     Private NotInheritable Class include_with_string
-        Inherits code_gens(Of typed_node_writer).include_with_string(Of default_includes.folders,
-                                                                        default_includes.ignore_default_folder,
-                                                                        default_includes.default_folder,
-                                                                        _true,
-                                                                        should_include_t)
+        Inherits code_gens(Of typed_node_writer).include_with_string
+
         Public Sub New()
-            MyBase.New(file_parser.instance)
+            MyBase.New(includes.include_folders(),
+                       includes.ignore_default_include(),
+                       includes.folder,
+                       includes.ignore_include_error)
         End Sub
+
+        Protected Overrides Function file_parse(ByVal s As String, ByVal o As typed_node_writer) As Boolean
+            Return includes.file_parse(s, o)
+        End Function
+
+        Protected Overrides Function should_include(ByVal s As String) As Boolean
+            Return includes.should_include(s)
+        End Function
 
         ' Forward missing files to the bstyle.
         Protected Overrides Function handle_not_dumpable(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
@@ -83,14 +90,22 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Private NotInheritable Class include_with_file
-        Inherits code_gens(Of typed_node_writer).include_with_file(Of default_includes.folders,
-                                                                      default_includes.ignore_default_folder,
-                                                                      default_includes.default_folder,
-                                                                      _true,
-                                                                      should_include_t)
+        Inherits code_gens(Of typed_node_writer).include_with_file
+
         Public Sub New()
-            MyBase.New(file_parser.instance)
+            MyBase.New(includes.include_folders(),
+                       includes.ignore_default_include(),
+                       includes.folder,
+                       includes.ignore_include_error)
         End Sub
+
+        Protected Overrides Function file_parse(ByVal s As String, ByVal o As typed_node_writer) As Boolean
+            Return includes.file_parse(s, o)
+        End Function
+
+        Protected Overrides Function should_include(ByVal s As String) As Boolean
+            Return includes.should_include(s)
+        End Function
 
         ' Forward missing files to the bstyle.
         Protected Overrides Function handle_not_dumpable(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean

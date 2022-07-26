@@ -62,7 +62,6 @@
     <None Include="b2style\lib\std\vector" />
     <Compile Include="b2style\name_with_namespace.ext.vb" />
     <Compile Include="b2style\name_with_namespace.vb" />
-    <Compile Include="b2style\parser.vb" />
     <Compile Include="b2style\rewriter\nodes\class.vb" />
     <Compile Include="b2style\rewriter\nodes\class_initializer.vb" />
     <Compile Include="b2style\rewriter\nodes\defines.vb" />

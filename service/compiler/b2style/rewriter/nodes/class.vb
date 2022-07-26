@@ -15,10 +15,6 @@ Partial Public NotInheritable Class b2style
         Inherits code_gens(Of typed_node_writer).reparser
         Implements code_gen(Of typed_node_writer), template.name_node, template.name
 
-        Public Sub New()
-            MyBase.New(parser.instance)
-        End Sub
-
         Private Function name_node_of(ByVal n As typed_node,
                                       ByRef o As typed_node) As Boolean Implements template.name_node.of
             assert(Not n Is Nothing)
@@ -29,6 +25,10 @@ Partial Public NotInheritable Class b2style
         Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean Implements template.name.of
             o = template.name_of(template.name_node_of(n), template.type_param_count(n))
             Return True
+        End Function
+
+        Protected Overrides Function parse(ByVal s As String, ByVal o As typed_node_writer) As Boolean
+            Return code_builder.build(s, o)
         End Function
 
         Protected Overrides Function dump(ByVal n As typed_node, ByRef s As String) As Boolean

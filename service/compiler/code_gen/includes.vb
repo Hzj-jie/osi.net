@@ -6,28 +6,38 @@ Option Strict On
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.formation
-Imports osi.root.template
 Imports osi.service.automata
 
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
-    Public MustInherit Class includes(Of _FOLDERS As __do(Of vector(Of String)),
-                                         _IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
-                                         _DEFAULT_FOLDER As __do(Of String),
-                                         _IGNORE_INCLUDE_ERROR As __do(Of Boolean),
-                                         _SHOULD_INCLUDE As __do(Of String, Boolean))
+    Public MustInherit Class includes
         Inherits reparser
 
-        Private Shared ReadOnly folders As _FOLDERS = alloc(Of _FOLDERS)()
-        Private Shared ReadOnly ignore_default_folder As _IGNORE_DEFAULT_FOLDER = alloc(Of _IGNORE_DEFAULT_FOLDER)()
-        Private Shared ReadOnly default_folder As _DEFAULT_FOLDER = alloc(Of _DEFAULT_FOLDER)()
-        Private Shared ReadOnly ignore_include_error As _IGNORE_INCLUDE_ERROR = alloc(Of _IGNORE_INCLUDE_ERROR)()
-        Private Shared ReadOnly should_include As _do(Of String, Boolean) = -alloc(Of _SHOULD_INCLUDE)()
+        Private ReadOnly folders As vector(Of String)
+        ' TODO: Remove
+        Private ReadOnly ignore_default_folder As Boolean
+        ' TODO: Remove
+        Private ReadOnly default_folder As String
+        Private ReadOnly ignore_include_error As Boolean
 
-        Protected Sub New(ByVal file_parser As __do(Of String, WRITER, Boolean))
-            MyBase.new(file_parser)
+        Protected Sub New(ByVal folders As vector(Of String),
+                          ByVal ignore_default_folder As Boolean,
+                          ByVal default_folder As String,
+                          ByVal ignore_include_error As Boolean)
+            assert(Not default_folder.null_or_whitespace())
+            Me.folders = folders
+            Me.ignore_default_folder = ignore_default_folder
+            Me.default_folder = default_folder
+            Me.ignore_include_error = ignore_include_error
         End Sub
+
+        Protected NotOverridable Overrides Function parse(ByVal s As String, ByVal o As WRITER) As Boolean
+            Return file_parse(s, o)
+        End Function
+
+        ' Rename to make the functionality more clear.
+        Protected MustOverride Function file_parse(ByVal s As String, ByVal o As WRITER) As Boolean
+        Protected MustOverride Function should_include(ByVal s As String) As Boolean
 
         Private Shared Function include_file(ByVal p As String,
                                              ByVal s As String,
@@ -54,36 +64,31 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             Return False
         End Function
 
-        Protected Shared Function include_file(ByVal s As String, ByRef o As String) As Boolean
+        Protected Function include_file(ByVal s As String, ByRef o As String) As Boolean
             If Not should_include(s) AndAlso (arguments.include_once Or True) Then
                 Return True
             End If
-            If include_file(+folders, s, o) Then
+            If include_file(folders, s, o) Then
                 Return True
             End If
-            If Not (+ignore_default_folder) AndAlso include_file(+default_folder, s, o) Then
+            If Not ignore_default_folder AndAlso include_file(default_folder, s, o) Then
                 Return True
             End If
-            If Not (+ignore_include_error) Then
+            If Not ignore_include_error Then
                 raise_error(error_type.user, "Cannot find include file ", s)
             End If
             Return False
         End Function
     End Class
 
-    Public MustInherit Class include_with_string(Of FOLDERS As __do(Of vector(Of String)),
-                                                    IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
-                                                    DEFAULT_FOLDER As __do(Of String),
-                                                    IGNORE_INCLUDE_ERROR As __do(Of Boolean),
-                                                    SHOULD_INCLUDE As __do(Of String, Boolean))
-        Inherits includes(Of FOLDERS,
-                             IGNORE_DEFAULT_FOLDER,
-                             DEFAULT_FOLDER,
-                             IGNORE_INCLUDE_ERROR,
-                             SHOULD_INCLUDE)
+    Public MustInherit Class include_with_string
+        Inherits includes
 
-        Protected Sub New(ByVal file_parser As __do(Of String, WRITER, Boolean))
-            MyBase.New(file_parser)
+        Protected Sub New(ByVal folders As vector(Of String),
+                          ByVal ignore_default_folder As Boolean,
+                          ByVal default_folder As String,
+                          ByVal ignore_include_error As Boolean)
+            MyBase.New(folders, ignore_default_folder, default_folder, ignore_include_error)
         End Sub
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
@@ -93,21 +98,16 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
     End Class
 
-    Public MustInherit Class include_with_file(Of FOLDERS As __do(Of vector(Of String)),
-                                                  IGNORE_DEFAULT_FOLDER As __do(Of Boolean),
-                                                  DEFAULT_FOLDER As __do(Of String),
-                                                  IGNORE_INCLUDE_ERROR As __do(Of Boolean),
-                                                  SHOULD_INCLUDE As __do(Of String, Boolean))
-        Inherits includes(Of FOLDERS,
-                             IGNORE_DEFAULT_FOLDER,
-                             DEFAULT_FOLDER,
-                             IGNORE_INCLUDE_ERROR,
-                             SHOULD_INCLUDE)
+    Public MustInherit Class include_with_file
+        Inherits includes
 
         Private Const kw_include As String = "#include"
 
-        Protected Sub New(ByVal file_parser As __do(Of String, WRITER, Boolean))
-            MyBase.new(file_parser)
+        Protected Sub New(ByVal folders As vector(Of String),
+                          ByVal ignore_default_folder As Boolean,
+                          ByVal default_folder As String,
+                          ByVal ignore_include_error As Boolean)
+            MyBase.New(folders, ignore_default_folder, default_folder, ignore_include_error)
         End Sub
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
