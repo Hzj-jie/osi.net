@@ -44,5 +44,12 @@ Partial Public NotInheritable Class b2style
                                  Return i.incs
                              End Function)
         End Function
+
+        Public Function defines() As define_t
+            Return from_root(Function(ByVal i As scope) As define_t
+                                 assert(Not i Is Nothing)
+                                 Return i.d
+                             End Function)
+        End Function
     End Class
 End Class

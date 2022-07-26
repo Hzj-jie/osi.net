@@ -43,5 +43,31 @@ Partial Public NotInheritable Class bstyle
                                  Return i.incs
                              End Function)
         End Function
+
+        Public Function current_function() As current_function_proxy
+            Return New current_function_proxy(Me,
+                                              current_function_t.ctor(Function(ByVal i As String) As String
+                                                                          Return scope.current().type_alias()(i)
+                                                                      End Function),
+                                              Sub(ByVal i As scope, ByVal j As current_function_t)
+                                                  assert(Not i Is Nothing)
+                                                  i.cf = j
+                                              End Sub,
+                                              Function(ByVal i As scope) As current_function_t
+                                                  assert(Not i Is Nothing)
+                                                  Return i.cf
+                                              End Function,
+                                              Function(ByVal i As scope, ByVal j As String) As Boolean
+                                                  assert(Not i Is Nothing)
+                                                  Return i.structs().types().defined(j)
+                                              End Function)
+        End Function
+
+        Public Function defines() As define_t
+            Return from_root(Function(ByVal i As scope) As define_t
+                                 assert(Not i Is Nothing)
+                                 Return i.d
+                             End Function)
+        End Function
     End Class
 End Class
