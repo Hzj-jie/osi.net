@@ -114,7 +114,6 @@
     <Compile Include="bstyle\logic\nodes\typedef_type_name.vb" />
     <Compile Include="bstyle\logic\nodes\typedef_type_str.vb" />
     <Compile Include="bstyle\logic\nodes\undefine.vb" />
-    <Compile Include="bstyle\scope.delegate.vb" />
     <Compile Include="bstyle\scope.params.vb" />
     <Compile Include="bstyle\scope.value_target.vb" />
     <Compile Include="code_gen\code_gen.default.vb" />
@@ -219,6 +218,7 @@
     <Compile Include="logic\start_scope.vb" />
     <Compile Include="scope\scope.current_function.vb" />
     <Compile Include="scope\scope.define.vb" />
+    <Compile Include="scope\scope.delegate.vb" />
     <Compile Include="scope\scope.includes.vb" />
     <Compile Include="scope\scope.vb" />
     <Compile Include="logic\move.vb" />

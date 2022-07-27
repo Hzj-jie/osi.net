@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 
 Partial Public Class scope(Of T As scope(Of T))
+    ' Allows b2style.scope.call_hierarchy_t extending the functionality.
     Public MustInherit Class call_hierarchy_t
         Private Const main_name As String = "main"
         ' From -> To
