@@ -33,7 +33,9 @@ Partial Public NotInheritable Class bstyle
             incs = New includes_t()
             fc = New call_hierarchy_t()
             d = New define_t()
-            f = New function_t()
+            f = New function_t(Function(ByVal s As String) As String
+                                   Return scope.current().type_alias()(s)
+                               End Function)
             t = New temp_logic_name_t()
         End Sub
 
@@ -80,6 +82,13 @@ Partial Public NotInheritable Class bstyle
                                           assert(Not s Is Nothing)
                                           Return s.type_alias()(i)
                                       End Function)
+        End Function
+
+        Public Function functions() As function_t
+            Return from_root(Function(ByVal i As scope) As function_t
+                                 assert(Not i Is Nothing)
+                                 Return i.f
+                             End Function)
         End Function
     End Class
 End Class

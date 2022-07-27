@@ -154,7 +154,6 @@
     <Compile Include="bstyle\logic\nodes\value_declaration.vb" />
     <Compile Include="bstyle\logic\nodes\value_definition.vb" />
     <Compile Include="bstyle\logic\nodes\while.vb" />
-    <Compile Include="bstyle\scope.function.vb" />
     <Compile Include="bstyle\scope.call_hierarchy.vb" />
     <Compile Include="bstyle\scope.struct.vb" />
     <Compile Include="bstyle\scope.type_alias.vb" />
@@ -219,6 +218,7 @@
     <Compile Include="scope\scope.current_function.vb" />
     <Compile Include="scope\scope.define.vb" />
     <Compile Include="scope\scope.delegate.vb" />
+    <Compile Include="scope\scope.function.vb" />
     <Compile Include="scope\scope.includes.vb" />
     <Compile Include="scope\scope.vb" />
     <Compile Include="logic\move.vb" />
