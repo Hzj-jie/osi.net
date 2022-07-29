@@ -90,5 +90,9 @@ Partial Public NotInheritable Class bstyle
                                  Return i.f
                              End Function)
         End Function
+
+        Public Function params() As params_t
+            Return ps
+        End Function
     End Class
 End Class
