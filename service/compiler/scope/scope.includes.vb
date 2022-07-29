@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.formation
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of _ACCESSOR As accessor, T As scope(Of _ACCESSOR, T))
     Public NotInheritable Class includes_t
         Private ReadOnly _included As New unordered_set(Of String)()
 

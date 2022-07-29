@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.compiler.logic
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of _ACCESSOR As accessor, T As scope(Of _ACCESSOR, T))
     Public NotInheritable Class current_function_t
         Inherits function_signature(Of builders.parameter)
 

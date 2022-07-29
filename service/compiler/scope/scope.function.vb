@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of _ACCESSOR As accessor, T As scope(Of _ACCESSOR, T))
     Public NotInheritable Class function_t
         Private ReadOnly s As New unordered_map(Of String, String)()
         Private ReadOnly type_alias As Func(Of String, String)
