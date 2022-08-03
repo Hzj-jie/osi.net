@@ -8,19 +8,22 @@ Imports osi.root.formation
 
 Partial Public Class scope(Of T As scope(Of T))
     ' Allows b2style.scope.call_hierarchy_t extending the functionality.
-    Public MustInherit Class call_hierarchy_t
+    Public Class call_hierarchy_t
         Private Const main_name As String = "main"
         ' From -> To
         Private ReadOnly m As New unordered_map(Of String, vector(Of String))()
         Private tm As unordered_set(Of String) = Nothing
+        Private ReadOnly s As scope(Of T)
 
-        ' TODO: Is it possible to use scope.current().current_function().name() directly?
-        Protected MustOverride Function current_function_name() As [optional](Of String)
+        Public Sub New(ByVal s As scope(Of T))
+            assert(Not s Is Nothing)
+            Me.s = s
+        End Sub
 
         Public Sub [to](ByVal name As String)
             assert(tm Is Nothing)
             assert(Not name.null_or_whitespace())
-            Dim from As String = current_function_name().or_else(main_name)
+            Dim from As String = (+s.accessor).current_function_name().or_else(main_name)
             assert(Not from.null_or_whitespace())
             If Not name.Equals(from) Then
                 m(from).emplace_back(name)

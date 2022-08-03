@@ -31,7 +31,7 @@ Partial Public NotInheritable Class bstyle
         Public Sub New()
             Me.New(Nothing)
             incs = New includes_t()
-            fc = New call_hierarchy_t()
+            fc = New call_hierarchy_t(Me)
             d = New define_t()
             f = New function_t(Function(ByVal s As String) As String
                                    Return scope.current().type_alias()(s)

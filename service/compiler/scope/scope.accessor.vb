@@ -8,9 +8,9 @@ Imports osi.root.formation
 Imports osi.service.compiler.logic
 
 Partial Public Class scope(Of T As scope(Of T))
-    Private ReadOnly acc As lazier(Of accessor_t) = lazier.of(AddressOf Me.accessor)
+    Private ReadOnly accessor As lazier(Of accessor_t) = lazier.of(AddressOf Me.get_accessor)
 
-    Protected Overridable Function accessor() As accessor_t
+    Protected Overridable Function get_accessor() As accessor_t
         assert(False)
         Return Nothing
     End Function
@@ -22,15 +22,11 @@ Partial Public Class scope(Of T As scope(Of T))
             Return Nothing
         End Function
 
-        Public Class current_function_accessor
-            Public Overridable Function ctor(ByVal name As String,
-                                             ByVal return_type As String,
-                                             ByVal params As vector(Of builders.parameter)) As current_function_t
-                assert(False)
-                Return Nothing
-            End Function
+        Public ReadOnly current_function As lazier(Of current_function_accessor) =
+                lazier.of(AddressOf Me.get_current_function)
 
-            Public Overridable Function getter() As current_function_t
+        Public Class current_function_accessor
+            Public Overridable Function getter() As current_function_proxy
                 assert(False)
                 Return Nothing
             End Function
@@ -40,9 +36,14 @@ Partial Public Class scope(Of T As scope(Of T))
             End Sub
         End Class
 
-        Public Overridable Function current_function() As current_function_accessor
+        Protected Overridable Function get_current_function() As current_function_accessor
             assert(False)
             Return Nothing
+        End Function
+
+        ' TODO: Return string
+        Public Overridable Function current_function_name() As [optional](Of String)
+            Return (+current_function).getter().name_opt()
         End Function
 
         ' TODO: Return struct_proxy.
@@ -51,7 +52,7 @@ Partial Public Class scope(Of T As scope(Of T))
             Return False
         End Function
 
-        Public Overridable Function [delegate]() As delegate_t
+        Public Overridable Function delegates() As delegate_proxy
             assert(False)
             Return Nothing
         End Function

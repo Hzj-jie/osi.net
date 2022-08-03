@@ -4,16 +4,15 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
         Public NotInheritable Shadows Class call_hierarchy_t
             Inherits scope(Of scope).call_hierarchy_t
 
-            Protected Overrides Function current_function_name() As [optional](Of String)
-                Return scope.current().current_function().name_opt()
-            End Function
+            Public Sub New(ByVal s As scope)
+                MyBase.New(s)
+            End Sub
 
             Public NotInheritable Class calculator
                 Inherits calculator(Of compiler.logic.logic_writer, calculator)

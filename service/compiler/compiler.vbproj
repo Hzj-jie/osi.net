@@ -79,6 +79,7 @@
     <None Include="bstyle\lib\climits" />
     <Compile Include="b2style\rewriter\nodes\template_head.vb" />
     <Compile Include="b2style\rewriter\nodes\delegate_with_semi_colon.vb" />
+    <Compile Include="b2style\scope.accessor.vb" />
     <Compile Include="b3style\b3style_rules.vb" />
     <Compile Include="b3style\logic\b3style.vb" />
     <Compile Include="bstyle\logic\nodes\kw_file.vb" />
@@ -100,6 +101,7 @@
     <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\logic\nodes\kw_statement.vb" />
     <Compile Include="bstyle\logic\nodes\static_cast.vb" />
+    <Compile Include="bstyle\scope.accessor.vb" />
     <Compile Include="bstyle\scope.temp_logic_name.vb" />
     <Compile Include="logic\builder\biguint.vb" />
     <Compile Include="logic\builder\bool.vb" />

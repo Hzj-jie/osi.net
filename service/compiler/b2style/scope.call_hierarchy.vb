@@ -26,6 +26,10 @@ Partial Public NotInheritable Class b2style
                        End Function
             End Function
 
+            Public Sub New(ByVal s As scope)
+                MyBase.New(s)
+            End Sub
+
             Public Shadows Sub [to](ByVal name As String)
                 to_bstyle_function(_namespace.bstyle_format.of(name))
             End Sub
@@ -33,10 +37,6 @@ Partial Public NotInheritable Class b2style
             Public Sub to_bstyle_function(ByVal name As String)
                 MyBase.to(name)
             End Sub
-
-            Protected Overrides Function current_function_name() As [optional](Of String)
-                Return scope.current().current_function().name()
-            End Function
 
             Public NotInheritable Class calculator
                 Inherits calculator(Of rewriters.typed_node_writer, calculator)
