@@ -7,20 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.constructor
 
-Public Class scope(Of T As scope(Of T))
-    Inherits scope(Of dummy, T)
-
-    ' Forward the definition in base class to here.
-    Public NotInheritable Class dummy
-        Inherits scope(Of dummy, T).accessor
-    End Class
-
-    Protected Sub New(ByVal parent As T)
-        MyBase.New(parent)
-    End Sub
-End Class
-
-Partial Public Class scope(Of _ACCESSOR As accessor, T As scope(Of _ACCESSOR, T))
+Partial Public Class scope(Of T As scope(Of T))
     Implements IDisposable
 
     <ThreadStatic> Private Shared in_thread As T
