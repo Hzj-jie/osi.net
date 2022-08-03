@@ -5,10 +5,13 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.service.compiler.logic
 
 Partial Public Class scope(Of T As scope(Of T))
-    Private ReadOnly accessor As lazier(Of accessor_t) = lazier.of(AddressOf Me.get_accessor)
+    Private ReadOnly _accessor As lazier(Of accessor_t) = lazier.of(AddressOf Me.get_accessor)
+
+    Private Function accessor() As accessor_t
+        Return +_accessor
+    End Function
 
     Protected Overridable Function get_accessor() As accessor_t
         assert(False)
@@ -22,8 +25,12 @@ Partial Public Class scope(Of T As scope(Of T))
             Return Nothing
         End Function
 
-        Public ReadOnly current_function As lazier(Of current_function_accessor) =
+        Private ReadOnly _current_function As lazier(Of current_function_accessor) =
                 lazier.of(AddressOf Me.get_current_function)
+
+        Public Function current_function() As current_function_accessor
+            Return +_current_function
+        End Function
 
         Public Class current_function_accessor
             Public Overridable Function getter() As current_function_proxy
@@ -43,7 +50,7 @@ Partial Public Class scope(Of T As scope(Of T))
 
         ' TODO: Return string
         Public Overridable Function current_function_name() As [optional](Of String)
-            Return (+current_function).getter().name_opt()
+            Return current_function().getter().name_opt()
         End Function
 
         ' TODO: Return struct_proxy.
