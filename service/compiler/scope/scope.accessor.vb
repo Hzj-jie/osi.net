@@ -64,7 +64,7 @@ Partial Public Class scope(Of T As scope(Of T))
             Return False
         End Function
 
-        Public Overridable Function delegates() As delegate_proxy
+        Public Overridable Function delegates() As delegate_t
             assert(False)
             Return Nothing
         End Function

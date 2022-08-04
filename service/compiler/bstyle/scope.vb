@@ -58,15 +58,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Function delegates() As delegate_proxy
-            Return New delegate_proxy(Me,
-                                      Function(ByVal s As scope) As delegate_t
-                                          assert(Not s Is Nothing)
-                                          Return s.de
-                                      End Function,
-                                      Function(ByVal s As scope, ByVal i As String) As String
-                                          assert(Not s Is Nothing)
-                                          Return s.type_alias()(i)
-                                      End Function)
+            Return New delegate_proxy(Me)
         End Function
 
         Public Function functions() As function_t

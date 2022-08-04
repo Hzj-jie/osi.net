@@ -30,36 +30,28 @@ Partial Public Class scope(Of T As scope(Of T))
 
     Public Structure delegate_proxy
         Private ReadOnly s As T
-        Private ReadOnly getter As Func(Of T, delegate_t)
-        Private ReadOnly type_alias As Func(Of T, String, String)
 
-        Public Sub New(ByVal s As T,
-                       ByVal getter As Func(Of T, delegate_t),
-                       ByVal type_alias As Func(Of T, String, String))
+        Public Sub New(ByVal s As T)
             assert(Not s Is Nothing)
-            assert(Not getter Is Nothing)
-            assert(Not type_alias Is Nothing)
             Me.s = s
-            Me.getter = getter
-            Me.type_alias = type_alias
         End Sub
 
         Public Function define(ByVal return_type As String,
                                ByVal name As String,
                                ByVal parameters() As builders.parameter_type) As Boolean
             assert(Not parameters Is Nothing)
-            assert(return_type.Equals(type_alias(s, return_type)))
+            assert(return_type.Equals(s.accessor().type_alias(return_type)))
             For Each parameter As builders.parameter_type In parameters
                 assert(Not parameter Is Nothing)
-                assert(parameter.type.Equals(type_alias(s, parameter.type)))
+                assert(parameter.type.Equals(s.accessor().type_alias(parameter.type)))
             Next
-            Return getter(s).define(name, New function_signature(name, return_type, parameters))
+            Return s.accessor().delegates().define(name, New function_signature(name, return_type, parameters))
         End Function
 
         Public Function retrieve(ByVal name As String, ByRef o As function_signature) As Boolean
             Dim s As T = Me.s
             While Not s Is Nothing
-                If getter(s).retrieve(name, o) Then
+                If s.accessor().delegates().retrieve(name, o) Then
                     Return True
                 End If
                 s = s.parent

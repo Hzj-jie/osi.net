@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.service.compiler
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
@@ -58,8 +57,8 @@ Partial Public NotInheritable Class bstyle
                 Return s.structs().types().defined(i)
             End Function
 
-            Public Overrides Function delegates() As delegate_proxy
-                Return s.delegates()
+            Public Overrides Function delegates() As delegate_t
+                Return s.de
             End Function
         End Class
     End Class
