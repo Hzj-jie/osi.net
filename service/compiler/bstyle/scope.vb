@@ -33,9 +33,7 @@ Partial Public NotInheritable Class bstyle
             incs = New includes_t()
             fc = New call_hierarchy_t(Me)
             d = New define_t()
-            f = New function_t(Function(ByVal s As String) As String
-                                   Return scope.current().type_alias()(s)
-                               End Function)
+            f = New function_t(Me)
             t = New temp_logic_name_t()
         End Sub
 

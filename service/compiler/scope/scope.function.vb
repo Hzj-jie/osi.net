@@ -10,17 +10,17 @@ Imports osi.root.formation
 Partial Public Class scope(Of T As scope(Of T))
     Public NotInheritable Class function_t
         Private ReadOnly s As New unordered_map(Of String, String)()
-        Private ReadOnly type_alias As Func(Of String, String)
+        Private ReadOnly scope As T
 
-        Public Sub New(ByVal type_alias As Func(Of String, String))
-            assert(Not type_alias Is Nothing)
-            Me.type_alias = type_alias
+        Public Sub New(ByVal s As T)
+            assert(Not s Is Nothing)
+            Me.scope = s
         End Sub
 
         Public Function define(ByVal type As String, ByVal name As String) As Boolean
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
-            type = type_alias(type)
+            type = scope.accessor().type_alias(type)
             If s.emplace(name, type).second() Then
                 Return True
             End If
