@@ -11,21 +11,12 @@ Partial Public Class scope(Of T As scope(Of T))
     Public NotInheritable Class current_function_t
         Inherits function_signature(Of builders.parameter)
 
-        Private Sub New(ByVal type_alias As Func(Of String, String),
-                        ByVal name As String,
-                        ByVal return_type As String,
-                        ByVal params As vector(Of builders.parameter))
-            MyBase.New(name, assert_which.of(type_alias).is_not_null()(return_type), params)
+        Public Sub New(ByVal s As T,
+                       ByVal name As String,
+                       ByVal return_type As String,
+                       ByVal params As vector(Of builders.parameter))
+            MyBase.New(name, assert_which.of(s).is_not_null().accessor().type_alias(return_type), params)
         End Sub
-
-        Public Shared Function ctor(ByVal type_alias As Func(Of String, String)) _
-                                   As Func(Of String, String, vector(Of builders.parameter), current_function_t)
-            Return Function(ByVal i As String,
-                            ByVal j As String,
-                            ByVal k As vector(Of builders.parameter)) As current_function_t
-                       Return New current_function_t(type_alias, i, j, k)
-                   End Function
-        End Function
 
         Public Function allow_return_value() As Boolean
             Return Not return_type.Equals(compiler.logic.scope.type_t.zero_type)
@@ -34,53 +25,38 @@ Partial Public Class scope(Of T As scope(Of T))
 
     Public Structure current_function_proxy
         Private ReadOnly s As T
-        Private ReadOnly ctor As Func(Of String, String, vector(Of builders.parameter), current_function_t)
-        Private ReadOnly setter As Action(Of T, current_function_t)
-        Private ReadOnly getter As Func(Of T, current_function_t)
-        Private ReadOnly is_struct_type As Func(Of T, String, Boolean)
 
-        Public Sub New(ByVal s As T,
-                       ByVal ctor As Func(Of String, String, vector(Of builders.parameter), current_function_t),
-                       ByVal setter As Action(Of T, current_function_t),
-                       ByVal getter As Func(Of T, current_function_t),
-                       ByVal is_struct_type As Func(Of T, String, Boolean))
+        Public Sub New(ByVal s As T)
             assert(Not s Is Nothing)
-            assert(Not ctor Is Nothing)
-            assert(Not setter Is Nothing)
-            assert(Not getter Is Nothing)
-            assert(Not is_struct_type Is Nothing)
             Me.s = s
-            Me.ctor = ctor
-            Me.setter = setter
-            Me.getter = getter
-            Me.is_struct_type = is_struct_type
         End Sub
 
         Public Sub define(ByVal name As String,
                           ByVal return_type As String,
                           ByVal params As vector(Of builders.parameter))
-            assert(getter(s) Is Nothing)
-            setter(s, ctor(name, return_type, params))
+            assert(s.accessor().current_function().get() Is Nothing)
+            s.accessor().current_function().set(
+                New current_function_t(s, name, return_type, params))
         End Sub
 
         Private Function current_function() As current_function_t
             Dim s As T = Me.s
-            While getter(s) Is Nothing
+            While s.accessor().current_function().get() Is Nothing
                 s = s.parent
                 assert(Not s Is Nothing)
             End While
-            Return getter(s)
+            Return s.accessor().current_function().get()
         End Function
 
         Private Function current_function_opt() As [optional](Of current_function_t)
             Dim s As T = Me.s
-            While getter(s) Is Nothing
+            While s.accessor().current_function().get() Is Nothing
                 s = s.parent
                 If s Is Nothing Then
                     Return [optional].empty(Of current_function_t)()
                 End If
             End While
-            Return [optional].of(getter(s))
+            Return [optional].of(s.accessor().current_function().get())
         End Function
 
         Public Function allow_return_value() As Boolean
@@ -99,7 +75,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function return_struct() As Boolean
-            Return is_struct_type(s, return_type())
+            Return s.accessor().is_struct_type(return_type())
         End Function
 
         Public Function return_type() As String

@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.service.compiler
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
@@ -35,11 +36,15 @@ Partial Public NotInheritable Class bstyle
                     Me.s = s
                 End Sub
 
-                Public Overrides Function getter() As current_function_proxy
+                Public Overrides Function proxy() As current_function_proxy
                     Return scope.current().current_function()
                 End Function
 
-                Public Overrides Sub setter(ByVal c As current_function_t)
+                Public Overrides Function [get]() As current_function_t
+                    Return s.cf
+                End Function
+
+                Public Overrides Sub [set](ByVal c As current_function_t)
                     s.cf = c
                 End Sub
             End Class
