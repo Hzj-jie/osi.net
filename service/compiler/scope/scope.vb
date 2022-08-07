@@ -73,7 +73,7 @@ Partial Public Class scope(Of T As scope(Of T))
     End Function
 
     ' Avoid naming conflict.
-    Public Shared Function current_scope() As scope(Of T)
+    Public Shared Function current_scope() As T
         Return current()
     End Function
 

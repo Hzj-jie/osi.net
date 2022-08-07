@@ -38,7 +38,7 @@ Partial Public NotInheritable Class bstyle
         End Sub
 
         Public Function current_function() As current_function_proxy
-            Return New current_function_proxy(Me)
+            Return New current_function_proxy()
         End Function
 
         Public Function delegates() As delegate_proxy
