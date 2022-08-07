@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.compiler.logic
+Imports struct_def = osi.service.compiler.scope(Of osi.service.compiler.bstyle.scope).struct_def
 Imports target = osi.service.compiler.bstyle.scope.value_target_t.target
 
 Partial Public NotInheritable Class bstyle

@@ -74,7 +74,7 @@ Partial Public Class scope(Of T As scope(Of T))
         ' It must be a primitive.
         Public Function with_primitive(ByVal type As String, ByVal name As String) As struct_def
             Dim r As builders.parameter = nested(type, name)
-            assert(Not scope.current().structs().types().defined(r.type))
+            assert(Not scope(Of T).current().structs().types().defined(r.type))
             _primitives.emplace_back(r)
             Return Me
         End Function

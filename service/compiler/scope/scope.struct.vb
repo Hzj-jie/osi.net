@@ -46,7 +46,7 @@ Partial Public Class scope(Of T As scope(Of T))
                 i += uint32_1
             End While
             If s.emplace(type, d).second() Then
-                scope.current().type_alias().remove(type)
+                scope(Of T).current().type_alias().remove(type)
                 Return True
             End If
             raise_error(error_type.user, "Struct type ", type, " has been defined already as: ", s(type))
@@ -57,7 +57,7 @@ Partial Public Class scope(Of T As scope(Of T))
                                 ByVal name As String,
                                 ByRef o As struct_def) As Boolean
             assert(Not type.null_or_whitespace())
-            If Not s.find(scope.current().type_alias()(type), o) Then
+            If Not s.find(scope(Of T).current().type_alias()(type), o) Then
                 ' Do not log, value_declaration and value_definition always check if a struct is defined before
                 ' forwarding the defintion directly to the logic.
                 Return False
@@ -91,33 +91,26 @@ Partial Public Class scope(Of T As scope(Of T))
 
         Public Structure type_proxy
             Public Function defined(ByVal type As String) As Boolean
-                Return s.structs().resolve(type, Nothing, Nothing)
+                Return scope(Of T).current().structs().resolve(type, Nothing, Nothing)
             End Function
         End Structure
 
         Public Function types() As type_proxy
-            Return New type_proxy(s)
+            Return New type_proxy()
         End Function
 
         Public Structure variable_proxy
-            Private ReadOnly s As scope
-
-            Public Sub New(ByVal s As scope)
-                assert(Not s Is Nothing)
-                Me.s = s
-            End Sub
-
             Public Function resolve(ByVal name As String, ByRef o As tuple(Of String, struct_def)) As Boolean
-                Dim s As scope = Me.s
+                Dim s As T = scope(Of T).current()
                 While Not s Is Nothing
                     Dim type As String = Nothing
-                    If Not s.v.resolve(name, type) Then
+                    If Not s.accessor().variables().resolve(name, type) Then
                         s = s.parent
                         Continue While
                     End If
                     Dim v As struct_def = Nothing
                     ' The type may not be a struct at all.
-                    If Not s.structs().resolve(type, name, v) Then
+                    If Not s.accessor().structs().resolve(type, name, v) Then
                         Return False
                     End If
                     o = tuple.of(type, v)
@@ -141,7 +134,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Structure
 
         Public Function variables() As variable_proxy
-            Return New variable_proxy(s)
+            Return New variable_proxy()
         End Function
     End Structure
 End Class
