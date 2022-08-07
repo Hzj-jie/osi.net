@@ -14,7 +14,7 @@ Partial Public Class scope(Of T As scope(Of T))
         Public Sub New(ByVal name As String,
                        ByVal return_type As String,
                        ByVal params As vector(Of builders.parameter))
-            MyBase.New(name, current_accessor().type_alias(return_type), params)
+            MyBase.New(name, scope(Of T).current().type_alias(return_type), params)
         End Sub
 
         Public Function allow_return_value() As Boolean

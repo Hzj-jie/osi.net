@@ -29,8 +29,8 @@ Partial Public NotInheritable Class bstyle
                 Return s.d
             End Function
 
-            Public Overrides Function type_alias(ByVal i As String) As String
-                Return s.type_alias()(i)
+            Public Overrides Function type_alias() As type_alias_t
+                Return s.ta
             End Function
 
             Public Shadows Class current_function_accessor
@@ -42,10 +42,6 @@ Partial Public NotInheritable Class bstyle
                     assert(Not s Is Nothing)
                     Me.s = s
                 End Sub
-
-                Public Overrides Function proxy() As current_function_proxy
-                    Return scope.current().current_function()
-                End Function
 
                 Public Overrides Function [get]() As current_function_t
                     Return s.cf

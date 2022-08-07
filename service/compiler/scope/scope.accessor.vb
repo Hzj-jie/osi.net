@@ -30,7 +30,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         ' TODO: Return type_aliases
-        Public Overridable Function type_alias(ByVal i As String) As String
+        Public Overridable Function type_alias() As type_alias_t
             assert(False)
             Return Nothing
         End Function
@@ -48,11 +48,6 @@ Partial Public Class scope(Of T As scope(Of T))
                 Return Nothing
             End Function
 
-            Public Overridable Function proxy() As current_function_proxy
-                assert(False)
-                Return Nothing
-            End Function
-
             Public Overridable Sub [set](ByVal c As current_function_t)
                 assert(False)
             End Sub
@@ -65,7 +60,7 @@ Partial Public Class scope(Of T As scope(Of T))
 
         ' TODO: Return string
         Public Overridable Function current_function_name() As [optional](Of String)
-            Return current_function().proxy().name_opt()
+            Return scope(Of T).current().current_function().name_opt()
         End Function
 
         ' TODO: Return struct_proxy.
