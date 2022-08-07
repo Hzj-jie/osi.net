@@ -31,9 +31,9 @@ Partial Public NotInheritable Class bstyle
         Public Sub New()
             Me.New(Nothing)
             incs = New includes_t()
-            fc = New call_hierarchy_t(Me)
+            fc = New call_hierarchy_t()
             d = New define_t()
-            f = New function_t(Me)
+            f = New function_t()
             t = New temp_logic_name_t()
         End Sub
 

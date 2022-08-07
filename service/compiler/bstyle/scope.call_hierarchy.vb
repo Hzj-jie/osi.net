@@ -10,10 +10,6 @@ Partial Public NotInheritable Class bstyle
         Public NotInheritable Shadows Class call_hierarchy_t
             Inherits scope(Of scope).call_hierarchy_t
 
-            Public Sub New(ByVal s As scope)
-                MyBase.New(s)
-            End Sub
-
             Public NotInheritable Class calculator
                 Inherits calculator(Of compiler.logic.logic_writer, calculator)
 
