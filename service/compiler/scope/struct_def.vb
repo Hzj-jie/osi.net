@@ -61,9 +61,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         ' It can be a struct or just a primitive.
-        Public Shared Function nested(ByVal type As String,
-                                      ByVal name As String) As builders.parameter
-            assert(Not s Is Nothing)
+        Public Shared Function nested(ByVal type As String, ByVal name As String) As builders.parameter
             Return builders.parameter.no_ref(current_accessor().type_alias(type), name)
         End Function
 

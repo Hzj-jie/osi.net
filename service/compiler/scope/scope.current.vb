@@ -35,4 +35,8 @@ Partial Public Class scope(Of T As scope(Of T))
     Public Function type_alias() As type_alias_proxy
         Return New type_alias_proxy()
     End Function
+
+    Public Function structs() As struct_proxy
+        Return New struct_proxy()
+    End Function
 End Class

@@ -49,6 +49,11 @@ Partial Public NotInheritable Class bstyle
             Public Overrides Function delegates() As delegate_t
                 Return s.de
             End Function
+
+
+            Public Overrides Function structs() As struct_t
+                Return s.s
+            End Function
         End Class
     End Class
 End Class

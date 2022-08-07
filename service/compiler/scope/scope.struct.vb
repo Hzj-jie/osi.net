@@ -72,23 +72,16 @@ Partial Public Class scope(Of T As scope(Of T))
     End Class
 
     Public Structure struct_proxy
-        Private ReadOnly s As scope
-
-        Public Sub New(ByVal s As scope)
-            assert(Not s Is Nothing)
-            Me.s = s
-        End Sub
-
         Public Function define(ByVal type As String, ByVal members As vector(Of builders.parameter)) As Boolean
-            Return s.s.define(type, members)
+            Return current_accessor().structs().define(type, members)
         End Function
 
         Public Function resolve(ByVal type As String,
                                 ByVal name As String,
                                 ByRef o As struct_def) As Boolean
-            Dim s As scope = Me.s
+            Dim s As scope(Of T) = scope(Of T).current()
             While Not s Is Nothing
-                If s.s.resolve(type, name, o) Then
+                If s.accessor().structs().resolve(type, name, o) Then
                     Return True
                 End If
                 s = s.parent
@@ -97,13 +90,6 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Structure type_proxy
-            Private ReadOnly s As scope
-
-            Public Sub New(ByVal s As scope)
-                assert(Not s Is Nothing)
-                Me.s = s
-            End Sub
-
             Public Function defined(ByVal type As String) As Boolean
                 Return s.structs().resolve(type, Nothing, Nothing)
             End Function
@@ -158,8 +144,4 @@ Partial Public Class scope(Of T As scope(Of T))
             Return New variable_proxy(s)
         End Function
     End Structure
-
-    Public Function structs() As struct_proxy
-        Return New struct_proxy(Me)
-    End Function
 End Class
