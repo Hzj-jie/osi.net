@@ -36,7 +36,7 @@ Partial Public NotInheritable Class b2style
             End Function
         End Class
 
-        Public Function current_function() As current_function_proxy
+        Public Shadows Function current_function() As current_function_proxy
             Return New current_function_proxy(Me)
         End Function
     End Class

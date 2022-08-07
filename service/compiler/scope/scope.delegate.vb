@@ -33,10 +33,10 @@ Partial Public Class scope(Of T As scope(Of T))
                                ByVal name As String,
                                ByVal parameters() As builders.parameter_type) As Boolean
             assert(Not parameters Is Nothing)
-            assert(return_type.Equals(current_accessor().type_alias(return_type)))
+            assert(return_type.Equals(scope(Of T).current().type_alias(return_type)))
             For Each parameter As builders.parameter_type In parameters
                 assert(Not parameter Is Nothing)
-                assert(parameter.type.Equals(current_accessor().type_alias(parameter.type)))
+                assert(parameter.type.Equals(scope(Of T).current().type_alias(parameter.type)))
             Next
             Return current_accessor().delegates().define(name, New function_signature(name, return_type, parameters))
         End Function

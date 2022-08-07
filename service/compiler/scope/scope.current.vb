@@ -23,4 +23,16 @@ Partial Public Class scope(Of T As scope(Of T))
                              Return i.accessor().defines()
                          End Function)
     End Function
+
+    Public Function current_function() As current_function_proxy
+        Return New current_function_proxy()
+    End Function
+
+    Public Function delegates() As delegate_proxy
+        Return New delegate_proxy()
+    End Function
+
+    Public Function type_alias() As type_alias_proxy
+        Return New type_alias_proxy()
+    End Function
 End Class

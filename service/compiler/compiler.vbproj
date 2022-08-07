@@ -160,7 +160,7 @@
     <Compile Include="bstyle\logic\nodes\while.vb" />
     <Compile Include="bstyle\scope.call_hierarchy.vb" />
     <Compile Include="scope\scope.struct.vb" />
-    <Compile Include="bstyle\scope.type_alias.vb" />
+    <Compile Include="scope\scope.type_alias.vb" />
     <Compile Include="bstyle\scope.variable.vb" />
     <Compile Include="bstyle\scope.vb" />
     <Compile Include="scope\struct_def.vb" />
