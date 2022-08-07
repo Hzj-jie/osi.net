@@ -29,27 +29,20 @@ Partial Public Class scope(Of T As scope(Of T))
     End Class
 
     Public Structure delegate_proxy
-        Private ReadOnly s As T
-
-        Public Sub New(ByVal s As T)
-            assert(Not s Is Nothing)
-            Me.s = s
-        End Sub
-
         Public Function define(ByVal return_type As String,
                                ByVal name As String,
                                ByVal parameters() As builders.parameter_type) As Boolean
             assert(Not parameters Is Nothing)
-            assert(return_type.Equals(s.accessor().type_alias(return_type)))
+            assert(return_type.Equals(current_accessor().type_alias(return_type)))
             For Each parameter As builders.parameter_type In parameters
                 assert(Not parameter Is Nothing)
-                assert(parameter.type.Equals(s.accessor().type_alias(parameter.type)))
+                assert(parameter.type.Equals(current_accessor().type_alias(parameter.type)))
             Next
-            Return s.accessor().delegates().define(name, New function_signature(name, return_type, parameters))
+            Return current_accessor().delegates().define(name, New function_signature(name, return_type, parameters))
         End Function
 
         Public Function retrieve(ByVal name As String, ByRef o As function_signature) As Boolean
-            Dim s As T = Me.s
+            Dim s As scope(Of T) = scope(Of T).current()
             While Not s Is Nothing
                 If s.accessor().delegates().retrieve(name, o) Then
                     Return True

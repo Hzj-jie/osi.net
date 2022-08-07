@@ -42,7 +42,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Function delegates() As delegate_proxy
-            Return New delegate_proxy(Me)
+            Return New delegate_proxy()
         End Function
 
         Public Function functions() As function_t

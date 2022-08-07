@@ -14,7 +14,7 @@ Partial Public Class scope(Of T As scope(Of T))
         Public Sub New(ByVal name As String,
                        ByVal return_type As String,
                        ByVal params As vector(Of builders.parameter))
-            MyBase.New(name, current_scope().accessor().type_alias(return_type), params)
+            MyBase.New(name, current_accessor().type_alias(return_type), params)
         End Sub
 
         Public Function allow_return_value() As Boolean
@@ -26,13 +26,13 @@ Partial Public Class scope(Of T As scope(Of T))
         Public Sub define(ByVal name As String,
                           ByVal return_type As String,
                           ByVal params As vector(Of builders.parameter))
-            assert(current_scope().accessor().current_function().get() Is Nothing)
-            current_scope().accessor().current_function().set(
+            assert(current_accessor().current_function().get() Is Nothing)
+            current_accessor().current_function().set(
                 New current_function_t(name, return_type, params))
         End Sub
 
         Private Function current_function() As current_function_t
-            Dim s As T = current_scope()
+            Dim s As scope(Of T) = scope(Of T).current()
             While s.accessor().current_function().get() Is Nothing
                 s = s.parent
                 assert(Not s Is Nothing)
@@ -41,7 +41,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Private Function current_function_opt() As [optional](Of current_function_t)
-            Dim s As T = current_scope()
+            Dim s As scope(Of T) = scope(Of T).current()
             While s.accessor().current_function().get() Is Nothing
                 s = s.parent
                 If s Is Nothing Then
@@ -67,7 +67,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function return_struct() As Boolean
-            Return current_scope().accessor().is_struct_type(return_type())
+            Return current_accessor().is_struct_type(return_type())
         End Function
 
         Public Function return_type() As String
