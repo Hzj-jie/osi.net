@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.service.compiler.logic
 
 Partial Public Class scope(Of T As scope(Of T))
-    Private NotInheritable Class struct_t
+    Protected NotInheritable Class struct_t
         Private ReadOnly s As New unordered_map(Of String, struct_def)()
 
         ' TODO: Support value_definition
@@ -19,7 +19,7 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(Not d Is Nothing)
             ' Struct member types are always resolved during the define / build stage, so scope.current() equals to
             ' the scope where the struct_t instance is being defined.
-            type = scope.current().type_alias()(type)
+            type = current_accessor().type_alias(type)
             Dim sub_type As struct_def = Nothing
             If Not s.find(type, sub_type) Then
                 d.with_primitive(type, name)
