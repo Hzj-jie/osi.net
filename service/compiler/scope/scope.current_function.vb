@@ -26,29 +26,28 @@ Partial Public Class scope(Of T As scope(Of T))
         Public Sub define(ByVal name As String,
                           ByVal return_type As String,
                           ByVal params As vector(Of builders.parameter))
-            assert(current_accessor().current_function().get() Is Nothing)
-            current_accessor().current_function().set(
-                New current_function_t(name, return_type, params))
+            assert(current_accessor().current_function() Is Nothing)
+            current_accessor().current_function(New current_function_t(name, return_type, params))
         End Sub
 
         Private Function current_function() As current_function_t
             Dim s As scope(Of T) = scope(Of T).current()
-            While s.accessor().current_function().get() Is Nothing
+            While s.accessor().current_function() Is Nothing
                 s = s.parent
                 assert(Not s Is Nothing)
             End While
-            Return s.accessor().current_function().get()
+            Return s.accessor().current_function()
         End Function
 
         Private Function current_function_opt() As [optional](Of current_function_t)
             Dim s As scope(Of T) = scope(Of T).current()
-            While s.accessor().current_function().get() Is Nothing
+            While s.accessor().current_function() Is Nothing
                 s = s.parent
                 If s Is Nothing Then
                     Return [optional].empty(Of current_function_t)()
                 End If
             End While
-            Return [optional].of(s.accessor().current_function().get())
+            Return [optional].of(s.accessor().current_function())
         End Function
 
         Public Function allow_return_value() As Boolean

@@ -33,28 +33,13 @@ Partial Public NotInheritable Class bstyle
                 Return s.ta
             End Function
 
-            Public Shadows Class current_function_accessor
-                Inherits scope(Of scope).accessor_t.current_function_accessor
-
-                Private ReadOnly s As scope
-
-                Public Sub New(ByVal s As scope)
-                    assert(Not s Is Nothing)
-                    Me.s = s
-                End Sub
-
-                Public Overrides Function [get]() As current_function_t
-                    Return s.cf
-                End Function
-
-                Public Overrides Sub [set](ByVal c As current_function_t)
-                    s.cf = c
-                End Sub
-            End Class
-
-            Protected Overrides Function get_current_function() As scope(Of scope).accessor_t.current_function_accessor
-                Return New current_function_accessor(s)
+            Public Overrides Function current_function() As current_function_t
+                Return s.cf
             End Function
+
+            Public Overrides Sub current_function(ByVal c As current_function_t)
+                s.cf = c
+            End Sub
 
             ' TODO: Return struct_proxy.
             Public Overrides Function is_struct_type(ByVal i As String) As Boolean

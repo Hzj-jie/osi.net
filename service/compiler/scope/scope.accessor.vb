@@ -29,34 +29,19 @@ Partial Public Class scope(Of T As scope(Of T))
             Return Nothing
         End Function
 
-        ' TODO: Return type_aliases
         Public Overridable Function type_alias() As type_alias_t
             assert(False)
             Return Nothing
         End Function
 
-        Private ReadOnly _current_function As lazier(Of current_function_accessor) =
-                lazier.of(AddressOf Me.get_current_function)
-
-        Public Function current_function() As current_function_accessor
-            Return +_current_function
-        End Function
-
-        Public Class current_function_accessor
-            Public Overridable Function [get]() As current_function_t
-                assert(False)
-                Return Nothing
-            End Function
-
-            Public Overridable Sub [set](ByVal c As current_function_t)
-                assert(False)
-            End Sub
-        End Class
-
-        Protected Overridable Function get_current_function() As current_function_accessor
+        Public Overridable Function current_function() As current_function_t
             assert(False)
             Return Nothing
         End Function
+
+        Public Overridable Sub current_function(ByVal c As current_function_t)
+            assert(False)
+        End Sub
 
         ' TODO: Return string
         Public Overridable Function current_function_name() As [optional](Of String)
