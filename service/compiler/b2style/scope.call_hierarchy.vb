@@ -26,10 +26,6 @@ Partial Public NotInheritable Class b2style
                        End Function
             End Function
 
-            Public Sub New(ByVal s As scope)
-                MyBase.New(s)
-            End Sub
-
             Public Shadows Sub [to](ByVal name As String)
                 to_bstyle_function(_namespace.bstyle_format.of(name))
             End Sub

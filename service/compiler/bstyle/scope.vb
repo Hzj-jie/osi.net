@@ -31,33 +31,18 @@ Partial Public NotInheritable Class bstyle
         Public Sub New()
             Me.New(Nothing)
             incs = New includes_t()
-            fc = New call_hierarchy_t(Me)
+            fc = New call_hierarchy_t()
             d = New define_t()
-            f = New function_t(Me)
+            f = New function_t()
             t = New temp_logic_name_t()
         End Sub
 
-        ' TODO: Move to scope(Of T As scope(Of T)).
-        Public Function includes() As includes_t
-            Return from_root(Function(ByVal i As scope) As includes_t
-                                 assert(Not i Is Nothing)
-                                 Return i.incs
-                             End Function)
-        End Function
-
         Public Function current_function() As current_function_proxy
-            Return New current_function_proxy(Me)
-        End Function
-
-        Public Function defines() As define_t
-            Return from_root(Function(ByVal i As scope) As define_t
-                                 assert(Not i Is Nothing)
-                                 Return i.d
-                             End Function)
+            Return New current_function_proxy()
         End Function
 
         Public Function delegates() As delegate_proxy
-            Return New delegate_proxy(Me)
+            Return New delegate_proxy()
         End Function
 
         Public Function functions() As function_t

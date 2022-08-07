@@ -28,7 +28,7 @@ Partial Public NotInheritable Class b2style
         Public Sub New()
             Me.New(Nothing)
             incs = New includes_t()
-            fc = New call_hierarchy_t(Me)
+            fc = New call_hierarchy_t()
             cn = New current_namespace_t()
             d = New define_t()
             i = New root_type_injector_t()
@@ -36,20 +36,6 @@ Partial Public NotInheritable Class b2style
 
         Public Shared Function wrap() As scope
             Return current().start_scope()
-        End Function
-
-        Public Function includes() As includes_t
-            Return from_root(Function(ByVal i As scope) As includes_t
-                                 assert(Not i Is Nothing)
-                                 Return i.incs
-                             End Function)
-        End Function
-
-        Public Function defines() As define_t
-            Return from_root(Function(ByVal i As scope) As define_t
-                                 assert(Not i Is Nothing)
-                                 Return i.d
-                             End Function)
         End Function
     End Class
 End Class

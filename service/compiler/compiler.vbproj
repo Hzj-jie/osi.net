@@ -117,6 +117,7 @@
     <Compile Include="bstyle\logic\nodes\typedef_type_str.vb" />
     <Compile Include="bstyle\logic\nodes\undefine.vb" />
     <Compile Include="scope\scope.accessor.vb" />
+    <Compile Include="scope\scope.current.vb" />
     <Compile Include="scope\scope.params.vb" />
     <Compile Include="bstyle\scope.value_target.vb" />
     <Compile Include="code_gen\code_gen.default.vb" />

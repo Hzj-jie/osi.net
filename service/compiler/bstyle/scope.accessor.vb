@@ -21,6 +21,14 @@ Partial Public NotInheritable Class bstyle
                 Me.s = s
             End Sub
 
+            Public Overrides Function includes() As includes_t
+                Return s.incs
+            End Function
+
+            Public Overrides Function defines() As define_t
+                Return s.d
+            End Function
+
             Public Overrides Function type_alias(ByVal i As String) As String
                 Return s.type_alias()(i)
             End Function
