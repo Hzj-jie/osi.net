@@ -39,4 +39,8 @@ Partial Public Class scope(Of T As scope(Of T))
     Public Function structs() As struct_proxy
         Return New struct_proxy()
     End Function
+
+    Public Function variables() As variable_proxy
+        Return New variable_proxy()
+    End Function
 End Class

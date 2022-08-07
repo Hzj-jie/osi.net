@@ -50,9 +50,12 @@ Partial Public NotInheritable Class bstyle
                 Return s.de
             End Function
 
-
             Public Overrides Function structs() As struct_t
                 Return s.s
+            End Function
+
+            Public Overrides Function variables() As variable_t
+                Return s.v
             End Function
         End Class
     End Class
