@@ -22,6 +22,14 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
+            Public Overrides Function includes() As includes_t
+                Return s.incs
+            End Function
+
+            Public Overrides Function defines() As define_t
+                Return s.d
+            End Function
+
             Public Overrides Function current_function_name() As [optional](Of String)
                 Return scope.current().current_function().name()
             End Function

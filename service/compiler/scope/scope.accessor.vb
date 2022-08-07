@@ -19,6 +19,16 @@ Partial Public Class scope(Of T As scope(Of T))
     End Function
 
     Protected Class accessor_t
+        Public Overridable Function includes() As includes_t
+            assert(False)
+            Return Nothing
+        End Function
+
+        Public Overridable Function defines() As define_t
+            assert(False)
+            Return Nothing
+        End Function
+
         ' TODO: Return type_aliases
         Public Overridable Function type_alias(ByVal i As String) As String
             assert(False)

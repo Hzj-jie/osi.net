@@ -37,22 +37,8 @@ Partial Public NotInheritable Class bstyle
             t = New temp_logic_name_t()
         End Sub
 
-        Public Function includes() As includes_t
-            Return from_root(Function(ByVal i As scope) As includes_t
-                                 assert(Not i Is Nothing)
-                                 Return i.incs
-                             End Function)
-        End Function
-
         Public Function current_function() As current_function_proxy
             Return New current_function_proxy(Me)
-        End Function
-
-        Public Function defines() As define_t
-            Return from_root(Function(ByVal i As scope) As define_t
-                                 assert(Not i Is Nothing)
-                                 Return i.d
-                             End Function)
         End Function
 
         Public Function delegates() As delegate_proxy

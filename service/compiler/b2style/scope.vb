@@ -37,19 +37,5 @@ Partial Public NotInheritable Class b2style
         Public Shared Function wrap() As scope
             Return current().start_scope()
         End Function
-
-        Public Function includes() As includes_t
-            Return from_root(Function(ByVal i As scope) As includes_t
-                                 assert(Not i Is Nothing)
-                                 Return i.incs
-                             End Function)
-        End Function
-
-        Public Function defines() As define_t
-            Return from_root(Function(ByVal i As scope) As define_t
-                                 assert(Not i Is Nothing)
-                                 Return i.d
-                             End Function)
-        End Function
     End Class
 End Class

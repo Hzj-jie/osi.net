@@ -72,6 +72,11 @@ Partial Public Class scope(Of T As scope(Of T))
         Return in_thread
     End Function
 
+    ' Avoid naming conflict.
+    Public Shared Function current_scope() As scope(Of T)
+        Return current()
+    End Function
+
     Protected Function is_root() As Boolean
         Return parent Is Nothing
     End Function
