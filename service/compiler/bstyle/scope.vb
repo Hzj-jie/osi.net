@@ -37,6 +37,7 @@ Partial Public NotInheritable Class bstyle
             t = New temp_logic_name_t()
         End Sub
 
+        ' TODO: Move to scope(Of T As scope(Of T)).
         Public Function includes() As includes_t
             Return from_root(Function(ByVal i As scope) As includes_t
                                  assert(Not i Is Nothing)

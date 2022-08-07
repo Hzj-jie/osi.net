@@ -7,19 +7,23 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.compiler.logic
 
-Partial Public NotInheritable Class bstyle
+Partial Public Class scope(Of T As scope(Of T))
     Public NotInheritable Class struct_def
+        Private ReadOnly s As T
         Private ReadOnly _nesteds As vector(Of builders.parameter)
         Private ReadOnly _primitives As vector(Of builders.parameter)
 
-        Public Sub New()
-            Me.New(New vector(Of builders.parameter)(), New vector(Of builders.parameter)())
+        Public Sub New(ByVal s As T)
+            Me.New(s, New vector(Of builders.parameter)(), New vector(Of builders.parameter)())
         End Sub
 
-        Private Sub New(ByVal nesteds As vector(Of builders.parameter),
+        Private Sub New(ByVal s As T,
+                        ByVal nesteds As vector(Of builders.parameter),
                         ByVal primitives As vector(Of builders.parameter))
+            assert(Not s Is Nothing)
             assert(Not nesteds Is Nothing)
             assert(Not primitives Is Nothing)
+            Me.s = s
             Me._nesteds = nesteds
             Me._primitives = primitives
             Me._nesteds.
@@ -51,29 +55,32 @@ Partial Public NotInheritable Class bstyle
             Return _primitives.size()
         End Function
 
-        Public Shared Function of_primitive(ByVal type As String, ByVal name As String) As struct_def
-            Return New struct_def().with_primitive(type, name)
+        Public Shared Function of_primitive(ByVal s As T, ByVal type As String, ByVal name As String) As struct_def
+            Return New struct_def(s).with_primitive(type, name)
         End Function
 
         Public Function with_nested(ByVal type As String, ByVal name As String) As struct_def
-            _nesteds.emplace_back(nested(type, name))
+            _nesteds.emplace_back(nested(s, type, name))
             Return Me
         End Function
 
         ' It can be a struct or just a primitive.
-        Public Shared Function nested(ByVal type As String, ByVal name As String) As builders.parameter
-            Return builders.parameter.no_ref(scope.current().type_alias()(type), name)
+        Public Shared Function nested(ByVal s As T,
+                                      ByVal type As String,
+                                      ByVal name As String) As builders.parameter
+            assert(Not s Is Nothing)
+            Return builders.parameter.no_ref(s.accessor().type_alias(type), name)
         End Function
 
-        Public Shared Function nested(ByVal p As builders.parameter) As builders.parameter
+        Public Shared Function nested(ByVal s As T, ByVal p As builders.parameter) As builders.parameter
             assert(Not p Is Nothing)
             assert(Not p.ref)
-            Return nested(p.type, p.name)
+            Return nested(s, p.type, p.name)
         End Function
 
         ' It must be a primitive.
         Public Function with_primitive(ByVal type As String, ByVal name As String) As struct_def
-            Dim r As builders.parameter = nested(type, name)
+            Dim r As builders.parameter = nested(s, type, name)
             assert(Not scope.current().structs().types().defined(r.type))
             _primitives.emplace_back(r)
             Return Me
@@ -94,7 +101,7 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Function append_prefix(ByVal name As String) As struct_def
-            Return New struct_def(append_prefix(_nesteds, name), append_prefix(_primitives, name))
+            Return New struct_def(s, append_prefix(_nesteds, name), append_prefix(_primitives, name))
         End Function
 
         Public Sub append(ByVal r As struct_def)
@@ -111,3 +118,4 @@ Partial Public NotInheritable Class bstyle
         End Function
     End Class
 End Class
+

@@ -158,11 +158,11 @@
     <Compile Include="bstyle\logic\nodes\value_definition.vb" />
     <Compile Include="bstyle\logic\nodes\while.vb" />
     <Compile Include="bstyle\scope.call_hierarchy.vb" />
-    <Compile Include="bstyle\scope.struct.vb" />
+    <Compile Include="scope\scope.struct.vb" />
     <Compile Include="bstyle\scope.type_alias.vb" />
     <Compile Include="bstyle\scope.variable.vb" />
     <Compile Include="bstyle\scope.vb" />
-    <Compile Include="bstyle\struct_def.vb" />
+    <Compile Include="scope\struct_def.vb" />
     <Compile Include="code_gen\reparser.vb" />
     <Compile Include="function_signature.vb" />
     <Compile Include="logic\address_of.vb" />
