@@ -109,8 +109,9 @@ Partial Public Class scope(Of T As scope(Of T))
                         Continue While
                     End If
                     Dim v As struct_def = Nothing
-                    ' The type may not be a struct at all.
-                    If Not s.accessor().structs().resolve(type, name, v) Then
+                    ' The type may not be a struct at all. Note, the struct only applies to the variables after it's
+                    ' defined.
+                    If Not s.structs().resolve(type, name, v) Then
                         Return False
                     End If
                     o = tuple.of(type, v)
