@@ -84,7 +84,7 @@ Partial Public Class scope(Of T As scope(Of T))
             End If
             Dim s As scope(Of T) = scope(Of T).current()
             While Not s Is Nothing
-                If s.accessor().variables().redefine(type, name) Then
+                If s.myself().variables().redefine(type, name) Then
                     Return True
                 End If
                 s = s.parent
@@ -105,7 +105,7 @@ Partial Public Class scope(Of T As scope(Of T))
             End If
             Dim s As scope(Of T) = scope(Of T).current()
             While Not s Is Nothing
-                If s.accessor().variables().undefine(name) Then
+                If s.myself().variables().undefine(name) Then
                     Return True
                 End If
                 s = s.parent
@@ -142,7 +142,7 @@ Partial Public Class scope(Of T As scope(Of T))
 
             Dim s As scope(Of T) = scope(Of T).current()
             While Not s Is Nothing
-                If Not s.accessor().variables().resolve(name, type) Then
+                If Not s.myself().variables().resolve(name, type) Then
                     s = s.parent
                     Continue While
                 End If

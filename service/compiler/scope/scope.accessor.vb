@@ -9,7 +9,7 @@ Imports osi.root.formation
 Partial Public Class scope(Of T As scope(Of T))
     Private ReadOnly _accessor As lazier(Of accessor_t) = lazier.of(AddressOf Me.get_accessor)
 
-    Private Function accessor() As accessor_t
+    Private Function myself() As accessor_t
         Return +_accessor
     End Function
 

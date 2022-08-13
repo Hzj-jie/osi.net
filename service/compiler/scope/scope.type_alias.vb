@@ -68,7 +68,7 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(Not builders.parameter_type.is_ref_type([alias]))
             Dim s As T = scope(Of T).current()
             While Not s Is Nothing
-                [alias] = s.accessor().type_alias()([alias])
+                [alias] = s.myself().type_alias()([alias])
                 s = s.parent
             End While
             Return [alias]

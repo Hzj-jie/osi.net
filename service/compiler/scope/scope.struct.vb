@@ -81,7 +81,7 @@ Partial Public Class scope(Of T As scope(Of T))
                                 ByRef o As struct_def) As Boolean
             Dim s As scope(Of T) = scope(Of T).current()
             While Not s Is Nothing
-                If s.accessor().structs().resolve(type, name, o) Then
+                If s.myself().structs().resolve(type, name, o) Then
                     Return True
                 End If
                 s = s.parent
@@ -104,7 +104,7 @@ Partial Public Class scope(Of T As scope(Of T))
                 Dim s As T = scope(Of T).current()
                 While Not s Is Nothing
                     Dim type As String = Nothing
-                    If Not s.accessor().variables().resolve(name, type) Then
+                    If Not s.myself().variables().resolve(name, type) Then
                         s = s.parent
                         Continue While
                     End If

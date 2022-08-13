@@ -32,22 +32,22 @@ Partial Public Class scope(Of T As scope(Of T))
 
         Private Function current_function() As current_function_t
             Dim s As scope(Of T) = scope(Of T).current()
-            While s.accessor().current_function() Is Nothing
+            While s.myself().current_function() Is Nothing
                 s = s.parent
                 assert(Not s Is Nothing)
             End While
-            Return s.accessor().current_function()
+            Return s.myself().current_function()
         End Function
 
         Private Function current_function_opt() As [optional](Of current_function_t)
             Dim s As scope(Of T) = scope(Of T).current()
-            While s.accessor().current_function() Is Nothing
+            While s.myself().current_function() Is Nothing
                 s = s.parent
                 If s Is Nothing Then
                     Return [optional].empty(Of current_function_t)()
                 End If
             End While
-            Return [optional].of(s.accessor().current_function())
+            Return [optional].of(s.myself().current_function())
         End Function
 
         Public Function allow_return_value() As Boolean

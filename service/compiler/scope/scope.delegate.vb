@@ -44,7 +44,7 @@ Partial Public Class scope(Of T As scope(Of T))
         Public Function retrieve(ByVal name As String, ByRef o As function_signature) As Boolean
             Dim s As scope(Of T) = scope(Of T).current()
             While Not s Is Nothing
-                If s.accessor().delegates().retrieve(name, o) Then
+                If s.myself().delegates().retrieve(name, o) Then
                     Return True
                 End If
                 s = s.parent
