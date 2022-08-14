@@ -43,9 +43,8 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(False)
         End Sub
 
-        ' TODO: Return string
         Public Overridable Function current_function_name() As [optional](Of String)
-            Return scope(Of T).current().current_function().name_opt()
+            Return scope(Of T).current().current_function().name()
         End Function
 
         Public Overridable Function delegates() As delegate_t

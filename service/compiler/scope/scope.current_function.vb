@@ -30,16 +30,7 @@ Partial Public Class scope(Of T As scope(Of T))
             scope(Of T).current().myself().current_function(New current_function_t(name, return_type, params))
         End Sub
 
-        Private Function current_function() As current_function_t
-            Dim s As scope(Of T) = scope(Of T).current()
-            While s.myself().current_function() Is Nothing
-                s = s.parent
-                assert(Not s Is Nothing)
-            End While
-            Return s.myself().current_function()
-        End Function
-
-        Private Function current_function_opt() As [optional](Of current_function_t)
+        Private Function current_function() As [optional](Of current_function_t)
             Dim s As scope(Of T) = scope(Of T).current()
             While s.myself().current_function() Is Nothing
                 s = s.parent
@@ -51,18 +42,14 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function allow_return_value() As Boolean
-            Return current_function().allow_return_value()
+            Return (+current_function()).allow_return_value()
         End Function
 
-        Public Function name() As String
-            Return current_function().name
-        End Function
-
-        Public Function name_opt() As [optional](Of String)
-            Return current_function_opt().map(Function(ByVal x As current_function_t) As String
-                                                  assert(Not x Is Nothing)
-                                                  Return x.name
-                                              End Function)
+        Public Function name() As [optional](Of String)
+            Return current_function().map(Function(ByVal c As current_function_t) As String
+                                              assert(Not c Is Nothing)
+                                              Return c.name
+                                          End Function)
         End Function
 
         Public Function return_struct() As Boolean
@@ -71,14 +58,14 @@ Partial Public Class scope(Of T As scope(Of T))
 
         Public Function return_type() As String
             assert(allow_return_value())
-            Return current_function().return_type
+            Return (+current_function()).return_type
         End Function
 
         Public Function signature() As String
-            Return current_function_opt().map(Function(ByVal x As current_function_t) As String
-                                                  Return x.ToString()
-                                              End Function).
-                                              or_else("unknown_function")
+            Return current_function().map(Function(ByVal x As current_function_t) As String
+                                              Return x.ToString()
+                                          End Function).
+                                      or_else("unknown_function")
         End Function
     End Structure
 End Class

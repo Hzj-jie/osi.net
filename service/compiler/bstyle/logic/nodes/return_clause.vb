@@ -29,7 +29,7 @@ Partial Public NotInheritable Class bstyle
                 End If
             End If
             If n.child_count() = 1 Then
-                Return builders.of_return(scope.current().current_function().name()).to(o)
+                Return builders.of_return(+scope.current().current_function().name()).to(o)
             End If
             If Not code_gen_of(n.child(1)).build(o) Then
                 Return False
@@ -49,12 +49,12 @@ Partial Public NotInheritable Class bstyle
                     End If
                     Dim return_value As String = scope.current().temp_logic_name().variable() +
                                                  "@" +
-                                                 scope.current().current_function().name() +
+                                                 (+scope.current().current_function().name()) +
                                                  "@return_value"
                     assert(value_declaration.declare_single_data_slot(
                                compiler.logic.scope.type_t.variable_type, return_value, o))
                     Return struct.pack((+r).names, return_value, o) AndAlso
-                           builders.of_return(scope.current().current_function().name(), return_value).to(o)
+                           builders.of_return(+scope.current().current_function().name(), return_value).to(o)
                 End If
                 If (+r).names.size() <> 1 Then
                     raise_error(error_type.user,
@@ -62,7 +62,7 @@ Partial Public NotInheritable Class bstyle
                                 scope.current().current_function().name())
                     Return False
                 End If
-                Return builders.of_return(scope.current().current_function().name(), (+r).names(0)).to(o)
+                Return builders.of_return(+scope.current().current_function().name(), (+r).names(0)).to(o)
             End Using
         End Function
     End Class
