@@ -10,7 +10,7 @@ Imports osi.root.formation
 Imports osi.service.automata
 
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
-    Public MustInherit Class includes
+    Public MustInherit Class includes(Of T As scope(Of T))
         Inherits reparser
 
         Private ReadOnly folders As vector(Of String)
@@ -37,7 +37,6 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
 
         ' Rename to make the functionality more clear.
         Protected MustOverride Function file_parse(ByVal s As String, ByVal o As WRITER) As Boolean
-        Protected MustOverride Function should_include(ByVal s As String) As Boolean
 
         Private Shared Function include_file(ByVal p As String,
                                              ByVal s As String,
@@ -65,7 +64,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
 
         Protected Function include_file(ByVal s As String, ByRef o As String) As Boolean
-            If Not should_include(s) AndAlso (arguments.include_once Or True) Then
+            If Not scope(Of T).current().includes().should_include(s) AndAlso (arguments.include_once Or True) Then
                 Return True
             End If
             If include_file(folders, s, o) Then
@@ -81,8 +80,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
     End Class
 
-    Public MustInherit Class include_with_string
-        Inherits includes
+    Public MustInherit Class include_with_string(Of T As scope(Of T))
+        Inherits includes(Of T)
 
         Protected Sub New(ByVal folders As vector(Of String),
                           ByVal ignore_default_folder As Boolean,
@@ -98,8 +97,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
     End Class
 
-    Public MustInherit Class include_with_file
-        Inherits includes
+    Public MustInherit Class include_with_file(Of T As scope(Of T))
+        Inherits includes(Of T)
 
         Private Const kw_include As String = "#include"
 

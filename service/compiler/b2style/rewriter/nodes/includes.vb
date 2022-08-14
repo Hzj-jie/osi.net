@@ -23,9 +23,8 @@ Partial Public NotInheritable Class b2style
                 ' The file has been included already.
                 Return True
             End If
-            Dim o As typed_node_writer = j
             Return parse_wrapper.with_current_file(i, Function(ByVal s As String) As Boolean
-                                                          Return code_builder.build(s, o)
+                                                          Return code_builder.build(s, j)
                                                       End Function)
         End Function
 
@@ -34,10 +33,6 @@ Partial Public NotInheritable Class b2style
                                                       tar.gen.dump(b2style_lib.data, folder)
                                                       Return folder
                                                   End Function()
-
-        Public Shared Function should_include(ByVal i As String) As Boolean
-            Return scope.current().includes().should_include(i)
-        End Function
 
         Public Shared Function include_folders() As vector(Of String)
             Return +b2style.include_folders
@@ -63,7 +58,7 @@ Partial Public NotInheritable Class b2style
 
     ' TODO: Consider to include bstyle headers into b2style.
     Private NotInheritable Class include_with_string
-        Inherits code_gens(Of typed_node_writer).include_with_string
+        Inherits code_gens(Of typed_node_writer).include_with_string(Of scope)
 
         Public Sub New()
             MyBase.New(includes.include_folders(),
@@ -74,10 +69,6 @@ Partial Public NotInheritable Class b2style
 
         Protected Overrides Function file_parse(ByVal s As String, ByVal o As typed_node_writer) As Boolean
             Return includes.file_parse(s, o)
-        End Function
-
-        Protected Overrides Function should_include(ByVal s As String) As Boolean
-            Return includes.should_include(s)
         End Function
 
         ' Forward missing files to the bstyle.
@@ -90,7 +81,7 @@ Partial Public NotInheritable Class b2style
     End Class
 
     Private NotInheritable Class include_with_file
-        Inherits code_gens(Of typed_node_writer).include_with_file
+        Inherits code_gens(Of typed_node_writer).include_with_file(Of scope)
 
         Public Sub New()
             MyBase.New(includes.include_folders(),
@@ -101,10 +92,6 @@ Partial Public NotInheritable Class b2style
 
         Protected Overrides Function file_parse(ByVal s As String, ByVal o As typed_node_writer) As Boolean
             Return includes.file_parse(s, o)
-        End Function
-
-        Protected Overrides Function should_include(ByVal s As String) As Boolean
-            Return includes.should_include(s)
         End Function
 
         ' Forward missing files to the bstyle.

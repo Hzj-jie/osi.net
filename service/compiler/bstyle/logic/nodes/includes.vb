@@ -20,9 +20,8 @@ Partial Public NotInheritable Class bstyle
                 ' The file has been included already.
                 Return True
             End If
-            Dim o As logic_writer = j
             Return parse_wrapper.with_current_file(i, Function(ByVal s As String) As Boolean
-                                                          Return code_builder.build(s, o)
+                                                          Return code_builder.build(s, j)
                                                       End Function)
         End Function
 
@@ -51,7 +50,7 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Private NotInheritable Class include_with_string
-        Inherits code_gens(Of logic_writer).include_with_string
+        Inherits code_gens(Of logic_writer).include_with_string(Of scope)
 
         Public Sub New()
             MyBase.New(includes.include_folders(),
@@ -62,15 +61,11 @@ Partial Public NotInheritable Class bstyle
 
         Protected Overrides Function file_parse(ByVal s As String, ByVal o As logic_writer) As Boolean
             Return includes.file_parse(s, o)
-        End Function
-
-        Protected Overrides Function should_include(ByVal s As String) As Boolean
-            Return includes.should_include(s)
         End Function
     End Class
 
     Private NotInheritable Class include_with_file
-        Inherits code_gens(Of logic_writer).include_with_file
+        Inherits code_gens(Of logic_writer).include_with_file(Of scope)
 
         Public Sub New()
             MyBase.New(includes.include_folders(),
@@ -81,10 +76,6 @@ Partial Public NotInheritable Class bstyle
 
         Protected Overrides Function file_parse(ByVal s As String, ByVal o As logic_writer) As Boolean
             Return includes.file_parse(s, o)
-        End Function
-
-        Protected Overrides Function should_include(ByVal s As String) As Boolean
-            Return includes.should_include(s)
         End Function
     End Class
 End Class
