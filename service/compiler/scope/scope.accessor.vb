@@ -78,5 +78,10 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(False)
             Return Nothing
         End Function
+
+        Public Overridable Function call_hierarchy() As call_hierarchy_t
+            assert(False)
+            Return Nothing
+        End Function
     End Class
 End Class

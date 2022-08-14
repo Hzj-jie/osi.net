@@ -64,6 +64,10 @@ Partial Public NotInheritable Class b2style
             Public Overrides Function current_function_name() As [optional](Of String)
                 Return scope.current().current_function().name()
             End Function
+
+            Public Overrides Function call_hierarchy() As scope(Of scope).call_hierarchy_t
+                Return s.fc
+            End Function
         End Class
     End Class
 End Class

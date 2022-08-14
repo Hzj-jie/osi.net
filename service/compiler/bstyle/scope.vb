@@ -106,6 +106,10 @@ Partial Public NotInheritable Class bstyle
             Public Overrides Function value_target() As value_target_t
                 Return s.vt
             End Function
+
+            Public Overrides Function call_hierarchy() As scope(Of scope).call_hierarchy_t
+                Return s.fc
+            End Function
         End Class
     End Class
 End Class

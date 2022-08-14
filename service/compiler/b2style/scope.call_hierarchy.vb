@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 Imports osi.service.automata
 
 Partial Public NotInheritable Class b2style
@@ -43,11 +42,8 @@ Partial Public NotInheritable Class b2style
             End Class
         End Class
 
-        Public Function call_hierarchy() As call_hierarchy_t
-            Return from_root(Function(ByVal i As scope) As call_hierarchy_t
-                                 assert(Not i Is Nothing)
-                                 Return i.fc
-                             End Function)
+        Public Shadows Function call_hierarchy() As call_hierarchy_t
+            Return MyBase.call_hierarchy(Of call_hierarchy_t)()
         End Function
     End Class
 End Class

@@ -50,4 +50,11 @@ Partial Public Class scope(Of T As scope(Of T))
     Public Function value_target() As value_target_t
         Return scope(Of T).current().myself().value_target()
     End Function
+
+    Protected Function call_hierarchy(Of CT As call_hierarchy_t)() As CT
+        Return from_root(Function(ByVal i As T) As CT
+                             assert(Not i Is Nothing)
+                             Return direct_cast(Of CT)(i.myself().call_hierarchy())
+                         End Function)
+    End Function
 End Class
