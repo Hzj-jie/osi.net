@@ -66,7 +66,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function return_struct() As Boolean
-            Return scope(Of T).current().myself().is_struct_type(return_type())
+            Return scope(Of T).current().structs().types().defined(return_type())
         End Function
 
         Public Function return_type() As String

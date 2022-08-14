@@ -48,12 +48,6 @@ Partial Public Class scope(Of T As scope(Of T))
             Return scope(Of T).current().current_function().name_opt()
         End Function
 
-        ' TODO: Return struct_proxy.
-        Public Overridable Function is_struct_type(ByVal i As String) As Boolean
-            assert(False)
-            Return False
-        End Function
-
         Public Overridable Function delegates() As delegate_t
             assert(False)
             Return Nothing

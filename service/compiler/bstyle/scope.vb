@@ -82,11 +82,6 @@ Partial Public NotInheritable Class bstyle
                 s.cf = c
             End Sub
 
-            ' TODO: Return struct_proxy.
-            Public Overrides Function is_struct_type(ByVal i As String) As Boolean
-                Return s.structs().types().defined(i)
-            End Function
-
             Public Overrides Function delegates() As delegate_t
                 Return s.de
             End Function
