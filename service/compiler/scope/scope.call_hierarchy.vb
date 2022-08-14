@@ -17,7 +17,7 @@ Partial Public Class scope(Of T As scope(Of T))
         Public Sub [to](ByVal name As String)
             assert(tm Is Nothing)
             assert(Not name.null_or_whitespace())
-            Dim from As String = current_accessor().current_function_name().or_else(main_name)
+            Dim from As String = scope(Of T).current().myself().current_function_name().or_else(main_name)
             assert(Not from.null_or_whitespace())
             If Not name.Equals(from) Then
                 m(from).emplace_back(name)

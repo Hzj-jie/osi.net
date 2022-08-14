@@ -69,7 +69,7 @@ Partial Public Class scope(Of T As scope(Of T))
 
     Public Structure variable_proxy
         Public Function define(ByVal type As String, ByVal name As String) As Boolean
-            Return current_accessor().variables().define(type, name)
+            Return scope(Of T).current().myself().variables().define(type, name)
         End Function
 
         Public Function redefine(ByVal type As String, ByVal name As String) As Boolean

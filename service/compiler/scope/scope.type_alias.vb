@@ -61,7 +61,7 @@ Partial Public Class scope(Of T As scope(Of T))
 
     Public Structure type_alias_proxy
         Public Function define(ByVal [alias] As String, ByVal canonical As String) As Boolean
-            Return current_accessor().type_alias().define([alias], canonical)
+            Return scope(Of T).current().myself().type_alias().define([alias], canonical)
         End Function
 
         Private Function retrieve(ByVal [alias] As String) As String
@@ -95,7 +95,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Sub remove(ByVal [alias] As String)
-            current_accessor().type_alias().remove([alias])
+            scope(Of T).current().myself().type_alias().remove([alias])
         End Sub
     End Structure
 End Class

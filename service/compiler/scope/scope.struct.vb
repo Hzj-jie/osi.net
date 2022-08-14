@@ -73,7 +73,7 @@ Partial Public Class scope(Of T As scope(Of T))
 
     Public Structure struct_proxy
         Public Function define(ByVal type As String, ByVal members As vector(Of builders.parameter)) As Boolean
-            Return current_accessor().structs().define(type, members)
+            Return scope(Of T).current().myself().structs().define(type, members)
         End Function
 
         Public Function resolve(ByVal type As String,

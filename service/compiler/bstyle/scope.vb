@@ -102,6 +102,10 @@ Partial Public NotInheritable Class bstyle
             Public Overrides Function temp_logic_name() As temp_logic_name_t
                 Return s.t
             End Function
+
+            Public Overrides Function value_target() As value_target_t
+                Return s.vt
+            End Function
         End Class
     End Class
 End Class

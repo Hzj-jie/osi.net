@@ -26,8 +26,8 @@ Partial Public Class scope(Of T As scope(Of T))
         Public Sub define(ByVal name As String,
                           ByVal return_type As String,
                           ByVal params As vector(Of builders.parameter))
-            assert(current_accessor().current_function() Is Nothing)
-            current_accessor().current_function(New current_function_t(name, return_type, params))
+            assert(scope(Of T).current().myself().current_function() Is Nothing)
+            scope(Of T).current().myself().current_function(New current_function_t(name, return_type, params))
         End Sub
 
         Private Function current_function() As current_function_t
@@ -66,7 +66,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function return_struct() As Boolean
-            Return current_accessor().is_struct_type(return_type())
+            Return scope(Of T).current().myself().is_struct_type(return_type())
         End Function
 
         Public Function return_type() As String

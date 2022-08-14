@@ -6,10 +6,6 @@ Option Strict On
 Imports osi.root.connector
 
 Partial Public Class scope(Of T As scope(Of T))
-    Protected Shared Function current_accessor() As accessor_t
-        Return scope(Of T).current().myself()
-    End Function
-
     Public Function includes() As includes_t
         Return from_root(Function(ByVal i As T) As includes_t
                              assert(Not i Is Nothing)
@@ -49,5 +45,9 @@ Partial Public Class scope(Of T As scope(Of T))
                              assert(Not i Is Nothing)
                              Return i.myself().temp_logic_name()
                          End Function)
+    End Function
+
+    Public Function value_target() As value_target_t
+        Return scope(Of T).current().myself().value_target()
     End Function
 End Class

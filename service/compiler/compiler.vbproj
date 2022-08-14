@@ -117,7 +117,7 @@
     <Compile Include="scope\scope.accessor.vb" />
     <Compile Include="scope\scope.current.vb" />
     <Compile Include="scope\scope.params.vb" />
-    <Compile Include="bstyle\scope.value_target.vb" />
+    <Compile Include="scope\scope.value_target.vb" />
     <Compile Include="code_gen\code_gen.default.vb" />
     <Compile Include="code_gen\code_gens_registrar.vb" />
     <Compile Include="code_gen\includes.vb" />
