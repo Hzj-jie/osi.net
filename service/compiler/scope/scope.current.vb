@@ -43,4 +43,11 @@ Partial Public Class scope(Of T As scope(Of T))
     Public Function variables() As variable_proxy
         Return New variable_proxy()
     End Function
+
+    Public Function temp_logic_name() As temp_logic_name_t
+        Return from_root(Function(ByVal i As T) As temp_logic_name_t
+                             assert(Not i Is Nothing)
+                             Return i.myself().temp_logic_name()
+                         End Function)
+    End Function
 End Class

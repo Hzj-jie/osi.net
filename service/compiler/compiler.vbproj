@@ -102,7 +102,7 @@
     <Compile Include="bstyle\logic\nodes\kw_statement.vb" />
     <Compile Include="bstyle\logic\nodes\static_cast.vb" />
     <Compile Include="bstyle\scope.accessor.vb" />
-    <Compile Include="bstyle\scope.temp_logic_name.vb" />
+    <Compile Include="scope\scope.temp_logic_name.vb" />
     <Compile Include="logic\builder\biguint.vb" />
     <Compile Include="logic\builder\bool.vb" />
     <Compile Include="logic\builder\integer.vb" />

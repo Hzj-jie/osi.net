@@ -57,6 +57,10 @@ Partial Public NotInheritable Class bstyle
             Public Overrides Function variables() As variable_t
                 Return s.v
             End Function
+
+            Public Overrides Function temp_logic_name() As temp_logic_name_t
+                Return s.t
+            End Function
         End Class
     End Class
 End Class
