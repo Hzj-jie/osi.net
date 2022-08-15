@@ -68,6 +68,10 @@ Partial Public NotInheritable Class b2style
             Public Overrides Function call_hierarchy() As scope(Of scope).call_hierarchy_t
                 Return s.fc
             End Function
+
+            Public Overrides Function current_namespace() As current_namespace_t
+                Return s.cn
+            End Function
         End Class
     End Class
 End Class

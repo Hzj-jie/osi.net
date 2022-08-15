@@ -48,3 +48,6 @@ Rule of Thumb
 
 1. Do not use namespace within a project, use class. Namespaces live in project
    level only. Unlike classes, namespaces have no visibility control.
+
+1. Limit the use of "Imports namespace", prefer of using
+   "Imports a = namespace.a".

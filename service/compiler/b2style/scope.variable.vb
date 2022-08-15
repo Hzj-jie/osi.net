@@ -69,7 +69,7 @@ Partial Public NotInheritable Class b2style
             End Function
         End Structure
 
-        Public Function variables() As variable_proxy
+        Public Shadows Function variables() As variable_proxy
             Return New variable_proxy(Me)
         End Function
     End Class

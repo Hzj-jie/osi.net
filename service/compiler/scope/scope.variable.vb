@@ -7,6 +7,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports builders = osi.service.compiler.logic.builders
+Imports typed_node = osi.service.automata.typed_node
 Imports variable = osi.service.compiler.logic.variable
 
 Partial Public Class scope(Of T As scope(Of T))
@@ -37,6 +38,12 @@ Partial Public Class scope(Of T As scope(Of T))
                         ") has been defined already as ",
                         s(name))
             Return False
+        End Function
+
+        Public Function define(ByVal n As typed_node) As Boolean
+            assert(Not n Is Nothing)
+            assert(n.child_count() >= 2)
+            Return define(n.child(0).input_without_ignored(), n.child(1).input_without_ignored())
         End Function
 
         Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
