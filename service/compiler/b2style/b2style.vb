@@ -100,8 +100,14 @@ Partial Public NotInheritable Class b2style
                                     scope.variable_proxy.define(), "value-declaration")).
                            with(code_gen.of_all_children_with_precondition(Of typed_node_writer)(
                                     scope.call_hierarchy_t.from_value_clause(), "value-clause")).
-                           with(Of ifndef_wrapped)().
-                           with(Of define)().
+                           with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of,
+                                                                        Function() As scope.define_t
+                                                                            Return scope.current().defines()
+                                                                        End Function)).
+                           with(scope.define_t.code_gens.define(Of typed_node_writer)(
+                                    Function() As scope.define_t
+                                        Return scope.current().defines()
+                                    End Function)).
                            with(Of paramtype_with_comma)().
                            with(Of class_initializer)().
                            with(code_gen.of_ignore(Of typed_node_writer)("colon")).

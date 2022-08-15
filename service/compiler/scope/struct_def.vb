@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.compiler.logic
 
-Partial Public NotInheritable Class bstyle
+Partial Public Class scope(Of T As scope(Of T))
     Public NotInheritable Class struct_def
         Private ReadOnly _nesteds As vector(Of builders.parameter)
         Private ReadOnly _primitives As vector(Of builders.parameter)
@@ -62,7 +62,7 @@ Partial Public NotInheritable Class bstyle
 
         ' It can be a struct or just a primitive.
         Public Shared Function nested(ByVal type As String, ByVal name As String) As builders.parameter
-            Return builders.parameter.no_ref(scope.current().type_alias()(type), name)
+            Return builders.parameter.no_ref(scope(Of T).current().type_alias()(type), name)
         End Function
 
         Public Shared Function nested(ByVal p As builders.parameter) As builders.parameter
@@ -74,7 +74,7 @@ Partial Public NotInheritable Class bstyle
         ' It must be a primitive.
         Public Function with_primitive(ByVal type As String, ByVal name As String) As struct_def
             Dim r As builders.parameter = nested(type, name)
-            assert(Not scope.current().structs().types().defined(r.type))
+            assert(Not scope(Of T).current().structs().types().defined(r.type))
             _primitives.emplace_back(r)
             Return Me
         End Function
@@ -111,3 +111,4 @@ Partial Public NotInheritable Class bstyle
         End Function
     End Class
 End Class
+

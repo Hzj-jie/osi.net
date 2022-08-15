@@ -67,11 +67,11 @@ Public NotInheritable Class typed_word
     End Function
 
     Public Function str() As String
-        Return strmid(ref, start, len)
+        Return ref.Substring(CInt(start), CInt(len))
     End Function
 
     Public Function debug_str() As String
-        Return strcat("[", type_name, "]: ", str(), "@", start, "-", [end])
+        Return String.Concat("[", type_name, "]: ", str(), "@", start, "-", [end])
     End Function
 
     Public Overrides Function ToString() As String

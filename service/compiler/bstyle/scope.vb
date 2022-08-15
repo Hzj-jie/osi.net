@@ -37,13 +37,74 @@ Partial Public NotInheritable Class bstyle
             t = New temp_logic_name_t()
         End Sub
 
-        Public Function includes() As includes_t
-            If is_root() Then
-                assert(Not incs Is Nothing)
-                Return incs
-            End If
-            assert(incs Is Nothing)
-            Return (+root).includes()
+        Public Function functions() As function_t
+            Return from_root(Function(ByVal i As scope) As function_t
+                                 assert(Not i Is Nothing)
+                                 Return i.f
+                             End Function)
         End Function
+
+        Public Function params() As params_t
+            Return ps
+        End Function
+
+        Protected Overrides Function get_accessor() As scope(Of scope).accessor_t
+            Return New accessor_t(Me)
+        End Function
+
+        Private Shadows Class accessor_t
+            Inherits scope(Of scope).accessor_t
+
+            Private ReadOnly s As scope
+
+            Public Sub New(ByVal s As scope)
+                assert(Not s Is Nothing)
+                Me.s = s
+            End Sub
+
+            Public Overrides Function includes() As includes_t
+                Return s.incs
+            End Function
+
+            Public Overrides Function defines() As define_t
+                Return s.d
+            End Function
+
+            Public Overrides Function type_alias() As type_alias_t
+                Return s.ta
+            End Function
+
+            Public Overrides Function current_function() As current_function_t
+                Return s.cf
+            End Function
+
+            Public Overrides Sub current_function(ByVal c As current_function_t)
+                s.cf = c
+            End Sub
+
+            Public Overrides Function delegates() As delegate_t
+                Return s.de
+            End Function
+
+            Public Overrides Function structs() As struct_t
+                Return s.s
+            End Function
+
+            Public Overrides Function variables() As variable_t
+                Return s.v
+            End Function
+
+            Public Overrides Function temp_logic_name() As temp_logic_name_t
+                Return s.t
+            End Function
+
+            Public Overrides Function value_target() As value_target_t
+                Return s.vt
+            End Function
+
+            Public Overrides Function call_hierarchy() As scope(Of scope).call_hierarchy_t
+                Return s.fc
+            End Function
+        End Class
     End Class
 End Class

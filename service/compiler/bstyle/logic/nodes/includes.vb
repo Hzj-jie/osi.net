@@ -6,7 +6,6 @@ Option Strict On
 Imports System.IO
 Imports osi.root.delegates
 Imports osi.root.formation
-Imports osi.root.template
 Imports osi.root.utils
 Imports osi.service.compiler.logic
 Imports osi.service.resource
@@ -15,90 +14,68 @@ Partial Public NotInheritable Class bstyle
     Private Shared include_folders As argument(Of vector(Of String))
     Private Shared ignore_default_include As argument(Of Boolean)
 
-    Public NotInheritable Class file_parser
-        Inherits __do(Of String, logic_writer, Boolean)
-
-        Public Shared ReadOnly instance As New file_parser()
-
-        Private Sub New()
-        End Sub
-
-        Public Overrides Function at(ByRef i As String, ByRef j As logic_writer) As Boolean
+    Private NotInheritable Class includes
+        Public Shared Function file_parse(ByVal i As String, ByVal j As logic_writer) As Boolean
             If i Is Nothing Then
                 ' The file has been included already.
                 Return True
             End If
-            Dim o As logic_writer = j
             Return parse_wrapper.with_current_file(i, Function(ByVal s As String) As Boolean
-                                                          Return code_builder.build(s, o)
+                                                          Return code_builder.build(s, j)
                                                       End Function)
         End Function
-    End Class
 
-    Public NotInheritable Class default_includes
-        Private Shared ReadOnly folder As String = create_inc_folder()
+        Public Shared ReadOnly folder As String = Function() As String
+                                                      Dim folder As String = Path.Combine(temp_folder, "bstyle-inc")
+                                                      tar.gen.dump(bstyle_lib.data, folder)
+                                                      Return folder
+                                                  End Function()
 
-        Private Shared Function create_inc_folder() As String
-            Dim folder As String = Path.Combine(temp_folder, "bstyle-inc")
-            tar.gen.dump(bstyle_lib.data, folder)
-            Return folder
+        Public Shared Function should_include(ByVal i As String) As Boolean
+            Return scope.current().includes().should_include(i)
         End Function
 
-        Public NotInheritable Class folders
-            Inherits __do(Of vector(Of String))
+        Public Shared Function include_folders() As vector(Of String)
+            Return +bstyle.include_folders
+        End Function
 
-            Protected Overrides Function at() As vector(Of String)
-                Return +include_folders
-            End Function
-        End Class
+        Public Shared Function ignore_default_include() As Boolean
+            Return bstyle.ignore_default_include Or False
+        End Function
 
-        Public NotInheritable Class ignore_default_folder
-            Inherits __do(Of Boolean)
-
-            Protected Overrides Function at() As Boolean
-                Return ignore_default_include Or False
-            End Function
-        End Class
-
-        Public NotInheritable Class default_folder
-            Inherits __do(Of String)
-
-            Protected Overrides Function at() As String
-                Return folder
-            End Function
-        End Class
+        Public Const ignore_include_error As Boolean = False
 
         Private Sub New()
         End Sub
     End Class
 
-    Public NotInheritable Class should_include_t
-        Inherits __do(Of String, Boolean)
+    Private NotInheritable Class include_with_string
+        Inherits code_gens(Of logic_writer).include_with_string(Of scope)
 
-        Public Overrides Function at(ByRef k As String) As Boolean
-            Return scope.current().includes().should_include(k)
+        Public Sub New()
+            MyBase.New(includes.include_folders(),
+                       includes.ignore_default_include(),
+                       includes.folder,
+                       includes.ignore_include_error)
+        End Sub
+
+        Protected Overrides Function file_parse(ByVal s As String, ByVal o As logic_writer) As Boolean
+            Return includes.file_parse(s, o)
         End Function
     End Class
 
-    Private NotInheritable Class include_with_string
-        Inherits code_gens(Of logic_writer).include_with_string(Of default_includes.folders,
-                                                                   default_includes.ignore_default_folder,
-                                                                   default_includes.default_folder,
-                                                                   _false,
-                                                                   should_include_t)
-        Public Sub New()
-            MyBase.New(file_parser.instance)
-        End Sub
-    End Class
-
     Private NotInheritable Class include_with_file
-        Inherits code_gens(Of logic_writer).include_with_file(Of default_includes.folders,
-                                                                 default_includes.ignore_default_folder,
-                                                                 default_includes.default_folder,
-                                                                 _false,
-                                                                 should_include_t)
+        Inherits code_gens(Of logic_writer).include_with_file(Of scope)
+
         Public Sub New()
-            MyBase.New(file_parser.instance)
+            MyBase.New(includes.include_folders(),
+                       includes.ignore_default_include(),
+                       includes.folder,
+                       includes.ignore_include_error)
         End Sub
+
+        Protected Overrides Function file_parse(ByVal s As String, ByVal o As logic_writer) As Boolean
+            Return includes.file_parse(s, o)
+        End Function
     End Class
 End Class

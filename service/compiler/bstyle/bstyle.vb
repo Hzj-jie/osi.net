@@ -91,8 +91,13 @@ Partial Public NotInheritable Class bstyle
                            with(Of _while)().
                            with(Of include_with_string)().
                            with(Of include_with_file)().
-                           with(Of ifndef_wrapped)().
-                           with(Of define)().
+                           with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of,
+                                                                        Function() As scope.define_t
+                                                                            Return scope.current().defines()
+                                                                        End Function)).
+                           with(scope.define_t.code_gens.define(Of logic_writer)(Function() As scope.define_t
+                                                                                     Return scope.current().defines()
+                                                                                 End Function)).
                            with(Of typedef)().
                            with(Of typedef_type_name)().
                            with(Of typedef_type_str)().

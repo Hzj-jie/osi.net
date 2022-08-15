@@ -29,11 +29,10 @@ Partial Public NotInheritable Class b2style
         End Class
 
         Public Function current_namespace() As current_namespace_t
-            If is_root() Then
-                assert(Not cn Is Nothing)
-                Return cn
-            End If
-            Return (+root).current_namespace()
+            Return from_root(Function(ByVal i As scope) As current_namespace_t
+                                 assert(Not i Is Nothing)
+                                 Return i.cn
+                             End Function)
         End Function
     End Class
 End Class

@@ -811,16 +811,11 @@ Public NotInheritable Class b2style_test
                                   parse(_b2style_test_data.__func__.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), streams.of(
+        assertion.equal(io.output().Trim(), String.Join(character.newline,
             "type0 main([])",
             "type0 std_out:C__struct__type__id__type([this.C__struct__type__id: C__struct__type__id__type&])",
             "type0 N__print([])",
-            "type0 N__f2:Integer:String([N__x: Integer, N__s: String])").
-            map(Function(ByVal x As String) As String
-                    Return x + character.newline
-                End Function).
-            collect_by(stream(Of String).collectors.to_str("")).
-            ToString())
+            "type0 N__f2:Integer:String([N__x: Integer, N__s: String])"))
     End Sub
 
     Private Sub New()

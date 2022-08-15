@@ -8,7 +8,8 @@ Imports osi.root.formation
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
-        Public NotInheritable Class current_function_proxy
+        ' It's a different current_function implementation.
+        Public NotInheritable Shadows Class current_function_proxy
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
@@ -35,7 +36,7 @@ Partial Public NotInheritable Class b2style
             End Function
         End Class
 
-        Public Function current_function() As current_function_proxy
+        Public Shadows Function current_function() As current_function_proxy
             Return New current_function_proxy(Me)
         End Function
     End Class

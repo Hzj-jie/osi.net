@@ -9,6 +9,7 @@ Imports osi.service.constructor
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
+    ' TODO: This class should be private.
     Partial Public NotInheritable Class scope
         Inherits scope(Of scope)
 
@@ -38,12 +39,10 @@ Partial Public NotInheritable Class logic
         End Sub
 
         Public Function functions() As interrupts
-            If is_root() Then
-                assert(Not f Is Nothing)
-                Return f
-            End If
-            assert(f Is Nothing)
-            Return (+root).functions()
+            Return from_root(Function(ByVal i As scope) As interrupts
+                                 assert(Not i Is Nothing)
+                                 Return i.f
+                             End Function)
         End Function
     End Class
 End Class

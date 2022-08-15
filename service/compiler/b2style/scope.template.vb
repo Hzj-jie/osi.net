@@ -79,7 +79,7 @@ Partial Public NotInheritable Class b2style
                     Using If(name.namespace().empty_or_whitespace(),
                              empty_idisposable.instance,
                              scope.current().current_namespace().define(name.namespace()))
-                        If Not parser.instance(s, scope.current().root_type_injector().current()) Then
+                        If Not code_builder.build(s, scope.current().root_type_injector().current()) Then
                             Return ternary.false
                         End If
                     End Using
