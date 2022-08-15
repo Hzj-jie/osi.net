@@ -107,7 +107,7 @@ Partial Public NotInheritable Class bstyle
             End Function
 
             Public Overrides Function current_namespace() As current_namespace_t
-                Return current_namespace_t.noop
+                Return Nothing
             End Function
         End Class
     End Class

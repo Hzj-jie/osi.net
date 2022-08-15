@@ -15,6 +15,8 @@ Partial Public Class scope(Of T As scope(Of T))
         Private ReadOnly s As New unordered_map(Of String, String)()
 
         Public Function try_define(ByVal type As String, ByVal name As String) As Boolean
+            type = scope(Of T).current_namespace_t.of(type)
+            name = scope(Of T).current_namespace_t.of(name)
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope

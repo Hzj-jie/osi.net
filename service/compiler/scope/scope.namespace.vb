@@ -9,11 +9,9 @@ Imports osi.root.formation
 
 Partial Public Class scope(Of T As scope(Of T))
     Public NotInheritable Class current_namespace_t
-        Public Shared ReadOnly noop As New current_namespace_t()
         Private ReadOnly s As New stack(Of String)()
 
         Public Function define(ByVal name As String) As IDisposable
-            assert(Not Object.ReferenceEquals(noop, Me))
             assert(Not name.null_or_whitespace())
             s.emplace(name)
             Return defer.to(Sub()
@@ -23,9 +21,6 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function name() As String
-            If Object.ReferenceEquals(noop, Me) Then
-                assert(s.empty())
-            End If
             If s.empty() Then
                 Return ""
             End If
@@ -35,7 +30,13 @@ Partial Public Class scope(Of T As scope(Of T))
         Public Const namespace_separator As String = "::"
 
         Public Shared Function [of](ByVal i As String) As String
-            Return with_namespace(scope(Of T).current().current_namespace().name(), i)
+            Return scope(Of T).current().
+                               current_namespace_opt().
+                               map(Function(ByVal x As current_namespace_t) As String
+                                       assert(Not x Is Nothing)
+                                       Return with_namespace(x.name(), i)
+                                   End Function).
+                               or_else(i)
         End Function
 
         Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)
@@ -54,7 +55,7 @@ Partial Public Class scope(Of T As scope(Of T))
             If i.StartsWith(namespace_separator) Then
                 Return i
             End If
-            Return strcat(n, namespace_separator, i)
+            Return String.Concat(n, namespace_separator, i)
         End Function
     End Class
 End Class
