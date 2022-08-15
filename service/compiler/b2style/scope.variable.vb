@@ -10,7 +10,8 @@ Imports osi.service.automata
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
-        Private NotInheritable Class variable_t
+        ' TODO: Merge with scope/scope.variable_t.
+        Private NotInheritable Shadows Class variable_t
             ' name -> type
             Private ReadOnly m As New unordered_map(Of String, String)()
 
@@ -35,7 +36,7 @@ Partial Public NotInheritable Class b2style
             End Function
         End Class
 
-        Public Structure variable_proxy
+        Public Shadows Structure variable_proxy
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
