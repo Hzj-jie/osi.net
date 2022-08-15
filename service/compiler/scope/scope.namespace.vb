@@ -32,7 +32,7 @@ Partial Public Class scope(Of T As scope(Of T))
             Return s.back()
         End Function
 
-        Private Const namespace_separator As String = "::"
+        Public Const namespace_separator As String = "::"
 
         Public Shared Function [of](ByVal i As String) As String
             Return with_namespace(scope(Of T).current().current_namespace().name(), i)

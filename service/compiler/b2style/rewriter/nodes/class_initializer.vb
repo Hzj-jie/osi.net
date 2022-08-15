@@ -38,8 +38,8 @@ Partial Public NotInheritable Class b2style
                            o.append(_namespace.bstyle_format.of(n.child(1))) AndAlso
                            o.append(");"))
                 End Sub)
-            scope.current().call_hierarchy().to(_namespace.with_global_namespace("construct"))
-            scope.current().call_hierarchy().to(_namespace.with_global_namespace("destruct"))
+            scope.current().call_hierarchy().to(scope.current_namespace_t.with_global_namespace("construct"))
+            scope.current().call_hierarchy().to(scope.current_namespace_t.with_global_namespace("destruct"))
             Return True
         End Function
     End Class

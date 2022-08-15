@@ -18,21 +18,21 @@ Partial Public NotInheritable Class b2style
             Public Function define(ByVal n As typed_node) As Boolean
                 assert(Not n Is Nothing)
                 assert(n.child_count() >= 2)
-                If m.emplace(_namespace.of(n.child(1).input_without_ignored()),
-                             _namespace.of(n.child(0).input_without_ignored())).second() Then
+                If m.emplace(scope.current_namespace_t.of(n.child(1).input_without_ignored()),
+                             scope.current_namespace_t.of(n.child(0).input_without_ignored())).second() Then
                     Return True
                 End If
                 raise_error(error_type.user,
                             "Variable ",
-                            _namespace.of(n.child(1).input_without_ignored()),
+                            scope.current_namespace_t.of(n.child(1).input_without_ignored()),
                             " has been defined already as ",
-                            _namespace.of(n.child(0).input_without_ignored()))
+                            scope.current_namespace_t.of(n.child(0).input_without_ignored()))
                 Return False
             End Function
 
             Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
                 assert(Not name.null_or_whitespace())
-                Return m.find(_namespace.of(name), type)
+                Return m.find(scope.current_namespace_t.of(name), type)
             End Function
         End Class
 

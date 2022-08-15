@@ -13,28 +13,20 @@ Partial Public NotInheritable Class b2style
     Private NotInheritable Class _namespace
         Implements code_gen(Of typed_node_writer)
 
-        Private Const namespace_separator As String = "::"
         Private Const namespace_replacer As String = "__"
-
-        Public Shared Function [of](ByVal i As String) As String
-            Return scope.current_namespace_t.of(i)
-        End Function
-
-        Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)
-            Return scope.current_namespace_t.of_namespace_and_name(i)
-        End Function
 
         Public NotInheritable Class bstyle_format
             Public Shared Function [of](ByVal i As String) As String
                 assert(Not i.null_or_whitespace())
-                Return streams.of(_namespace.of(i).Split("."c)).
+                Return streams.of(scope.current_namespace_t.of(i).Split("."c)).
                                map(Function(ByVal x As String) As String
                                        assert(Not x Is Nothing)
-                                       If Not x.Contains(namespace_separator) Then
+                                       If Not x.Contains(scope.current_namespace_t.namespace_separator) Then
                                            Return x
                                        End If
-                                       Return _namespace.of(x).
-                                                     Replace(namespace_separator, namespace_replacer).
+                                       Return scope.current_namespace_t.of(x).
+                                                     Replace(scope.current_namespace_t.namespace_separator,
+                                                             namespace_replacer).
                                                      Substring(namespace_replacer.Length())
                                    End Function).
                                collect_by(stream(Of String).collectors.to_str(".")).
@@ -48,13 +40,13 @@ Partial Public NotInheritable Class b2style
 
             ' TODO: The use case of this function is not valid, may consider to remove it.
             Public Shared Function with_namespace(ByVal ns As String, ByVal i As String) As String
-                Return [of](_namespace.with_namespace(ns, i))
+                Return [of](scope.current_namespace_t.with_namespace(ns, i))
             End Function
 
             ' TODO: This function should return the same string as the input "i" and is quite confusing, may consider to
             ' remove it.
             Public Shared Function in_global_namespace(ByVal i As String) As String
-                Return [of](_namespace.with_global_namespace(i))
+                Return [of](scope.current_namespace_t.with_global_namespace(i))
             End Function
 
             Public Shared Function operator_function_name(ByVal operator_name As String) As String
@@ -71,26 +63,20 @@ Partial Public NotInheritable Class b2style
         End Class
 
         Public Shared Function in_b2style_namespace(ByVal name As String) As String
-            Return with_global_namespace(with_namespace("b2style", name))
-        End Function
-
-        Public Shared Function with_global_namespace(ByVal n As String) As String
-            Return scope.current_namespace_t.with_global_namespace(n)
+            Return scope.current_namespace_t.with_global_namespace(
+                      scope.current_namespace_t.with_namespace("b2style", name))
         End Function
 
         Public Shared Function in_global_namespace(ByVal n As name_with_namespace) As String
-            Return with_global_namespace(with_namespace(n.namespace(), n.name()))
-        End Function
-
-        Private Shared Function with_namespace(ByVal n As String, ByVal i As String) As String
-            Return scope.current_namespace_t.with_namespace(n, i)
+            Return scope.current_namespace_t.with_global_namespace(
+                      scope.current_namespace_t.with_namespace(n.namespace(), n.name()))
         End Function
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() >= 4)
-            Using scope.current().current_namespace().define([of](n.child(1).word().str()))
+            Using scope.current().current_namespace().define(scope.current_namespace_t.of(n.child(1).word().str()))
                 For i As UInt32 = 3 To n.child_count() - uint32_2
                     If Not code_gen_of(n.child(i)).build(o) Then
                         Return False

@@ -185,26 +185,28 @@ Partial Public NotInheritable Class b2style
                           with_func(parse_function(node, t.second(), Nothing))
                       End Sub)
             If Not has_constructor Then
-                with_func(New function_def(Me,
-                                           function_def.type_of("void"),
-                                           function_def.name_of(construct),
-                                           function_def.type_t.pure,
-                                           New StringBuilder().Append("void ").
-                                                               Append(_namespace.with_global_namespace(construct)).
-                                                               Append("(").
-                                                               Append(name.name()).
-                                                               Append("& this){}").ToString()))
+                with_func(New function_def(
+                              Me,
+                              function_def.type_of("void"),
+                              function_def.name_of(construct),
+                              function_def.type_t.pure,
+                              New StringBuilder().Append("void ").
+                                                  Append(scope.current_namespace_t.with_global_namespace(construct)).
+                                                  Append("(").
+                                                  Append(name.name()).
+                                                  Append("& this){}").ToString()))
             End If
             If Not has_destructor Then
-                with_func(New function_def(Me,
-                                           function_def.type_of("void"),
-                                           function_def.name_of(destruct),
-                                           function_def.type_t.pure,
-                                           New StringBuilder().Append("void ").
-                                                               Append(_namespace.with_global_namespace(destruct)).
-                                                               Append("(").
-                                                               Append(name.name()).
-                                                               Append("& this){}").ToString()))
+                with_func(New function_def(
+                              Me,
+                              function_def.type_of("void"),
+                              function_def.name_of(destruct),
+                              function_def.type_t.pure,
+                              New StringBuilder().Append("void ").
+                                                  Append(scope.current_namespace_t.with_global_namespace(destruct)).
+                                                  Append("(").
+                                                  Append(name.name()).
+                                                  Append("& this){}").ToString()))
             End If
 
             n.children_of("class-template-function").

@@ -51,7 +51,7 @@ Partial Public NotInheritable Class logic
             End Sub
         End Class
 
-        Private NotInheritable Class variable_t
+        Private NotInheritable Shadows Class variable_t
             ' This stack can be a real stack, but using map with offset can provide a better lookup performance.
             Private ReadOnly stack As New unordered_map(Of String, ref)()
             Private undefined As UInt32 = 0
@@ -95,7 +95,7 @@ Partial Public NotInheritable Class logic
             End Function
         End Class
 
-        Public Structure variable_proxy
+        Public Shadows Structure variable_proxy
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
@@ -173,7 +173,7 @@ Partial Public NotInheritable Class logic
             End Function
         End Structure
 
-        Public Function variables() As variable_proxy
+        Public Shadows Function variables() As variable_proxy
             Return New variable_proxy(Me)
         End Function
     End Class
