@@ -8,7 +8,6 @@ Imports osi.root.constants
 Imports osi.root.template
 Imports builders = osi.service.compiler.logic.builders
 
-' TODO: Remove
 Public NotInheritable Class logic_writer
     Inherits lazy_list_writer(Of debug_dump)
 
