@@ -52,7 +52,7 @@ Partial Public NotInheritable Class bstyle
             Return New accessor_t(Me)
         End Function
 
-        Protected Shadows Class accessor_t
+        Private Shadows Class accessor_t
             Inherits scope(Of scope).accessor_t
 
             Private ReadOnly s As scope

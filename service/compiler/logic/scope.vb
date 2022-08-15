@@ -9,6 +9,7 @@ Imports osi.service.constructor
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class logic
+    ' TODO: This class should be private.
     Partial Public NotInheritable Class scope
         Inherits scope(Of scope)
 

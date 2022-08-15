@@ -8,7 +8,7 @@ Imports osi.root.formation
 Imports osi.service.compiler.logic
 
 Partial Public Class scope(Of T As scope(Of T))
-    Public NotInheritable Class current_function_t
+    Protected NotInheritable Class current_function_t
         Inherits function_signature(Of builders.parameter)
 
         Public Sub New(ByVal name As String,
@@ -18,7 +18,8 @@ Partial Public Class scope(Of T As scope(Of T))
         End Sub
 
         Public Function allow_return_value() As Boolean
-            Return Not return_type.Equals(compiler.logic.scope.type_t.zero_type)
+            ' This constant needs to match the implementation in logic/scope.type_t.zero_type.
+            Return Not return_type.Equals("type0")
         End Function
     End Class
 

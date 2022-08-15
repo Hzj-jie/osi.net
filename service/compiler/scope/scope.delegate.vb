@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.service.compiler.logic
 
 Partial Public Class scope(Of T As scope(Of T))
-    Public NotInheritable Class delegate_t
+    Protected NotInheritable Class delegate_t
         Private ReadOnly s As New unordered_map(Of String, function_signature)()
 
         Public Function define(ByVal name As String, ByVal signature As function_signature) As Boolean
