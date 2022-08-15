@@ -72,6 +72,14 @@ Partial Public NotInheritable Class b2style
             Public Overrides Function current_namespace() As current_namespace_t
                 Return s.cn
             End Function
+
+            Public Overrides Function variables() As variable_t
+                Return s.v
+            End Function
+
+            Public Overrides Function type_alias() As type_alias_t
+                Return Nothing
+            End Function
         End Class
     End Class
 End Class

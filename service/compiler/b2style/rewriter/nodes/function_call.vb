@@ -45,7 +45,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
             assert(Not o Is Nothing)
-            If scope.current().variables().resolve(name, Nothing) Then
+            If scope.current().variables().try_resolve(name, Nothing) Then
                 ' This should be a delegate function call.
                 Return code_gens().of_all_children(n).build(o)
             End If

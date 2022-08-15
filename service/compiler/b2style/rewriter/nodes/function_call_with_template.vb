@@ -55,7 +55,7 @@ Partial Public NotInheritable Class b2style
                          End Function).
                      map(Function(ByVal param As String) As Boolean
                              Dim type As String = Nothing
-                             If Not scope.current().variables().resolve(param, type) Then
+                             If Not scope.current().variables().try_resolve(param, type) Then
                                  raise_error(error_type.user, "Cannot find the type of parameter ", param)
                                  Return False
                              End If
