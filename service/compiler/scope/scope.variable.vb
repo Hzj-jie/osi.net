@@ -49,6 +49,8 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
+            type = scope(Of T).current_namespace_t.of(type)
+            name = scope(Of T).current_namespace_t.of(name)
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
@@ -65,6 +67,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function undefine(ByVal name As String) As Boolean
+            name = scope(Of T).current_namespace_t.of(name)
             assert(Not name.null_or_whitespace())
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
@@ -72,6 +75,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
+            name = scope(Of T).current_namespace_t.of(name)
             assert(Not name.null_or_whitespace())
             Return s.find(name, type)
         End Function
