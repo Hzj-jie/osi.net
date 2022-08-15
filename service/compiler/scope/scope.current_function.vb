@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.service.compiler.logic
+Imports builders = osi.service.compiler.logic.builders
 
 Partial Public Class scope(Of T As scope(Of T))
     Protected NotInheritable Class current_function_t

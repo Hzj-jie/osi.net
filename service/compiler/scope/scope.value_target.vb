@@ -6,7 +6,6 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
-Imports osi.service.compiler.logic
 
 Partial Public Class scope(Of T As scope(Of T))
     Public NotInheritable Class value_target_t

@@ -7,7 +7,7 @@ Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
-Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.logic_writer)
+Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic_writer)
 
 Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of String),
                                    _syntaxer_rule As __do(Of String),

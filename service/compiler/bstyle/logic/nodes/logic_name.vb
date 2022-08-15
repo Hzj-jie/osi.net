@@ -7,7 +7,7 @@ Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.service.compiler.logic
+Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class logic_name

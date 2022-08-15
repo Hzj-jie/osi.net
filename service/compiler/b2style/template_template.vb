@@ -9,8 +9,8 @@ Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.automata
-Imports osi.service.compiler.logic
 Imports osi.service.compiler.rewriters
+Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class b2style
     ' VisibleForTesting

@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.service.compiler.logic
+Imports builders = osi.service.compiler.logic.builders
 
 Partial Public Class scope(Of T As scope(Of T))
     Protected NotInheritable Class delegate_t
@@ -38,7 +38,10 @@ Partial Public Class scope(Of T As scope(Of T))
                 assert(Not parameter Is Nothing)
                 assert(parameter.type.Equals(scope(Of T).current().type_alias(parameter.type)))
             Next
-            Return scope(Of T).current().myself().delegates().define(name, New function_signature(name, return_type, parameters))
+            Return scope(Of T).current().
+                               myself().
+                               delegates().
+                               define(name, New function_signature(name, return_type, parameters))
         End Function
 
         Public Function retrieve(ByVal name As String, ByRef o As function_signature) As Boolean

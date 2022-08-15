@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.service.compiler.logic
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle

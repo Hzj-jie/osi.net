@@ -5,7 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.service.compiler.logic
+Imports builders = osi.service.compiler.logic.builders
 
 Public Class function_signature
     Inherits function_signature(Of builders.parameter_type)

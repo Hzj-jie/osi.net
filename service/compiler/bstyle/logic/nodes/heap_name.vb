@@ -7,7 +7,8 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
-Imports osi.service.compiler.logic
+Imports builders = osi.service.compiler.logic.builders
+Imports variable = osi.service.compiler.logic.variable
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class heap_name

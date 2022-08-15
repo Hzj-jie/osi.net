@@ -9,7 +9,7 @@ Partial Public NotInheritable Class bstyle
             Inherits scope(Of scope).call_hierarchy_t
 
             Public NotInheritable Class calculator
-                Inherits calculator(Of compiler.logic.logic_writer, calculator)
+                Inherits calculator(Of logic_writer, calculator)
 
                 Protected Overrides Function current() As scope(Of scope).call_hierarchy_t
                     Return scope.current().call_hierarchy()

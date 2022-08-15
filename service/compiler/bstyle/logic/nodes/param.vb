@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.automata
-Imports osi.service.compiler.logic
+Imports builders = osi.service.compiler.logic.builders
 Imports struct_def = osi.service.compiler.scope(Of osi.service.compiler.bstyle.scope).struct_def
 
 Partial Public NotInheritable Class bstyle

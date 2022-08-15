@@ -7,8 +7,9 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
-Imports osi.service.compiler.logic
+Imports builders = osi.service.compiler.logic.builders
 Imports struct_def = osi.service.compiler.scope(Of osi.service.compiler.bstyle.scope).struct_def
+Imports variable = osi.service.compiler.logic.variable
 
 Partial Public NotInheritable Class bstyle
     ' TODO: Avoid publicizing struct to b2style.

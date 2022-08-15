@@ -6,7 +6,6 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.service.automata
-Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class typedef_type_str

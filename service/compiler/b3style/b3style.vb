@@ -8,9 +8,8 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utils
-Imports osi.service.compiler.logic
 Imports osi.service.resource
-Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic.logic_writer)
+Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic_writer)
 
 Partial Public NotInheritable Class b3style
     Inherits logic_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, logic_gens_t, scope)

@@ -179,7 +179,7 @@
     <Compile Include="arguments.vb" />
     <Compile Include="scope\scope.call_hierarchy.vb" />
     <Compile Include="logic\define_heap.vb" />
-    <Compile Include="logic\logic_gen\read_scoped.vb" />
+    <Compile Include="read_scoped.vb" />
     <Compile Include="logic\builder\builders.implementation.vb" />
     <Compile Include="logic\builder\builders.vb" />
     <Compile Include="logic\builder\logic_writer.vb" />

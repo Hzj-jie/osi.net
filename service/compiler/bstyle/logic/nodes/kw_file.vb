@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.service.automata
-Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class kw_file

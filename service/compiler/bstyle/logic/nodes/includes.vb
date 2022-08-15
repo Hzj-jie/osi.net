@@ -7,7 +7,6 @@ Imports System.IO
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utils
-Imports osi.service.compiler.logic
 Imports osi.service.resource
 
 Partial Public NotInheritable Class bstyle

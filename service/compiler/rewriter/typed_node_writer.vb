@@ -10,6 +10,7 @@ Imports osi.root.template
 Imports osi.service.automata
 
 Partial Public NotInheritable Class rewriters
+    ' TODO: Remove.
     Public Class typed_node_writer(Of DEBUG_DUMP As __void(Of String))
         Inherits lazy_list_writer(Of DEBUG_DUMP)
 
