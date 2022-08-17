@@ -76,5 +76,10 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(False)
             Return Nothing
         End Function
+
+        Public Overridable Function current_namespace() As current_namespace_t
+            assert(False)
+            Return Nothing
+        End Function
     End Class
 End Class

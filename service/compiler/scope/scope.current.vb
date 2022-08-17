@@ -57,4 +57,11 @@ Partial Public Class scope(Of T As scope(Of T))
                              Return direct_cast(Of CT)(i.myself().call_hierarchy())
                          End Function)
     End Function
+
+    Public Function current_namespace() As current_namespace_t
+        Return from_root(Function(ByVal i As T) As current_namespace_t
+                             assert(Not i Is Nothing)
+                             Return i.myself().current_namespace()
+                         End Function)
+    End Function
 End Class

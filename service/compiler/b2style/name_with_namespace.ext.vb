@@ -9,7 +9,7 @@ Imports osi.root.formation
 Partial Public NotInheritable Class b2style
     Partial Public Structure name_with_namespace
         Public Shared Function [of](ByVal i As String) As name_with_namespace
-            Return New name_with_namespace(_namespace.of_namespace_and_name(i))
+            Return New name_with_namespace(scope.current_namespace_t.of_namespace_and_name(i))
         End Function
 
         Public Shared Function of_global_namespace(ByVal i As String) As name_with_namespace

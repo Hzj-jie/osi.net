@@ -7,26 +7,35 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports builders = osi.service.compiler.logic.builders
+Imports typed_node = osi.service.automata.typed_node
 Imports variable = osi.service.compiler.logic.variable
 
 Partial Public Class scope(Of T As scope(Of T))
     Protected NotInheritable Class variable_t
+        ' name -> type
         Private ReadOnly s As New unordered_map(Of String, String)()
 
-        Public Function try_define(ByVal type As String, ByVal name As String) As Boolean
+        Private Function define(ByVal type As String,
+                                ByVal name As String,
+                                ByVal insert As Func(Of String, String, Boolean)) As Boolean
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
+            assert(Not insert Is Nothing)
+            type = scope(Of T).current_namespace_t.of(type)
+            name = scope(Of T).current_namespace_t.of(name)
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
             ' where the variable_t instance Is being defined.
             type = scope(Of T).current().type_alias()(type)
             assert(Not builders.parameter_type.is_ref_type(type))
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
-            Return s.emplace(name, type).second()
+            Return insert(name, type)
         End Function
 
         Public Function define(ByVal type As String, ByVal name As String) As Boolean
-            If try_define(type, name) Then
+            If define(type, name, Function(ByVal n As String, ByVal t As String) As Boolean
+                                      Return s.emplace(n, t).second()
+                                  End Function) Then
                 Return True
             End If
             raise_error(error_type.user,
@@ -40,22 +49,17 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
-            assert(Not type.null_or_whitespace())
-            assert(Not name.null_or_whitespace())
-            ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
-            ' where the variable_t instance Is being defined.
-            type = scope(Of T).current().type_alias()(type)
-            assert(Not builders.parameter_type.is_ref_type(type))
-            ' The name should not be an array with index.
-            assert(Not variable.is_heap_name(name))
-            If s.find(name) = s.end() Then
-                Return False
-            End If
-            s(name) = type
-            Return True
+            Return define(type, name, Function(ByVal n As String, ByVal t As String) As Boolean
+                                          If s.find(n) = s.end() Then
+                                              Return False
+                                          End If
+                                          s(n) = t
+                                          Return True
+                                      End Function)
         End Function
 
         Public Function undefine(ByVal name As String) As Boolean
+            name = scope(Of T).current_namespace_t.of(name)
             assert(Not name.null_or_whitespace())
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
@@ -63,6 +67,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
+            name = scope(Of T).current_namespace_t.of(name)
             assert(Not name.null_or_whitespace())
             Return s.find(name, type)
         End Function
@@ -71,6 +76,12 @@ Partial Public Class scope(Of T As scope(Of T))
     Public Structure variable_proxy
         Public Function define(ByVal type As String, ByVal name As String) As Boolean
             Return scope(Of T).current().myself().variables().define(type, name)
+        End Function
+
+        Public Function define(ByVal n As typed_node) As Boolean
+            assert(Not n Is Nothing)
+            assert(n.child_count() >= 2)
+            Return define(n.child(0).input_without_ignored(), n.child(1).input_without_ignored())
         End Function
 
         Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
@@ -171,6 +182,12 @@ Partial Public Class scope(Of T As scope(Of T))
             End If
             raise_error(error_type.user, "Variable ", name, " has not been defined.")
             Return False
+        End Function
+
+        Public Shared Function define() As Func(Of typed_node, Boolean)
+            Return Function(ByVal n As typed_node) As Boolean
+                       Return current().variables().define(n)
+                   End Function
         End Function
     End Structure
 End Class

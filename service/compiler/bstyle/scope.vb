@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.service.compiler
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
@@ -104,6 +105,18 @@ Partial Public NotInheritable Class bstyle
 
             Public Overrides Function call_hierarchy() As scope(Of scope).call_hierarchy_t
                 Return s.fc
+            End Function
+        End Class
+
+        Protected Overrides Function get_features() As scope(Of scope).features_t
+            Return New features_t()
+        End Function
+
+        Public Shadows Class features_t
+            Inherits scope(Of scope).features_t
+
+            Public Overrides Function with_namespace() As Boolean
+                Return False
             End Function
         End Class
     End Class

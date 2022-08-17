@@ -20,8 +20,8 @@ Partial Public Class scope(Of T As scope(Of T))
             Return values.pop()
         End Function
 
-        Public Function value(Of T)(ByVal f As _do_val_ref(Of target, T, Boolean)) _
-                             As read_scoped(Of target).ref(Of T)
+        Public Function value(Of RT)(ByVal f As _do_val_ref(Of target, RT, Boolean)) _
+                             As read_scoped(Of target).ref(Of RT)
             Return values.pop(f)
         End Function
 

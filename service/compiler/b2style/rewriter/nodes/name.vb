@@ -28,7 +28,8 @@ Partial Public NotInheritable Class b2style
                    n.descentdant_of("paramtype") AndAlso
                    (n.descentdant_of("template-type-name") OrElse n.descentdant_of("function-name-with-template")) Then
                 ' Local type name should be used when expanding templates.
-                o.append(_namespace.with_global_namespace(_namespace.of(n.input_without_ignored())))
+                o.append(scope.current_namespace_t.with_global_namespace(
+                             scope.current_namespace_t.of(n.input_without_ignored())))
             Else
                 o.append(_namespace.bstyle_format.of(n))
             End If

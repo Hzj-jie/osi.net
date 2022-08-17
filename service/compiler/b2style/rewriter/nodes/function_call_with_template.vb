@@ -22,7 +22,7 @@ Partial Public NotInheritable Class b2style
             End If
             Dim extended_type As String = Nothing
             Return scope.current().template().resolve(n.child(0), extended_type) AndAlso
-                   code_gens().typed(Of function_call).build(_namespace.with_global_namespace(
+                   code_gens().typed(Of function_call).build(scope.current_namespace_t.with_global_namespace(
                        If(t.is_null(),
                           extended_type,
                           function_call.build_struct_function(t.first(), extended_type))),
@@ -55,7 +55,7 @@ Partial Public NotInheritable Class b2style
                          End Function).
                      map(Function(ByVal param As String) As Boolean
                              Dim type As String = Nothing
-                             If Not scope.current().variables().resolve(param, type) Then
+                             If Not scope.current().variables().try_resolve(param, type) Then
                                  raise_error(error_type.user, "Cannot find the type of parameter ", param)
                                  Return False
                              End If
