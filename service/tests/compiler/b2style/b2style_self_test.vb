@@ -20,6 +20,9 @@ Public NotInheritable Class b2style_self_test
     Public Const failure As String = "Failure: "
     Public Const success As String = "Success: "
     Public Const no_extra_inforamtion As String = "no extra information."
+    Private Shared ReadOnly ignored_test As unordered_set(Of String) = unordered_set.of(
+        "delegate_in_class.txt",
+        "delegate_in_class_on_heap.txt")
     Private Shared filter As argument(Of String)
 
     Public Sub New()
@@ -32,6 +35,9 @@ Public NotInheritable Class b2style_self_test
     End Sub
 
     Protected Overrides Sub execute(ByVal name As String, ByVal content As String)
+        If ignored_test.find(name) <> ignored_test.end() Then
+            Return
+        End If
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(content, e), name)

@@ -45,12 +45,13 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
             assert(Not o Is Nothing)
-            If scope.current().variables().resolve(name, Nothing) Then
-                ' This should be a delegate function call.
-                Return code_gens().of_all_children(n).build(o)
-            End If
 
             If Not name.Contains(".") Then
+                If scope.current().variables().resolve(name, Nothing) Then
+                    ' This should be a delegate function call.
+                    Return code_gens().of_all_children(n).build(o)
+                End If
+
                 o.append(_namespace.bstyle_format.of(name))
                 scope.current().call_hierarchy().to(name)
                 For i As UInt32 = 1 To n.child_count() - uint32_1
@@ -63,6 +64,11 @@ Partial Public NotInheritable Class b2style
 
             Dim p As tuple(Of String, String) = split_struct_function(name)
             Dim function_name As String = _namespace.bstyle_format.in_global_namespace(p.second())
+            ' TODO: This never works, class variables are not defined in scope.current().variables().
+            ' If scope.current().variables().resolve(function_name, Nothing) Then
+            '     Return code_gens().of_all_children(n).build(o)
+            ' End If
+
             scope.current().call_hierarchy().to_bstyle_function(function_name)
             o.append(function_name)
             o.append("(")
