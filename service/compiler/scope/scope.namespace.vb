@@ -30,13 +30,10 @@ Partial Public Class scope(Of T As scope(Of T))
         Public Const namespace_separator As String = "::"
 
         Public Shared Function [of](ByVal i As String) As String
-            Return scope(Of T).current().
-                               current_namespace_opt().
-                               map(Function(ByVal x As current_namespace_t) As String
-                                       assert(Not x Is Nothing)
-                                       Return with_namespace(x.name(), i)
-                                   End Function).
-                               or_else(i)
+            If Not scope(Of T).current().features().with_namespace() Then
+                Return i
+            End If
+            Return with_namespace(scope(Of T).current().current_namespace().name(), i)
         End Function
 
         Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)

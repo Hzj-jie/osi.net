@@ -85,13 +85,4 @@ Partial Public Class scope(Of T As scope(Of T))
         assert(getter(+this) Is Nothing)
         Return (+root).from_root(getter)
     End Function
-
-    Protected Function from_root_opt(Of RT)(ByVal getter As Func(Of T, RT)) As [optional](Of RT)
-        assert(Not getter Is Nothing)
-        If is_root() Then
-            Return [optional].of_nullable(getter(+this))
-        End If
-        assert(getter(+this) Is Nothing)
-        Return (+root).from_root_opt(getter)
-    End Function
 End Class

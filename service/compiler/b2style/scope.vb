@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.compiler
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b2style
@@ -76,9 +77,17 @@ Partial Public NotInheritable Class b2style
             Public Overrides Function variables() As variable_t
                 Return s.v
             End Function
+        End Class
 
-            Public Overrides Function type_alias() As type_alias_t
-                Return Nothing
+        Protected Overrides Function get_features() As scope(Of scope).features_t
+            Return New features_t()
+        End Function
+
+        Public Shadows Class features_t
+            Inherits scope(Of scope).features_t
+
+            Public Overrides Function with_type_alias() As Boolean
+                Return False
             End Function
         End Class
     End Class

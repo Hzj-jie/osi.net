@@ -93,6 +93,7 @@
     <Compile Include="b2style\rewriter\nodes\template_type_name.vb" />
     <Compile Include="b2style\scope.class.vb" />
     <Compile Include="b2style\scope.current_function.vb" />
+    <Compile Include="scope\scope.features.vb" />
     <Compile Include="scope\scope.namespace.vb" />
     <Compile Include="b2style\scope.root_type_injector.vb" />
     <Compile Include="b2style\scope.template.vb" />

@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.formation
 
 Partial Public Class scope(Of T As scope(Of T))
     Public Function includes() As includes_t
@@ -64,12 +63,5 @@ Partial Public Class scope(Of T As scope(Of T))
                              assert(Not i Is Nothing)
                              Return i.myself().current_namespace()
                          End Function)
-    End Function
-
-    Public Function current_namespace_opt() As [optional](Of current_namespace_t)
-        Return from_root_opt(Function(ByVal i As T) As current_namespace_t
-                                 assert(Not i Is Nothing)
-                                 Return i.myself().current_namespace()
-                             End Function)
     End Function
 End Class

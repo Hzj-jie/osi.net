@@ -67,7 +67,7 @@ Partial Public Class scope(Of T As scope(Of T))
         Private Function retrieve(ByVal [alias] As String) As String
             assert(Not builders.parameter_type.is_ref_type([alias]))
             Dim s As T = scope(Of T).current()
-            If s.myself().type_alias() Is Nothing Then
+            If Not s.features().with_type_alias() Then
                 Return [alias]
             End If
             While Not s Is Nothing
