@@ -78,7 +78,9 @@
     <Content Include="b2style\self-test\bool-heap.txt" />
     <Content Include="b2style\self-test\bool_array.txt" />
     <Content Include="b2style\self-test\class-func-use-own-type.txt" />
+    <Content Include="b2style\self-test\class-func.txt" />
     <Content Include="b2style\self-test\class-template-func-compile-only.txt" />
+    <Content Include="b2style\self-test\delegate_in_class.txt" />
     <Content Include="b2style\self-test\delegate_in_class_on_heap.txt" />
     <Content Include="b2style\self-test\empty-and-null.txt" />
     <Content Include="b2style\self-test\heap.txt" />

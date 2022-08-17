@@ -16,6 +16,9 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4 OrElse n.child_count() = 5)
+            If Not scope.current().variables().define(n) Then
+                Return False
+            End If
             If Not code_gen_of(n.child(0)).build(o) OrElse
                Not code_gen_of(n.child(1)).build(o) OrElse
                Not o.append(";") Then

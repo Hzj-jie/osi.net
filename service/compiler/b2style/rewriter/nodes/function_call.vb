@@ -64,9 +64,10 @@ Partial Public NotInheritable Class b2style
 
             Dim p As tuple(Of String, String) = split_struct_function(name)
             Dim function_name As String = _namespace.bstyle_format.in_global_namespace(p.second())
-            If scope.current().variables().resolve(function_name, Nothing) Then
-                Return code_gens().of_all_children(n).build(o)
-            End If
+            ' TODO: This never works, class variables are not defined in scope.current().variables().
+            ' If scope.current().variables().resolve(function_name, Nothing) Then
+            '     Return code_gens().of_all_children(n).build(o)
+            ' End If
 
             scope.current().call_hierarchy().to_bstyle_function(function_name)
             o.append(function_name)
