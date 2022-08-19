@@ -64,4 +64,11 @@ Partial Public Class scope(Of T As scope(Of T))
                              Return i.myself().current_namespace()
                          End Function)
     End Function
+
+    Protected Function root_type_injector(Of WRITER As {lazy_list_writer, New})() As root_type_injector_t(Of WRITER)
+        Return from_root(Function(ByVal i As T) As root_type_injector_t(Of WRITER)
+                             assert(Not i Is Nothing)
+                             Return i.myself().root_type_injector(Of WRITER)()
+                         End Function)
+    End Function
 End Class

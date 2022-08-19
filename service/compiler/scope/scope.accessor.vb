@@ -81,5 +81,11 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(False)
             Return Nothing
         End Function
+
+        Public Overridable Function root_type_injector(Of WRITER As {lazy_list_writer, New})() _
+                                        As root_type_injector_t(Of WRITER)
+            assert(False)
+            Return Nothing
+        End Function
     End Class
 End Class

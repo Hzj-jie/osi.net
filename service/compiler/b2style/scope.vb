@@ -5,8 +5,8 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.service.compiler
 Imports osi.service.constructor
+Imports typed_node_writer = osi.service.compiler.rewriters.typed_node_writer
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
@@ -20,7 +20,7 @@ Partial Public NotInheritable Class b2style
         Private ReadOnly v As New variable_t()
         Private ReadOnly d As define_t
         Private ReadOnly c As New class_t()
-        Private ReadOnly i As root_type_injector_t
+        Private ReadOnly i As root_type_injector_t(Of typed_node_writer)
 
         <inject_constructor>
         Public Sub New(ByVal parent As scope)
@@ -33,7 +33,7 @@ Partial Public NotInheritable Class b2style
             fc = New call_hierarchy_t()
             cn = New current_namespace_t()
             d = New define_t()
-            i = New root_type_injector_t()
+            i = New root_type_injector_t(Of typed_node_writer)()
         End Sub
 
         Public Shared Function wrap() As scope
@@ -77,7 +77,16 @@ Partial Public NotInheritable Class b2style
             Public Overrides Function variables() As variable_t
                 Return s.v
             End Function
+
+            Public Overrides Function root_type_injector(Of WRITER As {lazy_list_writer, New})() _
+                                          As root_type_injector_t(Of WRITER)
+                Return direct_cast(Of root_type_injector_t(Of WRITER))(s.i)
+            End Function
         End Class
+
+        Public Shadows Function root_type_injector() As root_type_injector_t(Of typed_node_writer)
+            Return MyBase.root_type_injector(Of typed_node_writer)()
+        End Function
 
         Protected Overrides Function get_features() As scope(Of scope).features_t
             Return New features_t()
