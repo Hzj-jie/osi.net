@@ -58,6 +58,10 @@ Partial Public Class scope(Of T As scope(Of T))
                          End Function)
     End Function
 
+    Private Function call_hierarchy() As call_hierarchy_t
+        Return call_hierarchy(Of call_hierarchy_t)()
+    End Function
+
     Public Function current_namespace() As current_namespace_t
         Return from_root(Function(ByVal i As T) As current_namespace_t
                              assert(Not i Is Nothing)

@@ -8,6 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
+Imports name_with_namespace = osi.service.compiler.scope(Of osi.service.compiler.b2style.scope).name_with_namespace
 
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class _namespace
@@ -55,7 +56,7 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public Shared Function [of](ByVal n As name_with_namespace) As String
-                Return [of](_namespace.in_global_namespace(n))
+                Return [of](n.in_global_namespace())
             End Function
 
             Private Sub New()
@@ -65,11 +66,6 @@ Partial Public NotInheritable Class b2style
         Public Shared Function in_b2style_namespace(ByVal name As String) As String
             Return scope.current_namespace_t.with_global_namespace(
                       scope.current_namespace_t.with_namespace("b2style", name))
-        End Function
-
-        Public Shared Function in_global_namespace(ByVal n As name_with_namespace) As String
-            Return scope.current_namespace_t.with_global_namespace(
-                      scope.current_namespace_t.with_namespace(n.namespace(), n.name()))
         End Function
 
         Private Function build(ByVal n As typed_node,

@@ -8,7 +8,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 
-Partial Public NotInheritable Class b2style
+Partial Public Class scope(Of T As scope(Of T))
     Partial Public NotInheritable Class class_def
         Public NotInheritable Class function_def
             Implements IComparable(Of function_def), IEquatable(Of function_def)

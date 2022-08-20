@@ -9,6 +9,7 @@ Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 Imports builders = osi.service.compiler.logic.builders
+Imports class_def = osi.service.compiler.scope(Of osi.service.compiler.b2style.scope).class_def
 
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class _class
@@ -39,7 +40,7 @@ Partial Public NotInheritable Class b2style
             Dim class_name As String = n.child(1).input()
             Dim cd As New class_def(class_name)
             bstyle.struct.parse_struct_body(n).foreach(AddressOf cd.with_var)
-            cd.with_funcs(n)
+            cd.with_funcs(code_gens(), n)
             Dim classes As scope.class_proxy = scope.current().classes()
             If n.child(2).type_name.Equals("class-inheritance") AndAlso
                Not code_gens().of_all_children(n.child(2).child(1)).

@@ -2,10 +2,10 @@
 Imports osi.root.connector
 Imports osi.root.formation
 
-Partial Public NotInheritable Class b2style
+Partial Public Class scope(Of T As scope(Of T))
 
 ##DEFINE TYPE_NAME name_with_namespace
 ##DEFINE INNER_TYPE tuple(Of String, String)
-##INCLUDE ..\..\..\..\root\codegen\podw.vbp
+##INCLUDE ..\..\..\root\codegen\podw.vbp
 
 End Class

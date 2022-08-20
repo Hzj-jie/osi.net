@@ -57,11 +57,9 @@
   <ItemGroup>
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
-    <Compile Include="b2style\class_def.vb" />
-    <Compile Include="b2style\function_def.vb" />
+    <Compile Include="scope\class_def.vb" />
+    <Compile Include="scope\function_def.vb" />
     <None Include="b2style\lib\std\vector" />
-    <Compile Include="b2style\name_with_namespace.ext.vb" />
-    <Compile Include="b2style\name_with_namespace.vb" />
     <Compile Include="b2style\rewriter\nodes\class.vb" />
     <Compile Include="b2style\rewriter\nodes\class_initializer.vb" />
     <Compile Include="b2style\rewriter\nodes\function.vb" />
@@ -257,6 +255,8 @@
     <Compile Include="rewriter\rewriter_rule_wrapper.vb" />
     <Compile Include="rewriter\typed_node_writer.vb" />
     <Compile Include="rule_wrapper.vb" />
+    <Compile Include="scope\name_with_namespace.ext.vb" />
+    <Compile Include="scope\name_with_namespace.vb" />
     <Compile Include="shared\shared_rules.vb" />
     <Compile Include="shared\shared_rules_exporter.vb" />
   </ItemGroup>
@@ -269,7 +269,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="b2style\codegen\name_with_namespace.vbp" />
     <None Include="b2style\codegen\run.cmd" />
     <None Include="b2style\lib\run.cmd" />
     <Compile Include="b2style\scope.call_hierarchy.vb" />
@@ -289,6 +288,8 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="scope\name_with_namespace.vbp" />
+    <None Include="scope\run.cmd" />
     <None Include="shared\run.cmd" />
   </ItemGroup>
   <ItemGroup>
