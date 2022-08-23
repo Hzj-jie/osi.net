@@ -75,4 +75,8 @@ Partial Public Class scope(Of T As scope(Of T))
                              Return i.myself().root_type_injector(Of WRITER)()
                          End Function)
     End Function
+
+    Public Function classes() As class_proxy
+        Return New class_proxy()
+    End Function
 End Class

@@ -82,6 +82,10 @@ Partial Public NotInheritable Class b2style
                                           As root_type_injector_t(Of WRITER)
                 Return direct_cast(Of root_type_injector_t(Of WRITER))(s.i)
             End Function
+
+            Public Overrides Function classes() As class_t
+                Return s.c
+            End Function
         End Class
 
         Public Shadows Function root_type_injector() As root_type_injector_t(Of typed_node_writer)
