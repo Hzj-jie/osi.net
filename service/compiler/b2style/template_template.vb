@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
@@ -21,21 +22,31 @@ Partial Public NotInheritable Class b2style
         ' One template type can be used multiple times in the generated code.
         Private ReadOnly type_refs As New vector(Of ref(Of String))()
 
-        Private NotInheritable Class extended_type_name_t
+        Private Structure extended_type_name_t
             Private ReadOnly name As String
-            Private ReadOnly types As New one_off(Of vector(Of String))()
+            Private ReadOnly types As one_off(Of vector(Of String))
 
             Public Sub New(ByVal name As String)
                 assert(Not name.null_or_whitespace())
                 Me.name = name
+                Me.types = New one_off(Of vector(Of String))()
             End Sub
 
             Public Sub apply(ByVal types As vector(Of String))
                 assert(Me.types.set(
                        types.stream().
                              map(Function(ByVal type As String) As String
-                                     ' Remove referneces in the name.
-                                     Return _namespace.bstyle_format.of(builders.parameter_type.remove_ref(type))
+                                     ' Remove referneces in the name, and replace any characters out of the raw-name in
+                                     ' nlexer_rule2 into an underscore. Knowing, this behavior may cause some naming
+                                     ' conflicts.
+                                     Dim r As New StringBuilder(builders.parameter_type.remove_ref(type))
+                                     For i As Int32 = 0 To r.Length() - 1
+                                         If r(i).alpha() OrElse r(i).digit() OrElse r(i) = character.underline Then
+                                             Continue For
+                                         End If
+                                         r(i) = character.underline
+                                     Next
+                                     Return r.ToString()
                                  End Function).
                              collect_to(Of vector(Of String))()))
             End Sub
@@ -43,7 +54,7 @@ Partial Public NotInheritable Class b2style
             Public Function str() As String
                 Return strcat(name, "__", types.get().str("__"))
             End Function
-        End Class
+        End Structure
 
         Private Sub New(ByVal body As typed_node, ByVal name_node As typed_node, ByVal types As vector(Of String))
             assert(Not body Is Nothing)
