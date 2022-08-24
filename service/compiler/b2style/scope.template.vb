@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 
@@ -37,14 +38,11 @@ Partial Public NotInheritable Class b2style
                 End Function
             End Class
 
-            Public Function define(ByVal name As String,
-                                   ByVal type_param_list As vector(Of String),
-                                   ByVal body As typed_node,
-                                   ByVal name_node As typed_node) As Boolean
+            Public Function define(ByVal name As String, ByVal f As _do(Of template_template, Boolean)) As Boolean
                 assert(Not name.null_or_whitespace())
-                assert(Not body Is Nothing)
+                assert(Not f Is Nothing)
                 Dim t As template_template = Nothing
-                If Not template_template.of(type_param_list, body, name_node, t) Then
+                If Not f(t) Then
                     Return False
                 End If
                 assert(Not t Is Nothing)
@@ -99,12 +97,8 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
-            Public Function define(ByVal name As String,
-                                   ByVal type_param_list As vector(Of String),
-                                   ByVal body As typed_node,
-                                   ByVal name_node As typed_node) As Boolean
-                assert(Not body Is Nothing)
-                Return s.t.define(name, type_param_list, body, name_node)
+            Public Function define(ByVal name As String, ByVal f As _do(Of template_template, Boolean)) As Boolean
+                Return s.t.define(name, f)
             End Function
 
             Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean

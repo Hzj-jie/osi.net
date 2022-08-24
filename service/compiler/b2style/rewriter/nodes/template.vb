@@ -91,10 +91,12 @@ Partial Public NotInheritable Class b2style
                                   ByVal body As typed_node,
                                   ByVal name_node As typed_node,
                                   ByRef unused As Int32) As Boolean
-                             Return scope.current().template().define(name,
-                                                                      types,
-                                                                      body,
-                                                                      name_node)
+                             Return scope.current().
+                                          template().
+                                          define(name,
+                                                 Function(ByRef t As template_template) As Boolean
+                                                     Return template_template.of(types, body, name_node, t)
+                                                 End Function)
                          End Function,
                          0)
         End Function
