@@ -36,7 +36,7 @@ Partial Public NotInheritable Class b2style
             assert(n.child_count() = 2)
             Dim name As String = Nothing
             Dim name_node As typed_node = Nothing
-            Return code_gens().typed(Of name)(n.child(1).child().type_name).of(n, name) AndAlso
+            Return l.typed(Of name)(n.child(1).child().type_name).of(n, name) AndAlso
                    name_node_of(n, name_node) AndAlso
                    f(name,
                      l.typed(Of template_head)().type_param_list(n.child(0)),
