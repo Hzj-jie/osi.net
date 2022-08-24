@@ -59,8 +59,6 @@ Partial Public NotInheritable Class b2style
         Private Sub New(ByVal body As typed_node, ByVal name_node As typed_node, ByVal types As vector(Of String))
             assert(Not body Is Nothing)
             assert(Not name_node Is Nothing)
-            assert(body.type_name.Equals("template-body"))
-            body = body.child()
             assert(Not types.null_or_empty())
             Me._extended_type_name = New extended_type_name_t(name_node.input_without_ignored())
             Me.type_refs.resize(types.size(),
@@ -120,7 +118,7 @@ Partial Public NotInheritable Class b2style
                             "]")
                 Return False
             End If
-            o = New template_template(body, name_node, type_param_list)
+            o = New template_template(body.child(), name_node, type_param_list)
             Return True
         End Function
 
