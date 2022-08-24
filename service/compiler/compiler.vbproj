@@ -257,6 +257,7 @@
     <Compile Include="rule_wrapper.vb" />
     <Compile Include="scope\name_with_namespace.ext.vb" />
     <Compile Include="scope\name_with_namespace.vb" />
+    <Compile Include="scope\template_template.vb" />
     <Compile Include="shared\shared_rules.vb" />
     <Compile Include="shared\shared_rules_exporter.vb" />
   </ItemGroup>
