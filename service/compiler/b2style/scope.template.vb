@@ -38,13 +38,8 @@ Partial Public NotInheritable Class b2style
                 End Function
             End Class
 
-            Public Function define(ByVal name As String, ByVal f As _do(Of template_template, Boolean)) As Boolean
+            Public Function define(ByVal name As String, ByVal t As template_template) As Boolean
                 assert(Not name.null_or_whitespace())
-                assert(Not f Is Nothing)
-                Dim t As template_template = Nothing
-                If Not f(t) Then
-                    Return False
-                End If
                 assert(Not t Is Nothing)
                 Dim d As New definition(t)
                 If m.emplace(name_with_namespace.of(name), d).second() Then
@@ -96,8 +91,8 @@ Partial Public NotInheritable Class b2style
                 Me.s = s
             End Sub
 
-            Public Function define(ByVal name As String, ByVal f As _do(Of template_template, Boolean)) As Boolean
-                Return s.t.define(name, f)
+            Public Function define(ByVal name As String, ByVal t As template_template) As Boolean
+                Return s.t.define(name, t)
             End Function
 
             Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
