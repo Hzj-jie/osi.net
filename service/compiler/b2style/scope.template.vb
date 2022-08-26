@@ -5,9 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.formation
-Imports osi.service.automata
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
