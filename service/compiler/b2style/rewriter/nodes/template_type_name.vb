@@ -18,7 +18,7 @@ Partial Public NotInheritable Class b2style
             If Not scope.current().template().resolve(n, extended_type) Then
                 Return False
             End If
-            Return o.append(extended_type)
+            Return o.append(_namespace.bstyle_format.of(extended_type))
         End Function
 
         Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean Implements template.name.of

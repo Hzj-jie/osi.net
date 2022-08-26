@@ -84,8 +84,7 @@ Partial Public NotInheritable Class b2style
                         End If
                     End Using
                 End If
-                ' TODO: Should return b2style name with namespace rather than bstyle.
-                extended_type_name = _namespace.bstyle_format.with_namespace(
+                extended_type_name = scope.current_namespace_t.with_namespace(
                                          name.namespace(),
                                          d.extended_type_name(types))
                 Return ternary.true
