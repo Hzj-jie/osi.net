@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.constructor
 Imports typed_node_writer = osi.service.compiler.rewriters.typed_node_writer
@@ -16,7 +17,9 @@ Partial Public NotInheritable Class b2style
         Private ReadOnly fc As call_hierarchy_t
         Private ReadOnly cn As current_namespace_t
         Private f As String
-        Private ReadOnly t As New template_t(Of typed_node_writer, code_builder_proxy)()
+        Private ReadOnly t As New template_t(Of template.target_type_name,
+                                                typed_node_writer,
+                                                code_builder_proxy)()
         Private ReadOnly v As New variable_t()
         Private ReadOnly d As define_t
         Private ReadOnly c As New class_t()
@@ -86,11 +89,14 @@ Partial Public NotInheritable Class b2style
             Public Overrides Function classes() As class_t
                 Return s.c
             End Function
-        End Class
 
-        Public Shadows Function root_type_injector() As root_type_injector_t(Of typed_node_writer)
-            Return MyBase.root_type_injector(Of typed_node_writer)()
-        End Function
+            Public Overrides Function template(Of TARGET_TYPE_NAME As func_t(Of String),
+                                                  WRITER As {lazy_list_writer, New},
+                                                  BUILDER As func_t(Of String, WRITER, Boolean))() _
+                                          As template_t(Of TARGET_TYPE_NAME, WRITER, BUILDER)
+                Return direct_cast(Of template_t(Of TARGET_TYPE_NAME, WRITER, BUILDER))(s.t)
+            End Function
+        End Class
 
         Protected Overrides Function get_features() As scope(Of scope).features_t
             Return New features_t()
@@ -103,5 +109,15 @@ Partial Public NotInheritable Class b2style
                 Return False
             End Function
         End Class
+
+        Public Shadows Function root_type_injector() As root_type_injector_t(Of typed_node_writer)
+            Return MyBase.root_type_injector(Of typed_node_writer)()
+        End Function
+
+        Public Shadows Function template() As template_proxy(Of template.target_type_name,
+                                                                typed_node_writer,
+                                                                code_builder_proxy)
+            Return MyBase.template(Of template.target_type_name, typed_node_writer, code_builder_proxy)()
+        End Function
     End Class
 End Class

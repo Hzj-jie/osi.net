@@ -15,7 +15,7 @@ Imports osi.service.compiler.rewriters
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public Class scope(Of T As scope(Of T))
-    Public Class template_template(Of _TARGET_TYPE_NAME As func_t(Of String))
+    Public NotInheritable Class template_template(Of _TARGET_TYPE_NAME As func_t(Of String))
         Private Shared ReadOnly target_type_name As String = alloc(Of _TARGET_TYPE_NAME)().run()
         Private Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("template", "template", "dump"))
         Private ReadOnly w As New template_writer()
@@ -57,7 +57,7 @@ Partial Public Class scope(Of T As scope(Of T))
             End Function
         End Structure
 
-        Protected Sub New(ByVal body As typed_node, ByVal name_node As typed_node, ByVal types As vector(Of String))
+        Public Sub New(ByVal body As typed_node, ByVal name_node As typed_node, ByVal types As vector(Of String))
             assert(Not body Is Nothing)
             assert(Not name_node Is Nothing)
             assert(Not types.null_or_empty())

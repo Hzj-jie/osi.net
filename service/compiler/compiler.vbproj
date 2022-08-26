@@ -94,9 +94,8 @@
     <Compile Include="scope\scope.features.vb" />
     <Compile Include="scope\scope.namespace.vb" />
     <Compile Include="scope\scope.root_type_injector.vb" />
-    <Compile Include="b2style\scope.template.vb" />
+    <Compile Include="scope\scope.template.vb" />
     <Compile Include="b2style\scope.vb" />
-    <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\logic\nodes\kw_statement.vb" />
     <Compile Include="bstyle\logic\nodes\static_cast.vb" />
     <Compile Include="scope\scope.temp_logic_name.vb" />

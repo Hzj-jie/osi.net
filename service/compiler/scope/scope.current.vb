@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.delegates
 
 Partial Public Class scope(Of T As scope(Of T))
     Public Function includes() As includes_t
@@ -78,5 +79,12 @@ Partial Public Class scope(Of T As scope(Of T))
 
     Public Function classes() As class_proxy
         Return New class_proxy()
+    End Function
+
+    Protected Function template(Of TARGET_TYPE_NAME As func_t(Of String),
+                                   WRITER As {lazy_list_writer, New},
+                                   BUILDER As func_t(Of String, WRITER, Boolean))() _
+                           As template_proxy(Of TARGET_TYPE_NAME, WRITER, BUILDER)
+        Return New template_proxy(Of TARGET_TYPE_NAME, WRITER, BUILDER)()
     End Function
 End Class

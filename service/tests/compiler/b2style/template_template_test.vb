@@ -12,7 +12,8 @@ Imports osi.service.automata
 Imports osi.service.compiler
 Imports osi.service.compiler.b2style
 Imports osi.service.resource
-Imports template_template = osi.service.compiler.b2style.template_template
+Imports template_template = osi.service.compiler.scope(Of osi.service.compiler.b2style.scope).
+                                template_template(Of osi.service.compiler.b2style.template.target_type_name)
 
 <test>
 Public NotInheritable Class template_template_test
@@ -23,7 +24,7 @@ Public NotInheritable Class template_template_test
         assertion.is_not_null(n)
         Using New scope()
             Dim t As template_template = Nothing
-            assertion.is_true(template_template.of(b2style.new_code_gens(), n.child().child(), t))
+            assertion.is_true(b2style.template.of(b2style.new_code_gens(), n.child().child(), t))
             Dim impl As String = Nothing
             assertion.is_true(t.apply(vector.of("int"), impl))
             assertion.equal(impl, "class C__int { int x ; void f ( int y ) { } } ;")
@@ -37,7 +38,7 @@ Public NotInheritable Class template_template_test
         assertion.is_not_null(n)
         Using New scope()
             Dim t As template_template = Nothing
-            assertion.is_true(template_template.of(b2style.new_code_gens(), n.child().child(), t))
+            assertion.is_true(b2style.template.of(b2style.new_code_gens(), n.child().child(), t))
             assertion.is_false(t.apply(vector.of("a", "b"), Nothing))
         End Using
     End Sub
@@ -51,9 +52,9 @@ Public NotInheritable Class template_template_test
         assertions.of(error_event.capture_log(error_type.user,
                                               Sub()
                                                   Using New scope()
-                                                      assertion.is_false(template_template.of(b2style.new_code_gens(),
-                                                                                              n.child().child(),
-                                                                                              Nothing))
+                                                      assertion.is_false(b2style.template.of(b2style.new_code_gens(),
+                                                                                             n.child().child(),
+                                                                                             Nothing))
                                                   End Using
                                               End Sub)).
                       contains("T, T")
@@ -66,7 +67,7 @@ Public NotInheritable Class template_template_test
         assertion.is_not_null(n)
         Using New scope()
             Dim t As template_template = Nothing
-            assertion.is_true(template_template.of(b2style.new_code_gens(), n.child().child(), t))
+            assertion.is_true(b2style.template.of(b2style.new_code_gens(), n.child().child(), t))
             Dim impl As String = Nothing
             assertion.is_true(t.apply(vector.of("int", "string"), impl))
             assertion.equal(impl, "class C__int__string { int x ; string y ; void p ( int x , string y ) { } } ;")

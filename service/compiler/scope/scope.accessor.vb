@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
 
 Partial Public Class scope(Of T As scope(Of T))
@@ -89,6 +90,14 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Overridable Function classes() As class_t
+            assert(False)
+            Return Nothing
+        End Function
+
+        Public Overridable Function template(Of TARGET_TYPE_NAME As func_t(Of String),
+                                                WRITER As {lazy_list_writer, New},
+                                                BUILDER As func_t(Of String, WRITER, Boolean))() _
+                                        As template_t(Of TARGET_TYPE_NAME, WRITER, BUILDER)
             assert(False)
             Return Nothing
         End Function
