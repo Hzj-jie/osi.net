@@ -16,7 +16,7 @@ Partial Public NotInheritable Class b2style
         Private ReadOnly fc As call_hierarchy_t
         Private ReadOnly cn As current_namespace_t
         Private f As String
-        Private ReadOnly t As New template_t()
+        Private ReadOnly t As New template_t(Of typed_node_writer, code_builder_proxy)()
         Private ReadOnly v As New variable_t()
         Private ReadOnly d As define_t
         Private ReadOnly c As New class_t()

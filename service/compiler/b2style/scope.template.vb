@@ -5,11 +5,15 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
+Imports typed_node_writer = osi.service.compiler.rewriters.typed_node_writer
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
-        Private NotInheritable Class template_t
+        Protected NotInheritable Class template_t(Of WRITER As {lazy_list_writer, New},
+                                                     _BUILDER As func_t(Of String, WRITER, Boolean))
+            Private Shared ReadOnly builder As func_t(Of String, WRITER, Boolean) = alloc(Of _BUILDER)()
             Private ReadOnly m As New unordered_map(Of name_with_namespace, definition)()
 
             Private NotInheritable Class definition
@@ -69,7 +73,8 @@ Partial Public NotInheritable Class b2style
                     Using If(name.namespace().empty_or_whitespace(),
                              empty_idisposable.instance,
                              scope.current().current_namespace().define(name.namespace()))
-                        If Not code_builder.build(s, scope.current().root_type_injector().current()) Then
+                        If Not builder.run(s,
+                                           direct_cast(Of WRITER)(scope.current().root_type_injector().current())) Then
                             Return ternary.false
                         End If
                     End Using
@@ -81,7 +86,8 @@ Partial Public NotInheritable Class b2style
             End Function
         End Class
 
-        Public Structure template_proxy
+        Public Structure template_proxy(Of WRITER As {lazy_list_writer, New},
+                                           BUILDER As func_t(Of String, WRITER, Boolean))
             Private ReadOnly s As scope
 
             Public Sub New(ByVal s As scope)
@@ -114,8 +120,8 @@ Partial Public NotInheritable Class b2style
             End Function
         End Structure
 
-        Public Function template() As template_proxy
-            Return New template_proxy(Me)
+        Public Function template() As template_proxy(Of typed_node_writer, code_builder_proxy)
+            Return New template_proxy(Of typed_node_writer, code_builder_proxy)(Me)
         End Function
     End Class
 End Class
