@@ -15,7 +15,7 @@ Partial Public NotInheritable Class b2style
                                ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not o Is Nothing)
             Dim extended_type As String = Nothing
-            If Not scope.current().template().resolve(n, extended_type) Then
+            If Not template.resolve(n, extended_type) Then
                 Return False
             End If
             Return o.append(_namespace.bstyle_format.of(extended_type))

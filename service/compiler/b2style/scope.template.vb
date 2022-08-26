@@ -95,15 +95,10 @@ Partial Public NotInheritable Class b2style
                 Return s.t.define(name, t)
             End Function
 
-            Public Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
-                assert(Not n Is Nothing)
-                assert(n.child_count() = 4)
-                Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
-                Dim name As String = Nothing
-                If Not code_gens().typed(Of template.name)(n.type_name).of(n, name) Then
-                    raise_error(error_type.user, "Cannot retrieve template name of ", n.input())
-                    Return False
-                End If
+            Public Function resolve(ByVal name As String,
+                                    ByVal types As vector(Of String),
+                                    ByRef extended_type_name As String,
+                                    ByVal msg As Object) As Boolean
                 Dim s As scope = Me.s
                 While Not s Is Nothing
                     Dim r As ternary = s.t.resolve(name, types, extended_type_name)
@@ -116,7 +111,7 @@ Partial Public NotInheritable Class b2style
                             "Template [",
                             name,
                             "] has not been defined for ",
-                            n.input())
+                            msg)
                 Return False
             End Function
         End Structure

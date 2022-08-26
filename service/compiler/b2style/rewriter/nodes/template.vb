@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
@@ -113,6 +114,18 @@ Partial Public NotInheritable Class b2style
                              Return template_template.of(types, body, name_node, x)
                          End Function,
                          o)
+        End Function
+
+        Public Shared Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
+            assert(Not n Is Nothing)
+            assert(n.child_count() = 4)
+            Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
+            Dim name As String = Nothing
+            If Not code_gens().typed(Of template.name)(n.type_name).of(n, name) Then
+                raise_error(error_type.user, "Cannot retrieve template name of ", n.input())
+                Return False
+            End If
+            Return scope.current().template().resolve(name, types, extended_type_name, lazier.of(AddressOf n.input))
         End Function
     End Class
 End Class
