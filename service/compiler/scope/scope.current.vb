@@ -81,10 +81,9 @@ Partial Public Class scope(Of T As scope(Of T))
         Return New class_proxy()
     End Function
 
-    Protected Function template(Of TARGET_TYPE_NAME As func_t(Of String),
-                                   WRITER As {lazy_list_writer, New},
+    Protected Function template(Of WRITER As {lazy_list_writer, New},
                                    BUILDER As func_t(Of String, WRITER, Boolean))() _
-                           As template_proxy(Of TARGET_TYPE_NAME, WRITER, BUILDER)
-        Return New template_proxy(Of TARGET_TYPE_NAME, WRITER, BUILDER)()
+                           As template_proxy(Of WRITER, BUILDER)
+        Return New template_proxy(Of WRITER, BUILDER)()
     End Function
 End Class

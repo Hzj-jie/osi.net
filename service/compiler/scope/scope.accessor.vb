@@ -94,10 +94,9 @@ Partial Public Class scope(Of T As scope(Of T))
             Return Nothing
         End Function
 
-        Public Overridable Function template(Of TARGET_TYPE_NAME As func_t(Of String),
-                                                WRITER As {lazy_list_writer, New},
+        Public Overridable Function template(Of WRITER As {lazy_list_writer, New},
                                                 BUILDER As func_t(Of String, WRITER, Boolean))() _
-                                        As template_t(Of TARGET_TYPE_NAME, WRITER, BUILDER)
+                                        As template_t(Of WRITER, BUILDER)
             assert(False)
             Return Nothing
         End Function

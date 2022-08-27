@@ -6,7 +6,6 @@ Option Strict On
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.template
@@ -15,8 +14,7 @@ Imports osi.service.compiler.rewriters
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public Class scope(Of T As scope(Of T))
-    Public NotInheritable Class template_template(Of _TARGET_TYPE_NAME As func_t(Of String))
-        Private Shared ReadOnly target_type_name As String = alloc(Of _TARGET_TYPE_NAME)().run()
+    Public NotInheritable Class template_template
         Private Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("template", "template", "dump"))
         Private ReadOnly w As New template_writer()
         Private ReadOnly _extended_type_name As extended_type_name_t
@@ -74,7 +72,7 @@ Partial Public Class scope(Of T As scope(Of T))
                              stop_navigating_sub_nodes()
                              Return
                          End If
-                         If Not node.type_name.Equals(target_type_name) Then
+                         If Not node.type_name.Equals("raw-type-name") Then
                              Return
                          End If
 

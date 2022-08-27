@@ -9,17 +9,16 @@ Imports osi.root.delegates
 Imports osi.root.formation
 
 Partial Public Class scope(Of T As scope(Of T))
-    Protected NotInheritable Class template_t(Of TARGET_TYPE_NAME As func_t(Of String),
-                                                 WRITER As {lazy_list_writer, New},
+    Protected NotInheritable Class template_t(Of WRITER As {lazy_list_writer, New},
                                                  _BUILDER As func_t(Of String, WRITER, Boolean))
         Private Shared ReadOnly builder As func_t(Of String, WRITER, Boolean) = alloc(Of _BUILDER)()
         Private ReadOnly m As New unordered_map(Of name_with_namespace, definition)()
 
         Private NotInheritable Class definition
-            Private ReadOnly template As template_template(Of TARGET_TYPE_NAME)
+            Private ReadOnly template As template_template
             Private ReadOnly injected_types As New unordered_set(Of vector(Of String))()
 
-            Public Sub New(ByVal t As template_template(Of TARGET_TYPE_NAME))
+            Public Sub New(ByVal t As template_template)
                 assert(Not t Is Nothing)
                 template = t
             End Sub
@@ -39,7 +38,7 @@ Partial Public Class scope(Of T As scope(Of T))
             End Function
         End Class
 
-        Public Function define(ByVal name As String, ByVal t As template_template(Of TARGET_TYPE_NAME)) As Boolean
+        Public Function define(ByVal name As String, ByVal t As template_template) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not t Is Nothing)
             Dim d As New definition(t)
@@ -84,11 +83,10 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
     End Class
 
-    Public Structure template_proxy(Of TARGET_TYPE_NAME As func_t(Of String),
-                                       WRITER As {lazy_list_writer, New},
+    Public Structure template_proxy(Of WRITER As {lazy_list_writer, New},
                                        BUILDER As func_t(Of String, WRITER, Boolean))
-        Public Function define(ByVal name As String, ByVal t As template_template(Of TARGET_TYPE_NAME)) As Boolean
-            Return scope(Of T).current().myself().template(Of TARGET_TYPE_NAME, WRITER, BUILDER)().define(name, t)
+        Public Function define(ByVal name As String, ByVal t As template_template) As Boolean
+            Return scope(Of T).current().myself().template(Of WRITER, BUILDER)().define(name, t)
         End Function
 
         Public Function resolve(ByVal name As String,
@@ -98,7 +96,7 @@ Partial Public Class scope(Of T As scope(Of T))
             Dim s As scope(Of T) = scope(Of T).current()
             While Not s Is Nothing
                 Dim r As ternary = s.myself().
-                                     template(Of TARGET_TYPE_NAME, WRITER, BUILDER)().
+                                     template(Of WRITER, BUILDER)().
                                      resolve(name, types, extended_type_name)
                 If Not r.unknown_() Then
                     Return r

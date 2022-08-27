@@ -12,8 +12,7 @@ Imports osi.service.automata
 Imports osi.service.compiler
 Imports osi.service.compiler.b2style
 Imports osi.service.resource
-Imports template_template = osi.service.compiler.scope(Of osi.service.compiler.b2style.scope).
-                                template_template(Of osi.service.compiler.b2style.template.target_type_name)
+Imports template_template = osi.service.compiler.scope(Of osi.service.compiler.b2style.scope).template_template
 
 <test>
 Public NotInheritable Class template_template_test

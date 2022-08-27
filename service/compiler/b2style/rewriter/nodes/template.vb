@@ -92,7 +92,7 @@ Partial Public NotInheritable Class b2style
                                   ByVal body As typed_node,
                                   ByVal name_node As typed_node,
                                   ByRef unused As Int32) As Boolean
-                             Dim t As scope.template_template(Of target_type_name) = Nothing
+                             Dim t As scope.template_template = Nothing
                              Return template.of(types, body, name_node, t) AndAlso
                                     scope.current().template().define(name, t)
                          End Function,
@@ -111,26 +111,18 @@ Partial Public NotInheritable Class b2style
             Return scope.current().template().resolve(name, types, extended_type_name, lazier.of(AddressOf n.input))
         End Function
 
-        Public Structure target_type_name
-            Implements func_t(Of String)
-
-            Public Function run() As String Implements func_t(Of String).run
-                Return "raw-type-name"
-            End Function
-        End Structure
-
         ' @VisibleForTesting
         ' TODO: Remove this function.
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
                                     ByVal n As typed_node,
-                                    ByRef o As scope.template_template(Of target_type_name)) As Boolean
+                                    ByRef o As scope.template_template) As Boolean
             Return build(l,
                          n,
                          Function(ByVal name As String,
                                   ByVal types As vector(Of String),
                                   ByVal body As typed_node,
                                   ByVal name_node As typed_node,
-                                  ByRef x As scope.template_template(Of target_type_name)) As Boolean
+                                  ByRef x As scope.template_template) As Boolean
                              Return [of](types, body, name_node, x)
                          End Function,
                          o)
@@ -139,7 +131,7 @@ Partial Public NotInheritable Class b2style
         Public Shared Function [of](ByVal type_param_list As vector(Of String),
                                     ByVal body As typed_node,
                                     ByVal name_node As typed_node,
-                                    ByRef o As scope.template_template(Of target_type_name)) As Boolean
+                                    ByRef o As scope.template_template) As Boolean
             assert(Not type_param_list.null_or_empty())
             assert(Not body Is Nothing)
             assert(Not name_node Is Nothing)
@@ -155,7 +147,7 @@ Partial Public NotInheritable Class b2style
                             "]")
                 Return False
             End If
-            o = New scope.template_template(Of target_type_name)(body.child(), name_node, type_param_list)
+            o = New scope.template_template(body.child(), name_node, type_param_list)
             Return True
         End Function
     End Class
