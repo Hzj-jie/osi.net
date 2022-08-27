@@ -111,8 +111,15 @@ Partial Public NotInheritable Class b2style
             Return MyBase.root_type_injector(Of typed_node_writer)()
         End Function
 
-        Public Shadows Function template() As template_proxy(Of typed_node_writer, code_builder_proxy, code_gens_proxy)
-            Return MyBase.template(Of typed_node_writer, code_builder_proxy, code_gens_proxy)()
+        Public Shadows Function template() As template_proxy(Of typed_node_writer, code_builder_proxy)
+            Return MyBase.template(Of typed_node_writer, code_builder_proxy)()
         End Function
+
+        Public NotInheritable Shadows Class template_builder
+            Inherits template_builder(Of typed_node_writer, code_gens_proxy)
+
+            Private Sub New()
+            End Sub
+        End Class
     End Class
 End Class

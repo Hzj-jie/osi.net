@@ -82,9 +82,8 @@ Partial Public Class scope(Of T As scope(Of T))
     End Function
 
     Protected Function template(Of WRITER As {lazy_list_writer, New},
-                                   BUILDER As func_t(Of String, WRITER, Boolean),
-                                   CODE_GENS As func_t(Of code_gens(Of WRITER)))() _
-                           As template_proxy(Of WRITER, BUILDER, CODE_GENS)
-        Return New template_proxy(Of WRITER, BUILDER, CODE_GENS)()
+                                   BUILDER As func_t(Of String, WRITER, Boolean))() _
+                           As template_proxy(Of WRITER, BUILDER)
+        Return New template_proxy(Of WRITER, BUILDER)()
     End Function
 End Class

@@ -85,10 +85,7 @@ Partial Public Class scope(Of T As scope(Of T))
     End Class
 
     Public Structure template_proxy(Of WRITER As {lazy_list_writer, New},
-                                       BUILDER As func_t(Of String, WRITER, Boolean),
-                                       _CODE_GENS As func_t(Of code_gens(Of WRITER)))
-        Private Shared ReadOnly code_gens As func_t(Of code_gens(Of WRITER)) = alloc(Of _CODE_GENS)()
-
+                                       BUILDER As func_t(Of String, WRITER, Boolean))
         Public Function define(ByVal name As String, ByVal t As template_template) As Boolean
             Return scope(Of T).current().myself().template(Of WRITER, BUILDER)().define(name, t)
         End Function
@@ -114,6 +111,13 @@ Partial Public Class scope(Of T As scope(Of T))
                         msg)
             Return False
         End Function
+    End Structure
+
+    ' Allow implementations to forward type.
+    Public Class template_builder(Of WRITER As {lazy_list_writer, New},
+                                     _CODE_GENS As func_t(Of code_gens(Of WRITER)))
+
+        Private Shared ReadOnly code_gens As func_t(Of code_gens(Of WRITER)) = alloc(Of _CODE_GENS)()
 
         Public Shared Function type_param_count(ByVal n As typed_node) As UInt32
             assert(Not n Is Nothing)
@@ -152,7 +156,10 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(name_node_of(n, o))
             Return o
         End Function
-    End Structure
+
+        Protected Sub New()
+        End Sub
+    End Class
 
     Public NotInheritable Class template_t
         Public Interface name
