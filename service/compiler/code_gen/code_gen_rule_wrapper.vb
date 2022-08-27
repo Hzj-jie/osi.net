@@ -33,6 +33,14 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         Return l
     End Function
 
+    Public Structure code_gens_proxy
+        Implements func_t(Of code_gens(Of WRITER))
+
+        Public Function run() As code_gens(Of WRITER) Implements func_t(Of code_gens(Of WRITER)).run
+            Return code_gens()
+        End Function
+    End Structure
+
     Protected Shared Function code_gens() As code_gens(Of WRITER)
         Return code_builder.code_gens
     End Function

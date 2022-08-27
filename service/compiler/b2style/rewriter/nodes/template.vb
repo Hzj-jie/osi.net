@@ -14,14 +14,6 @@ Partial Public NotInheritable Class b2style
     Public NotInheritable Class template
         Implements code_gen(Of typed_node_writer)
 
-        Public Interface name
-            Function [of](ByVal n As typed_node, ByRef o As String) As Boolean
-        End Interface
-
-        Public Interface name_node
-            Function [of](ByVal n As typed_node, ByRef o As typed_node) As Boolean
-        End Interface
-
         Private Shared Function build(Of T)(ByVal l As code_gens(Of typed_node_writer),
                                             ByVal n As typed_node,
                                             ByVal f As _do_val_val_val_val_ref(Of String,
@@ -37,7 +29,7 @@ Partial Public NotInheritable Class b2style
             assert(n.child_count() = 2)
             Dim name As String = Nothing
             Dim name_node As typed_node = Nothing
-            Return l.typed(Of name)(n.child(1).child().type_name).of(n, name) AndAlso
+            Return l.typed(Of scope.template_t.name)(n.child(1).child().type_name).of(n, name) AndAlso
                    name_node_of(n, name_node) AndAlso
                    f(name,
                      l.typed(Of template_head)().type_param_list(n.child(0)),
@@ -62,7 +54,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(n.child_count() = 2)
             n = n.child(1).child()
-            Return code_gens().typed(Of name_node)(n.type_name).of(n, o)
+            Return code_gens().typed(Of scope.template_t.name_node)(n.type_name).of(n, o)
         End Function
 
         Public Shared Function name_node_of(ByVal n As typed_node) As typed_node
@@ -104,7 +96,7 @@ Partial Public NotInheritable Class b2style
             assert(n.child_count() = 4)
             Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
             Dim name As String = Nothing
-            If Not code_gens().typed(Of template.name)(n.type_name).of(n, name) Then
+            If Not code_gens().typed(Of scope.template_t.name)(n.type_name).of(n, name) Then
                 raise_error(error_type.user, "Cannot retrieve template name of ", n.input())
                 Return False
             End If

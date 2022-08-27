@@ -14,16 +14,17 @@ Imports class_def = osi.service.compiler.scope(Of osi.service.compiler.b2style.s
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class _class
         Inherits code_gens(Of typed_node_writer).reparser
-        Implements code_gen(Of typed_node_writer), template.name_node, template.name
+        Implements code_gen(Of typed_node_writer), scope.template_t.name_node, scope.template_t.name
 
-        Private Function name_node_of(ByVal n As typed_node,
-                                      ByRef o As typed_node) As Boolean Implements template.name_node.of
+        Private Function name_node_of(ByVal n As typed_node, ByRef o As typed_node) As Boolean _
+                                     Implements scope.template_t.name_node.of
             assert(Not n Is Nothing)
             o = n.child(1)
             Return True
         End Function
 
-        Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean Implements template.name.of
+        Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean _
+                                Implements scope.template_t.name.of
             o = template.name_of(template.name_node_of(n), template.type_param_count(n))
             Return True
         End Function
