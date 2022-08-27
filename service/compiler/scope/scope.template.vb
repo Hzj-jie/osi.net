@@ -133,6 +133,25 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(n.child_count() = 4)
             Return code_gens.run().of_all_children(n.child(2)).dump()
         End Function
+
+        Public Shared Function body_of(ByVal n As typed_node) As typed_node
+            assert(Not n Is Nothing)
+            assert(n.child_count() = 2)
+            Return n.child(1).child()
+        End Function
+
+        Public Shared Function name_node_of(ByVal n As typed_node, ByRef o As typed_node) As Boolean
+            assert(Not n Is Nothing)
+            assert(n.child_count() = 2)
+            n = n.child(1).child()
+            Return code_gens.run().typed(Of template_t.name_node)(n.type_name).of(n, o)
+        End Function
+
+        Public Shared Function name_node_of(ByVal n As typed_node) As typed_node
+            Dim o As typed_node = Nothing
+            assert(name_node_of(n, o))
+            Return o
+        End Function
     End Structure
 
     Public NotInheritable Class template_t

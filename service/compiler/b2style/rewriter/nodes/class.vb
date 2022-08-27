@@ -25,7 +25,8 @@ Partial Public NotInheritable Class b2style
 
         Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean _
                                 Implements scope.template_t.name.of
-            o = template.name_of(template.name_node_of(n),
+            o = template.name_of(scope.template_proxy(Of typed_node_writer, code_builder_proxy, code_gens_proxy).
+                                       name_node_of(n),
                                  scope.template_proxy(Of typed_node_writer, code_builder_proxy, code_gens_proxy).
                                        type_param_count(n))
             Return True

@@ -30,31 +30,13 @@ Partial Public NotInheritable Class b2style
             Dim name As String = Nothing
             Dim name_node As typed_node = Nothing
             Return l.typed(Of scope.template_t.name)(n.child(1).child().type_name).of(n, name) AndAlso
-                   name_node_of(n, name_node) AndAlso
+                   scope.template_proxy(Of typed_node_writer, code_builder_proxy, code_gens_proxy).
+                         name_node_of(n, name_node) AndAlso
                    f(name,
                      scope.template_proxy(Of typed_node_writer, code_builder_proxy, code_gens_proxy).type_param_list(n),
                      n.child(1),
                      name_node,
                      o)
-        End Function
-
-        Public Shared Function body_of(ByVal n As typed_node) As typed_node
-            assert(Not n Is Nothing)
-            assert(n.child_count() = 2)
-            Return n.child(1).child()
-        End Function
-
-        Public Shared Function name_node_of(ByVal n As typed_node, ByRef o As typed_node) As Boolean
-            assert(Not n Is Nothing)
-            assert(n.child_count() = 2)
-            n = n.child(1).child()
-            Return code_gens().typed(Of scope.template_t.name_node)(n.type_name).of(n, o)
-        End Function
-
-        Public Shared Function name_node_of(ByVal n As typed_node) As typed_node
-            Dim o As typed_node = Nothing
-            assert(name_node_of(n, o))
-            Return o
         End Function
 
         ' TODO: Remove
