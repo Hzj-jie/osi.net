@@ -17,7 +17,7 @@ Partial Public NotInheritable Class b2style
         Private ReadOnly fc As call_hierarchy_t
         Private ReadOnly cn As current_namespace_t
         Private f As String
-        Private ReadOnly t As New template_t(Of typed_node_writer, code_builder_proxy, code_gens_proxy)()
+        Private ReadOnly t As New template_t(Of typed_node_writer, code_builder_proxy)()
         Private ReadOnly v As New variable_t()
         Private ReadOnly d As define_t
         Private ReadOnly c As New class_t()
@@ -89,10 +89,9 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public Overrides Function template(Of WRITER As {lazy_list_writer, New},
-                                                  BUILDER As func_t(Of String, WRITER, Boolean),
-                                                  CODE_GENS As func_t(Of code_gens(Of WRITER)))() _
-                                          As template_t(Of WRITER, BUILDER, CODE_GENS)
-                Return direct_cast(Of template_t(Of WRITER, BUILDER, CODE_GENS))(s.t)
+                                                  BUILDER As func_t(Of String, WRITER, Boolean))() _
+                                          As template_t(Of WRITER, BUILDER)
+                Return direct_cast(Of template_t(Of WRITER, BUILDER))(s.t)
             End Function
         End Class
 

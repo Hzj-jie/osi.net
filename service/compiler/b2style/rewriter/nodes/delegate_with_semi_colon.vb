@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.service.automata
+Imports typed_node_writer = osi.service.compiler.rewriters.typed_node_writer
 
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class delegate_with_semi_colon
@@ -19,7 +20,9 @@ Partial Public NotInheritable Class b2style
 
         Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean _
                                 Implements scope.template_t.name.of
-            o = template.name_of(template.name_node_of(n), template.type_param_count(n))
+            o = template.name_of(template.name_node_of(n),
+                                 scope.template_proxy(Of typed_node_writer, code_builder_proxy, code_gens_proxy).
+                                       type_param_count(n))
             Return True
         End Function
     End Class

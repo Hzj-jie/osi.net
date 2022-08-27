@@ -32,16 +32,10 @@ Partial Public NotInheritable Class b2style
             Return l.typed(Of scope.template_t.name)(n.child(1).child().type_name).of(n, name) AndAlso
                    name_node_of(n, name_node) AndAlso
                    f(name,
-                     l.typed(Of template_head)().type_param_list(n.child(0)),
+                     scope.template_proxy(Of typed_node_writer, code_builder_proxy, code_gens_proxy).type_param_list(n),
                      n.child(1),
                      name_node,
                      o)
-        End Function
-
-        Public Shared Function type_param_count(ByVal n As typed_node) As UInt32
-            assert(Not n Is Nothing)
-            assert(n.child_count() = 2)
-            Return code_gens().typed(Of template_head)().type_param_count(n.child(0))
         End Function
 
         Public Shared Function body_of(ByVal n As typed_node) As typed_node

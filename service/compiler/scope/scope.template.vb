@@ -11,10 +11,8 @@ Imports osi.service.automata
 
 Partial Public Class scope(Of T As scope(Of T))
     Protected NotInheritable Class template_t(Of WRITER As {lazy_list_writer, New},
-                                                 _BUILDER As func_t(Of String, WRITER, Boolean),
-                                                 _CODE_GENS As func_t(Of code_gens(Of WRITER)))
+                                                 _BUILDER As func_t(Of String, WRITER, Boolean))
         Private Shared ReadOnly builder As func_t(Of String, WRITER, Boolean) = alloc(Of _BUILDER)()
-        Private Shared ReadOnly code_gens As func_t(Of code_gens(Of WRITER)) = alloc(Of _CODE_GENS)()
         Private ReadOnly m As New unordered_map(Of name_with_namespace, definition)()
 
         Private NotInheritable Class definition
@@ -84,6 +82,38 @@ Partial Public Class scope(Of T As scope(Of T))
                                      d.extended_type_name(types))
             Return ternary.true
         End Function
+    End Class
+
+    Public Structure template_proxy(Of WRITER As {lazy_list_writer, New},
+                                       BUILDER As func_t(Of String, WRITER, Boolean),
+                                       _CODE_GENS As func_t(Of code_gens(Of WRITER)))
+        Private Shared ReadOnly code_gens As func_t(Of code_gens(Of WRITER)) = alloc(Of _CODE_GENS)()
+
+        Public Function define(ByVal name As String, ByVal t As template_template) As Boolean
+            Return scope(Of T).current().myself().template(Of WRITER, BUILDER)().define(name, t)
+        End Function
+
+        Public Function resolve(ByVal name As String,
+                                ByVal types As vector(Of String),
+                                ByRef extended_type_name As String,
+                                ByVal msg As Object) As Boolean
+            Dim s As scope(Of T) = scope(Of T).current()
+            While Not s Is Nothing
+                Dim r As ternary = s.myself().
+                                     template(Of WRITER, BUILDER)().
+                                     resolve(name, types, extended_type_name)
+                If Not r.unknown_() Then
+                    Return r
+                End If
+                s = s.parent
+            End While
+            raise_error(error_type.user,
+                        "Template [",
+                        name,
+                        "] has not been defined for ",
+                        msg)
+            Return False
+        End Function
 
         Public Shared Function type_param_count(ByVal n As typed_node) As UInt32
             assert(Not n Is Nothing)
@@ -102,36 +132,6 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(Not n Is Nothing)
             assert(n.child_count() = 4)
             Return code_gens.run().of_all_children(n.child(2)).dump()
-        End Function
-    End Class
-
-    Public Structure template_proxy(Of WRITER As {lazy_list_writer, New},
-                                       BUILDER As func_t(Of String, WRITER, Boolean),
-                                       CODE_GENS As func_t(Of code_gens(Of WRITER)))
-        Public Function define(ByVal name As String, ByVal t As template_template) As Boolean
-            Return scope(Of T).current().myself().template(Of WRITER, BUILDER, CODE_GENS)().define(name, t)
-        End Function
-
-        Public Function resolve(ByVal name As String,
-                                ByVal types As vector(Of String),
-                                ByRef extended_type_name As String,
-                                ByVal msg As Object) As Boolean
-            Dim s As scope(Of T) = scope(Of T).current()
-            While Not s Is Nothing
-                Dim r As ternary = s.myself().
-                                     template(Of WRITER, BUILDER, CODE_GENS)().
-                                     resolve(name, types, extended_type_name)
-                If Not r.unknown_() Then
-                    Return r
-                End If
-                s = s.parent
-            End While
-            raise_error(error_type.user,
-                        "Template [",
-                        name,
-                        "] has not been defined for ",
-                        msg)
-            Return False
         End Function
     End Structure
 

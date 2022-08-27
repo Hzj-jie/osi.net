@@ -116,7 +116,6 @@ Partial Public NotInheritable Class b2style
                            with(Of kw_file)().
                            with(code_gen.of_input(Of typed_node_writer)("kw-func")).
                            with(code_gen.of_input(Of typed_node_writer)("kw-line")).
-                           with(Of template_head)().
                            with_of_only_childs(
                                "base-root-type",
                                "paragraph",

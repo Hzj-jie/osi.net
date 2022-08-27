@@ -75,7 +75,6 @@
     <None Include="b3style\codegen\run.cmd" />
     <None Include="b3style\lib\run.cmd" />
     <None Include="bstyle\lib\climits" />
-    <Compile Include="b2style\rewriter\nodes\template_head.vb" />
     <Compile Include="b2style\rewriter\nodes\delegate_with_semi_colon.vb" />
     <Compile Include="b3style\b3style_rules.vb" />
     <Compile Include="b3style\b3style.vb" />
