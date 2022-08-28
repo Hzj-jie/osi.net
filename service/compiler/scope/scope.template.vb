@@ -187,6 +187,52 @@ Partial Public Class scope(Of T As scope(Of T))
             Return name_of(n.input_without_ignored(), type_count)
         End Function
 
+        ' @VisibleForTesting
+        Public Shared Function [of](ByVal l As code_gens(Of WRITER),
+                                    ByVal n As typed_node,
+                                    ByRef o As template_template) As Boolean
+            Return [of](l, n, Nothing, o)
+        End Function
+
+        Public Shared Function [of](ByVal n As typed_node,
+                                    ByRef name As String,
+                                    ByRef o As template_template) As Boolean
+            Return [of](code_gens.run(), n, name, o)
+        End Function
+
+        Private Shared Function [of](ByVal l As code_gens(Of WRITER),
+                                     ByVal n As typed_node,
+                                     ByRef name As String,
+                                     ByRef o As template_template) As Boolean
+            assert(Not l Is Nothing)
+            assert(Not n Is Nothing)
+            assert(n.child_count() = 2)
+            Dim name_node As typed_node = Nothing
+            If Not l.typed(Of template_t.name)(n.child(1).child().type_name).of(n, name) OrElse
+               Not name_node_of(n, name_node) Then
+                Return False
+            End If
+            assert(Not name_node Is Nothing)
+            Dim types As vector(Of String) = type_param_list(n)
+            assert(Not types.null_or_empty())
+            Dim body As typed_node = n.child(1)
+            assert(Not body Is Nothing)
+            assert(body.type_name.Equals("template-body"))
+            assert(body.child_count() = 1)
+            If types.size() >
+               types.stream().collect_by(stream(Of String).collectors.unique()).size() Then
+                raise_error(error_type.user,
+                            "Template ",
+                            name_node.input_without_ignored(),
+                            " has duplicated template type parameters: [",
+                            types.str(", "),
+                            "]")
+                Return False
+            End If
+            o = New template_template(body.child(), name_node, types)
+            Return True
+        End Function
+
         Protected Sub New()
         End Sub
     End Class

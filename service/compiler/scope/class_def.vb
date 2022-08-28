@@ -166,7 +166,6 @@ Partial Public Class scope(Of T As scope(Of T))
             Return tuple.of(node, function_def.type_t.pure)
         End Function
 
-        ' TODO: Decouple with "class-function".
         Public Function with_funcs(Of WRITER As New)(ByVal code_gens As code_gens(Of WRITER),
                                                      ByVal n As typed_node) As class_def
             assert(Not n Is Nothing)
