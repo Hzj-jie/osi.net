@@ -72,7 +72,7 @@ Partial Public NotInheritable Class b2style
             assert(Not function_name.null_or_whitespace())
             assert(type_param_count > 0)
             assert(Not param_types Is Nothing)
-            Dim r As New StringBuilder(template.name_of(function_name, type_param_count))
+            Dim r As New StringBuilder(scope.template_builder.name_of(function_name, type_param_count))
             Dim i As UInt32 = 0
             While i < param_types.size()
                 r.Append("&").

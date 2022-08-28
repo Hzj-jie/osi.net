@@ -115,9 +115,24 @@ Partial Public Class scope(Of T As scope(Of T))
 
     ' Allow implementations to forward type.
     Public Class template_builder(Of WRITER As {lazy_list_writer, New},
+                                     BUILDER As func_t(Of String, WRITER, Boolean),
                                      _CODE_GENS As func_t(Of code_gens(Of WRITER)))
 
         Private Shared ReadOnly code_gens As func_t(Of code_gens(Of WRITER)) = alloc(Of _CODE_GENS)()
+
+        Public Shared Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
+            assert(Not n Is Nothing)
+            assert(n.child_count() = 4)
+            Dim types As vector(Of String) = code_gens.run().of_all_children(n.child(2)).dump()
+            Dim name As String = Nothing
+            If Not code_gens.run().typed(Of scope(Of T).template_t.name)(n.type_name).of(n, name) Then
+                raise_error(error_type.user, "Cannot retrieve template name of ", n.input())
+                Return False
+            End If
+            Return scope(Of T).current().
+                               template(Of WRITER, BUILDER)().
+                               resolve(name, types, extended_type_name, lazier.of(AddressOf n.input))
+        End Function
 
         Public Shared Function type_param_count(ByVal n As typed_node) As UInt32
             assert(Not n Is Nothing)
@@ -155,6 +170,21 @@ Partial Public Class scope(Of T As scope(Of T))
             Dim o As typed_node = Nothing
             assert(name_node_of(n, o))
             Return o
+        End Function
+
+        Public Shared Function name_of(ByVal n As typed_node) As String
+            Return name_of(name_node_of(n), type_param_count(n))
+        End Function
+
+        Public Shared Function name_of(ByVal name As String, ByVal type_count As UInt32) As String
+            assert(Not name.null_or_whitespace())
+            assert(type_count > 0)
+            Return String.Concat(name, "__", type_count)
+        End Function
+
+        Public Shared Function name_of(ByVal n As typed_node, ByVal type_count As UInt32) As String
+            assert(Not n Is Nothing)
+            Return name_of(n.input_without_ignored(), type_count)
         End Function
 
         Protected Sub New()

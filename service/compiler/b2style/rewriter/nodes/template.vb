@@ -12,17 +12,6 @@ Imports osi.service.compiler.rewriters
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class template
         Implements code_gen(Of typed_node_writer)
-        ' TODO: Remove
-        Public Shared Function name_of(ByVal name As String, ByVal type_count As UInt32) As String
-            assert(Not name.null_or_whitespace())
-            assert(type_count > 0)
-            Return String.Concat(name, "__", type_count)
-        End Function
-
-        Public Shared Function name_of(ByVal n As typed_node, ByVal type_count As UInt32) As String
-            assert(Not n Is Nothing)
-            Return name_of(n.input_without_ignored(), type_count)
-        End Function
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
@@ -30,18 +19,6 @@ Partial Public NotInheritable Class b2style
             Dim t As scope.template_template = Nothing
             Return [of](code_gens(), n, name, t) AndAlso
                    scope.current().template().define(name, t)
-        End Function
-
-        Public Shared Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
-            assert(Not n Is Nothing)
-            assert(n.child_count() = 4)
-            Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
-            Dim name As String = Nothing
-            If Not code_gens().typed(Of scope.template_t.name)(n.type_name).of(n, name) Then
-                raise_error(error_type.user, "Cannot retrieve template name of ", n.input())
-                Return False
-            End If
-            Return scope.current().template().resolve(name, types, extended_type_name, lazier.of(AddressOf n.input))
         End Function
 
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),

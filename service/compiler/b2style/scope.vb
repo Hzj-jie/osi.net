@@ -116,7 +116,7 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Public NotInheritable Shadows Class template_builder
-            Inherits template_builder(Of typed_node_writer, code_gens_proxy)
+            Inherits template_builder(Of typed_node_writer, code_builder_proxy, code_gens_proxy)
 
             Private Sub New()
             End Sub

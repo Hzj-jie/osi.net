@@ -21,7 +21,7 @@ Partial Public NotInheritable Class b2style
                 t = Nothing
             End If
             Dim extended_type As String = Nothing
-            Return template.resolve(n.child(0), extended_type) AndAlso
+            Return scope.template_builder.resolve(n.child(0), extended_type) AndAlso
                    code_gens().typed(Of function_call).build(scope.current_namespace_t.with_global_namespace(
                        If(t.is_null(),
                           extended_type,
