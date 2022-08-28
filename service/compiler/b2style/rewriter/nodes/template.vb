@@ -14,6 +14,22 @@ Partial Public NotInheritable Class b2style
     Public NotInheritable Class template
         Implements code_gen(Of typed_node_writer)
 
+        Private Shared Function build(ByVal l As code_gens(Of typed_node_writer),
+                                      ByVal n As typed_node,
+                                      ByVal f As Func(Of String, scope.template_template, Boolean)) As Boolean
+            assert(Not l Is Nothing)
+            assert(Not n Is Nothing)
+            assert(Not f Is Nothing)
+            assert(n.child_count() = 2)
+            Dim name As String = Nothing
+            Dim name_node As typed_node = Nothing
+            Dim o As scope.template_template = Nothing
+            Return l.typed(Of scope.template_t.name)(n.child(1).child().type_name).of(n, name) AndAlso
+                   scope.template_builder.name_node_of(n, name_node) AndAlso
+                   [of](scope.template_builder.type_param_list(n), n.child(1), name_node, o) AndAlso
+                   f(name, o)
+        End Function
+
         Private Shared Function build(Of T)(ByVal l As code_gens(Of typed_node_writer),
                                             ByVal n As typed_node,
                                             ByVal f As _do_val_val_val_val_ref(Of String,
