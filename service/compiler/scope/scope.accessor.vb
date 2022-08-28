@@ -7,7 +7,10 @@ Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
+                              __BUILDER As func_t(Of String, WRITER, Boolean),
+                              __CODE_GENS As func_t(Of code_gens(Of WRITER)),
+                              T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Private ReadOnly _accessor As lazier(Of accessor_t) = lazier.of(AddressOf Me.get_accessor)
 
     Private Function myself() As accessor_t
@@ -83,21 +86,17 @@ Partial Public Class scope(Of T As scope(Of T))
             Return Nothing
         End Function
 
-        Public Overridable Function root_type_injector(Of WRITER As {lazy_list_writer, New})() _
-                                        As root_type_injector_t(Of WRITER)
+        Public Overridable Function root_type_injector() As root_type_injector_t
             assert(False)
             Return Nothing
         End Function
 
-        Public Overridable Function classes(Of WRITER As New, CODE_GENS_PROXY As func_t(Of code_gens(Of WRITER)))() _
-                                           As class_t(Of WRITER, CODE_GENS_PROXY)
+        Public Overridable Function classes() As class_t
             assert(False)
             Return Nothing
         End Function
 
-        Public Overridable Function template(Of WRITER As {lazy_list_writer, New},
-                                                BUILDER As func_t(Of String, WRITER, Boolean))() _
-                                        As template_t(Of WRITER, BUILDER)
+        Public Overridable Function template() As template_t
             assert(False)
             Return Nothing
         End Function

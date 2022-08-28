@@ -5,10 +5,14 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports builders = osi.service.compiler.logic.builders
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
+                              __BUILDER As func_t(Of String, WRITER, Boolean),
+                              __CODE_GENS As func_t(Of code_gens(Of WRITER)),
+                              T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Protected NotInheritable Class delegate_t
         Private ReadOnly s As New unordered_map(Of String, function_signature)()
 
@@ -45,7 +49,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function retrieve(ByVal name As String, ByRef o As function_signature) As Boolean
-            Dim s As scope(Of T) = scope(Of T).current()
+            Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
                 If s.myself().delegates().retrieve(name, o) Then
                     Return True

@@ -5,10 +5,14 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
+                              __BUILDER As func_t(Of String, WRITER, Boolean),
+                              __CODE_GENS As func_t(Of code_gens(Of WRITER)),
+                              T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Public NotInheritable Class define_t
         Private ReadOnly d As New unordered_set(Of String)()
 
@@ -20,7 +24,7 @@ Partial Public Class scope(Of T As scope(Of T))
             Return d.find(s) <> d.end()
         End Function
 
-        Private NotInheritable Class ifndef_wrapped_impl(Of WRITER As New)
+        Private NotInheritable Class ifndef_wrapped_impl
             Implements code_gen(Of WRITER)
 
             Private ReadOnly code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy)
@@ -50,7 +54,7 @@ Partial Public Class scope(Of T As scope(Of T))
             End Function
         End Class
 
-        Private NotInheritable Class define_impl(Of WRITER As New)
+        Private NotInheritable Class define_impl
             Implements code_gen(Of WRITER)
 
             Private ReadOnly define As Action(Of String)
@@ -70,29 +74,27 @@ Partial Public Class scope(Of T As scope(Of T))
         End Class
 
         Public NotInheritable Class code_gens
-            Public Shared Function ifndef_wrapped(Of WRITER As New) _
-                                                 (ByVal code_gen_of As Func(Of typed_node,
+            Public Shared Function ifndef_wrapped(ByVal code_gen_of As Func(Of typed_node,
                                                                                code_gens(Of WRITER).code_gen_proxy),
                                                   ByVal defines As Func(Of define_t)) As Action(Of code_gens(Of WRITER))
                 assert(Not defines Is Nothing)
                 Return Sub(ByVal c As code_gens(Of WRITER))
                            assert(Not c Is Nothing)
                            c.register("ifndef-wrapped",
-                                      New ifndef_wrapped_impl(Of WRITER)(code_gen_of,
-                                                                         Function(ByVal s As String) As Boolean
-                                                                             Return defines().is_defined(s)
-                                                                         End Function))
+                                      New ifndef_wrapped_impl(code_gen_of,
+                                                              Function(ByVal s As String) As Boolean
+                                                                  Return defines().is_defined(s)
+                                                              End Function))
                        End Sub
             End Function
 
-            Public Shared Function define(Of WRITER As New) _
-                                         (ByVal defines As Func(Of define_t)) As Action(Of code_gens(Of WRITER))
+            Public Shared Function define(ByVal defines As Func(Of define_t)) As Action(Of code_gens(Of WRITER))
                 assert(Not defines Is Nothing)
                 Return Sub(ByVal c As code_gens(Of WRITER))
                            assert(Not c Is Nothing)
-                           c.register("define", New define_impl(Of WRITER)(Sub(ByVal s As String)
-                                                                               defines().define(s)
-                                                                           End Sub))
+                           c.register("define", New define_impl(Sub(ByVal s As String)
+                                                                    defines().define(s)
+                                                                End Sub))
                        End Sub
             End Function
 

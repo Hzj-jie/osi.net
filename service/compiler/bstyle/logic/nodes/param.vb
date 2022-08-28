@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
-Imports struct_def = osi.service.compiler.scope(Of osi.service.compiler.bstyle.scope).struct_def
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class param
@@ -20,11 +19,11 @@ Partial Public NotInheritable Class bstyle
             Dim type_node As typed_node = n.child(0)
             struct.forward_in_stack(type_node.child(0).word().str(),
                                     n.last_child().word().str())
-            Dim params As struct_def = Nothing
+            Dim params As scope.struct_def = Nothing
             If Not scope.current().structs().resolve(type_node.child(0).input_without_ignored(),
                                                      n.last_child().word().str(),
                                                      params) Then
-                params = struct_def.of_primitive(type_node.child(0).word().str(), n.last_child().word().str())
+                params = scope.struct_def.of_primitive(type_node.child(0).word().str(), n.last_child().word().str())
             End If
             Dim ps As stream(Of builders.parameter) = params.primitives()
             If type_node.child_count() = 2 Then

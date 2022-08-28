@@ -6,13 +6,16 @@ Option Strict On
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
-    Public MustInherit Class includes(Of T As scope(Of T))
+    Public MustInherit Class includes(Of _SHOULD_INCLUDE As func_t(Of String, Boolean))
         Inherits reparser
 
+        ' TODO: Remove constructor parameters and make the includes related components stateless.
+        Private Shared ReadOnly should_include As _SHOULD_INCLUDE = alloc(Of _SHOULD_INCLUDE)()
         Private ReadOnly folders As vector(Of String)
         ' TODO: Remove
         Private ReadOnly ignore_default_folder As Boolean
@@ -64,7 +67,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
 
         Protected Function include_file(ByVal s As String, ByRef o As String) As Boolean
-            If Not scope(Of T).current().includes().should_include(s) AndAlso (arguments.include_once Or True) Then
+            If Not should_include.run(s) AndAlso (arguments.include_once Or True) Then
                 Return True
             End If
             If include_file(folders, s, o) Then
@@ -80,8 +83,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
     End Class
 
-    Public MustInherit Class include_with_string(Of T As scope(Of T))
-        Inherits includes(Of T)
+    Public MustInherit Class include_with_string(Of SHOULD_INCLUDE As func_t(Of String, Boolean))
+        Inherits includes(Of SHOULD_INCLUDE)
 
         Protected Sub New(ByVal folders As vector(Of String),
                           ByVal ignore_default_folder As Boolean,
@@ -97,8 +100,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
     End Class
 
-    Public MustInherit Class include_with_file(Of T As scope(Of T))
-        Inherits includes(Of T)
+    Public MustInherit Class include_with_file(Of SHOULD_INCLUDE As func_t(Of String, Boolean))
+        Inherits includes(Of SHOULD_INCLUDE)
 
         Private Const kw_include As String = "#include"
 

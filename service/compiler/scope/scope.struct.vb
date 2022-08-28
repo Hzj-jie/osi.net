@@ -5,10 +5,14 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports builders = osi.service.compiler.logic.builders
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
+                              __BUILDER As func_t(Of String, WRITER, Boolean),
+                              __CODE_GENS As func_t(Of code_gens(Of WRITER)),
+                              T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Protected NotInheritable Class struct_t
         Private ReadOnly s As New unordered_map(Of String, struct_def)()
 
@@ -79,7 +83,7 @@ Partial Public Class scope(Of T As scope(Of T))
         Public Function resolve(ByVal type As String,
                                 ByVal name As String,
                                 ByRef o As struct_def) As Boolean
-            Dim s As scope(Of T) = scope(Of T).current()
+            Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
                 If s.myself().structs().resolve(type, name, o) Then
                     Return True

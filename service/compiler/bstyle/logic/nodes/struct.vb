@@ -8,7 +8,6 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
-Imports struct_def = osi.service.compiler.scope(Of osi.service.compiler.bstyle.scope).struct_def
 Imports variable = osi.service.compiler.logic.variable
 
 Partial Public NotInheritable Class bstyle
@@ -23,7 +22,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not sources Is Nothing)
             assert(Not target.null_or_whitespace())
             assert(Not target_naming Is Nothing)
-            Dim vs As struct_def = Nothing
+            Dim vs As scope.struct_def = Nothing
             If Not scope.current().structs().variables().resolve(target, vs) Then
                 Return False
             End If
@@ -107,11 +106,11 @@ Partial Public NotInheritable Class bstyle
 
         Private Shared Function define(ByVal type As String,
                                        ByVal name As String,
-                                       ByVal v As struct_def) As Boolean
+                                       ByVal v As scope.struct_def) As Boolean
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
             assert(Not v Is Nothing)
-            Return streams.of(struct_def.nested(type, name)).
+            Return streams.of(scope.struct_def.nested(type, name)).
                            concat(v.nesteds()).
                            map(Function(ByVal s As builders.parameter) As Boolean
                                    assert(Not s Is Nothing)
@@ -123,7 +122,7 @@ Partial Public NotInheritable Class bstyle
 
         ' Forward the definition of, or declare the {type, name} pair in the scope.variable in stack.
         Public Shared Sub forward_in_stack(ByVal type As String, ByVal name As String)
-            Dim v As struct_def = Nothing
+            Dim v As scope.struct_def = Nothing
             If scope.current().structs().resolve(type, name, v) Then
                 define(type, name, v)
             End If
@@ -133,7 +132,7 @@ Partial Public NotInheritable Class bstyle
                                                ByVal name As String,
                                                ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
-            Dim v As struct_def = Nothing
+            Dim v As scope.struct_def = Nothing
             If Not scope.current().structs().resolve(type, name, v) OrElse
                Not define(type, name, v) Then
                 Return False
@@ -151,7 +150,7 @@ Partial Public NotInheritable Class bstyle
                                        ByVal o As logic_writer) As Boolean
             assert(Not length Is Nothing)
             assert(Not o Is Nothing)
-            Dim v As struct_def = Nothing
+            Dim v As scope.struct_def = Nothing
             If Not scope.current().structs().resolve(type, name, v) OrElse
                Not define(type, name, v) Then
                 Return False
@@ -173,7 +172,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function dealloc_from_heap(ByVal name As String, ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
-            Dim v As struct_def = Nothing
+            Dim v As scope.struct_def = Nothing
             If Not scope.current().structs().variables().resolve(name, v) Then
                 Return False
             End If
@@ -186,7 +185,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function undefine(ByVal name As String, ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
-            Dim v As struct_def = Nothing
+            Dim v As scope.struct_def = Nothing
             If Not scope.current().structs().variables().resolve(name, v) Then
                 Return False
             End If
@@ -201,7 +200,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function redefine(ByVal name As String, ByVal type As String, ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
-            Dim v As struct_def = Nothing
+            Dim v As scope.struct_def = Nothing
             ' Note: the variable name should be suffixed by the variables in "type" struct.
             If Not scope.current().structs().resolve(type, name, v) Then
                 Return False
@@ -250,7 +249,7 @@ Partial Public NotInheritable Class bstyle
             assert(builders.of_type(id.type, uint32_1).to(o))
             Return scope.current().structs().define(
                        n.child(1).word().str(),
-                       parse_struct_body(n).map(AddressOf struct_def.nested).
+                       parse_struct_body(n).map(AddressOf scope.struct_def.nested).
                                             collect_to(Of vector(Of builders.parameter))() +
                                             id)
         End Function

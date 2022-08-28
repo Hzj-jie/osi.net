@@ -5,12 +5,16 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports builders = osi.service.compiler.logic.builders
 Imports typed_node = osi.service.automata.typed_node
 Imports variable = osi.service.compiler.logic.variable
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
+                              __BUILDER As func_t(Of String, WRITER, Boolean),
+                              __CODE_GENS As func_t(Of code_gens(Of WRITER)),
+                              T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Protected NotInheritable Class variable_t
         ' name -> type
         Private ReadOnly s As New unordered_map(Of String, String)()
@@ -21,8 +25,8 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
             assert(Not insert Is Nothing)
-            type = scope(Of T).current_namespace_t.of(type)
-            name = scope(Of T).current_namespace_t.of(name)
+            type = current_namespace_t.of(type)
+            name = current_namespace_t.of(name)
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
             ' where the variable_t instance Is being defined.
             type = scope(Of T).current().type_alias()(type)
@@ -59,7 +63,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function undefine(ByVal name As String) As Boolean
-            name = scope(Of T).current_namespace_t.of(name)
+            name = current_namespace_t.of(name)
             assert(Not name.null_or_whitespace())
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
@@ -67,7 +71,7 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-            name = scope(Of T).current_namespace_t.of(name)
+            name = current_namespace_t.of(name)
             assert(Not name.null_or_whitespace())
             Return s.find(name, type)
         End Function
@@ -94,7 +98,7 @@ Partial Public Class scope(Of T As scope(Of T))
                             ")")
                 Return False
             End If
-            Dim s As scope(Of T) = scope(Of T).current()
+            Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
                 If s.myself().variables().redefine(type, name) Then
                     Return True
@@ -115,7 +119,7 @@ Partial Public Class scope(Of T As scope(Of T))
                 raise_error(error_type.user, "Undefine works for heap name without index, but got ", name)
                 Return False
             End If
-            Dim s As scope(Of T) = scope(Of T).current()
+            Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
                 If s.myself().variables().undefine(name) Then
                     Return True
@@ -152,7 +156,7 @@ Partial Public Class scope(Of T As scope(Of T))
                 name = name.Substring(0, name.IndexOf(character.left_mid_bracket))
             End If
 
-            Dim s As scope(Of T) = scope(Of T).current()
+            Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
                 If Not s.myself().variables().resolve(name, type) Then
                     s = s.parent

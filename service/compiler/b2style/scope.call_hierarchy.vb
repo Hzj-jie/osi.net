@@ -5,11 +5,12 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.service.automata
+Imports typed_node_writer = osi.service.compiler.rewriters.typed_node_writer
 
 Partial Public NotInheritable Class b2style
     Partial Public NotInheritable Class scope
         Public NotInheritable Shadows Class call_hierarchy_t
-            Inherits scope(Of scope).call_hierarchy_t
+            Inherits scope(Of typed_node_writer, code_builder_proxy, code_gens_proxy, scope).call_hierarchy_t
 
             Public Shared Function from_value_clause() As Func(Of typed_node, Boolean)
                 Return Function(ByVal n As typed_node) As Boolean
@@ -34,9 +35,10 @@ Partial Public NotInheritable Class b2style
             End Sub
 
             Public NotInheritable Class calculator
-                Inherits calculator(Of rewriters.typed_node_writer, calculator)
+                Inherits calculator(Of calculator)
 
-                Protected Overrides Function current() As scope(Of scope).call_hierarchy_t
+                Protected Overrides Function current() As _
+                        scope(Of typed_node_writer, code_builder_proxy, code_gens_proxy, scope).call_hierarchy_t
                     Return scope.current().call_hierarchy()
                 End Function
             End Class

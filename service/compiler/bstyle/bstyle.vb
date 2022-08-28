@@ -94,9 +94,9 @@ Partial Public NotInheritable Class bstyle
                                                                         Function() As scope.define_t
                                                                             Return scope.current().defines()
                                                                         End Function)).
-                           with(scope.define_t.code_gens.define(Of logic_writer)(Function() As scope.define_t
-                                                                                     Return scope.current().defines()
-                                                                                 End Function)).
+                           with(scope.define_t.code_gens.define(Function() As scope.define_t
+                                                                    Return scope.current().defines()
+                                                                End Function)).
                            with(Of typedef)().
                            with(Of typedef_type_name)().
                            with(Of typedef_type_str)().
