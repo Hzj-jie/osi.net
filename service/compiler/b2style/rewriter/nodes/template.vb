@@ -5,7 +5,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
@@ -13,47 +12,6 @@ Imports osi.service.compiler.rewriters
 Partial Public NotInheritable Class b2style
     Public NotInheritable Class template
         Implements code_gen(Of typed_node_writer)
-
-        Private Shared Function build(ByVal l As code_gens(Of typed_node_writer),
-                                      ByVal n As typed_node,
-                                      ByVal f As Func(Of String, scope.template_template, Boolean)) As Boolean
-            assert(Not l Is Nothing)
-            assert(Not n Is Nothing)
-            assert(Not f Is Nothing)
-            assert(n.child_count() = 2)
-            Dim name As String = Nothing
-            Dim name_node As typed_node = Nothing
-            Dim o As scope.template_template = Nothing
-            Return l.typed(Of scope.template_t.name)(n.child(1).child().type_name).of(n, name) AndAlso
-                   scope.template_builder.name_node_of(n, name_node) AndAlso
-                   [of](scope.template_builder.type_param_list(n), n.child(1), name_node, o) AndAlso
-                   f(name, o)
-        End Function
-
-        Private Shared Function build(Of T)(ByVal l As code_gens(Of typed_node_writer),
-                                            ByVal n As typed_node,
-                                            ByVal f As _do_val_val_val_val_ref(Of String,
-                                                                                  vector(Of String),
-                                                                                  typed_node,
-                                                                                  typed_node,
-                                                                                  T,
-                                                                                  Boolean),
-                                            ByRef o As T) As Boolean
-            assert(Not l Is Nothing)
-            assert(Not n Is Nothing)
-            assert(Not f Is Nothing)
-            assert(n.child_count() = 2)
-            Dim name As String = Nothing
-            Dim name_node As typed_node = Nothing
-            Return l.typed(Of scope.template_t.name)(n.child(1).child().type_name).of(n, name) AndAlso
-                   scope.template_builder.name_node_of(n, name_node) AndAlso
-                   f(name,
-                     scope.template_builder.type_param_list(n),
-                     n.child(1),
-                     name_node,
-                     o)
-        End Function
-
         ' TODO: Remove
         Public Shared Function name_of(ByVal name As String, ByVal type_count As UInt32) As String
             assert(Not name.null_or_whitespace())
@@ -68,18 +26,10 @@ Partial Public NotInheritable Class b2style
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
-            Return build(code_gens(),
-                         n,
-                         Function(ByVal name As String,
-                                  ByVal types As vector(Of String),
-                                  ByVal body As typed_node,
-                                  ByVal name_node As typed_node,
-                                  ByRef unused As Int32) As Boolean
-                             Dim t As scope.template_template = Nothing
-                             Return template.of(types, body, name_node, t) AndAlso
-                                    scope.current().template().define(name, t)
-                         End Function,
-                         0)
+            Dim name As String = Nothing
+            Dim t As scope.template_template = Nothing
+            Return [of](code_gens(), n, name, t) AndAlso
+                   scope.current().template().define(name, t)
         End Function
 
         Public Shared Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
@@ -94,30 +44,23 @@ Partial Public NotInheritable Class b2style
             Return scope.current().template().resolve(name, types, extended_type_name, lazier.of(AddressOf n.input))
         End Function
 
-        ' @VisibleForTesting
-        ' TODO: Remove this function.
         Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
                                     ByVal n As typed_node,
+                                    ByRef name As String,
                                     ByRef o As scope.template_template) As Boolean
-            Return build(l,
-                         n,
-                         Function(ByVal name As String,
-                                  ByVal types As vector(Of String),
-                                  ByVal body As typed_node,
-                                  ByVal name_node As typed_node,
-                                  ByRef x As scope.template_template) As Boolean
-                             Return [of](types, body, name_node, x)
-                         End Function,
-                         o)
-        End Function
-
-        Public Shared Function [of](ByVal type_param_list As vector(Of String),
-                                    ByVal body As typed_node,
-                                    ByVal name_node As typed_node,
-                                    ByRef o As scope.template_template) As Boolean
-            assert(Not type_param_list.null_or_empty())
-            assert(Not body Is Nothing)
+            assert(Not l Is Nothing)
+            assert(Not n Is Nothing)
+            assert(n.child_count() = 2)
+            Dim name_node As typed_node = Nothing
+            If Not l.typed(Of scope.template_t.name)(n.child(1).child().type_name).of(n, name) OrElse
+               Not scope.template_builder.name_node_of(n, name_node) Then
+                Return False
+            End If
             assert(Not name_node Is Nothing)
+            Dim type_param_list As vector(Of String) = scope.template_builder.type_param_list(n)
+            assert(Not type_param_list.null_or_empty())
+            Dim body As typed_node = n.child(1)
+            assert(Not body Is Nothing)
             assert(body.type_name.Equals("template-body"))
             assert(body.child_count() = 1)
             If type_param_list.size() >
@@ -132,6 +75,13 @@ Partial Public NotInheritable Class b2style
             End If
             o = New scope.template_template(body.child(), name_node, type_param_list)
             Return True
+        End Function
+
+        ' @VisibleForTesting
+        Public Shared Function [of](ByVal l As code_gens(Of typed_node_writer),
+                                    ByVal n As typed_node,
+                                    ByRef o As scope.template_template) As Boolean
+            Return [of](l, n, Nothing, o)
         End Function
     End Class
 End Class
