@@ -89,7 +89,8 @@ Partial Public Class scope(Of T As scope(Of T))
             Return Nothing
         End Function
 
-        Public Overridable Function classes() As class_t
+        Public Overridable Function classes(Of WRITER As New, CODE_GENS_PROXY As func_t(Of code_gens(Of WRITER)))() _
+                                           As class_t(Of WRITER, CODE_GENS_PROXY)
             assert(False)
             Return Nothing
         End Function

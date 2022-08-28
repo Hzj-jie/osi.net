@@ -77,8 +77,9 @@ Partial Public Class scope(Of T As scope(Of T))
                          End Function)
     End Function
 
-    Public Function classes() As class_proxy
-        Return New class_proxy()
+    Protected Function classes(Of WRITER As New, CODE_GENS As func_t(Of code_gens(Of WRITER)))() _
+                              As class_proxy(Of WRITER, CODE_GENS)
+        Return New class_proxy(Of WRITER, CODE_GENS)()
     End Function
 
     Protected Function template(Of WRITER As {lazy_list_writer, New},

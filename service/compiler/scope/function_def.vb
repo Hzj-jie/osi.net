@@ -6,10 +6,11 @@ Option Strict On
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 
 Partial Public Class scope(Of T As scope(Of T))
-    Partial Public NotInheritable Class class_def
+    Partial Public Class class_def(Of WRITER As New, _CODE_GENS As func_t(Of code_gens(Of WRITER)))
         Public NotInheritable Class function_def
             Implements IComparable(Of function_def), IEquatable(Of function_def)
 
@@ -19,7 +20,7 @@ Partial Public Class scope(Of T As scope(Of T))
                 override
             End Enum
 
-            Private ReadOnly class_def As class_def
+            Private ReadOnly class_def As class_def(Of WRITER, _CODE_GENS)
             Private ReadOnly return_type As name_with_namespace
             ' TODO: Move name out of signature
             Private ReadOnly signature As vector(Of name_with_namespace)
@@ -40,7 +41,7 @@ Partial Public Class scope(Of T As scope(Of T))
                 Return name_with_namespace.of(type)
             End Function
 
-            Public Sub New(ByVal class_def As class_def,
+            Public Sub New(ByVal class_def As class_def(Of WRITER, _CODE_GENS),
                            ByVal return_type As name_with_namespace,
                            ByVal signature As vector(Of name_with_namespace),
                            ByVal type As type_t,
@@ -55,7 +56,7 @@ Partial Public Class scope(Of T As scope(Of T))
                 Me.content = content
             End Sub
 
-            Public Sub New(ByVal class_def As class_def,
+            Public Sub New(ByVal class_def As class_def(Of WRITER, _CODE_GENS),
                            ByVal return_type As name_with_namespace,
                            ByVal name As name_with_namespace,
                            ByVal type As type_t,
@@ -67,7 +68,7 @@ Partial Public Class scope(Of T As scope(Of T))
                 Return New function_def(class_def, return_type, signature, type, content)
             End Function
 
-            Public Function with_class(ByVal class_def As class_def) As function_def
+            Public Function with_class(ByVal class_def As class_def(Of WRITER, _CODE_GENS)) As function_def
                 Return New function_def(class_def, return_type, signature, type, content)
             End Function
 
@@ -87,7 +88,7 @@ Partial Public Class scope(Of T As scope(Of T))
                                collect_to(Of vector(Of String))()
             End Function
 
-            Public Function forward_to(ByVal other As class_def) As String
+            Public Function forward_to(ByVal other As class_def(Of WRITER, _CODE_GENS)) As String
                 assert(Not other Is Nothing)
                 Dim content As New StringBuilder()
                 content.Append("reinterpret_cast(this,").
@@ -155,7 +156,8 @@ Partial Public Class scope(Of T As scope(Of T))
                 Return signature.Equals(other.signature)
             End Function
 
-            Public Function CompareTo(ByVal other As function_def) As Int32 Implements IComparable(Of function_def).CompareTo
+            Public Function CompareTo(ByVal other As function_def) As Int32 _
+                                     Implements IComparable(Of function_def).CompareTo
                 If other Is Nothing Then
                     Return 1
                 End If

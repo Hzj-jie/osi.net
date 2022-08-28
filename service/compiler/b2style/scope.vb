@@ -20,7 +20,7 @@ Partial Public NotInheritable Class b2style
         Private ReadOnly t As New template_t(Of typed_node_writer, code_builder_proxy)()
         Private ReadOnly v As New variable_t()
         Private ReadOnly d As define_t
-        Private ReadOnly c As New class_t()
+        Private ReadOnly c As New class_t(Of typed_node_writer, code_gens_proxy)()
         Private ReadOnly i As root_type_injector_t(Of typed_node_writer)
 
         <inject_constructor>
@@ -84,8 +84,9 @@ Partial Public NotInheritable Class b2style
                 Return direct_cast(Of root_type_injector_t(Of WRITER))(s.i)
             End Function
 
-            Public Overrides Function classes() As class_t
-                Return s.c
+            Public Overrides Function classes(Of WRITER As New, CODE_GENS As func_t(Of code_gens(Of WRITER)))() _
+                                             As class_t(Of WRITER, CODE_GENS)
+                Return direct_cast(Of class_t(Of WRITER, CODE_GENS))(s.c)
             End Function
 
             Public Overrides Function template(Of WRITER As {lazy_list_writer, New},
@@ -115,11 +116,23 @@ Partial Public NotInheritable Class b2style
             Return MyBase.template(Of typed_node_writer, code_builder_proxy)()
         End Function
 
-        Public NotInheritable Shadows Class template_builder
+        Public NotInheritable Class template_builder
             Inherits template_builder(Of typed_node_writer, code_builder_proxy, code_gens_proxy)
 
             Private Sub New()
             End Sub
         End Class
+
+        Public NotInheritable Class class_def
+            Inherits class_def(Of typed_node_writer, code_gens_proxy)
+
+            Public Sub New(ByVal name As String)
+                MyBase.New(name)
+            End Sub
+        End Class
+
+        Public Shadows Function classes() As class_proxy(Of typed_node_writer, code_gens_proxy)
+            Return New class_proxy(Of typed_node_writer, code_gens_proxy)()
+        End Function
     End Class
 End Class
