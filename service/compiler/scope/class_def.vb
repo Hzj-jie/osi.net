@@ -6,12 +6,15 @@ Option Strict On
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
-Partial Public NotInheritable Class b2style
-    Partial Public NotInheritable Class class_def
+Partial Public Class scope(Of T As scope(Of T))
+    ' Allow the implementations to forward type.
+    Partial Public Class class_def(Of WRITER As New, _CODE_GENS As func_t(Of code_gens(Of WRITER)))
+        Private Shared ReadOnly code_gens As _CODE_GENS = alloc(Of _CODE_GENS)()
         Private Const construct As String = "construct"
         Private Const destruct As String = "destruct"
         Private ReadOnly name As name_with_namespace
@@ -24,7 +27,8 @@ Partial Public NotInheritable Class b2style
             Me.name = name_with_namespace.of(name)
         End Sub
 
-        Public Function inherit_from(ByVal other As class_def) As class_def
+        Public Function inherit_from(ByVal other As class_def(Of WRITER, _CODE_GENS)) _
+                                    As class_def(Of WRITER, _CODE_GENS)
             assert(Not other Is Nothing)
             _vars.emplace_back(other._vars)
             inherit_non_overrides(other)
@@ -32,21 +36,23 @@ Partial Public NotInheritable Class b2style
             Return Me
         End Function
 
-        Private Function forward_to(ByVal other As class_def, ByVal f As function_def) As function_def
+        Private Function forward_to(ByVal other As class_def(Of WRITER, _CODE_GENS),
+                                    ByVal f As function_def) As function_def
             assert(Not other Is Nothing)
             assert(Not f Is Nothing)
             f = f.with_class(Me)
-            scope.current().call_hierarchy().to(f.name().in_global_namespace())
+            scope(Of T).current().call_hierarchy().to(f.name().in_global_namespace())
             Return f.with_content(f.declaration() + "{" + f.forward_to(other) + "}")
         End Function
 
-        Private Function forward_to(ByVal other As class_def) As Func(Of function_def, function_def)
+        Private Function forward_to(ByVal other As class_def(Of WRITER, _CODE_GENS)) _
+                                   As Func(Of function_def, function_def)
             Return Function(ByVal f As function_def) As function_def
                        Return forward_to(other, f)
                    End Function
         End Function
 
-        Private Function forward_with_temp_to(ByVal other As class_def) _
+        Private Function forward_with_temp_to(ByVal other As class_def(Of WRITER, _CODE_GENS)) _
                          As Func(Of tuple(Of String, function_def), tuple(Of String, function_def))
             Return Function(ByVal p As tuple(Of String, function_def)) As tuple(Of String, function_def)
                        Return tuple.emplace_of(p.first, forward_to(other, p.second))
@@ -61,7 +67,7 @@ Partial Public NotInheritable Class b2style
                    Not f.name().name().Equals(destruct)
         End Function
 
-        Private Sub inherit_non_overrides(ByVal other As class_def)
+        Private Sub inherit_non_overrides(ByVal other As class_def(Of WRITER, _CODE_GENS))
             assert(Not other Is Nothing)
             _funcs.emplace_back(other.funcs().
                                       filter(AddressOf filter_non_overrides).
@@ -75,7 +81,7 @@ Partial Public NotInheritable Class b2style
                                       collect_to(Of vector(Of tuple(Of String, function_def)))())
         End Sub
 
-        Private Sub inherit_overrides(ByVal other As class_def)
+        Private Sub inherit_overrides(ByVal other As class_def(Of WRITER, _CODE_GENS))
             assert(Not other Is Nothing)
             _funcs.emplace_back(other.funcs().
                                       filter(Function(ByVal f As function_def) As Boolean
@@ -114,14 +120,14 @@ Partial Public NotInheritable Class b2style
             Return _temps.stream()
         End Function
 
-        Public Function with_var(ByVal p As builders.parameter) As class_def
+        Public Function with_var(ByVal p As builders.parameter) As class_def(Of WRITER, _CODE_GENS)
             assert(Not p Is Nothing)
             assert(Not p.ref)
             _vars.emplace_back(p)
             Return Me
         End Function
 
-        Private Function with_func(ByVal f As function_def) As class_def
+        Private Function with_func(ByVal f As function_def) As class_def(Of WRITER, _CODE_GENS)
             assert(Not f Is Nothing)
             _funcs.emplace_back(f)
             Return Me
@@ -166,7 +172,7 @@ Partial Public NotInheritable Class b2style
             Return tuple.of(node, function_def.type_t.pure)
         End Function
 
-        Public Function with_funcs(ByVal n As typed_node) As class_def
+        Public Function with_funcs(ByVal n As typed_node) As class_def(Of WRITER, _CODE_GENS)
             assert(Not n Is Nothing)
             Dim has_constructor As Boolean = False
             Dim has_destructor As Boolean = False
@@ -190,11 +196,12 @@ Partial Public NotInheritable Class b2style
                               function_def.type_of("void"),
                               function_def.name_of(construct),
                               function_def.type_t.pure,
-                              New StringBuilder().Append("void ").
-                                                  Append(scope.current_namespace_t.with_global_namespace(construct)).
-                                                  Append("(").
-                                                  Append(name.name()).
-                                                  Append("& this){}").ToString()))
+                              New StringBuilder().
+                                  Append("void ").
+                                  Append(scope(Of T).current_namespace_t.with_global_namespace(construct)).
+                                  Append("(").
+                                  Append(name.name()).
+                                  Append("& this){}").ToString()))
             End If
             If Not has_destructor Then
                 with_func(New function_def(
@@ -202,11 +209,12 @@ Partial Public NotInheritable Class b2style
                               function_def.type_of("void"),
                               function_def.name_of(destruct),
                               function_def.type_t.pure,
-                              New StringBuilder().Append("void ").
-                                                  Append(scope.current_namespace_t.with_global_namespace(destruct)).
-                                                  Append("(").
-                                                  Append(name.name()).
-                                                  Append("& this){}").ToString()))
+                              New StringBuilder().
+                                  Append("void ").
+                                  Append(scope(Of T).current_namespace_t.with_global_namespace(destruct)).
+                                  Append("(").
+                                  Append(name.name()).
+                                  Append("& this){}").ToString()))
             End If
 
             n.children_of("class-template-function").
@@ -219,7 +227,7 @@ Partial Public NotInheritable Class b2style
                   End Function).
               foreach(Sub(ByVal t As tuple(Of typed_node, typed_node, function_def.type_t))
                           Dim template_types As unordered_set(Of String) =
-                                  unordered_set.emplace_of(+code_gens().of_all_children(t._1().child(2)).dump())
+                                  unordered_set.emplace_of(+code_gens.run().of_all_children(t._1().child(2)).dump())
                           _temps.emplace_back(tuple.of(t._1().input(), parse_function(t._2(), t._3(), template_types)))
                       End Sub)
             Return Me

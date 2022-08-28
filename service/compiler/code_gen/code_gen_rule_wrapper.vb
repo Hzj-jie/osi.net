@@ -6,6 +6,7 @@ Option Strict On
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.service.automata
@@ -32,6 +33,14 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         Return l
     End Function
 
+    Public Structure code_gens_proxy
+        Implements func_t(Of code_gens(Of WRITER))
+
+        Public Function run() As code_gens(Of WRITER) Implements func_t(Of code_gens(Of WRITER)).run
+            Return code_gens()
+        End Function
+    End Structure
+
     Protected Shared Function code_gens() As code_gens(Of WRITER)
         Return code_builder.code_gens
     End Function
@@ -44,6 +53,16 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         assert(Not n Is Nothing)
         Return n.ancestor_of(compiler.code_gens(Of WRITER).code_gen_name(Of T)())
     End Function
+
+    Public Structure code_builder_proxy
+        Implements func_t(Of String, WRITER, Boolean)
+
+        Public Function run(ByVal i As String,
+                                ByVal j As WRITER) As Boolean _
+                               Implements func_t(Of String, WRITER, Boolean).run
+            Return code_builder.build(i, j)
+        End Function
+    End Structure
 
     Protected NotInheritable Class code_builder
         Public Shared ReadOnly code_gens As code_gens(Of WRITER) = new_code_gens()

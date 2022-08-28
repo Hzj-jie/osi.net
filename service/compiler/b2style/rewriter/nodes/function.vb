@@ -12,7 +12,7 @@ Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class _function
-        Implements code_gen(Of typed_node_writer), template.name_node, template.name
+        Implements code_gen(Of typed_node_writer), scope.template_t.name_node, scope.template_t.name
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
@@ -26,8 +26,8 @@ Partial Public NotInheritable Class b2style
             End Using
         End Function
 
-        Private Function name_node_of(ByVal n As typed_node,
-                                      ByRef o As typed_node) As Boolean Implements template.name_node.of
+        Private Function name_node_of(ByVal n As typed_node, ByRef o As typed_node) As Boolean _
+                                     Implements scope.template_t.name_node.of
             assert(Not n Is Nothing)
             o = n.child(1)
             Return True
@@ -58,10 +58,11 @@ Partial Public NotInheritable Class b2style
 #End If
         End Function
 
-        Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean Implements template.name.of
-            o = template_name_of(template.name_node_of(n).input_without_ignored(),
-                                 template.type_param_count(n),
-                                 param_types(template.body_of(n)))
+        Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean _
+                                Implements scope.template_t.name.of
+            o = template_name_of(scope.template_builder.name_node_of(n).input_without_ignored(),
+                                 scope.template_builder.type_param_count(n),
+                                 param_types(scope.template_builder.body_of(n)))
             Return True
         End Function
 
@@ -71,7 +72,7 @@ Partial Public NotInheritable Class b2style
             assert(Not function_name.null_or_whitespace())
             assert(type_param_count > 0)
             assert(Not param_types Is Nothing)
-            Dim r As New StringBuilder(template.name_of(function_name, type_param_count))
+            Dim r As New StringBuilder(scope.template_builder.name_of(function_name, type_param_count))
             Dim i As UInt32 = 0
             While i < param_types.size()
                 r.Append("&").

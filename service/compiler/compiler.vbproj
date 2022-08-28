@@ -57,11 +57,9 @@
   <ItemGroup>
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
-    <Compile Include="b2style\class_def.vb" />
-    <Compile Include="b2style\function_def.vb" />
+    <Compile Include="scope\class_def.vb" />
+    <Compile Include="scope\function_def.vb" />
     <None Include="b2style\lib\std\vector" />
-    <Compile Include="b2style\name_with_namespace.ext.vb" />
-    <Compile Include="b2style\name_with_namespace.vb" />
     <Compile Include="b2style\rewriter\nodes\class.vb" />
     <Compile Include="b2style\rewriter\nodes\class_initializer.vb" />
     <Compile Include="b2style\rewriter\nodes\function.vb" />
@@ -77,7 +75,6 @@
     <None Include="b3style\codegen\run.cmd" />
     <None Include="b3style\lib\run.cmd" />
     <None Include="bstyle\lib\climits" />
-    <Compile Include="b2style\rewriter\nodes\template_head.vb" />
     <Compile Include="b2style\rewriter\nodes\delegate_with_semi_colon.vb" />
     <Compile Include="b3style\b3style_rules.vb" />
     <Compile Include="b3style\b3style.vb" />
@@ -91,14 +88,13 @@
     <Compile Include="b2style\rewriter\nodes\root_type.vb" />
     <Compile Include="b2style\rewriter\nodes\template.vb" />
     <Compile Include="b2style\rewriter\nodes\template_type_name.vb" />
-    <Compile Include="b2style\scope.class.vb" />
+    <Compile Include="scope\scope.class.vb" />
     <Compile Include="b2style\scope.current_function.vb" />
     <Compile Include="scope\scope.features.vb" />
     <Compile Include="scope\scope.namespace.vb" />
-    <Compile Include="b2style\scope.root_type_injector.vb" />
-    <Compile Include="b2style\scope.template.vb" />
+    <Compile Include="scope\scope.root_type_injector.vb" />
+    <Compile Include="scope\scope.template.vb" />
     <Compile Include="b2style\scope.vb" />
-    <Compile Include="b2style\template_template.vb" />
     <Compile Include="bstyle\logic\nodes\kw_statement.vb" />
     <Compile Include="bstyle\logic\nodes\static_cast.vb" />
     <Compile Include="scope\scope.temp_logic_name.vb" />
@@ -257,6 +253,9 @@
     <Compile Include="rewriter\rewriter_rule_wrapper.vb" />
     <Compile Include="rewriter\typed_node_writer.vb" />
     <Compile Include="rule_wrapper.vb" />
+    <Compile Include="scope\name_with_namespace.ext.vb" />
+    <Compile Include="scope\name_with_namespace.vb" />
+    <Compile Include="scope\template_template.vb" />
     <Compile Include="shared\shared_rules.vb" />
     <Compile Include="shared\shared_rules_exporter.vb" />
   </ItemGroup>
@@ -269,7 +268,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="b2style\codegen\name_with_namespace.vbp" />
     <None Include="b2style\codegen\run.cmd" />
     <None Include="b2style\lib\run.cmd" />
     <Compile Include="b2style\scope.call_hierarchy.vb" />
@@ -289,6 +287,8 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="scope\name_with_namespace.vbp" />
+    <None Include="scope\run.cmd" />
     <None Include="shared\run.cmd" />
   </ItemGroup>
   <ItemGroup>
