@@ -25,7 +25,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
             Private ReadOnly class_def As class_def
             Private ReadOnly return_type As name_with_namespace
-            ' TODO: Move name out of signature
             Private ReadOnly signature As vector(Of name_with_namespace)
             Private ReadOnly type As type_t
             Public ReadOnly content As String
@@ -41,6 +40,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End Function
 
             Public Shared Function type_of(ByVal type As String) As name_with_namespace
+                If current().features().with_type_alias() Then
+                    type = current().type_alias()(type)
+                End If
                 Return name_with_namespace.of(type)
             End Function
 

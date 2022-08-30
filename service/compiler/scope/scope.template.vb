@@ -26,7 +26,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End Sub
 
             Public Function apply(ByVal types As vector(Of String), ByRef o As String) As Boolean
-                ' TODO: Should resolve type-aliases.
+                assert(Not types.null_or_empty())
+                If current().features().with_type_alias() Then
+                    types = types.stream().
+                                  map(AddressOf current().type_alias().canonical_of).
+                                  collect_to(Of vector(Of String))()
+                End If
                 If injected_types.emplace(types).second() Then
                     Return template.apply(types, o)
                 End If
