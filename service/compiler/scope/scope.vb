@@ -108,5 +108,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
     Protected Sub New(ByVal parent As T)
         MyBase.New(parent)
+        _features = If(is_root(), get_features(), Nothing)
     End Sub
 End Class
