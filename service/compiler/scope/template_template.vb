@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.template
@@ -13,7 +14,10 @@ Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 Imports builders = osi.service.compiler.logic.builders
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
+                              __BUILDER As func_t(Of String, WRITER, Boolean),
+                              __CODE_GENS As func_t(Of code_gens(Of WRITER)),
+                              T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Public NotInheritable Class template_template
         Private Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("template", "template", "dump"))
         Private ReadOnly w As New template_writer()

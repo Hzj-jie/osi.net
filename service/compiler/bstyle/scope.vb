@@ -4,12 +4,11 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.service.compiler
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class scope
-        Inherits scope(Of scope)
+        Inherits scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope)
 
         Private ReadOnly incs As includes_t
         Private ReadOnly fc As call_hierarchy_t
@@ -49,12 +48,13 @@ Partial Public NotInheritable Class bstyle
             Return ps
         End Function
 
-        Protected Overrides Function get_accessor() As scope(Of scope).accessor_t
+        Protected Overrides Function get_accessor() As _
+                scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).accessor_t
             Return New accessor_t(Me)
         End Function
 
         Private Shadows Class accessor_t
-            Inherits scope(Of scope).accessor_t
+            Inherits scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).accessor_t
 
             Private ReadOnly s As scope
 
@@ -103,17 +103,19 @@ Partial Public NotInheritable Class bstyle
                 Return s.vt
             End Function
 
-            Public Overrides Function call_hierarchy() As scope(Of scope).call_hierarchy_t
+            Public Overrides Function call_hierarchy() As _
+                    scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).call_hierarchy_t
                 Return s.fc
             End Function
         End Class
 
-        Protected Overrides Function get_features() As scope(Of scope).features_t
+        Protected Overrides Function get_features() As _
+                scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).features_t
             Return New features_t()
         End Function
 
         Public Shadows Class features_t
-            Inherits scope(Of scope).features_t
+            Inherits scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).features_t
 
             Public Overrides Function with_namespace() As Boolean
                 Return False

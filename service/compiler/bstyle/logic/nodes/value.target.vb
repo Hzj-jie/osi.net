@@ -7,26 +7,26 @@ Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.compiler.logic
-Imports struct_def = osi.service.compiler.scope(Of osi.service.compiler.bstyle.scope).struct_def
-Imports target = osi.service.compiler.scope(Of osi.service.compiler.bstyle.scope).value_target_t.target
 
 Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value
         Implements code_gen(Of logic_writer)
 
         ' Type of the single data slot is handled by logic.
-        Public Shared Function read_target_single_data_slot() As read_scoped(Of target).ref(Of String)
-            Return scope.current().value_target().value(Function(ByVal x As target, ByRef o As String) As Boolean
-                                                            assert(Not x Is Nothing)
-                                                            If x.names.size() <> 1 Then
-                                                                Return False
-                                                            End If
-                                                            o = x.names(0)
-                                                            Return True
-                                                        End Function)
+        Public Shared Function read_target_single_data_slot() As _
+                read_scoped(Of scope.value_target_t.target).ref(Of String)
+            Return scope.current().value_target().value(
+                Function(ByVal x As scope.value_target_t.target, ByRef o As String) As Boolean
+                    assert(Not x Is Nothing)
+                    If x.names.size() <> 1 Then
+                        Return False
+                    End If
+                    o = x.names(0)
+                    Return True
+                End Function)
         End Function
 
-        Public Shared Function read_target() As read_scoped(Of target).ref
+        Public Shared Function read_target() As read_scoped(Of scope.value_target_t.target).ref
             Return scope.current().value_target().value()
         End Function
 
@@ -64,7 +64,7 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function with_temp_target(ByVal type As String, ByVal o As logic_writer) As vector(Of String)
             assert(Not o Is Nothing)
-            Dim params As struct_def = Nothing
+            Dim params As scope.struct_def = Nothing
             assert(scope.current().structs().resolve(type, scope.current().temp_logic_name().variable(), params))
             assert(Not params Is Nothing)
             params.primitives.

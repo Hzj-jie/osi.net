@@ -49,7 +49,7 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Private NotInheritable Class include_with_string
-        Inherits code_gens(Of logic_writer).include_with_string(Of scope)
+        Inherits code_gens(Of logic_writer).include_with_string(Of scope.includes_t.proxy)
 
         Public Sub New()
             MyBase.New(includes.include_folders(),
@@ -64,7 +64,7 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Private NotInheritable Class include_with_file
-        Inherits code_gens(Of logic_writer).include_with_file(Of scope)
+        Inherits code_gens(Of logic_writer).include_with_file(Of scope.includes_t.proxy)
 
         Public Sub New()
             MyBase.New(includes.include_folders(),

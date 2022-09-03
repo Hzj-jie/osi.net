@@ -48,7 +48,7 @@ Partial Public NotInheritable Class b2style
                      stream().
                      with_index().
                      map(Function(ByVal t As tuple(Of UInt32, String)) As Boolean
-                             Dim bcd As scope.class_def(Of typed_node_writer, code_gens_proxy) = Nothing
+                             Dim bcd As scope.class_def = Nothing
                              If Not scope.current().classes().resolve(t.second(), bcd) Then
                                  Return False
                              End If

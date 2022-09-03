@@ -7,7 +7,7 @@ Imports osi.service.constructor
 
 Partial Public NotInheritable Class b3style
     Partial Public NotInheritable Class scope
-        Inherits scope(Of scope)
+        Inherits scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope)
 
         <inject_constructor>
         Public Sub New(ByVal parent As scope)

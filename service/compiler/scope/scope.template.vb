@@ -9,10 +9,11 @@ Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 
-Partial Public Class scope(Of T As scope(Of T))
-    Protected NotInheritable Class template_t(Of WRITER As {lazy_list_writer, New},
-                                                 _BUILDER As func_t(Of String, WRITER, Boolean))
-        Private Shared ReadOnly builder As func_t(Of String, WRITER, Boolean) = alloc(Of _BUILDER)()
+Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
+                              __BUILDER As func_t(Of String, WRITER, Boolean),
+                              __CODE_GENS As func_t(Of code_gens(Of WRITER)),
+                              T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
+    Public NotInheritable Class template_t
         Private ReadOnly m As New unordered_map(Of name_with_namespace, definition)()
 
         Private NotInheritable Class definition
@@ -25,7 +26,12 @@ Partial Public Class scope(Of T As scope(Of T))
             End Sub
 
             Public Function apply(ByVal types As vector(Of String), ByRef o As String) As Boolean
-                ' TODO: Should resolve type-aliases.
+                assert(Not types.null_or_empty())
+                If current().features().with_type_alias() Then
+                    types = types.stream().
+                                  map(AddressOf current().type_alias().canonical_of).
+                                  collect_to(Of vector(Of String))()
+                End If
                 If injected_types.emplace(types).second() Then
                     Return template.apply(types, o)
                 End If
@@ -72,32 +78,39 @@ Partial Public Class scope(Of T As scope(Of T))
                 Using If(name.namespace().empty_or_whitespace(),
                          empty_idisposable.instance,
                          scope(Of T).current().current_namespace().define(name.namespace()))
-                    If Not builder.run(s, scope(Of T).current().root_type_injector(Of WRITER)().current()) Then
+                    If Not code_build(s, scope(Of T).current().root_type_injector().current()) Then
                         Return ternary.false
                     End If
                 End Using
             End If
-            extended_type_name = scope(Of T).current_namespace_t.with_namespace(
+            extended_type_name = current_namespace_t.with_namespace(
                                      name.namespace(),
                                      d.extended_type_name(types))
             Return ternary.true
         End Function
+
+        Public Interface name
+            Function [of](ByVal n As typed_node, ByRef o As String) As Boolean
+        End Interface
+
+        Public Interface name_node
+            Function [of](ByVal n As typed_node, ByRef o As typed_node) As Boolean
+        End Interface
     End Class
 
-    Public Structure template_proxy(Of WRITER As {lazy_list_writer, New},
-                                       BUILDER As func_t(Of String, WRITER, Boolean))
+    Public Structure template_proxy
         Public Function define(ByVal name As String, ByVal t As template_template) As Boolean
-            Return scope(Of T).current().myself().template(Of WRITER, BUILDER)().define(name, t)
+            Return scope(Of T).current().myself().template().define(name, t)
         End Function
 
         Public Function resolve(ByVal name As String,
                                 ByVal types As vector(Of String),
                                 ByRef extended_type_name As String,
                                 ByVal msg As Object) As Boolean
-            Dim s As scope(Of T) = scope(Of T).current()
+            Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
                 Dim r As ternary = s.myself().
-                                     template(Of WRITER, BUILDER)().
+                                     template().
                                      resolve(name, types, extended_type_name)
                 If Not r.unknown_() Then
                     Return r
@@ -113,24 +126,19 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
     End Structure
 
-    ' Allow implementations to forward type.
-    Public Class template_builder(Of WRITER As {lazy_list_writer, New},
-                                     BUILDER As func_t(Of String, WRITER, Boolean),
-                                     _CODE_GENS As func_t(Of code_gens(Of WRITER)))
-
-        Private Shared ReadOnly code_gens As func_t(Of code_gens(Of WRITER)) = alloc(Of _CODE_GENS)()
-
+    ' TODO: Remove
+    Public NotInheritable Class template_builder
         Public Shared Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
             assert(Not n Is Nothing)
             assert(n.child_count() = 4)
-            Dim types As vector(Of String) = code_gens.run().of_all_children(n.child(2)).dump()
+            Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
             Dim name As String = Nothing
-            If Not code_gens.run().typed(Of scope(Of T).template_t.name)(n.type_name).of(n, name) Then
+            If Not code_gens().typed(Of template_t.name)(n.type_name).of(n, name) Then
                 raise_error(error_type.user, "Cannot retrieve template name of ", n.input())
                 Return False
             End If
             Return scope(Of T).current().
-                               template(Of WRITER, BUILDER)().
+                               template().
                                resolve(name, types, extended_type_name, lazier.of(AddressOf n.input))
         End Function
 
@@ -150,7 +158,7 @@ Partial Public Class scope(Of T As scope(Of T))
             n = n.child(0)
             assert(Not n Is Nothing)
             assert(n.child_count() = 4)
-            Return code_gens.run().of_all_children(n.child(2)).dump()
+            Return code_gens().of_all_children(n.child(2)).dump()
         End Function
 
         Public Shared Function body_of(ByVal n As typed_node) As typed_node
@@ -163,7 +171,7 @@ Partial Public Class scope(Of T As scope(Of T))
             assert(Not n Is Nothing)
             assert(n.child_count() = 2)
             n = n.child(1).child()
-            Return code_gens.run().typed(Of template_t.name_node)(n.type_name).of(n, o)
+            Return code_gens().typed(Of template_t.name_node)(n.type_name).of(n, o)
         End Function
 
         Public Shared Function name_node_of(ByVal n As typed_node) As typed_node
@@ -197,7 +205,7 @@ Partial Public Class scope(Of T As scope(Of T))
         Public Shared Function [of](ByVal n As typed_node,
                                     ByRef name As String,
                                     ByRef o As template_template) As Boolean
-            Return [of](code_gens.run(), n, name, o)
+            Return [of](code_gens(), n, name, o)
         End Function
 
         Private Shared Function [of](ByVal l As code_gens(Of WRITER),
@@ -234,19 +242,6 @@ Partial Public Class scope(Of T As scope(Of T))
         End Function
 
         Protected Sub New()
-        End Sub
-    End Class
-
-    Public NotInheritable Class template_t
-        Public Interface name
-            Function [of](ByVal n As typed_node, ByRef o As String) As Boolean
-        End Interface
-
-        Public Interface name_node
-            Function [of](ByVal n As typed_node, ByRef o As typed_node) As Boolean
-        End Interface
-
-        Private Sub New()
         End Sub
     End Class
 End Class

@@ -12,7 +12,6 @@ Imports osi.service.automata
 Imports osi.service.compiler
 Imports osi.service.compiler.b2style
 Imports osi.service.resource
-Imports template_template = osi.service.compiler.scope(Of osi.service.compiler.b2style.scope).template_template
 
 <test>
 Public NotInheritable Class template_template_test
@@ -22,7 +21,7 @@ Public NotInheritable Class template_template_test
         assertion.is_true(b2style.nlp().parse(_b2style_test_data.template_template_case1.as_text(), root:=n))
         assertion.is_not_null(n)
         Using New scope()
-            Dim t As template_template = Nothing
+            Dim t As scope.template_template = Nothing
             assertion.is_true(b2style.scope.template_builder.of(b2style.new_code_gens(), n.child().child(), t))
             Dim impl As String = Nothing
             assertion.is_true(t.apply(vector.of("int"), impl))
@@ -36,7 +35,7 @@ Public NotInheritable Class template_template_test
         assertion.is_true(b2style.nlp().parse(_b2style_test_data.template_template_case1.as_text(), root:=n))
         assertion.is_not_null(n)
         Using New scope()
-            Dim t As template_template = Nothing
+            Dim t As scope.template_template = Nothing
             assertion.is_true(b2style.scope.template_builder.of(b2style.new_code_gens(), n.child().child(), t))
             assertion.is_false(t.apply(vector.of("a", "b"), Nothing))
         End Using
@@ -66,7 +65,7 @@ Public NotInheritable Class template_template_test
         assertion.is_true(b2style.nlp().parse(_b2style_test_data.two_template_type_parameters.as_text(), root:=n))
         assertion.is_not_null(n)
         Using New scope()
-            Dim t As template_template = Nothing
+            Dim t As scope.template_template = Nothing
             assertion.is_true(b2style.scope.template_builder.of(b2style.new_code_gens(), n.child().child(), t))
             Dim impl As String = Nothing
             assertion.is_true(t.apply(vector.of("int", "string"), impl))

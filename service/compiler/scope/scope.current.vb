@@ -6,7 +6,10 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.delegates
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
+                              __BUILDER As func_t(Of String, WRITER, Boolean),
+                              __CODE_GENS As func_t(Of code_gens(Of WRITER)),
+                              T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Public Function includes() As includes_t
         Return from_root(Function(ByVal i As T) As includes_t
                              assert(Not i Is Nothing)
@@ -59,7 +62,7 @@ Partial Public Class scope(Of T As scope(Of T))
                          End Function)
     End Function
 
-    Private Function call_hierarchy() As call_hierarchy_t
+    Public Function call_hierarchy() As call_hierarchy_t
         Return call_hierarchy(Of call_hierarchy_t)()
     End Function
 
@@ -70,21 +73,18 @@ Partial Public Class scope(Of T As scope(Of T))
                          End Function)
     End Function
 
-    Protected Function root_type_injector(Of WRITER As {lazy_list_writer, New})() As root_type_injector_t(Of WRITER)
-        Return from_root(Function(ByVal i As T) As root_type_injector_t(Of WRITER)
+    Public Function root_type_injector() As root_type_injector_t
+        Return from_root(Function(ByVal i As T) As root_type_injector_t
                              assert(Not i Is Nothing)
-                             Return i.myself().root_type_injector(Of WRITER)()
+                             Return i.myself().root_type_injector()
                          End Function)
     End Function
 
-    Protected Function classes(Of WRITER As New, CODE_GENS As func_t(Of code_gens(Of WRITER)))() _
-                              As class_proxy(Of WRITER, CODE_GENS)
-        Return New class_proxy(Of WRITER, CODE_GENS)()
+    Public Function classes() As class_proxy
+        Return New class_proxy()
     End Function
 
-    Protected Function template(Of WRITER As {lazy_list_writer, New},
-                                   BUILDER As func_t(Of String, WRITER, Boolean))() _
-                           As template_proxy(Of WRITER, BUILDER)
-        Return New template_proxy(Of WRITER, BUILDER)()
+    Public Function template() As template_proxy
+        Return New template_proxy()
     End Function
 End Class

@@ -8,7 +8,6 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
-Imports name_with_namespace = osi.service.compiler.scope(Of osi.service.compiler.b2style.scope).name_with_namespace
 
 Partial Public NotInheritable Class b2style
     Private NotInheritable Class _namespace
@@ -55,7 +54,7 @@ Partial Public NotInheritable Class b2style
                 Return [of](_namespace.in_b2style_namespace(operator_name.Replace("-"c, "_"c)))
             End Function
 
-            Public Shared Function [of](ByVal n As name_with_namespace) As String
+            Public Shared Function [of](ByVal n As scope.name_with_namespace) As String
                 Return [of](n.in_global_namespace())
             End Function
 

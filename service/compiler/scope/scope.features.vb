@@ -3,9 +3,13 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.delegates
 Imports osi.root.formation
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
+                              __BUILDER As func_t(Of String, WRITER, Boolean),
+                              __CODE_GENS As func_t(Of code_gens(Of WRITER)),
+                              T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Private ReadOnly _features As lazier(Of features_t) = lazier.of(AddressOf Me.get_features)
 
     Private Function features() As features_t

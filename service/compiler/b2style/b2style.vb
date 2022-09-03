@@ -104,10 +104,9 @@ Partial Public NotInheritable Class b2style
                                                                         Function() As scope.define_t
                                                                             Return scope.current().defines()
                                                                         End Function)).
-                           with(scope.define_t.code_gens.define(Of typed_node_writer)(
-                                    Function() As scope.define_t
-                                        Return scope.current().defines()
-                                    End Function)).
+                           with(scope.define_t.code_gens.define(Function() As scope.define_t
+                                                                    Return scope.current().defines()
+                                                                End Function)).
                            with(Of paramtype_with_comma)().
                            with(Of class_initializer)().
                            with(code_gen.of_ignore(Of typed_node_writer)("colon")).

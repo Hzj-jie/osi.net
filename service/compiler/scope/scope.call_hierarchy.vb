@@ -4,9 +4,13 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
 
-Partial Public Class scope(Of T As scope(Of T))
+Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
+                              __BUILDER As func_t(Of String, WRITER, Boolean),
+                              __CODE_GENS As func_t(Of code_gens(Of WRITER)),
+                              T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     ' Allows b2style.scope.call_hierarchy_t extending the functionality.
     Public Class call_hierarchy_t
         Private Const main_name As String = "main"
@@ -60,20 +64,21 @@ Partial Public Class scope(Of T As scope(Of T))
             Return AddressOf New filtered_writer(Me, f, o).str
         End Function
 
-        Public MustInherit Class calculator(Of WRITER, IMPL_T As {calculator(Of WRITER, IMPL_T), New})
+        Public NotInheritable Class calculator
             Implements statement(Of WRITER)
 
-            Private Shared ReadOnly instance As New IMPL_T()
+            Private Shared ReadOnly instance As New calculator()
+
+            Private Sub New()
+            End Sub
 
             Public Shared Sub register(ByVal p As statements(Of WRITER))
                 assert(Not p Is Nothing)
                 p.register(instance)
             End Sub
 
-            Protected MustOverride Function current() As call_hierarchy_t
-
             Public Sub export(ByVal o As WRITER) Implements statement(Of WRITER).export
-                current().calculate()
+                current().call_hierarchy().calculate()
             End Sub
         End Class
 

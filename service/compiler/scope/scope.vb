@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.constructor
 
@@ -85,4 +86,28 @@ Partial Public Class scope(Of T As scope(Of T))
         assert(getter(+this) Is Nothing)
         Return (+root).from_root(getter)
     End Function
+End Class
+
+' An implementation for b*style implementations.
+Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
+                              __BUILDER As func_t(Of String, WRITER, Boolean),
+                              __CODE_GENS As func_t(Of code_gens(Of WRITER)),
+                              T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
+    Inherits scope(Of T)
+
+    ' TODO: Use these type parameters.
+    Private Shared ReadOnly _builder As func_t(Of String, WRITER, Boolean) = alloc(Of __BUILDER)()
+    Private Shared ReadOnly _code_gens As func_t(Of code_gens(Of WRITER)) = alloc(Of __CODE_GENS)()
+
+    Protected Shared Function code_build(ByVal source As String, ByVal o As WRITER) As Boolean
+        Return _builder.run(source, o)
+    End Function
+
+    Protected Shared Function code_gens() As code_gens(Of WRITER)
+        Return _code_gens.run()
+    End Function
+
+    Protected Sub New(ByVal parent As T)
+        MyBase.New(parent)
+    End Sub
 End Class

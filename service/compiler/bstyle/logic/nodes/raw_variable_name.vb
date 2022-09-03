@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
-Imports struct_def = osi.service.compiler.scope(Of osi.service.compiler.bstyle.scope).struct_def
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class raw_variable_name
@@ -26,7 +25,7 @@ Partial Public NotInheritable Class bstyle
             If Not scope.current().variables().resolve(n.input_without_ignored(), type) Then
                 Return False
             End If
-            Dim ps As struct_def = Nothing
+            Dim ps As scope.struct_def = Nothing
             If scope.current().structs().resolve(type, n.input_without_ignored(), ps) Then
                 Return struct_handle(type, ps.primitives())
             End If

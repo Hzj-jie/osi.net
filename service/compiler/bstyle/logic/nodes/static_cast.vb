@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
-Imports struct_def = osi.service.compiler.scope(Of osi.service.compiler.bstyle.scope).struct_def
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class static_cast
@@ -37,7 +36,7 @@ Partial Public NotInheritable Class bstyle
             End If
             If scope.current().structs().types().defined(type) Then
                 ' Convert from type_ptr to struct ptr.
-                Dim sdef As struct_def = Nothing
+                Dim sdef As scope.struct_def = Nothing
                 assert(scope.current().structs().resolve(type, name, sdef))
                 assert(Not sdef Is Nothing)
                 assert(sdef.primitive_count() > 0)
@@ -66,7 +65,7 @@ Partial Public NotInheritable Class bstyle
             End If
             If scope.current().structs().variables().defined(name) Then
                 ' Convert from struct ptr to type_ptr.
-                Dim sdef As struct_def = Nothing
+                Dim sdef As scope.struct_def = Nothing
                 assert(scope.current().structs().variables().resolve(name, sdef))
                 assert(Not sdef Is Nothing)
                 Return builders.of_define(name, type).to(o) AndAlso
