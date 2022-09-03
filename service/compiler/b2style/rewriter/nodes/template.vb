@@ -14,7 +14,7 @@ Partial Public NotInheritable Class b2style
                                ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             Dim name As String = Nothing
             Dim t As scope.template_template = Nothing
-            Return scope.template_builder.of(n, name, t) AndAlso
+            Return scope.template_t.of(n, name, t) AndAlso
                    scope.current().template().define(name, t)
         End Function
     End Class

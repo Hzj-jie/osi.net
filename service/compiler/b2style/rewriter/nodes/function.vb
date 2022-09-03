@@ -60,9 +60,9 @@ Partial Public NotInheritable Class b2style
 
         Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean _
                                 Implements scope.template_t.name.of
-            o = template_name_of(scope.template_builder.name_node_of(n).input_without_ignored(),
-                                 scope.template_builder.type_param_count(n),
-                                 param_types(scope.template_builder.body_of(n)))
+            o = template_name_of(scope.template_t.name_node_of(n).input_without_ignored(),
+                                 scope.template_t.type_param_count(n),
+                                 param_types(scope.template_t.body_of(n)))
             Return True
         End Function
 
@@ -72,7 +72,7 @@ Partial Public NotInheritable Class b2style
             assert(Not function_name.null_or_whitespace())
             assert(type_param_count > 0)
             assert(Not param_types Is Nothing)
-            Dim r As New StringBuilder(scope.template_builder.name_of(function_name, type_param_count))
+            Dim r As New StringBuilder(scope.template_t.name_of(function_name, type_param_count))
             Dim i As UInt32 = 0
             While i < param_types.size()
                 r.Append("&").

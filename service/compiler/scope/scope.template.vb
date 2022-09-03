@@ -96,38 +96,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Interface name_node
             Function [of](ByVal n As typed_node, ByRef o As typed_node) As Boolean
         End Interface
-    End Class
 
-    Public Structure template_proxy
-        Public Function define(ByVal name As String, ByVal t As template_template) As Boolean
-            Return scope(Of T).current().myself().template().define(name, t)
-        End Function
-
-        Public Function resolve(ByVal name As String,
-                                ByVal types As vector(Of String),
-                                ByRef extended_type_name As String,
-                                ByVal msg As Object) As Boolean
-            Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
-            While Not s Is Nothing
-                Dim r As ternary = s.myself().
-                                     template().
-                                     resolve(name, types, extended_type_name)
-                If Not r.unknown_() Then
-                    Return r
-                End If
-                s = s.parent
-            End While
-            raise_error(error_type.user,
-                        "Template [",
-                        name,
-                        "] has not been defined for ",
-                        msg)
-            Return False
-        End Function
-    End Structure
-
-    ' TODO: Remove
-    Public NotInheritable Class template_builder
         Public Shared Function resolve(ByVal n As typed_node, ByRef extended_type_name As String) As Boolean
             assert(Not n Is Nothing)
             assert(n.child_count() = 4)
@@ -240,8 +209,33 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             o = New template_template(body.child(), name_node, types)
             Return True
         End Function
-
-        Protected Sub New()
-        End Sub
     End Class
+
+    Public Structure template_proxy
+        Public Function define(ByVal name As String, ByVal t As template_template) As Boolean
+            Return scope(Of T).current().myself().template().define(name, t)
+        End Function
+
+        Public Function resolve(ByVal name As String,
+                                ByVal types As vector(Of String),
+                                ByRef extended_type_name As String,
+                                ByVal msg As Object) As Boolean
+            Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
+            While Not s Is Nothing
+                Dim r As ternary = s.myself().
+                                     template().
+                                     resolve(name, types, extended_type_name)
+                If Not r.unknown_() Then
+                    Return r
+                End If
+                s = s.parent
+            End While
+            raise_error(error_type.user,
+                        "Template [",
+                        name,
+                        "] has not been defined for ",
+                        msg)
+            Return False
+        End Function
+    End Structure
 End Class

@@ -25,7 +25,7 @@ Partial Public NotInheritable Class b2style
 
         Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean _
                                 Implements scope.template_t.name.of
-            o = scope.template_builder.name_of(n)
+            o = scope.template_t.name_of(n)
             Return True
         End Function
 

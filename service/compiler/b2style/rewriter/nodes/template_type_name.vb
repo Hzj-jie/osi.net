@@ -15,7 +15,7 @@ Partial Public NotInheritable Class b2style
                                ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not o Is Nothing)
             Dim extended_type As String = Nothing
-            If Not scope.template_builder.resolve(n, extended_type) Then
+            If Not scope.template_t.resolve(n, extended_type) Then
                 Return False
             End If
             Return o.append(_namespace.bstyle_format.of(extended_type))
@@ -25,7 +25,7 @@ Partial Public NotInheritable Class b2style
                                 Implements scope.template_t.name.of
             assert(Not n Is Nothing)
             assert(n.child_count() = 4)
-            o = scope.template_builder.name_of(n.child(0), n.child(2).child_count())
+            o = scope.template_t.name_of(n.child(0), n.child(2).child_count())
             Return True
         End Function
     End Class
