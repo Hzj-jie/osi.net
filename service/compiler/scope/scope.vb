@@ -95,7 +95,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Inherits scope(Of T)
 
-    ' TODO: Use these type parameters.
     Private Shared ReadOnly _builder As func_t(Of String, WRITER, Boolean) = alloc(Of __BUILDER)()
     Private Shared ReadOnly _code_gens As func_t(Of code_gens(Of WRITER)) = alloc(Of __CODE_GENS)()
 

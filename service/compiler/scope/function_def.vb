@@ -23,6 +23,14 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 override
             End Enum
 
+            ' TODO: A better way to check the return type.
+            Private Shared ReadOnly void_type As String = Function() As String
+                                                              Dim r As String = "void"
+                                                              If current().features().with_type_alias() Then
+                                                                  Return current().type_alias()(r)
+                                                              End If
+                                                              Return r
+                                                          End Function()
             Private ReadOnly class_def As class_def
             Private ReadOnly return_type As name_with_namespace
             Private ReadOnly signature As vector(Of name_with_namespace)
@@ -99,8 +107,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 content.Append("reinterpret_cast(this,").
                         Append(other.name.in_global_namespace()).
                         Append(");")
-                ' TODO: A better way to check the return type.
-                If Not return_type.name().Equals("void") Then
+                If Not return_type.name().Equals(void_type) Then
                     content.Append("return ")
                 End If
                 content.Append(name().in_global_namespace()).
