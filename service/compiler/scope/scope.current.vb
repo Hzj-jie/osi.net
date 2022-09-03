@@ -62,7 +62,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                          End Function)
     End Function
 
-    Private Function call_hierarchy() As call_hierarchy_t
+    Public Function call_hierarchy() As call_hierarchy_t
         Return call_hierarchy(Of call_hierarchy_t)()
     End Function
 

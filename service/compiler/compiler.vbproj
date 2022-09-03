@@ -153,7 +153,6 @@
     <Compile Include="bstyle\logic\nodes\value_declaration.vb" />
     <Compile Include="bstyle\logic\nodes\value_definition.vb" />
     <Compile Include="bstyle\logic\nodes\while.vb" />
-    <Compile Include="bstyle\scope.call_hierarchy.vb" />
     <Compile Include="scope\scope.struct.vb" />
     <Compile Include="scope\scope.type_alias.vb" />
     <Compile Include="scope\scope.variable.vb" />

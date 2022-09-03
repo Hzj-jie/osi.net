@@ -33,15 +33,6 @@ Partial Public NotInheritable Class b2style
             Public Sub to_bstyle_function(ByVal name As String)
                 MyBase.to(name)
             End Sub
-
-            Public NotInheritable Class calculator
-                Inherits calculator(Of calculator)
-
-                Protected Overrides Function current() As _
-                        scope(Of typed_node_writer, code_builder_proxy, code_gens_proxy, scope).call_hierarchy_t
-                    Return scope.current().call_hierarchy()
-                End Function
-            End Class
         End Class
 
         Public Shadows Function call_hierarchy() As call_hierarchy_t
