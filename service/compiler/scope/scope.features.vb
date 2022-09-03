@@ -23,7 +23,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Return New features_t()
     End Function
 
-    Public Class features_t
+    Protected Class features_t
         Public Overridable Function with_type_alias() As Boolean
             Return True
         End Function

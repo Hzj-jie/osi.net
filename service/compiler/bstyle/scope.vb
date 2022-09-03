@@ -114,7 +114,7 @@ Partial Public NotInheritable Class bstyle
             Return New features_t()
         End Function
 
-        Public Shadows Class features_t
+        Protected Shadows Class features_t
             Inherits scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).features_t
 
             Public Overrides Function with_namespace() As Boolean
