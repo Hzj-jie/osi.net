@@ -47,7 +47,8 @@ Partial Public NotInheritable Class bstyle
         Inherits __do(Of vector(Of Action(Of statements)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return vector.emplace_of(Of Action(Of statements))(AddressOf code_types.register)
+            Return vector.emplace_of(Of Action(Of statements))(
+                       AddressOf compiler.logic.code_types(Of value.with_single_data_slot_temp_target_t).register)
         End Function
     End Class
 
@@ -55,7 +56,7 @@ Partial Public NotInheritable Class bstyle
         Inherits __do(Of vector(Of Action(Of statements)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return vector.emplace_of(Of Action(Of statements))(AddressOf main.register,
+            Return vector.emplace_of(Of Action(Of statements))(AddressOf compiler.logic.main.register,
                                                                AddressOf scope.call_hierarchy_t.calculator.register)
         End Function
     End Class

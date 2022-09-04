@@ -5,25 +5,26 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports logic_builder = osi.service.compiler.logic.builders
 Imports statement = osi.service.compiler.statement(Of osi.service.compiler.logic_writer)
 Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic_writer)
 
-Partial Public NotInheritable Class bstyle
+Partial Public NotInheritable Class logic
     ' Must supported types used in logic/nodes code generation.
-    Public NotInheritable Class code_types
+    Public NotInheritable Class code_types(Of TEMP_TARGET As func_t(Of String, logic_writer, String))
         Implements statement
 
         Private Shared ReadOnly v As vector(Of pair(Of String, UInt32)) = vector.emplace_of(
-            type_of(_integer.type_name, 4),
-            type_of(bool.type_name, 1),
-            type_of(biguint.type_name, max_uint32 - 1),
-            type_of(ufloat.type_name, max_uint32 - 2),
-            type_of(_string.type_name, max_uint32 - 3)
+            type_of(_integer(Of TEMP_TARGET).type_name, 4),
+            type_of(bool(Of TEMP_TARGET).type_name, 1),
+            type_of(biguint(Of TEMP_TARGET).type_name, max_uint32 - 1),
+            type_of(ufloat(Of TEMP_TARGET).type_name, max_uint32 - 2),
+            type_of(_string(Of TEMP_TARGET).type_name, max_uint32 - 3)
         )
 
-        Private Shared ReadOnly instance As New code_types()
+        Private Shared ReadOnly instance As New code_types(Of TEMP_TARGET)()
 
         Private Shared Function type_of(ByVal name As String, ByVal size As UInt32) As pair(Of String, UInt32)
             Return pair.emplace_of(name, size)
