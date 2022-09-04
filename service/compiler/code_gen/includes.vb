@@ -11,28 +11,14 @@ Imports osi.root.formation
 Imports osi.service.automata
 
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
-    Public MustInherit Class includes(Of _SHOULD_INCLUDE As func_t(Of String, Boolean))
+    Public MustInherit Class includes(Of _SHOULD_INCLUDE As func_t(Of String, Boolean),
+                                         _FOLDERS As func_t(Of vector(Of String)),
+                                         _IGNORE_INCLUDE_ERROR As func_t(Of Boolean))
         Inherits reparser
 
-        ' TODO: Remove constructor parameters and make the includes related components stateless.
         Private Shared ReadOnly should_include As _SHOULD_INCLUDE = alloc(Of _SHOULD_INCLUDE)()
-        Private ReadOnly folders As vector(Of String)
-        ' TODO: Remove
-        Private ReadOnly ignore_default_folder As Boolean
-        ' TODO: Remove
-        Private ReadOnly default_folder As String
-        Private ReadOnly ignore_include_error As Boolean
-
-        Protected Sub New(ByVal folders As vector(Of String),
-                          ByVal ignore_default_folder As Boolean,
-                          ByVal default_folder As String,
-                          ByVal ignore_include_error As Boolean)
-            assert(Not default_folder.null_or_whitespace())
-            Me.folders = folders
-            Me.ignore_default_folder = ignore_default_folder
-            Me.default_folder = default_folder
-            Me.ignore_include_error = ignore_include_error
-        End Sub
+        Private Shared ReadOnly folders As vector(Of String) = alloc(Of _FOLDERS)().run()
+        Private Shared ReadOnly ignore_include_error As Boolean = alloc(Of _IGNORE_INCLUDE_ERROR)().run()
 
         Protected NotOverridable Overrides Function parse(ByVal s As String, ByVal o As WRITER) As Boolean
             Return file_parse(s, o)
@@ -73,9 +59,6 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             If include_file(folders, s, o) Then
                 Return True
             End If
-            If Not ignore_default_folder AndAlso include_file(default_folder, s, o) Then
-                Return True
-            End If
             If Not ignore_include_error Then
                 raise_error(error_type.user, "Cannot find include file ", s)
             End If
@@ -83,15 +66,10 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
     End Class
 
-    Public MustInherit Class include_with_string(Of SHOULD_INCLUDE As func_t(Of String, Boolean))
-        Inherits includes(Of SHOULD_INCLUDE)
-
-        Protected Sub New(ByVal folders As vector(Of String),
-                          ByVal ignore_default_folder As Boolean,
-                          ByVal default_folder As String,
-                          ByVal ignore_include_error As Boolean)
-            MyBase.New(folders, ignore_default_folder, default_folder, ignore_include_error)
-        End Sub
+    Public MustInherit Class include_with_string(Of SHOULD_INCLUDE As func_t(Of String, Boolean),
+                                                    FOLDERS As func_t(Of vector(Of String)),
+                                                    IGNORE_INCLUDE_ERROR As func_t(Of Boolean))
+        Inherits includes(Of SHOULD_INCLUDE, FOLDERS, IGNORE_INCLUDE_ERROR)
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
             assert(Not n Is Nothing)
@@ -100,17 +78,12 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         End Function
     End Class
 
-    Public MustInherit Class include_with_file(Of SHOULD_INCLUDE As func_t(Of String, Boolean))
-        Inherits includes(Of SHOULD_INCLUDE)
+    Public MustInherit Class include_with_file(Of SHOULD_INCLUDE As func_t(Of String, Boolean),
+                                                  FOLDERS As func_t(Of vector(Of String)),
+                                                  IGNORE_INCLUDE_ERROR As func_t(Of Boolean))
+        Inherits includes(Of SHOULD_INCLUDE, FOLDERS, IGNORE_INCLUDE_ERROR)
 
         Private Const kw_include As String = "#include"
-
-        Protected Sub New(ByVal folders As vector(Of String),
-                          ByVal ignore_default_folder As Boolean,
-                          ByVal default_folder As String,
-                          ByVal ignore_include_error As Boolean)
-            MyBase.New(folders, ignore_default_folder, default_folder, ignore_include_error)
-        End Sub
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
             assert(Not n Is Nothing)
