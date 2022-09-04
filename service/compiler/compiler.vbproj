@@ -98,12 +98,12 @@
     <Compile Include="bstyle\logic\nodes\kw_statement.vb" />
     <Compile Include="bstyle\logic\nodes\static_cast.vb" />
     <Compile Include="scope\scope.temp_logic_name.vb" />
-    <Compile Include="logic\builder\nodes\biguint.vb" />
-    <Compile Include="logic\builder\nodes\bool.vb" />
-    <Compile Include="logic\builder\nodes\integer.vb" />
-    <Compile Include="logic\builder\nodes\raw_value.vb" />
-    <Compile Include="logic\builder\nodes\string.vb" />
-    <Compile Include="logic\builder\nodes\ufloat.vb" />
+    <Compile Include="logic\builder\biguint.vb" />
+    <Compile Include="logic\builder\bool.vb" />
+    <Compile Include="logic\builder\integer.vb" />
+    <Compile Include="logic\builder\raw_value.vb" />
+    <Compile Include="logic\builder\string.vb" />
+    <Compile Include="logic\builder\ufloat.vb" />
     <Compile Include="bstyle\bstyle_lib.vb" />
     <Compile Include="bstyle\logic\nodes\dealloc.vb" />
     <Compile Include="bstyle\logic\nodes\delegate.vb" />
@@ -140,8 +140,8 @@
     <Compile Include="bstyle\logic\nodes\logic.vb" />
     <Compile Include="bstyle\logic\nodes\return_clause.vb" />
     <Compile Include="bstyle\logic\nodes\string.vb" />
-    <Compile Include="logic\builder\prefixes\code_types.vb" />
-    <Compile Include="logic\builder\suffixes\main.vb" />
+    <Compile Include="bstyle\logic\prefixes\code_types.vb" />
+    <Compile Include="bstyle\logic\suffixes\main.vb" />
     <Compile Include="bstyle\logic\nodes\condition.vb" />
     <Compile Include="bstyle\logic\nodes\function_call.vb" />
     <Compile Include="bstyle\logic\nodes\value_list.vb" />
@@ -340,8 +340,6 @@
     <Folder Include="b3style\logic\nodes\" />
     <Folder Include="b3style\logic\prefixes\" />
     <Folder Include="b3style\logic\suffixes\" />
-    <Folder Include="bstyle\logic\prefixes\" />
-    <Folder Include="bstyle\logic\suffixes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <Import Project="compiler.dep" />
