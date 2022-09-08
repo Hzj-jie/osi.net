@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class b3style
@@ -102,8 +103,7 @@ Partial Public NotInheritable Class b3style
                 Return s.vt
             End Function
 
-            Public Overrides Function call_hierarchy() As _
-                    scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).call_hierarchy_t
+            Public Overrides Function call_hierarchy() As call_hierarchy_t
                 Return s.fc
             End Function
         End Class

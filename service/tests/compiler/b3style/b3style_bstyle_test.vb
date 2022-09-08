@@ -45,7 +45,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.global_variable.as_text(), e))
+                                  parse(_bstyle_test_data.global_variable.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "TrueFalse")
@@ -56,7 +56,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.overload_function.as_text(), e))
+                                  parse(_bstyle_test_data.overload_function.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "TrueFalseFalseTrue")
@@ -67,7 +67,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.single_level_struct.as_text(), e))
+                                  parse(_bstyle_test_data.single_level_struct.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "dabc")
@@ -78,7 +78,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.nested_struct.as_text(), e))
+                                  parse(_bstyle_test_data.nested_struct.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "dd")
@@ -89,7 +89,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.function_struct.as_text(), e))
+                                  parse(_bstyle_test_data.function_struct.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "abcdef")
@@ -100,7 +100,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.return_struct.as_text(), e))
+                                  parse(_bstyle_test_data.return_struct.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "abcdef")
@@ -111,7 +111,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.call_struct_on_heap.as_text(), e))
+                                  parse(_bstyle_test_data.call_struct_on_heap.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "abcd")
@@ -122,7 +122,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.for_loop.as_text(), e))
+                                  parse(_bstyle_test_data.for_loop.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), character.newline)
@@ -133,7 +133,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.empty_struct_overloads.as_text(), e))
+                                  parse(_bstyle_test_data.empty_struct_overloads.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "DE")
@@ -144,7 +144,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.func_name_with_dot.as_text(), e))
+                                  parse(_bstyle_test_data.func_name_with_dot.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output().Length(), 2)
@@ -157,7 +157,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.[delegate].as_text(), e))
+                                  parse(_bstyle_test_data.[delegate].as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "fg")
@@ -168,7 +168,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.statement.as_text(), e))
+                                  parse(_bstyle_test_data.statement.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "std_out ( __STATEMENT__ ) ;string s = __STATEMENT__ ;")
@@ -180,11 +180,24 @@ Public NotInheritable Class b3style_bstyle_test
         Dim e As executor = Nothing
         Using b3style.parse_wrapper.with_current_file("real__file__.txt")
             assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                     parse(_bstyle_test_data.real__file__.as_text(), e))
+                                      parse(_bstyle_test_data.real__file__.as_text(), e))
         End Using
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "real__file__.txt")
+    End Sub
+
+    <test>
+    Private Shared Sub compile_error_case1()
+        assertions.of(error_event.capture_log(error_type.user,
+            Sub()
+                assertion.is_false(
+                    b3style.with_default_functions().
+                            parse(_bstyle_test_data.errors_dot_is_disallowed_as_the_end_of_name.as_text(),
+                    Nothing))
+            End Sub)).contains("[syntaxer]",
+                               syntaxer.debug_str("x", "raw-name"),
+                               syntaxer.debug_str(".", "dot"))
     End Sub
 
     Private Sub New()

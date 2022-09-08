@@ -91,9 +91,9 @@ Partial Public NotInheritable Class b3style
                            with(Of bstyle.raw_variable_name)().
                            with(Of bstyle.value_list)().
                            with(Of bstyle._while)().
-                           with(Of bstyle.include_with_string)().
-                           with(Of bstyle.include_with_file)().
-                           with(scope.define_t.code_gens.ifndef_wrapped(AddressOf bstyle.code_gen_of,
+                           with(Of include_with_string)().
+                           with(Of include_with_file)().
+                           with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of,
                                                                         Function() As scope.define_t
                                                                             Return scope.current().defines()
                                                                         End Function)).
