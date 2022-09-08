@@ -13,7 +13,7 @@ Partial Public NotInheritable Class bstyle
     Private Shared include_folders As argument(Of vector(Of String))
     Private Shared ignore_default_include As argument(Of Boolean)
 
-    Private NotInheritable Class includes
+    Public NotInheritable Class includes
         Public Shared Function file_parse(ByVal i As String, ByVal j As logic_writer) As Boolean
             If i Is Nothing Then
                 ' The file has been included already.
@@ -51,7 +51,7 @@ Partial Public NotInheritable Class bstyle
         End Sub
     End Class
 
-    Private NotInheritable Class include_with_string
+    Public NotInheritable Class include_with_string
         Inherits code_gens(Of logic_writer).include_with_string(Of scope.includes_t.proxy,
                                                                    includes.folders,
                                                                    includes.ignore_include_error)
@@ -61,7 +61,7 @@ Partial Public NotInheritable Class bstyle
         End Function
     End Class
 
-    Private NotInheritable Class include_with_file
+    Public NotInheritable Class include_with_file
         Inherits code_gens(Of logic_writer).include_with_file(Of scope.includes_t.proxy,
                                                                  includes.folders,
                                                                  includes.ignore_include_error)

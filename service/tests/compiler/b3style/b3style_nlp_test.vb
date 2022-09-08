@@ -53,7 +53,6 @@ Public NotInheritable Class b3style_nlp_tests
         Private Shared Sub b2style_tests()
             run_tests(GetType(_b2style_test_data))
         End Sub
-
     End Class
 
     <test>

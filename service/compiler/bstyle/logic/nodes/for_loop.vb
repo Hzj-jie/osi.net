@@ -10,7 +10,7 @@ Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class for_loop
+    Public NotInheritable Class for_loop
         Implements code_gen(Of logic_writer)
 
         Private NotInheritable Class ref

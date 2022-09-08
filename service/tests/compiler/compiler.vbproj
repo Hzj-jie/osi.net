@@ -98,6 +98,7 @@
     <Content Include="b2style\self-test\delegate-functions-with-same-name.txt" />
     <Content Include="b2style\self-test\call-func-in-param.txt" />
     <Compile Include="b2style\template_template_test.vb" />
+    <Compile Include="b3style\b3style_bstyle_test.vb" />
     <Compile Include="compiler_self_test_runner.vb" />
     <Compile Include="b3style\b3style_nlp_test.vb" />
     <Compile Include="bstyle\bstyle_compiler_error_test.vb" />

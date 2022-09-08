@@ -11,7 +11,7 @@ Imports builders = osi.service.compiler.logic.builders
 Imports variable = osi.service.compiler.logic.variable
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class heap_name
+    Public NotInheritable Class heap_name
         Implements code_gen(Of logic_writer)
 
         Public Function build(ByVal index As typed_node,
