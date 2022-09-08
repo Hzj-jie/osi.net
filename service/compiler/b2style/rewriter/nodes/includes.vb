@@ -15,8 +15,11 @@ Imports osi.service.resource
 Partial Public NotInheritable Class b2style
     Private Shared include_folders As argument(Of vector(Of String))
 
-    Private NotInheritable Class includes
-        Public Shared Function file_parse(ByVal i As String, ByVal j As typed_node_writer) As Boolean
+    Public MustInherit Class includes
+        Inherits code_gens(Of logic_writer).includes(Of scope.includes_t.proxy,
+                                                        folders,
+                                                        ignore_include_error)
+        Public Shared Shadows Function parse(ByVal i As String, ByVal j As typed_node_writer) As Boolean
             If i Is Nothing Then
                 ' The file has been included already.
                 Return True
@@ -60,7 +63,7 @@ Partial Public NotInheritable Class b2style
                                                                         includes.ignore_include_error)
 
         Protected Overrides Function file_parse(ByVal s As String, ByVal o As typed_node_writer) As Boolean
-            Return includes.file_parse(s, o)
+            Return includes.parse(s, o)
         End Function
 
         ' Forward missing files to the bstyle.
@@ -78,7 +81,7 @@ Partial Public NotInheritable Class b2style
                                                                       includes.ignore_include_error)
 
         Protected Overrides Function file_parse(ByVal s As String, ByVal o As typed_node_writer) As Boolean
-            Return includes.file_parse(s, o)
+            Return includes.parse(s, o)
         End Function
 
         ' Forward missing files to the bstyle.

@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.service.automata
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class typedef_type_name
+    Public NotInheritable Class typedef_type_name
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,

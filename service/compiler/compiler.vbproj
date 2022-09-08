@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
+    <Compile Include="b3style\b3style_lib.vb" />
+    <Compile Include="b3style\logic\nodes\includes.vb" />
     <Compile Include="scope\class_def.vb" />
     <Compile Include="scope\function_def.vb" />
     <None Include="b2style\lib\std\vector" />
@@ -337,7 +339,6 @@
     <Content Include="shared\syntaxer_rule.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="b3style\logic\nodes\" />
     <Folder Include="b3style\logic\prefixes\" />
     <Folder Include="b3style\logic\suffixes\" />
   </ItemGroup>

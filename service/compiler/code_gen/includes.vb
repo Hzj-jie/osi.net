@@ -20,6 +20,10 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Private Shared ReadOnly folders As vector(Of String) = alloc(Of _FOLDERS)().run()
         Private Shared ReadOnly ignore_include_error As Boolean = alloc(Of _IGNORE_INCLUDE_ERROR)().run()
 
+        Public Shared Function include_folders() As vector(Of String)
+            Return folders.CloneT()
+        End Function
+
         Protected NotOverridable Overrides Function parse(ByVal s As String, ByVal o As WRITER) As Boolean
             Return file_parse(s, o)
         End Function
