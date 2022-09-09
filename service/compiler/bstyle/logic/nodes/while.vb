@@ -9,7 +9,7 @@ Imports osi.service.automata
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class _while
+    Private NotInheritable Class _while
         Implements code_gen(Of logic_writer)
 
         Private Function while_value(ByVal n As typed_node,

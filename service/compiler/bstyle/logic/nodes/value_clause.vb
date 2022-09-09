@@ -10,7 +10,7 @@ Imports osi.service.automata
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class value_clause
+    Private NotInheritable Class value_clause
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal name As typed_node,

@@ -6,7 +6,7 @@ Option Strict On
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class _string
+    Private NotInheritable Class _string
         Inherits compiler.logic._string(Of value.with_single_data_slot_temp_target_t)
 
         Public Overloads Shared Function build(ByVal s As String, ByVal o As logic_writer) As Boolean

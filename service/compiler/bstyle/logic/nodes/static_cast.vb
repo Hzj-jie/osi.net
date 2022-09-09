@@ -9,7 +9,7 @@ Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class static_cast
+    Private NotInheritable Class static_cast
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,

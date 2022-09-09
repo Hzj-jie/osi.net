@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.service.automata
 
 Partial Public NotInheritable Class bstyle
-    Public NotInheritable Class logic
+    Private NotInheritable Class logic
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,
