@@ -31,7 +31,7 @@ Partial Public NotInheritable Class bstyle
                                                                  ByVal o As logic_writer) As String
             Dim value_name As String = scope.current().temp_logic_name().variable()
             define_single_data_slot_temp_target(type, value_name, o)
-            with_single_data_slot_target(type, value_name)
+            scope.current().value_target().with_value(type, value_name)
             Return value_name
         End Function
 
@@ -54,26 +54,7 @@ Partial Public NotInheritable Class bstyle
                                assert(Not p Is Nothing)
                                define_single_data_slot_temp_target(p.type, p.name, o)
                            End Sub)
-            Return with_target(type, params.primitives())
-        End Function
-
-        Public Shared Function with_target(ByVal type As String,
-                                           ByVal ps As stream(Of builders.parameter)) As vector(Of String)
-            assert(Not ps Is Nothing)
-            Dim vs As vector(Of String) = ps.map(Function(ByVal p As builders.parameter) As String
-                                                     assert(Not p Is Nothing)
-                                                     assert(Not p.name.null_or_whitespace())
-                                                     Return p.name
-                                                 End Function).
-                                             collect_to(Of vector(Of String))()
-            scope.current().value_target().with_value(type, vs)
-            Return vs
-        End Function
-
-        Public Shared Function with_single_data_slot_target(ByVal type As String, ByVal v As String) As String
-            assert(Not v.null_or_whitespace())
-            scope.current().value_target().with_value(type, vector.emplace_of(v))
-            Return v
+            Return scope.current().value_target().with_value(type, params.primitives())
         End Function
     End Class
 End Class

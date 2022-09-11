@@ -47,7 +47,7 @@ Partial Public NotInheritable Class bstyle
                                         n.child(0),
                                         Function(ByVal type As String,
                                                  ByVal ps As stream(Of builders.parameter)) As Boolean
-                                            value.with_target(
+                                            scope.current().value_target().with_value(
                                                 type,
                                                 ps.map(Function(ByVal d As builders.parameter) As builders.parameter
                                                            assert(Not d Is Nothing)
@@ -58,7 +58,7 @@ Partial Public NotInheritable Class bstyle
                                             Return True
                                         End Function,
                                         Function(ByVal type As String, ByVal source As String) As Boolean
-                                            value.with_single_data_slot_target(
+                                            scope.current().value_target().with_value(
                                                 type, variable.name_of(source, indexstr))
                                             Return True
                                         End Function,
