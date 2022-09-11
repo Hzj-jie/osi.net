@@ -18,13 +18,9 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             type = scope.current().type_alias()(type)
             assert(Not scope.current().structs().types().defined(type))
-            Dim existing_type As String = Nothing
-            If scope.current().variables().try_resolve(name, existing_type) Then
-                assert(type.Equals(existing_type))
-            Else
-                assert(scope.current().variables().define(type, name))
-                assert(builders.of_define(name, type).to(o))
-            End If
+            assert(Not scope.current().variables().try_resolve(name, Nothing))
+            assert(scope.current().variables().define(type, name))
+            assert(builders.of_define(name, type).to(o))
         End Sub
 
         Public Shared Function with_single_data_slot_temp_target(ByVal type As String,
