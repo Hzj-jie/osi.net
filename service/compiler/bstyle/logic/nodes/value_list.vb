@@ -23,7 +23,7 @@ Partial Public NotInheritable Class bstyle
                 If Not code_gen_of(n.child(i)).build(o) Then
                     Return False
                 End If
-                Using r As read_scoped(Of scope.value_target_t.target).ref = value.read_target()
+                Using r As read_scoped(Of scope.value_target_t.target).ref = scope.current().value_target().value()
                     v.emplace_back((+r).names)
                 End Using
                 i += uint32_1

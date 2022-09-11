@@ -28,6 +28,18 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return values.pop(f)
         End Function
 
+        ' Type of the single data slot is handled by logic.
+        Public Function single_data_slot() As read_scoped(Of target).ref(Of String)
+            Return value(Function(ByVal x As value_target_t.target, ByRef o As String) As Boolean
+                             assert(Not x Is Nothing)
+                             If x.names.size() <> 1 Then
+                                 Return False
+                             End If
+                             o = x.names(0)
+                             Return True
+                         End Function)
+        End Function
+
         Public Sub with_value_list(ByVal v As vector(Of String))
             assert(Not v Is Nothing)
             value_lists.push(v)

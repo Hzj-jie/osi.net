@@ -12,24 +12,6 @@ Partial Public NotInheritable Class bstyle
     Partial Public NotInheritable Class value
         Implements code_gen(Of logic_writer)
 
-        ' Type of the single data slot is handled by logic.
-        Public Shared Function read_target_single_data_slot() As _
-                read_scoped(Of scope.value_target_t.target).ref(Of String)
-            Return scope.current().value_target().value(
-                Function(ByVal x As scope.value_target_t.target, ByRef o As String) As Boolean
-                    assert(Not x Is Nothing)
-                    If x.names.size() <> 1 Then
-                        Return False
-                    End If
-                    o = x.names(0)
-                    Return True
-                End Function)
-        End Function
-
-        Public Shared Function read_target() As read_scoped(Of scope.value_target_t.target).ref
-            Return scope.current().value_target().value()
-        End Function
-
         Private Shared Sub define_single_data_slot_temp_target(ByVal type As String,
                                                                ByVal name As String,
                                                                ByVal o As logic_writer)

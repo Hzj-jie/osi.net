@@ -49,7 +49,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Using read_target As read_scoped(Of scope.value_target_t.target).ref(Of String) =
-                    value.read_target_single_data_slot()
+                    scope.current().value_target().single_data_slot()
                 ' TODO: May want to restrict the type of condition.
                 If Not read_target.retrieve(condition) Then
                     raise_error(error_type.user, "Condition of for-loop cannot be a struct.")
