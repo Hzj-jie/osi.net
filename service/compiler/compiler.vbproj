@@ -277,7 +277,6 @@
     <None Include="compiler.dep" />
     <None Include="compiler.props" />
     <None Include="bstyle\codegen\run.cmd" />
-    <Compile Include="bstyle\logic\nodes\value.target.vb" />
     <None Include="logic\codegen\run.cmd" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>

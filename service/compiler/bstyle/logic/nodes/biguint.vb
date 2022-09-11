@@ -5,6 +5,6 @@ Option Strict On
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class biguint
-        Inherits compiler.logic.biguint(Of value.with_single_data_slot_temp_target_t)
+        Inherits compiler.logic.biguint(Of scope.value_target_t.with_single_data_slot_temp_target_t)
     End Class
 End Class

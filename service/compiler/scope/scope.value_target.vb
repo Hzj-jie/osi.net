@@ -67,6 +67,41 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return value_lists.pop()
         End Function
 
+        Public Function with_temp_target(ByVal type As String, ByVal o As logic_writer) As vector(Of String)
+            Dim define_single_data_slot_temp_target As Action(Of String, String) =
+                Sub(ByVal t As String, ByVal n As String)
+                    ' It will trigger the assertion failure anyway if not type_alias is provided.
+                    t = current().type_alias()(t)
+                    assert(Not current().structs().types().defined(t))
+                    assert(Not current().variables().try_resolve(n, Nothing))
+                    assert(current().variables().define(t, n))
+                    assert(builders.of_define(n, t).to(o))
+                End Sub
+            Dim params As struct_def = Nothing
+            If current().structs().resolve(type, current().temp_logic_name().variable(), params) Then
+                assert(Not params Is Nothing)
+                params.primitives.
+                       foreach(Sub(ByVal p As builders.parameter)
+                                   assert(Not p Is Nothing)
+                                   define_single_data_slot_temp_target(p.type, p.name)
+                               End Sub)
+                Return with_value(type, params.primitives())
+            End If
+            Dim name As String = current().temp_logic_name().variable()
+            define_single_data_slot_temp_target(type, name)
+            with_value(type, name)
+            Return vector.emplace_of(name)
+        End Function
+
+        Public Structure with_single_data_slot_temp_target_t
+            Implements func_t(Of String, logic_writer, String)
+
+            Public Function run(ByVal i As String, ByVal j As logic_writer) As String _
+                    Implements func_t(Of String, logic_writer, String).run
+                Return current().value_target().with_temp_target(i, j).only()
+            End Function
+        End Structure
+
         Public NotInheritable Class target
             Implements IComparable(Of target)
 
