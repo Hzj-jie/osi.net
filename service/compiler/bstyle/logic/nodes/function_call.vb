@@ -75,20 +75,23 @@ Partial Public NotInheritable Class bstyle
                                If Not return_type_of(name, return_type) Then
                                    Return False
                                End If
-                               If scope.current().structs().types().defined(return_type) Then
-                                   ' TODO: Check the type consistency between function_call and variable receiver.
-                                   Dim return_value As String =
-                                         scope.current().temp_logic_name().variable() + "@" + name + "@return_value"
-                                   assert(value_declaration.declare_single_data_slot(
-                                            compiler.logic.scope.type_t.variable_type, return_value, o))
-                                   Return builder(name, return_value, parameters) AndAlso
-                                          struct.unpack(return_value,
-                                                        value.with_temp_target(return_type, o),
-                                                        o)
+                               If Not scope.current().structs().types().defined(return_type) Then
+                                   Return builder(name,
+                                                  scope.current().
+                                                        value_target().
+                                                        with_temp_target(return_type, o).
+                                                        only(),
+                                                  parameters)
                                End If
-                               Return builder(name,
-                                              value.with_single_data_slot_temp_target(return_type, o),
-                                              parameters)
+                               ' TODO: Check the type consistency between function_call and variable receiver.
+                               Dim return_value As String =
+                                       scope.current().temp_logic_name().variable() + "@" + name + "@return_value"
+                               assert(value_declaration.declare_single_data_slot(
+                                          compiler.logic.scope.type_t.variable_type, return_value, o))
+                               Return builder(name, return_value, parameters) AndAlso
+                                      struct.unpack(return_value,
+                                                    scope.current().value_target().with_temp_target(return_type, o),
+                                                    o)
                            End Function
                 End Function
             Return build(n,

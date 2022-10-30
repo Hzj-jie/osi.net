@@ -38,11 +38,11 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() = 1)
             Return build(n.child(),
                          Function(ByVal type As String, ByVal ps As stream(Of builders.parameter)) As Boolean
-                             value.with_target(type, ps)
+                             scope.current().value_target().with_value(type, ps)
                              Return True
                          End Function,
                          Function(ByVal type As String, ByVal source As String) As Boolean
-                             value.with_single_data_slot_target(type, source)
+                             scope.current().value_target().with_value(type, source)
                              Return True
                          End Function,
                          o)

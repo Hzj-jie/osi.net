@@ -229,6 +229,13 @@ Public Module vector_extension
     <Extension()> Public Function stream(Of T)(ByVal v As vector(Of T)) As stream(Of T)
         Return New stream(Of T).container(Of vector(Of T))(v)
     End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    <Extension()> Public Function only(Of T)(ByVal v As vector(Of T)) As T
+        assert(Not v Is Nothing)
+        assert(v.size() = 1)
+        Return v(0)
+    End Function
 End Module
 
 Public NotInheritable Class vector

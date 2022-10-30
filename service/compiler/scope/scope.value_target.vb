@@ -6,6 +6,7 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
+Imports osi.service.compiler.logic
 
 Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               __BUILDER As func_t(Of String, WRITER, Boolean),
@@ -15,8 +16,25 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Private ReadOnly values As New read_scoped(Of target)()
         Private ReadOnly value_lists As New read_scoped(Of vector(Of String))()
 
-        Public Sub with_value(ByVal type As String, ByVal vs As vector(Of String))
+        Private Sub with_value(ByVal type As String, ByVal vs As vector(Of String))
             values.push(New target(type, vs))
+        End Sub
+
+        Public Function with_value(ByVal type As String, ByVal ps As stream(Of builders.parameter)) As vector(Of String)
+            assert(Not ps Is Nothing)
+            Dim vs As vector(Of String) = ps.map(Function(ByVal p As builders.parameter) As String
+                                                     assert(Not p Is Nothing)
+                                                     assert(Not p.name.null_or_whitespace())
+                                                     Return p.name
+                                                 End Function).
+                                             collect_to(Of vector(Of String))()
+            with_value(type, vs)
+            Return vs
+        End Function
+
+        Public Sub with_value(ByVal type As String, ByVal v As String)
+            assert(Not v.null_or_whitespace())
+            with_value(type, vector.emplace_of(v))
         End Sub
 
         Public Function value() As read_scoped(Of target).ref
@@ -28,6 +46,18 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return values.pop(f)
         End Function
 
+        ' Type of the single data slot is handled by logic.
+        Public Function single_data_slot() As read_scoped(Of target).ref(Of String)
+            Return value(Function(ByVal x As value_target_t.target, ByRef o As String) As Boolean
+                             assert(Not x Is Nothing)
+                             If x.names.size() <> 1 Then
+                                 Return False
+                             End If
+                             o = x.names(0)
+                             Return True
+                         End Function)
+        End Function
+
         Public Sub with_value_list(ByVal v As vector(Of String))
             assert(Not v Is Nothing)
             value_lists.push(v)
@@ -36,6 +66,41 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Function value_list() As read_scoped(Of vector(Of String)).ref
             Return value_lists.pop()
         End Function
+
+        Public Function with_temp_target(ByVal type As String, ByVal o As logic_writer) As vector(Of String)
+            Dim define_single_data_slot_temp_target As Action(Of String, String) =
+                Sub(ByVal t As String, ByVal n As String)
+                    ' It will trigger the assertion failure anyway if not type_alias is provided.
+                    t = current().type_alias()(t)
+                    assert(Not current().structs().types().defined(t))
+                    assert(Not current().variables().try_resolve(n, Nothing))
+                    assert(current().variables().define(t, n))
+                    assert(builders.of_define(n, t).to(o))
+                End Sub
+            Dim params As struct_def = Nothing
+            If current().structs().resolve(type, current().temp_logic_name().variable(), params) Then
+                assert(Not params Is Nothing)
+                params.primitives.
+                       foreach(Sub(ByVal p As builders.parameter)
+                                   assert(Not p Is Nothing)
+                                   define_single_data_slot_temp_target(p.type, p.name)
+                               End Sub)
+                Return with_value(type, params.primitives())
+            End If
+            Dim name As String = current().temp_logic_name().variable()
+            define_single_data_slot_temp_target(type, name)
+            with_value(type, name)
+            Return vector.emplace_of(name)
+        End Function
+
+        Public Structure with_single_data_slot_temp_target_t
+            Implements func_t(Of String, logic_writer, String)
+
+            Public Function run(ByVal i As String, ByVal j As logic_writer) As String _
+                    Implements func_t(Of String, logic_writer, String).run
+                Return current().value_target().with_temp_target(i, j).only()
+            End Function
+        End Structure
 
         Public NotInheritable Class target
             Implements IComparable(Of target)
@@ -47,8 +112,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 assert(Not type.null_or_whitespace())
                 ' Allow empty struct, so the names can be empty.
                 assert(Not names Is Nothing)
-                type = scope(Of T).current().type_alias()(type)
-                If Not scope(Of T).current().structs().types().defined(type) Then
+                type = current().type_alias()(type)
+                If Not current().structs().types().defined(type) Then
                     assert(names.size() = 1)
                 End If
 

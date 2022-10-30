@@ -45,7 +45,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             If scope.current().structs().types().defined(type) Then
-                Using r As read_scoped(Of scope.value_target_t.target).ref = bstyle.value.read_target()
+                Using r As read_scoped(Of scope.value_target_t.target).ref = scope.current().value_target().value()
                     If Not (+r).type.Equals(type) Then
                         raise_error(error_type.user,
                                     "Type ",
@@ -60,7 +60,7 @@ Partial Public NotInheritable Class bstyle
                 End Using
             End If
             Using r As read_scoped(Of scope.value_target_t.target).ref(Of String) =
-                           bstyle.value.read_target_single_data_slot()
+                    scope.current().value_target().single_data_slot()
                 ' The type check of single-data-slot-target will be handled by logic.
                 assert(Not r Is Nothing)
                 Dim s As String = Nothing
