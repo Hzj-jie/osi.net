@@ -12,8 +12,12 @@ Imports osi.service.resource
 Partial Public NotInheritable Class b3style
     Private Shared include_folders As argument(Of vector(Of String))
 
-    Private NotInheritable Class includes
-        Public Shared Function parse(ByVal i As String, ByVal j As logic_writer) As Boolean
+    Public MustInherit Class includes
+        Inherits code_gens(Of logic_writer).includes(Of scope.includes_t.proxy,
+                                                        folders,
+                                                        ignore_include_error)
+
+        Public Shared Shadows Function parse(ByVal i As String, ByVal j As logic_writer) As Boolean
             If i Is Nothing Then
                 ' The file has been included already.
                 Return True
