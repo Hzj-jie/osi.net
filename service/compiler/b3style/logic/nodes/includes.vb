@@ -13,9 +13,7 @@ Partial Public NotInheritable Class b3style
     Private Shared include_folders As argument(Of vector(Of String))
 
     Public MustInherit Class includes
-        Inherits code_gens(Of logic_writer).includes(Of scope.includes_t.proxy,
-                                                        folders,
-                                                        ignore_include_error)
+        Inherits code_gens(Of logic_writer).includes(Of scope.includes_t.proxy, folders)
 
         Public Shared Shadows Function parse(ByVal i As String, ByVal j As logic_writer) As Boolean
             If i Is Nothing Then
@@ -45,22 +43,12 @@ Partial Public NotInheritable Class b3style
             End Function
         End Structure
 
-        Public Structure ignore_include_error
-            Implements func_t(Of Boolean)
-
-            Public Function run() As Boolean Implements func_t(Of Boolean).run
-                Return False
-            End Function
-        End Structure
-
         Private Sub New()
         End Sub
     End Class
 
     Private NotInheritable Class include_with_string
-        Inherits code_gens(Of logic_writer).include_with_string(Of scope.includes_t.proxy,
-                                                                   includes.folders,
-                                                                   includes.ignore_include_error)
+        Inherits code_gens(Of logic_writer).include_with_string(Of scope.includes_t.proxy, includes.folders)
 
         Protected Overrides Function file_parse(ByVal s As String, ByVal o As logic_writer) As Boolean
             Return includes.parse(s, o)
@@ -68,9 +56,7 @@ Partial Public NotInheritable Class b3style
     End Class
 
     Private NotInheritable Class include_with_file
-        Inherits code_gens(Of logic_writer).include_with_file(Of scope.includes_t.proxy,
-                                                                 includes.folders,
-                                                                 includes.ignore_include_error)
+        Inherits code_gens(Of logic_writer).include_with_file(Of scope.includes_t.proxy, includes.folders)
 
         Protected Overrides Function file_parse(ByVal s As String, ByVal o As logic_writer) As Boolean
             Return includes.parse(s, o)

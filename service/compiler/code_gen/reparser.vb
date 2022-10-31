@@ -17,9 +17,6 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             assert(Not o Is Nothing)
             Dim s As String = Nothing
             If Not dump(n, s) Then
-                If handle_not_dumpable(n, o) Then
-                    Return True
-                End If
                 raise_error(error_type.user, "Failed to dump ", n)
                 Return False
             End If
@@ -32,9 +29,5 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
 
         Protected MustOverride Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
         Protected MustOverride Function parse(ByVal s As String, ByVal o As WRITER) As Boolean
-
-        Protected Overridable Function handle_not_dumpable(ByVal n As typed_node, ByVal o As WRITER) As Boolean
-            Return False
-        End Function
     End Class
 End Class

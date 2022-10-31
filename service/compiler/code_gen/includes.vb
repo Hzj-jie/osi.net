@@ -12,13 +12,11 @@ Imports osi.service.automata
 
 Partial Public NotInheritable Class code_gens(Of WRITER As New)
     Public MustInherit Class includes(Of _SHOULD_INCLUDE As func_t(Of String, Boolean),
-                                         _FOLDERS As func_t(Of vector(Of String)),
-                                         _IGNORE_INCLUDE_ERROR As func_t(Of Boolean))
+                                         _FOLDERS As func_t(Of vector(Of String)))
         Inherits reparser
 
         Private Shared ReadOnly should_include As _SHOULD_INCLUDE = alloc(Of _SHOULD_INCLUDE)()
         Private Shared ReadOnly folders As vector(Of String) = alloc(Of _FOLDERS)().run()
-        Private Shared ReadOnly ignore_include_error As Boolean = alloc(Of _IGNORE_INCLUDE_ERROR)().run()
 
         Public Shared Function include_folders() As vector(Of String)
             Return folders.CloneT()
@@ -63,17 +61,14 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             If include_file(folders, s, o) Then
                 Return True
             End If
-            If Not ignore_include_error Then
-                raise_error(error_type.user, "Cannot find include file ", s)
-            End If
+            raise_error(error_type.user, "Cannot find include file ", s)
             Return False
         End Function
     End Class
 
     Public MustInherit Class include_with_string(Of SHOULD_INCLUDE As func_t(Of String, Boolean),
-                                                    FOLDERS As func_t(Of vector(Of String)),
-                                                    IGNORE_INCLUDE_ERROR As func_t(Of Boolean))
-        Inherits includes(Of SHOULD_INCLUDE, FOLDERS, IGNORE_INCLUDE_ERROR)
+                                                    FOLDERS As func_t(Of vector(Of String)))
+        Inherits includes(Of SHOULD_INCLUDE, FOLDERS)
 
         Protected NotOverridable Overrides Function dump(ByVal n As typed_node, ByRef o As String) As Boolean
             assert(Not n Is Nothing)
@@ -83,9 +78,8 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
     End Class
 
     Public MustInherit Class include_with_file(Of SHOULD_INCLUDE As func_t(Of String, Boolean),
-                                                  FOLDERS As func_t(Of vector(Of String)),
-                                                  IGNORE_INCLUDE_ERROR As func_t(Of Boolean))
-        Inherits includes(Of SHOULD_INCLUDE, FOLDERS, IGNORE_INCLUDE_ERROR)
+                                                  FOLDERS As func_t(Of vector(Of String)))
+        Inherits includes(Of SHOULD_INCLUDE, FOLDERS)
 
         Private Const kw_include As String = "#include"
 

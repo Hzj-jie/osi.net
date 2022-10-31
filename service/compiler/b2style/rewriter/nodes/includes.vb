@@ -16,9 +16,7 @@ Partial Public NotInheritable Class b2style
     Private Shared include_folders As argument(Of vector(Of String))
 
     Public MustInherit Class includes
-        Inherits code_gens(Of logic_writer).includes(Of scope.includes_t.proxy,
-                                                        folders,
-                                                        ignore_include_error)
+        Inherits code_gens(Of logic_writer).includes(Of scope.includes_t.proxy, folders)
         Public Shared Shadows Function parse(ByVal i As String, ByVal j As typed_node_writer) As Boolean
             If i Is Nothing Then
                 ' The file has been included already.
@@ -40,15 +38,9 @@ Partial Public NotInheritable Class b2style
                 r.emplace_back(folder)
 
                 r.emplace_back(+b2style.include_folders)
+
+                r.emplace_back(bstyle.includes.include_folders())
                 Return r
-            End Function
-        End Structure
-
-        Public Structure ignore_include_error
-            Implements func_t(Of Boolean)
-
-            Public Function run() As Boolean Implements func_t(Of Boolean).run
-                Return True
             End Function
         End Structure
 
@@ -58,38 +50,18 @@ Partial Public NotInheritable Class b2style
 
     ' TODO: Consider to include bstyle headers into b2style.
     Private NotInheritable Class include_with_string
-        Inherits code_gens(Of typed_node_writer).include_with_string(Of scope.includes_t.proxy,
-                                                                        includes.folders,
-                                                                        includes.ignore_include_error)
+        Inherits code_gens(Of typed_node_writer).include_with_string(Of scope.includes_t.proxy, includes.folders)
 
         Protected Overrides Function file_parse(ByVal s As String, ByVal o As typed_node_writer) As Boolean
             Return includes.parse(s, o)
-        End Function
-
-        ' Forward missing files to the bstyle.
-        Protected Overrides Function handle_not_dumpable(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
-            o.append(n)
-            Return True
         End Function
     End Class
 
     Private NotInheritable Class include_with_file
-        Inherits code_gens(Of typed_node_writer).include_with_file(Of scope.includes_t.proxy,
-                                                                      includes.folders,
-                                                                      includes.ignore_include_error)
+        Inherits code_gens(Of typed_node_writer).include_with_file(Of scope.includes_t.proxy, includes.folders)
 
         Protected Overrides Function file_parse(ByVal s As String, ByVal o As typed_node_writer) As Boolean
             Return includes.parse(s, o)
-        End Function
-
-        ' Forward missing files to the bstyle.
-        Protected Overrides Function handle_not_dumpable(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
-            o.append(n)
-            Return True
         End Function
     End Class
 End Class
