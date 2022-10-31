@@ -12,7 +12,6 @@ Partial Public NotInheritable Class b3style
 
         Private ReadOnly incs As includes_t
         Private ReadOnly fc As call_hierarchy_t
-        Private ReadOnly cn As current_namespace_t
         Private ReadOnly d As define_t
         Private ReadOnly ta As New type_alias_t()
         Private ReadOnly s As New struct_t()
@@ -23,6 +22,10 @@ Partial Public NotInheritable Class b3style
         Private cf As current_function_t
         Private ReadOnly de As New delegate_t()
         Private ReadOnly t As temp_logic_name_t
+        Private ReadOnly cn As current_namespace_t
+        Private ReadOnly tt As New template_t()
+        Private ReadOnly c As New class_t()
+        Private ReadOnly i As root_type_injector_t
 
         <inject_constructor>
         Public Sub New(ByVal parent As scope)
@@ -33,10 +36,11 @@ Partial Public NotInheritable Class b3style
             Me.New(Nothing)
             incs = New includes_t()
             fc = New call_hierarchy_t()
-            cn = New current_namespace_t()
             d = New define_t()
             f = New function_t()
             t = New temp_logic_name_t()
+            cn = New current_namespace_t()
+            i = New root_type_injector_t()
         End Sub
 
         Public Function functions() As function_t
@@ -111,6 +115,18 @@ Partial Public NotInheritable Class b3style
 
             Public Overrides Function current_namespace() As current_namespace_t
                 Return s.cn
+            End Function
+
+            Public Overrides Function root_type_injector() As root_type_injector_t
+                Return s.i
+            End Function
+
+            Public Overrides Function classes() As class_t
+                Return s.c
+            End Function
+
+            Public Overrides Function template() As template_t
+                Return s.tt
             End Function
         End Class
     End Class
