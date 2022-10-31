@@ -12,6 +12,7 @@ Partial Public NotInheritable Class b3style
 
         Private ReadOnly incs As includes_t
         Private ReadOnly fc As call_hierarchy_t
+        Private ReadOnly cn As current_namespace_t
         Private ReadOnly d As define_t
         Private ReadOnly ta As New type_alias_t()
         Private ReadOnly s As New struct_t()
@@ -32,6 +33,7 @@ Partial Public NotInheritable Class b3style
             Me.New(Nothing)
             incs = New includes_t()
             fc = New call_hierarchy_t()
+            cn = New current_namespace_t()
             d = New define_t()
             f = New function_t()
             t = New temp_logic_name_t()
@@ -106,18 +108,9 @@ Partial Public NotInheritable Class b3style
             Public Overrides Function call_hierarchy() As call_hierarchy_t
                 Return s.fc
             End Function
-        End Class
 
-        Protected Overrides Function get_features() As _
-                scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).features_t
-            Return New features_t()
-        End Function
-
-        Protected Shadows Class features_t
-            Inherits scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).features_t
-
-            Public Overrides Function with_namespace() As Boolean
-                Return False
+            Public Overrides Function current_namespace() As current_namespace_t
+                Return s.cn
             End Function
         End Class
     End Class
