@@ -98,7 +98,9 @@
     <Content Include="b2style\self-test\delegate-functions-with-same-name.txt" />
     <Content Include="b2style\self-test\call-func-in-param.txt" />
     <Compile Include="b2style\template_template_test.vb" />
+    <Compile Include="b3style\b3style_runnable_test.vb" />
     <Compile Include="b3style\b3style_bstyle_test.vb" />
+    <Compile Include="b3style\b3style_runnable_test_cases.vb" />
     <Compile Include="compiler_self_test_runner.vb" />
     <Compile Include="b3style\b3style_nlp_test.vb" />
     <Compile Include="bstyle\bstyle_compiler_error_test.vb" />
@@ -196,6 +198,7 @@
     <Content Include="b2style\self-test\virtual-function-compile-only.txt" />
     <Content Include="b2style\self-test\void-variable.txt" />
     <Content Include="b2style\self-test\__file__.txt" />
+    <Content Include="b3style\runnable\case1.txt" />
     <Content Include="bstyle\codegen\delegate.txt" />
     <Content Include="bstyle\codegen\func_name_with_dot.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />
@@ -204,6 +207,7 @@
     <None Include="b2style\codegen\run.cmd" />
     <None Include="b2style\self-compile-error-test\run.cmd" />
     <None Include="b2style\self-test\run.cmd" />
+    <None Include="b3style\runnable\run.cmd" />
     <None Include="bstyle\codegen\run.cmd" />
     <None Include="dotnet\codegen\run.cmd" />
     <None Include="logic\codegen\run.cmd" />

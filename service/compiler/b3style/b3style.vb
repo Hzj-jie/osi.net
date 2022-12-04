@@ -50,7 +50,7 @@ Partial Public NotInheritable Class b3style
         Inherits __do(Of vector(Of Action(Of statements)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return New vector(Of Action(Of statements))()
+            Return vector.emplace_of(Of Action(Of statements))(AddressOf bstyle.code_types.register)
         End Function
     End Class
 
@@ -58,7 +58,8 @@ Partial Public NotInheritable Class b3style
         Inherits __do(Of vector(Of Action(Of statements)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return New vector(Of Action(Of statements))()
+            Return vector.emplace_of(Of Action(Of statements))(AddressOf bstyle.main.register,
+                                                               AddressOf scope.call_hierarchy_t.calculator.register)
         End Function
     End Class
 
@@ -66,7 +67,15 @@ Partial Public NotInheritable Class b3style
         Inherits __do(Of vector(Of Action(Of code_gens(Of logic_writer))))
 
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of logic_writer)))
-            Return New vector(Of Action(Of code_gens(Of logic_writer)))()
+            Return New code_gens_registrar(Of logic_writer)().
+                with(Of include_with_file)().
+                with(Of include_with_string)().
+                with(Of biguint)().
+                with(Of bool)().
+                with(Of _integer)().
+                with(Of _string)().
+                with(Of ufloat)().
+                with(Of bstyle.logic)()
         End Function
     End Class
 End Class

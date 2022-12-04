@@ -58,7 +58,12 @@
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
     <Compile Include="b3style\b3style_lib.vb" />
+    <Compile Include="b3style\logic\nodes\biguint.vb" />
+    <Compile Include="b3style\logic\nodes\bool.vb" />
     <Compile Include="b3style\logic\nodes\includes.vb" />
+    <Compile Include="b3style\logic\nodes\integer.vb" />
+    <Compile Include="b3style\logic\nodes\string.vb" />
+    <Compile Include="b3style\logic\nodes\ufloat.vb" />
     <Compile Include="scope\class_def.vb" />
     <Compile Include="scope\function_def.vb" />
     <None Include="b2style\lib\std\vector" />
