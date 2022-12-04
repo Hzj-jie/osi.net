@@ -75,7 +75,12 @@ Partial Public NotInheritable Class b3style
                 with(Of _integer)().
                 with(Of _string)().
                 with(Of ufloat)().
-                with(Of bstyle.logic)()
+                with(Of bstyle.logic)().
+                with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of, AddressOf scope.current)).
+                with(scope.define_t.code_gens.define(AddressOf scope.current)).
+                with(Of bstyle.typedef)().
+                with(Of bstyle.typedef_type_name)().
+                with(Of bstyle.typedef_type_str)()
         End Function
     End Class
 End Class

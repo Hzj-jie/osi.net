@@ -199,6 +199,7 @@
     <Content Include="b2style\self-test\void-variable.txt" />
     <Content Include="b2style\self-test\__file__.txt" />
     <Content Include="b3style\runnable\case1.txt" />
+    <Content Include="b3style\runnable\include-bstyle-types.txt" />
     <Content Include="bstyle\codegen\delegate.txt" />
     <Content Include="bstyle\codegen\func_name_with_dot.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />
