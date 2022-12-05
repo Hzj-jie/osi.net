@@ -46,7 +46,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return values.pop(f)
         End Function
 
-        ' Type of the single data slot is handled by logic.
+        ' Type of the primitive type target is handled by logic.
         Public Function primitive_type() As read_scoped(Of target).ref(Of String)
             Return value(Function(ByVal x As value_target_t.target, ByRef o As String) As Boolean
                              assert(Not x Is Nothing)
