@@ -36,7 +36,7 @@ Partial Public NotInheritable Class bstyle
             End If
             Using r As read_scoped(Of scope.value_target_t.target).ref = scope.current().value_target().value()
                 If scope.current().current_function().return_struct() Then
-                    ' The return type check of single-data-slot-target will be handled by logic.
+                    ' The return type check of primitive-type target will be handled by logic.
                     If Not scope.current().current_function().return_type().Equals((+r).type) Then
                         raise_error(error_type.user,
                                     "Return type ",
@@ -51,7 +51,7 @@ Partial Public NotInheritable Class bstyle
                                                  "@" +
                                                  (+scope.current().current_function().name()) +
                                                  "@return_value"
-                    assert(value_declaration.declare_single_data_slot(
+                    assert(value_declaration.declare_primitive_type(
                                compiler.logic.scope.type_t.variable_type, return_value, o))
                     Return struct.pack((+r).names, return_value, o) AndAlso
                            builders.of_return(+scope.current().current_function().name(), return_value).to(o)

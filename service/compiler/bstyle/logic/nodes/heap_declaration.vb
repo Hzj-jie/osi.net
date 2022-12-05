@@ -30,11 +30,11 @@ Partial Public NotInheritable Class bstyle
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean
-                           Return declare_single_data_slot(type_str, name_str, len_name, o)
+                           Return declare_primitive_type(type_str, name_str, len_name, o)
                        End Function)
         End Function
 
-        Public Shared Function declare_single_data_slot(ByVal type As String,
+        Public Shared Function declare_primitive_type(ByVal type As String,
                                                         ByVal name As String,
                                                         ByVal length As String,
                                                         ByVal o As logic_writer) As Boolean

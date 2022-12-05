@@ -19,7 +19,7 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             Using value_target As read_scoped(Of scope.value_target_t.target).ref(Of String) =
-                    scope.current().value_target().single_data_slot()
+                    scope.current().value_target().primitive_type()
                 ' TODO: May want to restrict the type of condition.
                 If Not value_target.retrieve(condition) Then
                     raise_error(error_type.user, "Condition of while cannot be a struct.")

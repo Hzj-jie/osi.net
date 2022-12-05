@@ -93,7 +93,7 @@ Partial Public NotInheritable Class bstyle
                 Return True
             End If
             Dim index As String = strcat(targets(0), "@index")
-            assert(value_declaration.declare_single_data_slot(_integer.type_name, index, o))
+            assert(value_declaration.declare_primitive_type(_integer.type_name, index, o))
             Return targets.stream().
                            map(Function(ByVal target As String) As Boolean
                                    assert(Not target.null_or_whitespace())
@@ -140,7 +140,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not v Is Nothing)
             Return v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
                                             assert(Not m Is Nothing)
-                                            Return value_declaration.declare_single_data_slot(m.type, m.name, o)
+                                            Return value_declaration.declare_primitive_type(m.type, m.name, o)
                                         End Function)
         End Function
 
@@ -164,7 +164,7 @@ Partial Public NotInheritable Class bstyle
                                          Return v.for_each_primitive(
                                                     Function(ByVal m As builders.parameter) As Boolean
                                                         assert(Not m Is Nothing)
-                                                        Return heap_declaration.declare_single_data_slot(
+                                                        Return heap_declaration.declare_primitive_type(
                                                                    m.type, m.name, len_name, o)
                                                     End Function)
                                      End Function)

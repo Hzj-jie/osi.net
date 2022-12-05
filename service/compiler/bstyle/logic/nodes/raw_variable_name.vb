@@ -14,11 +14,11 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function build(ByVal n As typed_node,
                                      ByVal struct_handle As Func(Of String, stream(Of builders.parameter), Boolean),
-                                     ByVal single_data_slot_handle As Func(Of String, String, Boolean),
+                                     ByVal primitive_type_handle As Func(Of String, String, Boolean),
                                      ByVal o As logic_writer) As Boolean
             assert(Not n Is Nothing)
             assert(Not struct_handle Is Nothing)
-            assert(Not single_data_slot_handle Is Nothing)
+            assert(Not primitive_type_handle Is Nothing)
             assert(Not o Is Nothing)
 
             Dim type As String = Nothing
@@ -29,7 +29,7 @@ Partial Public NotInheritable Class bstyle
             If scope.current().structs().resolve(type, n.input_without_ignored(), ps) Then
                 Return struct_handle(type, ps.primitives())
             End If
-            Return single_data_slot_handle(type, n.input_without_ignored())
+            Return primitive_type_handle(type, n.input_without_ignored())
         End Function
 
         Private Function build(ByVal n As typed_node,

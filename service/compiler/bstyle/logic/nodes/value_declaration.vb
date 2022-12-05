@@ -28,10 +28,10 @@ Partial Public NotInheritable Class bstyle
             Dim t As String = type.input_without_ignored()
             Dim n As String = name.input_without_ignored()
             Return struct.define_in_stack(t, n, o) OrElse
-                   declare_single_data_slot(t, n, o)
+                   declare_primitive_type(t, n, o)
         End Function
 
-        Public Shared Function declare_single_data_slot(ByVal type As String,
+        Public Shared Function declare_primitive_type(ByVal type As String,
                                                         ByVal name As String,
                                                         ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
