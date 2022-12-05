@@ -74,12 +74,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Class
 
         Public NotInheritable Class code_gens
-            Public Shared Function ifndef_wrapped(
-                    ByVal code_gen_of As Func(Of typed_node,
-                                                 code_gens(Of WRITER).code_gen_proxy),
-                    ByVal current As Func(Of scope(Of WRITER, __BUILDER, __CODE_GENS, T))) _
+            Public Shared Function ifndef_wrapped(ByVal code_gen_of As Func(Of typed_node,
+                                                                               code_gens(Of WRITER).code_gen_proxy)) _
                     As Action(Of code_gens(Of WRITER))
-                assert(Not current Is Nothing)
                 Return Sub(ByVal c As code_gens(Of WRITER))
                            assert(Not c Is Nothing)
                            c.register("ifndef-wrapped",
@@ -90,9 +87,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                        End Sub
             End Function
 
-            Public Shared Function define(ByVal current As Func(Of scope(Of WRITER, __BUILDER, __CODE_GENS, T))) _
-                    As Action(Of code_gens(Of WRITER))
-                assert(Not current Is Nothing)
+            Public Shared Function define() As Action(Of code_gens(Of WRITER))
                 Return Sub(ByVal c As code_gens(Of WRITER))
                            assert(Not c Is Nothing)
                            c.register("define", New define_impl(Sub(ByVal s As String)
