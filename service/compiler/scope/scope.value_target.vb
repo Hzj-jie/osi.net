@@ -47,7 +47,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         ' Type of the single data slot is handled by logic.
-        Public Function single_data_slot() As read_scoped(Of target).ref(Of String)
+        Public Function primitive_type() As read_scoped(Of target).ref(Of String)
             Return value(Function(ByVal x As value_target_t.target, ByRef o As String) As Boolean
                              assert(Not x Is Nothing)
                              If x.names.size() <> 1 Then
@@ -68,7 +68,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function with_temp_target(ByVal type As String, ByVal o As logic_writer) As vector(Of String)
-            Dim define_single_data_slot_temp_target As Action(Of String, String) =
+            Dim define_primitive_type_temp_target As Action(Of String, String) =
                 Sub(ByVal t As String, ByVal n As String)
                     ' It will trigger the assertion failure anyway if not type_alias is provided.
                     t = current().type_alias()(t)
@@ -83,17 +83,17 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 params.primitives.
                        foreach(Sub(ByVal p As builders.parameter)
                                    assert(Not p Is Nothing)
-                                   define_single_data_slot_temp_target(p.type, p.name)
+                                   define_primitive_type_temp_target(p.type, p.name)
                                End Sub)
                 Return with_value(type, params.primitives())
             End If
             Dim name As String = current().temp_logic_name().variable()
-            define_single_data_slot_temp_target(type, name)
+            define_primitive_type_temp_target(type, name)
             with_value(type, name)
             Return vector.emplace_of(name)
         End Function
 
-        Public Structure with_single_data_slot_temp_target_t
+        Public Structure with_primitive_type_temp_target_t
             Implements func_t(Of String, logic_writer, String)
 
             Public Function run(ByVal i As String, ByVal j As logic_writer) As String _

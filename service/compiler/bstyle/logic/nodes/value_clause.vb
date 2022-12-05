@@ -16,12 +16,12 @@ Partial Public NotInheritable Class bstyle
         Private Function build(ByVal name As typed_node,
                                ByVal value As typed_node,
                                ByVal struct_copy As Func(Of vector(Of String), Boolean),
-                               ByVal single_data_slot_copy As Func(Of String, Boolean),
+                               ByVal primitive_type_copy As Func(Of String, Boolean),
                                ByVal o As logic_writer) As Boolean
             assert(Not name Is Nothing)
             assert(Not value Is Nothing)
             assert(Not struct_copy Is Nothing)
-            assert(Not single_data_slot_copy Is Nothing)
+            assert(Not primitive_type_copy Is Nothing)
             assert(Not o Is Nothing)
             Dim type As String = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
@@ -60,16 +60,16 @@ Partial Public NotInheritable Class bstyle
                 End Using
             End If
             Using r As read_scoped(Of scope.value_target_t.target).ref(Of String) =
-                    scope.current().value_target().single_data_slot()
-                ' The type check of single-data-slot-target will be handled by logic.
+                    scope.current().value_target().primitive_type()
+                ' The type check of primitive-type target will be handled by logic.
                 assert(Not r Is Nothing)
                 Dim s As String = Nothing
                 If Not r.retrieve(s) Then
                     raise_error(error_type.user,
-                                "Failed to retrieve a single data slot from the r-value, received a struct?")
+                                "Failed to retrieve a primitive-type target from the r-value, received a struct?")
                     Return False
                 End If
-                Return single_data_slot_copy(s)
+                Return primitive_type_copy(s)
             End Using
         End Function
 

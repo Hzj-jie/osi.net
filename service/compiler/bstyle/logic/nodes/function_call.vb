@@ -86,7 +86,7 @@ Partial Public NotInheritable Class bstyle
                                ' TODO: Check the type consistency between function_call and variable receiver.
                                Dim return_value As String =
                                        scope.current().temp_logic_name().variable() + "@" + name + "@return_value"
-                               assert(value_declaration.declare_single_data_slot(
+                               assert(value_declaration.declare_primitive_type(
                                           compiler.logic.scope.type_t.variable_type, return_value, o))
                                Return builder(name, return_value, parameters) AndAlso
                                       struct.unpack(return_value,

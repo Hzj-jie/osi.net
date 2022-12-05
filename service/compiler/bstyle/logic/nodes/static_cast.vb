@@ -41,13 +41,13 @@ Partial Public NotInheritable Class bstyle
                 assert(Not sdef Is Nothing)
                 assert(sdef.primitive_count() > 0)
                 Return sdef.for_each_primitive(Function(ByVal t As builders.parameter) As Boolean
-                                                   Return value_declaration.declare_single_data_slot(t.type, t.name, o)
+                                                   Return value_declaration.declare_primitive_type(t.type, t.name, o)
                                                End Function) AndAlso
                        builders.start_scope(o).of(
                            Function() As Boolean
                                Dim offset_name As String = "@offset"
                                ' TODO: Using builders.of_define is sufficient.
-                               Return value_declaration.declare_single_data_slot(
+                               Return value_declaration.declare_primitive_type(
                                           compiler.logic.scope.type_t.ptr_type,
                                           offset_name,
                                           o) AndAlso
