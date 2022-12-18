@@ -26,5 +26,11 @@ Partial Public NotInheritable Class assert_which
             End Try
             Return 0
         End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function not_null_or_empty() As String
+            assert(Not i.null_or_empty())
+            Return i
+        End Function
     End Structure
 End Class

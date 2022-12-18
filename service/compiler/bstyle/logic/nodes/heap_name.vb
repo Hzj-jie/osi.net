@@ -14,9 +14,9 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class heap_name
         Implements code_gen(Of logic_writer)
 
-        Public Function build(ByVal index As typed_node,
-                              ByVal o As logic_writer,
-                              ByVal f As Func(Of String, Boolean)) As Boolean
+        Public Shared Function build(ByVal index As typed_node,
+                                     ByVal o As logic_writer,
+                                     ByVal f As Func(Of String, Boolean)) As Boolean
             assert(Not index Is Nothing)
             assert(Not o Is Nothing)
             assert(Not f Is Nothing)

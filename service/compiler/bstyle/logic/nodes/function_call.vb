@@ -14,10 +14,10 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class function_call
         Implements code_gen(Of logic_writer)
 
-        Private Function build(ByVal n As typed_node,
-                               ByVal o As logic_writer,
-                               ByVal build_caller As Func(Of String, vector(Of String), Boolean),
-                               ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
+        Private Shared Function build(ByVal n As typed_node,
+                                      ByVal o As logic_writer,
+                                      ByVal build_caller As Func(Of String, vector(Of String), Boolean),
+                                      ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(Not build_caller Is Nothing)
@@ -47,7 +47,7 @@ Partial Public NotInheritable Class bstyle
             End Using
         End Function
 
-        Public Function without_return(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+        Public Shared Function without_return(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
             Return build(n,
                          o,
                          Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean

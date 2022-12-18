@@ -11,13 +11,17 @@ Imports osi.service.math
 
 Partial Public NotInheritable Class bstyle
     Public MustInherit Class biguint(Of TEMP_TARGET As func_t(Of String, logic_writer, String))
-        Inherits raw_value(Of TEMP_TARGET)
+        Inherits raw_value(Of code_type, TEMP_TARGET)
 
         Public Const type_name As String = "BigUnsignedInteger"
 
-        Public Sub New()
-            MyBase.New(type_name)
-        End Sub
+        Public Structure code_type
+            Implements func_t(Of String)
+
+            Public Function run() As String Implements func_t(Of String).run
+                Return type_name
+            End Function
+        End Structure
 
         Protected NotOverridable Overrides Function parse(ByVal n As typed_node, ByRef o As data_block) As Boolean
             Dim s As String = n.word().str()
