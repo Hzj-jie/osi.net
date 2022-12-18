@@ -25,7 +25,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not length Is Nothing)
             Dim type_str As String = type.input_without_ignored()
             Dim name_str As String = name.input_without_ignored()
-            Return code_gens().typed(Of struct).define_in_heap(type_str, name_str, length, o) OrElse
+            Return struct.define_in_heap(type_str, name_str, length, o) OrElse
                    heap_name.build(
                        length,
                        o,

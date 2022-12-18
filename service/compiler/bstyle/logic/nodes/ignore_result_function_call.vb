@@ -14,7 +14,7 @@ Partial Public NotInheritable Class bstyle
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Return code_gens().typed(Of function_call).without_return(n.child(), o)
+            Return function_call.without_return(n.child(), o)
         End Function
     End Class
 End Class

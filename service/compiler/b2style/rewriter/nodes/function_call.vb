@@ -38,9 +38,9 @@ Partial Public NotInheritable Class b2style
             Return o
         End Function
 
-        Public Function build(ByVal name As String,
-                              ByVal n As typed_node,
-                              ByVal o As typed_node_writer) As Boolean
+        Public Shared Function build(ByVal name As String,
+                                     ByVal n As typed_node,
+                                     ByVal o As typed_node_writer) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not n Is Nothing)
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
