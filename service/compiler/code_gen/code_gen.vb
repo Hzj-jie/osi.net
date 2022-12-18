@@ -34,12 +34,6 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
         Return direct_cast(Of T)((+it).second)
     End Function
 
-    ' Limit the use of this function, prefer code_gen_proxy.dump if possible.
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function typed(Of T)() As T
-        Return typed(Of T)(code_gen_name(Of T)())
-    End Function
-
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function code_gen_of(ByVal name As String) As code_gen(Of WRITER)
         Return typed(Of code_gen(Of WRITER))(name)

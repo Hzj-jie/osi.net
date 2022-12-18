@@ -144,10 +144,10 @@ Partial Public NotInheritable Class bstyle
                                         End Function)
         End Function
 
-        Public Function define_in_heap(ByVal type As String,
-                                       ByVal name As String,
-                                       ByVal length As typed_node,
-                                       ByVal o As logic_writer) As Boolean
+        Public Shared Function define_in_heap(ByVal type As String,
+                                              ByVal name As String,
+                                              ByVal length As typed_node,
+                                              ByVal o As logic_writer) As Boolean
             assert(Not length Is Nothing)
             assert(Not o Is Nothing)
             Dim v As scope.struct_def = Nothing
@@ -156,18 +156,17 @@ Partial Public NotInheritable Class bstyle
                 Return False
             End If
             assert(Not v Is Nothing)
-            Return code_gens().typed(Of heap_name).
-                               build(length,
-                                     o,
-                                     Function(ByVal len_name As String) As Boolean
-                                         assert(Not v Is Nothing)
-                                         Return v.for_each_primitive(
-                                                    Function(ByVal m As builders.parameter) As Boolean
-                                                        assert(Not m Is Nothing)
-                                                        Return heap_declaration.declare_primitive_type(
-                                                                   m.type, m.name, len_name, o)
-                                                    End Function)
-                                     End Function)
+            Return heap_name.build(length,
+                                   o,
+                                   Function(ByVal len_name As String) As Boolean
+                                       assert(Not v Is Nothing)
+                                       Return v.for_each_primitive(
+                                                  Function(ByVal m As builders.parameter) As Boolean
+                                                      assert(Not m Is Nothing)
+                                                      Return heap_declaration.declare_primitive_type(
+                                                                 m.type, m.name, len_name, o)
+                                                  End Function)
+                                   End Function)
         End Function
 
         Public Shared Function dealloc_from_heap(ByVal name As String, ByVal o As logic_writer) As Boolean

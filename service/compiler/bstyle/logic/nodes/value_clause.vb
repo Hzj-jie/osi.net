@@ -13,11 +13,11 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class value_clause
         Implements code_gen(Of logic_writer)
 
-        Private Function build(ByVal name As typed_node,
-                               ByVal value As typed_node,
-                               ByVal struct_copy As Func(Of vector(Of String), Boolean),
-                               ByVal primitive_type_copy As Func(Of String, Boolean),
-                               ByVal o As logic_writer) As Boolean
+        Private Shared Function build(ByVal name As typed_node,
+                                      ByVal value As typed_node,
+                                      ByVal struct_copy As Func(Of vector(Of String), Boolean),
+                                      ByVal primitive_type_copy As Func(Of String, Boolean),
+                                      ByVal o As logic_writer) As Boolean
             assert(Not name Is Nothing)
             assert(Not value Is Nothing)
             assert(Not struct_copy Is Nothing)
@@ -73,7 +73,9 @@ Partial Public NotInheritable Class bstyle
             End Using
         End Function
 
-        Public Function build(ByVal name As typed_node, ByVal value As typed_node, ByVal o As logic_writer) As Boolean
+        Public Shared Function build(ByVal name As typed_node,
+                                     ByVal value As typed_node,
+                                     ByVal o As logic_writer) As Boolean
             assert(Not name Is Nothing)
             ' TODO: If the value on the right is a temporary value (rvalue), move can be used to reduce memory copy.
             Return build(name,
@@ -95,7 +97,7 @@ Partial Public NotInheritable Class bstyle
             If Not n.child(0).child().type_name.Equals("heap-name") Then
                 Return build(n.child(0).child(), n.child(2), o)
             End If
-            Return code_gens().typed(Of heap_name).build(
+            Return heap_name.build(
                        n.child(0).child().child(2),
                        o,
                        Function(ByVal indexstr As String) As Boolean

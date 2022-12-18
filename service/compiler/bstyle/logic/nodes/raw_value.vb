@@ -10,22 +10,17 @@ Imports osi.service.automata
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle
-    Public MustInherit Class raw_value(Of _TEMP_TARGET As func_t(Of String, logic_writer, String))
+    Public MustInherit Class raw_value(Of _CODE_TYPE As func_t(Of String),
+                                          _TEMP_TARGET As func_t(Of String, logic_writer, String))
         Implements code_gen(Of logic_writer)
 
+        Private Shared ReadOnly code_type As String = assert_which.of(alloc(Of _CODE_TYPE)().run()).not_null_or_empty()
         Private Shared ReadOnly temp_target As Func(Of String, logic_writer, String) =
                 AddressOf alloc(Of _TEMP_TARGET)().run
 
-        Private ReadOnly code_type As String
-
-        Protected Sub New(ByVal code_type As String)
-            assert(Not code_type.null_or_whitespace())
-            Me.code_type = code_type
-        End Sub
-
         Protected MustOverride Function parse(ByVal n As typed_node, ByRef o As data_block) As Boolean
 
-        Protected Function build(ByVal i As data_block, ByVal o As logic_writer) As Boolean
+        Protected Shared Function build(ByVal i As data_block, ByVal o As logic_writer) As Boolean
             assert(Not i Is Nothing)
             assert(Not o Is Nothing)
             Return compiler.logic.builders.of_copy_const(temp_target(code_type, o), i).to(o)
