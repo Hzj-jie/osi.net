@@ -4,11 +4,14 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class heap_declaration
+    Public Class heap_declaration(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                     CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                     T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,
@@ -25,26 +28,30 @@ Partial Public NotInheritable Class bstyle
             assert(Not length Is Nothing)
             Dim type_str As String = type.input_without_ignored()
             Dim name_str As String = name.input_without_ignored()
-            Return code_gens().typed(Of struct).define_in_heap(type_str, name_str, length, o) OrElse
-                   code_gens().typed(Of heap_name).build(
-                       length,
-                       o,
-                       Function(ByVal len_name As String) As Boolean
-                           Return declare_primitive_type(type_str, name_str, len_name, o)
-                       End Function)
+            Return CODE_GENS().typed(Of struct).define_in_heap(type_str, name_str, length, o) OrElse
+                       CODE_GENS().typed(Of heap_name).build(
+                           length,
+                           o,
+                           Function(ByVal len_name As String) As Boolean
+                               Return declare_primitive_type(type_str, name_str, len_name, o)
+                           End Function)
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,
-                                                        ByVal name As String,
-                                                        ByVal length As String,
-                                                        ByVal o As logic_writer) As Boolean
+                                                            ByVal name As String,
+                                                            ByVal length As String,
+                                                            ByVal o As logic_writer) As Boolean
             assert(Not scope.current().structs().types().defined(type))
             assert(Not o Is Nothing)
             Return scope.current().variables().define(type, name) AndAlso
-                   builders.of_define_heap(name,
-                                           scope.current().type_alias()(type),
-                                           length).
-                            to(o)
+                       builders.of_define_heap(name,
+                                               scope.current().type_alias()(type),
+                                               length).
+                                to(o)
         End Function
+    End Class
+
+    Private NotInheritable Class heap_declaration
+
     End Class
 End Class

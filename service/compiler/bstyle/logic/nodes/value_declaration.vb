@@ -5,11 +5,14 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class value_declaration
+    Public Class value_declaration(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                      CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                      T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,
@@ -27,13 +30,13 @@ Partial Public NotInheritable Class bstyle
             assert(Not name Is Nothing)
             Dim t As String = type.input_without_ignored()
             Dim n As String = name.input_without_ignored()
-            Return struct.define_in_stack(t, n, o) OrElse
+            Return struct(Of BUILDER, CODE_GENS, T).define_in_stack(t, n, o) OrElse
                    declare_primitive_type(t, n, o)
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,
-                                                        ByVal name As String,
-                                                        ByVal o As logic_writer) As Boolean
+                                                      ByVal name As String,
+                                                      ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
 
             If Not scope.current().structs().types().defined(type) AndAlso
@@ -51,5 +54,9 @@ Partial Public NotInheritable Class bstyle
                         " as a primitive type variable.")
             Return False
         End Function
+    End Class
+
+    Private NotInheritable Class value_declaration
+        Inherits value_declaration(Of code_builder_proxy, code_gens_proxy, scope)
     End Class
 End Class
