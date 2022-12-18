@@ -10,7 +10,7 @@ Partial Public NotInheritable Class b3style
         Inherits bstyle._string(Of scope.value_target_t.with_primitive_type_temp_target_t)
 
         Public Overloads Shared Function build(ByVal s As String, ByVal o As logic_writer) As Boolean
-            Return code_gens().typed(Of _string)().build(New data_block(s), o)
+            Return _string.build(New data_block(s), o)
         End Function
     End Class
 End Class

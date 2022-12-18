@@ -28,7 +28,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not length Is Nothing)
             Dim type_str As String = type.input_without_ignored()
             Dim name_str As String = name.input_without_ignored()
-            Return struct.define_in_heap(type_str, name_str, length, o) OrElse
+            Return struct(Of BUILDER, CODE_GENS, T).define_in_heap(type_str, name_str, length, o) OrElse
                    heap_name.build(
                        length,
                        o,
@@ -43,7 +43,7 @@ Partial Public NotInheritable Class bstyle
                                                             ByVal o As logic_writer) As Boolean
             assert(Not scope.current().structs().types().defined(type))
             assert(Not o Is Nothing)
-            Return scope.current().variables().define(type, name) AndAlso
+            Return scope(Of logic_writer, BUILDER, CODE_GENS, T).current().variables().define(type, name) AndAlso
                        builders.of_define_heap(name,
                                                scope.current().type_alias()(type),
                                                length).
@@ -52,6 +52,6 @@ Partial Public NotInheritable Class bstyle
     End Class
 
     Private NotInheritable Class heap_declaration
-
+        Inherits heap_declaration(Of code_builder_proxy, code_gens_proxy, scope)
     End Class
 End Class
