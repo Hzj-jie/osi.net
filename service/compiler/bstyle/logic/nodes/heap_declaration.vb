@@ -29,7 +29,7 @@ Partial Public NotInheritable Class bstyle
             Dim type_str As String = type.input_without_ignored()
             Dim name_str As String = name.input_without_ignored()
             Return struct(Of BUILDER, CODE_GENS, T).define_in_heap(type_str, name_str, length, o) OrElse
-                   heap_name.build(
+                   heap_name(Of BUILDER, CODE_GENS, T).build(
                        length,
                        o,
                        Function(ByVal len_name As String) As Boolean
