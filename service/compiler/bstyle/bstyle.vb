@@ -81,10 +81,10 @@ Partial Public NotInheritable Class bstyle
                            with(Of _string)().
                            with(Of value)().
                            with(Of value_clause)().
-                           with(Of value_declaration)().
-                           with(Of heap_declaration)().
-                           with(Of value_definition)().
-                           with(Of heap_name)().
+                           with(Of value_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
+                           with(Of heap_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
+                           with(Of value_definition(Of code_builder_proxy, code_gens_proxy, scope))().
+                           with(Of heap_name(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of raw_variable_name)().
                            with(Of value_list)().
                            with(Of _while)().

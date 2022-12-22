@@ -12,9 +12,9 @@ Imports builders = osi.service.compiler.logic.builders
 Imports variable = osi.service.compiler.logic.variable
 
 Partial Public NotInheritable Class bstyle
-    Public Class heap_name(Of BUILDER As func_t(Of String, logic_writer, Boolean),
-                              CODE_GENS As func_t(Of code_gens(Of logic_writer)),
-                              T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
+    Public NotInheritable Class heap_name(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                             CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                             T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
         Implements code_gen(Of logic_writer)
 
         Public Shared Function build(ByVal index As typed_node,
@@ -76,9 +76,5 @@ Partial Public NotInheritable Class bstyle
                                         o)
                          End Function)
         End Function
-    End Class
-
-    Private NotInheritable Class heap_name
-        Inherits heap_name(Of code_builder_proxy, code_gens_proxy, scope)
     End Class
 End Class

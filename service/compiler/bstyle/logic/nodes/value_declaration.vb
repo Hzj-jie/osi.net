@@ -10,9 +10,9 @@ Imports osi.service.automata
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
-    Public Class value_declaration(Of BUILDER As func_t(Of String, logic_writer, Boolean),
-                                      CODE_GENS As func_t(Of code_gens(Of logic_writer)),
-                                      T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
+    Public NotInheritable Class value_declaration(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                                     CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                                     T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,
@@ -54,9 +54,5 @@ Partial Public NotInheritable Class bstyle
                         " as a primitive type variable.")
             Return False
         End Function
-    End Class
-
-    Private NotInheritable Class value_declaration
-        Inherits value_declaration(Of code_builder_proxy, code_gens_proxy, scope)
     End Class
 End Class

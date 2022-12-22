@@ -5,12 +5,15 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class value_clause
+    Public NotInheritable Class value_clause(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                                CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                                T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
         Implements code_gen(Of logic_writer)
 
         Private Shared Function build(ByVal name As typed_node,
@@ -25,7 +28,10 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             Dim type As String = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
-            If Not scope.current().variables().resolve(name.input_without_ignored(), type, delegate_definition) Then
+            If Not scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                       current().
+                       variables().
+                       resolve(name.input_without_ignored(), type, delegate_definition) Then
                 ' Emmmm, scope.variable should log the error already.
                 Return False
             End If
@@ -33,10 +39,16 @@ Partial Public NotInheritable Class bstyle
                 ' TODO: Avoid copying.
                 Dim target_function_name As String = logic_name.of_function(value.input_without_ignored(),
                                                                             +delegate_definition.get().parameters)
-                If scope.current().functions().is_defined(target_function_name) Then
+                If scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                       current().
+                       functions().
+                       is_defined(target_function_name) Then
                     ' Use address-of to copy a function address to the target.
                     ' TODO: Need to use logic_name here.
-                    scope.current().call_hierarchy().to(target_function_name)
+                    scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                        current().
+                        call_hierarchy().
+                        to(target_function_name)
                     Return builders.of_address_of(name.input_without_ignored(), target_function_name).to(o)
                 End If
                 Return builders.of_copy(name.input_without_ignored(), value.input_without_ignored()).to(o)
@@ -44,8 +56,9 @@ Partial Public NotInheritable Class bstyle
             If Not code_gen_of(value).build(o) Then
                 Return False
             End If
-            If scope.current().structs().types().defined(type) Then
-                Using r As read_scoped(Of scope.value_target_t.target).ref = scope.current().value_target().value()
+            If scope(Of logic_writer, BUILDER, CODE_GENS, T).current().structs().types().defined(type) Then
+                Using r As read_scoped(Of scope(Of logic_writer, BUILDER, CODE_GENS, T).value_target_t.target).ref =
+                        scope(Of logic_writer, BUILDER, CODE_GENS, T).current().value_target().value()
                     If Not (+r).type.Equals(type) Then
                         raise_error(error_type.user,
                                     "Type ",
@@ -59,8 +72,9 @@ Partial Public NotInheritable Class bstyle
                     Return struct_copy((+r).names)
                 End Using
             End If
-            Using r As read_scoped(Of scope.value_target_t.target).ref(Of String) =
-                    scope.current().value_target().primitive_type()
+            Using r As read_scoped(Of scope(Of logic_writer, BUILDER, CODE_GENS, T).value_target_t.target).
+                           ref(Of String) =
+                    scope(Of logic_writer, BUILDER, CODE_GENS, T).current().value_target().primitive_type()
                 ' The type check of primitive-type target will be handled by logic.
                 assert(Not r Is Nothing)
                 Dim s As String = Nothing
@@ -81,7 +95,7 @@ Partial Public NotInheritable Class bstyle
             Return build(name,
                          value,
                          Function(ByVal r As vector(Of String)) As Boolean
-                             Return struct.copy(r, name.input_without_ignored(), o)
+                             Return struct(Of BUILDER, CODE_GENS, T).copy(r, name.input_without_ignored(), o)
                          End Function,
                          Function(ByVal r As String) As Boolean
                              Return builders.of_copy(name.input_without_ignored(), r).to(o)
@@ -97,14 +111,14 @@ Partial Public NotInheritable Class bstyle
             If Not n.child(0).child().type_name.Equals("heap-name") Then
                 Return build(n.child(0).child(), n.child(2), o)
             End If
-            Return heap_name.build(
+            Return heap_name(Of BUILDER, CODE_GENS, T).build(
                        n.child(0).child().child(2),
                        o,
                        Function(ByVal indexstr As String) As Boolean
                            Return build(n.child(0).child().child(0),
                                         n.child(2),
                                         Function(ByVal r As vector(Of String)) As Boolean
-                                            Return struct.copy(r,
+                                            Return struct(Of BUILDER, CODE_GENS, T).copy(r,
                                                                n.child(0).child().child(0).input_without_ignored(),
                                                                indexstr,
                                                                o)

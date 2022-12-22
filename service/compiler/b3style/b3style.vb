@@ -80,7 +80,12 @@ Partial Public NotInheritable Class b3style
                 with(scope.define_t.code_gens.define()).
                 with(Of bstyle.typedef)().
                 with(Of bstyle.typedef_type_name)().
-                with(Of bstyle.typedef_type_str)()
+                with(Of bstyle.typedef_type_str)().
+                with(Of bstyle.heap_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.heap_name(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.struct(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.value_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.value_definition(Of code_builder_proxy, code_gens_proxy, scope))()
         End Function
     End Class
 End Class
