@@ -87,4 +87,15 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     Public Function template() As template_proxy
         Return New template_proxy()
     End Function
+
+    Public Function functions() As function_t
+        Return from_root(Function(ByVal i As T) As function_t
+                             assert(Not i Is Nothing)
+                             Return i.myself().functions()
+                         End Function)
+    End Function
+
+    Public Function params() As params_t
+        Return scope(Of T).current().myself().params()
+    End Function
 End Class
