@@ -26,7 +26,10 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() >= 3)
             Dim bc As Func(Of vector(Of String), Boolean) =
                 Function(ByVal parameters As vector(Of String)) As Boolean
-                    If scope.current().variables().try_resolve(n.child(0).input_without_ignored(), Nothing) Then
+                    If scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                            current().
+                            variables().
+                            try_resolve(n.child(0).input_without_ignored(), Nothing) Then
                         Return build_caller_ref(n.child(0).input_without_ignored(), parameters)
                     End If
 
@@ -34,7 +37,7 @@ Partial Public NotInheritable Class bstyle
                     If Not logic_name.of_function_call(n.child(0).input_without_ignored(), parameters, name) Then
                         Return False
                     End If
-                    scope.current().call_hierarchy().to(name)
+                    scope(Of logic_writer, BUILDER, CODE_GENS, T).current().call_hierarchy().to(name)
                     Return build_caller(name, parameters)
                 End Function
 
@@ -44,7 +47,8 @@ Partial Public NotInheritable Class bstyle
             If Not code_gen_of(n.child(2)).build(o) Then
                 Return False
             End If
-            Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
+            Using targets As read_scoped(Of vector(Of String)).ref =
+                    value_list(Of BUILDER, CODE_GENS, T).current_targets()
                 Return bc(+targets)
             End Using
         End Function
@@ -77,12 +81,17 @@ Partial Public NotInheritable Class bstyle
                                If Not return_type_of(name, return_type) Then
                                    Return False
                                End If
-                               If Not scope.current().structs().types().defined(return_type) Then
+                               If Not scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                                          current().
+                                          structs().
+                                          types().
+                                          defined(return_type) Then
                                    Return builder(name,
-                                                  scope.current().
-                                                        value_target().
-                                                        with_temp_target(return_type, o).
-                                                        only(),
+                                                  scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                                                      current().
+                                                      value_target().
+                                                      with_temp_target(return_type, o).
+                                                      only(),
                                                   parameters)
                                End If
                                ' TODO: Check the type consistency between function_call and variable receiver.
@@ -104,7 +113,10 @@ Partial Public NotInheritable Class bstyle
                                Return builders.of_caller(name, result, parameters).to(o)
                            End Function,
                            Function(ByVal name As String, ByRef type As String) As Boolean
-                               Return scope.current().functions().return_type_of(name, type)
+                               Return scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                                          current().
+                                          functions().
+                                          return_type_of(name, type)
                            End Function),
                          b(Function(ByVal name As String,
                                     ByVal result As String,
@@ -114,7 +126,10 @@ Partial Public NotInheritable Class bstyle
                            Function(ByVal name As String, ByRef type As String) As Boolean
                                Dim signature As New ref(Of function_signature)()
                                Dim delegate_type As String = Nothing
-                               If Not scope.current().variables().resolve(name, delegate_type, signature) Then
+                               If Not scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                                          current().
+                                          variables().
+                                          resolve(name, delegate_type, signature) Then
                                    Return False
                                End If
                                If Not signature Then

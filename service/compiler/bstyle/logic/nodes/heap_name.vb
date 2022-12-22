@@ -47,7 +47,7 @@ Partial Public NotInheritable Class bstyle
             Return build(n.child(2),
                          o,
                          Function(ByVal indexstr As String) As Boolean
-                             Return raw_variable_name.build(
+                             Return raw_variable_name(Of BUILDER, CODE_GENS, T).build(
                                         n.child(0),
                                         Function(ByVal type As String,
                                                  ByVal ps As stream(Of builders.parameter)) As Boolean

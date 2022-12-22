@@ -90,7 +90,13 @@ Partial Public NotInheritable Class b3style
                 with(Of bstyle.function_call(Of code_builder_proxy, code_gens_proxy, scope))().
                 with(Of bstyle.return_clause(Of code_builder_proxy, code_gens_proxy, scope))().
                 with(Of bstyle.static_cast(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.ignore_result_function_call(Of code_builder_proxy, code_gens_proxy, scope))()
+                with(Of bstyle.ignore_result_function_call(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.value_list(Of code_builder_proxy, code_gens_proxy, scope))().
+                without(Of bstyle.raw_variable_name(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.kw_file)().
+                with(Of bstyle.kw_func)().
+                with(Of bstyle.kw_line)().
+                with(Of bstyle.kw_statement)()
         End Function
     End Class
 End Class

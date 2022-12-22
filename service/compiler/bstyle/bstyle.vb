@@ -85,8 +85,8 @@ Partial Public NotInheritable Class bstyle
                            with(Of heap_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of value_definition(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of heap_name(Of code_builder_proxy, code_gens_proxy, scope))().
-                           with(Of raw_variable_name)().
-                           with(Of value_list)().
+                           with(Of raw_variable_name(Of code_builder_proxy, code_gens_proxy, scope))().
+                           with(Of value_list(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of _while)().
                            with(Of include_with_string)().
                            with(Of include_with_file)().

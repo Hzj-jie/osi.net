@@ -43,16 +43,25 @@ End Class
 Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of WRITER, RT))
     Private ReadOnly v As New vector(Of Action(Of code_gens(Of WRITER)))()
 
+    Private Function self() As RT
+        Return direct_cast(Of RT)(Me)
+    End Function
+
     Public Function [with](ByVal actions() As Action(Of code_gens(Of WRITER))) As RT
         assert(Not actions Is Nothing)
         For Each a As Action(Of code_gens(Of WRITER)) In actions
             v.emplace_back(a)
         Next
-        Return direct_cast(Of RT)(Me)
+        Return self()
     End Function
 
     Public Function [with](ByVal a As Action(Of code_gens(Of WRITER))) As RT
         Return [with]({a})
+    End Function
+
+    ' Keep tracking of the code_gen without really using it.
+    Public Function without(Of T As New)() As RT
+        Return self()
     End Function
 
     Public Function [with](Of T As New)() As RT

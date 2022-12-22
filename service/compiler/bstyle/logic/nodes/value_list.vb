@@ -5,11 +5,14 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 
 Partial Public NotInheritable Class bstyle
-    Partial Public NotInheritable Class value_list
+    Public NotInheritable Class value_list(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                              CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                              T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,
@@ -23,17 +26,18 @@ Partial Public NotInheritable Class bstyle
                 If Not code_gen_of(n.child(i)).build(o) Then
                     Return False
                 End If
-                Using r As read_scoped(Of scope.value_target_t.target).ref = scope.current().value_target().value()
+                Using r As read_scoped(Of scope(Of logic_writer, BUILDER, CODE_GENS, T).value_target_t.target).ref =
+                        scope(Of logic_writer, BUILDER, CODE_GENS, T).current().value_target().value()
                     v.emplace_back((+r).names)
                 End Using
                 i += uint32_1
             End While
-            scope.current().value_target().with_value_list(v)
+            scope(Of logic_writer, BUILDER, CODE_GENS, T).current().value_target().with_value_list(v)
             Return True
         End Function
 
         Public Shared Function current_targets() As read_scoped(Of vector(Of String)).ref
-            Return scope.current().value_target().value_list()
+            Return scope(Of logic_writer, BUILDER, CODE_GENS, T).current().value_target().value_list()
         End Function
     End Class
 End Class
