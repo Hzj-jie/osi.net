@@ -11,7 +11,9 @@ Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class function_call
+    Public NotInheritable Class function_call(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                                 CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                                 T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
         Implements code_gen(Of logic_writer)
 
         Private Shared Function build(ByVal n As typed_node,
@@ -86,7 +88,7 @@ Partial Public NotInheritable Class bstyle
                                ' TODO: Check the type consistency between function_call and variable receiver.
                                Dim return_value As String =
                                        scope.current().temp_logic_name().variable() + "@" + name + "@return_value"
-                               assert(value_declaration.declare_primitive_type(
+                               assert(value_declaration(Of BUILDER, CODE_GENS, T).declare_primitive_type(
                                           compiler.logic.scope.type_t.variable_type, return_value, o))
                                Return builder(name, return_value, parameters) AndAlso
                                       struct.unpack(return_value,

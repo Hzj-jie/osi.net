@@ -85,7 +85,12 @@ Partial Public NotInheritable Class b3style
                 with(Of bstyle.heap_name(Of code_builder_proxy, code_gens_proxy, scope))().
                 with(Of bstyle.struct(Of code_builder_proxy, code_gens_proxy, scope))().
                 with(Of bstyle.value_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.value_definition(Of code_builder_proxy, code_gens_proxy, scope))()
+                with(Of bstyle.value_definition(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.value_clause(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.function_call(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.return_clause(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.static_cast(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.ignore_result_function_call(Of code_builder_proxy, code_gens_proxy, scope))()
         End Function
     End Class
 End Class

@@ -5,11 +5,14 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class return_clause
+    Public NotInheritable Class return_clause(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                                 CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                                 T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,
@@ -51,7 +54,7 @@ Partial Public NotInheritable Class bstyle
                                                  "@" +
                                                  (+scope.current().current_function().name()) +
                                                  "@return_value"
-                    assert(value_declaration.declare_primitive_type(
+                    assert(value_declaration(Of BUILDER, CODE_GENS, T).declare_primitive_type(
                                compiler.logic.scope.type_t.variable_type, return_value, o))
                     Return struct.pack((+r).names, return_value, o) AndAlso
                            builders.of_return(+scope.current().current_function().name(), return_value).to(o)

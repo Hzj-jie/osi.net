@@ -70,17 +70,17 @@ Partial Public NotInheritable Class bstyle
                            with(Of for_loop)().
                            with(Of ufloat)().
                            with(Of _function)().
-                           with(Of function_call)().
-                           with(Of ignore_result_function_call)().
+                           with(Of function_call(Of code_builder_proxy, code_gens_proxy, scope))().
+                           with(Of ignore_result_function_call(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of _integer)().
                            with(Of biguint)().
                            with(Of logic)().
                            with(Of multi_sentence_paragraph)().
                            with(Of param)().
-                           with(Of return_clause)().
+                           with(Of return_clause(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of _string)().
                            with(Of value)().
-                           with(Of value_clause)().
+                           with(Of value_clause(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of value_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of heap_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of value_definition(Of code_builder_proxy, code_gens_proxy, scope))().
@@ -99,7 +99,7 @@ Partial Public NotInheritable Class bstyle
                            with(Of reinterpret_cast)().
                            with(Of undefine)().
                            with(Of dealloc)().
-                           with(Of static_cast)().
+                           with(Of static_cast(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of _delegate)().
                            with(Of kw_file)().
                            with(Of kw_func)().

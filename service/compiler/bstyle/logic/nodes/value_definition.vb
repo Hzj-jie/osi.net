@@ -19,7 +19,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(n.child_count() = 4)
             Return value_declaration(Of BUILDER, CODE_GENS, T).build(n.child(0), n.child(1), o) AndAlso
-                   value_clause.build(n.child(1), n.child(3), o)
+                   value_clause(Of BUILDER, CODE_GENS, T).build(n.child(1), n.child(3), o)
         End Function
     End Class
 End Class

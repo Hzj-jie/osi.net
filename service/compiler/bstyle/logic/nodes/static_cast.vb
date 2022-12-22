@@ -5,11 +5,14 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class static_cast
+    Public NotInheritable Class static_cast(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                               CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                               T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,
@@ -41,13 +44,14 @@ Partial Public NotInheritable Class bstyle
                 assert(Not sdef Is Nothing)
                 assert(sdef.primitive_count() > 0)
                 Return sdef.for_each_primitive(Function(ByVal t As builders.parameter) As Boolean
-                                                   Return value_declaration.declare_primitive_type(t.type, t.name, o)
+                                                   Return value_declaration(Of BUILDER, CODE_GENS, T).
+                                                              declare_primitive_type(t.type, t.name, o)
                                                End Function) AndAlso
                        builders.start_scope(o).of(
                            Function() As Boolean
                                Dim offset_name As String = "@offset"
                                ' TODO: Using builders.of_define is sufficient.
-                               Return value_declaration.declare_primitive_type(
+                               Return value_declaration(Of BUILDER, CODE_GENS, T).declare_primitive_type(
                                           compiler.logic.scope.type_t.ptr_type,
                                           offset_name,
                                           o) AndAlso
