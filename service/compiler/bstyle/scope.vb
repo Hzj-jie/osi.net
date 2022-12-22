@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.service.compiler
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
@@ -36,17 +37,6 @@ Partial Public NotInheritable Class bstyle
             f = New function_t()
             t = New temp_logic_name_t()
         End Sub
-
-        Public Function functions() As function_t
-            Return from_root(Function(ByVal i As scope) As function_t
-                                 assert(Not i Is Nothing)
-                                 Return i.f
-                             End Function)
-        End Function
-
-        Public Function params() As params_t
-            Return ps
-        End Function
 
         Protected Overrides Function get_accessor() As _
                 scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).accessor_t
@@ -105,6 +95,14 @@ Partial Public NotInheritable Class bstyle
 
             Public Overrides Function call_hierarchy() As call_hierarchy_t
                 Return s.fc
+            End Function
+
+            Public Overrides Function functions() As function_t
+                Return s.f
+            End Function
+
+            Public Overrides Function params() As params_t
+                Return s.ps
             End Function
         End Class
 

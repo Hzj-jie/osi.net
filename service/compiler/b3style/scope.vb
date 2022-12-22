@@ -43,17 +43,6 @@ Partial Public NotInheritable Class b3style
             i = New root_type_injector_t()
         End Sub
 
-        Public Function functions() As function_t
-            Return from_root(Function(ByVal i As scope) As function_t
-                                 assert(Not i Is Nothing)
-                                 Return i.f
-                             End Function)
-        End Function
-
-        Public Function params() As params_t
-            Return ps
-        End Function
-
         Protected Overrides Function get_accessor() As _
                 scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).accessor_t
             Return New accessor_t(Me)
@@ -127,6 +116,14 @@ Partial Public NotInheritable Class b3style
 
             Public Overrides Function template() As template_t
                 Return s.tt
+            End Function
+
+            Public Overrides Function functions() As function_t
+                Return s.f
+            End Function
+
+            Public Overrides Function params() As params_t
+                Return s.ps
             End Function
         End Class
     End Class

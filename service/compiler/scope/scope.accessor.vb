@@ -100,5 +100,15 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(False)
             Return Nothing
         End Function
+
+        Public Overridable Function functions() As function_t
+            assert(False)
+            Return Nothing
+        End Function
+
+        Public Overridable Function params() As params_t
+            assert(False)
+            Return Nothing
+        End Function
     End Class
 End Class
