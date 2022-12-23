@@ -202,6 +202,7 @@
     <Content Include="b3style\runnable\function-call.txt" />
     <Content Include="b3style\runnable\hello-world.txt" />
     <Content Include="b3style\runnable\include-bstyle-types.txt" />
+    <Content Include="b3style\runnable\predefined-macros.txt" />
     <Content Include="bstyle\codegen\delegate.txt" />
     <Content Include="bstyle\codegen\func_name_with_dot.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />
