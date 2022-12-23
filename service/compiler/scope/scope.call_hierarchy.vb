@@ -16,10 +16,10 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Private Const main_name As String = "main"
         ' From -> To
         Private ReadOnly m As New unordered_map(Of String, vector(Of String))()
-        Private tm As unordered_set(Of String) = Nothing
+        Private ReadOnly tm As New unordered_set(Of String)()
 
         Public Sub [to](ByVal name As String)
-            assert(tm Is Nothing)
+            assert(tm.empty())
             assert(Not name.null_or_whitespace())
             Dim from As String = scope(Of T).current().myself().current_function_name().or_else(main_name)
             assert(Not from.null_or_whitespace())
@@ -29,8 +29,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Sub
 
         Private Sub calculate()
-            assert(tm Is Nothing)
-            tm = New unordered_set(Of String)()
+            assert(tm.empty())
             Dim q As New queue(Of String)()
             q.emplace(main_name)
             assert(tm.emplace(main_name).second())
