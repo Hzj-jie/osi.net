@@ -96,7 +96,8 @@ Partial Public NotInheritable Class b3style
                 with(Of bstyle.kw_file)().
                 with(Of bstyle.kw_func)().
                 with(Of bstyle.kw_line)().
-                with(Of bstyle.kw_statement)()
+                with(Of bstyle.kw_statement)().
+                with(Of bstyle._function(Of code_builder_proxy, code_gens_proxy, scope))()
         End Function
     End Class
 End Class

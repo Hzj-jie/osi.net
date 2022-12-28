@@ -69,7 +69,7 @@ Partial Public NotInheritable Class bstyle
                            with(Of condition)().
                            with(Of for_loop)().
                            with(Of ufloat)().
-                           with(Of _function)().
+                           with(Of _function(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of function_call(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of ignore_result_function_call(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of _integer)().

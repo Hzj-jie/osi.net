@@ -10,7 +10,9 @@ Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class _function
+    Public NotInheritable Class _function(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                             CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                             T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
         Implements code_gen(Of logic_writer)
 
         Private Shared remove_unused_functions As argument(Of Boolean)
@@ -19,7 +21,8 @@ Partial Public NotInheritable Class bstyle
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Using new_scope As scope = scope.current().start_scope()
+            Using new_scope As scope(Of logic_writer, BUILDER, CODE_GENS, T) =
+                    scope(Of logic_writer, BUILDER, CODE_GENS, T).current().start_scope()
                 Dim fo As New logic_writer()
                 Dim has_paramlist As Boolean = strsame(n.child(3).type_name, "paramlist")
                 If has_paramlist Then
