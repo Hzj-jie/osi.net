@@ -68,6 +68,12 @@ Partial Public NotInheritable Class b3style
 
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of logic_writer)))
             Return New code_gens_registrar(Of logic_writer)().
+                with_of_only_childs(
+                    "root-type",
+                    "base-root-type",
+                    "include"
+                ).
+                with(code_gen.of_ignore_last_child(Of logic_writer)("root-type-with-semi-colon")).
                 with(Of include_with_file)().
                 with(Of include_with_string)().
                 with(Of biguint)().
@@ -78,7 +84,7 @@ Partial Public NotInheritable Class b3style
                 with(Of bstyle.logic)().
                 with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of)).
                 with(scope.define_t.code_gens.define()).
-                with(Of bstyle.typedef)().
+                with(Of bstyle.typedef(Of code_builder_proxy, code_gens_proxy, scope))().
                 with(Of bstyle.typedef_type_name)().
                 with(Of bstyle.typedef_type_str)().
                 with(Of bstyle.heap_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
@@ -97,7 +103,8 @@ Partial Public NotInheritable Class b3style
                 with(Of bstyle.kw_func)().
                 with(Of bstyle.kw_line)().
                 with(Of bstyle.kw_statement)().
-                with(Of bstyle._function(Of code_builder_proxy, code_gens_proxy, scope))()
+                with(Of bstyle._function(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of bstyle.param(Of code_builder_proxy, code_gens_proxy, scope))()
         End Function
     End Class
 End Class

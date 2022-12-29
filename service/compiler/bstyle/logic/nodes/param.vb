@@ -4,12 +4,15 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class param
+    Public NotInheritable Class param(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                         CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                         T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,
@@ -17,13 +20,18 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(n.child_count() = 2)
             Dim type_node As typed_node = n.child(0)
-            struct.forward_in_stack(type_node.child(0).word().str(),
-                                    n.last_child().word().str())
-            Dim params As scope.struct_def = Nothing
-            If Not scope.current().structs().resolve(type_node.child(0).input_without_ignored(),
-                                                     n.last_child().word().str(),
-                                                     params) Then
-                params = scope.struct_def.of_primitive(type_node.child(0).word().str(), n.last_child().word().str())
+            struct(Of BUILDER, CODE_GENS, T).forward_in_stack(type_node.child(0).word().str(),
+                                                              n.last_child().word().str())
+            Dim params As scope(Of logic_writer, BUILDER, CODE_GENS, T).struct_def = Nothing
+            If Not scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                    current().
+                    structs().
+                    resolve(type_node.child(0).input_without_ignored(),
+                            n.last_child().word().str(),
+                            params) Then
+                params = scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                             struct_def.
+                             of_primitive(type_node.child(0).word().str(), n.last_child().word().str())
             End If
             Dim ps As stream(Of builders.parameter) = params.primitives()
             If type_node.child_count() = 2 Then
@@ -31,7 +39,7 @@ Partial Public NotInheritable Class bstyle
                 assert(type_node.child(1).type_name.Equals("reference"))
                 ps = ps.map(AddressOf builders.parameter.to_ref)
             End If
-            scope.current().params().pack(ps)
+            scope(Of logic_writer, BUILDER, CODE_GENS, T).current().params().pack(ps)
             Return True
         End Function
     End Class

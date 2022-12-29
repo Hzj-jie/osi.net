@@ -32,7 +32,7 @@ Partial Public NotInheritable Class bstyle
                 End If
                 Dim function_name As String = n.child(1).input_without_ignored()
                 Dim params As vector(Of builders.parameter) = new_scope.params().unpack()
-                Return logic_name.of_callee(function_name,
+                Return logic_name(Of BUILDER, CODE_GENS, T).of_callee(function_name,
                                             n.child(0).input_without_ignored(),
                                             params,
                                             Function() As Boolean
@@ -41,7 +41,7 @@ Partial Public NotInheritable Class bstyle
                                             End Function,
                                             fo) AndAlso
                        o.append(new_scope.call_hierarchy().filter(
-                                    logic_name.of_function(function_name, +params),
+                                    logic_name(Of BUILDER, CODE_GENS, T).of_function(function_name, +params),
                                     AddressOf fo.str))
             End Using
         End Function

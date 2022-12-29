@@ -34,7 +34,10 @@ Partial Public NotInheritable Class bstyle
                     End If
 
                     Dim name As String = Nothing
-                    If Not logic_name.of_function_call(n.child(0).input_without_ignored(), parameters, name) Then
+                    If Not logic_name(Of BUILDER, CODE_GENS, T).of_function_call(
+                            n.child(0).input_without_ignored(),
+                            parameters,
+                            name) Then
                         Return False
                     End If
                     scope(Of logic_writer, BUILDER, CODE_GENS, T).current().call_hierarchy().to(name)

@@ -6,18 +6,21 @@ Option Strict On
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
-    Private NotInheritable Class logic_name
-        Public Shared Function of_function(Of T As builders.parameter_type) _
+    Public NotInheritable Class logic_name(Of BUILDER As func_t(Of String, logic_writer, Boolean),
+                                              CODE_GENS As func_t(Of code_gens(Of logic_writer)),
+                                              T As scope(Of logic_writer, BUILDER, CODE_GENS, T))
+        Public Shared Function of_function(Of PT As builders.parameter_type) _
                                           (ByVal raw_name As String,
-                                           ByVal ParamArray params() As T) As String
+                                           ByVal ParamArray params() As PT) As String
             assert(Not params Is Nothing)
             Return build(raw_name,
                          streams.of(params).
-                                 map(Function(ByVal i As T) As String
+                                 map(Function(ByVal i As PT) As String
                                          assert(Not i Is Nothing)
                                          Return i.type
                                      End Function).
@@ -30,18 +33,28 @@ Partial Public NotInheritable Class bstyle
                                          ByVal paragraph As Func(Of logic_writer, Boolean),
                                          ByVal o As logic_writer) As Boolean
             Dim name As String = of_function(raw_name, +parameters)
-            If Not scope.current().functions().define(return_type, name) Then
+            If Not scope(Of logic_writer, BUILDER, CODE_GENS, T).current().functions().define(return_type, name) Then
                 Return False
             End If
-            scope.current().current_function().define(name, return_type, parameters)
-            If Not scope.current().variables().define(parameters) Then
+            scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                current().
+                current_function().
+                define(name, return_type, parameters)
+            If Not scope(Of logic_writer, BUILDER, CODE_GENS, T).current().variables().define(parameters) Then
                 Return False
             End If
-            Dim ta As scope.type_alias_proxy = scope.current().type_alias()
+            Dim ta As scope(Of logic_writer, BUILDER, CODE_GENS, T).type_alias_proxy =
+                    scope(Of logic_writer, BUILDER, CODE_GENS, T).current().type_alias()
             Return builders.of_callee(name,
-                                      If(scope.current().structs().types().defined(return_type),
+                                      If(scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                                             current().
+                                             structs().
+                                             types().
+                                             defined(return_type),
                                          compiler.logic.scope.type_t.variable_type,
-                                         scope.current().type_alias()(return_type)),
+                                         scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                                             current().
+                                             type_alias()(return_type)),
                                       parameters.stream().
                                                  map(AddressOf ta.canonical_of).
                                                  collect_to(Of vector(Of builders.parameter))(),
@@ -55,7 +68,10 @@ Partial Public NotInheritable Class bstyle
             Dim i As UInt32 = 0
             While i < parameters.size()
                 Dim type As String = Nothing
-                If Not scope.current().variables().resolve(parameters(i), type) Then
+                If Not scope(Of logic_writer, BUILDER, CODE_GENS, T).
+                        current().
+                        variables().
+                        resolve(parameters(i), type) Then
                     Return False
                 End If
                 types.emplace_back(type)
@@ -69,7 +85,8 @@ Partial Public NotInheritable Class bstyle
             assert(Not types Is Nothing)
             Dim s As New StringBuilder(raw_name)
             Dim i As UInt32 = 0
-            Dim ta As scope.type_alias_proxy = scope.current().type_alias()
+            Dim ta As scope(Of logic_writer, BUILDER, CODE_GENS, T).type_alias_proxy =
+                scope(Of logic_writer, BUILDER, CODE_GENS, T).current().type_alias()
             While i < types.size()
                 assert(Not types(i).contains_any(space_chars))
                 assert(Not builders.parameter_type.is_ref_type(types(i)))

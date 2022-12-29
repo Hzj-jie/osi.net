@@ -37,8 +37,9 @@ Partial Public NotInheritable Class bstyle
             End If
             If delegate_definition Then
                 ' TODO: Avoid copying.
-                Dim target_function_name As String = logic_name.of_function(value.input_without_ignored(),
-                                                                            +delegate_definition.get().parameters)
+                Dim target_function_name As String = logic_name(Of BUILDER, CODE_GENS, T).of_function(
+                        value.input_without_ignored(),
+                        +delegate_definition.get().parameters)
                 If scope(Of logic_writer, BUILDER, CODE_GENS, T).
                        current().
                        functions().

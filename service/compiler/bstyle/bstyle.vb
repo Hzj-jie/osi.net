@@ -76,7 +76,7 @@ Partial Public NotInheritable Class bstyle
                            with(Of biguint)().
                            with(Of logic)().
                            with(Of multi_sentence_paragraph)().
-                           with(Of param)().
+                           with(Of param(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of return_clause(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of _string)().
                            with(Of value)().
@@ -92,7 +92,7 @@ Partial Public NotInheritable Class bstyle
                            with(Of include_with_file)().
                            with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of)).
                            with(scope.define_t.code_gens.define()).
-                           with(Of typedef)().
+                           with(Of typedef(Of code_builder_proxy, code_gens_proxy, scope))().
                            with(Of typedef_type_name)().
                            with(Of typedef_type_str)().
                            with(Of struct)().
