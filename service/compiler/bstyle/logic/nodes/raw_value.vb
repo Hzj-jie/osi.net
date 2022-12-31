@@ -5,25 +5,31 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
+Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.interpreter.primitive
 
 Partial Public NotInheritable Class bstyle
-    Public MustInherit Class raw_value(Of _CODE_TYPE As func_t(Of String),
-                                          _TEMP_TARGET As func_t(Of String, logic_writer, String))
+    Private MustInherit Class raw_value
         Implements code_gen(Of logic_writer)
 
-        Private Shared ReadOnly code_type As String = assert_which.of(alloc(Of _CODE_TYPE)().run()).not_null_or_empty()
-        Private Shared ReadOnly temp_target As Func(Of String, logic_writer, String) =
-                AddressOf alloc(Of _TEMP_TARGET)().run
+        Private ReadOnly code_type As String
+
+        Protected Sub New(ByVal code_type As String)
+            assert(Not code_type.null_or_whitespace())
+            Me.code_type = code_type
+        End Sub
 
         Protected MustOverride Function parse(ByVal n As typed_node, ByRef o As data_block) As Boolean
 
-        Protected Shared Function build(ByVal i As data_block, ByVal o As logic_writer) As Boolean
+        Protected Shared Function build(ByVal i As data_block,
+                                        ByVal code_type As String,
+                                        ByVal o As logic_writer) As Boolean
             assert(Not i Is Nothing)
+            assert(Not code_type.null_or_whitespace())
             assert(Not o Is Nothing)
-            Return compiler.logic.builders.of_copy_const(temp_target(code_type, o), i).to(o)
+            Return compiler.logic.builders.of_copy_const(
+                        scope.current().value_target().with_temp_target(code_type, o).only(), i).to(o)
         End Function
 
         Private Function build(ByVal n As typed_node,
@@ -36,7 +42,7 @@ Partial Public NotInheritable Class bstyle
                 raise_error(error_type.user, "Cannot parse data to ", code_type, " ", n.trace_back_str())
                 Return False
             End If
-            Return build(d, o)
+            Return build(d, code_type, o)
         End Function
     End Class
 End Class

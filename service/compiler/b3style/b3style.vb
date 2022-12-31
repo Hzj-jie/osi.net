@@ -84,27 +84,27 @@ Partial Public NotInheritable Class b3style
                 with(Of bstyle.logic)().
                 with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of)).
                 with(scope.define_t.code_gens.define()).
-                with(Of bstyle.typedef(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of typedef)().
                 with(Of bstyle.typedef_type_name)().
                 with(Of bstyle.typedef_type_str)().
-                with(Of bstyle.heap_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.heap_name(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.struct(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.value_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.value_definition(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.value_clause(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.function_call(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.return_clause(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.static_cast(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.ignore_result_function_call(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.value_list(Of code_builder_proxy, code_gens_proxy, scope))().
-                without(Of bstyle.raw_variable_name(Of code_builder_proxy, code_gens_proxy, scope))().
+                with(Of heap_declaration)().
+                with(Of heap_name)().
+                with(Of struct)().
+                with(Of value_declaration)().
+                with(Of value_definition)().
+                with(Of value_clause)().
+                with(Of function_call)().
+                with(Of return_clause)().
+                with(Of static_cast)().
+                with(Of ignore_result_function_call)().
+                with(Of value_list)().
+                without(Of raw_variable_name)().
                 with(Of bstyle.kw_file)().
                 with(Of bstyle.kw_func)().
                 with(Of bstyle.kw_line)().
                 with(Of bstyle.kw_statement)().
-                with(Of bstyle._function(Of code_builder_proxy, code_gens_proxy, scope))().
-                with(Of bstyle.param(Of code_builder_proxy, code_gens_proxy, scope))()
+                with(Of _function)().
+                with(Of param)()
         End Function
     End Class
 End Class

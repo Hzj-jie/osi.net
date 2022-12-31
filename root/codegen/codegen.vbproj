@@ -16,9 +16,11 @@
     <None Include="gitver\gitver.cmd" />
     <None Include="pack.cmd" />
     <None Include="podw.vbp" />
+    <None Include="precompile\build.cmd" />
     <None Include="precompile\precompile.sample1" />
     <None Include="precompile\precompile.sample2" />
     <None Include="run.cmd" />
+    <None Include="sed\build.cmd" />
     <None Include="tfver\tfver.cmd" />
   </ItemGroup>
   <ItemGroup>
@@ -35,6 +37,8 @@
     <Content Include="eva\eva.exe" />
     <Content Include="precompile\precompile.cs" />
     <Content Include="precompile\precompile.exe" />
+    <Content Include="sed\sed.cs" />
+    <Content Include="sed\sed.exe" />
     <Content Include="swap\swap.cpp" />
     <Content Include="swap\swap.exe" />
     <Content Include="unchecked_int2\unchecked_int2.cs" />

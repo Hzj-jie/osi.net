@@ -69,37 +69,37 @@ Partial Public NotInheritable Class bstyle
                            with(Of condition)().
                            with(Of for_loop)().
                            with(Of ufloat)().
-                           with(Of _function(Of code_builder_proxy, code_gens_proxy, scope))().
-                           with(Of function_call(Of code_builder_proxy, code_gens_proxy, scope))().
-                           with(Of ignore_result_function_call(Of code_builder_proxy, code_gens_proxy, scope))().
+                           with(Of _function)().
+                           with(Of function_call)().
+                           with(Of ignore_result_function_call)().
                            with(Of _integer)().
                            with(Of biguint)().
                            with(Of logic)().
                            with(Of multi_sentence_paragraph)().
-                           with(Of param(Of code_builder_proxy, code_gens_proxy, scope))().
-                           with(Of return_clause(Of code_builder_proxy, code_gens_proxy, scope))().
+                           with(Of param)().
+                           with(Of return_clause)().
                            with(Of _string)().
                            with(Of value)().
-                           with(Of value_clause(Of code_builder_proxy, code_gens_proxy, scope))().
-                           with(Of value_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
-                           with(Of heap_declaration(Of code_builder_proxy, code_gens_proxy, scope))().
-                           with(Of value_definition(Of code_builder_proxy, code_gens_proxy, scope))().
-                           with(Of heap_name(Of code_builder_proxy, code_gens_proxy, scope))().
-                           with(Of raw_variable_name(Of code_builder_proxy, code_gens_proxy, scope))().
-                           with(Of value_list(Of code_builder_proxy, code_gens_proxy, scope))().
+                           with(Of value_clause)().
+                           with(Of value_declaration)().
+                           with(Of heap_declaration)().
+                           with(Of value_definition)().
+                           with(Of heap_name)().
+                           with(Of raw_variable_name)().
+                           with(Of value_list)().
                            with(Of _while)().
                            with(Of include_with_string)().
                            with(Of include_with_file)().
                            with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of)).
                            with(scope.define_t.code_gens.define()).
-                           with(Of typedef(Of code_builder_proxy, code_gens_proxy, scope))().
+                           with(Of typedef)().
                            with(Of typedef_type_name)().
                            with(Of typedef_type_str)().
                            with(Of struct)().
                            with(Of reinterpret_cast)().
                            with(Of undefine)().
                            with(Of dealloc)().
-                           with(Of static_cast(Of code_builder_proxy, code_gens_proxy, scope))().
+                           with(Of static_cast)().
                            with(Of _delegate)().
                            with(Of kw_file)().
                            with(Of kw_func)().
