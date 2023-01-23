@@ -71,7 +71,13 @@ Partial Public NotInheritable Class b3style
                 with_of_only_childs(
                     "root-type",
                     "base-root-type",
-                    "include"
+                    "include",
+                    "typedef-type",
+                    "paragraph",
+                    "sentence",
+                    "sentence-with-semi-colon",
+                    "value-without-bracket",
+                    "base-value-without-bracket"
                 ).
                 with(code_gen.of_ignore_last_child(Of logic_writer)("root-type-with-semi-colon")).
                 with(Of include_with_file)().
@@ -104,7 +110,12 @@ Partial Public NotInheritable Class b3style
                 with(Of bstyle.kw_line)().
                 with(Of bstyle.kw_statement)().
                 with(Of _function)().
-                with(Of param)()
+                with(Of param)().
+                with(code_gen.of_all_children(Of logic_writer)("paramlist")).
+                with(Of multi_sentence_paragraph)().
+                with(code_gen.of_ignore_last_child(Of logic_writer)("base-sentence-with-semi-colon")).
+                with(Of value)().
+                with_of_all_childrens("raw-value")
         End Function
     End Class
 End Class

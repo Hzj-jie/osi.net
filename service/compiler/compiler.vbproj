@@ -68,6 +68,7 @@
     <Compile Include="b3style\logic\nodes\includes.vb" />
     <Compile Include="b3style\logic\nodes\integer.vb" />
     <Compile Include="b3style\logic\nodes\logic_name.vb" />
+    <Compile Include="b3style\logic\nodes\multi_sentence_paragraph.vb" />
     <Compile Include="b3style\logic\nodes\param.vb" />
     <Compile Include="b3style\logic\nodes\raw_value.vb" />
     <Compile Include="b3style\logic\nodes\raw_variable_name.vb" />
@@ -77,6 +78,7 @@
     <Compile Include="b3style\logic\nodes\struct.vb" />
     <Compile Include="b3style\logic\nodes\typedef.vb" />
     <Compile Include="b3style\logic\nodes\ufloat.vb" />
+    <Compile Include="b3style\logic\nodes\value.vb" />
     <Compile Include="b3style\logic\nodes\value_clause.vb" />
     <Compile Include="b3style\logic\nodes\value_declaration.vb" />
     <Compile Include="b3style\logic\nodes\value_definition.vb" />

@@ -26,6 +26,8 @@ call :run raw_variable_name
 call :run value_list
 call :run typedef
 call :run static_cast
+call :run multi_sentence_paragraph
+call :run value
 
 exit /b 0
 
