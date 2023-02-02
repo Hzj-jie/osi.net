@@ -77,7 +77,8 @@ Partial Public NotInheritable Class b3style
                     "sentence",
                     "sentence-with-semi-colon",
                     "value-without-bracket",
-                    "base-value-without-bracket"
+                    "base-value-without-bracket",
+                    "variable-name"
                 ).
                 with(code_gen.of_ignore_last_child(Of logic_writer)("root-type-with-semi-colon")).
                 with(Of include_with_file)().
