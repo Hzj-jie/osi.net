@@ -28,6 +28,10 @@ call :run typedef
 call :run static_cast
 call :run multi_sentence_paragraph
 call :run value
+call :run kw_file
+call :run kw_func
+call :run kw_line
+call :run kw_statement
 
 exit /b 0
 

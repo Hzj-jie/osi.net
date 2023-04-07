@@ -31,7 +31,7 @@ Partial Public NotInheritable Class b3style
                 Dim fo As New logic_writer()
                 Dim has_paramlist As Boolean = strsame(n.child(3).type_name, "paramlist")
                 If has_paramlist Then
-                    If Not code_gen_of(n.child(3)).build(o) Then
+                    If Not code_gen_of(n.child(3)).build(fo) Then
                         Return False
                     End If
                 End If

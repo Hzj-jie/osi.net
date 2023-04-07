@@ -67,8 +67,13 @@
     <Compile Include="b3style\logic\nodes\ignore_result_function_call.vb" />
     <Compile Include="b3style\logic\nodes\includes.vb" />
     <Compile Include="b3style\logic\nodes\integer.vb" />
+    <Compile Include="b3style\logic\nodes\kw_file.vb" />
+    <Compile Include="b3style\logic\nodes\kw_func.vb" />
+    <Compile Include="b3style\logic\nodes\kw_line.vb" />
+    <Compile Include="b3style\logic\nodes\kw_statement.vb" />
     <Compile Include="b3style\logic\nodes\logic_name.vb" />
     <Compile Include="b3style\logic\nodes\multi_sentence_paragraph.vb" />
+    <Compile Include="b3style\logic\nodes\name.vb" />
     <Compile Include="b3style\logic\nodes\param.vb" />
     <Compile Include="b3style\logic\nodes\raw_value.vb" />
     <Compile Include="b3style\logic\nodes\raw_variable_name.vb" />

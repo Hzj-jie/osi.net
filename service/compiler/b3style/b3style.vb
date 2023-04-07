@@ -106,17 +106,18 @@ Partial Public NotInheritable Class b3style
                 with(Of ignore_result_function_call)().
                 with(Of value_list)().
                 without(Of raw_variable_name)().
-                with(Of bstyle.kw_file)().
-                with(Of bstyle.kw_func)().
-                with(Of bstyle.kw_line)().
-                with(Of bstyle.kw_statement)().
+                with(Of kw_file)().
+                with(Of kw_func)().
+                with(Of kw_line)().
+                with(Of kw_statement)().
                 with(Of _function)().
                 with(Of param)().
                 with(code_gen.of_all_children(Of logic_writer)("paramlist")).
                 with(Of multi_sentence_paragraph)().
                 with(code_gen.of_ignore_last_child(Of logic_writer)("base-sentence-with-semi-colon")).
                 with(Of value)().
-                with_of_all_childrens("raw-value")
+                with_of_all_childrens("raw-value").
+                with(Of name)()
         End Function
     End Class
 End Class
