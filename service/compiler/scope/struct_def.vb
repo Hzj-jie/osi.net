@@ -66,7 +66,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
         ' It can be a struct or just a primitive.
         Public Shared Function nested(ByVal type As String, ByVal name As String) As builders.parameter
-            Return builders.parameter.no_ref(scope(Of T).current().type_alias()(type), name)
+            Return builders.parameter.no_ref(current().type_alias()(type), name)
         End Function
 
         Public Shared Function nested(ByVal p As builders.parameter) As builders.parameter

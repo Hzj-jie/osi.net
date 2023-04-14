@@ -38,6 +38,11 @@ Partial Public NotInheritable Class b3style
                 assert(type_node.child(1).type_name.Equals("reference"))
                 ps = ps.map(AddressOf builders.parameter.to_ref)
             End If
+            ps = ps.map(Function(ByVal p As builders.parameter) As builders.parameter
+                            Return p.map_type(Function(ByVal x As String) As String
+                                                  Return scope.current_namespace_t.of(x)
+                                              End Function)
+                        End Function)
             scope.current().params().pack(ps)
             Return True
         End Function
