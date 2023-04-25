@@ -3,9 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
 Imports osi.root.delegates
-Imports osi.root.formation
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
