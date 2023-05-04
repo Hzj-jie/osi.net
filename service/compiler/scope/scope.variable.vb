@@ -25,11 +25,11 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
             assert(Not insert Is Nothing)
-            type = current_namespace_t.of(type)
-            name = current_namespace_t.of(name)
+            ' TODO: May consider using builders.parameter.
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
             ' where the variable_t instance Is being defined.
-            type = scope(Of T).current().type_alias()(type)
+            type = normalized_type.logic_type_of(type)
+            name = current_namespace_t.of(name)
             assert(Not builders.parameter_type.is_ref_type(type))
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))

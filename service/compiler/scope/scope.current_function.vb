@@ -18,7 +18,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Sub New(ByVal name As String,
                        ByVal return_type As String,
                        ByVal params As vector(Of builders.parameter))
-            MyBase.New(name, scope(Of T).current().type_alias(return_type), params)
+            MyBase.New(name, normalized_type.logic_type_of(return_type), params)
         End Sub
 
         Public Function allow_return_value() As Boolean

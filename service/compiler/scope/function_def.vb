@@ -25,11 +25,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
             ' TODO: A better way to check the return type.
             Private Shared ReadOnly void_type As String = Function() As String
-                                                              Dim r As String = "void"
-                                                              If current().features().with_type_alias() Then
-                                                                  Return current().type_alias()(r)
-                                                              End If
-                                                              Return r
+                                                              Return normalized_type.logic_type_of("void")
                                                           End Function()
             Private ReadOnly class_def As class_def
             Private ReadOnly return_type As name_with_namespace
@@ -48,10 +44,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End Function
 
             Public Shared Function type_of(ByVal type As String) As name_with_namespace
-                If current().features().with_type_alias() Then
-                    type = current().type_alias()(type)
-                End If
-                Return name_with_namespace.of(type)
+                Return name_with_namespace.of(normalized_type.logic_type_of(type))
             End Function
 
             Public Sub New(ByVal class_def As class_def,

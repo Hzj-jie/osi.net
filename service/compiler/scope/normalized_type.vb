@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.delegates
 Imports builders = osi.service.compiler.logic.builders
 
@@ -16,8 +17,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return New builders.parameter_type(type).map_type(AddressOf map_type)
         End Function
 
+        Public Shared Function logic_type_of(ByVal type As String) As String
+            Return [of](type).logic_type()
+        End Function
+
         Public Shared Function map_type(ByVal i As String) As String
-            Return current_namespace_t.of(current().type_alias()(i))
+            Return current().type_alias()(current_namespace_t.of(i))
         End Function
 
         Private Sub New()
@@ -31,6 +36,11 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                                 map_name(Function(ByVal i As String) As String
                                              Return current_namespace_t.of(i)
                                          End Function)
+        End Function
+
+        Public Shared Function [of](ByVal i As builders.parameter) As builders.parameter
+            assert(Not i Is Nothing)
+            Return [of](i.type, i.name)
         End Function
 
         Private Sub New()

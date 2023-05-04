@@ -65,44 +65,28 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
     Public Structure type_alias_proxy
         Public Function define(ByVal [alias] As String, ByVal canonical As String) As Boolean
-            Return scope(Of T).current().myself().type_alias().define([alias], canonical)
-        End Function
-
-        Private Function retrieve(ByVal [alias] As String) As String
-            assert(Not builders.parameter_type.is_ref_type([alias]))
-            Dim s As T = scope(Of T).current()
-            If Not s.features().with_type_alias() Then
-                Return [alias]
-            End If
-            While Not s Is Nothing
-                [alias] = s.myself().type_alias()([alias])
-                s = s.parent
-            End While
-            Return [alias]
-        End Function
-
-        Public Function canonical_of(ByVal [alias] As String) As String
-            Return canonical_of(New builders.parameter_type([alias])).logic_type()
+            assert(current().features().with_type_alias())
+            Return current().myself().type_alias().define([alias], canonical)
         End Function
 
         Default Public ReadOnly Property _D(ByVal [alias] As String) As String
             Get
-                Return canonical_of([alias])
+                assert(Not builders.parameter_type.is_ref_type([alias]))
+                Dim s As T = current()
+                If Not s.features().with_type_alias() Then
+                    Return [alias]
+                End If
+                While Not s Is Nothing
+                    [alias] = s.myself().type_alias()([alias])
+                    s = s.parent
+                End While
+                Return [alias]
             End Get
         End Property
 
-        Public Function canonical_of(ByVal p As builders.parameter_type) As builders.parameter_type
-            assert(Not p Is Nothing)
-            Return p.map_type(AddressOf retrieve)
-        End Function
-
-        Public Function canonical_of(ByVal p As builders.parameter) As builders.parameter
-            assert(Not p Is Nothing)
-            Return p.map_type(AddressOf retrieve)
-        End Function
-
         Public Sub remove(ByVal [alias] As String)
-            scope(Of T).current().myself().type_alias().remove([alias])
+            assert(current().features().with_type_alias())
+            current().myself().type_alias().remove([alias])
         End Sub
     End Structure
 End Class
