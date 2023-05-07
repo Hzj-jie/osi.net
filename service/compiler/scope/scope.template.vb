@@ -29,7 +29,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 assert(Not types.null_or_empty())
                 If current().features().with_type_alias() Then
                     types = types.stream().
-                                  map(AddressOf current().type_alias().canonical_of).
+                                  map(AddressOf normalized_type.logic_type_of).
                                   collect_to(Of vector(Of String))()
                 End If
                 If injected_types.emplace(types).second() Then
