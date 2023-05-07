@@ -100,7 +100,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 content.Append("reinterpret_cast(this,").
                         Append(other.name.in_global_namespace()).
                         Append(");")
-                If Not return_type.name().Equals(void_type) Then
+                If Not return_type.in_global_namespace().Equals(void_type) Then
                     content.Append("return ")
                 End If
                 content.Append(name().in_global_namespace()).
