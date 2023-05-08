@@ -25,26 +25,32 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                             End Sub)
         End Function
 
-        Public Function name() As String
-            If s.empty() Then
-                Return ""
-            End If
-            Return s.back()
-        End Function
-
         Public Const namespace_separator As String = "::"
 
         Public Shared Function [of](ByVal i As String) As String
+            assert(Not i.null_or_whitespace())
             If Not current().features().with_namespace() Then
                 Return i
             End If
-            Return with_namespace(current().current_namespace().name(), i)
+            If i.StartsWith(namespace_separator) Then
+                Return i.Substring(namespace_separator.Length())
+            End If
+
+            Dim s As stack(Of String) = current().current_namespace().s
+            assert(Not s Is Nothing)
+            If s.empty() Then
+                ' In the root namespace
+                Return i
+            End If
+            Return String.Concat(s.back(), namespace_separator, i)
         End Function
 
         Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)
             Dim f As String = [of](i)
             Dim index As Int32 = f.LastIndexOf(namespace_separator)
-            assert(index <> npos)
+            If index = npos Then
+                Return tuple.of("", f)
+            End If
             Return tuple.of(f.Substring(0, index), f.Substring(index + namespace_separator.Length()))
         End Function
 
