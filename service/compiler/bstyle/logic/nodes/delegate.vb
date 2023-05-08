@@ -22,10 +22,9 @@ Partial Public NotInheritable Class bstyle
             Else
                 ps = code_gens().of_all_children(n.child(4)).dump()
             End If
-            Dim ta As scope.type_alias_proxy = scope.current().type_alias()
-            Dim return_type As String = ta(n.child(1).input_without_ignored())
+            Dim return_type As String = scope.normalized_type.logic_type_of(n.child(1).input_without_ignored())
             ps = ps.stream().
-                    map(AddressOf ta.canonical_of).
+                    map(AddressOf scope.normalized_type.logic_type_of).
                     collect_to(Of vector(Of String))()
             Return scope.current().delegates().define(return_type,
                                                       n.child(2).input_without_ignored(),

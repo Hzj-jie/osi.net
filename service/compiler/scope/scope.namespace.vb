@@ -17,6 +17,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
         Public Function define(ByVal name As String) As IDisposable
             assert(Not name.null_or_whitespace())
+            assert(current().features().with_namespace())
             s.emplace(name)
             Return defer.to(Sub()
                                 assert(Not s.empty())
@@ -34,10 +35,10 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Const namespace_separator As String = "::"
 
         Public Shared Function [of](ByVal i As String) As String
-            If Not scope(Of T).current().features().with_namespace() Then
+            If Not current().features().with_namespace() Then
                 Return i
             End If
-            Return with_namespace(scope(Of T).current().current_namespace().name(), i)
+            Return with_namespace(current().current_namespace().name(), i)
         End Function
 
         Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)

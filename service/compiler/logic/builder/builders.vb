@@ -86,7 +86,7 @@ Partial Public NotInheritable Class logic
 
             Public ReadOnly name As String
 
-            Private Sub New(ByVal type As String, ByVal name As String)
+            Public Sub New(ByVal type As String, ByVal name As String)
                 MyBase.New(type)
                 assert(Not name.null_or_whitespace())
                 Me.name = name

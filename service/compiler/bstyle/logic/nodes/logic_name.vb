@@ -37,13 +37,12 @@ Partial Public NotInheritable Class bstyle
             If Not scope.current().variables().define(parameters) Then
                 Return False
             End If
-            Dim ta As scope.type_alias_proxy = scope.current().type_alias()
             Return builders.of_callee(name,
                                       If(scope.current().structs().types().defined(return_type),
                                          compiler.logic.scope.type_t.variable_type,
-                                         scope.current().type_alias()(return_type)),
+                                         scope.normalized_type.logic_type_of(return_type)),
                                       parameters.stream().
-                                                 map(AddressOf ta.canonical_of).
+                                                 map(AddressOf scope.normalized_parameter.of).
                                                  collect_to(Of vector(Of builders.parameter))(),
                                       paragraph).to(o)
         End Function
@@ -69,11 +68,10 @@ Partial Public NotInheritable Class bstyle
             assert(Not types Is Nothing)
             Dim s As New StringBuilder(raw_name)
             Dim i As UInt32 = 0
-            Dim ta As scope.type_alias_proxy = scope.current().type_alias()
             While i < types.size()
                 assert(Not types(i).contains_any(space_chars))
                 assert(Not builders.parameter_type.is_ref_type(types(i)))
-                s.Append(":").Append(ta(types(i)))
+                s.Append(":").Append(scope.normalized_type.logic_type_of(types(i)))
                 i += uint32_1
             End While
             Return Convert.ToString(s)
