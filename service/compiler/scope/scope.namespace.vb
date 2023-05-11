@@ -32,17 +32,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             If Not current().features().with_namespace() Then
                 Return i
             End If
-            If i.StartsWith(namespace_separator) Then
-                Return i.Substring(namespace_separator.Length())
-            End If
-
             Dim s As stack(Of String) = current().current_namespace().s
             assert(Not s Is Nothing)
             If s.empty() Then
-                ' In the root namespace
-                Return i
+                Return with_global_namespace(i)
             End If
-            Return String.Concat(s.back(), namespace_separator, i)
+            Return with_global_namespace(with_namespace(s.back(), i))
         End Function
 
         Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)
