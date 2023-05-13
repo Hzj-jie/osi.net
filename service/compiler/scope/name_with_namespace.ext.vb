@@ -30,7 +30,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function in_global_namespace() As String
-            Return current_namespace_t.with_global_namespace(
+            Return current_namespace_t.in_global_namespace(
                        current_namespace_t.with_namespace([namespace](), name()))
         End Function
     End Structure

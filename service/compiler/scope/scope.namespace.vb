@@ -35,9 +35,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Dim s As stack(Of String) = current().current_namespace().s
             assert(Not s Is Nothing)
             If s.empty() Then
-                Return with_global_namespace(i)
+                Return in_global_namespace(i)
             End If
-            Return with_global_namespace(with_namespace(s.back(), i))
+            Return in_global_namespace(with_namespace(s.back(), i))
         End Function
 
         Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)
@@ -49,7 +49,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return tuple.of(f.Substring(0, index), f.Substring(index + namespace_separator.Length()))
         End Function
 
-        Public Shared Function with_global_namespace(ByVal n As String) As String
+        Public Shared Function in_global_namespace(ByVal n As String) As String
             Return with_namespace("", n)
         End Function
 
