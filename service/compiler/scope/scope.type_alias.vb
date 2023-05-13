@@ -18,6 +18,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
         Public Function define(ByVal [alias] As String, ByVal canonical_type As String) As Boolean
             assert(Not [alias].null_or_whitespace())
+            [alias] = current_namespace_t.of([alias])
+            assert(Not [alias].null_or_whitespace())
             assert(Not canonical_type.null_or_whitespace())
             Dim canonical As builders.parameter_type = normalized_type.of(canonical_type)
             assert(Not canonical Is Nothing)
