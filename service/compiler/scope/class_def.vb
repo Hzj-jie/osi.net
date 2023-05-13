@@ -16,8 +16,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               __CODE_GENS As func_t(Of code_gens(Of WRITER)),
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Partial Public NotInheritable Class class_def
-        Private Const construct As String = "construct"
-        Private Const destruct As String = "destruct"
+        Public Const construct As String = "construct"
+        Public Const destruct As String = "destruct"
         Private ReadOnly name As name_with_namespace
         ' The type-name pair directly passes to bstyle/struct.
         Private ReadOnly _vars As New vector(Of builders.parameter)()
@@ -196,7 +196,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               function_def.type_t.pure,
                               New StringBuilder().
                                   Append("void ").
-                                  Append(current_namespace_t.with_global_namespace(construct)).
+                                  Append(current_namespace_t.in_global_namespace(construct)).
                                   Append("(").
                                   Append(name.name()).
                                   Append("& this){}").ToString()))
@@ -209,7 +209,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               function_def.type_t.pure,
                               New StringBuilder().
                                   Append("void ").
-                                  Append(current_namespace_t.with_global_namespace(destruct)).
+                                  Append(current_namespace_t.in_global_namespace(destruct)).
                                   Append("(").
                                   Append(name.name()).
                                   Append("& this){}").ToString()))

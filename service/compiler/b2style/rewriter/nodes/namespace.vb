@@ -18,9 +18,10 @@ Partial Public NotInheritable Class b2style
         Public NotInheritable Class bstyle_format
             Public Shared Function [of](ByVal i As String) As String
                 assert(Not i.null_or_whitespace())
-                Return streams.of(scope.current_namespace_t.of(i).Split("."c)).
+                Return streams.of(scope.current_namespace_t.of(i).Split("."c)).  ' For the first
                                map(Function(ByVal x As String) As String
-                                       assert(Not x Is Nothing)
+                                       assert(Not x.null_or_whitespace())
+                                       ' TODO: This is wrong, the later parts should rely on the class definitions.
                                        If Not x.Contains(scope.current_namespace_t.namespace_separator) Then
                                            Return x
                                        End If
@@ -38,34 +39,19 @@ Partial Public NotInheritable Class b2style
                 Return [of](n.input_without_ignored())
             End Function
 
-            ' TODO: The use case of this function is not valid, may consider to remove it.
-            Public Shared Function with_namespace(ByVal ns As String, ByVal i As String) As String
-                Return [of](scope.current_namespace_t.with_namespace(ns, i))
-            End Function
-
-            ' TODO: This function should return the same string as the input "i" and is quite confusing, may consider to
-            ' remove it.
             Public Shared Function in_global_namespace(ByVal i As String) As String
-                Return [of](scope.current_namespace_t.with_global_namespace(i))
+                Return [of](scope.current_namespace_t.in_global_namespace(i))
             End Function
 
             Public Shared Function operator_function_name(ByVal operator_name As String) As String
                 assert(Not operator_name.null_or_whitespace())
-                Return [of](_namespace.in_b2style_namespace(operator_name.Replace("-"c, "_"c)))
-            End Function
-
-            Public Shared Function [of](ByVal n As scope.name_with_namespace) As String
-                Return [of](n.in_global_namespace())
+                Return in_global_namespace(
+                           scope.current_namespace_t.with_namespace("b2style", operator_name.Replace("-"c, "_"c)))
             End Function
 
             Private Sub New()
             End Sub
         End Class
-
-        Public Shared Function in_b2style_namespace(ByVal name As String) As String
-            Return scope.current_namespace_t.with_global_namespace(
-                      scope.current_namespace_t.with_namespace("b2style", name))
-        End Function
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
