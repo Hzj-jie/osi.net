@@ -18,9 +18,10 @@ Partial Public NotInheritable Class b2style
         Public NotInheritable Class bstyle_format
             Public Shared Function [of](ByVal i As String) As String
                 assert(Not i.null_or_whitespace())
-                Return streams.of(scope.current_namespace_t.of(i).Split("."c)).
+                Return streams.of(scope.current_namespace_t.of(i).Split("."c)).  ' For the first
                                map(Function(ByVal x As String) As String
                                        assert(Not x Is Nothing)
+                                       ' TODO: This is wrong, the later parts should rely on the class definitions.
                                        If Not x.Contains(scope.current_namespace_t.namespace_separator) Then
                                            Return x
                                        End If
