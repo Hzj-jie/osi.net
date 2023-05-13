@@ -46,7 +46,8 @@ Partial Public NotInheritable Class b2style
 
             Public Shared Function operator_function_name(ByVal operator_name As String) As String
                 assert(Not operator_name.null_or_whitespace())
-                Return [of](_namespace.in_b2style_namespace(operator_name.Replace("-"c, "_"c)))
+                Return in_global_namespace(
+                           scope.current_namespace_t.with_namespace("b2style", operator_name.Replace("-"c, "_"c)))
             End Function
 
             Public Shared Function [of](ByVal n As scope.name_with_namespace) As String
@@ -56,11 +57,6 @@ Partial Public NotInheritable Class b2style
             Private Sub New()
             End Sub
         End Class
-
-        Public Shared Function in_b2style_namespace(ByVal name As String) As String
-            Return scope.current_namespace_t.in_global_namespace(
-                      scope.current_namespace_t.with_namespace("b2style", name))
-        End Function
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
