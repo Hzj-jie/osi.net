@@ -27,7 +27,7 @@ Partial Public NotInheritable Class b2style
             ' Functions are always in global namespace.
             ' The last semi-colon is haniled by class_initializer_with_semi_colon.
             ' But add another one to avoid potential risk.
-            If Not (o.append(_namespace.bstyle_format.in_global_namespace("construct")) AndAlso
+            If Not (o.append(_namespace.bstyle_format.in_global_namespace(scope.class_def.construct)) AndAlso
                     o.append("(") AndAlso
                     o.append(_namespace.bstyle_format.of(n.child(1))) AndAlso
                     If(n.child_count() = 5, o.append(",") AndAlso code_gen_of(n.child(3)).build(o), True) AndAlso
@@ -36,13 +36,17 @@ Partial Public NotInheritable Class b2style
             End If
             scope.current().when_end_scope(
                 Sub()
-                    assert(o.append(_namespace.bstyle_format.in_global_namespace("destruct")) AndAlso
+                    assert(o.append(_namespace.bstyle_format.in_global_namespace(scope.class_def.destruct)) AndAlso
                            o.append("(") AndAlso
                            o.append(_namespace.bstyle_format.of(n.child(1))) AndAlso
                            o.append(");"))
                 End Sub)
-            scope.current().call_hierarchy().to(scope.current_namespace_t.with_global_namespace("construct"))
-            scope.current().call_hierarchy().to(scope.current_namespace_t.with_global_namespace("destruct"))
+            scope.current().
+                  call_hierarchy().
+                  to(scope.current_namespace_t.in_global_namespace(scope.class_def.construct))
+            scope.current().
+                  call_hierarchy().
+                  to(scope.current_namespace_t.in_global_namespace(scope.class_def.destruct))
             Return True
         End Function
     End Class
