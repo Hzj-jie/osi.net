@@ -14,7 +14,11 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     ' A helper to always de-alias and apply namespace.
     Public NotInheritable Class normalized_type
         Public Shared Function logic_type_of(ByVal type As String) As String
-            Return New builders.parameter_type(type).map_type(AddressOf map_type).logic_type()
+            Return [of](type).logic_type()
+        End Function
+
+        Public Shared Function [of](ByVal type As String) As builders.parameter_type
+            Return New builders.parameter_type(type).map_type(AddressOf map_type)
         End Function
 
         Public Shared Function map_type(ByVal i As String) As String

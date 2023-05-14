@@ -16,28 +16,25 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     Protected NotInheritable Class type_alias_t
         Private ReadOnly m As New unordered_map(Of String, String)()
 
-        Public Function define(ByVal [alias] As String, ByVal canonical As String) As Boolean
+        Public Function define(ByVal [alias] As String, ByVal canonical_type As String) As Boolean
             assert(Not [alias].null_or_whitespace())
-            assert(Not canonical.null_or_whitespace())
+            [alias] = current_namespace_t.of([alias])
+            assert(Not [alias].null_or_whitespace())
+            assert(Not canonical_type.null_or_whitespace())
+            Dim canonical As builders.parameter_type = normalized_type.of(canonical_type)
+            assert(Not canonical Is Nothing)
             If builders.parameter_type.is_ref_type([alias]) Then
                 raise_error(error_type.user, "Reference type ", [alias], " is not allowed to be aliased. ")
                 Return False
             End If
-            If builders.parameter_type.is_ref_type(canonical) Then
+            If canonical.ref Then
                 raise_error(error_type.user,
                             "Reference type ",
                             canonical,
                             " is not allowed to be used as a canonical type. ")
                 Return False
             End If
-            If [alias].Equals(canonical) Then
-                raise_error(error_type.user,
-                            "Alias ",
-                            [alias],
-                            " cannot be defined to itself.")
-                Return False
-            End If
-            If [alias].Equals(Me(canonical)) Then
+            If [alias].Equals(canonical.type) Then
                 raise_error(error_type.user,
                             "Cycle typedefs detected, alias ",
                             [alias],
@@ -45,7 +42,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                             canonical)
                 Return False
             End If
-            m([alias]) = Me(canonical)
+            m([alias]) = canonical.type
             Return True
         End Function
 
