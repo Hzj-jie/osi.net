@@ -8,6 +8,7 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
+Imports builders = osi.service.compiler.logic.builders
 
 Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               __BUILDER As func_t(Of String, WRITER, Boolean),
@@ -24,9 +25,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End Enum
 
             ' TODO: A better way to check the return type.
-            Private Shared ReadOnly void_type As String = Function() As String
-                                                              Return normalized_type.logic_type_of("void")
-                                                          End Function()
+            Private Shared ReadOnly void_type As String =
+                Function() As String
+                    Dim p As builders.parameter_type = normalized_type.of("void")
+                    assert(Not p.ref)
+                    Return p.type
+                End Function()
             Private ReadOnly class_def As class_def
             Private ReadOnly return_type As name_with_namespace
             Private ReadOnly signature As vector(Of name_with_namespace)
