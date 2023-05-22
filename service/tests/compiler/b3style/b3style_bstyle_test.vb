@@ -13,7 +13,7 @@ Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 Imports osi.service.resource
 
-' <test>
+<test>
 Public NotInheritable Class b3style_bstyle_test
     <test>
     Private Shared Sub nlp_parsable()
