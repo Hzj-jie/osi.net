@@ -27,6 +27,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Shared Function remove_namespace_prefix(ByVal s As String) As String
+            If Not current().features().with_namespace() Then
+                Return s
+            End If
             assert(s.StartsWith(current_namespace_t.namespace_separator))
             Return s.Substring(current_namespace_t.namespace_separator.Length())
         End Function
@@ -38,8 +41,10 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     Public NotInheritable Class normalized_parameter
         Public Shared Function logic_name_type_of(ByVal i As builders.parameter) As pair(Of String, String)
             assert(Not i Is Nothing)
-            Return pair.emplace_of(normalized_type.remove_namespace_prefix(current_namespace_t.of(i.name)),
-                                   normalized_type.remove_namespace_prefix(normalized_type.map_type(i.type)))
+            i = i.map_type(AddressOf normalized_type.map_type).
+                  map_name(AddressOf current_namespace_t.of)
+            Return pair.emplace_of(normalized_type.remove_namespace_prefix(i.name),
+                                   normalized_type.remove_namespace_prefix(i.logic_type()))
         End Function
 
         Private Sub New()
