@@ -136,21 +136,6 @@ Partial Public NotInheritable Class logic
             End Function
         End Class
 
-        Public Shared Function of_callee(ByVal name As String,
-                                         ByVal type As String,
-                                         ByVal parameters As vector(Of parameter),
-                                         ByVal paragraph As Func(Of logic_writer, Boolean)) As callee_builder_16
-            Return of_callee(name,
-                             type,
-                             parameters.stream().
-                                        map(Function(ByVal i As parameter) As pair(Of String, String)
-                                                assert(Not i Is Nothing)
-                                                Return pair.emplace_of(i.name, i.logic_type())
-                                            End Function).
-                                        collect_to(Of vector(Of pair(Of String, String)))(),
-                             paragraph)
-        End Function
-
         Public Structure start_scope_wrapper
             Private ReadOnly o As logic_writer
 
