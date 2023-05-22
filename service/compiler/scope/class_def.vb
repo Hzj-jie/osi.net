@@ -131,12 +131,20 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return Me
         End Function
 
+        Private Shared Function function_name_of(ByVal name As String) As name_with_namespace
+            Return name_with_namespace.of_global_namespace(name)
+        End Function
+
+        Private Shared Function function_type_of(ByVal type As String) As name_with_namespace
+            Return name_with_namespace.of(normalized_type.of(type).logic_type())
+        End Function
+
         Private Function parse_function(ByVal node As typed_node,
                                         ByVal type As function_def.type_t,
                                         ByVal ignored_types As unordered_set(Of String)) As function_def
             assert(Not node Is Nothing)
             Dim signature As New vector(Of name_with_namespace)()
-            signature.emplace_back(function_def.name_of(node.child(1).input()))
+            signature.emplace_back(function_name_of(node.child(1).input()))
             Dim param_names As New vector(Of String)()
             If node.child_count() = 6 Then
                 For i As UInt32 = 0 To node.child(3).child_count() - uint32_1
@@ -145,12 +153,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                         p = p.child(0)
                     End If
                     assert(p.type_name.Equals("param"))
-                    signature.emplace_back(function_def.type_of(p.child(0).input_without_ignored()))
+                    signature.emplace_back(function_type_of(p.child(0).input_without_ignored()))
                     param_names.emplace_back(p.child(1).input())
                 Next
             End If
             Dim f As New function_def(Me,
-                                      function_def.type_of(node.child(0).input_without_ignored()),
+                                      function_type_of(node.child(0).input_without_ignored()),
                                       signature,
                                       type,
                                       "// This content should never be used.")
@@ -191,8 +199,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             If Not has_constructor Then
                 with_func(New function_def(
                               Me,
-                              function_def.type_of("void"),
-                              function_def.name_of(construct),
+                              function_type_of("void"),
+                              function_name_of(construct),
                               function_def.type_t.pure,
                               New StringBuilder().
                                   Append("void ").
@@ -204,8 +212,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             If Not has_destructor Then
                 with_func(New function_def(
                               Me,
-                              function_def.type_of("void"),
-                              function_def.name_of(destruct),
+                              function_type_of("void"),
+                              function_name_of(destruct),
                               function_def.type_t.pure,
                               New StringBuilder().
                                   Append("void ").
