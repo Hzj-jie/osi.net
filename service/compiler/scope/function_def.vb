@@ -43,14 +43,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 Return signature(0)
             End Function
 
-            Public Shared Function name_of(ByVal name As String) As name_with_namespace
-                Return name_with_namespace.of_global_namespace(name)
-            End Function
-
-            Public Shared Function type_of(ByVal type As String) As name_with_namespace
-                Return name_with_namespace.of(normalized_type.logic_type_of(type))
-            End Function
-
             Public Sub New(ByVal class_def As class_def,
                            ByVal return_type As name_with_namespace,
                            ByVal signature As vector(Of name_with_namespace),
