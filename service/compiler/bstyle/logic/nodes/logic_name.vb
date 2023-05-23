@@ -11,13 +11,13 @@ Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class logic_name
-        Public Shared Function of_function(Of T As builders.parameter_type) _
+        Public Shared Function of_function(Of PT As builders.parameter_type) _
                                           (ByVal raw_name As String,
-                                           ByVal ParamArray params() As T) As String
+                                           ByVal ParamArray params() As PT) As String
             assert(Not params Is Nothing)
             Return build(raw_name,
                          streams.of(params).
-                                 map(Function(ByVal i As T) As String
+                                 map(Function(ByVal i As PT) As String
                                          assert(Not i Is Nothing)
                                          Return i.type
                                      End Function).
@@ -81,3 +81,4 @@ Partial Public NotInheritable Class bstyle
         End Sub
     End Class
 End Class
+

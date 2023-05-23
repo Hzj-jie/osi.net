@@ -76,12 +76,10 @@ Partial Public NotInheritable Class bstyle
                                    Return False
                                End If
                                If Not scope.current().structs().types().defined(return_type) Then
-                                   Return builder(name,
-                                                  scope.current().
-                                                        value_target().
-                                                        with_temp_target(return_type, o).
-                                                        only(),
-                                                  parameters)
+                                   Return builder(
+                                              name,
+                                              scope.current().value_target().with_temp_target(return_type, o).only(),
+                                              parameters)
                                End If
                                ' TODO: Check the type consistency between function_call and variable receiver.
                                Dim return_value As String =
@@ -130,3 +128,4 @@ Partial Public NotInheritable Class bstyle
         End Function
     End Class
 End Class
+

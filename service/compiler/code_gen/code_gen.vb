@@ -17,7 +17,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
     Private ReadOnly m As New unordered_map(Of String, Object)()
 
     Public Shared Function code_gen_name(Of T)() As String
-        Return GetType(T).Name().TrimStart("_"c).Replace("_"c, "-"c)
+        Return type_info(Of T).name_without_generic_arity.TrimStart("_"c).Replace("_"c, "-"c)
     End Function
 
     Public Sub register(ByVal s As String, ByVal b As Object)

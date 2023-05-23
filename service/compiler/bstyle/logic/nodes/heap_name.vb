@@ -47,19 +47,26 @@ Partial Public NotInheritable Class bstyle
                                         n.child(0),
                                         Function(ByVal type As String,
                                                  ByVal ps As stream(Of builders.parameter)) As Boolean
-                                            scope.current().value_target().with_value(
-                                                type,
-                                                ps.map(Function(ByVal d As builders.parameter) As builders.parameter
-                                                           assert(Not d Is Nothing)
-                                                           Return d.map_name(Function(ByVal name As String) As String
-                                                                                 Return variable.name_of(name, indexstr)
-                                                                             End Function)
-                                                       End Function))
+                                            scope.
+                                                current().
+                                                value_target().
+                                                with_value(
+                                                    type,
+                                                    ps.map(Function(ByVal d As builders.parameter) As builders.parameter
+                                                               assert(Not d Is Nothing)
+                                                               Return d.map_name(
+                                                                       Function(ByVal name As String) As String
+                                                                           Return variable.name_of(name, indexstr)
+                                                                       End Function)
+                                                           End Function))
                                             Return True
                                         End Function,
                                         Function(ByVal type As String, ByVal source As String) As Boolean
-                                            scope.current().value_target().with_value(
-                                                type, variable.name_of(source, indexstr))
+                                            scope.
+                                                current().
+                                                value_target().
+                                                with_value(
+                                                    type, variable.name_of(source, indexstr))
                                             Return True
                                         End Function,
                                         o)
@@ -67,3 +74,4 @@ Partial Public NotInheritable Class bstyle
         End Function
     End Class
 End Class
+

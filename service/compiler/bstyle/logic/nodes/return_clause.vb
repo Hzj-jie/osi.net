@@ -67,3 +67,4 @@ Partial Public NotInheritable Class bstyle
         End Function
     End Class
 End Class
+

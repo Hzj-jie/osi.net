@@ -26,18 +26,17 @@ Partial Public NotInheritable Class bstyle
             Dim type_str As String = type.input_without_ignored()
             Dim name_str As String = name.input_without_ignored()
             Return struct.define_in_heap(type_str, name_str, length, o) OrElse
-                   heap_name.build(
-                       length,
-                       o,
-                       Function(ByVal len_name As String) As Boolean
-                           Return declare_primitive_type(type_str, name_str, len_name, o)
-                       End Function)
+                   heap_name.build(length,
+                                   o,
+                                   Function(ByVal len_name As String) As Boolean
+                                       Return declare_primitive_type(type_str, name_str, len_name, o)
+                                   End Function)
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,
-                                                        ByVal name As String,
-                                                        ByVal length As String,
-                                                        ByVal o As logic_writer) As Boolean
+                                                            ByVal name As String,
+                                                            ByVal length As String,
+                                                            ByVal o As logic_writer) As Boolean
             assert(Not scope.current().structs().types().defined(type))
             assert(Not o Is Nothing)
             Return scope.current().variables().define(type, name) AndAlso

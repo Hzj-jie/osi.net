@@ -151,8 +151,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not length Is Nothing)
             assert(Not o Is Nothing)
             Dim v As scope.struct_def = Nothing
-            If Not scope.current().structs().resolve(type, name, v) OrElse
-               Not define(type, name, v) Then
+            If Not scope.current().structs().resolve(type, name, v) OrElse Not define(type, name, v) Then
                 Return False
             End If
             assert(Not v Is Nothing)
@@ -163,8 +162,8 @@ Partial Public NotInheritable Class bstyle
                                        Return v.for_each_primitive(
                                                   Function(ByVal m As builders.parameter) As Boolean
                                                       assert(Not m Is Nothing)
-                                                      Return heap_declaration.declare_primitive_type(
-                                                                 m.type, m.name, len_name, o)
+                                                      Return heap_declaration.
+                                                                 declare_primitive_type(m.type, m.name, len_name, o)
                                                   End Function)
                                    End Function)
         End Function
@@ -190,11 +189,11 @@ Partial Public NotInheritable Class bstyle
             End If
             assert(Not v Is Nothing)
             Return scope.current().variables().undefine(name) AndAlso
-                   v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
-                                            assert(Not m Is Nothing)
-                                            Return scope.current().variables().undefine(m.name) AndAlso
-                                                   builders.of_undefine(m.name).to(o)
-                                        End Function)
+               v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
+                                        assert(Not m Is Nothing)
+                                        Return scope.current().variables().undefine(m.name) AndAlso
+                                               builders.of_undefine(m.name).to(o)
+                                    End Function)
         End Function
 
         Public Shared Function redefine(ByVal name As String, ByVal type As String, ByVal o As logic_writer) As Boolean
@@ -220,23 +219,23 @@ Partial Public NotInheritable Class bstyle
 
         Public Shared Function parse_struct_body(ByVal n As typed_node) As stream(Of builders.parameter)
             Return n.children_of("struct-body").
-                     stream().
-                     filter(Function(ByVal c As typed_node) As Boolean
-                                assert(Not c Is Nothing)
-                                assert(c.child_count() <= 2)
-                                Return c.child_count() = 2
-                            End Function).
-                     map(Function(ByVal c As typed_node) As typed_node
-                             Return c.child(0)
-                         End Function).
-                     map(Function(ByVal c As typed_node) As builders.parameter
-                             ' TODO: Support value_definition.str_bytes_val
-                             assert(Not c Is Nothing)
-                             assert(c.type_name.Equals("value-declaration"))
-                             assert(c.child_count() = 2)
-                             Return builders.parameter.no_ref(c.child(0).input_without_ignored(),
-                                                              c.child(1).input_without_ignored())
-                         End Function)
+                 stream().
+                 filter(Function(ByVal c As typed_node) As Boolean
+                            assert(Not c Is Nothing)
+                            assert(c.child_count() <= 2)
+                            Return c.child_count() = 2
+                        End Function).
+                 map(Function(ByVal c As typed_node) As typed_node
+                         Return c.child(0)
+                     End Function).
+                 map(Function(ByVal c As typed_node) As builders.parameter
+                         ' TODO: Support value_definition.str_bytes_val
+                         assert(Not c Is Nothing)
+                         assert(c.type_name.Equals("value-declaration"))
+                         assert(c.child_count() = 2)
+                         Return builders.parameter.no_ref(c.child(0).input_without_ignored(),
+                                                          c.child(1).input_without_ignored())
+                     End Function)
         End Function
 
         Private Function build(ByVal n As typed_node,
@@ -254,3 +253,4 @@ Partial Public NotInheritable Class bstyle
         End Function
     End Class
 End Class
+

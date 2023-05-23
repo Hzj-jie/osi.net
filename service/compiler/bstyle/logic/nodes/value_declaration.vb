@@ -32,8 +32,8 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,
-                                                        ByVal name As String,
-                                                        ByVal o As logic_writer) As Boolean
+                                                      ByVal name As String,
+                                                      ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
 
             If Not scope.current().structs().types().defined(type) AndAlso

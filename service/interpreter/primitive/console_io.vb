@@ -42,6 +42,13 @@ Namespace primitive
             err = i
         End Sub
 
+        Public Shared Function null() As console_io
+            Dim r As New console_io()
+            r.redirect_output(TextWriter.Null)
+            r.redirect_error(TextWriter.Null)
+            Return r
+        End Function
+
         Public NotInheritable Class test_wrapper
             Private ReadOnly out As disposer(Of StringWriter)
             Private ReadOnly err As disposer(Of StringWriter)

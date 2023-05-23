@@ -14,10 +14,14 @@
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <SccProjectName>SAK</SccProjectName>
-    <SccLocalPath>SAK</SccLocalPath>
-    <SccAuxPath>SAK</SccAuxPath>
-    <SccProvider>SAK</SccProvider>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -58,7 +62,39 @@
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
     <Compile Include="b3style\b3style_lib.vb" />
+    <Compile Include="b3style\logic\nodes\biguint.vb" />
+    <Compile Include="b3style\logic\nodes\bool.vb" />
+    <Compile Include="b3style\logic\nodes\condition.vb" />
+    <Compile Include="b3style\logic\nodes\delegate.vb" />
+    <Compile Include="b3style\logic\nodes\for_loop.vb" />
+    <Compile Include="b3style\logic\nodes\function.vb" />
+    <Compile Include="b3style\logic\nodes\function_call.vb" />
+    <Compile Include="b3style\logic\nodes\heap_declaration.vb" />
+    <Compile Include="b3style\logic\nodes\heap_name.vb" />
+    <Compile Include="b3style\logic\nodes\ignore_result_function_call.vb" />
     <Compile Include="b3style\logic\nodes\includes.vb" />
+    <Compile Include="b3style\logic\nodes\integer.vb" />
+    <Compile Include="b3style\logic\nodes\kw_file.vb" />
+    <Compile Include="b3style\logic\nodes\kw_func.vb" />
+    <Compile Include="b3style\logic\nodes\kw_line.vb" />
+    <Compile Include="b3style\logic\nodes\kw_statement.vb" />
+    <Compile Include="b3style\logic\nodes\logic_name.vb" />
+    <Compile Include="b3style\logic\nodes\multi_sentence_paragraph.vb" />
+    <Compile Include="b3style\logic\nodes\name.vb" />
+    <Compile Include="b3style\logic\nodes\param.vb" />
+    <Compile Include="b3style\logic\nodes\raw_value.vb" />
+    <Compile Include="b3style\logic\nodes\raw_variable_name.vb" />
+    <Compile Include="b3style\logic\nodes\return_clause.vb" />
+    <Compile Include="b3style\logic\nodes\static_cast.vb" />
+    <Compile Include="b3style\logic\nodes\string.vb" />
+    <Compile Include="b3style\logic\nodes\struct.vb" />
+    <Compile Include="b3style\logic\nodes\typedef.vb" />
+    <Compile Include="b3style\logic\nodes\ufloat.vb" />
+    <Compile Include="b3style\logic\nodes\value.vb" />
+    <Compile Include="b3style\logic\nodes\value_clause.vb" />
+    <Compile Include="b3style\logic\nodes\value_declaration.vb" />
+    <Compile Include="b3style\logic\nodes\value_definition.vb" />
+    <Compile Include="b3style\logic\nodes\value_list.vb" />
     <Compile Include="scope\class_def.vb" />
     <Compile Include="scope\function_def.vb" />
     <None Include="b2style\lib\std\vector" />
@@ -76,6 +112,7 @@
     <Compile Include="b2style\rewriter\nodes\kw_file.vb" />
     <None Include="b3style\codegen\run.cmd" />
     <None Include="b3style\lib\run.cmd" />
+    <None Include="b3style\logic\nodes\from-bstyle.cmd" />
     <None Include="bstyle\lib\climits" />
     <Compile Include="b2style\rewriter\nodes\delegate_with_semi_colon.vb" />
     <Compile Include="b3style\b3style_rules.vb" />

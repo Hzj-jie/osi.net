@@ -15,6 +15,12 @@ Partial Public NotInheritable Class type_info(Of T)
     Public Shared ReadOnly assembly_qualified_name As String = GetType(T).AssemblyQualifiedName()
     Public Shared ReadOnly fullname As String = GetType(T).FullName()
     Public Shared ReadOnly name As String = GetType(T).Name()
+    Public Shared ReadOnly name_without_generic_arity As String = Function() As String
+                                                                      If name.IndexOf("`") = npos Then
+                                                                          Return name
+                                                                      End If
+                                                                      Return name.Substring(0, name.IndexOf("`"))
+                                                                  End Function()
 
     ' => GetType(T) Is GetType(Object)
     Public Shared ReadOnly is_object As Boolean = (GetType(T) Is GetType(Object))

@@ -50,7 +50,7 @@ Partial Public NotInheritable Class b3style
         Inherits __do(Of vector(Of Action(Of statements)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return New vector(Of Action(Of statements))()
+            Return vector.emplace_of(Of Action(Of statements))(AddressOf bstyle.code_types.register)
         End Function
     End Class
 
@@ -58,7 +58,8 @@ Partial Public NotInheritable Class b3style
         Inherits __do(Of vector(Of Action(Of statements)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return New vector(Of Action(Of statements))()
+            Return vector.emplace_of(Of Action(Of statements))(AddressOf bstyle.main.register,
+                                                               AddressOf scope.call_hierarchy_t.calculator.register)
         End Function
     End Class
 
@@ -66,7 +67,65 @@ Partial Public NotInheritable Class b3style
         Inherits __do(Of vector(Of Action(Of code_gens(Of logic_writer))))
 
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of logic_writer)))
-            Return New vector(Of Action(Of code_gens(Of logic_writer)))()
+            Return New code_gens_registrar(Of logic_writer)().
+                with_of_only_childs(
+                    "root-type",
+                    "base-root-type",
+                    "include",
+                    "typedef-type",
+                    "paragraph",
+                    "sentence",
+                    "sentence-with-semi-colon",
+                    "value-without-bracket",
+                    "base-value-without-bracket",
+                    "variable-name",
+                    "for-increase",
+                    "base-for-increase"
+                ).
+                with(code_gen.of_ignore_last_child(Of logic_writer)("root-type-with-semi-colon")).
+                with(Of include_with_file)().
+                with(Of include_with_string)().
+                with(Of biguint)().
+                with(Of bool)().
+                with(Of _integer)().
+                with(Of _string)().
+                with(Of ufloat)().
+                with(Of bstyle.logic)().
+                with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of)).
+                with(scope.define_t.code_gens.define()).
+                with(Of typedef)().
+                with(Of bstyle.typedef_type_name)().
+                with(Of bstyle.typedef_type_str)().
+                with(Of heap_declaration)().
+                with(Of heap_name)().
+                with(Of struct)().
+                with(Of value_declaration)().
+                with(Of value_definition)().
+                with(Of value_clause)().
+                with(Of function_call)().
+                with(Of return_clause)().
+                with(Of static_cast)().
+                with(Of ignore_result_function_call)().
+                with(Of value_list)().
+                without(Of raw_variable_name)().
+                with(Of kw_file)().
+                with(Of kw_func)().
+                with(Of kw_line)().
+                with(Of kw_statement)().
+                with(Of _function)().
+                with(Of param)().
+                with(code_gen.of_all_children(Of logic_writer)("paramlist")).
+                with(Of multi_sentence_paragraph)().
+                with(code_gen.of_ignore_last_child(Of logic_writer)("base-sentence-with-semi-colon")).
+                with(Of value)().
+                with_of_all_childrens("raw-value").
+                with(Of name)().
+                with(code_gen.of_first_child(Of logic_writer)("param-with-comma")).
+                with(code_gen.of_first_child(Of logic_writer)("value-with-comma")).
+                with(Of condition)().
+                with(code_gen.of_children(Of logic_writer)("else-condition", 1)).
+                with(Of for_loop)().
+                with(Of _delegate)()
         End Function
     End Class
 End Class
