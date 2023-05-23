@@ -34,7 +34,7 @@ Partial Public NotInheritable Class b3style
             End If
             Dim ps As stream(Of builders.parameter) = params.primitives()
             If type_node.child_count() = 2 Then
-                assert(type_node.child(1).leaf())
+                ' assert(type_node.child(1).leaf())  ' b3style uses bit-and as reference.
                 assert(type_node.child(1).type_name.Equals("reference"))
                 ps = ps.map(AddressOf builders.parameter.to_ref)
             End If

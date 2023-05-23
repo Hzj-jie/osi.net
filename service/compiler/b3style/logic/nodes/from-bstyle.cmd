@@ -32,6 +32,9 @@ call :run kw_file
 call :run kw_func
 call :run kw_line
 call :run kw_statement
+call :run condition
+call :run for_loop
+call :run delegate
 
 exit /b 0
 

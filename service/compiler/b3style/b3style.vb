@@ -78,7 +78,9 @@ Partial Public NotInheritable Class b3style
                     "sentence-with-semi-colon",
                     "value-without-bracket",
                     "base-value-without-bracket",
-                    "variable-name"
+                    "variable-name",
+                    "for-increase",
+                    "base-for-increase"
                 ).
                 with(code_gen.of_ignore_last_child(Of logic_writer)("root-type-with-semi-colon")).
                 with(Of include_with_file)().
@@ -117,7 +119,13 @@ Partial Public NotInheritable Class b3style
                 with(code_gen.of_ignore_last_child(Of logic_writer)("base-sentence-with-semi-colon")).
                 with(Of value)().
                 with_of_all_childrens("raw-value").
-                with(Of name)()
+                with(Of name)().
+                with(code_gen.of_first_child(Of logic_writer)("param-with-comma")).
+                with(code_gen.of_first_child(Of logic_writer)("value-with-comma")).
+                with(Of condition)().
+                with(code_gen.of_children(Of logic_writer)("else-condition", 1)).
+                with(Of for_loop)().
+                with(Of _delegate)()
         End Function
     End Class
 End Class
