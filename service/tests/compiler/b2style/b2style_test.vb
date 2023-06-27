@@ -5,7 +5,9 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
+Imports osi.root.template
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.automata
@@ -13,12 +15,8 @@ Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 Imports osi.service.resource
 
-<test>
-Public NotInheritable Class b2style_test
-    <test>
-    Private Shared Sub nlp_parsable()
-        assertion.is_true(nlp.of_file(b2style.nlexer_rule, b2style.syntaxer_rule, Nothing))
-    End Sub
+Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, executor, Boolean))
+    Private Shared ReadOnly parse As _do(Of console_io.test_wrapper, String, executor, Boolean) = -(alloc(Of _PARSE)())
 
     <test>
     Private Shared Sub case1()
@@ -816,6 +814,29 @@ Public NotInheritable Class b2style_test
             "type0 std_out:C__struct__type__id__type([this.C__struct__type__id: C__struct__type__id__type&])",
             "type0 N__print([])",
             "type0 N__f2:Integer:String([N__x: Integer, N__s: String])"))
+    End Sub
+
+    Protected Sub New()
+    End Sub
+End Class
+
+<test>
+Public NotInheritable Class b2style_test
+    Inherits b2style_test(Of parse)
+
+    Public NotInheritable Class parse
+        Inherits __do(Of console_io.test_wrapper, String, executor, Boolean)
+
+        Public Overrides Function at(ByRef i As console_io.test_wrapper,
+                                     ByRef j As String,
+                                     ByRef k As executor) As Boolean
+            Return b2style.with_functions(New interrupts(+i)).parse(j, k)
+        End Function
+    End Class
+
+    <test>
+    Private Shared Sub nlp_parsable()
+        assertion.is_true(nlp.of_file(b2style.nlexer_rule, b2style.syntaxer_rule, Nothing))
     End Sub
 
     Private Sub New()

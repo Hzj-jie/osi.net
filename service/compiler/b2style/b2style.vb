@@ -253,6 +253,23 @@ Partial Public NotInheritable Class b2style
         End Function
     End Class
 
+    Public NotInheritable Shadows Class parse_wrapper_b3style
+        Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
+                                          syntaxer_rule_t,
+                                          __do.default_of(Of vector(Of Action(Of statements))),
+                                          suffixes_t,
+                                          rewriter_gens_t,
+                                          scope).parse_wrapper
+
+        Public Sub New(ByVal functions As interrupts)
+            MyBase.New(functions)
+        End Sub
+
+        Protected Overrides Function text_import(ByVal s As String, ByVal o As exportable) As Boolean
+            Return b3style.with_functions(functions).parse(s, o)
+        End Function
+    End Class
+
     Private Sub New()
     End Sub
 End Class

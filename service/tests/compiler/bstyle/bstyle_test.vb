@@ -165,9 +165,9 @@ End Class
 
 <test>
 Public NotInheritable Class bstyle_test
-    Inherits bstyle_test(Of PARSE)
+    Inherits bstyle_test(Of parse)
 
-    Public NotInheritable Class PARSE
+    Public NotInheritable Class parse
         Inherits __do(Of console_io.test_wrapper, String, executor, Boolean)
 
         Public Overrides Function at(ByRef i As console_io.test_wrapper,

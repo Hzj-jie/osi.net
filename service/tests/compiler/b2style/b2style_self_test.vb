@@ -12,8 +12,7 @@ Imports osi.root.utt.attributes
 Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 
-<test>
-Public NotInheritable Class b2style_self_test
+Public MustInherit Class b2style_self_test_runner
     Inherits compiler_self_test_runner
 
     Public Const total_assertions As String = "Total assertions: "
@@ -34,13 +33,13 @@ Public NotInheritable Class b2style_self_test
         MyBase.run()
     End Sub
 
-    Protected Overrides Sub execute(ByVal name As String, ByVal content As String)
+    Protected NotOverridable Overrides Sub execute(ByVal name As String, ByVal content As String)
         If ignored_test.find(name) <> ignored_test.end() Then
             Return
         End If
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(content, e), name)
+        assertion.is_true(parse(New interrupts(+io), content, e), name)
         assertion.is_not_null(e, name)
         e.assert_execute_without_errors(name)
         Dim v As vector(Of String) = streams.of(io.output().Trim().Split(character.newline)).
@@ -64,4 +63,23 @@ Public NotInheritable Class b2style_self_test
             i += uint32_1
         End While
     End Sub
+
+    Protected MustOverride Function parse(ByVal functions As interrupts,
+                                          ByVal content As String,
+                                          ByRef e As executor) As Boolean
+End Class
+
+<test>
+Public NotInheritable Class b2style_self_test
+    Inherits b2style_self_test_runner
+
+    Protected Overrides Function parse(ByVal functions As interrupts,
+                                       ByVal content As String,
+                                       ByRef e As executor) As Boolean
+        Return b2style.with_functions(functions).parse(content, e)
+    End Function
+
+    Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
+        Return b2style.parse_wrapper.with_current_file(filename)
+    End Function
 End Class

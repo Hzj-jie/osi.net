@@ -34,7 +34,7 @@ Public Class config
                       ByVal case_sensitive As Boolean)
         Me.argument_separator = argument_separator
         Me.switcher_prefix = switcher_prefix
-        Me.full_switcher_prefix = Me.full_switcher_prefix
+        Me.full_switcher_prefix = full_switcher_prefix
         Me.arg_prefix = arg_prefix
         Me.arg_key_value_separator = arg_key_value_separator
         Me.case_sensitive = case_sensitive
