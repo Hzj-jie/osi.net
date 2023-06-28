@@ -13,6 +13,8 @@ Imports this_process = osi.root.envs.this_process
 Public Module _app
     Public Sub main(ByVal args() As String)
         debugpause()
+        ' - or / style switcher conflicts with negative string patterns.
+        assert(envs.set_env("argument-no-short-switcher", "true"))
         global_init.execute(load_assemblies:=True)
         Dim start_ms As Int64 = Now().milliseconds()
         If envs.utt_no_assert Then

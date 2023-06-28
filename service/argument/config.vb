@@ -5,8 +5,9 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports envs = osi.root.envs
 
-Public Class config
+Public NotInheritable Class config
     Implements ICloneable, ICloneable(Of config)
 
     Public Shared ReadOnly [default] As config
@@ -16,22 +17,29 @@ Public Class config
     End Sub
 
     Public argument_separator As String = character.blank
-    Public switcher_prefix As String = character.minus_sign + character.left_slash
+    Public switcher_prefix As String = default_switcher_prefix
     Public full_switcher_prefix As String = character.tilde
     Public arg_prefix As String = character.minus_sign + character.minus_sign
     Public arg_key_value_separator As String = character.equal_sign
     Public case_sensitive As Boolean = True
 
+    Private Shared ReadOnly default_switcher_prefix As String =
+        Function() As String
+            If envs.env_bool(envs.env_keys("argument", "no", "short", "switcher")) Then
+                Return Nothing
+            End If
+            Return character.minus_sign + character.left_slash
+        End Function()
+
     Public Sub New()
     End Sub
 
-    <copy_constructor>
-    Protected Sub New(ByVal argument_separator As String,
-                      ByVal switcher_prefix As String,
-                      ByVal full_switcher_prefix As String,
-                      ByVal arg_prefix As String,
-                      ByVal arg_key_value_separator As String,
-                      ByVal case_sensitive As Boolean)
+    Private Sub New(ByVal argument_separator As String,
+                    ByVal switcher_prefix As String,
+                    ByVal full_switcher_prefix As String,
+                    ByVal arg_prefix As String,
+                    ByVal arg_key_value_separator As String,
+                    ByVal case_sensitive As Boolean)
         Me.argument_separator = argument_separator
         Me.switcher_prefix = switcher_prefix
         Me.full_switcher_prefix = Me.full_switcher_prefix
@@ -56,18 +64,12 @@ Public Class config
         Return strjoin(argument_separator, kvs)
     End Function
 
-    Private Function is_not_any_prefix(ByVal c As Char) As Boolean
-        Return strindexof(switcher_prefix, c, case_sensitive) = npos AndAlso
-               strindexof(arg_prefix, c, case_sensitive) = npos AndAlso
-               strindexof(full_switcher_prefix, c, case_sensitive) = npos
-    End Function
-
     Private Function is_switcher_prefix(ByVal i As String) As Boolean
         Return Not i.null_or_empty() AndAlso
                Not switcher_prefix.null_or_empty() AndAlso
                strlen(i) > 1 AndAlso
                strindexof(switcher_prefix, i(0), case_sensitive) <> npos AndAlso
-               is_not_any_prefix(i(1))
+               Not is_arg_prefix(i)
     End Function
 
     Private Function is_full_switcher_prefix(ByVal i As String) As Boolean
@@ -75,15 +77,14 @@ Public Class config
                Not full_switcher_prefix.null_or_empty() AndAlso
                strlen(i) > 1 AndAlso
                strindexof(full_switcher_prefix, i(0), case_sensitive) <> npos AndAlso
-               is_not_any_prefix(i(1))
+               Not is_arg_prefix(i)
     End Function
 
     Private Function is_arg_prefix(ByVal i As String) As Boolean
         Return Not i.null_or_empty() AndAlso
                Not arg_prefix.null_or_empty() AndAlso
                strlen(i) > strlen(arg_prefix) AndAlso
-               strsame(i, arg_prefix, strlen(arg_prefix)) AndAlso
-               is_not_any_prefix(i(strlen_i(arg_prefix)))
+               strsame(i, arg_prefix, strlen(arg_prefix))
     End Function
 
     Friend Function is_switcher(ByVal i As String, ByRef o As String) As Boolean
@@ -124,19 +125,15 @@ Public Class config
     End Function
 
     Public Function Clone() As Object Implements ICloneable.Clone
-        Return cloneT()
+        Return CloneT()
     End Function
 
     Public Function CloneT() As config Implements ICloneable(Of config).Clone
-        Return clone(Of config)()
-    End Function
-
-    Public Function clone(Of R As config)() As R
-        Return copy_constructor(Of R).invoke(argument_separator,
-                                             switcher_prefix,
-                                             full_switcher_prefix,
-                                             arg_prefix,
-                                             arg_key_value_separator,
-                                             case_sensitive)
+        Return New config(argument_separator,
+                          switcher_prefix,
+                          full_switcher_prefix,
+                          arg_prefix,
+                          arg_key_value_separator,
+                          case_sensitive)
     End Function
 End Class
