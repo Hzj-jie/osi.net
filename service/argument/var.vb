@@ -6,9 +6,18 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
+Imports envs = osi.root.envs
 
 Partial Public NotInheritable Class var
-    Public Shared ReadOnly [default] As var = New var(streams.of(Environment.GetCommandLineArgs()).skip(1).to_array())
+    Public Shared ReadOnly application As var =
+        New var(streams.of(Environment.GetCommandLineArgs()).skip(1).to_array(),
+                Function() As config
+                    Dim r As config = config.default()
+                    If envs.env_bool(envs.env_keys("argument", "no", "short", "switcher")) Then
+                        r.switcher_prefix = Nothing
+                    End If
+                    Return r
+                End Function())
 
     Private ReadOnly raw As map(Of String, vector(Of String))
     Private ReadOnly binded As map(Of String, vector(Of String))
@@ -42,7 +51,7 @@ Partial Public NotInheritable Class var
     End Sub
 
     Public Sub New(Optional ByVal c As config = Nothing)
-        Me.New(If(c Is Nothing, config.default, c),
+        Me.New(If(c Is Nothing, config.default(), c),
                New map(Of String, vector(Of String))(),
                New map(Of String, vector(Of String))(),
                New vector(Of String)())

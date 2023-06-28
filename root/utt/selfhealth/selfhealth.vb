@@ -6,14 +6,14 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.formation
 
-Public Module selfhealth
-    Private self_health As Boolean = False
+Public NotInheritable Class selfhealth
+    Private Shared self_health As Boolean = False
 
-    Public Function self_health_stage() As Boolean
+    Public Shared Function self_health_stage() As Boolean
         Return self_health
     End Function
 
-    Public Function run() As Boolean
+    Public Shared Function run() As Boolean
         Dim selectors As New vector(Of String)()
         selectors.push_back(GetType(failure_case).AssemblyQualifiedName())
 
@@ -34,4 +34,7 @@ Public Module selfhealth
 
         Return True
     End Function
-End Module
+
+    Private Sub New()
+    End Sub
+End Class

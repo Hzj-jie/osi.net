@@ -19,7 +19,7 @@ Public NotInheritable Class argument_setter
                         "process arguments from ",
                         Microsoft.VisualBasic.Command(),
                         ", parsed arguments ",
-                        var.[default])
+                        var.application)
         End Sub
 
         Private Sub New()
@@ -32,7 +32,7 @@ Public NotInheritable Class argument_setter
 
     Private Shared Sub process_assembly(ByVal assembly As Assembly)
         For Each type As Type In assembly.GetTypes()
-            process_type(type, var.[default])
+            process_type(type, var.application)
         Next
     End Sub
 
