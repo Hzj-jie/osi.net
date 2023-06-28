@@ -65,6 +65,7 @@
     <Compile Include="b3style\logic\nodes\biguint.vb" />
     <Compile Include="b3style\logic\nodes\bool.vb" />
     <Compile Include="b3style\logic\nodes\condition.vb" />
+    <Compile Include="b3style\logic\nodes\dealloc.vb" />
     <Compile Include="b3style\logic\nodes\delegate.vb" />
     <Compile Include="b3style\logic\nodes\for_loop.vb" />
     <Compile Include="b3style\logic\nodes\function.vb" />
@@ -84,12 +85,14 @@
     <Compile Include="b3style\logic\nodes\param.vb" />
     <Compile Include="b3style\logic\nodes\raw_value.vb" />
     <Compile Include="b3style\logic\nodes\raw_variable_name.vb" />
+    <Compile Include="b3style\logic\nodes\reinterpret_cast.vb" />
     <Compile Include="b3style\logic\nodes\return_clause.vb" />
     <Compile Include="b3style\logic\nodes\static_cast.vb" />
     <Compile Include="b3style\logic\nodes\string.vb" />
     <Compile Include="b3style\logic\nodes\struct.vb" />
     <Compile Include="b3style\logic\nodes\typedef.vb" />
     <Compile Include="b3style\logic\nodes\ufloat.vb" />
+    <Compile Include="b3style\logic\nodes\undefine.vb" />
     <Compile Include="b3style\logic\nodes\value.vb" />
     <Compile Include="b3style\logic\nodes\value_clause.vb" />
     <Compile Include="b3style\logic\nodes\value_declaration.vb" />

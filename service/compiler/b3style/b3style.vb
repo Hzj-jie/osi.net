@@ -125,7 +125,15 @@ Partial Public NotInheritable Class b3style
                 with(Of condition)().
                 with(code_gen.of_children(Of logic_writer)("else-condition", 1)).
                 with(Of for_loop)().
-                with(Of _delegate)()
+                with(Of _delegate)().
+                with(Of reinterpret_cast)().
+                with(code_gen.of_ignore_last_child(Of logic_writer)("b2style-sentence-with-semi-colon")).
+                with(Of dealloc)().
+                with(Of undefine)().
+                with(code_gen.of_children(Of logic_writer)("value-with-bracket", 1)).
+                with(code_gen.of_input_without_ignored(Of logic_writer)("paramtype")).
+                with_of_all_childrens("paramtypelist").
+                with(code_gen.of_first_child(Of logic_writer)("paramtype-with-comma"))
         End Function
     End Class
 End Class
