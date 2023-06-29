@@ -13,7 +13,13 @@ Public Module deploys
     Public Const counter_folder_name As String = "counter"
     Public Const data_folder_name As String = "data"
     Public Const log_folder_name As String = "log"
-    Public ReadOnly deploys_root As String = calculate_deploys_root()
+    Public ReadOnly deploys_root As String =
+        Function() As String
+            If strsame(Path.GetFileName(Path.GetDirectoryName(application_directory)), app_folder_name, False) Then
+                Return Path.GetDirectoryName(Path.GetDirectoryName(application_directory))
+            End If
+            Return Path.GetPathRoot(application_directory)
+        End Function()
     Public ReadOnly service_name As String = Path.GetFileName(application_directory)
     Public ReadOnly report_deploys_folder As Boolean = env_bool(env_keys("report", "deploys", "folder"))
 
@@ -60,17 +66,6 @@ Public Module deploys
         Private Sub New()
         End Sub
     End Class
-
-    Private Function calculate_deploys_root() As String
-        Dim deploys_root As String
-        If strsame(Path.GetFileName(Path.GetDirectoryName(application_directory)), app_folder_name, False) Then
-            deploys_root = Path.GetDirectoryName(Path.GetDirectoryName(application_directory))
-        Else
-            deploys_root = Path.GetPathRoot(application_directory)
-        End If
-        assert(Not deploys_root.null_or_empty())
-        Return deploys_root
-    End Function
 
     Public Function application_info_output_filename() As String
         Return Path.Combine(application_name,

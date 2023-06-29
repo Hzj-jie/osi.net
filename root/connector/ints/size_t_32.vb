@@ -34,25 +34,23 @@ Imports constants = osi.root.constants
 Partial Public Structure size_t_32
     Implements IComparable, IComparable(Of size_t_32), ICloneable, ICloneable(Of size_t_32)
 
-    Public Shared ReadOnly inf As size_t_32 = calculate_inf()
-    Public Shared ReadOnly zero As size_t_32 = calculate_zero()
+    Public Shared ReadOnly inf As size_t_32 =
+        Function() As size_t_32
+            Dim inf As size_t_32 = New size_t_32(constants.npos)
+            assert(inf.npos())
+            Return inf
+        End Function()
+    Public Shared ReadOnly zero As size_t_32 =
+        Function() As size_t_32
+            Dim zero As size_t_32 = New size_t_32(uint32_0)
+            If True Then
+                assert(Not zero.npos())
+            Else
+                assert(zero.npos())
+            End If
+            Return zero
+        End Function()
     Public Shared ReadOnly sizeof_value As UInt32 = CUInt(sizeof(Of UInt32)())
-
-    Private Shared Function calculate_inf() As size_t_32
-        Dim inf As size_t_32 = New size_t_32(constants.npos)
-        assert(inf.npos())
-        Return inf
-    End Function
-
-    Private Shared Function calculate_zero() As size_t_32
-        Dim zero As size_t_32 = New size_t_32(uint32_0)
-        If True Then
-            assert(Not zero.npos())
-        Else
-            assert(zero.npos())
-        End If
-        Return zero
-    End Function
 
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2207:InitializeValueTypeStaticFieldsInline")>
     Shared Sub New()

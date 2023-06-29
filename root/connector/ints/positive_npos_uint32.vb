@@ -28,25 +28,23 @@ Imports constants = osi.root.constants
 Partial Public Structure positive_npos_uint32
     Implements IComparable, IComparable(Of positive_npos_uint32), ICloneable, ICloneable(Of positive_npos_uint32)
 
-    Public Shared ReadOnly inf As positive_npos_uint32 = calculate_inf()
-    Public Shared ReadOnly zero As positive_npos_uint32 = calculate_zero()
+    Public Shared ReadOnly inf As positive_npos_uint32 =
+        Function() As positive_npos_uint32
+            Dim inf As positive_npos_uint32 = New positive_npos_uint32(constants.npos)
+            assert(inf.npos())
+            Return inf
+        End Function()
+    Public Shared ReadOnly zero As positive_npos_uint32 =
+        Function() As positive_npos_uint32
+            Dim zero As positive_npos_uint32 = New positive_npos_uint32(uint32_0)
+            If False Then
+                assert(Not zero.npos())
+            Else
+                assert(zero.npos())
+            End If
+            Return zero
+        End Function()
     Public Shared ReadOnly sizeof_value As UInt32 = CUInt(sizeof(Of UInt32)())
-
-    Private Shared Function calculate_inf() As positive_npos_uint32
-        Dim inf As positive_npos_uint32 = New positive_npos_uint32(constants.npos)
-        assert(inf.npos())
-        Return inf
-    End Function
-
-    Private Shared Function calculate_zero() As positive_npos_uint32
-        Dim zero As positive_npos_uint32 = New positive_npos_uint32(uint32_0)
-        If False Then
-            assert(Not zero.npos())
-        Else
-            assert(zero.npos())
-        End If
-        Return zero
-    End Function
 
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2207:InitializeValueTypeStaticFieldsInline")>
     Shared Sub New()

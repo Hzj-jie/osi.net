@@ -44,11 +44,11 @@ Public Module _chmod
                       "Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756"
     Private Const mono_posix_assembly_v4 As String =
                       "Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756"
-    Private ReadOnly f As invoker = calculate_f()
-
-    Private Function calculate_f() As invoker
-        Dim f As invoker = Nothing
-        If envs.mono Then
+    Private ReadOnly f As invoker =
+        Function() As invoker
+            If Not envs.mono Then
+                Return Nothing
+            End If
             Try
                 If envs.clr_2 Then
                     AppDomain.CurrentDomain().Load(mono_posix_assembly_v2)
@@ -61,19 +61,19 @@ Public Module _chmod
                 End If
             Catch ex As Exception
                 raise_error(error_type.warning,
-                            "failed to load Mono.Posix assembly, ex ",
-                            ex.Message())
+                                "failed to load Mono.Posix assembly, ex ",
+                                ex.Message())
                 Return Nothing
             End Try
             ' Mono.Unix.Native.FilePermissions is not available.
+            Dim f As invoker = Nothing
             typeless_invoker.of(f).
-                with_type_name(strcat("Mono.Unix.Native.Syscall, ",
-                                      If(envs.clr_2, mono_posix_assembly_v2, mono_posix_assembly_v4))).
-                with_name("chmod").
-                build(f)
-        End If
-        Return f
-    End Function
+                             with_type_name(strcat("Mono.Unix.Native.Syscall, ",
+                                                   If(envs.clr_2, mono_posix_assembly_v2, mono_posix_assembly_v4))).
+                             with_name("chmod").
+                             build(f)
+            Return f
+        End Function()
 
     Public Sub chmod(ByVal file As String, ByVal permissions As FilePermissions, ByRef o As Int32)
         If Not f Is Nothing AndAlso f.static() AndAlso f.pre_binding() Then

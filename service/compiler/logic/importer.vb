@@ -13,18 +13,16 @@ Partial Public NotInheritable Class logic
     Partial Public NotInheritable Class importer
         Private Const comment_start As String = "##"
         Private Const comment_end As String = character.newline
-        Private Shared ReadOnly separators() As String = build_separators()
+        Private Shared ReadOnly separators() As String = Function() As String()
+                                                             Dim v As New vector(Of String)()
+                                                             For i As UInt32 = 0 To strlen(space_chars) - uint32_1
+                                                                 v.emplace_back(space_chars(CInt(i)))
+                                                             Next
+                                                             Return +v
+                                                         End Function()
         Private Shared ReadOnly surround_strs() As String = Nothing
 
         Private ReadOnly functions As interrupts
-
-        Private Shared Function build_separators() As String()
-            Dim v As New vector(Of String)()
-            For i As UInt32 = 0 To strlen(space_chars) - uint32_1
-                v.emplace_back(space_chars(CInt(i)))
-            Next
-            Return +v
-        End Function
 
         Public Sub New(ByVal functions As interrupts)
             assert(Not functions Is Nothing)

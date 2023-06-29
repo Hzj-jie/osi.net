@@ -13,19 +13,18 @@ Public NotInheritable Class comparable_type
                IEquatable(Of comparable_type),
                IEquatable(Of Type)
 
-    Private Shared ReadOnly cmp As Func(Of Type, Type, Int32) = calculate_cmp()
-    Private ReadOnly t As Type
-
-    Private Shared Function calculate_cmp() As Func(Of Type, Type, Int32)
-        If use_recursive_compare() Then
+    Private Shared ReadOnly cmp As Func(Of Type, Type, Int32) =
+        Function() As Func(Of Type, Type, Int32)
+            If use_recursive_compare() Then
+                Return Function(x As Type, y As Type) As Int32
+                           Return x.GUID().CompareTo(y.GUID())
+                       End Function
+            End If
             Return Function(x As Type, y As Type) As Int32
-                       Return x.GUID().CompareTo(y.GUID())
+                       Return strcmp(x.AssemblyQualifiedName(), y.AssemblyQualifiedName())
                    End Function
-        End If
-        Return Function(x As Type, y As Type) As Int32
-                   Return strcmp(x.AssemblyQualifiedName(), y.AssemblyQualifiedName())
-               End Function
-    End Function
+        End Function()
+    Private ReadOnly t As Type
 
     Private Shared Function use_recursive_compare() As Boolean
 #If recursive_compare Then

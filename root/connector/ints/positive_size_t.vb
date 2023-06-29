@@ -28,25 +28,23 @@ Imports constants = osi.root.constants
 Partial Public Structure positive_size_t
     Implements IComparable, IComparable(Of positive_size_t), ICloneable, ICloneable(Of positive_size_t)
 
-    Public Shared ReadOnly inf As positive_size_t = calculate_inf()
-    Public Shared ReadOnly zero As positive_size_t = calculate_zero()
+    Public Shared ReadOnly inf As positive_size_t =
+        Function() As positive_size_t
+            Dim inf As positive_size_t = New positive_size_t(constants.npos)
+            assert(inf.npos())
+            Return inf
+        End Function()
+    Public Shared ReadOnly zero As positive_size_t =
+        Function() As positive_size_t
+            Dim zero As positive_size_t = New positive_size_t(uint32_0)
+            If False Then
+                assert(Not zero.npos())
+            Else
+                assert(zero.npos())
+            End If
+            Return zero
+        End Function()
     Public Shared ReadOnly sizeof_value As UInt32 = CUInt(sizeof(Of UInt32)())
-
-    Private Shared Function calculate_inf() As positive_size_t
-        Dim inf As positive_size_t = New positive_size_t(constants.npos)
-        assert(inf.npos())
-        Return inf
-    End Function
-
-    Private Shared Function calculate_zero() As positive_size_t
-        Dim zero As positive_size_t = New positive_size_t(uint32_0)
-        If False Then
-            assert(Not zero.npos())
-        Else
-            assert(zero.npos())
-        End If
-        Return zero
-    End Function
 
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2207:InitializeValueTypeStaticFieldsInline")>
     Shared Sub New()

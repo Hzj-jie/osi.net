@@ -22,7 +22,7 @@ Public NotInheritable Class template_template_test
         assertion.is_not_null(n)
         Using New scope()
             Dim t As scope.template_template = Nothing
-            assertion.is_true(b2style.scope.template_t.of(b2style.new_code_gens(), n.child().child(), t))
+            assertion.is_true(b2style.scope.template_t.of(b2style.code_gens(), n.child().child(), t))
             Dim impl As String = Nothing
             assertion.is_true(t.apply(vector.of("int"), impl))
             assertion.equal(impl, "class C__int { int x ; void f ( int y ) { } } ;")
@@ -36,7 +36,7 @@ Public NotInheritable Class template_template_test
         assertion.is_not_null(n)
         Using New scope()
             Dim t As scope.template_template = Nothing
-            assertion.is_true(b2style.scope.template_t.of(b2style.new_code_gens(), n.child().child(), t))
+            assertion.is_true(b2style.scope.template_t.of(b2style.code_gens(), n.child().child(), t))
             assertion.is_false(t.apply(vector.of("a", "b"), Nothing))
         End Using
     End Sub
@@ -51,7 +51,7 @@ Public NotInheritable Class template_template_test
             error_type.user,
             Sub()
                 Using New scope()
-                    assertion.is_false(b2style.scope.template_t.of(b2style.new_code_gens(),
+                    assertion.is_false(b2style.scope.template_t.of(b2style.code_gens(),
                                                                          n.child().child(),
                                                                          Nothing))
                 End Using
@@ -66,7 +66,7 @@ Public NotInheritable Class template_template_test
         assertion.is_not_null(n)
         Using New scope()
             Dim t As scope.template_template = Nothing
-            assertion.is_true(b2style.scope.template_t.of(b2style.new_code_gens(), n.child().child(), t))
+            assertion.is_true(b2style.scope.template_t.of(b2style.code_gens(), n.child().child(), t))
             Dim impl As String = Nothing
             assertion.is_true(t.apply(vector.of("int", "string"), impl))
             assertion.equal(impl, "class C__int__string { int x ; string y ; void p ( int x , string y ) { } } ;")

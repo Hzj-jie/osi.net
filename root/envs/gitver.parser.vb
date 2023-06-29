@@ -71,15 +71,13 @@ Partial Public NotInheritable Class gitver
     Private Shared ReadOnly field_count As Int32 = array_size_i(titles)
     Public Shared ReadOnly latest As commit_info = parse(latest_commit_raw)
     Public Shared ReadOnly current As commit_info = parse(current_commit_raw)
-    Public Shared ReadOnly diff As String = calculate_diff()
-
-    Private Shared Function calculate_diff() As String
-        Dim diff As String = bytes_str(Convert.FromBase64String(diff_base64))
-        If diff.null_or_whitespace() Then
-            diff = "<identical>"
-        End If
-        Return diff
-    End Function
+    Public Shared ReadOnly diff As String = Function() As String
+                                                Dim diff As String = bytes_str(Convert.FromBase64String(diff_base64))
+                                                If diff.null_or_whitespace() Then
+                                                    Return "<identical>"
+                                                End If
+                                                Return diff
+                                            End Function()
 
     Private Shared Function parse(ByVal commit_str As String) As commit_info
         Dim r As commit_info = Nothing

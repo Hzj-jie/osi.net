@@ -13,35 +13,56 @@ echo     Public Shared ReadOnly latest_commit_raw As String = _
 set FORMAT="CommitHash:%%H  |-+-|  ShortCommitHash:%%h  |-+-|  Author:%%an  |-+-|  AuthorEMail:%%ae  |-+-|  AuthorDate:%%ad  |-+-|  Committer:%%cn  |-+-|  CommitterEMail:%%ce  |-+-|  CommitterDate:%%cd  |-+-|  Subject:%%s  |-+-|  Body:%%b"
 set gitver=""
 if defined NO_GITVER (
-  set gitver=
+  set gitver=""
 ) else (
   call git fetch origin >nul 2>&1
   for /F "delims=" %%i in ('git log -1 origin/master --pretty^=%FORMAT%') do (
-    set gitver=%%i )
+    set gitver=%%i
+    goto :exit_for_1
+  )
+  :exit_for_1
+  set gitver="%gitver:"=""%"
 )
-set gitver="%gitver:"=""%"
 echo         %gitver%.Trim()
 
 echo     Public Shared ReadOnly current_commit_raw As String = _
 set gitver=""
 if defined NO_GITVER (
-  set gitver=
+  set gitver=""
 ) else (
   for /F "delims=" %%i in ('git log -1 --pretty^=%FORMAT%') do (
-    set gitver=%%i )
+    set gitver=%%i
+    goto :exit_for_2
+  )
+  :exit_for_2
+  set gitver="%gitver:"=""%"
 )
-set gitver="%gitver:"=""%"
 echo         %gitver%.Trim()
 
 echo     Public Shared ReadOnly diff_base64 As String = _
-git diff --ignore-all-space > gitdiff.txt
-certutil -encode gitdiff.txt gitdiff.b64 > nul
-for /F "delims=" %%i in ('findstr /v /c:- gitdiff.b64') do (
-  echo         "%%i" +
+if defined NO_GITVER (
+    echo         ""
+) else (
+    git diff --ignore-all-space > gitdiff.txt
+    certutil -encode gitdiff.txt gitdiff.b64 > nul
+    for /F "delims=" %%i in ('findstr /v /c:- gitdiff.b64') do (
+      echo         "%%i" +
+    )
+    echo         ""
+    del gitdiff.txt
+    del gitdiff.b64
 )
-echo         ""
-del gitdiff.txt
-del gitdiff.b64
+
+echo     Public Shared ReadOnly branch As String = _
+set gitbranch=""
+if defined NO_GITVER (
+  set gitbranch=""
+) else (
+  for /F "delims=" %%i in ('git branch --show-current') do (
+    set gitbranch="%%i"
+  )
+)
+echo         %gitbranch%.Trim()
 
 echo End Class
 

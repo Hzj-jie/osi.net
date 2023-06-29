@@ -17,15 +17,14 @@ Friend NotInheritable Class env_vars
     Public Shared ReadOnly utt_report_memory_status As Boolean =
         env_bool(env_keys("utt", "report", "memory", "status")) OrElse
         env_bool(env_keys("utt", "report", "memory"))
-    Public Shared ReadOnly repeat_per_case As UInt32 = utt_repeat_per_case()
-
-    Private Shared Function utt_repeat_per_case() As UInt32
-        Dim r As Int32 = 0
-        If Not env_value(env_keys("utt", "repeat"), r) OrElse r <= 0 Then
-            Return uint32_1
-        End If
-        Return CUInt(r)
-    End Function
+    Public Shared ReadOnly repeat_per_case As UInt32 =
+        Function() As UInt32
+            Dim r As Int32 = 0
+            If Not env_value(env_keys("utt", "repeat"), r) OrElse r <= 0 Then
+                Return uint32_1
+            End If
+            Return CUInt(r)
+        End Function()
 
     Private Sub New()
     End Sub

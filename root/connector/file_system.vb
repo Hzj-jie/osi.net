@@ -19,17 +19,15 @@ Public Module _file_system
         both_invalid = min_int32
     End Enum
 
-    Public ReadOnly file_system_case_sensitive As Boolean
-
-    Private Function calculate_file_system_case_sensitive() As Boolean
-        Dim tf As String = guid_str()
-        Try
-            File.WriteAllText(strtoupper(tf), character.null)
-            Return Not File.Exists(strtolower(tf))
-        Finally
-            File.Delete(strtoupper(tf))
-        End Try
-    End Function
+    Public ReadOnly file_system_case_sensitive As Boolean = Function() As Boolean
+                                                                Dim tf As String = guid_str()
+                                                                Try
+                                                                    File.WriteAllText(strtoupper(tf), character.null)
+                                                                    Return Not File.Exists(strtolower(tf))
+                                                                Finally
+                                                                    File.Delete(strtoupper(tf))
+                                                                End Try
+                                                            End Function()
 
     <Extension()> Public Function full_path(ByVal this As String, ByRef output As String) As Boolean
         If this Is Nothing Then

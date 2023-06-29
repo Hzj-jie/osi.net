@@ -21,18 +21,6 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
                                        SCOPE_T As {scope(Of SCOPE_T), New})
     Inherits rule_wrapper(Of _nlexer_rule, _syntaxer_rule)
 
-    ' @VisibleForTesting
-    Public Shared Function new_code_gens() As code_gens(Of WRITER)
-        Dim l As New code_gens(Of WRITER)()
-        Dim v As vector(Of Action(Of code_gens(Of WRITER))) = +alloc(Of _code_gens)()
-        Dim i As UInt32 = 0
-        While i < v.size()
-            v(i)(l)
-            i += uint32_1
-        End While
-        Return l
-    End Function
-
     Public Structure code_gens_proxy
         Implements func_t(Of code_gens(Of WRITER))
 
@@ -41,7 +29,8 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         End Function
     End Structure
 
-    Protected Shared Function code_gens() As code_gens(Of WRITER)
+    ' @VisibleForTesting
+    Public Shared Function code_gens() As code_gens(Of WRITER)
         Return code_builder.code_gens
     End Function
 
@@ -57,15 +46,24 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
     Public Structure code_builder_proxy
         Implements func_t(Of String, WRITER, Boolean)
 
-        Public Function run(ByVal i As String,
-                                ByVal j As WRITER) As Boolean _
+        Public Function run(ByVal i As String, ByVal j As WRITER) As Boolean _
                                Implements func_t(Of String, WRITER, Boolean).run
             Return code_builder.build(i, j)
         End Function
     End Structure
 
     Protected NotInheritable Class code_builder
-        Public Shared ReadOnly code_gens As code_gens(Of WRITER) = new_code_gens()
+        Public Shared ReadOnly code_gens As code_gens(Of WRITER) =
+            Function() As code_gens(Of WRITER)
+                Dim l As New code_gens(Of WRITER)()
+                Dim v As vector(Of Action(Of code_gens(Of WRITER))) = +alloc(Of _code_gens)()
+                Dim i As UInt32 = 0
+                While i < v.size()
+                    v(i)(l)
+                    i += uint32_1
+                End While
+                Return l
+            End Function()
 
         Public Shared Function build(ByVal input As String, ByVal o As WRITER) As Boolean
             assert(Not o Is Nothing)

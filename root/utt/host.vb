@@ -136,15 +136,11 @@ Partial Friend NotInheritable Class host
         Return has_fit_true
     End Function
 
-    Public Shared Sub clear_selection()
+    Public Shared Function run(ByVal selector As vector(Of String)) As Int32
         cases.stream().foreach(Sub(ByVal x As case_info)
                                    x.finished = False
                                End Sub)
-    End Sub
-
-    Public Shared Function run(ByVal selector As vector(Of String)) As Int32
         Dim r As Int32 = 0
-        clear_selection()
         cases.stream().foreach(Sub(ByVal x)
                                    If [select](selector, x) Then
                                        r += 1

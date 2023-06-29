@@ -249,7 +249,7 @@ Public NotInheritable Class argument_setter_test
     <test>
     Private Shared Sub unset_bool_should_be_undefined()
         argument_holder9.bool_arg = Nothing
-        argument_setter.process_type(GetType(argument_holder9), var.default)
+        argument_setter.process_type(GetType(argument_holder9), var.application)
         If assertion.is_not_null(argument_holder9.bool_arg) Then
             assertion.is_false(-argument_holder9.bool_arg)
             assertion.is_true(argument_holder9.bool_arg Or True)

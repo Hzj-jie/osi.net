@@ -5,33 +5,23 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports envs = osi.root.envs
 
 Public NotInheritable Class config
     Implements ICloneable, ICloneable(Of config)
 
-    Public Shared ReadOnly [default] As config
-
-    Shared Sub New()
-        [default] = New config()
-    End Sub
+    Public Shared Function [default]() As config
+        Return New config()
+    End Function
 
     Public argument_separator As String = character.blank
-    Public switcher_prefix As String = default_switcher_prefix
+    Public switcher_prefix As String = character.minus_sign + character.left_slash
     Public full_switcher_prefix As String = character.tilde
     Public arg_prefix As String = character.minus_sign + character.minus_sign
     Public arg_key_value_separator As String = character.equal_sign
     Public case_sensitive As Boolean = True
 
-    Private Shared ReadOnly default_switcher_prefix As String =
-        Function() As String
-            If envs.env_bool(envs.env_keys("argument", "no", "short", "switcher")) Then
-                Return Nothing
-            End If
-            Return character.minus_sign + character.left_slash
-        End Function()
-
-    Public Sub New()
+    ' Anything should start from [default]() then CloneT().
+    Private Sub New()
     End Sub
 
     Private Sub New(ByVal argument_separator As String,
@@ -137,3 +127,4 @@ Public NotInheritable Class config
                           case_sensitive)
     End Function
 End Class
+

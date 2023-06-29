@@ -6,9 +6,17 @@ Option Strict On
 Imports System.Text
 
 Public Module _string
-    Public Const newline_chars As String = character.newline +
-                                           character.return
-    Public ReadOnly space_chars As String = calculate_space_chars()
+    Public Const newline_chars As String = character.newline + character.return
+    Public ReadOnly space_chars As String =
+        Function() As String
+            Dim space_chars As String = Nothing
+            For i As Int32 = Convert.ToInt32(Char.MinValue) To Convert.ToInt32(Char.MaxValue)
+                If Char.IsWhiteSpace(Convert.ToChar(i)) Then
+                    space_chars += Convert.ToChar(i)
+                End If
+            Next
+            Return space_chars
+        End Function()
     Public Const left_brackets As String = "（｛［《＜〔〈【({[<"
     Public Const right_brackets As String = "）｝］》＞〕〉】)}]>"
     Public Const brackets As String = left_brackets + right_brackets
@@ -28,16 +36,6 @@ Public Module _string
     Public ReadOnly stringbuilder_default_capacity As UInt32 = CUInt((New StringBuilder()).Capacity())
 
     Public Const npos As Int32 = -1
-
-    Private Function calculate_space_chars() As String
-        Dim space_chars As String = Nothing
-        For i As Int32 = Convert.ToInt32(Char.MinValue) To Convert.ToInt32(Char.MaxValue)
-            If Char.IsWhiteSpace(Convert.ToChar(i)) Then
-                space_chars += Convert.ToChar(i)
-            End If
-        Next
-        Return space_chars
-    End Function
 End Module
 
 Public NotInheritable Class newline

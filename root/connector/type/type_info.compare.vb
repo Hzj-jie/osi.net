@@ -49,27 +49,26 @@ Public Class type_info_operators
 End Class
 
 Public NotInheritable Class type_info(Of T1, _OP As type_info_operators, T2)
-    Public Shared ReadOnly v As Boolean = calculate_v()
-
-    Private Shared Function calculate_v() As Boolean
-        If GetType(_OP).Equals(GetType(type_info_operators.[is])) Then
-            Return GetType(T1).is(GetType(T2))
-        End If
-        If GetType(_OP).Equals(GetType(type_info_operators.equal)) Then
-            Return GetType(T1).Equals(GetType(T2))
-        End If
-        If GetType(_OP).Equals(GetType(type_info_operators.inherit)) Then
-            Return GetType(T1).inherit(GetType(T2))
-        End If
-        If GetType(_OP).Equals(GetType(type_info_operators.implement)) Then
-            Return GetType(T1).implement(GetType(T2))
-        End If
-        If GetType(_OP).Equals(GetType(type_info_operators.interface_inherit)) Then
-            Return GetType(T1).interface_inherit(GetType(T2))
-        End If
-        assert(False)
-        Return False
-    End Function
+    Public Shared ReadOnly v As Boolean =
+        Function() As Boolean
+            If GetType(_OP).Equals(GetType(type_info_operators.[is])) Then
+                Return GetType(T1).is(GetType(T2))
+            End If
+            If GetType(_OP).Equals(GetType(type_info_operators.equal)) Then
+                Return GetType(T1).Equals(GetType(T2))
+            End If
+            If GetType(_OP).Equals(GetType(type_info_operators.inherit)) Then
+                Return GetType(T1).inherit(GetType(T2))
+            End If
+            If GetType(_OP).Equals(GetType(type_info_operators.implement)) Then
+                Return GetType(T1).implement(GetType(T2))
+            End If
+            If GetType(_OP).Equals(GetType(type_info_operators.interface_inherit)) Then
+                Return GetType(T1).interface_inherit(GetType(T2))
+            End If
+            assert(False)
+            Return False
+        End Function()
 
     Private Sub New()
     End Sub

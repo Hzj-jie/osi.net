@@ -36,32 +36,31 @@ Public Module _console_key_info_mapping
         End Function
     End Structure
 
-    Private ReadOnly m() As vector(Of keyinfo) = calculate_m()
-
-    Private Function calculate_m() As vector(Of keyinfo)()
-        Dim m(console_key_max_char_int) As vector(Of keyinfo)
-        assert(console_key_min >= 0)
-        assert(console_key_max < console_key_info_mapping_height)
-        For i As Int32 = console_key_min To console_key_max
-            For j As Int32 = 0 To console_key_info_mapping_width - 1
-                Dim k As keyinfo = Nothing
-                Dim c As Char = Nothing
-                Dim ci As Int32 = 0
-                Dim caps_lock As Boolean = False
-                Dim num_lock As Boolean = False
-                Dim shift As Boolean = False
-                console_key_info_mapping_column(j, caps_lock, num_lock, shift)
-                c = console_key_info_mapping(i, j)
-                ci = Convert.ToInt32(c)
-                k = New keyinfo(i, c, caps_lock, num_lock, shift)
-                If m(ci) Is Nothing Then
-                    m(ci) = New vector(Of keyinfo)()
-                End If
-                m(ci).emplace_back(k)
+    Private ReadOnly m() As vector(Of keyinfo) =
+        Function() As vector(Of keyinfo)()
+            Dim m(console_key_max_char_int) As vector(Of keyinfo)
+            assert(console_key_min >= 0)
+            assert(console_key_max < console_key_info_mapping_height)
+            For i As Int32 = console_key_min To console_key_max
+                For j As Int32 = 0 To console_key_info_mapping_width - 1
+                    Dim k As keyinfo = Nothing
+                    Dim c As Char = Nothing
+                    Dim ci As Int32 = 0
+                    Dim caps_lock As Boolean = False
+                    Dim num_lock As Boolean = False
+                    Dim shift As Boolean = False
+                    console_key_info_mapping_column(j, caps_lock, num_lock, shift)
+                    c = console_key_info_mapping(i, j)
+                    ci = Convert.ToInt32(c)
+                    k = New keyinfo(i, c, caps_lock, num_lock, shift)
+                    If m(ci) Is Nothing Then
+                        m(ci) = New vector(Of keyinfo)()
+                    End If
+                    m(ci).emplace_back(k)
+                Next
             Next
-        Next
-        Return m
-    End Function
+            Return m
+        End Function()
 
     <Extension()> Public Function keycode(ByVal c As Char,
                                           ByRef o As vector(Of keyinfo)) As Boolean

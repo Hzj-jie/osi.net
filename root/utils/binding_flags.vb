@@ -12,21 +12,19 @@ Imports osi.root.formation
 
 <global_init(global_init_level.functor)>
 Public Module _binding_flags
-    Private ReadOnly m As map(Of String, BindingFlags) = calculate_m()
+    Private ReadOnly m As map(Of String, BindingFlags) =
+        Function() As map(Of String, BindingFlags)
+            Dim m As New map(Of String, BindingFlags)()
+            Dim it As unordered_map(Of String, BindingFlags).iterator = enum_def(Of BindingFlags).string_map().begin()
+            While it <> enum_def(Of BindingFlags).string_map().end()
+                assert(m.emplace((+it).first, (+it).second).second)
+                it += 1
+            End While
 
-    Private Function calculate_m() As map(Of String, BindingFlags)
-        Dim m As map(Of String, BindingFlags) = New map(Of String, BindingFlags)()
-        Dim it As unordered_map(Of String, BindingFlags).iterator = Nothing
-        it = enum_def(Of BindingFlags).string_map().begin()
-        While it <> enum_def(Of BindingFlags).string_map().end()
-            assert(m.emplace((+it).first, (+it).second).second)
-            it += 1
-        End While
-
-        assert(m.emplace("private", BindingFlags.NonPublic).second)
-        assert(m.emplace("protected", BindingFlags.NonPublic).second)
-        Return m
-    End Function
+            assert(m.emplace("private", BindingFlags.NonPublic).second)
+            assert(m.emplace("protected", BindingFlags.NonPublic).second)
+            Return m
+        End Function()
 
     <Extension()> Public Function from_str(ByRef bf As BindingFlags, ByVal s As String) As Boolean
         If s.null_or_empty() Then
