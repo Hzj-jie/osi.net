@@ -18,7 +18,9 @@ if defined NO_GITVER (
   call git fetch origin >nul 2>&1
   for /F "delims=" %%i in ('git log -1 origin/master --pretty^=%FORMAT%') do (
     set gitver=%%i
+    goto :exit_for_1
   )
+  :exit_for_1
   set gitver="%gitver:"=""%"
 )
 echo         %gitver%.Trim()
@@ -30,23 +32,25 @@ if defined NO_GITVER (
 ) else (
   for /F "delims=" %%i in ('git log -1 --pretty^=%FORMAT%') do (
     set gitver=%%i
+    goto :exit_for_2
   )
+  :exit_for_2
   set gitver="%gitver:"=""%"
 )
 echo         %gitver%.Trim()
 
 echo     Public Shared ReadOnly diff_base64 As String = _
 if defined NO_GITVER (
-	echo         ""
+    echo         ""
 ) else (
-	git diff --ignore-all-space > gitdiff.txt
-	certutil -encode gitdiff.txt gitdiff.b64 > nul
-	for /F "delims=" %%i in ('findstr /v /c:- gitdiff.b64') do (
-	  echo         "%%i" +
-	)
-	echo         ""
-	del gitdiff.txt
-	del gitdiff.b64
+    git diff --ignore-all-space > gitdiff.txt
+    certutil -encode gitdiff.txt gitdiff.b64 > nul
+    for /F "delims=" %%i in ('findstr /v /c:- gitdiff.b64') do (
+      echo         "%%i" +
+    )
+    echo         ""
+    del gitdiff.txt
+    del gitdiff.b64
 )
 
 echo     Public Shared ReadOnly branch As String = _
@@ -55,7 +59,7 @@ if defined NO_GITVER (
   set gitbranch=""
 ) else (
   for /F "delims=" %%i in ('git branch --show-current') do (
-	set gitbranch="%%i"
+    set gitbranch="%%i"
   )
 )
 echo         %gitbranch%.Trim()
