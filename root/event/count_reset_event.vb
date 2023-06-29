@@ -19,20 +19,17 @@ End Class
 Public Class count_reset_event(Of _MAX_COUNT As _int64)
     Implements IDisposable
 
-    Private Shared ReadOnly MAX_COUNT As Int32 = calculate_max_count()
+    Private Shared ReadOnly MAX_COUNT As Int32 = Function() As Int32
+                                                     Dim c As Int64 = +alloc(Of _MAX_COUNT)()
+                                                     assert(c <= max_int32)
+                                                     assert(c >= 0)
+                                                     assert(c <> 1)
+                                                     Return CInt(c)
+                                                 End Function()
     Private ReadOnly m As ManualResetEvent
     Private ReadOnly clock As tick_clock
     Private l As lock_t
     Private p As Int32
-
-    Private Shared Function calculate_max_count() As Int32
-        Dim c As Int64 = 0
-        c = +alloc(Of _MAX_COUNT)()
-        assert(c <= max_int32)
-        assert(c >= 0)
-        assert(c <> 1)
-        Return CInt(c)
-    End Function
 
     Public Sub New()
         m = New ManualResetEvent(False)

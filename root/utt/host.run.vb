@@ -42,7 +42,7 @@ Partial Friend NotInheritable Class host
         assert(Not c Is Nothing)
         assert(Not finished Is Nothing)
 
-        If Not self_health_stage() Then
+        If Not selfhealth.in_stage() Then
             Dim msg() As Object = Nothing
             msg = {"start running ", c.full_name(), " at ", short_time()}
             If env_vars.utt_report_case_name Then
@@ -57,7 +57,7 @@ Partial Friend NotInheritable Class host
         execute_case(c)
         Interlocked.Add(using_threads, -c.case.reserved_processors())
 
-        If Not self_health_stage() Then
+        If Not selfhealth.in_stage() Then
             If env_vars.utt_report_background_worker_status Then
                 raise_error("background worker status after case ",
                             c.full_name(),

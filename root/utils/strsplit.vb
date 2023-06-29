@@ -10,7 +10,15 @@ Imports osi.root.constants
 Imports osi.root.formation
 
 Public NotInheritable Class strsplitter
-    Private Shared ReadOnly default_separators() As String = calculate_default_separators()
+    Private Shared ReadOnly default_separators() As String =
+        Function() As String()
+            assert(npos < 0)
+            Dim default_separators(strlen_i(space_chars) - 1) As String
+            For i As Int32 = 0 To strlen_i(space_chars) - 1
+                default_separators(i) = Convert.ToString(space_chars(i))
+            Next
+            Return default_separators
+        End Function()
     Private Shared ReadOnly default_surround_strs() As pair(Of String, String) =
         {pair.emplace_of(Convert.ToString(character.quote),
                          Convert.ToString(character.quote)),
@@ -18,15 +26,6 @@ Public NotInheritable Class strsplitter
                          Convert.ToString(character.single_quotation)),
          pair.emplace_of(Convert.ToString(character.backquote),
                          Convert.ToString(character.backquote))}
-
-    Private Shared Function calculate_default_separators() As String()
-        assert(npos < 0)
-        Dim default_separators(strlen_i(space_chars) - 1) As String
-        For i As Int32 = 0 To strlen_i(space_chars) - 1
-            default_separators(i) = Convert.ToString(space_chars(i))
-        Next
-        Return default_separators
-    End Function
 
     Public Shared Function with_default_separators(ParamArray ByVal separators() As String) As String()
         If isemptyarray(separators) Then

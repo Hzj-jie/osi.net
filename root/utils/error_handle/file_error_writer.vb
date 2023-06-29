@@ -14,16 +14,16 @@ Public NotInheritable Class file_error_writer
     Private NotInheritable Class log_writer
         Inherits application_info_writer
 
-        Private Shared Function calculate_log_file() As String
-            Dim log_file As String = Nothing
-            If Not envs.env_value(envs.env_keys("log", "file"), log_file) Then
-                log_file = Nothing
-            End If
-            Return log_file
-        End Function
-
         Public Sub New()
-            MyBase.New(envs.log_folder, calculate_log_file(), "log")
+            MyBase.New(envs.log_folder,
+                       Function() As String
+                           Dim log_file As String = Nothing
+                           If Not envs.env_value(envs.env_keys("log", "file"), log_file) Then
+                               Return Nothing
+                           End If
+                           Return log_file
+                       End Function(),
+                       "log")
         End Sub
 
         Public Shadows Function writer() As StreamWriter

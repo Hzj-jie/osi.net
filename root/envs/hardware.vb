@@ -9,8 +9,18 @@ Imports osi.root.constants
 
 <global_init(global_init_level.other)>
 Public Module _hardware
-    Public ReadOnly hardware_manufacturer As String = calculate_hardware_manufacturer()
-    Public ReadOnly hardware_model As String = calculate_hardware_model()
+    Public ReadOnly hardware_manufacturer As String = Function() As String
+                                                          If envs.mono Then
+                                                              Return "Mono"
+                                                          End If
+                                                          Return search_management_object("Manufacturer")
+                                                      End Function()
+    Public ReadOnly hardware_model As String = Function() As String
+                                                   If envs.mono Then
+                                                       Return "Mono"
+                                                   End If
+                                                   Return search_management_object("Model")
+                                               End Function()
     Public ReadOnly hyper_v_virtual_machine As Boolean =
         strsame(hardware_manufacturer, "microsoft corporation", False) AndAlso
         strcontains(hardware_model, "virtual", False)
@@ -21,20 +31,6 @@ Public Module _hardware
         vmware_virtual_machine OrElse
         virtualbox_virtual_machine
     Public ReadOnly report_hardware_info As Boolean = env_bool(env_keys("report", "hardware", "info"))
-
-    Private Function calculate_hardware_manufacturer() As String
-        If envs.mono Then
-            Return "Mono"
-        End If
-        Return search_management_object("Manufacturer")
-    End Function
-
-    Private Function calculate_hardware_model() As String
-        If envs.mono Then
-            Return "Mono"
-        End If
-        Return search_management_object("Model")
-    End Function
 
     Private Function search_management_object(ByVal item_name As String) As String
         Using searcher As New ManagementObjectSearcher("select * from Win32_ComputerSystem")

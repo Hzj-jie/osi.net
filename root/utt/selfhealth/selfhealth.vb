@@ -9,7 +9,7 @@ Imports osi.root.formation
 Public NotInheritable Class selfhealth
     Private Shared self_health As Boolean = False
 
-    Public Shared Function self_health_stage() As Boolean
+    Public Shared Function in_stage() As Boolean
         Return self_health
     End Function
 

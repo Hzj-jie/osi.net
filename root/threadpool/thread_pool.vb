@@ -46,15 +46,13 @@ Public NotInheritable Class thread_pool
     End Function
 
     Private NotInheritable Class ref
-        Public Shared ReadOnly q As slimqless2_threadpool = create_thread_pool()
-
-        Private Shared Function create_thread_pool() As slimqless2_threadpool
-            Dim r As New slimqless2_threadpool()
-            application_lifetime.stopping_handle(Sub()
-                                                     r.stop()
-                                                 End Sub)
-            Return r
-        End Function
+        Public Shared ReadOnly q As slimqless2_threadpool = Function() As slimqless2_threadpool
+                                                                Dim r As New slimqless2_threadpool()
+                                                                application_lifetime.stopping_handle(Sub()
+                                                                                                         r.stop()
+                                                                                                     End Sub)
+                                                                Return r
+                                                            End Function()
 
         Private Sub New()
         End Sub

@@ -5,7 +5,6 @@ Option Strict On
 
 Imports System.DateTime
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.envs
 
 Public NotInheritable Class failure_case
@@ -25,7 +24,7 @@ Public NotInheritable Class failure_case
     End Sub
 
     Public Overrides Function run() As Boolean
-        If self_health_stage() Then
+        If selfhealth.in_stage() Then
             assertion.is_true(False)
             report_self_health_failure(1, "assertion.is_true(False)")
             assertion.is_null("")
@@ -121,6 +120,6 @@ Public NotInheritable Class failure_case
         assertion.happening_in(Function() True, 1)
         assertion.not_happening_in(Function() False, 1)
 
-        Return Not self_health_stage()
+        Return Not selfhealth.in_stage()
     End Function
 End Class

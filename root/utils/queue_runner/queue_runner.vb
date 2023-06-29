@@ -13,7 +13,15 @@ Imports osi.root.lock
 
 <global_init(global_init_level.threading_and_procedure)>
 Partial Public NotInheritable Class queue_runner
-    Public Shared ReadOnly thread_count As UInt32 = determine_thread_count()
+    Public Shared ReadOnly thread_count As UInt32 =
+        Function() As UInt32
+            assert((queue_runner_thread_count > 0 AndAlso
+                    queue_runner_thread_count <= Environment.ProcessorCount()) OrElse
+                   queue_runner_thread_count = npos)
+            Return CUInt(If(queue_runner_thread_count <> npos,
+                            queue_runner_thread_count,
+                            max(1, Environment.ProcessorCount() >> 4)))
+        End Function()
     Private Shared ReadOnly LENGTH As Int64 = counter.register_average_and_last_average("QUEUE_RUNNER_LENGTH")
     Private Shared ReadOnly INTERVAL As Int64 = counter.register_average_and_last_average("QUEUE_RUNNER_INTERVAL_TICKS")
     Private Shared ReadOnly USED As Int64 = counter.register_average_and_last_average("QUEUE_RUNNER_USED_TICKS")
@@ -29,15 +37,6 @@ Partial Public NotInheritable Class queue_runner
                                                  End If
                                              End Sub)
     End Sub
-
-    Private Shared Function determine_thread_count() As UInt32
-        assert((queue_runner_thread_count > 0 AndAlso
-                queue_runner_thread_count <= Environment.ProcessorCount()) OrElse
-               queue_runner_thread_count = npos)
-        Return CUInt(If(queue_runner_thread_count <> npos,
-                        queue_runner_thread_count,
-                        max(1, Environment.ProcessorCount() >> 4)))
-    End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Sub trigger()
