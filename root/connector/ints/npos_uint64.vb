@@ -22,25 +22,23 @@ Imports constants = osi.root.constants
 Partial Public Structure npos_uint64
     Implements IComparable, IComparable(Of npos_uint64), ICloneable, ICloneable(Of npos_uint64)
 
-    Public Shared ReadOnly inf As npos_uint64 = calculate_inf()
-    Public Shared ReadOnly zero As npos_uint64 = calculate_zero()
+    Public Shared ReadOnly inf As npos_uint64 =
+        Function() As npos_uint64
+            Dim inf As npos_uint64 = New npos_uint64(constants.npos)
+            assert(inf.npos())
+            Return inf
+        End Function()
+    Public Shared ReadOnly zero As npos_uint64 =
+        Function() As npos_uint64
+            Dim zero As npos_uint64 = New npos_uint64(uint64_0)
+            If True Then
+                assert(Not zero.npos())
+            Else
+                assert(zero.npos())
+            End If
+            Return zero
+        End Function()
     Public Shared ReadOnly sizeof_value As UInt32 = CUInt(sizeof(Of UInt64)())
-
-    Private Shared Function calculate_inf() As npos_uint64
-        Dim inf As npos_uint64 = New npos_uint64(constants.npos)
-        assert(inf.npos())
-        Return inf
-    End Function
-
-    Private Shared Function calculate_zero() As npos_uint64
-        Dim zero As npos_uint64 = New npos_uint64(uint64_0)
-        If True Then
-            assert(Not zero.npos())
-        Else
-            assert(zero.npos())
-        End If
-        Return zero
-    End Function
 
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2207:InitializeValueTypeStaticFieldsInline")>
     Shared Sub New()

@@ -39,101 +39,93 @@ Public NotInheritable Class os
     Public Shared ReadOnly full_name As String = computer.Info().OSFullName()
     Public Shared ReadOnly platform As String = computer.Info().OSPlatform()
     Public Shared ReadOnly version As String = computer.Info().OSVersion()
-    Public Shared ReadOnly family As family_t = detect_family()
-    Public Shared ReadOnly windows_major As windows_major_t = detect_windows_major()
-    Public Shared ReadOnly windows_ver As windows_ver_t = detect_windows_ver()
-
-    Private Shared Function detect_family() As family_t
-        Dim p As PlatformID = Nothing
-        p = Environment.OSVersion().Platform()
-        Select Case p
-            Case PlatformID.MacOSX
-                Return family_t.macosx
-            Case PlatformID.Unix
-                Return family_t.unix
-            Case PlatformID.Win32NT,
-                 PlatformID.Win32S,
-                 PlatformID.Win32Windows,
-                 PlatformID.WinCE
-                Return family_t.windows
-            Case PlatformID.Xbox
-                Return family_t.xbox
-        End Select
-        Return family_t.unknown
-    End Function
-
-    Private Shared Function detect_windows_major() As windows_major_t
-        Dim p As PlatformID = Nothing
-        p = Environment.OSVersion().Platform()
-        Select Case p
-            Case PlatformID.WinCE
-                Return windows_major_t._CE
-            Case PlatformID.Win32S
-                Return windows_major_t._32_subset
-            Case PlatformID.Win32Windows
-                Return windows_major_t._9x
-        End Select
-
-        Dim v As Version = Nothing
-        v = Environment.OSVersion().Version()
-        Select Case v.Major()
-            Case 4
-                Return windows_major_t._4
-            Case 5
-                Return windows_major_t._5
-            Case 6
-                Return windows_major_t._6
-            Case 10
-                Return windows_major_t._10
-        End Select
-
-        Return windows_major_t._unknown
-    End Function
-
-    Private Shared Function detect_windows_ver() As windows_ver_t
-        If family = family_t.windows Then
-            Dim p As PlatformID = Nothing
-            p = Environment.OSVersion().Platform()
+    Public Shared ReadOnly family As family_t = Function() As family_t
+                                                    Dim p As PlatformID = Environment.OSVersion().Platform()
+                                                    Select Case p
+                                                        Case PlatformID.MacOSX
+                                                            Return family_t.macosx
+                                                        Case PlatformID.Unix
+                                                            Return family_t.unix
+                                                        Case PlatformID.Win32NT,
+                                                             PlatformID.Win32S,
+                                                             PlatformID.Win32Windows,
+                                                             PlatformID.WinCE
+                                                            Return family_t.windows
+                                                        Case PlatformID.Xbox
+                                                            Return family_t.xbox
+                                                    End Select
+                                                    Return family_t.unknown
+                                                End Function()
+    Public Shared ReadOnly windows_major As windows_major_t =
+        Function() As windows_major_t
+            Dim p As PlatformID = Environment.OSVersion().Platform()
             Select Case p
                 Case PlatformID.WinCE
-                    Return windows_ver_t._CE
+                    Return windows_major_t._CE
                 Case PlatformID.Win32S
-                    Return windows_ver_t._32_subset
+                    Return windows_major_t._32_subset
                 Case PlatformID.Win32Windows
-                    Return windows_ver_t._9x_me
+                    Return windows_major_t._9x
             End Select
-            Dim v As Version = Nothing
-            v = Environment.OSVersion().Version()
+
+            Dim v As Version = Environment.OSVersion().Version()
             Select Case v.Major()
+                Case 4
+                    Return windows_major_t._4
                 Case 5
-                    Select Case v.Minor()
-                        Case 0
-                            Return windows_ver_t._2000
-                        Case 1
-                            Return windows_ver_t._xp
-                        Case 2
-                            Return windows_ver_t._2003_or_xp_64
-                    End Select
+                    Return windows_major_t._5
                 Case 6
-                    Select Case v.Minor()
-                        Case 0
-                            Return windows_ver_t._2008_or_vista
-                        Case 1
-                            Return windows_ver_t._7_or_2008_r2
-                        Case 2
-                            Return windows_ver_t._8_or_2012
-                        Case 3
-                            Return windows_ver_t._8_1_or_2012_r2
-                    End Select
+                    Return windows_major_t._6
                 Case 10
-                    Select Case v.Minor()
-                        Case 0
-                            Return windows_ver_t._10_or_2016
-                    End Select
+                    Return windows_major_t._10
             End Select
-        End If
-        Return windows_ver_t._unknown
-    End Function
+
+            Return windows_major_t._unknown
+        End Function()
+
+    Public Shared ReadOnly windows_ver As windows_ver_t = Function() As windows_ver_t
+                                                              If family <> family_t.windows Then
+                                                                  Return windows_ver_t._unknown
+                                                              End If
+                                                              Dim p As PlatformID = Environment.OSVersion().Platform()
+                                                              Select Case p
+                                                                  Case PlatformID.WinCE
+                                                                      Return windows_ver_t._CE
+                                                                  Case PlatformID.Win32S
+                                                                      Return windows_ver_t._32_subset
+                                                                  Case PlatformID.Win32Windows
+                                                                      Return windows_ver_t._9x_me
+                                                              End Select
+                                                              Dim v As Version = Environment.OSVersion().Version()
+                                                              Select Case v.Major()
+                                                                  Case 5
+                                                                      Select Case v.Minor()
+                                                                          Case 0
+                                                                              Return windows_ver_t._2000
+                                                                          Case 1
+                                                                              Return windows_ver_t._xp
+                                                                          Case 2
+                                                                              Return windows_ver_t._2003_or_xp_64
+                                                                      End Select
+                                                                  Case 6
+                                                                      Select Case v.Minor()
+                                                                          Case 0
+                                                                              Return windows_ver_t._2008_or_vista
+                                                                          Case 1
+                                                                              Return windows_ver_t._7_or_2008_r2
+                                                                          Case 2
+                                                                              Return windows_ver_t._8_or_2012
+                                                                          Case 3
+                                                                              Return windows_ver_t._8_1_or_2012_r2
+                                                                      End Select
+                                                                  Case 10
+                                                                      Select Case v.Minor()
+                                                                          Case 0
+                                                                              Return windows_ver_t._10_or_2016
+                                                                      End Select
+                                                              End Select
+                                                              Return windows_ver_t._unknown
+                                                          End Function()
 
     Private Sub New()
     End Sub

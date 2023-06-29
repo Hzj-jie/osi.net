@@ -22,25 +22,23 @@ Imports constants = osi.root.constants
 Partial Public Structure retry_times_t
     Implements IComparable, IComparable(Of retry_times_t), ICloneable, ICloneable(Of retry_times_t)
 
-    Public Shared ReadOnly inf As retry_times_t = calculate_inf()
-    Public Shared ReadOnly zero As retry_times_t = calculate_zero()
+    Public Shared ReadOnly inf As retry_times_t =
+        Function() As retry_times_t
+            Dim inf As retry_times_t = New retry_times_t(constants.npos)
+            assert(inf.npos())
+            Return inf
+        End Function()
+    Public Shared ReadOnly zero As retry_times_t =
+        Function() As retry_times_t
+            Dim zero As retry_times_t = New retry_times_t(uint32_0)
+            If True Then
+                assert(Not zero.npos())
+            Else
+                assert(zero.npos())
+            End If
+            Return zero
+        End Function()
     Public Shared ReadOnly sizeof_value As UInt32 = CUInt(sizeof(Of UInt32)())
-
-    Private Shared Function calculate_inf() As retry_times_t
-        Dim inf As retry_times_t = New retry_times_t(constants.npos)
-        assert(inf.npos())
-        Return inf
-    End Function
-
-    Private Shared Function calculate_zero() As retry_times_t
-        Dim zero As retry_times_t = New retry_times_t(uint32_0)
-        If True Then
-            assert(Not zero.npos())
-        Else
-            assert(zero.npos())
-        End If
-        Return zero
-    End Function
 
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2207:InitializeValueTypeStaticFieldsInline")>
     Shared Sub New()

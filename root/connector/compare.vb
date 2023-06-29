@@ -45,41 +45,43 @@ Public Module _compare
             Function(ByVal this As T, ByVal that As T2, ByRef o As Int32) As Boolean
                 Return False
             End Function
-        Private Shared ReadOnly c As _do_val_val_ref(Of T, T2, Int32, Boolean) = select_c()
-
-        Private Shared Function select_c() As _do_val_val_ref(Of T, T2, Int32, Boolean)
-            Dim c As _do_val_val_ref(Of T, T2, Int32, Boolean) = Nothing
-            If comparer_for_specific_types(c) Then
-                '
-            ElseIf type_info(Of T, type_info_operators.is, IComparable(Of T2)).v Then
-                c = always_succeed(AddressOf this_to_t2(Of T2))
-            ElseIf type_info(Of T2, type_info_operators.is, IComparable(Of T)).v Then
-                c = always_succeed(AddressOf that_to_t(Of T))
-            ElseIf type_info(Of T, type_info_operators.is, IComparable).v Then
-                If use_restricted_compare_to_object(Of T)() Then
-                    c = AddressOf this_to_object_with_same_type(Of T)
-                Else
-                    c = always_succeed(AddressOf this_to_object)
+        Private Shared ReadOnly c As _do_val_val_ref(Of T, T2, Int32, Boolean) =
+            Function() As _do_val_val_ref(Of T, T2, Int32, Boolean)
+                Dim c As _do_val_val_ref(Of T, T2, Int32, Boolean) = Nothing
+                If comparer_for_specific_types(c) Then
+                    Return c
                 End If
-            ElseIf type_info(Of T2, type_info_operators.is, IComparable).v Then
-                If use_restricted_compare_to_object(Of T2)() Then
-                    c = AddressOf that_to_object_with_same_type(Of T2)
-                Else
-                    c = always_succeed(AddressOf that_to_object)
+                If type_info(Of T, type_info_operators.is, IComparable(Of T2)).v Then
+                    Return always_succeed(AddressOf this_to_t2(Of T2))
                 End If
-            ElseIf type_info(Of T).is_object OrElse type_info(Of T2).is_object Then
-                raise_error(error_type.performance,
-                            "compare_cache(Of *, Object) or compare_cache(Of Object, *) ",
-                            "impact performance seriously.")
-                If type_info(Of T).is_object AndAlso type_info(Of T2).is_object Then
-                    c = AddressOf runtime_object_compare
-                ElseIf type_info(Of T).is_object Then
-                    c = AddressOf runtime_this_compare(Of T2)
-                Else
+                If type_info(Of T2, type_info_operators.is, IComparable(Of T)).v Then
+                    Return always_succeed(AddressOf that_to_t(Of T))
+                End If
+                If type_info(Of T, type_info_operators.is, IComparable).v Then
+                    If use_restricted_compare_to_object(Of T)() Then
+                        Return AddressOf this_to_object_with_same_type(Of T)
+                    End If
+                    Return always_succeed(AddressOf this_to_object)
+                End If
+                If type_info(Of T2, type_info_operators.is, IComparable).v Then
+                    If use_restricted_compare_to_object(Of T2)() Then
+                        Return AddressOf that_to_object_with_same_type(Of T2)
+                    End If
+                    Return always_succeed(AddressOf that_to_object)
+                End If
+                If type_info(Of T).is_object OrElse type_info(Of T2).is_object Then
+                    raise_error(error_type.performance,
+                                "compare_cache(Of *, Object) or compare_cache(Of Object, *) ",
+                                "impact performance seriously.")
+                    If type_info(Of T).is_object AndAlso type_info(Of T2).is_object Then
+                        Return AddressOf runtime_object_compare
+                    End If
+                    If type_info(Of T).is_object Then
+                        Return AddressOf runtime_this_compare(Of T2)
+                    End If
                     assert(type_info(Of T2).is_object)
-                    c = AddressOf runtime_that_compare(Of T)
+                    Return AddressOf runtime_that_compare(Of T)
                 End If
-            Else
                 If Not is_suppressed.compare_error() Then
                     raise_error(error_type.exclamation,
                                 "caught types do not have IComparable implement, unable to compare ",
@@ -87,9 +89,8 @@ Public Module _compare
                                 " with ",
                                 type_info(Of T2).fullname)
                 End If
-            End If
-            Return c
-        End Function
+                Return Nothing
+            End Function()
 
         Private Shared Function always_succeed(ByVal i As Func(Of T, T2, Int32)) _
                                               As _do_val_val_ref(Of T, T2, Int32, Boolean)

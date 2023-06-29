@@ -9,16 +9,14 @@ Imports System.Threading
 Imports osi.root.constants
 
 Public Module _console
-    Public ReadOnly console_output_redirected As Boolean = calculate_console_output_redirected()
-
-    Private Function calculate_console_output_redirected() As Boolean
-        Try
-            Dim x As Int32 = Console.CursorLeft()
-            Return False
-        Catch ex As Exception
-            Return True
-        End Try
-    End Function
+    Public ReadOnly console_output_redirected As Boolean = Function() As Boolean
+                                                               Try
+                                                                   Dim x As Int32 = Console.CursorLeft()
+                                                                   Return False
+                                                               Catch ex As Exception
+                                                                   Return True
+                                                               End Try
+                                                           End Function()
 
     <SuppressMessage("Microsoft.Reliability", "CA2002:DoNotLockOnObjectsWithWeakIdentity")>
     Public Sub lock_console_output()

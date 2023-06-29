@@ -112,7 +112,15 @@ Public Module _cast
 
 #If cached_cast Then
     Private Structure runtime_casting_cache(Of T, IT)
-        Private Shared ReadOnly c As _do_val_ref(Of IT, T, Boolean) = create_delegate()
+        Private Shared ReadOnly c As _do_val_ref(Of IT, T, Boolean) =
+            Function() As _do_val_ref(Of IT, T, Boolean)
+                Dim c As _do_val_ref(Of IT, T, Boolean) = Nothing
+                Dim t As Boolean = select_casting(Of IT)(c) OrElse
+                                   select_casting(Of T)(c) OrElse
+                                   select_casting(c)
+                assert(Not c Is Nothing)
+                Return c
+            End Function()
 
         Private Shared Function select_casting(ByVal ms() As MethodInfo,
                                                ByVal itt As Type,
@@ -192,16 +200,6 @@ Public Module _cast
                     Return False
                 End Function
             Return True
-        End Function
-
-        Private Shared Function create_delegate() As _do_val_ref(Of IT, T, Boolean)
-            Dim c As _do_val_ref(Of IT, T, Boolean) = Nothing
-            Dim t As Boolean = False
-            t = select_casting(Of IT)(c) OrElse
-                    select_casting(Of T)(c) OrElse
-                    select_casting(c)
-            assert(Not c Is Nothing)
-            Return c
         End Function
 
         <MethodImpl(method_impl_options.aggressive_inlining)>

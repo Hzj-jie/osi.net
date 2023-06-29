@@ -28,25 +28,23 @@ Imports constants = osi.root.constants
 Partial Public Structure timeout_ms_t
     Implements IComparable, IComparable(Of timeout_ms_t), ICloneable, ICloneable(Of timeout_ms_t)
 
-    Public Shared ReadOnly inf As timeout_ms_t = calculate_inf()
-    Public Shared ReadOnly zero As timeout_ms_t = calculate_zero()
+    Public Shared ReadOnly inf As timeout_ms_t =
+        Function() As timeout_ms_t
+            Dim inf As timeout_ms_t = New timeout_ms_t(constants.npos)
+            assert(inf.npos())
+            Return inf
+        End Function()
+    Public Shared ReadOnly zero As timeout_ms_t =
+        Function() As timeout_ms_t
+            Dim zero As timeout_ms_t = New timeout_ms_t(uint64_0)
+            If True Then
+                assert(Not zero.npos())
+            Else
+                assert(zero.npos())
+            End If
+            Return zero
+        End Function()
     Public Shared ReadOnly sizeof_value As UInt32 = CUInt(sizeof(Of UInt64)())
-
-    Private Shared Function calculate_inf() As timeout_ms_t
-        Dim inf As timeout_ms_t = New timeout_ms_t(constants.npos)
-        assert(inf.npos())
-        Return inf
-    End Function
-
-    Private Shared Function calculate_zero() As timeout_ms_t
-        Dim zero As timeout_ms_t = New timeout_ms_t(uint64_0)
-        If True Then
-            assert(Not zero.npos())
-        Else
-            assert(zero.npos())
-        End If
-        Return zero
-    End Function
 
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2207:InitializeValueTypeStaticFieldsInline")>
     Shared Sub New()
