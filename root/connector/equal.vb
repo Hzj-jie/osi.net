@@ -28,34 +28,34 @@ Imports osi.root.delegates
 ' equal() fails only when exceptions have been thrown when executing various Equals() function.
 Public Module _equal
     Private NotInheritable Class equal_cache(Of T, T2)
-        Private Shared ReadOnly f As _do_val_val_ref(Of T, T2, Boolean, Boolean) = calculate_f()
-
-        Private Shared Function calculate_f() As _do_val_val_ref(Of T, T2, Boolean, Boolean)
-            Dim f As _do_val_val_ref(Of T, T2, Boolean, Boolean) = Nothing
-            If type_info(Of T, type_info_operators.implement, IEquatable(Of T2)).v Then
-                f = always_succeed(AddressOf this_to_t2(Of T2))
-            ElseIf type_info(Of T2, type_info_operators.implement, IEquatable(Of T)).v Then
-                f = always_succeed(AddressOf that_to_t(Of T))
-            ElseIf type_info(Of T, type_info_operators.implement, IEquatable(Of Object)).v Then
-                f = always_succeed(AddressOf this_to_t2(Of Object))
-            ElseIf type_info(Of T2, type_info_operators.implement, IEquatable(Of Object)).v Then
-                f = always_succeed(AddressOf that_to_t(Of Object))
-            ElseIf type_info(Of T).is_object OrElse type_info(Of T2).is_object Then
-                raise_error(error_type.performance,
-                            "equal_cache(Of *, Object) or equal_cache(Of Object, *) impacts performance seriously.")
-                If type_info(Of T).is_object AndAlso type_info(Of T2).is_object Then
-                    f = AddressOf runtime_equal
-                ElseIf type_info(Of T).is_object Then
-                    f = AddressOf runtime_this_to_t2(Of T2)
-                Else
-                    assert(type_info(Of T2).is_object)
-                    f = AddressOf runtime_that_to_t(Of T)
+        Private Shared ReadOnly f As _do_val_val_ref(Of T, T2, Boolean, Boolean) =
+            Function() As _do_val_val_ref(Of T, T2, Boolean, Boolean)
+                If type_info(Of T, type_info_operators.implement, IEquatable(Of T2)).v Then
+                    Return always_succeed(AddressOf this_to_t2(Of T2))
                 End If
-            Else
-                f = Nothing
-            End If
-            Return f
-        End Function
+                If type_info(Of T2, type_info_operators.implement, IEquatable(Of T)).v Then
+                    Return always_succeed(AddressOf that_to_t(Of T))
+                End If
+                If type_info(Of T, type_info_operators.implement, IEquatable(Of Object)).v Then
+                    Return always_succeed(AddressOf this_to_t2(Of Object))
+                End If
+                If type_info(Of T2, type_info_operators.implement, IEquatable(Of Object)).v Then
+                    Return always_succeed(AddressOf that_to_t(Of Object))
+                End If
+                If type_info(Of T).is_object OrElse type_info(Of T2).is_object Then
+                    raise_error(error_type.performance,
+                                "equal_cache(Of *, Object) or equal_cache(Of Object, *) impacts performance seriously.")
+                    If type_info(Of T).is_object AndAlso type_info(Of T2).is_object Then
+                        Return AddressOf runtime_equal
+                    End If
+                    If type_info(Of T).is_object Then
+                        Return AddressOf runtime_this_to_t2(Of T2)
+                    End If
+                    assert(type_info(Of T2).is_object)
+                    Return AddressOf runtime_that_to_t(Of T)
+                End If
+                Return Nothing
+            End Function()
 
         Private Shared Function always_succeed(ByVal f As Func(Of T, T2, Boolean)) _
                                               As _do_val_val_ref(Of T, T2, Boolean, Boolean)

@@ -176,39 +176,44 @@ Public NotInheritable Class endian
     End Class
 
     Private NotInheritable Class reverse_cache(Of T)
-        Public Shared ReadOnly f As Func(Of T, T) = calculate_f()
-
-        Private Shared Function calculate_f() As Func(Of T, T)
-            Dim f As Func(Of T, T) = Nothing
-            assert(supported(Of T)())
-            If type_info(Of T, type_info_operators.equal, SByte).v Then
-                f = c(Of SByte)(AddressOf reverse)
-            ElseIf type_info(Of T, type_info_operators.equal, Byte).v Then
-                f = c(Of Byte)(AddressOf reverse)
-            ElseIf type_info(Of T, type_info_operators.equal, Int16).v Then
-                f = c(Of Int16)(AddressOf reverse)
-            ElseIf type_info(Of T, type_info_operators.equal, UInt16).v Then
-                f = c(Of UInt16)(AddressOf reverse)
-            ElseIf type_info(Of T, type_info_operators.equal, Int32).v Then
-                f = c(Of Int32)(AddressOf reverse)
-            ElseIf type_info(Of T, type_info_operators.equal, UInt32).v Then
-                f = c(Of UInt32)(AddressOf reverse)
-            ElseIf type_info(Of T, type_info_operators.equal, Int64).v Then
-                f = c(Of Int64)(AddressOf reverse)
-            ElseIf type_info(Of T, type_info_operators.equal, UInt64).v Then
-                f = c(Of UInt64)(AddressOf reverse)
-            ElseIf type_info(Of T, type_info_operators.equal, Single).v Then
-                f = c(Of Single)(AddressOf reverse)
-            ElseIf type_info(Of T, type_info_operators.equal, Double).v Then
-                f = c(Of Double)(AddressOf reverse)
-            ElseIf type_info(Of T, type_info_operators.equal, Char).v Then
-                f = c(Of Char)(AddressOf reverse)
-            Else
-                assert(False)
-            End If
-            assert(Not f Is Nothing)
-            Return f
-        End Function
+        Public Shared ReadOnly f As Func(Of T, T) = Function() As Func(Of T, T)
+                                                        assert(supported(Of T)())
+                                                        If type_info(Of T, type_info_operators.equal, SByte).v Then
+                                                            Return c(Of SByte)(AddressOf reverse)
+                                                        End If
+                                                        If type_info(Of T, type_info_operators.equal, Byte).v Then
+                                                            Return c(Of Byte)(AddressOf reverse)
+                                                        End If
+                                                        If type_info(Of T, type_info_operators.equal, Int16).v Then
+                                                            Return c(Of Int16)(AddressOf reverse)
+                                                        End If
+                                                        If type_info(Of T, type_info_operators.equal, UInt16).v Then
+                                                            Return c(Of UInt16)(AddressOf reverse)
+                                                        End If
+                                                        If type_info(Of T, type_info_operators.equal, Int32).v Then
+                                                            Return c(Of Int32)(AddressOf reverse)
+                                                        End If
+                                                        If type_info(Of T, type_info_operators.equal, UInt32).v Then
+                                                            Return c(Of UInt32)(AddressOf reverse)
+                                                        End If
+                                                        If type_info(Of T, type_info_operators.equal, Int64).v Then
+                                                            Return c(Of Int64)(AddressOf reverse)
+                                                        End If
+                                                        If type_info(Of T, type_info_operators.equal, UInt64).v Then
+                                                            Return c(Of UInt64)(AddressOf reverse)
+                                                        End If
+                                                        If type_info(Of T, type_info_operators.equal, Single).v Then
+                                                            Return c(Of Single)(AddressOf reverse)
+                                                        End If
+                                                        If type_info(Of T, type_info_operators.equal, Double).v Then
+                                                            Return c(Of Double)(AddressOf reverse)
+                                                        End If
+                                                        If type_info(Of T, type_info_operators.equal, Char).v Then
+                                                            Return c(Of Char)(AddressOf reverse)
+                                                        End If
+                                                        assert(False)
+                                                        Return Nothing
+                                                    End Function()
 
         Private Shared Function c(Of VT)(ByVal f As Func(Of VT, VT)) As Func(Of T, T)
             assert(Not f Is Nothing)

@@ -8,10 +8,25 @@ Imports osi.root.constants
 
 Public Module _bit
     Private ReadOnly jump_size As Byte = CByte(bit_count_in_byte * sizeof_uint64)
-    Private ReadOnly jump1() As UInt64 = calculate_jump1()
-    Private ReadOnly jump0() As UInt64 = calculate_jump0()
-
-    Private ReadOnly rjump1() As UInt64 = jump1.Reverse()
+    Private ReadOnly jump1() As UInt64 = Function() As UInt64()
+                                             Dim jump1(jump_size - 1) As UInt64
+                                             Dim t As UInt64 = 0
+                                             t = int64_uint64(min_int64)
+                                             For i As Int32 = 0 To jump_size - 1
+                                                 jump1(i) = t
+                                                 t >>= 1
+                                             Next
+                                             assert(t = 0)
+                                             Return jump1
+                                         End Function()
+    Private ReadOnly jump0() As UInt64 = Function() As UInt64()
+                                             Dim jump0(jump_size - 1) As UInt64
+                                             For i As Int32 = 0 To jump_size - 1
+                                                 jump0(i) = Not jump1(i)
+                                             Next
+                                             Return jump0
+                                         End Function()
+    Private ReadOnly rjump1() As UInt64 = jump1.reverse()
     Private ReadOnly rjump0() As UInt64 = jump0.Reverse()
 
     Private ReadOnly bit_count_in_int8 As Byte = CByte(bit_count_in_byte * sizeof_int8)
@@ -23,26 +38,6 @@ Public Module _bit
     Private ReadOnly int16_offset As Int32 = bit_count_in_int64 - bit_count_in_int16
     Private ReadOnly int32_offset As Int32 = bit_count_in_int64 - bit_count_in_int32
     Private ReadOnly int64_offset As Int32 = bit_count_in_int64 - bit_count_in_int64
-
-    Private Function calculate_jump1() As UInt64()
-        Dim jump1(jump_size - 1) As UInt64
-        Dim t As UInt64 = 0
-        t = int64_uint64(min_int64)
-        For i As Int32 = 0 To jump_size - 1
-            jump1(i) = t
-            t >>= 1
-        Next
-        assert(t = 0)
-        Return jump1
-    End Function
-
-    Private Function calculate_jump0() As UInt64()
-        Dim jump0(jump_size - 1) As UInt64
-        For i As Int32 = 0 To jump_size - 1
-            jump0(i) = Not jump1(i)
-        Next
-        Return jump0
-    End Function
 
     Private Sub assert_index_int8(ByVal i As Byte)
         assert(i < bit_count_in_int8)

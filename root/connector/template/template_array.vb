@@ -14,39 +14,30 @@ Public NotInheritable Class template_array(Of T, R, F As typed_func(Of R))
 End Class
 
 Public NotInheritable Class template_array(Of T1, T2, R, F As typed_func(Of R))
-    Public Shared ReadOnly vs() As R = calculate_vs()
-
-    Private Shared Function calculate_vs() As R()
-        Dim x As F = Nothing
-        x = alloc(Of F)()
-        Return {x.at(Of T1)(), x.at(Of T2)()}
-    End Function
+    Public Shared ReadOnly vs() As R = Function() As R()
+                                           Dim x As F = alloc(Of F)()
+                                           Return {x.at(Of T1)(), x.at(Of T2)()}
+                                       End Function()
 
     Private Sub New()
     End Sub
 End Class
 
 Public NotInheritable Class template_array(Of T1, T2, T3, R, F As typed_func(Of R))
-    Public Shared ReadOnly vs() As R = calculate_vs()
-
-    Private Shared Function calculate_vs() As R()
-        Dim x As F = Nothing
-        x = alloc(Of F)()
-        Return {x.at(Of T1)(), x.at(Of T2)(), x.at(Of T3)()}
-    End Function
+    Public Shared ReadOnly vs() As R = Function() As R()
+                                           Dim x As F = alloc(Of F)()
+                                           Return {x.at(Of T1)(), x.at(Of T2)(), x.at(Of T3)()}
+                                       End Function()
 
     Private Sub New()
     End Sub
 End Class
 
 Public NotInheritable Class template_array(Of T1, T2, T3, T4, R, F As typed_func(Of R))
-    Public Shared ReadOnly vs() As R = calculate_vs()
-
-    Private Shared Function calculate_vs() As R()
-        Dim x As F = Nothing
-        x = alloc(Of F)()
-        Return {x.at(Of T1)(), x.at(Of T2)(), x.at(Of T3)(), x.at(Of T4)()}
-    End Function
+    Public Shared ReadOnly vs() As R = Function() As R()
+                                           Dim x As F = alloc(Of F)()
+                                           Return {x.at(Of T1)(), x.at(Of T2)(), x.at(Of T3)(), x.at(Of T4)()}
+                                       End Function()
 
     Private Sub New()
     End Sub

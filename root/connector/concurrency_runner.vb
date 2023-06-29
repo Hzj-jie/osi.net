@@ -25,23 +25,21 @@ End Class
 ' An executor to concurrently execute processor-count tasks in managed threadpool. To maximize processor usage, one
 ' should not queue a sleep or wait or io operation in a concurrency_runner.
 Public NotInheritable Class concurrency_runner(Of _SIZE As _int64)
-    Private Shared ReadOnly size As UInt32 = calculate_size()
+    Private Shared ReadOnly size As UInt32 = Function() As UInt32
+                                                 Dim size As UInt32 = 0
+                                                 Dim c As Int64 = +(alloc(Of _SIZE)())
+                                                 If c = npos Then
+                                                     size = CUInt(Environment.ProcessorCount())
+                                                 ElseIf c >= max_uint32 Then
+                                                     size = max_uint32
+                                                 ElseIf c > 0 Then
+                                                     size = CUInt(c)
+                                                 Else
+                                                     assert(False)
+                                                 End If
+                                                 Return size
+                                             End Function()
     <ThreadStatic> Private Shared is_concurrency_runner_thread As Boolean
-
-    Private Shared Function calculate_size() As UInt32
-        Dim size As UInt32 = 0
-        Dim c As Int64 = +(alloc(Of _SIZE)())
-        If c = npos Then
-            size = CUInt(Environment.ProcessorCount())
-        ElseIf c >= max_uint32 Then
-            size = max_uint32
-        ElseIf c > 0 Then
-            size = CUInt(c)
-        Else
-            assert(False)
-        End If
-        Return size
-    End Function
 
     Public Shared Function in_concurrency_runner_thread() As Boolean
         Return is_concurrency_runner_thread

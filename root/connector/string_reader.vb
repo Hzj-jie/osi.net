@@ -9,32 +9,31 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 
 Public Module _string_reader
-    Private ReadOnly _pos As FieldInfo = calculate_pos()
-    Private ReadOnly _length As FieldInfo = calculate_length()
+    Private ReadOnly _pos As FieldInfo =
+        Function() As FieldInfo
+            Dim _pos As FieldInfo = Nothing
+            Try
+                _pos = GetType(StringReader).GetField("_pos", binding_flags.instance_private)
+            Catch ex As Exception
+                assert(False, ex.details())
+            End Try
+            assert(Not _pos Is Nothing)
+            assert(Not _pos.IsStatic())
+            Return _pos
+        End Function()
 
-    Private Function calculate_pos() As FieldInfo
-        Dim _pos As FieldInfo = Nothing
-        Try
-            _pos = GetType(StringReader).GetField("_pos", binding_flags.instance_private)
-        Catch ex As Exception
-            assert(False, ex.details())
-        End Try
-        assert(Not _pos Is Nothing)
-        assert(Not _pos.IsStatic())
-        Return _pos
-    End Function
-
-    Private Function calculate_length() As FieldInfo
-        Dim _length As FieldInfo = Nothing
-        Try
-            _length = GetType(StringReader).GetField("_length", binding_flags.instance_private)
-        Catch ex As Exception
-            assert(False, ex.details())
-        End Try
-        assert(Not _length Is Nothing)
-        assert(Not _length.IsStatic())
-        Return _length
-    End Function
+    Private ReadOnly _length As FieldInfo =
+        Function() As FieldInfo
+            Dim _length As FieldInfo = Nothing
+            Try
+                _length = GetType(StringReader).GetField("_length", binding_flags.instance_private)
+            Catch ex As Exception
+                assert(False, ex.details())
+            End Try
+            assert(Not _length Is Nothing)
+            assert(Not _length.IsStatic())
+            Return _length
+        End Function()
 
     <Extension()> Public Function length(ByVal this As StringReader) As UInt32
         assert(Not this Is Nothing)

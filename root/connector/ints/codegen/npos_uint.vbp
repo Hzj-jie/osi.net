@@ -17,25 +17,23 @@ Imports constants = osi.root.constants
 Partial Public Structure ##TYPE##
     Implements IComparable, IComparable(Of ##TYPE##), ICloneable, ICloneable(Of ##TYPE##)
 
-    Public Shared ReadOnly inf As ##TYPE## = calculate_inf()
-    Public Shared ReadOnly zero As ##TYPE## = calculate_zero()
+    Public Shared ReadOnly inf As ##TYPE## =
+        Function() As ##TYPE##
+            Dim inf As ##TYPE## = New ##TYPE##(constants.npos)
+            assert(inf.npos())
+            Return inf
+        End Function()
+    Public Shared ReadOnly zero As ##TYPE## =
+        Function() As ##TYPE##
+            Dim zero As ##TYPE## = New ##TYPE##(##ZERO##)
+            If ##ACCEPT_ZERO## Then
+                assert(Not zero.npos())
+            Else
+                assert(zero.npos())
+            End If
+            Return zero
+        End Function()
     Public Shared ReadOnly sizeof_value As UInt32 = CUInt(sizeof(Of U##SIGNED_TYPE##)())
-
-    Private Shared Function calculate_inf() As ##TYPE##
-        Dim inf As ##TYPE## = New ##TYPE##(constants.npos)
-        assert(inf.npos())
-        Return inf
-    End Function
-
-    Private Shared Function calculate_zero() As ##TYPE##
-        Dim zero As ##TYPE## = New ##TYPE##(##ZERO##)
-        If ##ACCEPT_ZERO## Then
-            assert(Not zero.npos())
-        Else
-            assert(zero.npos())
-        End If
-        Return zero
-    End Function
 
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2207:InitializeValueTypeStaticFieldsInline")>
     Shared Sub New()

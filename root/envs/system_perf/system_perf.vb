@@ -9,7 +9,13 @@ Imports osi.root.constants.system_perf
 
 <global_init(global_init_level.other)>
 Public Module _system_perf
-    Public ReadOnly perf_run_ms As Int64 = calculate_perf_run_ms()
+    Public ReadOnly perf_run_ms As Int64 =
+        Function() As Int64
+            assert(error_writer_ignore_types(Of colorful_console_error_writer).valued(error_type.warning))
+            Using New boost()
+                Return perf_run()
+            End Using
+        End Function()
     Public ReadOnly loops_per_ms As Int64 = ratio \ perf_run_ms
 
     Private Function perf_run_single() As Int64
@@ -38,13 +44,6 @@ Public Module _system_perf
             End If
         Next
         Return max(ticks_to_milliseconds(min), 1)
-    End Function
-
-    Private Function calculate_perf_run_ms() As Int64
-        assert(error_writer_ignore_types(Of colorful_console_error_writer).valued(error_type.warning))
-        Using New boost()
-            Return perf_run()
-        End Using
     End Function
 
     Private Sub init()
