@@ -74,7 +74,7 @@ Partial Public NotInheritable Class gitver
     Public Shared ReadOnly diff As String = Function() As String
                                                 Dim diff As String = bytes_str(Convert.FromBase64String(diff_base64))
                                                 If diff.null_or_whitespace() Then
-                                                    diff = "<identical>"
+                                                    Return "<identical>"
                                                 End If
                                                 Return diff
                                             End Function()

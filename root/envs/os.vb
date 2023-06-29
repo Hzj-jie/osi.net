@@ -40,8 +40,7 @@ Public NotInheritable Class os
     Public Shared ReadOnly platform As String = computer.Info().OSPlatform()
     Public Shared ReadOnly version As String = computer.Info().OSVersion()
     Public Shared ReadOnly family As family_t = Function() As family_t
-                                                    Dim p As PlatformID = Nothing
-                                                    p = Environment.OSVersion().Platform()
+                                                    Dim p As PlatformID = Environment.OSVersion().Platform()
                                                     Select Case p
                                                         Case PlatformID.MacOSX
                                                             Return family_t.macosx

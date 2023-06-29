@@ -26,18 +26,18 @@ End Class
 ' should not queue a sleep or wait or io operation in a concurrency_runner.
 Public NotInheritable Class concurrency_runner(Of _SIZE As _int64)
     Private Shared ReadOnly size As UInt32 = Function() As UInt32
-                                                 Dim size As UInt32 = 0
                                                  Dim c As Int64 = +(alloc(Of _SIZE)())
                                                  If c = npos Then
-                                                     size = CUInt(Environment.ProcessorCount())
-                                                 ElseIf c >= max_uint32 Then
-                                                     size = max_uint32
-                                                 ElseIf c > 0 Then
-                                                     size = CUInt(c)
-                                                 Else
-                                                     assert(False)
+                                                     Return CUInt(Environment.ProcessorCount())
                                                  End If
-                                                 Return size
+                                                 If c >= max_uint32 Then
+                                                     Return max_uint32
+                                                 End If
+                                                 If c > 0 Then
+                                                     Return CUInt(c)
+                                                 End If
+                                                 assert(False)
+                                                 Return 0
                                              End Function()
     <ThreadStatic> Private Shared is_concurrency_runner_thread As Boolean
 

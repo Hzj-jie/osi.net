@@ -13,7 +13,7 @@ Public Module _processor_affinity
                     env_value(env_keys("affinity"), processor_affinity)) OrElse
                processor_affinity < 0 OrElse
                processor_affinity >= Environment.ProcessorCount() Then
-                processor_affinity = npos
+                Return npos
             End If
             Return processor_affinity
         End Function()
