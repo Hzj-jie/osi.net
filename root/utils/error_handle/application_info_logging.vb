@@ -55,6 +55,8 @@ Friend NotInheritable Class application_info_logging
         raise_error("detail git info as",
                     ", trackable_version ",
                     gitver.current.trackable_version,
+                    ", in branch ",
+                    gitver.branch,
                     ", hash ",
                     gitver.current.hash,
                     ", submitted by ",
