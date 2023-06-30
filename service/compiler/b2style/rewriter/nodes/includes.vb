@@ -4,11 +4,9 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
-Imports osi.root.connector
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utils
-Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 Imports osi.service.resource
 
@@ -17,6 +15,7 @@ Partial Public NotInheritable Class b2style
 
     Public MustInherit Class includes
         Inherits code_gens(Of logic_writer).includes(Of scope.includes_t.proxy, folders)
+
         Public Shared Shadows Function parse(ByVal i As String, ByVal j As typed_node_writer) As Boolean
             If i Is Nothing Then
                 ' The file has been included already.
@@ -32,13 +31,10 @@ Partial Public NotInheritable Class b2style
 
             Public Function run() As vector(Of String) Implements func_t(Of vector(Of String)).run
                 Dim r As New vector(Of String)()
-
                 Dim folder As String = Path.Combine(temp_folder, "b2style-inc")
                 tar.gen.dump(b2style_lib.data, folder)
                 r.emplace_back(folder)
-
                 r.emplace_back(+b2style.include_folders)
-
                 r.emplace_back(bstyle.includes.include_folders())
                 Return r
             End Function

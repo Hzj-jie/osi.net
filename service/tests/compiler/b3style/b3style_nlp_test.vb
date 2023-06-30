@@ -68,6 +68,10 @@ Public NotInheritable Class b3style_nlp_tests
             assertion.is_true(b3style.nlp().parse(text), name)
         End Sub
 
+        Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
+            Return b3style.parse_wrapper.with_current_file(filename)
+        End Function
+
         <test>
         Private Shadows Sub run()
             MyBase.run()
@@ -101,6 +105,10 @@ Public NotInheritable Class b3style_nlp_tests
                 assertion.is_true(b3style.nlp().parse(text), name)
             End If
         End Sub
+
+        Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
+            Return b3style.parse_wrapper.with_current_file(filename)
+        End Function
 
         <test>
         Private Shadows Sub run()

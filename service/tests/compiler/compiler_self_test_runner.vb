@@ -9,7 +9,6 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
-Imports osi.service.compiler
 Imports osi.service.resource
 
 Public MustInherit Class compiler_self_test_runner
@@ -32,12 +31,19 @@ Public MustInherit Class compiler_self_test_runner
                 Dim text As String = content.ReadToEnd()
                 a.emplace_back(Sub()
                                    If Not name.match_pattern(filter) AndAlso
-                                      Not name.match_pattern((filter) + ".txt") Then
+                                      Not name.match_pattern(filter + ".txt") Then
+                                       raise_error(error_type.user,
+                                                   "Ignore test case ",
+                                                   name,
+                                                   " through the filter.")
+                                       Return
+                                   End If
+                                   If ignore_case(name) Then
                                        raise_error(error_type.user, "Ignore test case ", name)
                                        Return
                                    End If
                                    raise_error(error_type.user, "Execute test case ", name)
-                                   Using b2style.parse_wrapper.with_current_file(name)
+                                   Using with_current_file(name)
                                        execute(name, text)
                                    End Using
                                End Sub)
@@ -47,4 +53,9 @@ Public MustInherit Class compiler_self_test_runner
     End Sub
 
     Protected MustOverride Sub execute(ByVal name As String, ByVal text As String)
+    Protected MustOverride Function with_current_file(ByVal filename As String) As IDisposable
+
+    Protected Overridable Function ignore_case(ByVal name As String) As Boolean
+        Return False
+    End Function
 End Class
