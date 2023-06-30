@@ -1,4 +1,4 @@
-﻿
+
 Imports System.Runtime.CompilerServices
 
 Public Module _calculator_error

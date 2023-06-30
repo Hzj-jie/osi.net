@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.utt
 
 Public Class string_null_or_whitespace_perf

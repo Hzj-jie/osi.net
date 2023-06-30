@@ -1,4 +1,4 @@
-﻿
+
 Public Class fixed_pool(Of T As Class)
     Inherits pool(Of T)
 

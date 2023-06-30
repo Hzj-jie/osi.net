@@ -1,4 +1,4 @@
-﻿
+
 Public Module _signature
     Public Const signature_2 As Byte = 1
     Public Const signature_4 As Byte = (signature_2 << 2) + signature_2

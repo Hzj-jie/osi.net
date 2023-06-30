@@ -1,4 +1,4 @@
-﻿
+
 Public Interface ioutputter(Of T)
     Function output(ByVal i As T, ByVal base As Byte) As String
 End Interface

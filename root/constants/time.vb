@@ -1,4 +1,4 @@
-﻿
+
 Public Module _time
     Public Const minute_second As Int32 = 60
     Public Const milli_micro As Int32 = 1000

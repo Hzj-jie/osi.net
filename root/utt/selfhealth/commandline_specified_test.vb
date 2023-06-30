@@ -1,4 +1,4 @@
-﻿
+
 Public Class commandline_specified_test
     Inherits commandline_specified_case_wrapper
 

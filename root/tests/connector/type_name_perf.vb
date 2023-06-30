@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.utt
 
 Public Class type_name_perf

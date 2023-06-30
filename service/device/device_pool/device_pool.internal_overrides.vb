@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.constants
 
 Partial Public Class device_pool

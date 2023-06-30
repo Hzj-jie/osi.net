@@ -51,3 +51,5 @@ Rule of Thumb
 
 1. Limit the use of "Imports namespace", prefer of using
    "Imports a = namespace.a".
+
+1. dos2unix all vb and cs files.

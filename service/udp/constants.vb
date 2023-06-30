@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.constants
 
 Public NotInheritable Class constants

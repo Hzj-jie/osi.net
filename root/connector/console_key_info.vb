@@ -1,4 +1,4 @@
-﻿
+
 Imports System.Runtime.CompilerServices
 
 Public Module _console_key_info

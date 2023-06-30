@@ -1,4 +1,4 @@
-﻿
+
 ' TODO: Move to service.devicepool
 
 Imports osi.root.constants

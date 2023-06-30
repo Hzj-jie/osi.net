@@ -1,4 +1,4 @@
-﻿
+
 Partial Public Class stopwatch
     Public Shared Function repeat(ByVal waitms As UInt32, ByVal d As Func(Of Boolean)) As Boolean
         If d Is Nothing Then

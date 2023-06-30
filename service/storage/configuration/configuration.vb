@@ -1,4 +1,4 @@
-﻿
+
 Public Class configuration
     Private Shared ReadOnly pdc As preserved_disk_capacity
 

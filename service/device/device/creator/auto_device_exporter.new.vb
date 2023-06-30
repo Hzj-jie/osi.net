@@ -1,4 +1,4 @@
-﻿
+
 Public NotInheritable Class auto_device_exporter
     Private Sub New()
     End Sub

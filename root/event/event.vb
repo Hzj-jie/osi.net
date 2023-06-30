@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.template
 
 Public Class [event]

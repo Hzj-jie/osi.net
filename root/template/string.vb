@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.constants
 
 Public MustInherit Class _string

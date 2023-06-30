@@ -1,4 +1,4 @@
-﻿
+
 Public Class int_calculator
     Inherits calculator(Of Int32)
 

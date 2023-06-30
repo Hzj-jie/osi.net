@@ -1,4 +1,4 @@
-﻿
+
 Public Interface ibinary_calculator(Of T)
     'this = this + that
     Function increment(ByRef this As T, ByVal that As T) As calculator_error

@@ -1,4 +1,4 @@
-﻿
+
 ' USE event.flip_event INSTEAD
 
 Option Explicit On

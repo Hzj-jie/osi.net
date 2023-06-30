@@ -1,4 +1,4 @@
-﻿
+
 Imports System.Security.Cryptography
 Imports osi.root.constants
 Imports osi.root.template 

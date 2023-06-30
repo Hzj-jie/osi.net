@@ -1,4 +1,4 @@
-﻿
+
 Imports sf = osi.service.configuration.constants.static_filter
 Imports fis = osi.service.configuration.constants.filter_selector
 

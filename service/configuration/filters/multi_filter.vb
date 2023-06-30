@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.connector
 Imports osi.service.configuration.constants.multi_filter
 

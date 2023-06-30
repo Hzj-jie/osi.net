@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.service.transmitter
 
 Public Class datagram_flow_adapter_test

@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.connector
 
 Public Class case_wrapper

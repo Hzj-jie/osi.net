@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.connector
 
 Partial Public Class adapter

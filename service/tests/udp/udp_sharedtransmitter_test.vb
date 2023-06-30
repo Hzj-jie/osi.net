@@ -1,4 +1,4 @@
-﻿
+
 #If 0 Then
 
 Option Explicit On

@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.service.device
 
 Public Class mock_device_creator(Of PROTECTOR)
