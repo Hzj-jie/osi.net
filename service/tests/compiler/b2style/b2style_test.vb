@@ -10,6 +10,7 @@ Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utt
 Imports osi.root.utt.attributes
+Imports osi.service.automata
 Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 Imports osi.service.resource
@@ -832,5 +833,12 @@ Public NotInheritable Class b2style_test
             Return b2style.with_functions(New interrupts(+i)).parse(j, k)
         End Function
     End Class
-End Class
 
+    <test>
+    Private Shared Sub nlp_parsable()
+        assertion.is_true(nlp.of_file(b2style.nlexer_rule, b2style.syntaxer_rule, Nothing))
+    End Sub
+
+    Private Sub New()
+    End Sub
+End Class
