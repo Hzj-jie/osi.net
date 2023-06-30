@@ -1,4 +1,4 @@
-﻿
+
 Option Explicit On
 Option Infer Off
 Option Strict On
@@ -10,6 +10,7 @@ Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.resource
+Imports envs = osi.root.envs
 
 Public MustInherit Class compiler_self_test_runner
     Private ReadOnly filter As String
@@ -32,17 +33,23 @@ Public MustInherit Class compiler_self_test_runner
                 a.emplace_back(Sub()
                                    If Not name.match_pattern(filter) AndAlso
                                       Not name.match_pattern(filter + ".txt") Then
-                                       raise_error(error_type.user,
-                                                   "Ignore test case ",
-                                                   name,
-                                                   " through the filter.")
+                                       If envs.deploys.dev_env Then
+                                           raise_error(error_type.user,
+                                                       "Ignore test case ",
+                                                       name,
+                                                       " through the filter.")
+                                       End If
                                        Return
                                    End If
                                    If ignore_case(name) Then
-                                       raise_error(error_type.user, "Ignore test case ", name)
+                                       If envs.deploys.dev_env Then
+                                           raise_error(error_type.user, "Ignore test case ", name)
+                                       End If
                                        Return
                                    End If
-                                   raise_error(error_type.user, "Execute test case ", name)
+                                   If envs.deploys.dev_env Then
+                                       raise_error(error_type.user, "Execute test case ", name)
+                                   End If
                                    Using with_current_file(name)
                                        execute(name, text)
                                    End Using

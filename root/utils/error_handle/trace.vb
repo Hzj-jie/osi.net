@@ -19,26 +19,27 @@ Public Module _trace
 
     <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
     Public Sub trace(ByVal additional_jump As Int32, ByVal ParamArray msg() As Object)
-        If enabled Then
-            If enable_detail_trace Then
-                raise_error(error_type.trace,
-                            character.null,
-                            additional_jump + 1,
-                            "thread id ",
-                            current_thread_id(),
-                            ", ",
-                            msg,
-                            ". Stack trace ",
-                            callstack())
-            Else
-                raise_error(error_type.trace,
-                            character.null,
-                            additional_jump + 1,
-                            "thread id ",
-                            current_thread_id(),
-                            ", ",
-                            msg)
-            End If
+        If Not enabled Then
+            Return
+        End If
+        If enable_detail_trace Then
+            raise_error(error_type.trace,
+                        character.null,
+                        additional_jump + 1,
+                        "thread id ",
+                        current_thread_id(),
+                        ", ",
+                        msg,
+                        ". Stack trace ",
+                        callstack())
+        Else
+            raise_error(error_type.trace,
+                        character.null,
+                        additional_jump + 1,
+                        "thread id ",
+                        current_thread_id(),
+                        ", ",
+                        msg)
         End If
     End Sub
 End Module

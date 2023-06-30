@@ -15,11 +15,15 @@ Public Module deploys
     Public Const log_folder_name As String = "log"
     Public ReadOnly deploys_root As String =
         Function() As String
-            If strsame(Path.GetFileName(Path.GetDirectoryName(application_directory)), app_folder_name, False) Then
+            If String.Equals(Path.GetFileName(Path.GetDirectoryName(application_directory)),
+                             app_folder_name) AndAlso
+               String.Equals(Path.GetFileName(Path.GetDirectoryName(Path.GetDirectoryName(application_directory))),
+                             deploys_folder_name) Then
                 Return Path.GetDirectoryName(Path.GetDirectoryName(application_directory))
             End If
             Return Path.GetPathRoot(application_directory)
         End Function()
+    Public ReadOnly dev_env As Boolean = (deploys_root = Path.GetPathRoot(application_directory))
     Public ReadOnly service_name As String = Path.GetFileName(application_directory)
     Public ReadOnly report_deploys_folder As Boolean = env_bool(env_keys("report", "deploys", "folder"))
 
