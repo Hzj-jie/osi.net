@@ -1,4 +1,4 @@
-﻿
+
 Imports Microsoft.VisualBasic
 
 Public NotInheritable Class character

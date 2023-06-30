@@ -1,4 +1,4 @@
-﻿
+
 Public Class big_uint_binary_calculator
     Implements ibinary_calculator(Of big_uint)
 

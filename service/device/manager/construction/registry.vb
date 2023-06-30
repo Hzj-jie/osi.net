@@ -1,4 +1,4 @@
-﻿
+
 ' TODO: Remove
 Option Explicit On
 Option Infer Off

@@ -1,4 +1,4 @@
-﻿
+
 Imports System.Runtime.CompilerServices
 #If Not NO_REFERENCE Then
 Imports osi.root.constants

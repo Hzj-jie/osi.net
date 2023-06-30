@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.utt
 
 Public Class type_attribute_perf_test

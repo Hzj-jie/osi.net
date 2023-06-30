@@ -1,4 +1,4 @@
-﻿
+
 Public Module _reference_types_definitions
     Friend Interface return_s
         Function s() As String

@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.formation
 
 Friend Class static_filter

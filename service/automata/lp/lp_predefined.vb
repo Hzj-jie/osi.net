@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.template
 Imports osi.root.formation
 Imports MAX_TYPE = osi.root.template._256

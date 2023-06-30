@@ -1,4 +1,4 @@
-﻿
+
 ' A lock does nothing, to help to implement thread-safe / thread-unsafe version of class easily
 Public Structure broken_lock
     Implements ilock

@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.constants
 
 ' A thread-safe integer which has a value in [min, max), increment (max - 1) returns min, and decrement min returns

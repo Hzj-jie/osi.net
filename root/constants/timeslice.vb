@@ -1,4 +1,4 @@
-﻿
+
 Public Module _timeslice
     Public Const default_timeslice_length_ms As Int64 = 16
     Public Const default_timeslice_length_ticks As Int64 = default_timeslice_length_ms * milli_tick

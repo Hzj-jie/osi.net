@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.template
 
 'just a set of classes to force using weak_event_handler

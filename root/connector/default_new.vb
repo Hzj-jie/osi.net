@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.template
 
 Public NotInheritable Class default_new(Of T)

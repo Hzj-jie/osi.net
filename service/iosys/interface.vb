@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.procedure
 
 Public Interface ireceiver(Of CASE_T)

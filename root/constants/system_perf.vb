@@ -1,4 +1,4 @@
-﻿
+
 Public Class system_perf
     Private Const ir As Double = 1.5
     Private Const irl2 As Double = 1

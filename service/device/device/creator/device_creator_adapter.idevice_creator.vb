@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.connector
 
 Partial Public Class device_creator_adapter(Of IT, OT)

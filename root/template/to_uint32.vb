@@ -1,4 +1,4 @@
-﻿
+
 Public MustInherit Class _to_uint32(Of keyT)
     Inherits __do(Of keyT, UInt32)
 

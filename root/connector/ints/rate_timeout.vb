@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.constants
 
 Public Class rate_timeout

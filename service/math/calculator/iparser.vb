@@ -1,4 +1,4 @@
-﻿
+
 Public Interface iparser(Of T)
     Function parse(ByVal this As String, ByVal base As Byte, ByRef that As T) As Boolean
 End Interface

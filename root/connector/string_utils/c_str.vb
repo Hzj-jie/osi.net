@@ -1,4 +1,4 @@
-﻿
+
 Imports System.Runtime.CompilerServices
 
 Public Module _c_str

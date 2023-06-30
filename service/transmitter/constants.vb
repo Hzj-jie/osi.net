@@ -1,4 +1,4 @@
-﻿
+
 Public NotInheritable Class constants
     Public Const default_io_buff_size As UInt32 = 4096
     Public Const io_pending_wait_ms As Int64 = 1

@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.delegates
 
 Public Class action_adapter

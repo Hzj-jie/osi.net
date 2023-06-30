@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.connector
 
 Public NotInheritable Class device_exporter_adapter

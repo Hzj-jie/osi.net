@@ -1,4 +1,4 @@
-﻿
+
 Option Explicit On
 Option Infer On
 Option Strict On

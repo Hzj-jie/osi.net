@@ -1,4 +1,4 @@
-﻿
+
 Imports osi.root.utt
 
 Public Class nullable_test

@@ -1,4 +1,4 @@
-﻿
+
 Public Module _inherit_used_loops
     Public Class expected_max_loops
         'since the perf of these tests are diff in windows 2003 and windows 8, so just use the perf from windows 8

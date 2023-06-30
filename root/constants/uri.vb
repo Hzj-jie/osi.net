@@ -1,4 +1,4 @@
-﻿
+
 Namespace uri
     Public Module _uri
         Public Const escape As Char = character.percent_mark

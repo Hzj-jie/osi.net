@@ -1,4 +1,4 @@
-﻿
+
 #Const USE_EXIT_SIGNAL = False
 
 Option Explicit On

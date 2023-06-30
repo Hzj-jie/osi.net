@@ -1,4 +1,4 @@
-﻿
+
 #Const SINGLE_OPERATION = True
 Imports System.Net
 Imports System.Net.Sockets
