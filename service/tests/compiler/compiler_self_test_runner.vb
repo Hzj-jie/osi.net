@@ -10,6 +10,7 @@ Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.resource
+Imports envs = osi.root.envs
 
 Public MustInherit Class compiler_self_test_runner
     Private ReadOnly filter As String
@@ -31,11 +32,24 @@ Public MustInherit Class compiler_self_test_runner
                 Dim text As String = content.ReadToEnd()
                 a.emplace_back(Sub()
                                    If Not name.match_pattern(filter) AndAlso
-                                      Not name.match_pattern((filter) + ".txt") Then
-                                       raise_error(error_type.user, "Ignore test case ", name)
+                                      Not name.match_pattern(filter + ".txt") Then
+                                       If envs.deploys.dev_env Then
+                                           raise_error(error_type.user,
+                                                       "Ignore test case ",
+                                                       name,
+                                                       " through the filter.")
+                                       End If
                                        Return
                                    End If
-                                   raise_error(error_type.user, "Execute test case ", name)
+                                   If ignore_case(name) Then
+                                       If envs.deploys.dev_env Then
+                                           raise_error(error_type.user, "Ignore test case ", name)
+                                       End If
+                                       Return
+                                   End If
+                                   If envs.deploys.dev_env Then
+                                       raise_error(error_type.user, "Execute test case ", name)
+                                   End If
                                    Using with_current_file(name)
                                        execute(name, text)
                                    End Using
@@ -47,4 +61,8 @@ Public MustInherit Class compiler_self_test_runner
 
     Protected MustOverride Sub execute(ByVal name As String, ByVal text As String)
     Protected MustOverride Function with_current_file(ByVal filename As String) As IDisposable
+
+    Protected Overridable Function ignore_case(ByVal name As String) As Boolean
+        Return False
+    End Function
 End Class
