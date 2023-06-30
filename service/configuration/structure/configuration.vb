@@ -9,12 +9,8 @@ Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.dataprovider
 
-Public Class configuration
-    Public Shared ReadOnly [default] As configuration
-
-    Shared Sub New()
-        [default] = New configuration()
-    End Sub
+Public NotInheritable Class configuration
+    Public Shared ReadOnly [default] As New configuration()
 
     Private ReadOnly c As characters
     Private ReadOnly fs As filter_selector
@@ -26,11 +22,11 @@ Public Class configuration
     Public Sub New(Optional ByVal c As characters = Nothing,
                    Optional ByVal fs As filter_selector = Nothing,
                    Optional ByVal static_variants As vector(Of pair(Of String, String)) = Nothing,
-                   Optional ByVal provider_ctor As Func(Of String, 
+                   Optional ByVal provider_ctor As Func(Of String,
                                                            idataloader(Of config),
-                                                           String, 
+                                                           String,
                                                            dataprovider(Of config)) = Nothing,
-                   Optional ByVal loader_ctor As Func(Of istreamdataloader(Of config), 
+                   Optional ByVal loader_ctor As Func(Of istreamdataloader(Of config),
                                                          idataloader(Of config)) = Nothing,
                    Optional ByVal loader_ctor2 As Func(Of idataloader(Of config)) = Nothing)
         If c Is Nothing Then

@@ -6,23 +6,19 @@ Option Strict On
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.configuration
-Imports osi.service.convertor
 Imports c = osi.service.configuration
+Imports envs = osi.root.envs
 
-Public Class configuration_test2
+Public NotInheritable Class configuration_test2
     Inherits [case]
 
-    Private ReadOnly config_file As String
-
-    Public Sub New()
-        config_file = Path.Combine(temp_folder, strcat(guid_str(), filesystem.extension_prefix, "ini"))
-    End Sub
+    Private ReadOnly config_file As String =
+        Path.Combine(temp_folder, strcat(guid_str(), filesystem.extension_prefix, "ini"))
 
     Public Overrides Function prepare() As Boolean
         If MyBase.prepare() Then
@@ -39,7 +35,7 @@ Public Class configuration_test2
         Return c.default()(config_file)
     End Function
 
-    Private Class variants_builder
+    Private NotInheritable Class variants_builder
         Private lang As String
         Private brand As String
         Private time As Int32
@@ -159,22 +155,22 @@ Public Class configuration_test2
 
     Public Overrides Function run() As Boolean
         ' Test [build] section
-        assertion.is_true(config()("build")(build).to(Of Boolean)())
+        assertion.is_true(config()("build")(envs.build).to(Of Boolean)())
         For i As UInt32 = 0 To config()("build").keys().size() - uint32_1
             Dim key As String = Nothing
             key = config()("build").keys()(i)
-            assertion.equal(config()("build")(key).to(Of Boolean)(), strsame(build, key))
+            assertion.equal(config()("build")(key).to(Of Boolean)(), strsame(envs.build, key))
         Next
 
         ' Test [application_directory] section
-        If strsame(service_name, "Debug") OrElse strsame(service_name, "Release") Then
-            assertion.equal(config()("application_directory")("value"), service_name)
+        If String.Equals(envs.deploys.service_name, "Debug") OrElse strsame(envs.deploys.service_name, "Release") Then
+            assertion.equal(config()("application_directory")("value"), envs.deploys.service_name)
         Else
             assertion.equal(config()("application_directory")("value"), "Unknown")
         End If
 
         ' Test [environment] section
-        If strsame(service_name, "Debug") OrElse strsame(service_name, "Release") Then
+        If strsame(envs.deploys.service_name, "Debug") OrElse strsame(envs.deploys.service_name, "Release") Then
             assertion.equal(config()("environment")("value"), "dev")
         Else
             assertion.equal(config()("environment")("value"), "utt-run")
