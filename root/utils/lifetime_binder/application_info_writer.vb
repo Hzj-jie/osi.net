@@ -5,7 +5,6 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
-Imports osi.root.envs
 Imports osi.root.constants
 
 <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
@@ -17,7 +16,7 @@ Public Class application_info_writer
         assert(Not extension.null_or_empty())
         assert(Not strstartwith(extension, filesystem.extension_prefix))
         If file.null_or_empty() Then
-            file = strcat(application_info_output_filename(), filesystem.extension_prefix, extension)
+            file = strcat(envs.deploys.application_info_output_filename(), filesystem.extension_prefix, extension)
         End If
         If Not Path.IsPathRooted(file) Then
             file = Path.Combine(folder, file)

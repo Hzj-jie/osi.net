@@ -15,7 +15,7 @@ Public NotInheritable Class file_error_writer
         Inherits application_info_writer
 
         Public Sub New()
-            MyBase.New(envs.log_folder,
+            MyBase.New(envs.deploys.log_folder,
                        Function() As String
                            Dim log_file As String = Nothing
                            If Not envs.env_value(envs.env_keys("log", "file"), log_file) Then

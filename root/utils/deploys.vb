@@ -6,12 +6,14 @@ Option Strict On
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.envs
 
 <global_init(global_init_level.foundamental)>
 Public Module deploys
     Public Const temp_folder_name As String = "temp"
-    Public ReadOnly temp_folder As String = Path.Combine(deploys_folder, temp_folder_name, application_name, guid_str())
+    Public ReadOnly temp_folder As String = Path.Combine(envs.deploys.deploys_folder,
+                                                         temp_folder_name,
+                                                         envs.application_name,
+                                                         guid_str())
 
     Private Sub init()
         Try
@@ -22,13 +24,13 @@ Public Module deploys
         application_lifetime.stopping_handle(Sub()
                                                  Directory.Delete(temp_folder, True)
                                              End Sub)
-        assert(set_env("temp_folder", temp_folder))
+        assert(envs.set_env("temp_folder", temp_folder))
     End Sub
 
     <global_init(global_init_level.other)>
     Private NotInheritable Class report
         Private Shared Sub init()
-            If report_deploys_folder Then
+            If envs.deploys.report_deploys_folder Then
                 raise_error("temp_folder ", temp_folder)
             End If
         End Sub

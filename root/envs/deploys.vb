@@ -7,13 +7,13 @@ Imports System.IO
 Imports osi.root.constants
 Imports osi.root.connector
 
-Public Module deploys
+Public NotInheritable Class deploys
     Public Const deploys_folder_name As String = "deploys"
     Public Const app_folder_name As String = "apps"
     Public Const counter_folder_name As String = "counter"
     Public Const data_folder_name As String = "data"
     Public Const log_folder_name As String = "log"
-    Public ReadOnly deploys_root As String =
+    Public Shared ReadOnly deploys_root As String =
         Function() As String
             If String.Equals(Path.GetFileName(Path.GetDirectoryName(application_directory)),
                              app_folder_name) AndAlso
@@ -23,16 +23,16 @@ Public Module deploys
             End If
             Return Path.GetPathRoot(application_directory)
         End Function()
-    Public ReadOnly dev_env As Boolean = (deploys_root = Path.GetPathRoot(application_directory))
-    Public ReadOnly service_name As String = Path.GetFileName(application_directory)
-    Public ReadOnly report_deploys_folder As Boolean = env_bool(env_keys("report", "deploys", "folder"))
+    Public Shared ReadOnly dev_env As Boolean = (deploys_root = Path.GetPathRoot(application_directory))
+    Public Shared ReadOnly service_name As String = Path.GetFileName(application_directory)
+    Public Shared ReadOnly report_deploys_folder As Boolean = env_bool(env_keys("report", "deploys", "folder"))
 
-    Public ReadOnly deploys_folder As String = deploys_root
-    Public ReadOnly app_folder As String = Path.Combine(deploys_folder, app_folder_name)
-    Public ReadOnly counter_folder As String = Path.Combine(deploys_folder, counter_folder_name)
-    Public ReadOnly data_folder As String = Path.Combine(deploys_folder, data_folder_name)
-    Public ReadOnly log_folder As String = Path.Combine(deploys_folder, log_folder_name)
-    Public ReadOnly service_data_folder As String = Path.Combine(data_folder, service_name)
+    Public Shared ReadOnly deploys_folder As String = deploys_root
+    Public Shared ReadOnly app_folder As String = Path.Combine(deploys_folder, app_folder_name)
+    Public Shared ReadOnly counter_folder As String = Path.Combine(deploys_folder, counter_folder_name)
+    Public Shared ReadOnly data_folder As String = Path.Combine(deploys_folder, data_folder_name)
+    Public Shared ReadOnly log_folder As String = Path.Combine(deploys_folder, log_folder_name)
+    Public Shared ReadOnly service_data_folder As String = Path.Combine(data_folder, service_name)
 
     <global_init(global_init_level.foundamental)>
     Private NotInheritable Class set_envs
@@ -71,7 +71,7 @@ Public Module deploys
         End Sub
     End Class
 
-    Public Function application_info_output_filename() As String
+    Public Shared Function application_info_output_filename() As String
         Return Path.Combine(application_name,
                             strcat(application_sign,
                                    character.underline,
@@ -83,4 +83,7 @@ Public Module deploys
                                    character.underline,
                                    this_process.ref.Id()))
     End Function
-End Module
+
+    Private Sub New()
+    End Sub
+End Class
