@@ -1,30 +1,27 @@
 
 using System;
 
-public static class Program
-{
+public static class Program {
     private const string template_parameter = "T";
     private const string public_accessmodifier = "Public";
-    private static void w(string a)
-    {
-        Console.WriteLine(a);
+    private static void w(string a) {
+        Console.Write(a);
+        Console.Write('\n');
     }
 
-    private static void w()
-    {
-        Console.WriteLine();
+    private static void w() {
+        Console.Write('\n');
     }
 
-    private static string strcat(params string[] s)
-    {
+    private static string strcat(params string[] s) {
         string r = null;
-        for(int i = 0; i < s.Length; i++)
+        for(int i = 0; i < s.Length; i++) {
             r += s[i] + "\r\n";
+        }
         return r;
     }
 
-    private class arguments
-    {
+    private class arguments {
         private const string tp = "t:";
         private const string ocp = "oc:";
         private const string ocam = "ocam:";
@@ -40,8 +37,7 @@ public static class Program
         public readonly bool is_not_template_parameter;
         public readonly bool is_plugin;
 
-        public arguments(string[] args)
-        {
+        public arguments(string[] args) {
             type = template_parameter;
             outter_class = null;
             outter_class_accessmodifier = public_accessmodifier;
@@ -49,62 +45,46 @@ public static class Program
             class_accessmodifier = public_accessmodifier;
             is_not_template_parameter = false;
             is_plugin = false;
-            if(args != null)
-            {
-                for(int i = 0; i < args.Length; i++)
-                {
-                    if(!string.IsNullOrEmpty(args[i]))
-                    {
-                        if(args[i].StartsWith(tp))
-                        {
-                            type = args[i].Substring(tp.Length);
-                        }
-                        else if(args[i].StartsWith(ocp))
-                        {
-                            outter_class = args[i].Substring(ocp.Length);
-                        }
-                        else if(args[i].StartsWith(ocam))
-                        {
-                            outter_class_accessmodifier = args[i].Substring(ocam.Length);
-                        }
-                        else if(args[i].StartsWith(nsp))
-                        {
-                            namespaces = args[i].Substring(nsp.Length);
-                        }
-                        else if(args[i].StartsWith(cam))
-                        {
-                            class_accessmodifier = args[i].Substring(cam.Length);
-                        }
-                        else if(args[i].StartsWith(ntp))
-                        {
-                            is_not_template_parameter = true;
-                        }
-                        else if(args[i].StartsWith(pp))
-                        {
-                            is_plugin = true;
-                        }
-                    }
+            if (args == null) {
+                return;
+            }
+            for (int i = 0; i < args.Length; i++) {
+                if (string.IsNullOrEmpty(args[i])) {
+                    continue;
+                }
+                if (args[i].StartsWith(tp)) {
+                    type = args[i].Substring(tp.Length);
+                } else if (args[i].StartsWith(ocp)) {
+                    outter_class = args[i].Substring(ocp.Length);
+                } else if (args[i].StartsWith(ocam)) {
+                    outter_class_accessmodifier = args[i].Substring(ocam.Length);
+                } else if (args[i].StartsWith(nsp)) {
+                    namespaces = args[i].Substring(nsp.Length);
+                } else if (args[i].StartsWith(cam)) {
+                    class_accessmodifier = args[i].Substring(cam.Length);
+                } else if (args[i].StartsWith(ntp)) {
+                    is_not_template_parameter = true;
+                } else if (args[i].StartsWith(pp)) {
+                    is_plugin = true;
                 }
             }
         }
 
-        public bool template_type
-        {
-            get
-            {
+        public bool template_type {
+            get {
                 return type == template_parameter && (!is_not_template_parameter);
             }
         }
     }
 
-    private static string class_name(arguments a)
-    {
-        if(a.is_plugin) return a.outter_class;
-        else return "adaptive_array" + (a.template_type ? "(Of " + a.type + ")" : "_" + a.type.ToLower());
+    private static string class_name(arguments a) {
+        if (a.is_plugin) {
+            return a.outter_class;
+        }
+        return "adaptive_array" + (a.template_type ? "(Of " + a.type + ")" : "_" + a.type.ToLower());
     }
 
-    public static void Main(string[] args)
-    {
+    public static void Main(string[] args) {
         arguments a = new arguments(args);
         w("\'this file is generated by /osi/root/codegen/adaptive_array/adaptive_array.exe");
         w("\'so change /osi/root/codegen/adaptive_array/adaptive_array.cs instead of this file");
@@ -122,18 +102,15 @@ public static class Program
         w("Imports osi.root.connector");
         w("Imports osi.root.constants");
         w();
-        if(!string.IsNullOrEmpty(a.namespaces))
-        {
+        if (!string.IsNullOrEmpty(a.namespaces)) {
             w("Namespace " + a.namespaces);
         }
 
-        if(!string.IsNullOrEmpty(a.outter_class))
-        {
+        if (!string.IsNullOrEmpty(a.outter_class)) {
             w("Partial " + a.outter_class_accessmodifier + " Class " + a.outter_class);
         }
 
-        if(!a.is_plugin)
-        {
+        if (!a.is_plugin) {
             w(a.class_accessmodifier + " NotInheritable Class " + class_name(a));
         }
         w(strcat(
@@ -371,18 +348,15 @@ public static class Program
 "    End Function"
         ));
 
-        if(!a.is_plugin)
-        {
+        if (!a.is_plugin) {
             w("End Class");
         }
 
-        if(!string.IsNullOrEmpty(a.outter_class))
-        {
+        if (!string.IsNullOrEmpty(a.outter_class)) {
             w("End Class");
         }
 
-        if(!string.IsNullOrEmpty(a.namespaces))
-        {
+        if (!string.IsNullOrEmpty(a.namespaces)) {
             w("End Namespace");
         }
     }

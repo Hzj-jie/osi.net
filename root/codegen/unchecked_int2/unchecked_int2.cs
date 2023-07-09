@@ -14,19 +14,20 @@ public static class Program
 
     private static void w(string a)
     {
-        Console.WriteLine(a);
+        Console.Write(a);
+        Console.Write('\n');
     }
 
     private static void w()
     {
-        Console.WriteLine();
+        Console.Write('\n');
     }
 
     private static string strcat(params string[] s)
     {
         string r = null;
         for(int i = 0; i < s.Length; i++)
-            r += s[i] + "\r\n";
+            r += s[i] + "\n";
         return r;
     }
 

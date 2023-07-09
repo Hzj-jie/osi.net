@@ -13,7 +13,7 @@ Friend Module _dotnet_test_data
     Public ReadOnly from_source1() As Byte
 
     Sub New()
-        from_source1 = Convert.FromBase64String(strcat_hint(CUInt(228), _
-        "DQpwdWJsaWMgY2xhc3MgZnJvbV9zb3VyY2UxIHsNCiAgICBwdWJsaWMgc3RhdGljIGludCBleGVjdXRlKGludCBhKSB7DQogICAgICAgIHJldHVybiBhICsgMTsNCiAgICB9DQoNCiAgICBwdWJsaWMgaW50IGV4ZWN1dGUyKGludCBhKSB7DQogICAgICAgIHJldHVybiBhIC0gMTsNCiAgICB9DQp9DQo="))
+        from_source1 = Convert.FromBase64String(strcat_hint(CUInt(216), _
+        "CnB1YmxpYyBjbGFzcyBmcm9tX3NvdXJjZTEgewogICAgcHVibGljIHN0YXRpYyBpbnQgZXhlY3V0ZShpbnQgYSkgewogICAgICAgIHJldHVybiBhICsgMTsKICAgIH0KCiAgICBwdWJsaWMgaW50IGV4ZWN1dGUyKGludCBhKSB7CiAgICAgICAgcmV0dXJuIGEgLSAxOwogICAgfQp9Cg=="))
     End Sub
 End Module
