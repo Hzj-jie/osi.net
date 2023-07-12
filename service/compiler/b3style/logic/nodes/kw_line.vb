@@ -14,7 +14,7 @@ Option Strict On
 Imports osi.service.automata
 
 Partial Public NotInheritable Class b3style
-    Public NotInheritable Class kw_line
+    Private NotInheritable Class kw_line
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,

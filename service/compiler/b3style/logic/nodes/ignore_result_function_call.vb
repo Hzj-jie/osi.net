@@ -15,7 +15,7 @@ Imports osi.root.connector
 Imports osi.service.automata
 
 Partial Public NotInheritable Class b3style
-    Public NotInheritable Class ignore_result_function_call
+    Private NotInheritable Class ignore_result_function_call
         Implements code_gen(Of logic_writer)
 
         Private Function build(ByVal n As typed_node,

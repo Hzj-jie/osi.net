@@ -7,7 +7,7 @@ Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
-    Public NotInheritable Class template
+    Private NotInheritable Class template
         Implements code_gen(Of typed_node_writer)
 
         Private Function build(ByVal n As typed_node,
