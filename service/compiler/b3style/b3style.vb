@@ -82,58 +82,64 @@ Partial Public NotInheritable Class b3style
                     "for-increase",
                     "base-for-increase"
                 ).
+                with_of_all_childrens(
+                    "paramtypelist",
+                    "raw-value",
+                    "paramlist"
+                ).
                 with(code_gen.of_ignore_last_child(Of logic_writer)("root-type-with-semi-colon")).
+                with(code_gen.of_ignore_last_child(Of logic_writer)("base-sentence-with-semi-colon")).
+                with(code_gen.of_ignore_last_child(Of logic_writer)("b2style-sentence-with-semi-colon")).
+                with(code_gen.of_first_child(Of logic_writer)("param-with-comma")).
+                with(code_gen.of_first_child(Of logic_writer)("value-with-comma")).
+                with(code_gen.of_first_child(Of logic_writer)("paramtype-with-comma")).
+                with(code_gen.of_children(Of logic_writer)("else-condition", 1)).
+                with(code_gen.of_children(Of logic_writer)("value-with-bracket", 1)).
+                with(code_gen.of_input_without_ignored(Of logic_writer)("paramtype")).
+ _
+                with(Of bstyle.logic)().
+                with(Of bstyle.typedef_type_name)().
+                with(Of bstyle.typedef_type_str)().
+ _
                 with(Of include_with_file)().
                 with(Of include_with_string)().
+                with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of)).
+                with(scope.define_t.code_gens.define()).
+ _
                 with(Of biguint)().
                 with(Of bool)().
                 with(Of _integer)().
                 with(Of _string)().
                 with(Of ufloat)().
-                with(Of bstyle.logic)().
-                with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of)).
-                with(scope.define_t.code_gens.define()).
-                with(Of typedef)().
-                with(Of bstyle.typedef_type_name)().
-                with(Of bstyle.typedef_type_str)().
+                with(Of _function)().
+                with(Of function_call)().
+                with(Of ignore_result_function_call)().
+                with(Of param)().
+                with(Of return_clause)().
+                with(Of value_clause)().
+                with(Of value_declaration)().
                 with(Of heap_declaration)().
+                with(Of value_definition)().
                 with(Of heap_name)().
                 with(Of struct)().
-                with(Of value_declaration)().
-                with(Of value_definition)().
-                with(Of value_clause)().
-                with(Of function_call)().
-                with(Of return_clause)().
-                with(Of static_cast)().
-                with(Of ignore_result_function_call)().
-                with(Of value_list)().
                 without(Of raw_variable_name)().
+                with(Of value_list)().
+                with(Of typedef)().
+                with(Of static_cast)().
+                with(Of multi_sentence_paragraph)().
+                with(Of value)().
                 with(Of kw_file)().
                 with(Of kw_func)().
                 with(Of kw_line)().
                 with(Of kw_statement)().
-                with(Of _function)().
-                with(Of param)().
-                with(code_gen.of_all_children(Of logic_writer)("paramlist")).
-                with(Of multi_sentence_paragraph)().
-                with(code_gen.of_ignore_last_child(Of logic_writer)("base-sentence-with-semi-colon")).
-                with(Of value)().
-                with_of_all_childrens("raw-value").
-                with(Of name)().
-                with(code_gen.of_first_child(Of logic_writer)("param-with-comma")).
-                with(code_gen.of_first_child(Of logic_writer)("value-with-comma")).
                 with(Of condition)().
-                with(code_gen.of_children(Of logic_writer)("else-condition", 1)).
                 with(Of for_loop)().
                 with(Of _delegate)().
                 with(Of reinterpret_cast)().
-                with(code_gen.of_ignore_last_child(Of logic_writer)("b2style-sentence-with-semi-colon")).
                 with(Of dealloc)().
                 with(Of undefine)().
-                with(code_gen.of_children(Of logic_writer)("value-with-bracket", 1)).
-                with(code_gen.of_input_without_ignored(Of logic_writer)("paramtype")).
-                with_of_all_childrens("paramtypelist").
-                with(code_gen.of_first_child(Of logic_writer)("paramtype-with-comma"))
+ _
+                with(Of name)()
         End Function
     End Class
 End Class
