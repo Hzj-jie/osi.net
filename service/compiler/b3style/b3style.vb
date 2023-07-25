@@ -134,6 +134,7 @@ Partial Public NotInheritable Class b3style
                 with(Of kw_statement)().
                 with(Of condition)().
                 with(Of for_loop)().
+                with(Of _while)().
                 with(Of _delegate)().
                 with(Of reinterpret_cast)().
                 with(Of dealloc)().
