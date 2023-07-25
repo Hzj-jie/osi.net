@@ -106,6 +106,7 @@
     <Compile Include="b3style\b3style_b2style_b3style_self_compile_error_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_self_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_test.vb" />
+    <Compile Include="b3style\b3style_b2style_test.vb" />
     <Compile Include="b3style\b3style_runnable_test.vb" />
     <Compile Include="b3style\b3style_bstyle_test.vb" />
     <Compile Include="b3style\b3style_runnable_test_cases.vb" />
