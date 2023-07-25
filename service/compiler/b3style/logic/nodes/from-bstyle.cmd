@@ -34,6 +34,7 @@ call :run kw_line
 call :run kw_statement
 call :run condition
 call :run for_loop
+call :run while
 call :run delegate
 call :run reinterpret_cast
 call :run dealloc

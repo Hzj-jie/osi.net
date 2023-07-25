@@ -22,7 +22,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub case1()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.case1.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.case1.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "Hello World")
@@ -32,7 +32,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub case2()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.case2.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.case2.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), strncat("", "False", 100))
@@ -42,8 +42,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub bool_and_bool()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.bool_and_bool.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.bool_and_bool.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "TrueFalseFalseFalseTrueTrueTrueFalse")
@@ -53,8 +52,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub str_unescape()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.str_unescape.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.str_unescape.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), strcat("abc", character.tab, "def", character.newline))
@@ -64,7 +62,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub _1_to_100()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data._1_to_100.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data._1_to_100.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), strcat("5050", character.newline))
@@ -74,7 +72,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub self_add()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.self_add.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.self_add.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "101101102")
@@ -84,7 +82,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub biguint()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).parse(_b2style_test_data.biguint.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.biguint.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "429496729642949672961")
@@ -94,8 +92,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub negative_int()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.negative_int.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.negative_int.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "-1-2-3")
@@ -105,8 +102,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub another_1_to_100()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.another_1_to_100.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.another_1_to_100.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), strcat("5050", character.newline))
@@ -116,8 +112,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub loaded_method()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.loaded_method.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.loaded_method.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), strncat("", "False", 100))
@@ -127,8 +122,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub ufloat_std_out()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.ufloat_std_out.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.ufloat_std_out.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "1.1")
@@ -138,8 +132,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub ufloat_operators()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.ufloat_operators.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.ufloat_operators.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "1.10.5")
@@ -149,8 +142,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub while_1_to_100()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.while_1_to_100.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.while_1_to_100.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), strcat("5050", character.newline))
@@ -160,8 +152,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub while_0_to_1()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.while_0_to_1.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.while_0_to_1.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), strcat("50.5", character.newline))
@@ -172,8 +163,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub pi_integral_0_1()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.pi_integral_0_1.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.pi_integral_0_1.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), strcat("3.304518326248318338508394330371205830216509246678390049350471115"))
@@ -184,8 +174,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub shift()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.shift.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.shift.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "40040012")
@@ -195,8 +184,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub calculate_pi_bbp()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.calculate_pi_bbp.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.calculate_pi_bbp.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "3.1415926535897932384626433832795028841971693993751058209749445923")
@@ -204,31 +192,10 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub order_of_operators()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.order_of_operators.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "15")
-        ' TODO:
-        ' Expected:
-        ' 1 + 6 + 4 - 30912
-        ' =-30901
-        ' Actually:
-        ' 1 + (2 * (3 + (4 - (5 * 6 * 7 * 8 * ( 9 / ( 10 * (11 + 12)))))))
-        ' =1 + (2 * (3 + 4))
-        ' =15
-        ' But it may not be handled by b2style.
-    End Sub
-
-    <test>
     Private Shared Sub include()
         Dim io As New console_io.test_wrapper("abc")
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.include.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.include.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "abcEOF")
@@ -238,8 +205,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub include2()
         Dim io As New console_io.test_wrapper("def")
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.include2.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.include2.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "defEoF")
@@ -249,8 +215,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub ifndef()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.ifndef.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.ifndef.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "good")
@@ -260,8 +225,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub namespaces()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.namespaces.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.namespaces.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), strcat("a::b::f1", character.newline,
@@ -275,8 +239,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub multiline_string()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.multiline_string.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.multiline_string.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         ' I hate different newline characters.
@@ -291,8 +254,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub comments()
         Dim io As New console_io.test_wrapper("good")
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.comments.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.comments.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "good")
@@ -302,8 +264,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub typedef()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                          parse(_b2style_test_data.typedef.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.typedef.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "abc")
@@ -313,8 +274,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub legacy_biguint_to_str()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.legacy_biguint_to_str.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.legacy_biguint_to_str.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "4294967296429496729610")
@@ -324,8 +284,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub struct_in_namespace()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.struct_in_namespace.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.struct_in_namespace.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "100")
@@ -335,8 +294,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub heap_declaration()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.heap_declaration.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.heap_declaration.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
     End Sub
@@ -345,8 +303,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub heap()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.heap.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.heap.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "abcdefghi100")
@@ -356,8 +313,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub function_ref()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.function_ref.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.function_ref.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "12345677")
@@ -367,8 +323,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub struct_function_ref()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.struct_function_ref.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.struct_function_ref.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "100abc")
@@ -378,8 +333,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub __i__()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.__i__.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.__i__.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "3_8_19_20_21_22")
@@ -389,8 +343,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub for_loop()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.for_loop.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.for_loop.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "495099001485019800")
@@ -400,8 +353,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub i__()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.i__.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.i__.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(Convert.ToInt32(io.output()(0)), 1)
@@ -411,8 +363,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub i__2()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.i__2.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.i__2.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(Convert.ToInt32(io.output()(0)), 1)
@@ -425,8 +376,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub __i()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.__i.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.__i.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(Convert.ToInt32(io.output()(0)), 1)
@@ -439,8 +389,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub heap_function_ref()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.heap_function_ref.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.heap_function_ref.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(),
@@ -456,8 +405,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub nested_paragraph()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.nested_paragraph.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.nested_paragraph.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), strcat("hello world",
@@ -471,8 +419,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub [class]()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.[class].as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.[class].as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "200100")
@@ -482,8 +429,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub nested_class()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.nested_class.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.nested_class.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "100200")
@@ -493,8 +439,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub class_on_heap()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.class_on_heap.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.class_on_heap.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), streams.range(0, 100).
@@ -510,8 +455,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub class_in_namespace()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.class_in_namespace.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.class_in_namespace.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "123")
@@ -521,8 +465,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub function_with_global_namespace()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.function_with_global_namespace.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.function_with_global_namespace.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "f::f")
@@ -532,8 +475,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub class_function_with_namespace()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.class_function_with_namespace.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.class_function_with_namespace.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "100200")
@@ -543,8 +485,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub nested_heap_access()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.nested_heap_access.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.nested_heap_access.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "234")
@@ -554,8 +495,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub heap_ptr_to_int64()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.heap_ptr_to_int64.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.heap_ptr_to_int64.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "0 4294967296 8589934592")
@@ -577,8 +517,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub empty_struct()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.empty_struct.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.empty_struct.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "f3ff2")
@@ -588,8 +527,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.template.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.template.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "DE")
@@ -599,8 +537,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub primitive_template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.primitive_template.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.primitive_template.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "101101.11")
@@ -610,8 +547,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub nested_template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.nested_template.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.nested_template.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "C")
@@ -621,8 +557,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub template_wont_be_extended_twice()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.template_wont_be_extended_twice.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.template_wont_be_extended_twice.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "24")
@@ -632,8 +567,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub template_with_different_length()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.template_with_different_length.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.template_with_different_length.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "12abc")
@@ -643,8 +577,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub reinterpret_cast()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.reinterpret_cast.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.reinterpret_cast.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "-100100")
@@ -654,8 +587,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub reinterpret_cast_heap()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.reinterpret_cast_heap.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.reinterpret_cast_heap.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "-1010")
@@ -665,8 +597,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub lots_of_semi_colons()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.lots_of_semi_colons.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.lots_of_semi_colons.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "100")
@@ -676,8 +607,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub delegate_()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.[delegate].as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.[delegate].as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "abc")
@@ -687,8 +617,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub delegate2()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.delegate2.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.delegate2.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "31")
@@ -698,8 +627,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub delegate_template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.delegate_template.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.delegate_template.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "2abc1")
@@ -709,8 +637,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub function_ptr()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.function_ptr.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.function_ptr.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "10199")
@@ -720,8 +647,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub delegate_ref()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.delegate_ref.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.delegate_ref.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "100101")
@@ -731,8 +657,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub class_constructor()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.class_constructor.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.class_constructor.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "10012002")
@@ -742,8 +667,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub test_assert()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.test_assert.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.test_assert.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertions.of(io.output().Split(character.newline)).equal(
@@ -757,8 +681,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub class_inheritance()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.class_inheritance.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.class_inheritance.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "3f21f2")
@@ -768,8 +691,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub assert_()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.assert_.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.assert_.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "This assertion should not pass.")
@@ -779,8 +701,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub vector_destructor()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.vector_destructor.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.vector_destructor.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(assertion.catch_thrown(Of executor_stop_error) _
@@ -794,8 +715,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub assert_with_statement()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.assert_with_statement.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.assert_with_statement.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "assert ( __STATEMENT__ , i < 100 , ""line 8"" ) ;: line 8")
@@ -805,8 +725,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     Private Shared Sub __func__()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(b2style.with_functions(New interrupts(+io)).
-                                  parse(_b2style_test_data.__func__.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.__func__.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output().Trim(), String.Join(character.newline,
@@ -837,6 +756,27 @@ Public NotInheritable Class b2style_test
     <test>
     Private Shared Sub nlp_parsable()
         assertion.is_true(nlp.of_file(b2style.nlexer_rule, b2style.syntaxer_rule, Nothing))
+    End Sub
+
+    ' TODO: This test is very slow in b3style_b2style_b3style_test due to the rule matching performance.
+    ' 3 seconds vs 10 minutes.
+    <test>
+    Private Shared Sub order_of_operators()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(New parse().at(io, _b2style_test_data.order_of_operators.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "15")
+        ' TODO:
+        ' Expected:
+        ' 1 + 6 + 4 - 30912
+        ' =-30901
+        ' Actually:
+        ' 1 + (2 * (3 + (4 - (5 * 6 * 7 * 8 * ( 9 / ( 10 * (11 + 12)))))))
+        ' =1 + (2 * (3 + 4))
+        ' =15
+        ' But it may not be handled by b2style.
     End Sub
 
     Private Sub New()
