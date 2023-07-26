@@ -40,8 +40,10 @@ call :run reinterpret_cast
 call :run dealloc
 call :run undefine
 
+sed " Class bstyle" " Class b3style" ..\..\..\bstyle\logic\prefixes\code_types.vb > ..\prefixes\code_types.vb
+
 exit /b 0
 
-:RUN
+:run
 sed " Class bstyle" " Class b3style" ..\..\..\bstyle\logic\nodes\%~1.vb > %~1.vb
 exit /b 0

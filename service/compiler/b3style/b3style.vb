@@ -50,7 +50,7 @@ Partial Public NotInheritable Class b3style
         Inherits __do(Of vector(Of Action(Of statements)))
 
         Protected Overrides Function at() As vector(Of Action(Of statements))
-            Return vector.emplace_of(Of Action(Of statements))(AddressOf bstyle.code_types.register)
+            Return vector.emplace_of(Of Action(Of statements))(AddressOf code_types.register)
         End Function
     End Class
 

@@ -15,7 +15,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     ' A helper to always de-alias and apply namespace.
     Public NotInheritable Class normalized_type
         Public Shared Function logic_type_of(ByVal type As String) As String
-            Return remove_namespace_prefix([of](type).logic_type())
+            Return [of](type).logic_type()
         End Function
 
         Public Shared Function [of](ByVal type As String) As builders.parameter_type
@@ -24,14 +24,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
         Public Shared Function map_type(ByVal i As String) As String
             Return current().type_alias()(current_namespace_t.of(i))
-        End Function
-
-        Public Shared Function remove_namespace_prefix(ByVal s As String) As String
-            If Not current().features().with_namespace() Then
-                Return s
-            End If
-            assert(s.StartsWith(current_namespace_t.namespace_separator))
-            Return s.Substring(current_namespace_t.namespace_separator.Length())
         End Function
 
         Private Sub New()
@@ -43,8 +35,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not i Is Nothing)
             i = i.map_type(AddressOf normalized_type.map_type).
                   map_name(AddressOf current_namespace_t.of)
-            Return pair.emplace_of(normalized_type.remove_namespace_prefix(i.name),
-                                   normalized_type.remove_namespace_prefix(i.logic_type()))
+            Return pair.emplace_of(i.name, i.logic_type())
         End Function
 
         Private Sub New()
