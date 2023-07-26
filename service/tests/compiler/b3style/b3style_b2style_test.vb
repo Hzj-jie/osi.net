@@ -8,6 +8,7 @@ Imports osi.root.utt.attributes
 Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 
+<command_line_specified>
 <test>
 Public NotInheritable Class b3style_b2style_test
     Inherits b2style_test(Of parse)
