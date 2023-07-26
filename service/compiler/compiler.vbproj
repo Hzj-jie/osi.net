@@ -82,6 +82,7 @@
     <Compile Include="b3style\logic\nodes\logic_name.vb" />
     <Compile Include="b3style\logic\nodes\multi_sentence_paragraph.vb" />
     <Compile Include="b3style\logic\nodes\name.vb" />
+    <Compile Include="b3style\logic\nodes\namespace.vb" />
     <Compile Include="b3style\logic\nodes\param.vb" />
     <Compile Include="b3style\logic\nodes\raw_value.vb" />
     <Compile Include="b3style\logic\nodes\raw_variable_name.vb" />
