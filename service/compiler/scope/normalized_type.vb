@@ -14,6 +14,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     ' A helper to always de-alias and apply namespace.
     Public NotInheritable Class normalized_type
         Public Shared Function logic_type_of(ByVal type As String) As String
+            ' TODO: Add a prefix for logic_type to avoid being called twice on one type.
             ' assert(Not type.null_or_whitespace())
             ' assert(Not type.StartsWith("@"))
             Dim s As String = [of](type).logic_type()
