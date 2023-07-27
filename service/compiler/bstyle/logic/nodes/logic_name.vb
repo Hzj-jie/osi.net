@@ -42,7 +42,12 @@ Partial Public NotInheritable Class bstyle
                                          compiler.logic.scope.type_t.variable_type,
                                          scope.normalized_type.logic_type_of(return_type)),
                                       parameters.stream().
-                                                 map(AddressOf scope.normalized_parameter.logic_name_type_of).
+                                                 map(Function(ByVal i As builders.parameter) As pair(Of String, String)
+                                                         assert(Not i Is Nothing)
+                                                         Return pair.emplace_of(
+                                                                 i.name,
+                                                                 scope.normalized_type.logic_type_of(i.logic_type()))
+                                                     End Function).
                                                  collect_to(Of vector(Of pair(Of String, String)))(),
                                       paragraph).to(o)
         End Function
