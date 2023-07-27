@@ -21,8 +21,7 @@ Partial Public NotInheritable Class logic
 
             Public Shared Function is_ref_type(ByVal type As String) As Boolean
                 assert(Not type.null_or_whitespace())
-                ' TODO: Try to avoid allowing only "&" as parameter type.
-                ' assert(Not type.Equals(type_ref_suffix))
+                assert(Not type.Equals(type_ref_suffix))
                 Return type.EndsWith(type_ref_suffix) AndAlso Not type.Equals(type_ref_suffix)
             End Function
 
