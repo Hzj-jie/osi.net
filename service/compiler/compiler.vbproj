@@ -99,7 +99,6 @@
     <Compile Include="b3style\logic\nodes\value_definition.vb" />
     <Compile Include="b3style\logic\nodes\value_list.vb" />
     <Compile Include="b3style\logic\nodes\while.vb" />
-    <Compile Include="b3style\logic\prefixes\code_types.vb" />
     <Compile Include="scope\class_def.vb" />
     <Compile Include="scope\function_def.vb" />
     <None Include="b2style\lib\std\vector" />
@@ -376,6 +375,7 @@
     <Content Include="shared\syntaxer_rule.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="b3style\logic\prefixes\" />
     <Folder Include="b3style\logic\suffixes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

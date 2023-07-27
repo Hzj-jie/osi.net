@@ -46,8 +46,7 @@ Partial Public NotInheritable Class bstyle
             Dim i As UInt32 = 0
             While i < v.size()
                 assert(v(i).second >= 0)
-                ' scope is only accessible until now.
-                logic_builder.of_type(scope.normalized_type.logic_type_of(v(i).first), CUInt(v(i).second)).to(o)
+                logic_builder.of_type(v(i).first, CUInt(v(i).second)).to(o)
                 i += uint32_1
             End While
         End Sub
