@@ -44,7 +44,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             While i < members.size()
                 assert(Not members(i) Is Nothing)
                 assert(Not members(i).ref)
-                If Not resolve_type(members(i).type, members(i).name, d) Then
+                If Not resolve_type(members(i).type(), members(i).name, d) Then
                     Return False
                 End If
                 i += uint32_1

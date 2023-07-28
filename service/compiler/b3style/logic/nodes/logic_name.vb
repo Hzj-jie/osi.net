@@ -27,7 +27,7 @@ Partial Public NotInheritable Class b3style
                          streams.of(params).
                                  map(Function(ByVal i As PT) As String
                                          assert(Not i Is Nothing)
-                                         Return i.type
+                                         Return i.no_ref_type()
                                      End Function).
                                  collect_to(Of vector(Of String))())
         End Function

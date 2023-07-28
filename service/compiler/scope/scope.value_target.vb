@@ -83,7 +83,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 params.primitives.
                        foreach(Sub(ByVal p As builders.parameter)
                                    assert(Not p Is Nothing)
-                                   define_primitive_type_temp_target(p.type, p.name)
+                                   define_primitive_type_temp_target(p.type(), p.name)
                                End Sub)
                 Return with_value(type, params.primitives())
             End If

@@ -135,7 +135,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Dim i As UInt32 = 0
             While i < vs.size()
                 assert(Not vs(i) Is Nothing)
-                If Not define(vs(i).type, vs(i).name) Then
+                If Not define(vs(i).no_ref_type(), vs(i).name) Then
                     Return False
                 End If
                 i += uint32_1

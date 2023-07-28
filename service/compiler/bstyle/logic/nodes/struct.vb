@@ -115,7 +115,7 @@ Partial Public NotInheritable Class bstyle
                            map(Function(ByVal s As builders.parameter) As Boolean
                                    assert(Not s Is Nothing)
                                    assert(Not s.ref)
-                                   Return scope.current().variables().define(s.type, s.name)
+                                   Return scope.current().variables().define(s.type(), s.name)
                                End Function).
                            aggregate(bool_stream.aggregators.all_true)
         End Function
@@ -140,7 +140,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not v Is Nothing)
             Return v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
                                             assert(Not m Is Nothing)
-                                            Return value_declaration.declare_primitive_type(m.type, m.name, o)
+                                            Return value_declaration.declare_primitive_type(m.type(), m.name, o)
                                         End Function)
         End Function
 
@@ -163,7 +163,7 @@ Partial Public NotInheritable Class bstyle
                                                   Function(ByVal m As builders.parameter) As Boolean
                                                       assert(Not m Is Nothing)
                                                       Return heap_declaration.
-                                                                 declare_primitive_type(m.type, m.name, len_name, o)
+                                                                 declare_primitive_type(m.type(), m.name, len_name, o)
                                                   End Function)
                                    End Function)
         End Function
@@ -207,8 +207,8 @@ Partial Public NotInheritable Class bstyle
             Return scope.current().variables().redefine(type, name) AndAlso
                    v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
                                             assert(Not m Is Nothing)
-                                            Return scope.current().variables().redefine(m.type, m.name) AndAlso
-                                                   builders.of_redefine(m.name, m.type).to(o)
+                                            Return scope.current().variables().redefine(m.type(), m.name) AndAlso
+                                                   builders.of_redefine(m.name, m.type()).to(o)
                                         End Function)
         End Function
 
@@ -244,7 +244,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             Dim id As builders.parameter = create_id(n.child(1).word().str())
-            assert(builders.of_type(id.type, uint32_1).to(o))
+            assert(builders.of_type(id.type(), uint32_1).to(o))
             Return scope.current().structs().define(
                        n.child(1).word().str(),
                        parse_struct_body(n).map(AddressOf scope.struct_def.nested).

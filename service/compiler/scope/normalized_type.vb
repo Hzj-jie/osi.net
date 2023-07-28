@@ -13,6 +13,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     ' A helper to always de-alias and apply namespace.
     Public NotInheritable Class normalized_type
+        ' TODO: full_type_of
         Public Shared Function logic_type_of(ByVal type As String) As String
             ' TODO: Add a prefix for logic_type to avoid being called twice on one type.
             ' assert(Not type.null_or_whitespace())
