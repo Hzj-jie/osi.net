@@ -18,7 +18,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Function define(ByVal type As String, ByVal name As String) As Boolean
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
-            type = normalized_type.logic_type_of(type)
+            type = normalized_type.full_type_of(type)
             If s.emplace(name, type).second() Then
                 Return True
             End If

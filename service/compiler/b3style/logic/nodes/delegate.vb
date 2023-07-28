@@ -30,9 +30,9 @@ Partial Public NotInheritable Class b3style
             Else
                 ps = code_gens().of_all_children(n.child(4)).dump()
             End If
-            Dim return_type As String = scope.normalized_type.logic_type_of(n.child(1).input_without_ignored())
+            Dim return_type As String = scope.normalized_type.full_type_of(n.child(1).input_without_ignored())
             ps = ps.stream().
-                    map(AddressOf scope.normalized_type.logic_type_of).
+                    map(AddressOf scope.normalized_type.full_type_of).
                     collect_to(Of vector(Of String))()
             Return scope.current().delegates().define(return_type,
                                                       n.child(2).input_without_ignored(),

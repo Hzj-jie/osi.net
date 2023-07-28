@@ -29,7 +29,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 Function() As String
                     Dim p As builders.parameter_type = normalized_type.of("void")
                     assert(Not p.ref)
-                    Return p.type()
+                    Return p.non_ref_type()
                 End Function()
             Private ReadOnly class_def As class_def
             Private ReadOnly return_type As name_with_namespace

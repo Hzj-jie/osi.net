@@ -23,7 +23,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not d Is Nothing)
             ' Struct member types are always resolved during the define / build stage, so scope.current() equals to
             ' the scope where the struct_t instance is being defined.
-            type = normalized_type.logic_type_of(type)
+            type = normalized_type.full_type_of(type)
             Dim sub_type As struct_def = Nothing
             If Not s.find(type, sub_type) Then
                 d.with_primitive(type, name)
@@ -44,7 +44,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             While i < members.size()
                 assert(Not members(i) Is Nothing)
                 assert(Not members(i).ref)
-                If Not resolve_type(members(i).type(), members(i).name, d) Then
+                If Not resolve_type(members(i).non_ref_type(), members(i).name, d) Then
                     Return False
                 End If
                 i += uint32_1
@@ -61,7 +61,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                                 ByVal name As String,
                                 ByRef o As struct_def) As Boolean
             assert(Not type.null_or_whitespace())
-            If Not s.find(normalized_type.logic_type_of(type), o) Then
+            If Not s.find(normalized_type.full_type_of(type), o) Then
                 ' Do not log, value_declaration and value_definition always check if a struct is defined before
                 ' forwarding the defintion directly to the logic.
                 Return False

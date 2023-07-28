@@ -48,22 +48,19 @@ Partial Public NotInheritable Class logic
                 Me._type = type.Trim()
             End Sub
 
-            ' TODO: full_type
-            Public Function logic_type() As String
+            Public Function full_type() As String
                 If ref Then
                     Return _type + type_ref_suffix
                 End If
                 Return _type
             End Function
 
-            ' TODO: no_ref_type
-            Public Function type() As String
+            Public Function non_ref_type() As String
                 assert(Not ref)
                 Return _type
             End Function
 
-            ' TODO: unrefed_type
-            Public Function no_ref_type() As String
+            Public Function unrefed_type() As String
                 Return _type
             End Function
 
@@ -102,7 +99,7 @@ Partial Public NotInheritable Class logic
             End Function
 
             Public Overrides Function ToString() As String
-                Return logic_type()
+                Return full_type()
             End Function
         End Class
 
@@ -124,7 +121,7 @@ Partial Public NotInheritable Class logic
                 Me.name = name
             End Sub
 
-            Public Shared Function no_ref(ByVal type As String, ByVal name As String) As parameter
+            Public Shared Function non_ref(ByVal type As String, ByVal name As String) As parameter
                 Dim r As New parameter(type, name)
                 assert(Not r.ref)
                 Return r

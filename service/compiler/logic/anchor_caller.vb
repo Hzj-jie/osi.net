@@ -65,7 +65,7 @@ Partial Public NotInheritable Class logic
             Next
             For i As Int32 = 0 To parameters.Length() - 1
                 Dim parameter_place_holder As String = parameter_place_holder_of(anchor, i)
-                If Not _define.export(parameter_place_holder, anchor.parameters(CUInt(i)).no_ref_type(), o) Then
+                If Not _define.export(parameter_place_holder, anchor.parameters(CUInt(i)).unrefed_type(), o) Then
                     Return False
                 End If
 

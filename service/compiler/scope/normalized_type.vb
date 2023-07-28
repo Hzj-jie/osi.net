@@ -13,12 +13,11 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     ' A helper to always de-alias and apply namespace.
     Public NotInheritable Class normalized_type
-        ' TODO: full_type_of
-        Public Shared Function logic_type_of(ByVal type As String) As String
+        Public Shared Function full_type_of(ByVal type As String) As String
             ' TODO: Add a prefix for logic_type to avoid being called twice on one type.
             ' assert(Not type.null_or_whitespace())
             ' assert(Not type.StartsWith("@"))
-            Dim s As String = [of](type).logic_type()
+            Dim s As String = [of](type).full_type()
             If current().features().with_namespace() Then
                 assert(s.StartsWith(current_namespace_t.namespace_separator))
                 s = s.Substring(current_namespace_t.namespace_separator.Length())
