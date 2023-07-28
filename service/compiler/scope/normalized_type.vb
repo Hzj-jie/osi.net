@@ -26,6 +26,11 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return s
         End Function
 
+        Public Shared Function full_type_of(ByVal i As builders.parameter_type) As String
+            assert(Not i Is Nothing)
+            Return full_type_of(i.full_type())
+        End Function
+
         Public Shared Function [of](ByVal type As String) As builders.parameter_type
             Return New builders.parameter_type(type).map_type(
                         Function(ByVal i As String) As String

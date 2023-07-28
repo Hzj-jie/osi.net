@@ -54,7 +54,7 @@ Partial Public NotInheritable Class b3style
                                                          assert(Not i Is Nothing)
                                                          Return pair.emplace_of(
                                                                  i.name,
-                                                                 scope.normalized_type.full_type_of(i.full_type()))
+                                                                 scope.normalized_type.full_type_of(i))
                                                      End Function).
                                                  collect_to(Of vector(Of pair(Of String, String)))(),
                                       paragraph).to(o)
