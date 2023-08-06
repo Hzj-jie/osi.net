@@ -8,6 +8,7 @@ Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.automata
+Imports builders = osi.service.compiler.logic.builders
 
 Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               __BUILDER As func_t(Of String, WRITER, Boolean),
@@ -29,7 +30,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 assert(Not types.null_or_empty())
                 If current().features().with_type_alias() Then
                     types = types.stream().
-                                  map(AddressOf normalized_type.full_type_of).
+                                  map(AddressOf normalized_type.of).
+                                  map(AddressOf builders.parameter_type.full_type).
                                   collect_to(Of vector(Of String))()
                 End If
                 If injected_types.emplace(types).second() Then

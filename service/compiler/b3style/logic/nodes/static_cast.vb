@@ -26,7 +26,7 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             assert(n.child_count() = 6)
             Dim name As String = n.child(2).input_without_ignored()
-            Dim type As String = scope.normalized_type.full_type_of(n.child(4).input_without_ignored())
+            Dim type As String = scope.normalized_type.of(n.child(4).input_without_ignored()).full_type()
             If scope.current().structs().types().defined(type) AndAlso
                scope.current().structs().variables().defined(name) Then
                 ' Convert from struct ptr to struct ptr.
@@ -76,7 +76,8 @@ Partial Public NotInheritable Class b3style
                 Dim sdef As scope.struct_def = Nothing
                 assert(scope.current().structs().variables().resolve(name, sdef))
                 assert(Not sdef Is Nothing)
-                Return builders.of_define(name, type).to(o) AndAlso
+                Return builders.of_define(name, scope.normalized_type.logic_type_of(type)).
+                                to(o) AndAlso
                        builders.of_copy(name, sdef.primitives().
                                               find_first().
                                               map(Function(ByVal x As builders.parameter) As String

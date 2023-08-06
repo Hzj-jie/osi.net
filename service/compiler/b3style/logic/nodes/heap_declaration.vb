@@ -42,16 +42,14 @@ Partial Public NotInheritable Class b3style
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,
-                                                            ByVal name As String,
-                                                            ByVal length As String,
-                                                            ByVal o As logic_writer) As Boolean
+                                                      ByVal name As String,
+                                                      ByVal length As String,
+                                                      ByVal o As logic_writer) As Boolean
+            type = scope.normalized_type.of(type).full_type()
             assert(Not scope.current().structs().types().defined(type))
             assert(Not o Is Nothing)
             Return scope.current().variables().define(type, name) AndAlso
-                   builders.of_define_heap(name,
-                                           scope.normalized_type.full_type_of(type),
-                                           length).
-                            to(o)
+                   builders.of_define_heap(name, scope.normalized_type.logic_type_of(type), length).to(o)
         End Function
     End Class
 End Class

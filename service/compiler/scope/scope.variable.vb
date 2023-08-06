@@ -28,7 +28,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             ' TODO: May consider using builders.parameter.
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
             ' where the variable_t instance Is being defined.
-            type = normalized_type.full_type_of(type)
+            type = normalized_type.of(type).full_type()
             name = current_namespace_t.of(name)
             assert(Not builders.parameter_type.is_ref_type(type))
             ' The name should not be an array with index.

@@ -22,14 +22,19 @@ Partial Public NotInheritable Class bstyle
             Else
                 ps = code_gens().of_all_children(n.child(4)).dump()
             End If
-            Dim return_type As String = scope.normalized_type.full_type_of(n.child(1).input_without_ignored())
+            Dim return_type As String = scope.normalized_type.of(n.child(1).input_without_ignored()).full_type()
             ps = ps.stream().
-                    map(AddressOf scope.normalized_type.full_type_of).
+                    map(AddressOf scope.normalized_type.of).
+                    map(AddressOf builders.parameter_type.full_type).
                     collect_to(Of vector(Of String))()
             Return scope.current().delegates().define(return_type,
                                                       n.child(2).input_without_ignored(),
                                                       builders.parameter_type.from(ps)) AndAlso
-                   builders.of_callee_ref(n.child(2).input_without_ignored(), return_type, ps).to(o)
+                   builders.of_callee_ref(n.child(2).input_without_ignored(),
+                                          scope.normalized_type.logic_type_of(return_type),
+                                          ps.stream().
+                                             map(AddressOf scope.normalized_type.logic_type_of).
+                                             collect_to(Of vector(Of String))()).to(o)
         End Function
     End Class
 End Class

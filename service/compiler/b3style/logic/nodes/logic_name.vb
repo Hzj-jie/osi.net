@@ -48,13 +48,14 @@ Partial Public NotInheritable Class b3style
             Return builders.of_callee(name,
                                       If(scope.current().structs().types().defined(return_type),
                                          compiler.logic.scope.type_t.variable_type,
-                                         scope.normalized_type.full_type_of(return_type)),
+                                         scope.normalized_type.logic_type_of(scope.normalized_type.of(return_type))),
                                       parameters.stream().
                                                  map(Function(ByVal i As builders.parameter) As pair(Of String, String)
                                                          assert(Not i Is Nothing)
                                                          Return pair.emplace_of(
                                                                  i.name,
-                                                                 scope.normalized_type.full_type_of(i))
+                                                                 scope.normalized_type.logic_type_of(
+                                                                     scope.normalized_type.of(i)))
                                                      End Function).
                                                  collect_to(Of vector(Of pair(Of String, String)))(),
                                       paragraph).to(o)
@@ -84,7 +85,7 @@ Partial Public NotInheritable Class b3style
             While i < types.size()
                 assert(Not types(i).contains_any(space_chars))
                 assert(Not builders.parameter_type.is_ref_type(types(i)))
-                s.Append(":").Append(scope.normalized_type.full_type_of(types(i)))
+                s.Append(":").Append(scope.normalized_type.logic_type_of(scope.normalized_type.of(types(i))))
                 i += uint32_1
             End While
             Return Convert.ToString(s)

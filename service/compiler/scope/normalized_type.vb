@@ -13,35 +13,30 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     ' A helper to always de-alias and apply namespace.
     Public NotInheritable Class normalized_type
-        Public Shared Function full_type_of(ByVal type As String) As String
-            assert(Not type.null_or_whitespace())
-            Dim s As String = [of](type).full_type()
-            If current().features().with_namespace() Then
-                assert(s.StartsWith(current_namespace_t.namespace_separator))
-                s = s.Substring(current_namespace_t.namespace_separator.Length())
-            End If
-            Return s
+        Public Shared Function logic_type_of(ByVal i As builders.parameter_type) As String
+            assert(Not i Is Nothing)
+            Return logic_type_of(i.full_type())
         End Function
 
         Public Shared Function logic_type_of(ByVal type As String) As String
-            type = full_type_of(type)
+            assert(Not type.null_or_whitespace())
             If current().features().with_namespace() Then
                 assert(type.StartsWith(current_namespace_t.namespace_separator))
                 Return type.Substring(current_namespace_t.namespace_separator.Length())
             End If
+            assert(Not type.StartsWith(current_namespace_t.namespace_separator))
             Return type
         End Function
 
-        Public Shared Function full_type_of(ByVal i As builders.parameter_type) As String
+        Public Shared Function [of](ByVal i As builders.parameter_type) As builders.parameter_type
             assert(Not i Is Nothing)
-            Return full_type_of(i.full_type())
+            Return i.map_type(Function(ByVal s As String) As String
+                                  Return current().type_alias()(current_namespace_t.of(s))
+                              End Function)
         End Function
 
         Public Shared Function [of](ByVal type As String) As builders.parameter_type
-            Return New builders.parameter_type(type).map_type(
-                        Function(ByVal i As String) As String
-                            Return current().type_alias()(current_namespace_t.of(i))
-                        End Function)
+            Return [of](New builders.parameter_type(type))
         End Function
 
         Private Sub New()

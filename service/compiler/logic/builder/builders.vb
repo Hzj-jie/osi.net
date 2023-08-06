@@ -48,11 +48,20 @@ Partial Public NotInheritable Class logic
                 Me._type = type.Trim()
             End Sub
 
+            Public Shared Function [of](ByVal type As String) As parameter_type
+                Return New parameter_type(type)
+            End Function
+
             Public Function full_type() As String
                 If ref Then
                     Return _type + type_ref_suffix
                 End If
                 Return _type
+            End Function
+
+            Public Shared Function full_type(ByVal i As parameter_type) As String
+                assert(Not i Is Nothing)
+                Return i.full_type()
             End Function
 
             Public Function non_ref_type() As String
