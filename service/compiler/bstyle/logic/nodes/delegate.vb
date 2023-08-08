@@ -23,14 +23,16 @@ Partial Public NotInheritable Class bstyle
                 ps = code_gens().of_all_children(n.child(4)).dump()
             End If
             Dim return_type As String = scope.normalized_type.of(n.child(1).input_without_ignored()).full_type()
+            ' The user side treat the delegate "name" as a type.
+            Dim name As String = scope.normalized_type.of(n.child(2).input_without_ignored()).full_type()
             ps = ps.stream().
                     map(AddressOf scope.normalized_type.of).
                     map(AddressOf builders.parameter_type.full_type).
                     collect_to(Of vector(Of String))()
             Return scope.current().delegates().define(return_type,
-                                                      n.child(2).input_without_ignored(),
+                                                      name,
                                                       builders.parameter_type.from(ps)) AndAlso
-                   builders.of_callee_ref(n.child(2).input_without_ignored(),
+                   builders.of_callee_ref(scope.normalized_type.logic_type_of(name),
                                           scope.normalized_type.logic_type_of(return_type),
                                           ps.stream().
                                              map(AddressOf scope.normalized_type.logic_type_of).

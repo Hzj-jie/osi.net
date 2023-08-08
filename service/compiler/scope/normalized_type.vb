@@ -13,6 +13,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     ' A helper to always de-alias and apply namespace.
     Public NotInheritable Class normalized_type
+        ' TODO: Make these functions as functors for builders.parameter_type.map.
         Public Shared Function logic_type_of(ByVal i As builders.parameter_type) As String
             assert(Not i Is Nothing)
             Return logic_type_of(i.full_type())
