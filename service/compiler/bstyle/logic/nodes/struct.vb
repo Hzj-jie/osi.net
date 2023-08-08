@@ -163,7 +163,10 @@ Partial Public NotInheritable Class bstyle
                                                   Function(ByVal m As builders.parameter) As Boolean
                                                       assert(Not m Is Nothing)
                                                       Return heap_declaration.
-                                                                 declare_primitive_type(m.non_ref_type(), m.name, len_name, o)
+                                                                 declare_primitive_type(m.non_ref_type(),
+                                                                                        m.name,
+                                                                                        len_name,
+                                                                                        o)
                                                   End Function)
                                    End Function)
         End Function
@@ -205,11 +208,13 @@ Partial Public NotInheritable Class bstyle
             End If
             assert(Not v Is Nothing)
             Return scope.current().variables().redefine(type, name) AndAlso
-                   v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
-                                            assert(Not m Is Nothing)
-                                            Return scope.current().variables().redefine(m.non_ref_type(), m.name) AndAlso
-                                                   builders.of_redefine(m.name, m.non_ref_type()).to(o)
-                                        End Function)
+                   v.for_each_primitive(
+                       Function(ByVal m As builders.parameter) As Boolean
+                           assert(Not m Is Nothing)
+                           Return scope.current().variables().redefine(m.non_ref_type(), m.name) AndAlso
+                                  builders.of_redefine(m.name,
+                                                       scope.normalized_type.logic_type_of(m.non_ref_type())).to(o)
+                       End Function)
         End Function
 
         Public Shared Function create_id(ByVal name As String) As builders.parameter
@@ -246,7 +251,7 @@ Partial Public NotInheritable Class bstyle
             Dim id As builders.parameter = create_id(n.child(1).word().str())
             assert(builders.of_type(id.non_ref_type(), uint32_1).to(o))
             Return scope.current().structs().define(
-                       n.child(1).word().str(),
+                       scope.normalized_type.of(n.child(1).word().str()).full_type(),
                        parse_struct_body(n).map(AddressOf scope.struct_def.nested).
                                             collect_to(Of vector(Of builders.parameter))() +
                                             id)
