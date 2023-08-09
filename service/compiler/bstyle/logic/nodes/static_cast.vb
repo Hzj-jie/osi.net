@@ -18,7 +18,9 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(n.child_count() = 6)
             Dim name As String = n.child(2).input_without_ignored()
-            Dim type As String = scope.normalized_type.of(n.child(4).input_without_ignored()).full_type()
+            Dim type As String = builders.parameter_type.of(n.child(4).input_without_ignored()).
+                                                         map_type(scope.normalized_type.of).
+                                                         full_type()
             If scope.current().structs().types().defined(type) AndAlso
                scope.current().structs().variables().defined(name) Then
                 ' Convert from struct ptr to struct ptr.

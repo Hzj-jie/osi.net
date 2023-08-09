@@ -37,7 +37,7 @@ Partial Public NotInheritable Class bstyle
                                                       ByVal name As String,
                                                       ByVal length As String,
                                                       ByVal o As logic_writer) As Boolean
-            type = scope.normalized_type.of(type).full_type()
+            type = builders.parameter_type.of(type).map_type(scope.normalized_type.of).full_type()
             assert(Not scope.current().structs().types().defined(type))
             assert(Not o Is Nothing)
             Return scope.current().variables().define(type, name) AndAlso

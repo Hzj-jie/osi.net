@@ -136,7 +136,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Private Shared Function function_type_of(ByVal type As String) As name_with_namespace
-            Return name_with_namespace.of(normalized_type.of(type).full_type())
+            Return name_with_namespace.of(builders.parameter_type.of(type).map_type(normalized_type.of).full_type())
         End Function
 
         Private Function parse_function(ByVal node As typed_node,

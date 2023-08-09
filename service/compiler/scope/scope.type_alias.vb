@@ -21,7 +21,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             [alias] = current_namespace_t.of([alias])
             assert(Not [alias].null_or_whitespace())
             assert(Not canonical_type.null_or_whitespace())
-            Dim canonical As builders.parameter_type = normalized_type.of(canonical_type)
+            Dim canonical As builders.parameter_type =
+                    New builders.parameter_type(canonical_type).map_type(normalized_type.of)
             assert(Not canonical Is Nothing)
             If builders.parameter_type.is_ref_type([alias]) Then
                 raise_error(error_type.user, "Reference type ", [alias], " is not allowed to be aliased. ")

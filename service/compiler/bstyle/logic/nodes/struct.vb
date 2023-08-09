@@ -251,7 +251,9 @@ Partial Public NotInheritable Class bstyle
             Dim id As builders.parameter = create_id(n.child(1).word().str())
             assert(builders.of_type(id.non_ref_type(), uint32_1).to(o))
             Return scope.current().structs().define(
-                       scope.normalized_type.of(n.child(1).word().str()).full_type(),
+                       builders.parameter_type.of(n.child(1).word().str()).
+                                               map_type(scope.normalized_type.of).
+                                               full_type(),
                        parse_struct_body(n).map(AddressOf scope.struct_def.nested).
                                             collect_to(Of vector(Of builders.parameter))() +
                                             id)

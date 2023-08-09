@@ -79,6 +79,15 @@ Partial Public NotInheritable Class logic
                                    End Function)
             End Function
 
+            Public Shared Function map_type_with(ByVal f As Func(Of String, String)) _
+                    As Func(Of parameter_type, parameter_type)
+                assert(Not f Is Nothing)
+                Return Function(ByVal i As parameter_type) As parameter_type
+                           assert(Not i Is Nothing)
+                           Return i.map_type(f)
+                       End Function
+            End Function
+
             Protected Function map_type(Of RT As parameter_type)(ByVal f As Func(Of String, String),
                                                                  ByVal n As Func(Of String, Boolean, RT)) As RT
                 assert(Not f Is Nothing)
@@ -90,21 +99,6 @@ Partial Public NotInheritable Class logic
                 assert(Not n Is Nothing)
                 assert(Not ref)
                 Return n(_type, True)
-            End Function
-
-            Public Shared Function from(ByVal ParamArray parameters() As String) As parameter_type()
-                assert(Not parameters Is Nothing)
-                Return streams.of(parameters).
-                               map(Function(ByVal p As String) As parameter_type
-                                       assert(Not p Is Nothing)
-                                       Return New parameter_type(p)
-                                   End Function).
-                               to_array()
-            End Function
-
-            Public Shared Function from(ByVal parameters As vector(Of String)) As parameter_type()
-                assert(Not parameters Is Nothing)
-                Return from(+parameters)
             End Function
 
             Public Overrides Function ToString() As String

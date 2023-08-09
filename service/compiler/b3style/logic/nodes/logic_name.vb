@@ -27,6 +27,8 @@ Partial Public NotInheritable Class b3style
                          streams.of(params).
                                  map(Function(ByVal i As PT) As String
                                          assert(Not i Is Nothing)
+                                         ' As long as the type is unique in the logic, the prefixed double colon is not
+                                         ' necessary.
                                          Return i.unrefed_type()
                                      End Function).
                                  collect_to(Of vector(Of String))())
@@ -54,8 +56,8 @@ Partial Public NotInheritable Class b3style
                                                          assert(Not i Is Nothing)
                                                          Return pair.emplace_of(
                                                                  i.name,
-                                                                 scope.normalized_type.logic_type_of(
-                                                                     scope.normalized_type.of(i)))
+                                                                 i.map_type(scope.normalized_type.logic_type_of).
+                                                                   full_type())
                                                      End Function).
                                                  collect_to(Of vector(Of pair(Of String, String)))(),
                                       paragraph).to(o)

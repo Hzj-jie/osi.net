@@ -48,8 +48,8 @@ Partial Public NotInheritable Class bstyle
                                                          assert(Not i Is Nothing)
                                                          Return pair.emplace_of(
                                                                  i.name,
-                                                                 scope.normalized_type.logic_type_of(
-                                                                     scope.normalized_type.of(i)))
+                                                                 i.map_type(scope.normalized_type.logic_type_of).
+                                                                   full_type())
                                                      End Function).
                                                  collect_to(Of vector(Of pair(Of String, String)))(),
                                       paragraph).to(o)
