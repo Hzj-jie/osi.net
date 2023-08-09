@@ -28,7 +28,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             ' TODO: May consider using builders.parameter.
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
             ' where the variable_t instance Is being defined.
-            type = normalized_type.logic_type_of(type)
+            type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
             name = current_namespace_t.of(name)
             assert(Not builders.parameter_type.is_ref_type(type))
             ' The name should not be an array with index.
@@ -135,7 +135,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Dim i As UInt32 = 0
             While i < vs.size()
                 assert(Not vs(i) Is Nothing)
-                If Not define(vs(i).type, vs(i).name) Then
+                If Not define(vs(i).unrefed_type(), vs(i).name) Then
                     Return False
                 End If
                 i += uint32_1

@@ -69,7 +69,7 @@ Partial Public NotInheritable Class b2style
             cd.vars().
                foreach(Sub(ByVal var As builders.parameter)
                            assert(Not var Is Nothing)
-                           o.Append(var.type).
+                           o.Append(var.non_ref_type()).
                              Append(" ").
                              Append(var.name).
                              Append(";")

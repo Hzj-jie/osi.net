@@ -47,7 +47,7 @@ Partial Public NotInheritable Class b3style
             If Not scope.current().structs().types().defined(type) AndAlso
                scope.current().variables().define(type, name) AndAlso
                builders.of_define(name,
-                                  scope.normalized_type.logic_type_of(type)).
+                                  scope.normalized_type.logic_type_of(scope.normalized_type.of(type))).
                         to(o) Then
                 Return True
             End If

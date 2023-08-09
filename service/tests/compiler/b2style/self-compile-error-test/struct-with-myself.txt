@@ -1,6 +1,6 @@
 ﻿
-// ERROR: Failed to declare S with name s as a primitive type variable.
-// ERROR: Failed to declare S with name s.s as a primitive type variable.
+// ERROR PATTERN: *Failed to declare *S with name s as a primitive type variable.*
+// ERROR PATTERN: *Failed to declare *S with name s.s as a primitive type variable.*
 
 #include <b2style.h>
 #include <testing.h>

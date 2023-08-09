@@ -25,9 +25,12 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             assert(n.child_count() = 6)
             Dim name As String = n.child(2).input_without_ignored()
-            Dim type As String = scope.normalized_type.logic_type_of(n.child(4).input_without_ignored())
+            Dim type As String = builders.parameter_type.of(n.child(4).input_without_ignored()).
+                                                         map_type(scope.normalized_type.of).
+                                                         full_type()
             Return struct.redefine(name, type, o) OrElse
-                   (builders.of_redefine(name, type).to(o) AndAlso scope.current().variables().redefine(type, name))
+                   (builders.of_redefine(name, scope.normalized_type.logic_type_of(type)).to(o) AndAlso
+                    scope.current().variables().redefine(type, name))
         End Function
     End Class
 End Class

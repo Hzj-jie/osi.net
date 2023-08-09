@@ -1,5 +1,6 @@
 ﻿
-// ERROR: Type S of s does not match the rvalue Integer
+// ERROR PATTERN: *Type *S of s does not match the rvalue *Integer*
+// b3style supports namespace, the output would be "::S of s" and "Integer" instead.
 
 #include <b2style.h>
 
