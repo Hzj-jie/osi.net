@@ -19,6 +19,8 @@ Partial Public NotInheritable Class bstyle
                          streams.of(params).
                                  map(Function(ByVal i As PT) As String
                                          assert(Not i Is Nothing)
+                                         ' As long as the type is unique in the logic, the prefixed double colon is not
+                                         ' necessary.
                                          Return i.unrefed_type()
                                      End Function).
                                  collect_to(Of vector(Of String))())
