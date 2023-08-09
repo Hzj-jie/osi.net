@@ -37,10 +37,11 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                                ByVal name As String,
                                ByVal parameters() As builders.parameter_type) As Boolean
             assert(Not parameters Is Nothing)
-            assert(return_type.Equals(normalized_type.logic_type_of(return_type)))
+            assert_which.of(return_type).
+                         equal_to(builders.parameter_type.of(return_type).map_type(normalized_type.of).full_type())
             For Each parameter As builders.parameter_type In parameters
                 assert(Not parameter Is Nothing)
-                assert(parameter.type.Equals(normalized_type.logic_type_of(parameter.type)))
+                assert_which.of(parameter.full_type()).equal_to(parameter.map_type(normalized_type.of).full_type())
             Next
             Return scope(Of T).current().
                                myself().

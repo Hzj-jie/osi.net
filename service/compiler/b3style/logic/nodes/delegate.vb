@@ -24,20 +24,32 @@ Partial Public NotInheritable Class b3style
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Dim ps As vector(Of String) = Nothing
+            Dim return_type As builders.parameter_type =
+                    New builders.parameter_type(n.child(1).input_without_ignored()).map_type(scope.normalized_type.of)
+            ' The user side treat the delegate "name" as a type.
+            Dim name As builders.parameter_type =
+                    New builders.parameter_type(n.child(2).input_without_ignored()).map_type(scope.normalized_type.of)
+            Dim ps As vector(Of builders.parameter_type) = Nothing
             If n.child_count() = 5 Then
-                ps = New vector(Of String)()
+                ps = New vector(Of builders.parameter_type)()
             Else
-                ps = code_gens().of_all_children(n.child(4)).dump()
+                ps = code_gens().of_all_children(n.child(4)).
+                                 dump().
+                                 stream().
+                                 map(AddressOf builders.parameter_type.of).
+                                 map(builders.parameter_type.map_type_with(scope.normalized_type.of)).
+                                 collect_to(Of vector(Of builders.parameter_type))()
             End If
-            Dim return_type As String = scope.normalized_type.logic_type_of(n.child(1).input_without_ignored())
-            ps = ps.stream().
-                    map(AddressOf scope.normalized_type.logic_type_of).
-                    collect_to(Of vector(Of String))()
-            Return scope.current().delegates().define(return_type,
-                                                      n.child(2).input_without_ignored(),
-                                                      builders.parameter_type.from(ps)) AndAlso
-                   builders.of_callee_ref(n.child(2).input_without_ignored(), return_type, ps).to(o)
+            Return scope.current().delegates().define(return_type.full_type(),
+                                                      name.full_type(),
+                                                      +ps) AndAlso
+                   builders.of_callee_ref(name.map_type(scope.normalized_type.logic_type_of).full_type(),
+                                          return_type.map_type(scope.normalized_type.logic_type_of).full_type(),
+                                          ps.stream().
+                                             map(builders.parameter_type.map_type_with(
+                                                     scope.normalized_type.logic_type_of)).
+                                             map(AddressOf builders.parameter_type.full_type).
+                                             collect_to(Of vector(Of String))()).to(o)
         End Function
     End Class
 End Class

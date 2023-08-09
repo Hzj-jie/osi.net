@@ -53,7 +53,7 @@ Partial Public NotInheritable Class logic
                     Return False
                 End If
                 For i As Int32 = 0 To array_size_i(parameters) - 1
-                    If Not _define.forward(parameters(i).name, parameters(i).type, o) Then
+                    If Not _define.forward(parameters(i).name, parameters(i).unrefed_type(), o) Then
                         Return False
                     End If
                 Next

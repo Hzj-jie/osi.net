@@ -68,20 +68,18 @@ Public NotInheritable Class pattern_match
                                          Optional ByVal case_sensitive As Boolean = False) As Boolean
         If filters.null_or_empty() Then
             Return False
-        Else
-            Dim fitted As Boolean = False
-            For i As UInt32 = 0 To filters.size() - uint32_1
-                Dim result As Byte
-                result = fit_filter(filters(i), name, case_sensitive)
-                If result = fit_false Then
-                    fitted = False
-                ElseIf result = fit_true Then
-                    fitted = True
-                End If
-            Next
-
-            Return fitted
         End If
+        Dim fitted As Boolean = False
+        For i As UInt32 = 0 To filters.size() - uint32_1
+            Dim result As Byte = fit_filter(filters(i), name, case_sensitive)
+            If result = fit_false Then
+                fitted = False
+            ElseIf result = fit_true Then
+                fitted = True
+            End If
+        Next
+
+        Return fitted
     End Function
 
     Private Shared Function match_filter_without_prefix(ByVal definition As String,

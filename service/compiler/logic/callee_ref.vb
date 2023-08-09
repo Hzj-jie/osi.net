@@ -21,7 +21,8 @@ Partial Public NotInheritable Class logic
             assert(Not return_type.null_or_empty())
             Me.name = name
             Me.return_type = return_type
-            Me.parameters = builders.parameter_type.from(parameters)
+            Me.parameters = streams.of(parameters).map(AddressOf builders.parameter_type.of).to_array()
+
         End Sub
 
         Public Sub New(ByVal name As String,

@@ -66,19 +66,20 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
         ' It can be a struct or just a primitive.
         Public Shared Function nested(ByVal type As String, ByVal name As String) As builders.parameter
-            Return builders.parameter.no_ref(normalized_type.logic_type_of(type), name)
+            Return builders.parameter.non_ref(
+                    builders.parameter_type.of(type).map_type(normalized_type.of).full_type(), name)
         End Function
 
         Public Shared Function nested(ByVal p As builders.parameter) As builders.parameter
             assert(Not p Is Nothing)
             assert(Not p.ref)
-            Return nested(p.type, p.name)
+            Return nested(p.non_ref_type(), p.name)
         End Function
 
         ' It must be a primitive.
         Public Function with_primitive(ByVal type As String, ByVal name As String) As struct_def
             Dim r As builders.parameter = nested(type, name)
-            assert(Not scope(Of T).current().structs().types().defined(r.type))
+            assert(Not scope(Of T).current().structs().types().defined(r.non_ref_type()))
             _primitives.emplace_back(r)
             Return Me
         End Function

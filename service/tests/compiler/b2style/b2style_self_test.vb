@@ -82,4 +82,9 @@ Public NotInheritable Class b2style_self_test
     Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
         Return b2style.parse_wrapper.with_current_file(filename)
     End Function
+
+    Protected Overrides Function ignore_case(ByVal name As String) As Boolean
+        assert(Not name.null_or_whitespace())
+        Return name.Equals("struct-and-primitive-type-with-same-name.txt")
+    End Function
 End Class

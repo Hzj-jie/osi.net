@@ -123,7 +123,7 @@ Partial Public NotInheritable Class b3style
                            map(Function(ByVal s As builders.parameter) As Boolean
                                    assert(Not s Is Nothing)
                                    assert(Not s.ref)
-                                   Return scope.current().variables().define(s.type, s.name)
+                                   Return scope.current().variables().define(s.non_ref_type(), s.name)
                                End Function).
                            aggregate(bool_stream.aggregators.all_true)
         End Function
@@ -148,7 +148,7 @@ Partial Public NotInheritable Class b3style
             assert(Not v Is Nothing)
             Return v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
                                             assert(Not m Is Nothing)
-                                            Return value_declaration.declare_primitive_type(m.type, m.name, o)
+                                            Return value_declaration.declare_primitive_type(m.non_ref_type(), m.name, o)
                                         End Function)
         End Function
 
@@ -171,7 +171,10 @@ Partial Public NotInheritable Class b3style
                                                   Function(ByVal m As builders.parameter) As Boolean
                                                       assert(Not m Is Nothing)
                                                       Return heap_declaration.
-                                                                 declare_primitive_type(m.type, m.name, len_name, o)
+                                                                 declare_primitive_type(m.non_ref_type(),
+                                                                                        m.name,
+                                                                                        len_name,
+                                                                                        o)
                                                   End Function)
                                    End Function)
         End Function
@@ -213,16 +216,18 @@ Partial Public NotInheritable Class b3style
             End If
             assert(Not v Is Nothing)
             Return scope.current().variables().redefine(type, name) AndAlso
-                   v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
-                                            assert(Not m Is Nothing)
-                                            Return scope.current().variables().redefine(m.type, m.name) AndAlso
-                                                   builders.of_redefine(m.name, m.type).to(o)
-                                        End Function)
+                   v.for_each_primitive(
+                       Function(ByVal m As builders.parameter) As Boolean
+                           assert(Not m Is Nothing)
+                           Return scope.current().variables().redefine(m.non_ref_type(), m.name) AndAlso
+                                  builders.of_redefine(m.name,
+                                                       scope.normalized_type.logic_type_of(m.non_ref_type())).to(o)
+                       End Function)
         End Function
 
         Public Shared Function create_id(ByVal name As String) As builders.parameter
             assert(Not name.null_or_whitespace())
-            Return builders.parameter.no_ref(name + "__struct__type__id__type", name + "__struct__type__id")
+            Return builders.parameter.non_ref(name + "__struct__type__id__type", name + "__struct__type__id")
         End Function
 
         Public Shared Function parse_struct_body(ByVal n As typed_node) As stream(Of builders.parameter)
@@ -241,7 +246,7 @@ Partial Public NotInheritable Class b3style
                          assert(Not c Is Nothing)
                          assert(c.type_name.Equals("value-declaration"))
                          assert(c.child_count() = 2)
-                         Return builders.parameter.no_ref(c.child(0).input_without_ignored(),
+                         Return builders.parameter.non_ref(c.child(0).input_without_ignored(),
                                                           c.child(1).input_without_ignored())
                      End Function)
         End Function
@@ -252,9 +257,11 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             Dim id As builders.parameter = create_id(n.child(1).word().str())
-            assert(builders.of_type(id.type, uint32_1).to(o))
+            assert(builders.of_type(id.non_ref_type(), uint32_1).to(o))
             Return scope.current().structs().define(
-                       n.child(1).word().str(),
+                       builders.parameter_type.of(n.child(1).word().str()).
+                                               map_type(scope.normalized_type.of).
+                                               full_type(),
                        parse_struct_body(n).map(AddressOf scope.struct_def.nested).
                                             collect_to(Of vector(Of builders.parameter))() +
                                             id)

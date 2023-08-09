@@ -16,13 +16,12 @@ Partial Public NotInheritable Class logic
         ' the same & mark is used for reference types.
         Public Class parameter_type
             Private Const type_ref_suffix As Char = character.and_mark
-            Public ReadOnly type As String
+            Private ReadOnly _type As String
             Public ReadOnly ref As Boolean
 
             Public Shared Function is_ref_type(ByVal type As String) As Boolean
                 assert(Not type.null_or_whitespace())
-                ' TODO: Try to avoid allowing only "&" as parameter type.
-                ' assert(Not type.Equals(type_ref_suffix))
+                assert(Not type.Equals(type_ref_suffix))
                 Return type.EndsWith(type_ref_suffix) AndAlso Not type.Equals(type_ref_suffix)
             End Function
 
@@ -30,12 +29,12 @@ Partial Public NotInheritable Class logic
             Protected Sub New(ByVal type As String, ByVal ref As Boolean)
                 assert(Not type.null_or_whitespace())
                 assert(Not is_ref_type(type))
-                Me.type = type
+                Me._type = type
                 Me.ref = ref
             End Sub
 
             Public Shared Function remove_ref(ByVal type As String) As String
-                Return New parameter_type(type).type
+                Return New parameter_type(type)._type
             End Function
 
             Public Sub New(ByVal type As String)
@@ -46,38 +45,64 @@ Partial Public NotInheritable Class logic
                 Else
                     type = type
                 End If
-                Me.type = type.Trim()
+                Me._type = type.Trim()
             End Sub
 
-            Public Function logic_type() As String
+            Public Shared Function [of](ByVal type As String) As parameter_type
+                Return New parameter_type(type)
+            End Function
+
+            Public Function full_type() As String
                 If ref Then
-                    Return type + type_ref_suffix
+                    Return _type + type_ref_suffix
                 End If
-                Return type
+                Return _type
+            End Function
+
+            Public Shared Function full_type(ByVal i As parameter_type) As String
+                assert(Not i Is Nothing)
+                Return i.full_type()
+            End Function
+
+            Public Function non_ref_type() As String
+                assert(Not ref)
+                Return _type
+            End Function
+
+            Public Function unrefed_type() As String
+                Return _type
             End Function
 
             Public Function map_type(ByVal f As Func(Of String, String)) As parameter_type
+                Return map_type(f, Function(ByVal t As String, ByVal r As Boolean) As parameter_type
+                                       Return New parameter_type(t, r)
+                                   End Function)
+            End Function
+
+            Public Shared Function map_type_with(ByVal f As Func(Of String, String)) _
+                    As Func(Of parameter_type, parameter_type)
                 assert(Not f Is Nothing)
-                Return New parameter_type(f(type), ref)
+                Return Function(ByVal i As parameter_type) As parameter_type
+                           assert(Not i Is Nothing)
+                           Return i.map_type(f)
+                       End Function
             End Function
 
-            Public Shared Function from(ByVal ParamArray parameters() As String) As parameter_type()
-                assert(Not parameters Is Nothing)
-                Return streams.of(parameters).
-                               map(Function(ByVal p As String) As parameter_type
-                                       assert(Not p Is Nothing)
-                                       Return New parameter_type(p)
-                                   End Function).
-                               to_array()
+            Protected Function map_type(Of RT As parameter_type)(ByVal f As Func(Of String, String),
+                                                                 ByVal n As Func(Of String, Boolean, RT)) As RT
+                assert(Not f Is Nothing)
+                assert(Not n Is Nothing)
+                Return n(f(_type), ref)
             End Function
 
-            Public Shared Function from(ByVal parameters As vector(Of String)) As parameter_type()
-                assert(Not parameters Is Nothing)
-                Return from(+parameters)
+            Protected Function to_ref(Of RT As parameter_type)(ByVal n As Func(Of String, Boolean, RT)) As RT
+                assert(Not n Is Nothing)
+                assert(Not ref)
+                Return n(_type, True)
             End Function
 
             Public Overrides Function ToString() As String
-                Return logic_type()
+                Return full_type()
             End Function
         End Class
 
@@ -99,26 +124,37 @@ Partial Public NotInheritable Class logic
                 Me.name = name
             End Sub
 
-            Public Shared Function no_ref(ByVal type As String, ByVal name As String) As parameter
+            Public Shared Function non_ref(ByVal type As String, ByVal name As String) As parameter
                 Dim r As New parameter(type, name)
                 assert(Not r.ref)
                 Return r
             End Function
 
             Public Shadows Function map_type(ByVal f As Func(Of String, String)) As parameter
-                assert(Not f Is Nothing)
-                Return New parameter(f(type), ref, name)
+                Return MyBase.map_type(f, Function(ByVal t As String, ByVal r As Boolean) As parameter
+                                              Return New parameter(t, ref, name)
+                                          End Function)
             End Function
 
             Public Function map_name(ByVal f As Func(Of String, String)) As parameter
                 assert(Not f Is Nothing)
-                Return New parameter(type, ref, f(name))
+                Return MyBase.map_type(Function(ByVal i As String) As String
+                                           Return i
+                                       End Function,
+                                       Function(ByVal t As String, ByVal r As Boolean) As parameter
+                                           Return New parameter(t, r, f(name))
+                                       End Function)
             End Function
 
-            Public Shared Function to_ref(ByVal p As parameter) As parameter
+            Private Shadows Function to_ref() As parameter
+                Return MyBase.to_ref(Function(ByVal t As String, ByVal r As Boolean) As parameter
+                                         Return New parameter(t, r, name)
+                                     End Function)
+            End Function
+
+            Public Shared Shadows Function to_ref(ByVal p As parameter) As parameter
                 assert(Not p Is Nothing)
-                assert(Not p.ref)
-                Return New parameter(p.type, True, p.name)
+                Return p.to_ref()
             End Function
 
             Public Overrides Function ToString() As String
