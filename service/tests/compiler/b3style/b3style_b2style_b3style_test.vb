@@ -5,7 +5,9 @@ Option Strict On
 
 Imports osi.root.constants
 Imports osi.root.template
+Imports osi.root.utt
 Imports osi.root.utt.attributes
+Imports osi.service.automata
 Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 Imports osi.service.resource
