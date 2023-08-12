@@ -10,7 +10,7 @@ long ptr_offset() {
 }
 
 void main() {
-  long MAX_UINT_PLUS_1 = bstyle::to_long(4294967296L);
+  long MAX_UINT_PLUS_1 = to_long(4294967296L);
   b2style::testing::assert_equal<long>(ptr_offset(), MAX_UINT_PLUS_1);
   b2style::testing::assert_equal<string>(b2style::to_str(ptr_offset()), "4294967296");
   b2style::testing::finished();

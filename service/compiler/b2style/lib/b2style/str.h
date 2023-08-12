@@ -16,16 +16,16 @@ string str_mid(string s, int i, int l) {
 }
 
 bool str_ends_with(string i, string j) {
-  int il = ::bstyle::str_len(i);
-  int jl = ::bstyle::str_len(j);
+  int il = ::str_len(i);
+  int jl = ::str_len(j);
   if (il < jl) {
     return false;
   }
   if (il == jl) {
-    return ::bstyle::str_equal(i, j);
+    return ::str_equal(i, j);
   }
   string si = str_mid(i, il - jl, jl);
-  return ::bstyle::str_equal(si, j);
+  return ::str_equal(si, j);
 }
 
 }  // namespace b2style

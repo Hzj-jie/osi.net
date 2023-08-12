@@ -4,11 +4,11 @@
 #include <bstyle/str.h>
 
 void main() {
-  b2style::testing::assert_true(bstyle::str_empty(""));
-  b2style::testing::assert_true(bstyle::str_empty("" + ""));
-  b2style::testing::assert_false(bstyle::str_empty("a" + ""));
-  b2style::testing::assert_equal<int>(bstyle::str_len(""), 0);
-  b2style::testing::assert_equal<int>(bstyle::str_len("abc"), 3);
-  b2style::testing::assert_equal<int>(bstyle::str_len("abc" + "def"), 6);
+  b2style::testing::assert_true(str_empty(""));
+  b2style::testing::assert_true(str_empty("" + ""));
+  b2style::testing::assert_false(str_empty("a" + ""));
+  b2style::testing::assert_equal<int>(str_len(""), 0);
+  b2style::testing::assert_equal<int>(str_len("abc"), 3);
+  b2style::testing::assert_equal<int>(str_len("abc" + "def"), 6);
   b2style::testing::finished();
 }

@@ -4,7 +4,7 @@
 #include <b2style/stdio.h>
 
 long loaded_current_ms() {
-  bstyle::load_method("current_ms");
+  load_method("current_ms");
   long result;
   logic "interrupt execute_loaded_method @@prefixes@temps@string result";
   return result;

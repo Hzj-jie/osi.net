@@ -5,7 +5,7 @@
 #include <bstyle/const.h>
 #include <bstyle/types.h>
 
-int bstyle__current_ms() {
+int current_ms() {
   int result;
   logic "interrupt current_ms @@prefixes@temps@string result";
   return result;

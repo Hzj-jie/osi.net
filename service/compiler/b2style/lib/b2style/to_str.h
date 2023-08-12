@@ -12,7 +12,7 @@ string to_str(string i) {
 }
 
 string to_str(byte i) {
-  return ::bstyle::to_str(i);
+  return ::to_str(i);
 }
 
 string to_str(bool i) {
@@ -26,10 +26,10 @@ string legacy_biguint_to_str(biguint i) {
   }
   string s;
   while (i > 0L) {
-    int b = ::bstyle::to_int(mod(i, 10L));
+    int b = ::to_int(mod(i, 10L));
     i /= 10L;
     b += 48;
-    s = ::bstyle::str_concat(::bstyle::to_str(::bstyle::to_byte(b)), s);
+    s = ::str_concat(::to_str(::to_byte(b)), s);
   }
   return s;
 }
@@ -46,13 +46,13 @@ string to_str(biguint i) {
 template <T>
 string biguint_to_str_forward(T i, T MAX) {
   if (i <= MAX) {
-    return biguint_to_str(::bstyle::to_biguint(i));
+    return biguint_to_str(::to_biguint(i));
   }
   i -= MAX;
   i = MAX - i;
   T _2 = 2;
   i += _2;
-  return ::bstyle::str_concat("-", biguint_to_str(::bstyle::to_biguint(i)));
+  return ::str_concat("-", biguint_to_str(::to_biguint(i)));
 }
 
 string int_to_str(int i) {
