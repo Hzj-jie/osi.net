@@ -53,7 +53,7 @@ void assert_equal(T t, T2 t2, string msg) {
 
 template <T, T2>
 void assert_equal(T t, T2 t2) {
-  assert_true(t == t2, ::bstyle::str_concat(::b2style::to_str(t), " != ", ::b2style::to_str(t2)));
+  assert_true(t == t2, ::str_concat(::b2style::to_str(t), " != ", ::b2style::to_str(t2)));
 }
 
 template <T>

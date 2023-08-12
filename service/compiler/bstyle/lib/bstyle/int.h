@@ -5,63 +5,63 @@
 #include <bstyle/const.h>
 #include <bstyle/types.h>
 
-biguint bstyle__to_biguint(int i) {
+biguint to_biguint(int i) {
   return i;
 }
 
-biguint bstyle__to_biguint(long i) {
+biguint to_biguint(long i) {
   return i;
 }
 
-long bstyle__to_long(int i) {
+long to_long(int i) {
   return i;
 }
 
-long bstyle__fit_in_long(long& x) {
+long fit_in_long(long& x) {
   logic "cut_len x x @@prefixes@constants@int_0 @@prefixes@constants@size_of_long";
   return x;
 }
 
-int bstyle__fit_in_int(int& x) {
+int fit_in_int(int& x) {
   logic "cut_len x x @@prefixes@constants@int_0 @@prefixes@constants@size_of_int";
   return x;
 }
 
-byte bstyle__fit_in_byte(byte& x) {
+byte fit_in_byte(byte& x) {
   logic "cut_len x x @@prefixes@constants@int_0 @@prefixes@constants@size_of_byte";
   return x;
 }
 
-long bstyle__to_long(biguint x) {
+long to_long(biguint x) {
   long y;
   logic "cut_len y x @@prefixes@constants@int_0 @@prefixes@constants@size_of_long";
   return y;
 }
 
-int bstyle__to_int(biguint x) {
+int to_int(biguint x) {
   int y;
   logic "cut_len y x @@prefixes@constants@int_0 @@prefixes@constants@size_of_int";
   return y;
 }
 
-byte bstyle__to_byte(int x) {
+byte to_byte(int x) {
   byte y;
   logic "cut_len y x @@prefixes@constants@int_0 @@prefixes@constants@size_of_byte";
   return y;
 }
 
-bool bstyle__equal(biguint i, biguint j) {
+bool equal(biguint i, biguint j) {
   bool result;
   logic "equal result i j";
   return result;
 }
 
-bool bstyle__equal(long i, long j) {
-  return bstyle__equal(bstyle__to_biguint(i), bstyle__to_biguint(j));
+bool equal(long i, long j) {
+  return equal(to_biguint(i), to_biguint(j));
 }
 
-bool bstyle__equal(int i, int j) {
-  return bstyle__equal(bstyle__to_biguint(i), bstyle__to_biguint(j));
+bool equal(int i, int j) {
+  return equal(to_biguint(i), to_biguint(j));
 }
 
 #endif  // BSTYLE_LIB_BSTYLE_INT_H

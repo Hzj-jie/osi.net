@@ -11,7 +11,7 @@ bool is_even(long i) {
 
 void main() {
   for (int i = 0; i < 100; i += 1) {
-    long x = bstyle::current_ms();
+    long x = current_ms();
     if (is_even(x)) {
       x = --x;
     }

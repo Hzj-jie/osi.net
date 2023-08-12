@@ -103,11 +103,11 @@ ufloat ufloat__from(biguint i) {
 }
 
 ufloat ufloat__from(int i) {
-  return ufloat__from(::bstyle::to_biguint(i));
+  return ufloat__from(::to_biguint(i));
 }
 
 ufloat ufloat__from(long i) {
-  return ufloat__from(::bstyle::to_biguint(i));
+  return ufloat__from(::to_biguint(i));
 }
 
 ufloat ufloat__fraction(biguint n, biguint d) {
@@ -117,27 +117,27 @@ ufloat ufloat__fraction(biguint n, biguint d) {
 }
 
 ufloat ufloat__fraction(biguint n, int d) {
-  return ufloat__fraction(n, ::bstyle::to_biguint(d));
+  return ufloat__fraction(n, ::to_biguint(d));
 }
 
 ufloat ufloat__fraction(biguint n, long d) {
-  return ufloat__fraction(n, ::bstyle::to_biguint(d));
+  return ufloat__fraction(n, ::to_biguint(d));
 }
 
 ufloat ufloat__fraction(int n, biguint d) {
-  return ufloat__fraction(::bstyle::to_biguint(n), d);
+  return ufloat__fraction(::to_biguint(n), d);
 }
 
 ufloat ufloat__fraction(long n, biguint d) {
-  return ufloat__fraction(::bstyle::to_biguint(n), d);
+  return ufloat__fraction(::to_biguint(n), d);
 }
 
 ufloat ufloat__fraction(int n, int d) {
-  return ufloat__fraction(::bstyle::to_biguint(n), ::bstyle::to_biguint(d));
+  return ufloat__fraction(::to_biguint(n), ::to_biguint(d));
 }
 
 ufloat ufloat__fraction(long n, long d) {
-  return ufloat__fraction(::bstyle::to_biguint(n), ::bstyle::to_biguint(d));
+  return ufloat__fraction(::to_biguint(n), ::to_biguint(d));
 }
 
 }  // namespace b2style

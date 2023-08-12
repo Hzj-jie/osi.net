@@ -8,7 +8,7 @@
 
 void assert(string statement, bool v, string msg) {
   if (v) return;
-  if (bstyle::str_empty(statement)) {
+  if (str_empty(statement)) {
     b2style::std_out(msg);
   } else {
     b2style::std_out(statement + ": " + msg);

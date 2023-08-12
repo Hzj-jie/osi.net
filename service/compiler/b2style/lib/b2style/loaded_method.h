@@ -8,7 +8,7 @@
 namespace b2style {
 
 void load_method(string m) {
-  ::bstyle::load_method(m);
+  ::load_method(m);
 }
 
 template <T>

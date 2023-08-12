@@ -30,7 +30,7 @@ bool not_pre(bool i) {
 }
 
 bool equal(string i, string j) {
-  return ::bstyle::str_equal(i, j);
+  return ::str_equal(i, j);
 }
 
 bool not_equal(string i, string j) {
@@ -38,7 +38,7 @@ bool not_equal(string i, string j) {
 }
 
 bool equal(biguint i, biguint j) {
-  return ::bstyle::equal(i, j);
+  return ::equal(i, j);
 }
 
 bool not_equal(biguint i, biguint j) {
@@ -46,7 +46,7 @@ bool not_equal(biguint i, biguint j) {
 }
 
 bool equal(long i, long j) {
-  return ::bstyle::equal(i, j);
+  return ::equal(i, j);
 }
 
 bool not_equal(long i, long j) {
@@ -54,7 +54,7 @@ bool not_equal(long i, long j) {
 }
 
 bool equal(int i, int j) {
-  return ::bstyle::equal(i, j);
+  return ::equal(i, j);
 }
 
 bool not_equal(int i, int j) {
@@ -77,11 +77,11 @@ bool greater_than(biguint i, biguint j) {
 }
 
 bool greater_than(long i, long j) {
-  return greater_than(::bstyle::to_biguint(i), ::bstyle::to_biguint(j));
+  return greater_than(::to_biguint(i), ::to_biguint(j));
 }
 
 bool greater_than(int i, int j) {
-  return greater_than(::bstyle::to_biguint(i), ::bstyle::to_biguint(j));
+  return greater_than(::to_biguint(i), ::to_biguint(j));
 }
 
 bool less_than(biguint i, biguint j) {
@@ -91,11 +91,11 @@ bool less_than(biguint i, biguint j) {
 }
 
 bool less_than(long i, long j) {
-  return less_than(::bstyle::to_biguint(i), ::bstyle::to_biguint(j));
+  return less_than(::to_biguint(i), ::to_biguint(j));
 }
 
 bool less_than(int i, int j) {
-  return less_than(::bstyle::to_biguint(i), ::bstyle::to_biguint(j));
+  return less_than(::to_biguint(i), ::to_biguint(j));
 }
 
 bool less_or_equal(biguint i, biguint j) {
@@ -129,21 +129,21 @@ biguint add(biguint i, biguint j) {
 
 long add(long i, long j) {
   logic "add b2style__i b2style__i b2style__j";
-  return ::bstyle::fit_in_long(i);
+  return ::fit_in_long(i);
 }
 
 int add(int i, int j) {
   logic "add b2style__i b2style__i b2style__j";
-  return ::bstyle::fit_in_int(i);
+  return ::fit_in_int(i);
 }
 
 byte add(byte i, byte j) {
   logic "add b2style__i b2style__i b2style__j";
-  return ::bstyle::fit_in_byte(i);
+  return ::fit_in_byte(i);
 }
 
 string add(string i, string j) {
-  return ::bstyle::str_concat(i, j);
+  return ::str_concat(i, j);
 }
 
 biguint minus(biguint i, biguint j) {
@@ -153,12 +153,12 @@ biguint minus(biguint i, biguint j) {
 
 long minus(long i, long j) {
   logic "subtract b2style__i b2style__i b2style__j";
-  return ::bstyle::fit_in_long(i);
+  return ::fit_in_long(i);
 }
 
 int minus(int i, int j) {
   logic "subtract b2style__i b2style__i b2style__j";
-  return ::bstyle::fit_in_int(i);
+  return ::fit_in_int(i);
 }
 
 biguint multiply(biguint i, biguint j) {
@@ -168,12 +168,12 @@ biguint multiply(biguint i, biguint j) {
 
 long multiply(long i, long j) {
   logic "multiply b2style__i b2style__i b2style__j";
-  return ::bstyle::fit_in_long(i);
+  return ::fit_in_long(i);
 }
 
 int multiply(int i, int j) {
   logic "multiply b2style__i b2style__i b2style__j";
-  return ::bstyle::fit_in_int(i);
+  return ::fit_in_int(i);
 }
 
 biguint divide(biguint i, biguint j) {
@@ -185,13 +185,13 @@ biguint divide(biguint i, biguint j) {
 long divide(long i, long j) {
   long result;
   logic "divide b2style__result @@prefixes@temps@string b2style__i b2style__j";
-  return ::bstyle::fit_in_long(result);
+  return ::fit_in_long(result);
 }
 
 int divide(int i, int j) {
   int result;
   logic "divide b2style__result @@prefixes@temps@string b2style__i b2style__j";
-  return ::bstyle::fit_in_int(result);
+  return ::fit_in_int(result);
 }
 
 biguint mod(biguint i, biguint j) {
@@ -203,13 +203,13 @@ biguint mod(biguint i, biguint j) {
 long mod(long i, long j) {
   long result;
   logic "divide @@prefixes@temps@string b2style__result b2style__i b2style__j";
-  return ::bstyle::fit_in_long(result);
+  return ::fit_in_long(result);
 }
 
 int mod(int i, int j) {
   int result;
   logic "divide @@prefixes@temps@string b2style__result b2style__i b2style__j";
-  return ::bstyle::fit_in_int(result);
+  return ::fit_in_int(result);
 }
 
 biguint power(biguint i, biguint j) {
@@ -219,12 +219,12 @@ biguint power(biguint i, biguint j) {
 
 long power(long i, long j) {
   logic "power b2style__i b2style__i b2style__j";
-  return ::bstyle::fit_in_long(i);
+  return ::fit_in_long(i);
 }
 
 int power(int i, int j) {
   logic "power b2style__i b2style__i b2style__j";
-  return ::bstyle::fit_in_int(i);
+  return ::fit_in_int(i);
 }
 
 biguint bit_and(biguint i, biguint j) {
@@ -266,13 +266,13 @@ biguint self_inc_post(biguint& x) {
 long self_inc_post(long& x) {
   long r = x;
   logic "add b2style__x b2style__x @@prefixes@constants@int_1";
-  return ::bstyle::fit_in_long(r);
+  return ::fit_in_long(r);
 }
 
 int self_inc_post(int& x) {
   int r = x;
   logic "add b2style__x b2style__x @@prefixes@constants@int_1";
-  return ::bstyle::fit_in_int(r);
+  return ::fit_in_int(r);
 }
 
 biguint self_dec_post(biguint& x) {
@@ -284,13 +284,13 @@ biguint self_dec_post(biguint& x) {
 long self_dec_post(long& x) {
   long r = x;
   logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
-  return ::bstyle::fit_in_long(r);
+  return ::fit_in_long(r);
 }
 
 int self_dec_post(int& x) {
   int r = x;
   logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
-  return ::bstyle::fit_in_int(r);
+  return ::fit_in_int(r);
 }
 
 biguint self_inc_pre(biguint& x) {
@@ -300,12 +300,12 @@ biguint self_inc_pre(biguint& x) {
 
 long self_inc_pre(long& x) {
   logic "add b2style__x b2style__x @@prefixes@constants@int_1";
-  return ::bstyle::fit_in_long(x);
+  return ::fit_in_long(x);
 }
 
 int self_inc_pre(int& x) {
   logic "add b2style__x b2style__x @@prefixes@constants@int_1";
-  return ::bstyle::fit_in_int(x);
+  return ::fit_in_int(x);
 }
 
 biguint self_dec_pre(biguint& x) {
@@ -315,12 +315,12 @@ biguint self_dec_pre(biguint& x) {
 
 long self_dec_pre(long& x) {
   logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
-  return ::bstyle::fit_in_long(x);
+  return ::fit_in_long(x);
 }
 
 int self_dec_pre(int& x) {
   logic "subtract b2style__x b2style__x @@prefixes@constants@int_1";
-  return ::bstyle::fit_in_int(x);
+  return ::fit_in_int(x);
 }
 
 biguint extract(biguint i, biguint j) {
@@ -348,46 +348,46 @@ biguint right_shift(biguint i, biguint j) {
 }
 
 biguint left_shift(biguint i, int j) {
-  return left_shift(i, ::bstyle::to_biguint(j));
+  return left_shift(i, ::to_biguint(j));
 }
 
 biguint right_shift(biguint i, int j) {
-  return right_shift(i, ::bstyle::to_biguint(j));
+  return right_shift(i, ::to_biguint(j));
 }
 
 biguint left_shift(biguint i, long j) {
-  return left_shift(i, ::bstyle::to_biguint(j));
+  return left_shift(i, ::to_biguint(j));
 }
 
 biguint right_shift(biguint i, long j) {
-  return right_shift(i, ::bstyle::to_biguint(j));
+  return right_shift(i, ::to_biguint(j));
 }
 
 int left_shift(int i, int j) {
-  return ::bstyle::to_int(
-    left_shift(::bstyle::to_biguint(i),
-               ::bstyle::to_biguint(j))
+  return ::to_int(
+    left_shift(::to_biguint(i),
+               ::to_biguint(j))
   );
 }
 
 int right_shift(int i, int j) {
-  return ::bstyle::to_int(
-    right_shift(::bstyle::to_biguint(i),
-                ::bstyle::to_biguint(j))
+  return ::to_int(
+    right_shift(::to_biguint(i),
+                ::to_biguint(j))
   );
 }
 
 long left_shift(long i, long j) {
-  return ::bstyle::to_long(
-    left_shift(::bstyle::to_biguint(i),
-               ::bstyle::to_biguint(j))
+  return ::to_long(
+    left_shift(::to_biguint(i),
+               ::to_biguint(j))
   );
 }
 
 long right_shift(long i, long j) {
-  return ::bstyle::to_long(
-    right_shift(::bstyle::to_biguint(i),
-                ::bstyle::to_biguint(j))
+  return ::to_long(
+    right_shift(::to_biguint(i),
+                ::to_biguint(j))
   );
 }
 
