@@ -82,11 +82,8 @@ Partial Public NotInheritable Class case2
                 End If
             End Using
 
-            Dim command_line_specified As Boolean = False
-            command_line_specified = member.has_custom_attribute(Of attributes.command_line_specified)()
-
-            Dim flaky As Boolean = False
-            flaky = member.has_custom_attribute(Of attributes.flaky)()
+            Dim command_line_specified As Boolean = member.has_custom_attribute(Of attributes.command_line_specified)()
+            Dim flaky As Boolean = member.has_custom_attribute(Of attributes.flaky)()
 
             Dim has_reserved_processors As Boolean = False
             Dim reserved_processors As Int16 = 0

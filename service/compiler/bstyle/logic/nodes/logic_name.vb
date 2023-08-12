@@ -74,7 +74,7 @@ Partial Public NotInheritable Class bstyle
 
         Private Shared Function build(ByVal raw_name As String, ByVal types As vector(Of String)) As String
             assert(Not types Is Nothing)
-            Dim s As New StringBuilder(scope.current_namespace_t.of(raw_name))
+            Dim s As New StringBuilder(raw_name)
             Dim i As UInt32 = 0
             While i < types.size()
                 assert(Not types(i).contains_any(space_chars))
