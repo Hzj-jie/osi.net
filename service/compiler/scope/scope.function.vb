@@ -20,6 +20,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
             type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
+            name = current_namespace_t.of(name)
             If s.emplace(name, type).second() Then
                 Return True
             End If
@@ -28,10 +29,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function is_defined(ByVal name As String) As Boolean
+            name = current_namespace_t.of(name)
             Return s.find(name, Nothing)
         End Function
 
         Public Function return_type_of(ByVal name As String, ByRef type As String) As Boolean
+            name = current_namespace_t.of(name)
             If s.find(name, type) Then
                 Return True
             End If
