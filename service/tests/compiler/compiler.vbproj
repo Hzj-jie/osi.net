@@ -101,6 +101,7 @@
     <Content Include="b2style\self-test\access-biguint-as-heap.txt" />
     <Content Include="b2style\self-test\delegate-functions-with-same-name.txt" />
     <Content Include="b2style\self-test\call-func-in-param.txt" />
+    <Content Include="b2style\self-test\ifdef.txt" />
     <Compile Include="b2style\template_template_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_compile_error_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_self_compile_error_test.vb" />

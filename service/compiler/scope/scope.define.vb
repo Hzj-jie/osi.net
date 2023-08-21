@@ -24,25 +24,40 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return d.find(s) <> d.end()
         End Function
 
-        Private NotInheritable Class ifndef_wrapped_impl
+        Private NotInheritable Class if_wrapped
             Implements code_gen(Of WRITER)
 
             Private ReadOnly code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy)
-            Private ReadOnly is_defined As Func(Of String, Boolean)
+            Private ReadOnly bypass As Func(Of String, Boolean)
 
-            Public Sub New(ByVal code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy),
-                           ByVal is_defined As Func(Of String, Boolean))
+            Private Sub New(ByVal code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy),
+                            ByVal bypass As Func(Of String, Boolean))
                 assert(Not code_gen_of Is Nothing)
-                assert(Not is_defined Is Nothing)
+                assert(Not bypass Is Nothing)
                 Me.code_gen_of = code_gen_of
-                Me.is_defined = is_defined
+                Me.bypass = bypass
             End Sub
+
+            Public Shared Function ifndef_wrapped(
+                    ByVal code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy),
+                    ByVal is_defined As Func(Of String, Boolean)) As code_gen(Of WRITER)
+                Return New if_wrapped(code_gen_of, is_defined)
+            End Function
+
+            Public Shared Function ifdef_wrapped(
+                    ByVal code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy),
+                    ByVal is_defined As Func(Of String, Boolean)) As code_gen(Of WRITER)
+                assert(Not is_defined Is Nothing)
+                Return New if_wrapped(code_gen_of, Function(ByVal s As String) As Boolean
+                                                       Return Not is_defined(s)
+                                                   End Function)
+            End Function
 
             Private Function build(ByVal n As typed_node,
                                    ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
                 assert(Not n Is Nothing)
                 assert(n.child_count() >= 3)
-                If is_defined(n.child(1).word().str()) Then
+                If bypass(n.child(1).word().str()) Then
                     Return True
                 End If
                 For i As UInt32 = 2 To n.child_count() - uint32_2
@@ -74,16 +89,29 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Class
 
         Public NotInheritable Class code_gens
+            Public Shared Function ifdef_wrapped(ByVal code_gen_of As Func(Of typed_node,
+                                                                               code_gens(Of WRITER).code_gen_proxy)) _
+                    As Action(Of code_gens(Of WRITER))
+                Return Sub(ByVal c As code_gens(Of WRITER))
+                           assert(Not c Is Nothing)
+                           c.register("ifdef-wrapped",
+                                      if_wrapped.ifdef_wrapped(code_gen_of,
+                                                               Function(ByVal s As String) As Boolean
+                                                                   Return current().defines().is_defined(s)
+                                                               End Function))
+                       End Sub
+            End Function
+
             Public Shared Function ifndef_wrapped(ByVal code_gen_of As Func(Of typed_node,
                                                                                code_gens(Of WRITER).code_gen_proxy)) _
                     As Action(Of code_gens(Of WRITER))
                 Return Sub(ByVal c As code_gens(Of WRITER))
                            assert(Not c Is Nothing)
                            c.register("ifndef-wrapped",
-                                      New ifndef_wrapped_impl(code_gen_of,
-                                                              Function(ByVal s As String) As Boolean
-                                                                  Return current().defines().is_defined(s)
-                                                              End Function))
+                                      if_wrapped.ifndef_wrapped(code_gen_of,
+                                                                Function(ByVal s As String) As Boolean
+                                                                    Return current().defines().is_defined(s)
+                                                                End Function))
                        End Sub
             End Function
 

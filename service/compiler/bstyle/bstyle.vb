@@ -90,6 +90,7 @@ Partial Public NotInheritable Class bstyle
                            with(Of _while)().
                            with(Of include_with_string)().
                            with(Of include_with_file)().
+                           with(scope.define_t.code_gens.ifdef_wrapped(AddressOf code_gen_of)).
                            with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of)).
                            with(scope.define_t.code_gens.define()).
                            with(Of typedef)().
