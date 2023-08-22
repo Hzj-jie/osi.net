@@ -74,6 +74,14 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                         Return True
                     End If
                 Next
+                If n.child(n.child_count() - uint32_2).type_name.Equals("delse-wrapped") Then
+                    For j As UInt32 = uint32_1 To n.child(n.child_count() - uint32_2).child_count() - uint32_1
+                        If Not code_gen_of(n.child(n.child_count() - uint32_2).child(j)).build(o) Then
+                            Return False
+                        End If
+                    Next
+                    Return True
+                End If
                 Return True
             End Function
         End Class

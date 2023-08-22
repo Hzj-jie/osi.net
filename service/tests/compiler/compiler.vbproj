@@ -89,6 +89,7 @@
     <Content Include="b2style\self-test\empty-and-null.txt" />
     <Content Include="b2style\self-test\heap.txt" />
     <Content Include="b2style\self-test\heap_ptr_test.txt" />
+    <Content Include="b2style\self-test\ifdef-else.txt" />
     <Content Include="b2style\self-test\include__FILE__.txt" />
     <Content Include="b2style\self-test\linked-list.txt" />
     <Content Include="b2style\self-test\mod_equals_to_1.txt" />
