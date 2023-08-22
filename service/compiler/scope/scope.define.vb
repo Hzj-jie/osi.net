@@ -58,7 +58,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                                    ByVal o As WRITER) As Boolean Implements code_gen(Of WRITER).build
                 assert(Not n Is Nothing)
                 assert(n.child_count() >= 3)
-#If False Then
                 For i As UInt32 = 0 To n.child(1).child_count() - uint32_1
                     Dim s As String
                     If i = n.child(1).child_count() - uint32_1 Then
@@ -66,17 +65,13 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                     Else
                         s = n.child(1).child(i).child(0).word().str()
                     End If
-                    If bypass(s) Then
+                    If Not bypass(s) Then
+                        For j As UInt32 = 2 To n.child_count() - uint32_2
+                            If Not code_gen_of(n.child(j)).build(o) Then
+                                Return False
+                            End If
+                        Next
                         Return True
-                    End If
-                Next
-#End If
-                If bypass(n.child(1).word().str()) Then
-                    Return True
-                End If
-                For i As UInt32 = 2 To n.child_count() - uint32_2
-                    If Not code_gen_of(n.child(i)).build(o) Then
-                        Return False
                     End If
                 Next
                 Return True
