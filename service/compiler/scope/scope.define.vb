@@ -39,17 +39,18 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End Sub
 
             Public Shared Function ifndef_wrapped(
-                    ByVal code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy),
-                    ByVal is_defined As Func(Of String, Boolean)) As code_gen(Of WRITER)
-                Return New if_wrapped(code_gen_of, is_defined)
+                    ByVal code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy)) _
+                    As code_gen(Of WRITER)
+                Return New if_wrapped(code_gen_of, Function(ByVal s As String) As Boolean
+                                                       Return current().defines().is_defined(s)
+                                                   End Function)
             End Function
 
             Public Shared Function ifdef_wrapped(
-                    ByVal code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy),
-                    ByVal is_defined As Func(Of String, Boolean)) As code_gen(Of WRITER)
-                assert(Not is_defined Is Nothing)
+                    ByVal code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy)) _
+                    As code_gen(Of WRITER)
                 Return New if_wrapped(code_gen_of, Function(ByVal s As String) As Boolean
-                                                       Return Not is_defined(s)
+                                                       Return Not current().defines().is_defined(s)
                                                    End Function)
             End Function
 
@@ -89,29 +90,21 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Class
 
         Public NotInheritable Class code_gens
-            Public Shared Function ifdef_wrapped(ByVal code_gen_of As Func(Of typed_node,
-                                                                               code_gens(Of WRITER).code_gen_proxy)) _
+            Public Shared Function ifdef_wrapped(
+                    ByVal code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy)) _
                     As Action(Of code_gens(Of WRITER))
                 Return Sub(ByVal c As code_gens(Of WRITER))
                            assert(Not c Is Nothing)
-                           c.register("ifdef-wrapped",
-                                      if_wrapped.ifdef_wrapped(code_gen_of,
-                                                               Function(ByVal s As String) As Boolean
-                                                                   Return current().defines().is_defined(s)
-                                                               End Function))
+                           c.register("ifdef-wrapped", if_wrapped.ifdef_wrapped(code_gen_of))
                        End Sub
             End Function
 
-            Public Shared Function ifndef_wrapped(ByVal code_gen_of As Func(Of typed_node,
-                                                                               code_gens(Of WRITER).code_gen_proxy)) _
+            Public Shared Function ifndef_wrapped(
+                    ByVal code_gen_of As Func(Of typed_node, code_gens(Of WRITER).code_gen_proxy)) _
                     As Action(Of code_gens(Of WRITER))
                 Return Sub(ByVal c As code_gens(Of WRITER))
                            assert(Not c Is Nothing)
-                           c.register("ifndef-wrapped",
-                                      if_wrapped.ifndef_wrapped(code_gen_of,
-                                                                Function(ByVal s As String) As Boolean
-                                                                    Return current().defines().is_defined(s)
-                                                                End Function))
+                           c.register("ifndef-wrapped", if_wrapped.ifndef_wrapped(code_gen_of))
                        End Sub
             End Function
 
