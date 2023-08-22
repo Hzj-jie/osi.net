@@ -45,12 +45,12 @@ logic kw-logic string
 include-with-string kw-include string
 include [include-with-string, include-with-file]
 
-define-with-separator name or
-defines [define-with-separator]* name
+define-with-separator raw-name or
+defines [define-with-separator]* raw-name
 delse-wrapped kw-delse [root-type]*
 ifdef-wrapped kw-ifdef defines [root-type]* [delse-wrapped]? kw-endif
 ifndef-wrapped kw-ifndef defines [root-type]* [delse-wrapped]? kw-endif
-define kw-define name
+define kw-define raw-name
 
 # Allow type* to be used as a string.
 typedef-type-str string
