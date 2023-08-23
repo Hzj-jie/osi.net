@@ -35,6 +35,8 @@ Partial Public NotInheritable Class b2style
             cn = New current_namespace_t()
             d = New define_t()
             i = New root_type_injector_t()
+
+            defines().define("B2STYLE")
         End Sub
 
         Public Shared Function wrap() As scope

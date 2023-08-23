@@ -89,10 +89,14 @@
     <Content Include="b2style\self-test\empty-and-null.txt" />
     <Content Include="b2style\self-test\heap.txt" />
     <Content Include="b2style\self-test\heap_ptr_test.txt" />
+    <Content Include="b2style\self-test\ifdef-else-ifdef.txt" />
+    <Content Include="b2style\self-test\ifdef-else.txt" />
     <Content Include="b2style\self-test\include__FILE__.txt" />
     <Content Include="b2style\self-test\linked-list.txt" />
     <Content Include="b2style\self-test\mod_equals_to_1.txt" />
+    <Content Include="b2style\self-test\multi-defines.txt" />
     <Content Include="b2style\self-test\non-overridable-class-template-function.txt" />
+    <Content Include="b2style\self-test\predefined_def.txt" />
     <Content Include="b2style\self-test\ptr_offset.txt" />
     <Content Include="b2style\self-test\raw-heap-ptr-test.txt" />
     <Content Include="b2style\self-test\real__file__.txt" />
@@ -101,6 +105,7 @@
     <Content Include="b2style\self-test\access-biguint-as-heap.txt" />
     <Content Include="b2style\self-test\delegate-functions-with-same-name.txt" />
     <Content Include="b2style\self-test\call-func-in-param.txt" />
+    <Content Include="b2style\self-test\ifdef.txt" />
     <Compile Include="b2style\template_template_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_compile_error_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_self_compile_error_test.vb" />
@@ -310,6 +315,7 @@
     <Content Include="b2style\codegen\heap.txt" />
     <Content Include="bstyle\codegen\nested_struct.txt" />
     <Content Include="bstyle\codegen\overload_function.txt" />
+    <Content Include="bstyle\codegen\predefined-def.txt" />
     <Content Include="bstyle\codegen\real__file__.txt" />
     <Content Include="bstyle\codegen\return_struct.txt" />
     <Content Include="bstyle\codegen\single_level_struct.txt" />

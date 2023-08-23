@@ -45,8 +45,12 @@ logic kw-logic string
 include-with-string kw-include string
 include [include-with-string, include-with-file]
 
-ifndef-wrapped kw-ifndef name [root-type]* kw-endif
-define kw-define name
+define-with-separator raw-name or
+defines [define-with-separator]* raw-name
+delse-wrapped kw-delse [root-type]*
+ifdef-wrapped kw-ifdef defines [root-type]* [delse-wrapped]? kw-endif
+ifndef-wrapped kw-ifndef defines [root-type]* [delse-wrapped]? kw-endif
+define kw-define raw-name
 
 # Allow type* to be used as a string.
 typedef-type-str string
@@ -65,7 +69,7 @@ dealloc kw-dealloc start-bracket variable-name end-bracket
 static-cast kw-static-cast start-bracket variable-name comma type-name end-bracket
 
 root-type-with-semi-colon [value-definition, heap-declaration, value-declaration, logic, typedef, delegate]? semi-colon
-base-root-type [root-type-with-semi-colon, function, include, define, ifndef-wrapped, struct]
+base-root-type [root-type-with-semi-colon, function, include, define, ifdef-wrapped, ifndef-wrapped, struct]
 base-sentence-with-semi-colon [ignore-result-function-call, value-definition, heap-declaration, value-declaration, value-clause, return-clause, kw-break, logic, typedef, reinterpret-cast, delegate, undefine, dealloc, static-cast]? semi-colon
 
 delegate kw-delegate type-name name start-bracket [paramtypelist]? end-bracket

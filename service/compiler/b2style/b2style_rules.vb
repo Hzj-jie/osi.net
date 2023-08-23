@@ -16,8 +16,8 @@ Friend Module b2style_rules
     Public ReadOnly syntaxer_rule() As Byte
 
     Sub New()
-        nlexer_rule = Convert.FromBase64String(strcat_hint(CUInt(584), _
-        "H4sIAAAAAAAEAH1TwW7cIBC9z1dMNmoipcuulGNk7yXtIVLVXtJT3USsGceoGFzA61Tqn/XQT+ovFDB2dnPIBb33GIb3RvDvz1+4+3z76euHj7jZbF3LLYmtVvRM9tEOijb+2QP8GJnmHbme14QLinKtuHOY1kg9db3innAGUTQHslYKvleER/hoa9EJ4BxvTddzK53RoMg5ZiyjnwNXWJTwZCl0tS/aroQJlCVo47N6Vk5Hfcs1FsupRHfxji89We6NBS4EVu+hk3pwyKAblJe9+oXVFQh5iNa20BmB76A3I1l8gL30jGuBFwkZi9VvSPwCEgk0GMEzcKQaJnUd+ocbEhNUI2PBW+OZa2XjsSiCGyuf2lmQYZxGN0rWHkfp22WUWNwX99e73av6IEy9pyTlRHKemb2kysqcbS6ICTPOOTNb0h7xFDPzKXkmOX9mJymzduq8BBBmCG+B1UYZjTc3IdzqYKQIEJtVHEacJVcqmBJrlB5dawYlcE9LYbNao/Et2VE6CiWXryeYCmPdBiyfnjKLG+zk8m/VuH78HtdKBHAVzLz9N67T5/gPyJjRukMDAAA="))
+        nlexer_rule = Convert.FromBase64String(strcat_hint(CUInt(580), _
+        "H4sIAAAAAAAEAH1TwW7cIBC9z1dMNmoipcuulGNk7yXtIVLVXtJT3USsGceoGFzA61Tqn/XQT+ovFDB2dnPIBb33GIb3RvDvz1+4+3z76euHj7jZbF3LLYmtVvRM9tEOijb+2QP8GJnmHbme14QLinKtuHOY1kg9db3innAGUTQHslYKvleER/hoa9EJ4BxvTddzK53RoMg5ZiyjnwNXWJTwZCl0tS/aroQJlCVo47N6Vk5Hfcs1FsupRHfxji89We6NBS4EVu+hk3pwyKAblJe9+oXVFQh5iNa20BmB76A3I1l8gL30jGuBFwkZi9VvSPwiGsAzcKQaJnUd+obOiQmqkbHgqfHMtbLxWBTBhZVP7SzIMEajGyVrj6P07TJCLO6L++vd7lV9EKbeU4JyIjnHzF7SZGXONBfEZBnnfJktKY94ypr5lDiTtLFsnaTM2qnzEkCYIbwBVhtlNN7chHCrg5EiQGxWcRhxllypYEqsUXp0rRmUwD0thc1qjca3ZEfpKJRcvp5gKox1G7B8esIsbrCTy79V4/rxe1wrEcBVMPP2n7hOn+I/KDg++jsDAAA="))
 
         assert(nlexer_rule.ungzip(nlexer_rule))
         syntaxer_rule = Convert.FromBase64String(strcat_hint(CUInt(1328), _
