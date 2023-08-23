@@ -195,6 +195,14 @@ Public NotInheritable Class bstyle_test
         assertion.equal(io.output(), "real__file__.txt")
     End Sub
 
+    <test>
+    Private Shared Sub predefined_def()
+        Dim e As executor = Nothing
+        assertion.is_true(bstyle.with_default_functions().parse(_bstyle_test_data.predefined_def.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

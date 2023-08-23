@@ -1,0 +1,6 @@
+﻿
+#include <bstyle.h>
+
+#ifdef BSTYLE
+void main() {}
+#endif

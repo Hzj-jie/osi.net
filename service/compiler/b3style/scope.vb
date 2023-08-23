@@ -41,6 +41,8 @@ Partial Public NotInheritable Class b3style
             t = New temp_logic_name_t()
             cn = New current_namespace_t()
             i = New root_type_injector_t()
+
+            defines().define("B3STYLE")
         End Sub
 
         Protected Overrides Function get_accessor() As _
