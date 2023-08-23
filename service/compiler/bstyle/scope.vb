@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.service.compiler
 Imports osi.service.constructor
 
 Partial Public NotInheritable Class bstyle
@@ -36,6 +35,8 @@ Partial Public NotInheritable Class bstyle
             d = New define_t()
             f = New function_t()
             t = New temp_logic_name_t()
+
+            defines().define("BSTYLE")
         End Sub
 
         Protected Overrides Function get_accessor() As _

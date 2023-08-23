@@ -103,6 +103,7 @@ Partial Public NotInheritable Class b3style
  _
                 with(Of include_with_file)().
                 with(Of include_with_string)().
+                with(scope.define_t.code_gens.ifdef_wrapped(AddressOf code_gen_of)).
                 with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of)).
                 with(scope.define_t.code_gens.define()).
  _
