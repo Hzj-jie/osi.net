@@ -41,6 +41,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)
+            assert(current().features().with_namespace())
             Dim f As String = [of](i)
             Dim index As Int32 = f.LastIndexOf(namespace_separator)
             If index = npos Then
@@ -50,10 +51,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Shared Function in_global_namespace(ByVal n As String) As String
+            assert(current().features().with_namespace())
             Return with_namespace("", n)
         End Function
 
         Public Shared Function with_namespace(ByVal n As String, ByVal i As String) As String
+            assert(current().features().with_namespace())
             assert(Not i.null_or_whitespace())
             If i.StartsWith(namespace_separator) Then
                 Return i
