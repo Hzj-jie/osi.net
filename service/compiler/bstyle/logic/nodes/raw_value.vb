@@ -29,7 +29,9 @@ Partial Public NotInheritable Class bstyle
             assert(Not code_type.null_or_whitespace())
             assert(Not o Is Nothing)
             Return compiler.logic.builders.of_copy_const(
-                        scope.current().value_target().with_temp_target(code_type, o).only(), i).to(o)
+                        scope.current().value_target().with_temp_target(
+                            scope.current_namespace_t.if_supported.in_global_namespace(code_type),
+                            o).only(), i).to(o)
         End Function
 
         Private Function build(ByVal n As typed_node,
