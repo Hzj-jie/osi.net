@@ -2,19 +2,26 @@
 #ifndef B2STYLE_LIB_B2STYLE_STDIO_H
 #define B2STYLE_LIB_B2STYLE_STDIO_H
 
+// Unsupported yet.
+#ifndef B3STYLE
 #include <b2style/to_str.h>
+#endif
+
 #include <b2style/types.h>
+#include <stdio.h>
 
 namespace b2style {
 
 void std_out(string i) {
-  logic "interrupt stdout b2style__i @@prefixes@temps@string";
+  ::std_out(i);
 }
 
 void std_err(string i) {
-  logic "interrupt stderr b2style__i @@prefixes@temps@string";
+  ::std_err(i);
 }
 
+// Unsupported yet.
+#ifndef B3STYLE
 template <T>
 void std_out(T i) {
   std_out(to_str(i));
@@ -49,6 +56,7 @@ void std_out(biguint i) {
 void std_err(biguint i) {
   std_err<biguint>(i);
 }
+#endif
 
 }  // namespace b2style
 

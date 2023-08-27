@@ -36,6 +36,10 @@ Partial Public NotInheritable Class b3style
                     End If
                 End If
                 Dim function_name As String = n.child(1).input_without_ignored()
+                ' TODO: Avoid the hack of not adding :: for main.
+                If Not function_name.Equals("main") Then
+                    function_name = scope.current_namespace_t.of(function_name)
+                End If
                 Dim params As vector(Of builders.parameter) = new_scope.params().unpack()
                 Return logic_name.of_callee(function_name,
                                             n.child(0).input_without_ignored(),

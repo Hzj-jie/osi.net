@@ -22,4 +22,12 @@ int eof() {
   return r;
 }
 
+void std_out(string i) {
+  logic "interrupt stdout i @@prefixes@temps@string";
+}
+
+void std_err(string i) {
+  logic "interrupt stderr i @@prefixes@temps@string";
+}
+
 #endif  // BSTYLE_LIB_STDIO_H

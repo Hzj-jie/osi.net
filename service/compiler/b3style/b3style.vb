@@ -141,7 +141,8 @@ Partial Public NotInheritable Class b3style
                 with(Of dealloc)().
                 with(Of undefine)().
  _
-                with(Of name)()
+                with(Of name)().
+                with(Of _namespace)()
         End Function
     End Class
 End Class

@@ -22,25 +22,22 @@ Public Class commandline_specified_case_wrapper
     Public NotOverridable Overrides Function prepare() As Boolean
         If commandline_specified() Then
             Return MyBase.prepare()
-        Else
-            Return True
         End If
+        Return True
     End Function
 
     Public NotOverridable Overrides Function run() As Boolean
         If commandline_specified() Then
             Return MyBase.run()
-        Else
-            raise_error("did not select ", name, " with commandline arguemnts, ignore")
-            Return True
         End If
+        raise_error("did not select ", name, " with commandline arguemnts, ignore")
+        Return True
     End Function
 
     Public NotOverridable Overrides Function finish() As Boolean
         If commandline_specified() Then
             Return MyBase.finish()
-        Else
-            Return True
         End If
+        Return True
     End Function
 End Class

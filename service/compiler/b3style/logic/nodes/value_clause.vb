@@ -40,7 +40,7 @@ Partial Public NotInheritable Class b3style
             If delegate_definition Then
                 ' TODO: Avoid copying.
                 Dim target_function_name As String = logic_name.of_function(
-                                                         value.input_without_ignored(),
+                                                         scope.current_namespace_t.of(value.input_without_ignored()),
                                                          +delegate_definition.get().parameters)
                 If scope.current().functions().is_defined(target_function_name) Then
                     ' Use address-of to copy a function address to the target.

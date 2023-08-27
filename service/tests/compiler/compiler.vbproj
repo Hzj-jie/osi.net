@@ -111,6 +111,7 @@
     <Compile Include="b3style\b3style_b2style_b3style_self_compile_error_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_self_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_test.vb" />
+    <Compile Include="b3style\b3style_b2style_test.vb" />
     <Compile Include="b3style\b3style_runnable_test.vb" />
     <Compile Include="b3style\b3style_bstyle_test.vb" />
     <Compile Include="b3style\b3style_runnable_test_cases.vb" />
@@ -216,6 +217,7 @@
     <Content Include="b3style\runnable\function-call.txt" />
     <Content Include="b3style\runnable\hello-world.txt" />
     <Content Include="b3style\runnable\include-bstyle-types.txt" />
+    <Content Include="b3style\runnable\namespace.txt" />
     <Content Include="b3style\runnable\predefined-macros.txt" />
     <Content Include="bstyle\codegen\delegate.txt" />
     <Content Include="bstyle\codegen\func_name_with_dot.txt" />
