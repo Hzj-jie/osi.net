@@ -24,7 +24,14 @@ Public NotInheritable Class b3style_b2style_b3style_self_test
 
     Protected Overrides Function ignore_case(ByVal name As String) As Boolean
         assert(Not name.null_or_whitespace())
-        Return name.Equals("struct-and-primitive-type-with-same-name.txt") OrElse  ' Unsupported scenario
-               name.Equals("ptr_offset.txt")  ' b3style uses ::ptr_offset as function name, and the predefine will be ignored by b2style
+        If name.Equals("struct-and-primitive-type-with-same-name.txt") Then
+            ' Unsupported scenario
+            Return True
+        End If
+        If name.Equals("ptr_offset.txt") Then
+            ' b3style uses ::ptr_offset as function name, and the predefine will be ignored by b2style
+            Return True
+        End If
+        Return False
     End Function
 End Class
