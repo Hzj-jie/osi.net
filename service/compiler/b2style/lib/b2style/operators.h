@@ -63,7 +63,7 @@ bool not_equal(int i, int j) {
 
 bool equal(bool i, bool j) {
   if (i) return j;
-  return !j;
+  return not(j);
 }
 
 bool not_equal(bool i, bool j) {
