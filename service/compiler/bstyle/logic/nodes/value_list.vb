@@ -15,19 +15,35 @@ Partial Public NotInheritable Class bstyle
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
             assert(n.child_count() > 0)
+            Return build(Sub(ByVal a As Action(Of typed_node))
+                             assert(Not a Is Nothing)
+                             Dim i As UInt32 = 0
+                             While i < n.child_count()
+                                 a(n.child(i))
+                                 i += uint32_1
+                             End While
+                         End Sub,
+                         o)
+        End Function
+
+        Public Function build(ByVal foreach As Action(Of Action(Of typed_node)), ByVal o As logic_writer) As Boolean
+            assert(Not foreach Is Nothing)
+            assert(Not o Is Nothing)
             Dim v As New vector(Of String)()
-            Dim i As UInt32 = 0
-            While i < n.child_count()
-                If Not code_gen_of(n.child(i)).build(o) Then
-                    Return False
-                End If
-                Using r As read_scoped(Of scope.value_target_t.target).ref = scope.current().value_target().value()
-                    v.emplace_back((+r).names)
-                End Using
-                i += uint32_1
-            End While
+            Try
+                foreach(Sub(ByVal n As typed_node)
+                            If Not code_gen_of(n).build(o) Then
+                                break_lambda.at_here()
+                            End If
+                            Using r As read_scoped(Of scope.value_target_t.target).ref =
+                                           scope.current().value_target().value()
+                                v.emplace_back((+r).names)
+                            End Using
+                        End Sub)
+            Catch ex As break_lambda
+                Return False
+            End Try
             scope.current().value_target().with_value_list(v)
             Return True
         End Function

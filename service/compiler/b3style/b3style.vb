@@ -85,7 +85,8 @@ Partial Public NotInheritable Class b3style
                 with_of_all_childrens(
                     "paramtypelist",
                     "raw-value",
-                    "paramlist"
+                    "paramlist",
+                    "value-with-operation"
                 ).
                 with(code_gen.of_ignore_last_child(Of logic_writer)("root-type-with-semi-colon")).
                 with(code_gen.of_ignore_last_child(Of logic_writer)("base-sentence-with-semi-colon")).
