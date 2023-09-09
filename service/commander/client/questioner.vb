@@ -5,14 +5,13 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.template
 Imports osi.service.argument
 Imports osi.service.device
 
 <global_init(global_init_level.server_services)>
-Public Class questioner
+Public NotInheritable Class questioner
     Inherits questioner(Of _true)
 
     Public Sub New(ByVal h As herald, Optional ByVal timeout_ms As Int64 = npos)
@@ -60,7 +59,6 @@ Public Class questioner
     End Function
 
     Private Shared Sub init()
-        assert(constructor.register(Of questioner)(AddressOf create))
         assert(constructor.register(Of questioner(Of _true))(AddressOf create))
     End Sub
 End Class

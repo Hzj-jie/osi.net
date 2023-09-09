@@ -236,7 +236,6 @@ Partial Public NotInheritable Class fces
     End Function
 
     Private Shared Sub init()
-        assert(constructor.register(AddressOf create_as_fces))
         assert(constructor.register("fces", AddressOf create_as_istrkeyvt))
     End Sub
 End Class
