@@ -10,24 +10,6 @@ Partial Public Class powerpoint
     Private Const type_str As String = "tcp"
 
     Private Shared Sub init()
-        assert(constructor.register(Function(v As var, ByRef o As iasync_device_creator(Of ref_client)) As Boolean
-                                        Dim p As powerpoint = Nothing
-                                        Return powerpoint.create(v, p) AndAlso
-                                               assert(Not p Is Nothing) AndAlso
-                                               p.ref_client_creator(o)
-                                    End Function))
-        assert(constructor.register(Function(v As var, ByRef o As imanual_device_exporter(Of ref_client)) As Boolean
-                                        Dim p As powerpoint = Nothing
-                                        Return powerpoint.create(v, p) AndAlso
-                                               assert(Not p Is Nothing) AndAlso
-                                               p.ref_client_manual_device_exporter(o)
-                                    End Function))
-        assert(constructor.register(Function(v As var, ByRef o As iauto_device_exporter(Of ref_client)) As Boolean
-                                        Dim p As powerpoint = Nothing
-                                        Return powerpoint.create(v, p) AndAlso
-                                               assert(Not p Is Nothing) AndAlso
-                                               p.ref_client_auto_device_exporter(o)
-                                    End Function))
         assert(constructor.register(type_str,
                                     Function(v As var, ByRef o As idevice_creator(Of flow)) As Boolean
                                         Dim p As powerpoint = Nothing

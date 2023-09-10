@@ -107,7 +107,6 @@ Public NotInheritable Class target_questioner
     End Function
 
     Private Shared Sub init()
-        assert(constructor.register(Of target_questioner)(AddressOf create))
         assert(constructor.register(parameter_allocator(Function(v As var,
                                                                  q As questioner(Of _true),
                                                                  ByRef o As target_questioner) As Boolean

@@ -166,15 +166,6 @@ Friend Module _registry
     End Function
 
     Sub New()
-        assert(constructor.register(Function(ByVal v As var, ByRef o As client_get_dev) As Boolean
-                                        Return create(v, o)
-                                    End Function))
-        assert(constructor.register(Function(ByVal v As var, ByRef o As client_post_dev) As Boolean
-                                        Return create(v, o)
-                                    End Function))
-        assert(constructor.register(Function(ByVal v As var, ByRef o As client_text_dev) As Boolean
-                                        Return create(v, o)
-                                    End Function))
         assert(constructor.register("get",
                                     Function(ByVal v As var, ByRef o As client_text_dev) As Boolean
                                         Return create_get(v, o)

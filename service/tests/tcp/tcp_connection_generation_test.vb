@@ -5,8 +5,8 @@ Option Strict On
 
 Imports System.Net
 Imports osi.root.connector
-Imports osi.root.lock
 Imports osi.root.constants
+Imports osi.root.lock
 Imports osi.root.utt
 Imports osi.service.device
 Imports osi.service.transmitter
@@ -14,24 +14,18 @@ Imports osi.service.tcp
 Imports osi.root.formation
 Imports constants = osi.service.tcp.constants
 
-Public Class tcp_connection_generation_test
+Public NotInheritable Class tcp_connection_generation_test
     Inherits multithreading_case_wrapper
 
     Public Sub New()
         MyBase.New(New test(), 3)
     End Sub
 
-    Private Class test
+    Private NotInheritable Class test
         Inherits [case]
-        Private ReadOnly port1 As UInt16
-        Private ReadOnly port2 As UInt16
-        Private ReadOnly port3 As UInt16
-
-        Public Sub New()
-            port1 = rnd_port()
-            port2 = rnd_port()
-            port3 = rnd_port()
-        End Sub
+        Private ReadOnly port1 As UInt16 = rnd_port()
+        Private ReadOnly port2 As UInt16 = rnd_port()
+        Private ReadOnly port3 As UInt16 = rnd_port()
 
         Private Overloads Shared Function run(ByVal token As String,
                                               ByVal port As UInt16,
@@ -42,43 +36,43 @@ Public Class tcp_connection_generation_test
                                       ", tokener: ", tokener,
                                       ", delay_connect: ", delay_connect)
             connection_state.bind()
-            Dim ap As idevice_pool(Of flow) = Nothing
-            Dim cp As idevice_pool(Of flow) = Nothing
-            ap = powerpoint.creator.[New]().
-                 with_token(token).
-                 with_endpoint(New IPEndPoint(IPAddress.Any, port)).
-                 with_connecting_timeout_ms(1000).
-                 with_send_rate_sec(uint32_1).
-                 with_response_timeout_ms(npos).
-                 with_receive_rate_sec(uint32_1).
-                 with_max_connecting(uint32_0).
-                 with_max_connected(uint32_0).
-                 with_no_delay(False).
-                 with_max_lifetime_ms(npos).
-                 with_incoming().
-                 with_enable_keepalive(False).
-                 with_first_keepalive_ms(CUInt(8000)).
-                 with_keepalive_interval_ms(CUInt(8000)).
-                 with_tokener(tokener).
-                 create().flow_device_pool()
-            cp = powerpoint.creator.[New]().
-                 with_token(token).
-                 with_endpoint(New IPEndPoint(IPAddress.Loopback, port)).
-                 with_connecting_timeout_ms(1000).
-                 with_send_rate_sec(uint32_1).
-                 with_response_timeout_ms(npos).
-                 with_receive_rate_sec(uint32_1).
-                 with_max_connecting(uint32_1).
-                 with_max_connected(uint32_1).
-                 with_no_delay(False).
-                 with_max_lifetime_ms(npos).
-                 with_outgoing().
-                 with_enable_keepalive(True).
-                 with_first_keepalive_ms(CUInt(8000)).
-                 with_keepalive_interval_ms(CUInt(8000)).
-                 with_tokener(tokener).
-                 with_delay_connect(delay_connect).
-                 create().flow_device_pool()
+            Dim ap As idevice_pool(Of flow) = powerpoint.creator.[New]().
+                                                         with_token(token).
+                                                         with_endpoint(New IPEndPoint(IPAddress.Any, port)).
+                                                         with_connecting_timeout_ms(1000).
+                                                         with_send_rate_sec(uint32_1).
+                                                         with_response_timeout_ms(npos).
+                                                         with_receive_rate_sec(uint32_1).
+                                                         with_max_connecting(uint32_0).
+                                                         with_max_connected(uint32_0).
+                                                         with_no_delay(False).
+                                                         with_max_lifetime_ms(npos).
+                                                         with_incoming().
+                                                         with_enable_keepalive(False).
+                                                         with_first_keepalive_ms(CUInt(8000)).
+                                                         with_keepalive_interval_ms(CUInt(8000)).
+                                                         with_tokener(tokener).
+                                                         create().
+                                                         flow_device_pool()
+            Dim cp As idevice_pool(Of flow) = powerpoint.creator.[New]().
+                                                         with_token(token).
+                                                         with_endpoint(New IPEndPoint(IPAddress.Loopback, port)).
+                                                         with_connecting_timeout_ms(1000).
+                                                         with_send_rate_sec(uint32_1).
+                                                         with_response_timeout_ms(npos).
+                                                         with_receive_rate_sec(uint32_1).
+                                                         with_max_connecting(uint32_1).
+                                                         with_max_connected(uint32_1).
+                                                         with_no_delay(False).
+                                                         with_max_lifetime_ms(npos).
+                                                         with_outgoing().
+                                                         with_enable_keepalive(True).
+                                                         with_first_keepalive_ms(CUInt(8000)).
+                                                         with_keepalive_interval_ms(CUInt(8000)).
+                                                         with_tokener(tokener).
+                                                         with_delay_connect(delay_connect).
+                                                         create().
+                                                         flow_device_pool()
             'wait for the accepter to start and connection to be generated
             If delay_connect OrElse
                (assertion.is_true(timeslice_sleep_wait_when(Function() As Boolean
