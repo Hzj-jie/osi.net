@@ -76,7 +76,6 @@ Partial Public Class file_key
     End Function
 
     Private Shared Sub init()
-        assert(constructor.register(Of file_key)(AddressOf create))
         assert(constructor.register(Of istrkeyvt)("file-key", AddressOf create))
     End Sub
 End Class

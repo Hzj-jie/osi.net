@@ -120,7 +120,6 @@ Public Class hash_distributor
     End Function
 
     Private Shared Sub init()
-        assert(constructor.register(Of hash_distributor)(AddressOf create))
         assert(constructor.register(Of istrkeyvt)("hash-distributor", AddressOf create))
     End Sub
 End Class

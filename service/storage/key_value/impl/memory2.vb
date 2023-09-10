@@ -170,7 +170,6 @@ Public NotInheritable Class memory2
     End Function
 
     Private Shared Sub init()
-        assert(constructor.register(Of memory2)(AddressOf create))
         assert(constructor.register(Of istrkeyvt)(
                    "memory2",
                    Function(v As var, ByRef o As istrkeyvt) As Boolean

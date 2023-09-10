@@ -250,7 +250,6 @@ Public NotInheritable Class file_index
 
     Private Shared Sub init()
         assert(ts_prefix <> fn_prefix)
-        assert(constructor.register(AddressOf create_as_file_index))
         assert(constructor.register("file-index", AddressOf create_as_istrkeyvt))
     End Sub
 End Class

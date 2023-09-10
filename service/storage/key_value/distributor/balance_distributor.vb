@@ -348,7 +348,6 @@ Public Class balance_distributor
     End Function
 
     Private Shared Sub init()
-        assert(constructor.register(Of balance_distributor)(AddressOf create))
         assert(constructor.register(Of istrkeyvt)("balance-distributor", AddressOf create))
     End Sub
 End Class

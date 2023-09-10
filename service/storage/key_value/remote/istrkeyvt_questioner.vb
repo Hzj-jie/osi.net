@@ -205,7 +205,6 @@ Partial Public Class istrkeyvt_questioner
     End Function
 
     Private Shared Sub init()
-        assert(constructor.register(Of istrkeyvt_questioner)(AddressOf create))
         assert(constructor.register(Of istrkeyvt)("remote", AddressOf istrkeyvt_questioner.create))
     End Sub
 End Class
