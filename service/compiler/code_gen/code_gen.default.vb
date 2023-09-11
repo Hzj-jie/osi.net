@@ -225,17 +225,6 @@ Public NotInheritable Class code_gen
                    End Function)
     End Function
 
-    Public Shared Function of_name(Of WRITER As {lazy_list_writer, New}) _
-                                  (ByVal name As String) As Action(Of code_gens(Of WRITER))
-        Return code_gen_delegate(Of WRITER).of(
-                   name,
-                   Function(ByVal n As typed_node, ByVal o As WRITER) As Boolean
-                       assert(Not n Is Nothing)
-                       assert(Not o Is Nothing)
-                       Return o.append(name)
-                   End Function)
-    End Function
-
     Private Sub New()
     End Sub
 End Class

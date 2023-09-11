@@ -191,41 +191,7 @@ Partial Public NotInheritable Class b2style
                                "struct-body",
                                "undefine",
                                "dealloc",
-                               "static-cast").
-                           with_of_names(
-                               "add",
-                               "minus",
-                               "multiply",
-                               "divide",
-                               "mod",
-                               "power",
-                               "bit-and",
-                               "bit-or",
-                               "and",
-                               "or",
-                               "not",
-                               "left-shift",
-                               "right-shift",
-                               "less-than",
-                               "greater-than",
-                               "less-or-equal",
-                               "greater-or-equal",
-                               "equal",
-                               "not-equal",
-                               "self-add",
-                               "self-minus",
-                               "self-multiply",
-                               "self-divide",
-                               "self-mod",
-                               "self-power",
-                               "self-bit-and",
-                               "self-bit-or",
-                               "self-and",
-                               "self-or",
-                               "self-left-shift",
-                               "self-right-shift",
-                               "self-inc",
-                               "self-dec")
+                               "static-cast")
         End Function
     End Class
 

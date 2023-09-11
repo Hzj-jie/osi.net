@@ -8,29 +8,12 @@ Imports osi.root.formation
 Imports osi.service.compiler.rewriters
 
 Public NotInheritable Class typed_node_writer_code_gens_registrar
-    Inherits lazy_list_writer_code_gens_registrar(Of typed_node_writer, typed_node_writer_code_gens_registrar)
+    Inherits code_gens_registrar(Of typed_node_writer, typed_node_writer_code_gens_registrar)
 
     Public Function with_of_leaf_nodes(ByVal ParamArray names() As String) As typed_node_writer_code_gens_registrar
         Return [with](streams.of(names).
                       map(Function(ByVal name As String) As Action(Of code_gens(Of typed_node_writer))
                               Return code_gen.of_leaf_node(name)
-                          End Function).
-                      to_array())
-    End Function
-End Class
-
-Public NotInheritable Class lazy_list_writer_code_gens_registrar
-    Inherits lazy_list_writer_code_gens_registrar(Of lazy_list_writer, lazy_list_writer_code_gens_registrar)
-End Class
-
-Public Class lazy_list_writer_code_gens_registrar(Of WRITER As {lazy_list_writer, New},
-                                                       RT As lazy_list_writer_code_gens_registrar(Of WRITER, RT))
-    Inherits code_gens_registrar(Of WRITER, RT)
-
-    Public Function with_of_names(ByVal ParamArray names() As String) As RT
-        Return [with](streams.of(names).
-                      map(Function(ByVal name As String) As Action(Of code_gens(Of WRITER))
-                              Return code_gen.of_name(Of WRITER)(name)
                           End Function).
                       to_array())
     End Function

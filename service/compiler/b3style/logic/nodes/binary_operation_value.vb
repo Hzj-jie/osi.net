@@ -17,7 +17,7 @@ Partial Public NotInheritable Class b3style
             assert(n.child_count() = 3)
             Dim function_name As String =
                     scope.current_namespace_t.in_global_namespace(
-                    scope.current_namespace_t.with_namespace("b2style", code_gen_of(n.child(1)).dump()))
+                    scope.current_namespace_t.with_namespace("b2style", n.child(1).type_name))
             value_list.build(Sub(ByVal a As Action(Of typed_node))
                                  assert(Not a Is Nothing)
                                  a(n.child(0))
