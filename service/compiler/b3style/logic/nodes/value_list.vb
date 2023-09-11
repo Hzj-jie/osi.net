@@ -35,7 +35,8 @@ Partial Public NotInheritable Class b3style
                          o)
         End Function
 
-        Public Function build(ByVal foreach As Action(Of Action(Of typed_node)), ByVal o As logic_writer) As Boolean
+        Public Shared Function build(ByVal foreach As Action(Of Action(Of typed_node)),
+                                     ByVal o As logic_writer) As Boolean
             assert(Not foreach Is Nothing)
             assert(Not o Is Nothing)
             Dim v As New vector(Of String)()

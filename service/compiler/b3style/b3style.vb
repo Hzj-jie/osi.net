@@ -143,7 +143,8 @@ Partial Public NotInheritable Class b3style
                 with(Of undefine)().
  _
                 with(Of name)().
-                with(Of _namespace)()
+                with(Of _namespace)().
+                with(Of binary_operation_value)()
         End Function
     End Class
 End Class

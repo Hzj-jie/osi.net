@@ -22,30 +22,25 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(Not build_caller Is Nothing)
             assert(n.child_count() >= 3)
-            Dim bc As Func(Of vector(Of String), Boolean) =
-                Function(ByVal parameters As vector(Of String)) As Boolean
-                    Dim function_name As String = n.child(0).input_without_ignored()
-                    If scope.current().variables().try_resolve(function_name, Nothing) Then
-                        Return build_caller_ref(function_name, parameters)
-                    End If
-
-                    function_name = scope.current_namespace_t.of(function_name)
-                    Dim name As String = Nothing
-                    If Not logic_name.of_function_call(function_name, parameters, name) Then
-                        Return False
-                    End If
-                    scope.current().call_hierarchy().to(name)
-                    Return build_caller(name, parameters)
-                End Function
-
             If n.child_count() = 3 Then
-                Return bc(vector.of(Of String)())
-            End If
-            If Not code_gen_of(n.child(2)).build(o) Then
+                value_list.with_empty()
+            ElseIf Not code_gen_of(n.child(2)).build(o) Then
                 Return False
             End If
             Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
-                Return bc(+targets)
+                Dim parameters As vector(Of String) = +targets
+                Dim function_name As String = n.child(0).input_without_ignored()
+                If scope.current().variables().try_resolve(function_name, Nothing) Then
+                    Return build_caller_ref(function_name, parameters)
+                End If
+
+                function_name = scope.current_namespace_t.of(function_name)
+                Dim name As String = Nothing
+                If Not logic_name.of_function_call(function_name, parameters, name) Then
+                    Return False
+                End If
+                scope.current().call_hierarchy().to(name)
+                Return build_caller(name, parameters)
             End Using
         End Function
 

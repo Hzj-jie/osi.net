@@ -27,7 +27,8 @@ Partial Public NotInheritable Class bstyle
                          o)
         End Function
 
-        Public Function build(ByVal foreach As Action(Of Action(Of typed_node)), ByVal o As logic_writer) As Boolean
+        Public Shared Function build(ByVal foreach As Action(Of Action(Of typed_node)),
+                                     ByVal o As logic_writer) As Boolean
             assert(Not foreach Is Nothing)
             assert(Not o Is Nothing)
             Dim v As New vector(Of String)()
@@ -47,6 +48,10 @@ Partial Public NotInheritable Class bstyle
             scope.current().value_target().with_value_list(v)
             Return True
         End Function
+
+        Public Shared Sub with_empty()
+            scope.current().value_target().with_value_list(New vector(Of String)())
+        End Sub
 
         Public Shared Function current_targets() As read_scoped(Of vector(Of String)).ref
             Return scope.current().value_target().value_list()

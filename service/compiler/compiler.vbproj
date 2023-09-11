@@ -63,6 +63,7 @@
     <Compile Include="b2style\b2style_lib.vb" />
     <Compile Include="b3style\b3style_lib.vb" />
     <Compile Include="b3style\logic\nodes\biguint.vb" />
+    <Compile Include="b3style\logic\nodes\binary_operation_value.vb" />
     <Compile Include="b3style\logic\nodes\bool.vb" />
     <Compile Include="b3style\logic\nodes\condition.vb" />
     <Compile Include="b3style\logic\nodes\dealloc.vb" />
