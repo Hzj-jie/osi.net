@@ -19,7 +19,7 @@ Partial Public NotInheritable Class b2style
             If Not code_gen_of(n.child(0)).build(o) Then
                 Return False
             End If
-            Dim function_name As String = n.child(1).type_name
+            Dim function_name As String = n.child(1).child().type_name
             assert(function_name.StartsWith(self_prefix))
             function_name = _namespace.bstyle_format.operator_function_name(
                                 function_name.Substring(self_prefix.Length()))

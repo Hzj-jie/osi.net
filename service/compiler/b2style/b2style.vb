@@ -122,8 +122,7 @@ Partial Public NotInheritable Class b2style
                                "base-for-increase",
                                "base-value-without-bracket",
                                "typedef-type",
-                               "type-name",
-                               "self-operator").
+                               "type-name").
                            with_of_leaf_nodes(
                                "kw-if",
                                "kw-else",
