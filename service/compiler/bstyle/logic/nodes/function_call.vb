@@ -14,22 +14,13 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class function_call
         Implements code_gen(Of logic_writer)
 
-        Private Shared Function build(ByVal n As typed_node,
-                                      ByVal o As logic_writer,
+        Private Shared Function build(ByVal function_name As String,
                                       ByVal build_caller As Func(Of String, vector(Of String), Boolean),
                                       ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
             assert(Not build_caller Is Nothing)
-            assert(n.child_count() >= 3)
-            If n.child_count() = 3 Then
-                value_list.with_empty()
-            ElseIf Not code_gen_of(n.child(2)).build(o) Then
-                Return False
-            End If
+            assert(Not build_caller_ref Is Nothing)
             Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
                 Dim parameters As vector(Of String) = +targets
-                Dim function_name As String = n.child(0).input_without_ignored()
                 If scope.current().variables().try_resolve(function_name, Nothing) Then
                     Return build_caller_ref(function_name, parameters)
                 End If
@@ -44,6 +35,21 @@ Partial Public NotInheritable Class bstyle
             End Using
         End Function
 
+        Private Shared Function build(ByVal n As typed_node,
+                                      ByVal o As logic_writer,
+                                      ByVal build_caller As Func(Of String, vector(Of String), Boolean),
+                                      ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
+            assert(n.child_count() >= 3)
+            If n.child_count() = 3 Then
+                value_list.with_empty()
+            ElseIf Not code_gen_of(n.child(2)).build(o) Then
+                Return False
+            End If
+            Return build(n.child(0).input_without_ignored(), build_caller, build_caller_ref)
+        End Function
+
         Public Shared Function without_return(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
             Return build(n,
                          o,
@@ -55,51 +61,50 @@ Partial Public NotInheritable Class bstyle
                          End Function)
         End Function
 
-        Private Function build(ByVal n As typed_node,
-                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(Not n Is Nothing)
+        Private Shared Function builder(ByVal logic_builder As Func(Of String, String, vector(Of String), Boolean),
+                                        ByVal return_type_of As _do_val_ref(Of String, String, Boolean),
+                                        ByVal o As logic_writer) _
+                                       As Func(Of String, vector(Of String), Boolean)
+            assert(Not logic_builder Is Nothing)
+            assert(Not return_type_of Is Nothing)
             assert(Not o Is Nothing)
-            assert(n.child_count() >= 3)
-            Dim b As Func(Of Func(Of String, String, vector(Of String), Boolean),
-                             _do_val_ref(Of String, String, Boolean),
-                             Func(Of String, vector(Of String), Boolean)) =
-                Function(ByVal builder As Func(Of String, String, vector(Of String), Boolean),
-                         ByVal return_type_of As _do_val_ref(Of String, String, Boolean)) _
-                        As Func(Of String, vector(Of String), Boolean)
-                    assert(Not builder Is Nothing)
-                    Return Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
-                               Dim return_type As String = Nothing
-                               If Not return_type_of(name, return_type) Then
-                                   Return False
-                               End If
-                               If Not scope.current().structs().types().defined(return_type) Then
-                                   Return builder(
-                                              name,
-                                              scope.current().value_target().with_temp_target(return_type, o).only(),
-                                              parameters)
-                               End If
-                               ' TODO: Check the type consistency between function_call and variable receiver.
-                               Dim return_value As String =
-                                       scope.current().temp_logic_name().variable() + "@" + name + "@return_value"
-                               assert(value_declaration.declare_primitive_type(
-                                          compiler.logic.scope.type_t.variable_type, return_value, o))
-                               Return builder(name, return_value, parameters) AndAlso
-                                      struct.unpack(return_value,
-                                                    scope.current().value_target().with_temp_target(return_type, o),
-                                                    o)
-                           End Function
-                End Function
-            Return build(n,
-                         o,
-                         b(Function(ByVal name As String,
-                                    ByVal result As String,
-                                    ByVal parameters As vector(Of String)) As Boolean
+            Return Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
+                       Dim return_type As String = Nothing
+                       If Not return_type_of(name, return_type) Then
+                           Return False
+                       End If
+                       If Not scope.current().structs().types().defined(return_type) Then
+                           Return logic_builder(name,
+                                                scope.current().value_target().with_temp_target(return_type, o).only(),
+                                                parameters)
+                       End If
+                       ' TODO: Check the type consistency between function_call and variable receiver.
+                       Dim return_value As String =
+                               scope.current().temp_logic_name().variable() + "@" + name + "@return_value"
+                       assert(value_declaration.declare_primitive_type(
+                                      compiler.logic.scope.type_t.variable_type, return_value, o))
+                       Return logic_builder(name, return_value, parameters) AndAlso
+                              struct.unpack(return_value,
+                                            scope.current().value_target().with_temp_target(return_type, o),
+                                            o)
+                   End Function
+        End Function
+
+        Private Shared Function caller_builder(ByVal o As logic_writer) As Func(Of String, vector(Of String), Boolean)
+            Return builder(Function(ByVal name As String,
+                                                ByVal result As String,
+                                                ByVal parameters As vector(Of String)) As Boolean
                                Return builders.of_caller(name, result, parameters).to(o)
                            End Function,
                            Function(ByVal name As String, ByRef type As String) As Boolean
                                Return scope.current().functions().return_type_of(name, type)
-                           End Function),
-                         b(Function(ByVal name As String,
+                           End Function,
+                           o)
+        End Function
+
+        Private Shared Function caller_ref_builder(ByVal o As logic_writer) _
+                                                  As Func(Of String, vector(Of String), Boolean)
+            Return builder(Function(ByVal name As String,
                                     ByVal result As String,
                                     ByVal parameters As vector(Of String)) As Boolean
                                Return builders.of_caller_ref(name, result, parameters).to(o)
@@ -121,7 +126,19 @@ Partial Public NotInheritable Class bstyle
                                End If
                                type = signature.get().return_type
                                Return True
-                           End Function))
+                           End Function,
+                           o)
+        End Function
+
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
+            Return build(n, o, caller_builder(o), caller_ref_builder(o))
+        End Function
+
+        Public Shared Function build(ByVal function_name As String, ByVal o As logic_writer) As Boolean
+            Return build(function_name, caller_builder(o), caller_ref_builder(o))
         End Function
     End Class
 End Class

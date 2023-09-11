@@ -57,6 +57,10 @@ Partial Public NotInheritable Class b3style
             Return True
         End Function
 
+        Public Shared Sub with_empty()
+            scope.current().value_target().with_value_list(New vector(Of String)())
+        End Sub
+
         Public Shared Function current_targets() As read_scoped(Of vector(Of String)).ref
             Return scope.current().value_target().value_list()
         End Function
