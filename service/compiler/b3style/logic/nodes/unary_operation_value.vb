@@ -15,7 +15,7 @@ Partial Public NotInheritable Class b3style
         Private ReadOnly suffix As String
 
         Protected Sub New(ByVal operator_index As UInt32, ByVal suffix As String)
-            assert(Not String.IsNullOrWhiteSpace(suffix))
+            assert(Not suffix.null_or_whitespace())
             Me.operator_index = operator_index
             Me.suffix = suffix
         End Sub
