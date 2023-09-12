@@ -122,7 +122,8 @@ Partial Public NotInheritable Class b2style
                                "base-for-increase",
                                "base-value-without-bracket",
                                "typedef-type",
-                               "type-name").
+                               "type-name",
+                               "unary-operation-value").
                            with_of_leaf_nodes(
                                "kw-if",
                                "kw-else",
@@ -174,7 +175,6 @@ Partial Public NotInheritable Class b2style
                                "raw-value",
                                "value-without-bracket",
                                "value-with-operation",
-                               "unary-operation-value",
                                "variable-name",
                                "value-list",
                                "value-with-comma",
