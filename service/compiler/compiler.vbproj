@@ -92,6 +92,7 @@
     <Compile Include="b3style\logic\nodes\raw_variable_name.vb" />
     <Compile Include="b3style\logic\nodes\reinterpret_cast.vb" />
     <Compile Include="b3style\logic\nodes\return_clause.vb" />
+    <Compile Include="b3style\logic\nodes\self_value_clause.vb" />
     <Compile Include="b3style\logic\nodes\static_cast.vb" />
     <Compile Include="b3style\logic\nodes\string.vb" />
     <Compile Include="b3style\logic\nodes\struct.vb" />
