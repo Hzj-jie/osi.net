@@ -147,7 +147,8 @@ Partial Public NotInheritable Class b3style
                 with(Of _namespace)().
                 with(Of binary_operation_value)().
                 with(Of pre_operation_value)().
-                with(Of post_operation_value)()
+                with(Of post_operation_value)().
+                with(Of self_value_clause)()
         End Function
     End Class
 End Class

@@ -20,15 +20,13 @@ Partial Public NotInheritable Class b3style
             Me.suffix = suffix
         End Sub
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 2)
             Dim function_name As String =
-                    scope.current_namespace_t.in_global_namespace(
-                    scope.current_namespace_t.with_namespace(
-                            "b2style", n.child(operator_index).type_name.Replace("-"c, "_"c) + suffix))
+                    binary_operation_value.operation_function_name(n.child(operator_index).type_name + suffix)
             value_list.build(Sub(ByVal a As Action(Of typed_node))
                                  assert(Not a Is Nothing)
                                  a(n.child(uint32_1 - operator_index))

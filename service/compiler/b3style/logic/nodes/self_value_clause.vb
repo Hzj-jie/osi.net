@@ -12,9 +12,19 @@ Partial Public NotInheritable Class b3style
 
         Private Const self_prefix As String = "self-"
 
-        Public Function build(ByVal n As typed_node,
-                              ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+            assert(Not n Is Nothing)
+            assert(n.child_count() = 3)
+            Return value_clause.build(n.child(0),
+                                      Function() As Boolean
+                                          Return binary_operation_value.build(
+                                                         n.child(0),
+                                                         n.child(1).type_name.Substring(self_prefix.Length()),
+                                                         n.child(2),
+                                                         o)
+                                      End Function,
+                                      o)
         End Function
     End Class
 End Class
