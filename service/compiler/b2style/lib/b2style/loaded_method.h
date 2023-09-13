@@ -11,6 +11,8 @@ void load_method(string m) {
   ::load_method(m);
 }
 
+// Unsupported yet.
+#ifndef B3STYLE
 template <T>
 T execute_loaded_method() {
   T result;
@@ -24,6 +26,7 @@ RT execute_loaded_method(T p) {
   logic "interrupt execute_loaded_method b2style__p b2style__result";
   return result;
 }
+#endif
 	
 }  // namespace b2style
 

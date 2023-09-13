@@ -34,6 +34,8 @@ string legacy_biguint_to_str(biguint i) {
   return s;
 }
 
+// Unsupported yet.
+#ifndef B3STYLE
 string biguint_to_str(biguint i) {
   load_method("big_uint_to_str");
   return execute_loaded_method<biguint, string>(i);
@@ -79,6 +81,7 @@ string long_to_str(long i) {
 string to_str(long i) {
   return long_to_str(i);
 }
+#endif
 
 }  // namespace b2style
 

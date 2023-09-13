@@ -2,11 +2,7 @@
 #ifndef B2STYLE_LIB_B2STYLE_STDIO_H
 #define B2STYLE_LIB_B2STYLE_STDIO_H
 
-// Unsupported yet.
-#ifndef B3STYLE
 #include <b2style/to_str.h>
-#endif
-
 #include <b2style/types.h>
 #include <stdio.h>
 
@@ -55,6 +51,14 @@ void std_out(biguint i) {
 
 void std_err(biguint i) {
   std_err<biguint>(i);
+}
+#else
+void std_out(bool i) {
+  std_out(to_str(i));
+}
+
+void std_err(bool i) {
+  std_err(to_str(i));
 }
 #endif
 
