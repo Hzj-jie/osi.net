@@ -50,18 +50,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return tuple.of(f.Substring(0, index), f.Substring(index + namespace_separator.Length()))
         End Function
 
-        Public NotInheritable Class if_supported
-            Public Shared Function in_global_namespace(ByVal n As String) As String
-                If Not current().features().with_namespace() Then
-                    Return n
-                End If
-                Return current_namespace_t.in_global_namespace(n)
-            End Function
-
-            Private Sub New()
-            End Sub
-        End Class
-
         Public Shared Function in_global_namespace(ByVal n As String) As String
             assert(current().features().with_namespace())
             Return with_namespace("", n)
