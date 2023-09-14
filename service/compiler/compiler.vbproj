@@ -117,7 +117,6 @@
     <Compile Include="b2style\rewriter\nodes\kw_file.vb" />
     <None Include="b3style\codegen\run.cmd" />
     <None Include="b3style\lib\run.cmd" />
-    <None Include="b3style\logic\nodes\from-bstyle.cmd" />
     <None Include="bstyle\lib\climits" />
     <Compile Include="b2style\rewriter\nodes\delegate_with_semi_colon.vb" />
     <Compile Include="b3style\b3style_rules.vb" />
