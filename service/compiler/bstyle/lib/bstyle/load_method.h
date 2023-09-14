@@ -3,6 +3,7 @@
 #define BSTYLE_LIB_BSTYLE_LOADED_METHOD_H
 
 #include <bstyle/types.h>
+#include <bstyle/str.h>
 
 void load_method(string m) {
   m = str_concat(

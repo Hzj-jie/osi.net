@@ -123,31 +123,34 @@ Partial Public NotInheritable Class b3style
                                       ByVal o As logic_writer) As Boolean
             assert(Not name Is Nothing)
             assert(Not o Is Nothing)
-            If Not name.type_name.Equals("heap-name") Then
-                Return stack_name_build(name, value, raw_value_str, o)
+            If name.type_name.Equals("heap-name") Then
+                Return heap_name.build(name.child(2),
+                                       o,
+                                       Function(ByVal indexstr As String) As Boolean
+                                           Return build(name.child(0),
+                                                        value,
+                                                        raw_value_str,
+                                                        Function(ByVal r As vector(Of String)) As Boolean
+                                                            Return struct.copy(r,
+                                                                               name.child(0).input_without_ignored(),
+                                                                               indexstr,
+                                                                               o)
+                                                        End Function,
+                                                        Function(ByVal r As String) As Boolean
+                                                            Return builders.of_copy(
+                                                                       variable.name_of(
+                                                                           name.child(0).input_without_ignored(),
+                                                                           indexstr),
+                                                                   r).to(o)
+                                                        End Function,
+                                                        o)
+                                       End Function)
             End If
-            Return heap_name.build(
-                       name.child(2),
-                       o,
-                       Function(ByVal indexstr As String) As Boolean
-                           Return build(name.child(0),
-                                        value,
-                                        raw_value_str,
-                                        Function(ByVal r As vector(Of String)) As Boolean
-                                            Return struct.copy(r,
-                                                               name.child(0).input_without_ignored(),
-                                                               indexstr,
-                                                               o)
-                                        End Function,
-                                        Function(ByVal r As String) As Boolean
-                                            Return builders.of_copy(
-                                                       variable.name_of(
-                                                           name.child(0).input_without_ignored(),
-                                                           indexstr),
-                                                   r).to(o)
-                                        End Function,
-                                 o)
-                       End Function)
+            If name.type_name.Equals("heap-struct-name") Then
+                raise_error(error_type.user, "heap-struct-name.value_clause hasn't been supported yet.")
+                Return False
+            End If
+            Return stack_name_build(name, value, raw_value_str, o)
         End Function
 
         Public Shared Function build(ByVal name As typed_node,

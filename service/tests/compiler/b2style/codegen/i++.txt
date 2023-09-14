@@ -7,12 +7,21 @@ namespace b2style {
 
 typedef ::int int;
 
+#ifdef B2STYLE
 int self_inc_post(int& x) {
   int r = x;
   int y = 1;
   logic "add b2style__x b2style__x b2style__y";
   return r;
 }
+#else
+int self_inc_post(int& x) {
+  int r = x;
+  int y = 1;
+  logic "add x x y";
+  return r;
+}
+#endif
 
 }  // namespace b2style
 

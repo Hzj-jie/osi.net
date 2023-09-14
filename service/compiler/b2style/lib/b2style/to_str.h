@@ -3,6 +3,7 @@
 #define B2STYLE_LIB_B2STYLE_TO_STR_H
 
 #include <b2style/loaded_method.h>
+#include <b2style/operators.h>
 #include <limits.h>
 
 namespace b2style {
