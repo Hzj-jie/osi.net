@@ -60,6 +60,22 @@ void std_out(bool i) {
 void std_err(bool i) {
   std_err(to_str(i));
 }
+
+void std_out(int i) {
+  std_out(to_str(i));
+}
+
+void std_err(int i) {
+  std_err(to_str(i));
+}
+
+void std_out(biguint i) {
+  std_out(to_str(i));
+}
+
+void std_err(biguint i) {
+  std_err(to_str(i));
+}
 #endif
 
 }  // namespace b2style
