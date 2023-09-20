@@ -16,6 +16,7 @@ Partial Public NotInheritable Class b3style
 
     Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "service/compiler/b3style")
 
+    ' TODO: Also disable the namespace of function / function_call.
     <ThreadStatic>
     Private Shared _disable_namespace As Boolean
 
