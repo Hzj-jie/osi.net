@@ -13,22 +13,25 @@ Partial Public NotInheritable Class b3style
     Private NotInheritable Class value_clause
         Implements code_gen(Of logic_writer)
 
-        Private Shared Function build(ByVal name As typed_node,
+        Private Shared Function build(ByVal name_node As typed_node,
                                       ByVal value As typed_node,
-                                      ByVal struct_copy As Func(Of vector(Of String), Boolean),
-                                      ByVal primitive_type_copy As Func(Of String, Boolean),
+                                      ByVal struct_copy As Func(Of String, vector(Of String), Boolean),
+                                      ByVal primitive_type_copy As Func(Of String, String, Boolean),
                                       ByVal o As logic_writer) As Boolean
-            assert(Not name Is Nothing)
+            assert(Not name_node Is Nothing)
             assert(Not value Is Nothing)
             assert(Not struct_copy Is Nothing)
             assert(Not primitive_type_copy Is Nothing)
             assert(Not o Is Nothing)
             Dim type As String = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
-            If Not scope.current().variables().resolve(name.input_without_ignored(), type, delegate_definition) Then
+            If Not scope.current().variables().resolve(name_node.input_without_ignored(),
+                                                       type,
+                                                       delegate_definition) Then
                 ' Emmmm, scope.variable should log the error already.
                 Return False
             End If
+            Dim name As String = value_definition.name_of(name_node)
             If delegate_definition Then
                 ' TODO: Avoid copying.
                 Dim target_function_name As String = logic_name.of_function(
@@ -38,9 +41,9 @@ Partial Public NotInheritable Class b3style
                     ' Use address-of to copy a function address to the target.
                     ' TODO: Need to use logic_name here.
                     scope.current().call_hierarchy().to(target_function_name)
-                    Return builders.of_address_of(name.input_without_ignored(), target_function_name).to(o)
+                    Return builders.of_address_of(name, target_function_name).to(o)
                 End If
-                Return builders.of_copy(name.input_without_ignored(), value.input_without_ignored()).to(o)
+                Return builders.of_copy(name, value.input_without_ignored()).to(o)
             End If
             If Not code_gen_of(value).build(o) Then
                 Return False
@@ -52,12 +55,12 @@ Partial Public NotInheritable Class b3style
                                     "Type ",
                                     type,
                                     " of ",
-                                    name.input_without_ignored(),
+                                    name,
                                     " does not match the rvalue ",
                                     (+r).type)
                         Return False
                     End If
-                    Return struct_copy((+r).names)
+                    Return struct_copy(name, (+r).names)
                 End Using
             End If
             Using r As read_scoped(Of scope.value_target_t.target).ref(Of String) =
@@ -70,7 +73,7 @@ Partial Public NotInheritable Class b3style
                                 "Failed to retrieve a primitive-type target from the r-value, received a struct?")
                     Return False
                 End If
-                Return primitive_type_copy(s)
+                Return primitive_type_copy(name, s)
             End Using
         End Function
 
@@ -81,11 +84,11 @@ Partial Public NotInheritable Class b3style
             ' TODO: If the value on the right is a temporary value (rvalue), move can be used to reduce memory copy.
             Return build(name,
                          value,
-                         Function(ByVal r As vector(Of String)) As Boolean
-                             Return struct.copy(r, name.input_without_ignored(), o)
+                         Function(ByVal n As String, ByVal r As vector(Of String)) As Boolean
+                             Return struct.copy(r, n, o)
                          End Function,
-                         Function(ByVal r As String) As Boolean
-                             Return builders.of_copy(name.input_without_ignored(), r).to(o)
+                         Function(ByVal n As String, ByVal r As String) As Boolean
+                             Return builders.of_copy(n, r).to(o)
                          End Function,
                          o)
         End Function
@@ -104,18 +107,11 @@ Partial Public NotInheritable Class b3style
                        Function(ByVal indexstr As String) As Boolean
                            Return build(n.child(0).child().child(0),
                                         n.child(2),
-                                        Function(ByVal r As vector(Of String)) As Boolean
-                                            Return struct.copy(r,
-                                                               n.child(0).child().child(0).input_without_ignored(),
-                                                               indexstr,
-                                                               o)
+                                        Function(ByVal name As String, ByVal r As vector(Of String)) As Boolean
+                                            Return struct.copy(r, name, indexstr, o)
                                         End Function,
-                                        Function(ByVal r As String) As Boolean
-                                            Return builders.of_copy(
-                                                       variable.name_of(
-                                                           n.child(0).child().child(0).input_without_ignored(),
-                                                           indexstr),
-                                                   r).to(o)
+                                        Function(ByVal name As String, ByVal r As String) As Boolean
+                                            Return builders.of_copy(variable.name_of(name, indexstr), r).to(o)
                                         End Function,
                                  o)
                        End Function)
