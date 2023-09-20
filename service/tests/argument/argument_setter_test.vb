@@ -257,6 +257,25 @@ Public NotInheritable Class argument_setter_test
         End If
     End Sub
 
+    Private NotInheritable Class argument_holder10
+        Public Shared _arg As argument(Of Boolean)
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    <test>
+    Private Shared Sub remove_prefix_underscore()
+        argument_holder10._arg = Nothing
+        argument_setter.process_type(GetType(argument_holder10),
+                                     New var({
+                                         "--osi.tests.service.argument.argument_setter_test.argument_holder10.arg"
+                                     }))
+        If assertion.is_not_null(argument_holder10._arg) Then
+            assertion.is_true(+argument_holder10._arg)
+        End If
+    End Sub
+
     Private Sub New()
     End Sub
 End Class

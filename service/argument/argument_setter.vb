@@ -37,11 +37,11 @@ Public NotInheritable Class argument_setter
     End Sub
 
     Private Shared Function full_argument_name(ByVal type As Type, ByVal field As FieldInfo) As String
-        Return strcat(type.full_name(), ".", field.Name()).Replace("+"c, "."c)
+        Return String.Concat(type.full_name(), ".", field.Name().TrimStart("_"c)).Replace("+"c, "."c)
     End Function
 
     Private Shared Function argument_name(ByVal type As Type, ByVal field As FieldInfo) As String
-        Return strcat(type.Name(), ".", field.Name()).Replace("+"c, "."c)
+        Return String.Concat(type.Name(), ".", field.Name().TrimStart("_"c)).Replace("+"c, "."c)
     End Function
 
     Private Shared Function get_argument_value(ByVal class_type As Type,

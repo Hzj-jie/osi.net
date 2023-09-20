@@ -44,7 +44,7 @@ Partial Public NotInheritable Class bstyle
             Return New accessor_t(Me)
         End Function
 
-        Private Shadows Class accessor_t
+        Private NotInheritable Shadows Class accessor_t
             Inherits scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).accessor_t
 
             Private ReadOnly s As scope
