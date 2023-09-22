@@ -14,19 +14,19 @@ Partial Public NotInheritable Class b3style
     Private NotInheritable Class function_call
         Implements code_gen(Of logic_writer)
 
-        Private Shared Function build(ByVal input_without_ignored As String,
+        Private Shared Function build(ByVal raw_function_name As String,
                                       ByVal build_caller As Func(Of String, vector(Of String), Boolean),
                                       ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
             assert(Not build_caller Is Nothing)
             assert(Not build_caller_ref Is Nothing)
             Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
-                Dim function_name As String = value_definition.name_of(input_without_ignored)
+                Dim function_name As String = value_definition.name_of(raw_function_name)
                 Dim parameters As vector(Of String) = +targets
                 If scope.current().variables().try_resolve(function_name, Nothing) Then
                     Return build_caller_ref(function_name, parameters)
                 End If
 
-                function_name = _function.name_of(input_without_ignored)
+                function_name = _function.name_of(raw_function_name)
                 Dim name As String = Nothing
                 If Not logic_name.of_function_call(function_name, parameters, name) Then
                     Return False
@@ -48,7 +48,7 @@ Partial Public NotInheritable Class b3style
             ElseIf Not code_gen_of(n.child(2)).build(o) Then
                 Return False
             End If
-            Return build(value_definition.name_of(n.child(0)), build_caller, build_caller_ref)
+            Return build(n.child(0).input_without_ignored(), build_caller, build_caller_ref)
         End Function
 
         Public Shared Function without_return(ByVal n As typed_node, ByVal o As logic_writer) As Boolean

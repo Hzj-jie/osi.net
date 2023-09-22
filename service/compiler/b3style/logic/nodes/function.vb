@@ -24,11 +24,6 @@ Partial Public NotInheritable Class b3style
             Return r
         End Function
 
-        Public Shared Function name_of(ByVal n As typed_node) As String
-            assert(Not n Is Nothing)
-            Return name_of(n.input_without_ignored())
-        End Function
-
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
@@ -41,7 +36,7 @@ Partial Public NotInheritable Class b3style
                         Return False
                     End If
                 End If
-                Dim function_name As String = name_of(n.child(1))
+                Dim function_name As String = name_of(n.child(1).input_without_ignored())
                 Dim params As vector(Of builders.parameter) = new_scope.params().unpack()
                 Return logic_name.of_callee(function_name,
                                             n.child(0).input_without_ignored(),
