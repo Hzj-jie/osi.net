@@ -23,20 +23,20 @@ Partial Public NotInheritable Class b3style
             assert(Not struct_copy Is Nothing)
             assert(Not primitive_type_copy Is Nothing)
             assert(Not o Is Nothing)
+            Dim name As String = value_definition.name_of(name_node)
             Dim type As String = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
-            If Not scope.current().variables().resolve(name_node.input_without_ignored(),
+            If Not scope.current().variables().resolve(name,
                                                        type,
                                                        delegate_definition) Then
                 ' Emmmm, scope.variable should log the error already.
                 Return False
             End If
-            Dim name As String = value_definition.name_of(name_node)
             If delegate_definition Then
                 ' TODO: Avoid copying.
                 Dim target_function_name As String = logic_name.of_function(
-                                                         scope.current_namespace_t.of(value.input_without_ignored()),
-                                                         +delegate_definition.get().parameters)
+                                                             _function.name_of(value),
+                                                             +delegate_definition.get().parameters)
                 If scope.current().functions().is_defined(target_function_name) Then
                     ' Use address-of to copy a function address to the target.
                     ' TODO: Need to use logic_name here.

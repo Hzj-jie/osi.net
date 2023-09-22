@@ -41,9 +41,9 @@ Public NotInheritable Class b3style_b2style_b3style_test
         e.assert_execute_without_errors()
         assertion.equal(io.output().Trim(), String.Join(character.newline,
             "::type0 main([])",
-            "::type0 ::std_out:C__struct__type__id__type([this.C__struct__type__id: ::C__struct__type__id__type&])",
-            "::type0 ::N__print([])",
-            "::type0 ::N__f2:Integer:String([N__x: ::Integer, N__s: ::String])"))
+            "::type0 std_out:C__struct__type__id__type([this.C__struct__type__id: ::C__struct__type__id__type&])",
+            "::type0 N__print([])",
+            "::type0 N__f2:Integer:String([N__x: ::Integer, N__s: ::String])"))
     End Sub
 
     Private Sub New()

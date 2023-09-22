@@ -15,6 +15,7 @@ Partial Public NotInheritable Class b3style
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() >= 4)
+            assert(Not _disable_namespace)
             Using scope.current().current_namespace().define(scope.current_namespace_t.of(n.child(1).word().str()))
                 For i As UInt32 = 3 To n.child_count() - uint32_2
                     If Not code_gen_of(n.child(i)).build(o) Then

@@ -11,6 +11,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               __CODE_GENS As func_t(Of code_gens(Of WRITER)),
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     ' A helper to always de-alias and apply namespace.
+    ' TODO: Should respect b3style._disable_namespace.
     Public NotInheritable Class normalized_type
         Public Shared ReadOnly logic_type_of As Func(Of String, String) =
             Function(ByVal type As String) As String
