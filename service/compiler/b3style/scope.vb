@@ -128,5 +128,17 @@ Partial Public NotInheritable Class b3style
                 Return s.ps
             End Function
         End Class
+
+        Protected Overrides Function get_features() As _
+                scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).features_t
+            Return New features_t()
+        End Function
+
+        Private NotInheritable Shadows Class features_t
+            Inherits scope(Of logic_writer, code_builder_proxy, code_gens_proxy, scope).features_t
+            Public Overrides Function with_namespace() As Boolean
+                Return Not _disable_namespace
+            End Function
+        End Class
     End Class
 End Class
