@@ -267,7 +267,9 @@ Partial Public NotInheritable Class b2style
         End Sub
 
         Protected Overrides Function text_import(ByVal s As String, ByVal o As exportable) As Boolean
-            Return b3style.with_functions(functions).parse(s, o)
+            Using b3style.disable_namespace()
+                Return b3style.with_functions(functions).parse(s, o)
+            End Using
         End Function
     End Class
 

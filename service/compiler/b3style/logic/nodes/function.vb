@@ -15,6 +15,16 @@ Partial Public NotInheritable Class b3style
 
         Private Shared remove_unused_functions As argument(Of Boolean)
 
+        Public Shared Function name_of(ByVal n As typed_node) As String
+            assert(Not n Is Nothing)
+            Dim r As String = n.input_without_ignored()
+            ' TODO: Avoid the hack of not adding :: for main.
+            If Not r.Equals("main") AndAlso Not _disable_namespace Then
+                Return scope.current_namespace_t.of(r)
+            End If
+            Return r
+        End Function
+
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
@@ -27,11 +37,7 @@ Partial Public NotInheritable Class b3style
                         Return False
                     End If
                 End If
-                Dim function_name As String = n.child(1).input_without_ignored()
-                ' TODO: Avoid the hack of not adding :: for main.
-                If Not function_name.Equals("main") Then
-                    function_name = scope.current_namespace_t.of(function_name)
-                End If
+                Dim function_name As String = name_of(n.child(1))
                 Dim params As vector(Of builders.parameter) = new_scope.params().unpack()
                 Return logic_name.of_callee(function_name,
                                             n.child(0).input_without_ignored(),

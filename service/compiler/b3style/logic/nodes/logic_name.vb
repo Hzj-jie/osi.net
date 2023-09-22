@@ -32,6 +32,7 @@ Partial Public NotInheritable Class b3style
                                          ByVal paragraph As Func(Of logic_writer, Boolean),
                                          ByVal o As logic_writer) As Boolean
             Dim name As String = of_function(raw_name, +parameters)
+            return_type = scope.normalized_type.of(return_type)
             If Not scope.current().functions().define(return_type, name) Then
                 Return False
             End If
@@ -42,7 +43,7 @@ Partial Public NotInheritable Class b3style
             Return builders.of_callee(name,
                                       If(scope.current().structs().types().defined(return_type),
                                          compiler.logic.scope.type_t.variable_type,
-                                         scope.normalized_type.logic_type_of(scope.normalized_type.of(return_type))),
+                                         scope.normalized_type.logic_type_of(return_type)),
                                       parameters.stream().
                                                  map(Function(ByVal i As builders.parameter) As pair(Of String, String)
                                                          assert(Not i Is Nothing)

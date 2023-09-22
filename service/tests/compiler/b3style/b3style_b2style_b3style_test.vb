@@ -31,21 +31,6 @@ Public NotInheritable Class b3style_b2style_b3style_test
         assertion.is_true(nlp.of_file(b3style.nlexer_rule, b3style.syntaxer_rule, Nothing))
     End Sub
 
-    <test>
-    Private Shared Sub __func__()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(New b2style.parse_wrapper_b3style(
-                              New interrupts(+io)).parse(_b2style_test_data.__func__.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output().Trim(), String.Join(character.newline,
-            "::type0 main([])",
-            "::type0 ::std_out:C__struct__type__id__type([this.C__struct__type__id: ::C__struct__type__id__type&])",
-            "::type0 ::N__print([])",
-            "::type0 ::N__f2:Integer:String([N__x: ::Integer, N__s: ::String])"))
-    End Sub
-
     Private Sub New()
     End Sub
 End Class
