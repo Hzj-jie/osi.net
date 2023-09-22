@@ -24,21 +24,23 @@ Partial Public NotInheritable Class b3style
             assert(Not struct_copy Is Nothing)
             assert(Not primitive_copy Is Nothing)
             assert(Not o Is Nothing)
+            Dim name As String = value_definition.name_of(name_node)
             Dim type As String = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
-            If Not scope.current().variables().resolve(name_node.input_without_ignored(), type, delegate_definition) Then
+            If Not scope.current().variables().resolve(name,
+                                                       type,
+                                                       delegate_definition) Then
                 ' Emmmm, scope.variable should log the error already.
                 Return False
             End If
-            Dim name As String = name_node.input_without_ignored()
             If delegate_definition Then
                 If raw_value_str.null_or_whitespace() Then
                     raise_error(error_type.user, "Unsupported delegate target, no function name provided.")
                 End If
                 ' TODO: Avoid copying.
                 Dim target_function_name As String = logic_name.of_function(
-                                                         scope.current_namespace_t.of(raw_value_str),
-                                                         +delegate_definition.get().parameters)
+                                                             _function.name_of(raw_value_str),
+                                                             +delegate_definition.get().parameters)
                 If scope.current().functions().is_defined(target_function_name) Then
                     ' Use address-of to copy a function address to the target.
                     ' TODO: Need to use logic_name here.

@@ -26,7 +26,7 @@ Partial Public NotInheritable Class b3style
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
             Dim t As String = type.input_without_ignored()
-            Dim n As String = name.input_without_ignored()
+            Dim n As String = value_definition.name_of(name)
             Return struct.define_in_stack(t, n, o) OrElse
                    declare_primitive_type(t, n, o)
         End Function

@@ -28,10 +28,11 @@ Partial Public NotInheritable Class b3style
             assert(Not i Is Nothing)
             assert(Not code_type.null_or_whitespace())
             assert(Not o Is Nothing)
+            If Not _disable_namespace Then
+                code_type = scope.current_namespace_t.in_global_namespace(code_type)
+            End If
             Return compiler.logic.builders.of_copy_const(
-                        scope.current().value_target().with_temp_target(
-                            scope.current_namespace_t.in_global_namespace(code_type),
-                            o).only(), i).to(o)
+                        scope.current().value_target().with_temp_target(code_type, o).only(), i).to(o)
         End Function
 
         Private Function build(ByVal n As typed_node,
