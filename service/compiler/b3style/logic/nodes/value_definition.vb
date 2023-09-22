@@ -12,18 +12,15 @@ Partial Public NotInheritable Class b3style
 
         Public Shared Function name_of(ByVal r As String) As String
             assert(Not r.null_or_whitespace())
+            If _disable_namespace OrElse Not scope.current().is_root() Then
+                Return r
+            End If
             Return scope.current_namespace_t.of(r)
         End Function
 
         Public Shared Function name_of(ByVal n As typed_node) As String
             assert(Not n Is Nothing)
-            Dim r As String = n.input_without_ignored()
-            If _disable_namespace OrElse
-               (Not n.immediate_descentdant_of("value-declaration", "root-type-with-semi-colon") AndAlso
-                Not n.immediate_descentdant_of("value-definition", "root-type-with-semi-colon")) Then
-                Return r
-            End If
-            Return name_of(r)
+            Return name_of(n.input_without_ignored())
         End Function
 
         Private Function build(ByVal n As typed_node,
