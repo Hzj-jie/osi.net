@@ -86,7 +86,7 @@ Partial Public NotInheritable Class b3style
                                                  ByVal raw_value_str As String,
                                                  ByVal o As logic_writer) As Boolean
             assert(Not name Is Nothing)
-            assert(name.type_name.Equals("name") OrElse name.child().type_name.Equals("name"), name)
+            assert(name.type_name.Equals("name"), name)
             ' TODO: If the value on the right is a temporary value (rvalue), move can be used to reduce memory copy.
             Return build(name,
                          value,
@@ -118,6 +118,12 @@ Partial Public NotInheritable Class b3style
                                       ByVal o As logic_writer) As Boolean
             assert(Not name Is Nothing)
             assert(Not o Is Nothing)
+            If name.type_name.Equals("variable-name") Then
+                Return stack_name_build(name.child(), value, raw_value_str, o)
+            End If
+            If name.type_name.Equals("name") Then
+                Return stack_name_build(name, value, raw_value_str, o)
+            End If
             If name.type_name.Equals("heap-name") Then
                 Return heap_name.build(name.child(2),
                                        o,
@@ -141,7 +147,8 @@ Partial Public NotInheritable Class b3style
                 raise_error(error_type.user, "heap-struct-name.value_clause hasn't been supported yet.")
                 Return False
             End If
-            Return stack_name_build(name, value, raw_value_str, o)
+            assert(False, "Unsupported assignee: ", name.type_name, " from [", name.input(), "]")
+            Return False
         End Function
 
         Public Shared Function build(ByVal name As typed_node,
