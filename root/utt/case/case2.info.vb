@@ -135,7 +135,7 @@ Partial Public NotInheritable Class case2
     End Class
 
     ' function_info with percentage
-    Private Class random_function_info
+    Private NotInheritable Class random_function_info
         Inherits function_info
 
         Public ReadOnly percentage As Double
