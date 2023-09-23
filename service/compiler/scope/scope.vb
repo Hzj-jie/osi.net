@@ -73,7 +73,7 @@ Partial Public Class scope(Of T As scope(Of T))
         Return in_thread
     End Function
 
-    Protected Function is_root() As Boolean
+    Public Function is_root() As Boolean
         Return parent Is Nothing
     End Function
 

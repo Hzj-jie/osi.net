@@ -3,20 +3,18 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.constants
 Imports osi.root.template
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.automata
 Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
-Imports osi.service.resource
 
 <test>
 Public NotInheritable Class b3style_b2style_b3style_test
-    Inherits b2style_test(Of parse)
+    Inherits b2style_test(Of _parse)
 
-    Public NotInheritable Class parse
+    Public NotInheritable Class _parse
         Inherits __do(Of console_io.test_wrapper, String, executor, Boolean)
 
         Public Overrides Function at(ByRef i As console_io.test_wrapper,

@@ -66,12 +66,13 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                         s = n.child(1).child(i).child(0).word().str()
                     End If
                     If Not bypass(s) Then
-                        For j As UInt32 = 2 To n.child_count() - uint32_2
+                        For j As UInt32 = 2 To n.child_count() - uint32_3
                             If Not code_gen_of(n.child(j)).build(o) Then
                                 Return False
                             End If
                         Next
-                        Return True
+                        Return n.child(n.child_count() - uint32_2).type_name.Equals("delse-wrapped") OrElse
+                               code_gen_of(n.child(n.child_count() - uint32_2)).build(o)
                     End If
                 Next
                 If n.child(n.child_count() - uint32_2).type_name.Equals("delse-wrapped") Then

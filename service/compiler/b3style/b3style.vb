@@ -91,12 +91,14 @@ Partial Public NotInheritable Class b3style
                     "base-value-without-bracket",
                     "variable-name",
                     "for-increase",
-                    "base-for-increase"
+                    "base-for-increase",
+                    "unary-operation-value"
                 ).
                 with_of_all_childrens(
                     "paramtypelist",
                     "raw-value",
-                    "paramlist"
+                    "paramlist",
+                    "value-with-operation"
                 ).
                 with(code_gen.of_ignore_last_child(Of logic_writer)("root-type-with-semi-colon")).
                 with(code_gen.of_ignore_last_child(Of logic_writer)("base-sentence-with-semi-colon")).
@@ -153,7 +155,11 @@ Partial Public NotInheritable Class b3style
                 with(Of undefine)().
  _
                 with(Of name)().
-                with(Of _namespace)()
+                with(Of _namespace)().
+                with(Of binary_operation_value)().
+                with(Of pre_operation_value)().
+                with(Of post_operation_value)().
+                with(Of self_value_clause)()
         End Function
     End Class
 End Class
