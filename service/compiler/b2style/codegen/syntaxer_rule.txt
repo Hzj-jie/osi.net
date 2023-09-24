@@ -24,8 +24,7 @@ class-initializer type-name name start-bracket [value-list]? end-bracket
 b2style-sentence-with-semi-colon [ignore-result-heap-struct-function-call, ignore-result-function-call-with-template, self-value-clause, pre-operation-value, post-operation-value, class-initializer]? semi-colon
 sentence-with-semi-colon [b2style-sentence-with-semi-colon, base-sentence-with-semi-colon]
 
-self-operator [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or, self-left-shift, self-right-shift]
-self-value-clause variable-name self-operator value
+self-value-clause variable-name [self-add, self-minus, self-multiply, self-divide, self-mod, self-power, self-bit-and, self-bit-or, self-and, self-or, self-left-shift, self-right-shift] value
 
 for-increase [self-value-clause, ignore-result-heap-struct-function-call, pre-operation-value, post-operation-value, base-for-increase]
 

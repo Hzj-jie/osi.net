@@ -632,6 +632,142 @@ long right_shift(long i, long j) {
   );
 }
 
+#ifdef B3STYLE
+
+void self_and(bool& i, bool j) {
+  i = and(i, j);
+}
+
+void self_or(bool& i, bool j) {
+  i = or(i, j);
+}
+
+void self_add(biguint& i, biguint j) {
+  i = add(i, j);
+}
+
+void self_add(long& i, long j) {
+  i = add(i, j);
+}
+
+void self_add(int& i, int j) {
+  i = add(i, j);
+}
+
+void self_add(byte& i, byte j) {
+  i = add(i, j);
+}
+
+void self_minus(biguint& i, biguint j) {
+  i = minus(i, j);
+}
+
+void self_minus(long& i, long j) {
+  i = minus(i, j);
+}
+
+void self_minus(int& i, int j) {
+  i = minus(i, j);
+}
+
+void self_multiply(biguint& i, biguint j) {
+  i = multiply(i, j);
+}
+
+void self_multiply(long& i, long j) {
+  i = multiply(i, j);
+}
+
+void self_multiply(int& i, int j) {
+  i = multiply(i, j);
+}
+
+void self_divide(biguint& i, biguint j) {
+  i = divide(i, j);
+}
+
+void self_divide(long& i, long j) {
+  i = divide(i, j);
+}
+
+void self_divide(int& i, int j) {
+  i = divide(i, j);
+}
+
+void self_mod(biguint& i, biguint j) {
+  i = mod(i, j);
+}
+
+void self_mod(long& i, long j) {
+  i = mod(i, j);
+}
+
+void self_mod(int& i, int j) {
+  i = mod(i, j);
+}
+
+void self_power(biguint& i, biguint j) {
+  i = power(i, j);
+}
+
+void self_power(long& i, long j) {
+  i = power(i, j);
+}
+
+void self_power(int& i, int j) {
+  i = power(i, j);
+}
+
+void self_bit_and(biguint& i, biguint j) {
+  i = bit_and(i, j);
+}
+
+void self_bit_and(long& i, long j) {
+  i = bit_and(i, j);
+}
+
+void self_bit_and(int& i, int j) {
+  i = bit_and(i, j);
+}
+
+void self_bit_or(biguint& i, biguint j) {
+  i = bit_or(i, j);
+}
+
+void self_bit_or(long& i, long j) {
+  i = bit_or(i, j);
+}
+
+void self_bit_or(int& i, int j) {
+  i = bit_or(i, j);
+}
+
+void self_left_shift(biguint& i, biguint j) {
+  i = left_shift(i, j);
+}
+
+void self_right_shift(biguint& i, biguint j) {
+  i = right_shift(i, j);
+}
+
+void self_left_shift(long& i, long j) {
+  i = left_shift(i, j);
+}
+
+void self_right_shift(long& i, long j) {
+  i = right_shift(i, j);
+}
+
+void self_left_shift(int& i, int j) {
+  i = left_shift(i, j);
+}
+
+void self_right_shift(int& i, int j) {
+  i = right_shift(i, j);
+}
+
+#endif
+
 }  // namespace b2style
 
 #endif  // B2STYLE_LIB_B2STYLE_OPERATORS_H

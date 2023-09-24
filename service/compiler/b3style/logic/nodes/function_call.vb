@@ -51,15 +51,26 @@ Partial Public NotInheritable Class b3style
             Return build(n.child(0).input_without_ignored(), build_caller, build_caller_ref)
         End Function
 
+        Private Shared Function without_return_caller_builder(ByVal o As logic_writer) _
+                                                             As Func(Of String, vector(Of String), Boolean)
+            Return Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
+                       Return builders.of_caller(name, parameters).to(o)
+                   End Function
+        End Function
+
+        Private Shared Function without_return_caller_ref_builder(ByVal o As logic_writer) _
+                                                                 As Func(Of String, vector(Of String), Boolean)
+            Return Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
+                       Return builders.of_caller_ref(name, parameters).to(o)
+                   End Function
+        End Function
+
         Public Shared Function without_return(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
-            Return build(n,
-                         o,
-                         Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
-                             Return builders.of_caller(name, parameters).to(o)
-                         End Function,
-                         Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
-                             Return builders.of_caller_ref(name, parameters).to(o)
-                         End Function)
+            Return build(n, o, without_return_caller_builder(o), without_return_caller_ref_builder(o))
+        End Function
+
+        Public Shared Function without_return(ByVal function_name As String, ByVal o As logic_writer) As Boolean
+            Return build(function_name, without_return_caller_builder(o), without_return_caller_ref_builder(o))
         End Function
 
         Private Shared Function builder(ByVal logic_builder As Func(Of String, String, vector(Of String), Boolean),

@@ -16,12 +16,12 @@ Partial Public NotInheritable Class bstyle
         Private Shared Function build(ByVal name As typed_node,
                                       ByVal value As typed_node,
                                       ByVal struct_copy As Func(Of vector(Of String), Boolean),
-                                      ByVal primitive_type_copy As Func(Of String, Boolean),
+                                      ByVal primitive_copy As Func(Of String, Boolean),
                                       ByVal o As logic_writer) As Boolean
             assert(Not name Is Nothing)
             assert(Not value Is Nothing)
             assert(Not struct_copy Is Nothing)
-            assert(Not primitive_type_copy Is Nothing)
+            assert(Not primitive_copy Is Nothing)
             assert(Not o Is Nothing)
             Dim type As String = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
@@ -70,7 +70,7 @@ Partial Public NotInheritable Class bstyle
                                 "Failed to retrieve a primitive-type target from the r-value, received a struct?")
                     Return False
                 End If
-                Return primitive_type_copy(s)
+                Return primitive_copy(s)
             End Using
         End Function
 
@@ -78,7 +78,7 @@ Partial Public NotInheritable Class bstyle
                                                 ByVal value As typed_node,
                                                 ByVal o As logic_writer) As Boolean
             assert(Not name Is Nothing)
-            assert(name.type_name.Equals("name"), name.type_name)
+            assert(name.type_name.Equals("name"), name)
             ' TODO: If the value on the right is a temporary value (rvalue), move can be used to reduce memory copy.
             Return build(name,
                          value,
@@ -96,34 +96,36 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
+            Dim name As typed_node = n.child(0).child()
+            Dim value As typed_node = n.child(2)
             If n.child(0).type_name.Equals("variable-name") AndAlso
-               n.child(0).child().type_name.Equals("raw-variable-name") Then
-                Return stack_name_build(n.child(0).child().child(), n.child(2), o)
+               name.type_name.Equals("raw-variable-name") Then
+                Return stack_name_build(name.child(), value, o)
             End If
-            If n.child(0).child().type_name.Equals("heap-name") Then
+            If name.type_name.Equals("heap-name") Then
                 Return heap_name.build(
-                           n.child(0).child().child(2),
+                           name.child(2),
                            o,
                            Function(ByVal indexstr As String) As Boolean
-                               Return build(n.child(0).child().child(0),
-                                            n.child(2),
+                               Return build(name.child(0),
+                                            value,
                                             Function(ByVal r As vector(Of String)) As Boolean
                                                 Return struct.copy(r,
-                                                                   n.child(0).child().child(0).input_without_ignored(),
+                                                                   name.child(0).input_without_ignored(),
                                                                    indexstr,
                                                                    o)
                                             End Function,
                                             Function(ByVal r As String) As Boolean
                                                 Return builders.of_copy(
                                                            variable.name_of(
-                                                               n.child(0).child().child(0).input_without_ignored(),
+                                                               name.child(0).input_without_ignored(),
                                                                indexstr),
                                                        r).to(o)
                                             End Function,
                                      o)
                            End Function)
             End If
-            assert(False, "Unsupported assignee: ", n.child(0).type_name, " from [", n.input(), "]")
+            assert(False, "Unsupported assignee: ", name.type_name, " from [", n.input(), "]")
             Return False
         End Function
     End Class

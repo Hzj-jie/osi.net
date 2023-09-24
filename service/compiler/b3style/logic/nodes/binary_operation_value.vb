@@ -16,28 +16,30 @@ Partial Public NotInheritable Class b3style
                            scope.current_namespace_t.with_namespace("b2style", op.Replace("-"c, "_"c)))
         End Function
 
-        Public Shared Function build(ByVal left As typed_node,
-                                     ByVal op As String,
-                                     ByVal right As typed_node,
-                                     ByVal o As logic_writer) As Boolean
-            assert(Not left Is Nothing)
-            assert(Not op.null_or_whitespace())
-            assert(Not right Is Nothing)
+        Private Shared Function build(ByVal n As typed_node,
+                                      ByVal fc As Func(Of String, logic_writer, Boolean),
+                                      ByVal o As logic_writer) As Boolean
+            assert(Not n Is Nothing)
             assert(Not o Is Nothing)
+            assert(Not fc Is Nothing)
+            assert(n.child_count() = 3)
             value_list.build(Sub(ByVal a As Action(Of typed_node))
                                  assert(Not a Is Nothing)
-                                 a(left)
-                                 a(right)
+                                 a(n.child(0))
+                                 a(n.child(2))
                              End Sub,
                              o)
-            Return function_call.build(operation_function_name(op), o)
+            Return fc(operation_function_name(n.child(1).type_name), o)
+        End Function
+
+        Public Shared Function without_return(ByVal n As typed_node,
+                                              ByVal o As logic_writer) As Boolean
+            Return build(n, AddressOf function_call.without_return, o)
         End Function
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(Not n Is Nothing)
-            assert(n.child_count() = 3)
-            Return build(n.child(0), n.child(1).type_name, n.child(2), o)
+            Return build(n, AddressOf function_call.build, o)
         End Function
     End Class
 End Class
