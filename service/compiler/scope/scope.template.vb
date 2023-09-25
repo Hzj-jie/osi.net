@@ -105,7 +105,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(n.child_count() = 4)
             Dim types As vector(Of String) = code_gens().of_all_children(n.child(2)).dump()
             Dim name As String = Nothing
-            If Not code_gens().typed(Of template_t.name)(n.type_name).of(n, name) Then
+            If Not code_gens().typed(Of template_t.name)(n).of(n, name) Then
                 raise_error(error_type.user, "Cannot retrieve template name of ", n.input())
                 Return False
             End If
@@ -143,7 +143,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not n Is Nothing)
             assert(n.child_count() = 2)
             n = n.child(1).child()
-            Return code_gens().typed(Of template_t.name_node)(n.type_name).of(n, o)
+            Return code_gens().typed(Of template_t.name_node)(n).of(n, o)
         End Function
 
         Public Shared Function name_node_of(ByVal n As typed_node) As typed_node
@@ -188,7 +188,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not n Is Nothing)
             assert(n.child_count() = 2)
             Dim name_node As typed_node = Nothing
-            If Not l.typed(Of template_t.name)(n.child(1).child().type_name).of(n, name) OrElse
+            If Not l.typed(Of template_t.name)(n.child(1).child()).of(n, name) OrElse
                Not name_node_of(n, name_node) Then
                 Return False
             End If

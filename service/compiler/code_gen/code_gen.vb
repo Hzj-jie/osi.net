@@ -28,10 +28,16 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
 
     ' Limit the use of this function, prefer code_gen_proxy.dump if possible.
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function typed(Of T)(ByVal name As String) As T
+    Private Function typed(Of T)(ByVal name As String) As T
         Dim it As unordered_map(Of String, Object).iterator = m.find(name)
         assert(it <> m.end(), "Cannot find code_gen of ", name)
         Return direct_cast(Of T)((+it).second)
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function typed(Of T)(ByVal n As typed_node) As T
+        assert(Not n Is Nothing)
+        Return typed(Of T)(n.type_name)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>

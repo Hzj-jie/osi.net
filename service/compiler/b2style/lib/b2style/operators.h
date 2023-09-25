@@ -632,8 +632,6 @@ long right_shift(long i, long j) {
   );
 }
 
-#ifdef B3STYLE
-
 void self_and(bool& i, bool j) {
   i = and(i, j);
 }
@@ -765,8 +763,6 @@ void self_left_shift(int& i, int j) {
 void self_right_shift(int& i, int j) {
   i = right_shift(i, j);
 }
-
-#endif
 
 }  // namespace b2style
 

@@ -48,9 +48,19 @@ Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of 
     End Function
 
     Public Function [with](Of T As New)() As RT
+        Return [with](Of T)(code_gens(Of WRITER).code_gen_name(Of T)())
+    End Function
+
+    Public Function [with](Of T As New)(ByVal name As String) As RT
+        Return [with](name, New T())
+    End Function
+
+    Public Function [with](ByVal name As String, ByVal obj As Object) As RT
+        assert(Not name.null_or_whitespace())
+        assert(Not obj Is Nothing)
         Return [with](Sub(ByVal b As code_gens(Of WRITER))
                           assert(Not b Is Nothing)
-                          b.register(code_gens(Of WRITER).code_gen_name(Of T)(), New T())
+                          b.register(name, obj)
                       End Sub)
     End Function
 

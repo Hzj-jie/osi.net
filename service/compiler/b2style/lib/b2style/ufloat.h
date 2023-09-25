@@ -97,48 +97,81 @@ ufloat self_dec_pre(ufloat& x) {
   return x;
 }
 
-ufloat ufloat__from(biguint i) {
-  load_method("big_uint_to_big_udec");
-  return execute_loaded_method<biguint, ufloat>(i);
+void self_add(ufloat& i, ufloat j) {
+  i = add(i, j);
 }
 
-ufloat ufloat__from(int i) {
-  return ufloat__from(::to_biguint(i));
+void self_minus(ufloat& i, ufloat j) {
+  i = minus(i, j);
 }
 
-ufloat ufloat__from(long i) {
-  return ufloat__from(::to_biguint(i));
+void self_multiply(ufloat& i, ufloat j) {
+  i = multiply(i, j);
 }
 
-ufloat ufloat__fraction(biguint n, biguint d) {
-  ufloat result = ufloat__from(n);
-  ufloat ud = ufloat__from(d);
-  return divide(result, ud);
+void self_divide(ufloat& i, ufloat j) {
+  i = divide(i, j);
 }
 
-ufloat ufloat__fraction(biguint n, int d) {
-  return ufloat__fraction(n, ::to_biguint(d));
+void self_power(ufloat& i, ufloat j) {
+  i = power(i, j);
 }
 
-ufloat ufloat__fraction(biguint n, long d) {
-  return ufloat__fraction(n, ::to_biguint(d));
+namespace ufloat {
+
+typedef ::string string;
+typedef ::void void;
+typedef ::bool bool;
+typedef ::biguint biguint;
+typedef ::long long;
+typedef ::int int;
+typedef ::byte byte;
+typedef ::ufloat ufloat;
+
+ufloat from(biguint i) {
+  ::b2style::load_method("big_uint_to_big_udec");
+  return ::b2style::execute_loaded_method<biguint, ufloat>(i);
 }
 
-ufloat ufloat__fraction(int n, biguint d) {
-  return ufloat__fraction(::to_biguint(n), d);
+ufloat from(int i) {
+  return from(::to_biguint(i));
 }
 
-ufloat ufloat__fraction(long n, biguint d) {
-  return ufloat__fraction(::to_biguint(n), d);
+ufloat from(long i) {
+  return from(::to_biguint(i));
 }
 
-ufloat ufloat__fraction(int n, int d) {
-  return ufloat__fraction(::to_biguint(n), ::to_biguint(d));
+ufloat fraction(biguint n, biguint d) {
+  ufloat result = from(n);
+  ufloat ud = from(d);
+  return ::b2style::divide(result, ud);
 }
 
-ufloat ufloat__fraction(long n, long d) {
-  return ufloat__fraction(::to_biguint(n), ::to_biguint(d));
+ufloat fraction(biguint n, int d) {
+  return fraction(n, ::to_biguint(d));
 }
+
+ufloat fraction(biguint n, long d) {
+  return fraction(n, ::to_biguint(d));
+}
+
+ufloat fraction(int n, biguint d) {
+  return fraction(::to_biguint(n), d);
+}
+
+ufloat fraction(long n, biguint d) {
+  return fraction(::to_biguint(n), d);
+}
+
+ufloat fraction(int n, int d) {
+  return fraction(::to_biguint(n), ::to_biguint(d));
+}
+
+ufloat fraction(long n, long d) {
+  return fraction(::to_biguint(n), ::to_biguint(d));
+}
+
+}  // namespace ufloat
 
 }  // namespace b2style
 #endif  // B2STYLE_LIB_B2STYLE_UFLOAT_H

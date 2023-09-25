@@ -71,7 +71,7 @@ Partial Public NotInheritable Class b2style
                                                                      (AddressOf scope.wrap, "struct")).
                            with(Of _namespace)().
                            with(Of heap_struct_name)().
-                           with(Of self_value_clause)().
+                           with(Of binary_operation_value)("self-value-clause").
                            with(Of binary_operation_value)().
                            with(Of pre_operation_value)().
                            with(Of post_operation_value)().
@@ -85,7 +85,7 @@ Partial Public NotInheritable Class b2style
                            with(Of function_call_with_template).
                            with(Of function_name_with_template).
                            with(Of name)().
-                           with(name.of("raw-type-name")).
+                           with(Of name)("raw-type-name").
                            with(Of _function)().
                            with(Of delegate_with_semi_colon)().
                            with(code_gen.of_first_child(Of typed_node_writer)("type-param-with-comma")).

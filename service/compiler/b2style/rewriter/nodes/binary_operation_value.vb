@@ -11,8 +11,7 @@ Partial Public NotInheritable Class b2style
     Private NotInheritable Class binary_operation_value
         Implements code_gen(Of typed_node_writer)
 
-        Private Function build(ByVal n As typed_node,
-                               ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+        Public Shared Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3)
@@ -29,6 +28,11 @@ Partial Public NotInheritable Class b2style
             End If
             o.append(")")
             Return True
+        End Function
+
+        Private Function code_gen_build(ByVal n As typed_node,
+                                ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
+            Return build(n, o)
         End Function
     End Class
 End Class
