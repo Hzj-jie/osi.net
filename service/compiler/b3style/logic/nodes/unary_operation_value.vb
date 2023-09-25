@@ -8,13 +8,13 @@ Imports osi.root.constants
 Imports osi.service.automata
 
 Partial Public NotInheritable Class b3style
-    Private MustInherit Class unary_operation_value
+    Private NotInheritable Class unary_operation_value
         Implements code_gen(Of logic_writer)
 
         Private ReadOnly operator_index As UInt32
         Private ReadOnly suffix As String
 
-        Protected Sub New(ByVal operator_index As UInt32, ByVal suffix As String)
+        Public Sub New(ByVal operator_index As UInt32, ByVal suffix As String)
             assert(Not suffix.null_or_whitespace())
             Me.operator_index = operator_index
             Me.suffix = suffix

@@ -8,7 +8,9 @@ Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utils
+Imports osi.service.automata
 Imports osi.service.resource
+Imports builders = osi.service.compiler.logic.builders
 Imports statements = osi.service.compiler.statements(Of osi.service.compiler.logic_writer)
 
 Partial Public NotInheritable Class b3style
@@ -127,7 +129,11 @@ Partial Public NotInheritable Class b3style
                 with(Of ufloat)().
                 with(Of _function)().
                 with(Of function_call)().
-                with(Of ignore_result_function_call)().
+                with_delegate("ignore-result-function-call",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  assert(Not n Is Nothing)
+                                  Return function_call.without_return(n.child(), o)
+                              End Function).
                 with(Of param)().
                 with(Of return_clause)().
                 with(Of value_clause)().
@@ -138,28 +144,75 @@ Partial Public NotInheritable Class b3style
                 with(Of struct)().
                 without(Of raw_variable_name)().
                 with(Of value_list)().
-                with(Of typedef)().
+                with_delegate("typedef",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  assert(Not n Is Nothing)
+                                  assert(Not o Is Nothing)
+                                  assert(n.child_count() = 3)
+                                  Return scope.current().type_alias().define(
+                                             code_gen_of(n.child(2)).dump(),
+                                             code_gen_of(n.child(1)).dump())
+                              End Function).
                 with(Of static_cast)().
                 with(Of multi_sentence_paragraph)().
-                with(Of value)().
-                with(Of kw_file)().
-                with(Of kw_func)().
-                with(Of kw_line)().
-                with(Of kw_statement)().
+                with_delegate("value",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  assert(Not n Is Nothing)
+                                  assert(Not o Is Nothing)
+                                  assert(strsame(n.type_name, "value") OrElse
+                                         (strsame(n.type_name, "ignore-result-function-call") AndAlso
+                                          strsame(n.child().type_name, "function-call")))
+                                  Return code_gen_of(n.child()).build(o)
+                              End Function).
+                with_delegate("kw-file",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  Return _string.build(parse_wrapper.current_file(), o)
+                              End Function).
+                with_delegate("kw-func",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  Return _string.build(scope.current().current_function().signature(), o)
+                              End Function).
+                with_delegate("kw-line",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  assert(Not n Is Nothing)
+                                  Return _integer.build(CInt(n.char_start()), o)
+                              End Function).
+                with_delegate("kw-statement",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  assert(Not n Is Nothing)
+                                  Return _string.build(n.ancestor_of("sentence").input(), o)
+                              End Function).
                 with(Of condition)().
                 with(Of for_loop)().
                 with(Of _while)().
                 with(Of _delegate)().
                 with(Of reinterpret_cast)().
-                with(Of dealloc)().
-                with(Of undefine)().
+                with_delegate("dealloc",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  assert(Not n Is Nothing)
+                                  assert(Not o Is Nothing)
+                                  assert(n.child_count() = 4)
+                                  Dim name As String = n.child(2).input_without_ignored()
+                                  Return struct.dealloc_from_heap(name, o) OrElse
+                                         builders.of_dealloc_heap(name).to(o)
+                              End Function).
+                with_delegate("undefine",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  assert(Not n Is Nothing)
+                                  assert(Not o Is Nothing)
+                                  assert(n.child_count() = 4)
+                                  Dim name As String = n.child(2).input_without_ignored()
+                                  Return struct.undefine(name, o) OrElse
+                                         (builders.of_undefine(name).to(o) AndAlso
+                                          scope.current().variables().undefine(name))
+                              End Function).
  _
                 with(Of name)().
                 with(Of _namespace)().
                 with(Of binary_operation_value)().
-                with(Of pre_operation_value)().
-                with(Of post_operation_value)().
-                with(Of self_value_clause)()
+                with("pre-operation-value", New unary_operation_value(0, "_pre")).
+                with("post-operation-value", New unary_operation_value(1, "_post")).
+                with_delegate("self-value-clause", AddressOf binary_operation_value.without_return)
         End Function
     End Class
 End Class

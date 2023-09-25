@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
+Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 
 Public NotInheritable Class typed_node_writer_code_gens_registrar
@@ -78,6 +79,10 @@ Public Class code_gens_registrar(Of WRITER As New, RT As code_gens_registrar(Of 
                               Return code_gen.of_all_children(Of WRITER)(name)
                           End Function).
                       to_array())
+    End Function
+
+    Public Function with_delegate(ByVal name As String, ByVal f As Func(Of typed_node, WRITER, Boolean)) As RT
+        Return [with](code_gen_delegate(Of WRITER).of(name, f))
     End Function
 
     Public Shared Widening Operator CType(ByVal this As code_gens_registrar(Of WRITER, RT)) _

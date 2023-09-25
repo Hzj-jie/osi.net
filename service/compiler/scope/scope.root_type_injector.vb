@@ -12,6 +12,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     ' Inject any code before the current root-type.
     Public NotInheritable Class root_type_injector_t
+        ' Always track the latest WRITER instance.
         Private i As WRITER
 
         Public Sub _new(ByVal o As WRITER)

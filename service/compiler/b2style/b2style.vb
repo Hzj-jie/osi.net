@@ -4,9 +4,11 @@ Option Infer Off
 Option Strict On
 
 Imports System.IO
+Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utils
+Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 Imports osi.service.interpreter.primitive
 Imports osi.service.resource
@@ -73,14 +75,25 @@ Partial Public NotInheritable Class b2style
                            with(Of heap_struct_name)().
                            with(Of binary_operation_value)("self-value-clause").
                            with(Of binary_operation_value)().
-                           with(Of pre_operation_value)().
-                           with(Of post_operation_value)().
+                           with("pre-operation-value", New unary_operation_value(0, "_pre")).
+                           with("post-operation-value", New unary_operation_value(1, "_post")).
                            with(Of function_call)().
-                           with(Of heap_struct_function_call)().
+                           with_delegate("heap-struct-function-call",
+                                         Function(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
+                                             assert(Not n Is Nothing)
+                                             Return function_call.build(
+                                                        heap_struct_name.bstyle_function(n.child(0)), n, o)
+                                         End Function).
                            with(Of include_with_string)().
                            with(Of include_with_file)().
                            with(Of _class)().
-                           with(Of template).
+                           with_delegate("template",
+                                         Function(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
+                                             Dim name As String = Nothing
+                                             Dim t As scope.template_template = Nothing
+                                             Return scope.template_t.of(n, name, t) AndAlso
+                                                    scope.current().template().define(name, t)
+                                         End Function).
                            with(Of template_type_name).
                            with(Of function_call_with_template).
                            with(Of function_name_with_template).
@@ -106,9 +119,25 @@ Partial Public NotInheritable Class b2style
                            with(Of paramtype_with_comma)().
                            with(Of class_initializer)().
                            with(code_gen.of_ignore(Of typed_node_writer)("colon")).
-                           with(Of root_type)().
-                           with(Of kw_statement)().
-                           with(Of kw_file)().
+                           with_delegate("root-type",
+                                         Function(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
+                                             scope.current().root_type_injector()._new(o)
+                                             Return code_gen_of(n.child()).build(o)
+                                         End Function).
+                           with_delegate("kw-statement",
+                                         Function(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
+                                             assert(Not n Is Nothing)
+                                             assert(Not o Is Nothing)
+                                             Return assert(
+                                                 o.append("""" + n.ancestor_of("sentence").input().c_escape() + """"))
+                                         End Function).
+                           with_delegate("kw-file",
+                                         Function(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
+                                             assert(Not n Is Nothing)
+                                             assert(Not o Is Nothing)
+                                             Return assert(
+                                                 o.append("""" + parse_wrapper.current_file().c_escape() + """"))
+                                         End Function).
                            with(code_gen.of_input(Of typed_node_writer)("kw-func")).
                            with(code_gen.of_input(Of typed_node_writer)("kw-line")).
                            with_of_only_childs(
