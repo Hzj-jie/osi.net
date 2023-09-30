@@ -14,6 +14,7 @@ Partial Public NotInheritable Class bstyle
 
     Public MustInherit Class includes
         Inherits code_gens(Of logic_writer).includes(Of scope.includes_t.proxy, folders)
+
         Public Shared Shadows Function parse(ByVal i As String, ByVal j As logic_writer) As Boolean
             If i Is Nothing Then
                 ' The file has been included already.
@@ -27,13 +28,17 @@ Partial Public NotInheritable Class bstyle
         Public Structure folders
             Implements func_t(Of vector(Of String))
 
-            Public Function run() As vector(Of String) Implements func_t(Of vector(Of String)).run
-                Dim r As New vector(Of String)()
+            Private Shared ReadOnly folder As String = init_inc_folder()
 
+            Private Shared Function init_inc_folder() As String
                 Dim folder As String = Path.Combine(temp_folder, "bstyle-inc")
                 tar.gen.dump(bstyle_lib.data, folder)
-                r.emplace_back(folder)
+                Return folder
+            End Function
 
+            Public Function run() As vector(Of String) Implements func_t(Of vector(Of String)).run
+                Dim r As New vector(Of String)()
+                r.emplace_back(folder)
                 r.emplace_back(+bstyle.include_folders)
                 Return r
             End Function

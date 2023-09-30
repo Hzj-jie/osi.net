@@ -28,15 +28,18 @@ Partial Public NotInheritable Class b3style
         Public Structure folders
             Implements func_t(Of vector(Of String))
 
-            Public Function run() As vector(Of String) Implements func_t(Of vector(Of String)).run
-                Dim r As New vector(Of String)()
+            Private Shared ReadOnly folder As String = init_inc_folder()
 
+            Private Shared Function init_inc_folder() As String
                 Dim folder As String = Path.Combine(temp_folder, "b3style-inc")
                 tar.gen.dump(b3style_lib.data, folder)
+                Return folder
+            End Function
+
+            Public Function run() As vector(Of String) Implements func_t(Of vector(Of String)).run
+                Dim r As New vector(Of String)()
                 r.emplace_back(folder)
-
                 r.emplace_back(+b3style.include_folders)
-
                 r.emplace_back(bstyle.includes.include_folders())
                 r.emplace_back(b2style.includes.include_folders())
                 Return r
