@@ -406,6 +406,16 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
         assertion.equal(io.output(), "31")
     End Sub
 
+    <test>
+    Private Shared Sub [class]()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.[class].as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "200100")
+    End Sub
+
     Protected Sub New()
     End Sub
 End Class
@@ -483,16 +493,6 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "12345677")
-    End Sub
-
-    <test>
-    Private Shared Sub [class]()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.[class].as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "200100")
     End Sub
 
     <test>
