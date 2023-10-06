@@ -75,7 +75,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                     assert(Not current().structs().types().defined(t))
                     assert(Not current().variables().try_resolve(n, Nothing))
                     assert(current().variables().define(t, n))
-                    assert(builders.of_define(n, normalized_type.logic_type_of(t)).to(o))
+                    assert(builders.of_define(n, t).to(o))
                 End Sub
             Dim params As struct_def = Nothing
             If current().structs().resolve(type, current().temp_logic_name().variable(), params) Then

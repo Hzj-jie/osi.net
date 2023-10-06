@@ -49,6 +49,7 @@ Partial Public Class scope(Of T As scope(Of T))
     End Sub
 
     Public Function without_end_scope() As IDisposable
+        assert(Not in_thread Is Nothing)
         Return defer.to(Sub()
                             in_thread = Nothing
                         End Sub)
