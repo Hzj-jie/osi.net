@@ -72,8 +72,7 @@ Partial Public NotInheritable Class b3style
                 Dim sdef As scope.struct_def = Nothing
                 assert(scope.current().structs().variables().resolve(name, sdef))
                 assert(Not sdef Is Nothing)
-                Return builders.of_define(name, scope.normalized_type.logic_type_of(type)).
-                                to(o) AndAlso
+                Return builders.of_define(name, type).to(o) AndAlso
                        builders.of_copy(name, sdef.primitives().
                                               find_first().
                                               map(Function(ByVal x As builders.parameter) As String

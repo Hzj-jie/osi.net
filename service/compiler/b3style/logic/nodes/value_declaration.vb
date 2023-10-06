@@ -37,9 +37,7 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             If Not scope.current().structs().types().defined(type) AndAlso
                scope.current().variables().define(type, name) AndAlso
-               builders.of_define(name,
-                                  scope.normalized_type.logic_type_of(scope.normalized_type.of(type))).
-                        to(o) Then
+               builders.of_define(name, scope.normalized_type.of(type)).to(o) Then
                 Return True
             End If
             raise_error(error_type.user,

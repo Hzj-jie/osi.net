@@ -35,11 +35,9 @@ Partial Public NotInheritable Class b3style
             Return scope.current().delegates().define(return_type.full_type(),
                                                       name.full_type(),
                                                       +ps) AndAlso
-                   builders.of_callee_ref(name.map_type(scope.normalized_type.logic_type_of).full_type(),
-                                          return_type.map_type(scope.normalized_type.logic_type_of).full_type(),
+                   builders.of_callee_ref(name.full_type(),
+                                          return_type.full_type(),
                                           ps.stream().
-                                             map(builders.parameter_type.map_type_with(
-                                                     scope.normalized_type.logic_type_of)).
                                              map(AddressOf builders.parameter_type.full_type).
                                              collect_to(Of vector(Of String))()).to(o)
         End Function

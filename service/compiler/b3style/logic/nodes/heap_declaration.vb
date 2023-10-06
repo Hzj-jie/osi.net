@@ -41,7 +41,7 @@ Partial Public NotInheritable Class b3style
             assert(Not scope.current().structs().types().defined(type))
             assert(Not o Is Nothing)
             Return scope.current().variables().define(type, name) AndAlso
-                   builders.of_define_heap(name, scope.normalized_type.logic_type_of(type), length).to(o)
+                   builders.of_define_heap(name, type, length).to(o)
         End Function
     End Class
 End Class

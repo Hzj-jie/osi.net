@@ -212,8 +212,7 @@ Partial Public NotInheritable Class bstyle
                        Function(ByVal m As builders.parameter) As Boolean
                            assert(Not m Is Nothing)
                            Return scope.current().variables().redefine(m.non_ref_type(), m.name) AndAlso
-                                  builders.of_redefine(m.name,
-                                                       scope.normalized_type.logic_type_of(m.non_ref_type())).to(o)
+                                  builders.of_redefine(m.name, m.non_ref_type()).to(o)
                        End Function)
         End Function
 
