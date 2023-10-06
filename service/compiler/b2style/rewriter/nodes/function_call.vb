@@ -10,7 +10,7 @@ Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
-    Private NotInheritable Class function_call
+    Public NotInheritable Class function_call
         Implements code_gen(Of typed_node_writer)
 
         Public Shared Function build_struct_function(ByVal this As String, ByVal name As String) As String

@@ -26,6 +26,11 @@ Partial Public NotInheritable Class b3style
                     Return build_caller_ref(function_name, parameters)
                 End If
 
+                Dim struct_func As tuple(Of String, String) = Nothing
+                If b2style.function_call.split_struct_function(raw_function_name, struct_func) Then
+                    parameters.insert(0, struct_func.first())
+                    raw_function_name = struct_func.second()
+                End If
                 function_name = _function.name_of(raw_function_name)
                 Dim name As String = Nothing
                 If Not logic_name.of_function_call(function_name, parameters, name) Then

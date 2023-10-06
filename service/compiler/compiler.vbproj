@@ -66,6 +66,7 @@
     <Compile Include="b3style\logic\nodes\biguint.vb" />
     <Compile Include="b3style\logic\nodes\binary_operation_value.vb" />
     <Compile Include="b3style\logic\nodes\bool.vb" />
+    <Compile Include="b3style\logic\nodes\class.vb" />
     <Compile Include="b3style\logic\nodes\condition.vb" />
     <Compile Include="b3style\logic\nodes\delegate.vb" />
     <Compile Include="b3style\logic\nodes\for_loop.vb" />
