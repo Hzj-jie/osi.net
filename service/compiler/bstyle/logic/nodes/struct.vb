@@ -239,7 +239,7 @@ Partial Public NotInheritable Class bstyle
                          assert(c.type_name.Equals("value-declaration"))
                          assert(c.child_count() = 2)
                          Return builders.parameter.non_ref(c.child(0).input_without_ignored(),
-                                                          c.child(1).input_without_ignored())
+                                                           c.child(1).input_without_ignored())
                      End Function)
         End Function
 
@@ -249,7 +249,9 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             Dim id As builders.parameter = create_id(n.child(1).word().str())
-            assert(builders.of_type(id.non_ref_type(), uint32_1).to(o))
+            assert(builders.of_type(id.map_type(scope.normalized_type.of).
+                                       map_type(scope.normalized_type.logic_type_of).
+                                       non_ref_type(), uint32_1).to(o))
             Return scope.current().structs().define(
                        builders.parameter_type.of(n.child(1).word().str()).
                                                map_type(scope.normalized_type.of).
