@@ -111,6 +111,7 @@
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <None Include="b3style\codegen\run.cmd" />
     <None Include="b3style\lib\run.cmd" />
+    <None Include="b3style\logic\nodes\from-b2style.cmd" />
     <None Include="b3style\logic\nodes\from-bstyle.cmd" />
     <None Include="bstyle\lib\climits" />
     <Compile Include="b2style\rewriter\nodes\delegate_with_semi_colon.vb" />
