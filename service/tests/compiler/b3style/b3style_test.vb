@@ -22,7 +22,7 @@ Public NotInheritable Class b3style_test
         assertion.equal(io.output().Trim(), String.Join(character.newline,
             "::type0 main([])",
             "::type0 ::N::print([])",
-            "::type0 ::N::f2:Integer:String([x: ::Integer, s: ::String])"))
+            "::type0 ::N::f2:::Integer:::String([x: ::Integer, s: ::String])"))
     End Sub
 
     Private Sub New()

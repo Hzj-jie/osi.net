@@ -21,7 +21,7 @@ Partial Public NotInheritable Class b3style
                                                          map_type(scope.normalized_type.of).
                                                          full_type()
             Return struct.redefine(name, type, o) OrElse
-                   (builders.of_redefine(name, scope.normalized_type.logic_type_of(type)).to(o) AndAlso
+                   (builders.of_redefine(name, type).to(o) AndAlso
                     scope.current().variables().redefine(type, name))
         End Function
     End Class

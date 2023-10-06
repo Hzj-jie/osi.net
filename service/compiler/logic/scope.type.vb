@@ -39,6 +39,7 @@ Partial Public NotInheritable Class logic
                     Return False
                 End If
                 sizes(type) = size
+                sizes(b3style.scope.current_namespace_t.namespace_separator + type) = size
                 Return True
             End Function
 
