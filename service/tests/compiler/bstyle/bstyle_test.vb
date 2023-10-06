@@ -128,18 +128,6 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub func_name_with_dot()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _bstyle_test_data.func_name_with_dot.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output().Length(), 2)
-        assertion.equal(Convert.ToInt32(io.output()(0)), 1)
-        assertion.equal(Convert.ToInt32(io.output()(1)), 2)
-    End Sub
-
-    <test>
     Private Shared Sub delegate_()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
@@ -201,6 +189,20 @@ Public NotInheritable Class bstyle_test
         assertion.is_true(bstyle.with_default_functions().parse(_bstyle_test_data.predefined_def.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
+    End Sub
+
+    ' b3style treat f.f() as f(f) / class function.
+    <test>
+    Private Shared Sub func_name_with_dot()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(bstyle.with_functions(New interrupts(+io)).
+                                 parse(_bstyle_test_data.func_name_with_dot.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output().Length(), 2)
+        assertion.equal(Convert.ToInt32(io.output()(0)), 1)
+        assertion.equal(Convert.ToInt32(io.output()(1)), 2)
     End Sub
 
     Private Sub New()
