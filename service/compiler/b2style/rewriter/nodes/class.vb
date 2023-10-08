@@ -34,9 +34,7 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Protected Overrides Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
-            Dim o As New StringBuilder()
             assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             Dim class_name As String = n.child(1).input()
             Dim cd As New scope.class_def(class_name)
@@ -62,6 +60,7 @@ Partial Public NotInheritable Class b2style
             If Not scope.current().classes().define(class_name, cd) Then
                 Return False
             End If
+            Dim o As New StringBuilder()
             ' Append struct-body back into the structure.
             o.Append("struct ").
               Append(class_name).
