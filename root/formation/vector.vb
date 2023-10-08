@@ -275,6 +275,18 @@ Public NotInheritable Class vector(Of T)
         Next
     End Sub
 
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function [with](ByVal o As T) As vector(Of T)
+        push_back(o)
+        Return Me
+    End Function
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Function emplace_with(ByVal o As T) As vector(Of T)
+        emplace_back(o)
+        Return Me
+    End Function
+
     '.net implementations
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function Clone() As Object Implements ICloneable.Clone
@@ -322,8 +334,17 @@ Public NotInheritable Class vector(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal this As vector(Of T), ByVal that As T) As vector(Of T)
         assert(Not this Is Nothing)
-        this.push_back(that)
-        Return this
+        Dim r As vector(Of T) = this.CloneT()
+        r.push_back(that)
+        Return r
+    End Operator
+
+    <MethodImpl(method_impl_options.aggressive_inlining)>
+    Public Shared Operator +(ByVal this As vector(Of T), ByVal that As vector(Of T)) As vector(Of T)
+        assert(Not this Is Nothing)
+        Dim r As vector(Of T) = this.CloneT()
+        r.push_back(that)
+        Return r
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
