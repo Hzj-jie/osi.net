@@ -426,6 +426,36 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
         assertion.equal(io.output(), "200100")
     End Sub
 
+    <test>
+    Private Shared Sub nested_class()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.nested_class.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "100200")
+    End Sub
+
+    <test>
+    Private Shared Sub class_in_namespace()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.class_in_namespace.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "123")
+    End Sub
+
+    <test>
+    Private Shared Sub class_constructor()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.class_constructor.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "10012002")
+    End Sub
+
     Protected Sub New()
     End Sub
 End Class
@@ -496,16 +526,6 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub nested_class()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.nested_class.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "100200")
-    End Sub
-
-    <test>
     Private Shared Sub class_on_heap()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
@@ -522,16 +542,6 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub class_in_namespace()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.class_in_namespace.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "123")
-    End Sub
-
-    <test>
     Private Shared Sub class_function_with_namespace()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
@@ -539,16 +549,6 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "100200")
-    End Sub
-
-    <test>
-    Private Shared Sub class_constructor()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.class_constructor.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "10012002")
     End Sub
 
     <test>
