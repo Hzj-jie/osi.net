@@ -213,7 +213,8 @@ Partial Public NotInheritable Class b3style
                 with("pre-operation-value", New unary_operation_value(0, "_pre")).
                 with("post-operation-value", New unary_operation_value(1, "_post")).
                 with_delegate("self-value-clause", AddressOf binary_operation_value.without_return).
-                with(Of _class)()
+                with(Of _class)().
+                with(Of class_initializer)()
         End Function
     End Class
 End Class

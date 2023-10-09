@@ -27,12 +27,12 @@ Partial Public NotInheritable Class b3style
             assert(n.child_count() = 2)
             Dim function_name As String =
                     binary_operation_value.operation_function_name(n.child(operator_index).type_name + suffix)
-            value_list.build(Sub(ByVal a As Action(Of typed_node))
-                                 assert(Not a Is Nothing)
-                                 a(n.child(uint32_1 - operator_index))
-                             End Sub,
-                             o)
-            Return function_call.build(function_name, o)
+            Return value_list.build(Sub(ByVal a As Action(Of typed_node))
+                                        assert(Not a Is Nothing)
+                                        a(n.child(uint32_1 - operator_index))
+                                    End Sub,
+                                    o) AndAlso
+                   function_call.build(function_name, o)
         End Function
     End Class
 End Class

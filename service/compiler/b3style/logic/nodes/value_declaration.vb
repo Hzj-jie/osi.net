@@ -31,6 +31,20 @@ Partial Public NotInheritable Class b3style
                    declare_primitive_type(t, n, o)
         End Function
 
+        Public Shared Function declare_struct_type(ByVal type As typed_node,
+                                                   ByVal name As typed_node,
+                                                   ByVal o As logic_writer) As Boolean
+            assert(Not type Is Nothing)
+            assert(Not name Is Nothing)
+            Return struct.define_in_stack(type.input_without_ignored(), value_definition.name_of(name), o)
+        End Function
+
+        Public Shared Function declare_primitive_type(ByVal m As builders.parameter,
+                                                      ByVal o As logic_writer) As Boolean
+            assert(Not m Is Nothing)
+            Return declare_primitive_type(m.non_ref_type(), m.name, o)
+        End Function
+
         Public Shared Function declare_primitive_type(ByVal type As String,
                                                       ByVal name As String,
                                                       ByVal o As logic_writer) As Boolean
