@@ -15,8 +15,8 @@ class C {
 C c;
 
 ::void print() {
-  c.x = 2;
-  c.print();
+  ::N::c.x = 2;
+  ::N::c.print();
 }
 
 }  // namespace N
@@ -26,8 +26,8 @@ namespace M {
 ::N::C c;
 
 ::void print() {
-  c.x = 3;
-  c.print();
+  ::M::c.x = 3;
+  ::M::c.print();
 }
 
 }  // namespace M
