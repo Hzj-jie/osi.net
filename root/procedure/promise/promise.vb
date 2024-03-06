@@ -58,6 +58,18 @@ Partial Public NotInheritable Class promise
                End Sub)
     End Sub
 
+    Public Shared Function [of](ByVal executor As Action(Of Action(Of Object), Action(Of Object))) As promise
+        Return New promise(executor)
+    End Function
+
+    Public Shared Function [of](ByVal executor As Action(Of Action(Of Object))) As promise
+        Return New promise(executor)
+    End Function
+
+    Public Shared Function [of](ByVal executor As Func(Of Object)) As promise
+        Return New promise(executor)
+    End Function
+
     Public Function [then](ByVal on_resolve As Func(Of Object, Object)) As promise
         Return [then](on_resolve, Nothing)
     End Function
