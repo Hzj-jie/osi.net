@@ -12,19 +12,21 @@ Partial Public NotInheritable Class promise
         If isemptyarray(promises) Then
             Return resolve(Nothing)
         End If
-        Dim r As New promise()
-        Dim c As New atomic_uint(array_size(promises))
+        Dim r As promise = Nothing
+        r = New promise()
+        Dim c As atomic_uint = Nothing
+        c = New atomic_uint(array_size(promises))
         For i As Int32 = 0 To array_size_i(promises) - 1
             If promises(i) Is Nothing Then
-                r.t.reject(strcat("promises", i, " is nothing"))
+                r._reject(strcat("promises", i, " is nothing"))
             Else
                 promises(i).then(Sub(ByVal result As Object)
                                      If c.decrement() = uint32_0 Then
-                                         r.t.resolve(Nothing)
+                                         r._resolve(Nothing)
                                      End If
                                  End Sub,
                                  Sub(ByVal reason As Object)
-                                     r.t.reject(reason)
+                                     r._reject(reason)
                                  End Sub)
             End If
         Next
@@ -35,16 +37,17 @@ Partial Public NotInheritable Class promise
         If isemptyarray(promises) Then
             Return resolve(Nothing)
         End If
-        Dim r As New promise()
+        Dim r As promise = Nothing
+        r = New promise()
         For i As Int32 = 0 To array_size_i(promises) - 1
             If promises(i) Is Nothing Then
-                r.t.reject(strcat("promises", i, " is nothing"))
+                r._reject(strcat("promises", i, " is nothing"))
             Else
                 promises(i).then(Sub(ByVal result As Object)
-                                     r.t.resolve(result)
+                                     r._resolve(result)
                                  End Sub,
                                  Sub(ByVal reason As Object)
-                                     r.t.reject(reason)
+                                     r._reject(reason)
                                  End Sub)
             End If
         Next

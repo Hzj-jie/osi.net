@@ -5,7 +5,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.formation
-Imports osi.root.utils
 
 Partial Public NotInheritable Class promise
     Partial Private Class thenable
@@ -14,16 +13,25 @@ Partial Public NotInheritable Class promise
         Private result As Object
         Private reason As Object
 
-        Private Shared Sub trace_start()
-            counter.instance_count_counter(Of promise).alloc()
-        End Sub
-
-        Private Shared Sub trace_stop()
-            counter.instance_count_counter(Of promise).dealloc()
-        End Sub
-
         Public Sub New()
             trace_start()
+        End Sub
+
+        Public Function pending() As Boolean
+            Return status = status.pending
+        End Function
+
+        Public Function fulfilled() As Boolean
+            Return status = status.fulfilled
+        End Function
+
+        Public Function rejected() As Boolean
+            Return status = status.rejected
+        End Function
+
+        Public Sub resolve(ByVal result As thenable)
+            assert(Not result Is Nothing)
+            result.then(AddressOf resolve, AddressOf reject)
         End Sub
 
         Public Sub resolve(ByVal result As Object)
@@ -74,21 +82,6 @@ Partial Public NotInheritable Class promise
             ElseIf status = status.rejected Then
                 [next].second(reason)
             End If
-        End Sub
-    End Class
-
-    Private NotInheritable Class auto
-        Inherits thenable
-
-        Public Sub New(ByVal executor As Action(Of Action(Of Object), Action(Of Object)))
-            MyBase.New()
-            assert(Not executor Is Nothing)
-            Try
-                executor(AddressOf resolve, AddressOf reject)
-            Catch ex As Exception
-                log_unhandled_exception(ex)
-                reject(ex)
-            End Try
         End Sub
     End Class
 End Class
