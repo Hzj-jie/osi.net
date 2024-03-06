@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 
 Partial Public Class event_comb
     <MethodImpl(method_impl_options.aggressive_inlining)>
