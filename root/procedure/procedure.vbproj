@@ -117,13 +117,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="event_comb\waitfor.vb" />
-    <Compile Include="promise\promise.thenable.alloc_trace.vb" />
-    <Compile Include="promise\promise.async_operation.vb" />
-    <Compile Include="promise\promise.auto.vb" />
-    <Compile Include="promise\promise.event_comb.vb" />
-    <Compile Include="promise\promise.new.vb" />
+    <Compile Include="promise\promise.transform.vb" />
     <Compile Include="promise\promise.share.vb" />
-    <Compile Include="promise\promise.status.vb" />
     <Compile Include="promise\promise.thenable.vb" />
     <Compile Include="promise\promise.vb" />
     <Compile Include="sync_async.vb" />
@@ -152,7 +147,6 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <Compile Include="promise\promise.then.vb" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\connector\connector.vbproj">
