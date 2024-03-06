@@ -9,7 +9,13 @@ Imports osi.root.utils
 
 Partial Public NotInheritable Class promise
     Partial Private Class thenable
-        Private status As status
+        Private Enum status_t
+            pending
+            fulfilled
+            rejected
+        End Enum
+
+        Private status As status_t
         Private [next] As const_pair(Of Action(Of Object), Action(Of Object))
         Private result As Object
         Private reason As Object
@@ -33,10 +39,10 @@ Partial Public NotInheritable Class promise
                 Return
             End If
             SyncLock Me
-                If status <> status.pending Then
+                If status <> status_t.pending Then
                     Return
                 End If
-                status = status.fulfilled
+                status = status_t.fulfilled
                 Me.result = result
                 execute_next()
                 trace_stop()
@@ -45,11 +51,11 @@ Partial Public NotInheritable Class promise
 
         Public Sub reject(ByVal reason As Object)
             SyncLock Me
-                If status <> status.pending Then
+                If status <> status_t.pending Then
                     Return
                 End If
                 Me.reason = reason
-                status = status.rejected
+                status = status_t.rejected
                 execute_next()
                 trace_stop()
             End SyncLock
@@ -69,9 +75,9 @@ Partial Public NotInheritable Class promise
             If [next] Is Nothing Then
                 Return
             End If
-            If status = status.fulfilled Then
+            If status = status_t.fulfilled Then
                 [next].first(result)
-            ElseIf status = status.rejected Then
+            ElseIf status = status_t.rejected Then
                 [next].second(reason)
             End If
         End Sub

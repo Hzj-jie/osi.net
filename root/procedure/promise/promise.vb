@@ -8,12 +8,6 @@ Imports osi.root.delegates
 Imports osi.root.lock
 
 Partial Public NotInheritable Class promise
-    Private Enum status
-        pending
-        fulfilled
-        rejected
-    End Enum
-
     Private ReadOnly t As thenable
     Private appended As singleentry
 
