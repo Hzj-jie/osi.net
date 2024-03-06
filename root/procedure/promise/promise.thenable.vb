@@ -45,8 +45,8 @@ Partial Public NotInheritable Class promise
                 status = status_t.fulfilled
                 Me.result = result
                 execute_next()
-                trace_stop()
             End SyncLock
+            trace_stop()
         End Sub
 
         Public Sub reject(ByVal reason As Object)
@@ -54,32 +54,35 @@ Partial Public NotInheritable Class promise
                 If status <> status_t.pending Then
                     Return
                 End If
-                Me.reason = reason
                 status = status_t.rejected
+                Me.reason = reason
                 execute_next()
-                trace_stop()
             End SyncLock
+            trace_stop()
         End Sub
 
         Public Sub [then](ByVal on_resolve As Action(Of Object), ByVal on_reject As Action(Of Object))
+            assert(Not on_resolve Is Nothing)
+            assert(Not on_reject Is Nothing)
             SyncLock Me
-                assert(Not on_resolve Is Nothing)
-                assert(Not on_reject Is Nothing)
-                assert(Me.next Is Nothing)
+                assert([next] Is Nothing)
                 [next] = const_pair.emplace_of(on_resolve, on_reject)
                 execute_next()
             End SyncLock
         End Sub
 
         Private Sub execute_next()
-            If [next] Is Nothing Then
+            If [next] Is Nothing OrElse status = status_t.pending Then
                 Return
             End If
-            If status = status_t.fulfilled Then
-                [next].first(result)
-            ElseIf status = status_t.rejected Then
-                [next].second(reason)
-            End If
+            Select Case status
+                Case status_t.fulfilled
+                    [next].first(result)
+                Case status_t.rejected
+                    [next].second(reason)
+                Case Else
+                    assert(False)
+            End Select
         End Sub
     End Class
 
