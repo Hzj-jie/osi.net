@@ -74,17 +74,13 @@ Partial Public Class file_index
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   If ci.capacity() = 0 Then
-                                      Return eva(result, True) AndAlso
-                                             goto_end()
-                                  Else
-                                      ec = index.full(result)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
+                                      Return eva(result, True) AndAlso goto_end()
                                   End If
+                                  ec = index.full(result)
+                                  Return waitfor(ec) AndAlso goto_next()
                               End Function,
                               Function() As Boolean
-                                  Return ec.end_result() AndAlso
-                                         goto_end()
+                                  Return ec.end_result() AndAlso goto_end()
                               End Function)
     End Function
 

@@ -21,23 +21,21 @@ Partial Public NotInheritable Class fces
         'the key should at least have one character
         If array_size(b) <= sizeof_int64 Then
             Return False
-        Else
-            cid = bytes_int64(b)
-            ReDim key(CInt(array_size(b) - sizeof_int64 - uint32_1))
-            arrays.copy(key, 0, b, sizeof_int64, array_size(key))
-            Return True
         End If
+        cid = bytes_int64(b)
+        ReDim key(CInt(array_size(b) - sizeof_int64 - uint32_1))
+        arrays.copy(key, 0, b, sizeof_int64, array_size(key))
+        Return True
     End Function
 
     Private Shared Function generate_index(ByVal key() As Byte, ByVal cid As Int64, ByRef b() As Byte) As Boolean
         If array_size(key) <= 0 Then
             Return False
-        Else
-            ReDim b(CInt(array_size(key) + sizeof_int64 - uint32_1))
-            assert(int64_bytes(cid, b))
-            arrays.copy(b, sizeof_int64, key)
-            Return True
         End If
+        ReDim b(CInt(array_size(key) + sizeof_int64 - uint32_1))
+        assert(int64_bytes(cid, b))
+        arrays.copy(b, sizeof_int64, key)
+        Return True
     End Function
 
     Private Function inject_index(ByVal iid As Int64) As event_comb
@@ -46,35 +44,33 @@ Partial Public NotInheritable Class fces
         Return New event_comb(Function() As Boolean
                                   r = New ref(Of Byte())()
                                   ec = index.read(iid, r)
-                                  Return waitfor(ec) AndAlso
-                                         goto_next()
+                                  Return waitfor(ec) AndAlso goto_next()
                               End Function,
                               Function() As Boolean
-                                  If ec.end_result() Then
-                                      Dim key() As Byte = Nothing
-                                      Dim cid As Int64 = 0
-                                      If parse_index(+r, key, cid) Then
-                                          inject_index(key, iid, cid)
-                                          If Not content.seek(cid) Then
-                                              raise_error(error_type.warning,
-                                                          "fail to find content cluster id ",
-                                                          cid,
-                                                          " from content free_cluster ",
-                                                          content.file_name(),
-                                                          ", the following read operation of this key ",
-                                                          "will be treated as not existing")
-                                          End If
-                                      Else
-                                          raise_error(error_type.warning,
-                                                      "fail to parse index from index free_cluster ",
-                                                      index.file_name(),
-                                                      ", ignore")
-                                      End If
-                                      Return goto_end()
-                                  Else
+                                  If Not ec.end_result() Then
                                       'should not happen, but just return false if it really happened
                                       Return False
                                   End If
+                                  Dim key() As Byte = Nothing
+                                  Dim cid As Int64 = 0
+                                  If parse_index(+r, key, cid) Then
+                                      inject_index(key, iid, cid)
+                                      If Not content.seek(cid) Then
+                                          raise_error(error_type.warning,
+                                                      "fail to find content cluster id ",
+                                                      cid,
+                                                      " from content free_cluster ",
+                                                      content.file_name(),
+                                                      ", the following read operation of this key ",
+                                                      "will be treated as not existing")
+                                      End If
+                                  Else
+                                      raise_error(error_type.warning,
+                                                  "fail to parse index from index free_cluster ",
+                                                  index.file_name(),
+                                                  ", ignore")
+                                  End If
+                                  Return goto_end()
                               End Function)
     End Function
 
@@ -87,9 +83,8 @@ Partial Public NotInheritable Class fces
                                   hcs = index.head_clusters()
                                   If hcs Is Nothing Then
                                       Return False
-                                  Else
-                                      Return goto_next()
                                   End If
+                                  Return goto_next()
                               End Function,
                               Function() As Boolean
                                   If i > 0 Then

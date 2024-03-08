@@ -7,25 +7,32 @@ Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
 
-Public Class capinfo
+Public NotInheritable Class capinfo
     Private ReadOnly di As DriveInfo
     Private ReadOnly reserve_disk_capacity As Int64
-
-    Shared Sub New()
-        assert(npos < 0)
-    End Sub
 
     Public Sub New(ByVal path_or_file As String, ByVal reserve_disk_capacity As UInt64)
         Try
             di = New DriveInfo(Path.GetPathRoot(Path.GetFullPath(path_or_file)))
+            raise_error(error_type.information,
+                        "drive info of ",
+                        path_or_file,
+                        " is ",
+                        String.Join(", ",
+                                    di.Name,
+                                    di.VolumeLabel,
+                                    di.DriveType,
+                                    di.DriveFormat,
+                                    di.TotalSize,
+                                    di.TotalFreeSpace,
+                                    di.AvailableFreeSpace))
         Catch ex As Exception
             raise_error(error_type.warning,
                         "fail to detect drive info of file or path ",
                         path_or_file,
                         ", ex ",
                         ex.Message(),
-                        ", the capacity will always return ",
-                        npos)
+                        ", the capacity will always return 0")
         End Try
         assert(reserve_disk_capacity <= max_int64)
         Me.reserve_disk_capacity = CLng(reserve_disk_capacity)
@@ -38,22 +45,18 @@ Public Class capinfo
     Public Function capacity() As UInt64
         If di Is Nothing Then
             Return 0
-        Else
-            Dim v As Int64 = 0
-            v = do_(Function() di.AvailableFreeSpace(), int64_0) - reserve_disk_capacity
-            If v <= 0 Then
-                Return 0
-            Else
-                Return CULng(v)
-            End If
         End If
+        Dim v As Int64 = do_(Function() di.AvailableFreeSpace(), int64_0) - reserve_disk_capacity
+        If v <= 0 Then
+            Return 0
+        End If
+        Return CULng(v)
     End Function
 
     Public Shared Operator +(ByVal this As capinfo) As UInt64
         If this Is Nothing Then
             Return 0
-        Else
-            Return this.capacity()
         End If
+        Return this.capacity()
     End Operator
 End Class

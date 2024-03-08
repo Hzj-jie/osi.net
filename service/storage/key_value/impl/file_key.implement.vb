@@ -68,7 +68,7 @@ Partial Public Class file_key
 
     Public Function full(ByVal result As ref(Of Boolean)) As event_comb Implements ikeyvt2(Of String).full
         Return sync_async(Sub()
-                              assert(eva(result, ci.capacity() <= 0))
+                              assert(eva(result, ci.capacity() = 0))
                           End Sub)
     End Function
 
