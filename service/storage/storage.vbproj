@@ -63,7 +63,7 @@
     <Compile Include="adapter\adapter.interop.vb" />
     <Compile Include="capinfo.vb" />
     <Compile Include="configuration\configuration.vb" />
-    <Compile Include="configuration\preserved_disk_capacity.vb" />
+    <Compile Include="configuration\reserved_disk_capacity.vb" />
     <Compile Include="data_dir.vb" />
     <Compile Include="free_cluster\cluster.constants.vb" />
     <Compile Include="free_cluster\cluster.data.vb" />

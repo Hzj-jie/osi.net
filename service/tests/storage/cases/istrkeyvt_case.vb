@@ -350,8 +350,7 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                               End Function,
                               Function() As Boolean
                                   assertion.is_true(ec.end_result())
-                                  ' TODO: Detect the capacity of remote ramfs on linux host and reenable this assertion.
-                                  ' assertion.is_false(+r)
+                                  assertion.is_false(+r)
                                   Return goto_end()
                               End Function)
     End Function
