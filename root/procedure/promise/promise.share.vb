@@ -12,13 +12,15 @@ Partial Public NotInheritable Class promise
         If promises.null_or_empty() Then
             Return resolve(Nothing)
         End If
-        Dim r As New promise()
-        Dim c As New atomic_uint(array_size(promises))
-        For i As Int32 = 0 To array_size_i(promises) - 1
+        For i As Int32 = 0 To promises.array_size_i() - 1
             If promises(i) Is Nothing Then
-                r.t.reject(String.Concat("promises", i, " is nothing"))
-                Return r
+                Return reject(String.Concat("promises", i, " is nothing"))
             End If
+        Next
+        Dim r As New promise()
+        Dim c As New atomic_uint(promises.array_size())
+        For i As Int32 = 0 To promises.array_size_i() - 1
+            assert(Not promises(i) Is Nothing)
             promises(i).then(Sub(ByVal result As Object)
                                  If c.decrement() = uint32_0 Then
                                      r.t.resolve(Nothing)
@@ -35,13 +37,15 @@ Partial Public NotInheritable Class promise
         If promises.null_or_empty() Then
             Return resolve(Nothing)
         End If
-        Dim r As New promise()
-        Dim c As New atomic_uint(array_size(promises))
-        For i As Int32 = 0 To array_size_i(promises) - 1
+        For i As Int32 = 0 To promises.array_size_i() - 1
             If promises(i) Is Nothing Then
-                r.t.reject(String.Concat("promises", i, " is nothing"))
-                Return r
+                Return reject(String.Concat("promises", i, " is nothing"))
             End If
+        Next
+        Dim r As New promise()
+        Dim c As New atomic_uint(promises.array_size())
+        For i As Int32 = 0 To promises.array_size_i() - 1
+            assert(Not promises(i) Is Nothing)
             promises(i).then(Sub(ByVal result As Object)
                                  r.t.resolve(result)
                              End Sub,
@@ -58,12 +62,14 @@ Partial Public NotInheritable Class promise
         If promises.null_or_empty() Then
             Return resolve(Nothing)
         End If
+        For i As Int32 = 0 To promises.array_size_i() - 1
+            If promises(i) Is Nothing Then
+                Return reject(String.Concat("promises", i, " is nothing"))
+            End If
+        Next
         Dim r As New promise()
         For i As Int32 = 0 To array_size_i(promises) - 1
-            If promises(i) Is Nothing Then
-                r.t.reject(String.Concat("promises", i, " is nothing"))
-                Return r
-            End If
+            assert(Not promises(i) Is Nothing)
             promises(i).then(Sub(ByVal result As Object)
                                  r.t.resolve(result)
                              End Sub,
