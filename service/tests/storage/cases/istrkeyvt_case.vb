@@ -145,15 +145,10 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                                                                   _KEY_LENGTH_UP,
                                                                   _BYTES_LENGTH_LOW,
                                                                   _BYTES_LENGTH_UP)
-    Private Shared ReadOnly round_count As Int64
+    Private Shared ReadOnly round_count As Int64 = +(alloc(Of _ROUND_BASE)()) * If(isdebugbuild(), 1, 8)
     ' Some systems, like vmware, does not support high-res file timestamp. So the timestamp provided by implementations,
     ' say, file_key, is low-res. The assertion needs to be updated to avoid unnecessary failures.
-    Private Shared ReadOnly low_res_timestamp As Boolean
-
-    Shared Sub New()
-        round_count = +(alloc(Of _ROUND_BASE)()) * If(isdebugbuild(), 1, 8)
-        low_res_timestamp = +(alloc(Of _LOW_RES_TIMESTAMP)())
-    End Sub
+    Private Shared ReadOnly low_res_timestamp As Boolean = +(alloc(Of _LOW_RES_TIMESTAMP)())
 
     Private Shared Function rand_key() As String
         Return rand_data.rand_key()
