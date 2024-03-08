@@ -50,7 +50,7 @@ Public NotInheritable Class promise_share_test
         Dim ce As New count_event(2)
         Dim finished As Boolean = False
         Dim p As promise = promise.race(New promise(Sub(ByVal resolve As Action(Of Object))
-                                                        assert(Not stopwatch.push(10000,
+                                                        assert(Not stopwatch.push(1000,
                                                                                   Sub()
                                                                                       resolve(value1)
                                                                                       ce.decrement()
@@ -70,8 +70,40 @@ Public NotInheritable Class promise_share_test
         Return True
     End Function
 
+    Private Shared Function any_case() As Boolean
+        Const value1 As Int32 = 10
+        Const value2 As Int32 = 20
+        Dim ce As New count_event(3)
+        Dim finished As Boolean = False
+        Dim p As promise = promise.any(New promise(Sub(ByVal resolve As Action(Of Object))
+                                                       assert(Not stopwatch.push(1000,
+                                                                                Sub()
+                                                                                    resolve(value1)
+                                                                                    ce.decrement()
+                                                                                End Sub) Is Nothing)
+                                                   End Sub),
+                                        New promise(Function() As Object
+                                                        ce.decrement()
+                                                        Return value2
+                                                    End Function),
+                                        New promise(Sub(ByVal resolve As Action(Of Object),
+                                                        ByVal reject As Action(Of Object))
+                                                        ce.decrement()
+                                                        reject(Nothing)
+                                                    End Sub)).
+                                   then(Sub(ByVal v As Object)
+                                            assertion.is_true(v.GetType().[is](Of Int32)())
+                                            assertion.equal(v, value2)
+                                            finished = True
+                                        End Sub)
+        assertion.is_true(finished)
+        assert(ce.wait())
+        Return True
+    End Function
+
     Public Overrides Function run() As Boolean
         Return all_case() AndAlso
-               race_case()
+               race_case() AndAlso
+               any_case()
     End Function
 End Class
