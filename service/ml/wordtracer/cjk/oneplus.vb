@@ -78,9 +78,9 @@ Partial Public NotInheritable Class wordtracer
                     Return
                 End If
                 s.strsep(AddressOf _character.not_cjk,
-                             Sub(ByVal l As UInt32, ByVal i As UInt32)
-                                 sentence(s, l, i)
-                             End Sub)
+                         Sub(ByVal l As UInt32, ByVal i As UInt32)
+                             sentence(s, l, i)
+                         End Sub)
             End Sub
 
             Public Function train(ByVal ss As IEnumerable(Of String)) As onebound(Of String).model
