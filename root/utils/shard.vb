@@ -15,4 +15,10 @@ Public NotInheritable Class shard(Of T)
         Me.index = index
         Me.count = count
     End Sub
+
+    Default Public ReadOnly Property _R(ByVal i As T) As Boolean
+        Get
+            Return fast_to_uint32(Of T).on(i) Mod count <= index
+        End Get
+    End Property
 End Class

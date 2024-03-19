@@ -142,6 +142,7 @@
     </Compile>
     <Compile Include="pattern_match.vb" />
     <Compile Include="domain_unhandled_exception.vb" />
+    <Compile Include="sampler.vb" />
     <Compile Include="samples.vb" />
     <Compile Include="shard.vb" />
     <Compile Include="thread_checker.vb" />
