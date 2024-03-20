@@ -41,6 +41,10 @@ Partial Public NotInheritable Class wordtracer
                     b.accumulate(r, l)
                 Next
             End Sub
+
+            Public Function dump() As onebound(Of String).model
+                Return onebound(Of String).model.bidirectional(f.dump(), b.dump())
+            End Function
         End Class
     End Class
 End Class

@@ -99,6 +99,12 @@ Partial Public NotInheritable Class onebound(Of K)
             Return m(a)(b)
         End Function
 
+        Public Shared Function bidirectional(ByVal i As model, ByVal j As model) As model
+            assert(Not i Is Nothing)
+            assert(Not j Is Nothing)
+            Return i.multiply(j.reverse())
+        End Function
+
         Public Function reverse() As model
             Dim r As New unordered_map(Of K, unordered_map(Of K, Double))()
             flat_map().foreach(Sub(ByVal v As first_const_pair(Of const_pair(Of K, K), Double))
