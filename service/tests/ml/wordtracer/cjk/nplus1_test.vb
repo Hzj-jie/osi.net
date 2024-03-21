@@ -21,7 +21,7 @@ Namespace wordtracer.cjk
             Dim n As New nplus1(1)
             n.train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"}))
             n.dump(percentage Or 0.9).
-              dump(output Or "cjk.nplus1.2.bin")
+              dump(output Or "cjk.nplus1.1.bin")
         End Sub
 
         <test>
@@ -29,8 +29,8 @@ Namespace wordtracer.cjk
         Private Shared Sub raw()
             Dim n As New nplus1(1)
             n.train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"}))
-            n.forward().dump((output Or "cjk.nplus1.2.bin") + ".forward")
-            n.forward().dump((output Or "cjk.nplus1.2.bin") + ".backward")
+            n.forward().dump((output Or "cjk.nplus1.1.bin") + ".forward")
+            n.forward().dump((output Or "cjk.nplus1.1.bin") + ".backward")
         End Sub
     End Class
 End Namespace
