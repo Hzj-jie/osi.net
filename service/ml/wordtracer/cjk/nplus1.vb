@@ -25,6 +25,10 @@ Partial Public NotInheritable Class wordtracer
                 Me.n = n
             End Sub
 
+            Public Sub New(ByVal n As UInt32)
+                Me.New(shard(Of String).all, n)
+            End Sub
+
             Protected Overrides Sub sentence(ByVal s As String, ByVal start As UInt32, ByVal [end] As UInt32)
                 If [end] - start <= n Then
                     Return
@@ -42,8 +46,18 @@ Partial Public NotInheritable Class wordtracer
                 Next
             End Sub
 
-            Public Function dump() As onebound(Of String).model
-                Return onebound(Of String).model.bidirectional(f.dump(), b.dump())
+            Public Function forward() As onebound(Of String).model
+                Return f.dump()
+            End Function
+
+            Public Function backward() As onebound(Of String).model
+                Return b.dump()
+            End Function
+
+            Public Function dump(ByVal percentage As Double) As onebound(Of String).model
+                Return onebound(Of String).model.bidirectional(
+                           onebound(Of String).selector.exponential(f.dump(), percentage),
+                           onebound(Of String).selector.exponential(b.dump(), percentage))
             End Function
         End Class
     End Class

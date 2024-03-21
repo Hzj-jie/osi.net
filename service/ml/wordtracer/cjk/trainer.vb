@@ -41,7 +41,7 @@ Partial Public NotInheritable Class wordtracer
                 End If
                 s.strsep(AddressOf _character.not_cjk,
                          Sub(ByVal l As UInt32, ByVal i As UInt32)
-                             If Me.s.not_sampled() Then
+                             If Me.s.sampled() Then
                                  sentence(s, l, i)
                              End If
                          End Sub)

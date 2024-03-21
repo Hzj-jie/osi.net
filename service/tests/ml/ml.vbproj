@@ -86,6 +86,7 @@
     <Compile Include="wordbreaker\cjk\trainer_test.vb" />
     <Compile Include="wordtracer\cjk\breaking_word_test.vb" />
     <Compile Include="wordtracer\cjk\coupling_ratio_test.vb" />
+    <Compile Include="wordtracer\cjk\nplus1_test.vb" />
     <Compile Include="wordtracer\cjk\oneplus_test.vb" />
     <Compile Include="wordtracer\cjk\tracerall_test.vb" />
     <Compile Include="wordtracer\cjk\tracer_test.vb" />

@@ -6,6 +6,8 @@ Option Strict On
 Imports osi.root.connector
 
 Public NotInheritable Class shard(Of T)
+    Public Shared ReadOnly all As New shard(Of T)(0, 1)
+
     Private ReadOnly index As UInt32
     Private ReadOnly count As UInt32
 

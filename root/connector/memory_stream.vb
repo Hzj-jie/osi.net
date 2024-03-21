@@ -174,7 +174,7 @@ Public Module _memory_stream
     <Extension()> Public Function unzip_from_file(ByVal this As MemoryStream, ByVal i As String) As Boolean
         assert(Not this Is Nothing)
         Try
-            Using fs As FileStream = New FileStream(i, FileMode.Open),
+            Using fs As FileStream = New FileStream(i, FileMode.Open, FileAccess.Read),
                   gz As GZipStream = New GZipStream(fs, CompressionMode.Decompress, True)
                 gz.CopyTo(this)
             End Using
