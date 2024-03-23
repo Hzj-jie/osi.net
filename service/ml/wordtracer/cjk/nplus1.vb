@@ -14,8 +14,7 @@ Partial Public NotInheritable Class wordtracer
 
             Private ReadOnly s As shard(Of String)
             Private ReadOnly n As UInt32
-            Private ReadOnly f As New onebound(Of String).trainer()
-            Private ReadOnly b As New onebound(Of String).trainer()
+            Private ReadOnly t As New onebound(Of String).trainer()
 
             Public Sub New(ByVal s As shard(Of String), ByVal n As UInt32)
                 MyBase.New()
@@ -41,23 +40,12 @@ Partial Public NotInheritable Class wordtracer
                         Continue For
                     End If
 
-                    f.accumulate(l, r)
-                    b.accumulate(r, l)
+                    t.accumulate(l, r)
                 Next
             End Sub
 
-            Public Function forward() As onebound(Of String).model
-                Return f.dump()
-            End Function
-
-            Public Function backward() As onebound(Of String).model
-                Return b.dump()
-            End Function
-
             Public Function dump(ByVal percentage As Double) As onebound(Of String).model
-                Return onebound(Of String).model.bidirectional(
-                           onebound(Of String).selector.exponential(f.dump(), percentage),
-                           onebound(Of String).selector.exponential(b.dump(), percentage))
+                Return onebound(Of String).selector.exponential(t.dump(), percentage)
             End Function
         End Class
     End Class
