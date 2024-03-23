@@ -29,7 +29,7 @@ Namespace wordtracer.cjk
         <test>
         <command_line_specified>
         Private Shared Sub from_tar_2()
-            Const num_of_shards As UInt32 = 2
+            Const num_of_shards As UInt32 = 8
             For i As UInt32 = 0 To num_of_shards - uint32_1
                 Dim n As New nplus1(New shard(Of String)(i, num_of_shards), 2)
                 n.train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"}))
@@ -41,7 +41,7 @@ Namespace wordtracer.cjk
         <test>
         <command_line_specified>
         Private Shared Sub from_tar_3()
-            Const num_of_shards As UInt32 = 4
+            Const num_of_shards As UInt32 = 32
             For i As UInt32 = 0 To num_of_shards - uint32_1
                 Dim n As New nplus1(New shard(Of String)(i, num_of_shards), 3)
                 n.train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"}))
@@ -53,7 +53,7 @@ Namespace wordtracer.cjk
         <test>
         <command_line_specified>
         Private Shared Sub from_tar_4()
-            Const num_of_shards As UInt32 = 8
+            Const num_of_shards As UInt32 = 128
             For i As UInt32 = 0 To num_of_shards - uint32_1
                 Dim n As New nplus1(New shard(Of String)(i, num_of_shards), 4)
                 n.train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"}))
