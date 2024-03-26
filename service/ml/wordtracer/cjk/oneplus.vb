@@ -12,7 +12,7 @@ Imports osi.service.resource
 Partial Public NotInheritable Class wordtracer
     Partial Public NotInheritable Class cjk
         Public NotInheritable Class oneplus
-            Inherits trainer
+            Inherits trainer(Of oneplus)
             Private ReadOnly m As unordered_map(Of String, Double)
             Private ReadOnly l As UInt32
             Private ReadOnly t As onebound(Of String).trainer

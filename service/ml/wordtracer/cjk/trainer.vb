@@ -12,7 +12,7 @@ Imports osi.service.resource
 
 Partial Public NotInheritable Class wordtracer
     Partial Public NotInheritable Class cjk
-        Public MustInherit Class trainer
+        Public MustInherit Class trainer(Of RT As trainer(Of RT))
             Private ReadOnly s As sampler
 
             Protected Sub New(ByVal sampler As sampler)
@@ -30,10 +30,15 @@ Partial Public NotInheritable Class wordtracer
 
             Protected MustOverride Sub sentence(ByVal s As String, ByVal start As UInt32, ByVal [end] As UInt32)
 
-            Public Sub train(ByVal s As String)
+            Private Function this() As RT
+                Return direct_cast(Of RT)(Me)
+            End Function
+
+            Public Function train(ByVal s As String) As RT
                 assert(Not s.null_or_whitespace())
                 train({s})
-            End Sub
+                Return this()
+            End Function
 
             Private Sub one_str(ByVal s As String)
                 If s.null_or_whitespace() Then
@@ -47,13 +52,14 @@ Partial Public NotInheritable Class wordtracer
                          End Sub)
             End Sub
 
-            Public Sub train(ByVal ss As IEnumerable(Of String))
+            Public Function train(ByVal ss As IEnumerable(Of String)) As RT
                 For Each s As String In ss
                     one_str(s)
                 Next
-            End Sub
+                Return this()
+            End Function
 
-            Public Sub train(ByVal reader As tar.reader)
+            Public Function train(ByVal reader As tar.reader) As RT
                 assert(Not reader Is Nothing)
                 reader.foreach(Sub(ByVal name As String, ByVal p As Double, ByVal r As StreamReader)
                                    If p < 0.8 Then
@@ -70,7 +76,8 @@ Partial Public NotInheritable Class wordtracer
                                        line = r.ReadLine()
                                    End While
                                End Sub)
-            End Sub
+                Return this()
+            End Function
         End Class
     End Class
 End Class

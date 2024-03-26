@@ -10,7 +10,7 @@ Imports osi.root.utils
 Partial Public NotInheritable Class wordtracer
     Partial Public NotInheritable Class cjk
         Public NotInheritable Class nplus1
-            Inherits trainer
+            Inherits trainer(Of nplus1)
 
             Private ReadOnly s As shard(Of String)
             Private ReadOnly n As UInt32
