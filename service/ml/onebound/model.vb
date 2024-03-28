@@ -161,6 +161,19 @@ Partial Public NotInheritable Class onebound(Of K)
             Return json_serializer.to_str(m)
         End Function
 
+        Public Function normalize() As model
+            Return New model(map_each(Function(ByVal x As unordered_map(Of K, Double)) As unordered_map(Of K, Double)
+                                          Dim s As Double = x.stream().
+                                                              map(x.second_selector).
+                                                              aggregate(stream(Of Double).aggregators.sum)
+                                          Return x.stream().
+                                                     map(x.second_mapper(Function(ByVal y As Double) As Double
+                                                                             Return y / s
+                                                                         End Function)).
+                                                     collect_to(Of unordered_map(Of K, Double))()
+                                      End Function))
+        End Function
+
         Public Function filter(ByVal lower_bound As Double) As model
             If lower_bound <= 0 Then
                 Return Me
