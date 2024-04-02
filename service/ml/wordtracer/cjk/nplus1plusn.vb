@@ -54,7 +54,7 @@ Partial Public NotInheritable Class wordtracer
 
             Public Function dump_raw(ByVal percent As Double) As onebound(Of String).model
                 Return onebound(Of String).model.bidirectional(f.dump().normalize().filter(percent),
-                                                               b.dump().normalize.filter(percent))
+                                                               b.dump().normalize().filter(percent))
             End Function
         End Class
     End Class
