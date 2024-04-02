@@ -47,6 +47,10 @@ Partial Public NotInheritable Class wordtracer
             Public Function dump(ByVal percentage As Double) As onebound(Of String).model
                 Return onebound(Of String).selector.exponential(t.dump(), percentage)
             End Function
+
+            Public Function dump_raw(ByVal percent As Double) As onebound(Of String).model
+                Return t.dump().normalize().filter(percent)
+            End Function
         End Class
     End Class
 End Class
