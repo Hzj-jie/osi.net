@@ -32,7 +32,7 @@ Namespace wordtracer.cjk
         Private Shared Sub from_tar_raw()
             Dim n As New nplus1plusn(1)
             n.train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"}))
-            n.dump_raw(percent Or 0.05).
+            n.dump_raw(percent Or 0.02).
               dump(output Or "cjk.nplus1plusn.1.raw.bin")
         End Sub
 
@@ -41,10 +41,22 @@ Namespace wordtracer.cjk
         Private Shared Sub from_tar_2()
             Const num_of_shards As UInt32 = 2
             For i As UInt32 = 0 To num_of_shards - uint32_1
-                Dim n As New nplus1plusn(2)
+                Dim n As New nplus1plusn(New shard(Of String)(i, num_of_shards), 2)
                 n.train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"}))
                 n.dump(percentage Or 0.9).
                   dump(String.Concat(output Or "cjk.nplus1plusn.2", ".", i, ".bin"))
+            Next
+        End Sub
+
+        <test>
+        <command_line_specified>
+        Private Shared Sub from_tar_raw_2()
+            Const num_of_shards As UInt32 = 8
+            For i As UInt32 = 0 To num_of_shards - uint32_1
+                Dim n As New nplus1plusn(New shard(Of String)(i, num_of_shards), 2)
+                n.train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"}))
+                n.dump_raw(percent Or 0.02).
+                  dump(String.Concat(output Or "cjk.nplus1plusn.2", ".", i, ".raw.bin"))
             Next
         End Sub
 
