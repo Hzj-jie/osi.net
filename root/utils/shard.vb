@@ -20,7 +20,7 @@ Public NotInheritable Class shard(Of T)
 
     Default Public ReadOnly Property _R(ByVal i As T) As Boolean
         Get
-            Return fast_to_uint32(Of T).on(i) Mod count = index
+            Return count = 1 OrElse (fast_to_uint32(Of T).on(i) Mod count = index)
         End Get
     End Property
 End Class
