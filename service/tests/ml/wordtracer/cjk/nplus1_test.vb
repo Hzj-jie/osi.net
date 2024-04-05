@@ -51,7 +51,7 @@ Namespace wordtracer.cjk
         <test>
         <command_line_specified>
         Private Shared Sub from_tar_raw_2()
-            Const num_of_shards As UInt32 = 127
+            Const num_of_shards As UInt32 = 257
             For i As UInt32 = 0 To num_of_shards - uint32_1
                 Dim n As New nplus1(New shard(Of String)(i, num_of_shards), 2)
                 n.train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"}))
