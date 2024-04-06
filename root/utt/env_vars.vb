@@ -25,6 +25,14 @@ Friend NotInheritable Class env_vars
             End If
             Return CUInt(r)
         End Function()
+    Public Shared ReadOnly utt_memory_limit As UInt64 =
+        Function() As UInt64
+            Dim r As Int64 = 0
+            If Not env_value(env_keys("utt", "memory", "limit"), r) OrElse r < 0 Then
+                Return 0
+            End If
+            Return CULng(r)
+        End Function()
 
     Private Sub New()
     End Sub

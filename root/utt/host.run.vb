@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports counter = osi.root.utils.counter
@@ -15,9 +16,10 @@ Partial Friend NotInheritable Class host
     Private Shared using_threads As Int32 = 0
     Private Shared running_cases As Int32 = 0
 
-    Private Shared Sub assert_running_time()
+    Private Shared Sub assert_healthy()
         assert(commandline.has_specified_selections() OrElse
                assertion.less_or_equal(nowadays.milliseconds(), expected_end_ms))
+        assert(env_vars.utt_memory_limit = 0 OrElse (workingset_bytes_usage() <= env_vars.utt_memory_limit))
     End Sub
 
     Public Shared Function execute_case(ByVal c As [case]) As Boolean
@@ -121,7 +123,7 @@ Partial Friend NotInheritable Class host
 
     Private Shared Function go_through(ByVal finished As EventWaitHandle, ByRef new_case_started As Boolean) As Boolean
         assert(Not new_case_started)
-        assert_running_time()
+        assert_healthy()
         Dim rtn As Boolean = False
         For i As UInt32 = uint32_0 To cases.size() - uint32_1
             If cases(i).finished Then
@@ -162,7 +164,7 @@ Partial Friend NotInheritable Class host
     Private Shared Sub wait_finish(ByVal finished As EventWaitHandle)
         assert(Not finished Is Nothing)
         While Not finished.WaitOne(5000)
-            assert_running_time()
+            assert_healthy()
         End While
     End Sub
 
