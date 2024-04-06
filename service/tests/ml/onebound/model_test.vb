@@ -10,6 +10,7 @@ Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.ml
+Imports osi.service.resource
 Imports osi.service.ml.onebound(Of String)
 
 Namespace onebound
@@ -63,6 +64,14 @@ Namespace onebound
         <test>
         Private Shared Sub combo_load()
             model.combo_load(++inputs).filter(lower_bound Or 0).dump(output Or "combo.bin")
+        End Sub
+
+        <command_line_specified>
+        <test>
+        Private Shared Sub pattern_load()
+            model.combo_load(+(New tar.selector() With {.pattern = input Or "*.bin"}.absolute())).
+                  filter(lower_bound Or 0).
+                  dump(output Or "combo.bin")
         End Sub
 
         <command_line_specified>
