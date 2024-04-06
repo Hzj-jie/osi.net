@@ -32,7 +32,7 @@ Namespace wordtracer.cjk
         Private Shared Sub from_tar_raw()
             Dim n As New nplus1plusn(1)
             n.train(tar.reader.unzip(New tar.selector() With {.pattern = input Or "tar_manual_test.zip_*"}))
-            n.dump_raw(percent Or 0.02).
+            n.dump_raw(percent Or 0.2).
               dump(output Or "cjk.nplus1plusn.1.raw.bin")
         End Sub
 
