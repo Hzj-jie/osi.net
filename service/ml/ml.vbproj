@@ -94,6 +94,7 @@
     <Compile Include="wordtracer\cjk\breaking_word.vb" />
     <Compile Include="wordtracer\cjk\nplus1.vb" />
     <Compile Include="wordtracer\cjk\nplus1plusn.vb" />
+    <Compile Include="wordtracer\cjk\nplusmplusn.vb" />
     <Compile Include="wordtracer\cjk\oneplus.vb" />
     <Compile Include="wordtracer\cjk\tracer.vb" />
     <Compile Include="wordtracer\cjk\tracerall.vb" />

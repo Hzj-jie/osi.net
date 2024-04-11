@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt
@@ -100,7 +101,7 @@ Namespace onebound
         <command_line_specified>
         <test>
         Private Shared Sub dump_to_text()
-            Using w As New StreamWriter(output Or "model.txt")
+            Using w As New StreamWriter(output Or ((+input).replace_file_extension("txt")))
                 dump_to_stream(w)
             End Using
         End Sub
