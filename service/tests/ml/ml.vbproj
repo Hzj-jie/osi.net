@@ -52,6 +52,7 @@
     <Compile Include="bernoulli_distribution\estimator_estimate_test.vb" />
     <Compile Include="boolaffinity\model_test.vb" />
     <Compile Include="combinatories_test.vb" />
+    <Compile Include="dump_results.vb" />
     <Compile Include="exponential_distribution\estimator_confidence_test.vb" />
     <Compile Include="exponential_distribution\estimator_estimate_test.vb" />
     <Compile Include="mean_test.vb" />
