@@ -81,8 +81,8 @@ Namespace onebound
             model.load(+input).filter(+lower_bound).dump(+output)
         End Sub
 
-        Private Shared Function load_to_pairs() As stream(Of first_const_pair(Of String, Double))
-            Return model.load(+input).
+        Private Shared Function load_to_pairs(ByVal input As String) As stream(Of first_const_pair(Of String, Double))
+            Return model.load(input).
                          filter(lower_bound Or 0).
                          flat_map().
                          map(Function(ByVal p As first_const_pair(Of const_pair(Of String, String), Double)) _
@@ -91,33 +91,41 @@ Namespace onebound
                              End Function)
         End Function
 
-        Private Shared Sub dump_to_stream(ByVal w As TextWriter)
+        Private Shared Sub dump_to_stream(ByVal input As String, ByVal w As TextWriter)
             assert(Not w Is Nothing)
-            load_to_pairs().foreach(Sub(ByVal p As first_const_pair(Of String, Double))
-                                        w.WriteLine(String.Concat(p.first, " ", p.second))
-                                    End Sub)
+            load_to_pairs(input).foreach(Sub(ByVal p As first_const_pair(Of String, Double))
+                                             w.WriteLine(String.Concat(p.first, " ", p.second))
+                                         End Sub)
         End Sub
 
         <command_line_specified>
         <test>
         Private Shared Sub dump_to_text()
-            Using w As New StreamWriter(output Or ((+input).replace_file_extension("txt")))
-                dump_to_stream(w)
-            End Using
+            If -inputs Then
+                For Each input As String In ++inputs
+                    Using w As New StreamWriter(input.replace_file_extension("txt"))
+                        dump_to_stream(input, w)
+                    End Using
+                Next
+            Else
+                Using w As New StreamWriter(output Or ((+input).replace_file_extension("txt")))
+                    dump_to_stream(+input, w)
+                End Using
+            End If
         End Sub
 
         <command_line_specified>
         <test>
         Private Shared Sub dump_to_console()
-            dump_to_stream(Console.Out)
+            dump_to_stream(+input, Console.Out)
         End Sub
 
         <command_line_specified>
         <test>
         Private Shared Sub sort_to_console()
-            load_to_pairs().sort().foreach(Sub(ByVal p As first_const_pair(Of String, Double))
-                                               Console.WriteLine(strcat(p.first, " ", p.second))
-                                           End Sub)
+            load_to_pairs(+input).sort().foreach(Sub(ByVal p As first_const_pair(Of String, Double))
+                                                     Console.WriteLine(strcat(p.first, " ", p.second))
+                                                 End Sub)
         End Sub
 
         <command_line_specified>
