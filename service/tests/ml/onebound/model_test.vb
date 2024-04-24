@@ -206,6 +206,21 @@ Namespace onebound
                                    End Sub)
         End Sub
 
+        <command_line_specified>
+        <test>
+        Private Shared Sub intersect_and_dump()
+            Using w As New StreamWriter(output Or "intersect.txt")
+                dump_results.intersect(+inputs,
+                                       Function(ByVal input As String) As unordered_map(Of String, Double)
+                                           Return load_to_pairs(input).collect_to(Of unordered_map(Of String, Double))()
+                                       End Function).
+                         stream().
+                         foreach(Sub(ByVal p As first_const_pair(Of String, Double))
+                                     w.WriteLine(String.Concat(p.first, " ", p.second))
+                                 End Sub)
+            End Using
+        End Sub
+
         Private Sub New()
         End Sub
     End Class
