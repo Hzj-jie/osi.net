@@ -48,7 +48,17 @@ Partial Public NotInheritable Class wordtracer
                 Next
             End Sub
 
-            Public Function dump(ByVal percent As Double) As onebound(Of String).model
+            Public Function dump(ByVal percentage As Double, ByVal lambda As Double) As onebound(Of String).model
+                Return onebound(Of String).model.bidirectional(
+                           onebound(Of String).selector.exponential(f.dump(), percentage, lambda),
+                           onebound(Of String).selector.exponential(b.dump(), percentage, lambda))
+            End Function
+
+            Public Function dump(ByVal percentage As Double) As onebound(Of String).model
+                Return dump(percentage, 0)
+            End Function
+
+            Public Function dump_raw(ByVal percent As Double) As onebound(Of String).model
                 Return onebound(Of String).model.bidirectional(f.dump().normalize().filter(percent),
                                                                b.dump().normalize().filter(percent))
             End Function
