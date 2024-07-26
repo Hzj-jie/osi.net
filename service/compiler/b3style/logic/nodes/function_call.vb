@@ -34,9 +34,10 @@ Partial Public NotInheritable Class b3style
                         Return False
                     End If
                     parameters = (+scope.current().value_target().value()).names + parameters
-                    raw_function_name = struct_func.second()
+                    function_name = scope.current_namespace_t.in_global_namespace(struct_func.second())
+                Else
+                    function_name = _function.name_of(raw_function_name)
                 End If
-                function_name = _function.name_of(raw_function_name)
                 Dim name As String = Nothing
                 If Not logic_name.of_function_call(function_name, parameters, name) Then
                     Return False

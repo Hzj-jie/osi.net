@@ -23,10 +23,10 @@ Partial Public NotInheritable Class b3style
             ElseIf Not code_gen_of(n.child(3)).build(o) Then
                 Return False
             End If
-            If Not function_call.build(b2style.function_call.build_struct_function(
-                                           n.child(1).input_without_ignored(),
-                                           scope.class_def.construct),
-                                       o) Then
+            If Not function_call.without_return(b2style.function_call.build_struct_function(
+                                                    n.child(1).input_without_ignored(),
+                                                    scope.class_def.construct),
+                                                o) Then
                 Return False
             End If
             ' Functions are always in global namespace.
@@ -34,10 +34,10 @@ Partial Public NotInheritable Class b3style
             scope.current().when_end_scope(
                 Sub()
                     value_list.with_empty()
-                    assert(function_call.build(b2style.function_call.build_struct_function(
-                                                   n.child(1).input_without_ignored(),
-                                                   scope.class_def.destruct),
-                                               o))
+                    assert(function_call.without_return(b2style.function_call.build_struct_function(
+                                                            n.child(1).input_without_ignored(),
+                                                            scope.class_def.destruct),
+                                                        o))
                 End Sub)
             scope.current().
                   call_hierarchy().
