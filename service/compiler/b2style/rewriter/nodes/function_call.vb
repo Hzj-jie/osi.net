@@ -32,12 +32,6 @@ Partial Public NotInheritable Class b2style
             Return True
         End Function
 
-        Private Shared Function split_struct_function(ByVal name As String) As tuple(Of String, String)
-            Dim o As tuple(Of String, String) = Nothing
-            assert(split_struct_function(name, o))
-            Return o
-        End Function
-
         Public Shared Function build(ByVal name As String,
                                      ByVal n As typed_node,
                                      ByVal o As typed_node_writer) As Boolean
@@ -46,7 +40,8 @@ Partial Public NotInheritable Class b2style
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
             assert(Not o Is Nothing)
 
-            If Not name.Contains(".") Then
+            Dim p As tuple(Of String, String) = Nothing
+            If Not split_struct_function(name, p) Then
                 If scope.current().variables().try_resolve(name, Nothing) Then
                     ' This should be a delegate function call.
                     Return code_gens().of_all_children(n).build(o)
@@ -62,7 +57,6 @@ Partial Public NotInheritable Class b2style
                 Return True
             End If
 
-            Dim p As tuple(Of String, String) = split_struct_function(name)
             Dim function_name As String = _namespace.bstyle_format.in_global_namespace(p.second())
             ' TODO: This never works, class variables are not defined in scope.current().variables().
             ' If scope.current().variables().resolve(function_name, Nothing) Then
