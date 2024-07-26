@@ -66,6 +66,8 @@
     <Compile Include="b3style\logic\nodes\biguint.vb" />
     <Compile Include="b3style\logic\nodes\binary_operation_value.vb" />
     <Compile Include="b3style\logic\nodes\bool.vb" />
+    <Compile Include="b3style\logic\nodes\class.vb" />
+    <Compile Include="b3style\logic\nodes\class_initializer.vb" />
     <Compile Include="b3style\logic\nodes\condition.vb" />
     <Compile Include="b3style\logic\nodes\delegate.vb" />
     <Compile Include="b3style\logic\nodes\for_loop.vb" />
@@ -110,6 +112,7 @@
     <Compile Include="b2style\rewriter\nodes\binary_operation_value.vb" />
     <None Include="b3style\codegen\run.cmd" />
     <None Include="b3style\lib\run.cmd" />
+    <None Include="b3style\logic\nodes\from-b2style.cmd" />
     <None Include="b3style\logic\nodes\from-bstyle.cmd" />
     <None Include="bstyle\lib\climits" />
     <Compile Include="b2style\rewriter\nodes\delegate_with_semi_colon.vb" />

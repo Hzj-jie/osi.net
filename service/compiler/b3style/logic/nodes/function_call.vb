@@ -16,7 +16,8 @@ Partial Public NotInheritable Class b3style
 
         Private Shared Function build(ByVal raw_function_name As String,
                                       ByVal build_caller As Func(Of String, vector(Of String), Boolean),
-                                      ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
+                                      ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean),
+                                      ByVal o As logic_writer) As Boolean
             assert(Not build_caller Is Nothing)
             assert(Not build_caller_ref Is Nothing)
             Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
@@ -26,7 +27,17 @@ Partial Public NotInheritable Class b3style
                     Return build_caller_ref(function_name, parameters)
                 End If
 
-                function_name = _function.name_of(raw_function_name)
+                Dim struct_func As tuple(Of String, String) = Nothing
+                If b2style.function_call.split_struct_function(raw_function_name, struct_func) Then
+                    If Not raw_variable_name.build(struct_func.first(), o) Then
+                        raise_error(error_type.user, "Cannot find class instance ", struct_func.first())
+                        Return False
+                    End If
+                    parameters = (+scope.current().value_target().value()).names + parameters
+                    function_name = scope.current_namespace_t.in_global_namespace(struct_func.second())
+                Else
+                    function_name = _function.name_of(raw_function_name)
+                End If
                 Dim name As String = Nothing
                 If Not logic_name.of_function_call(function_name, parameters, name) Then
                     Return False
@@ -48,7 +59,7 @@ Partial Public NotInheritable Class b3style
             ElseIf Not code_gen_of(n.child(2)).build(o) Then
                 Return False
             End If
-            Return build(n.child(0).input_without_ignored(), build_caller, build_caller_ref)
+            Return build(n.child(0).input_without_ignored(), build_caller, build_caller_ref, o)
         End Function
 
         Private Shared Function without_return_caller_builder(ByVal o As logic_writer) _
@@ -70,7 +81,7 @@ Partial Public NotInheritable Class b3style
         End Function
 
         Public Shared Function without_return(ByVal function_name As String, ByVal o As logic_writer) As Boolean
-            Return build(function_name, without_return_caller_builder(o), without_return_caller_ref_builder(o))
+            Return build(function_name, without_return_caller_builder(o), without_return_caller_ref_builder(o), o)
         End Function
 
         Private Shared Function builder(ByVal logic_builder As Func(Of String, String, vector(Of String), Boolean),
@@ -150,7 +161,7 @@ Partial Public NotInheritable Class b3style
         End Function
 
         Public Shared Function build(ByVal function_name As String, ByVal o As logic_writer) As Boolean
-            Return build(function_name, caller_builder(o), caller_ref_builder(o))
+            Return build(function_name, caller_builder(o), caller_ref_builder(o), o)
         End Function
     End Class
 End Class

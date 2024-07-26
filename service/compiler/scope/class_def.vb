@@ -132,6 +132,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Private Shared Function function_name_of(ByVal name As String) As name_with_namespace
+            ' Note, the function can be overloaded by the class type itself without needing to define the functions
+            ' themselves in the current namespace.
             Return name_with_namespace.of_global_namespace(name)
         End Function
 

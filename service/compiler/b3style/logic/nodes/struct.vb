@@ -147,8 +147,7 @@ Partial Public NotInheritable Class b3style
             End If
             assert(Not v Is Nothing)
             Return v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
-                                            assert(Not m Is Nothing)
-                                            Return value_declaration.declare_primitive_type(m.non_ref_type(), m.name, o)
+                                            Return value_declaration.declare_primitive_type(m, o)
                                         End Function)
         End Function
 
@@ -246,7 +245,7 @@ Partial Public NotInheritable Class b3style
                          assert(c.type_name.Equals("value-declaration"))
                          assert(c.child_count() = 2)
                          Return builders.parameter.non_ref(c.child(0).input_without_ignored(),
-                                                          c.child(1).input_without_ignored())
+                                                           c.child(1).input_without_ignored())
                      End Function)
         End Function
 
@@ -256,14 +255,15 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             Dim id As builders.parameter = create_id(n.child(1).word().str())
-            assert(builders.of_type(id.non_ref_type(), uint32_1).to(o))
+            assert(builders.of_type(id.map_type(scope.normalized_type.of).
+                                       non_ref_type(), uint32_1).to(o))
             Return scope.current().structs().define(
                        builders.parameter_type.of(n.child(1).word().str()).
                                                map_type(scope.normalized_type.of).
                                                full_type(),
                        parse_struct_body(n).map(AddressOf scope.struct_def.nested).
-                                            collect_to(Of vector(Of builders.parameter))() +
-                                            id)
+                                            collect_to(Of vector(Of builders.parameter))().
+                                            emplace_with(id))
         End Function
     End Class
 End Class

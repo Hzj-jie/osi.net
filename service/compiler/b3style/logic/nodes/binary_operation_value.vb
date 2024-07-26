@@ -23,13 +23,13 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             assert(Not fc Is Nothing)
             assert(n.child_count() = 3)
-            value_list.build(Sub(ByVal a As Action(Of typed_node))
-                                 assert(Not a Is Nothing)
-                                 a(n.child(0))
-                                 a(n.child(2))
-                             End Sub,
-                             o)
-            Return fc(operation_function_name(n.child(1).type_name), o)
+            Return value_list.build(Sub(ByVal a As Action(Of typed_node))
+                                        assert(Not a Is Nothing)
+                                        a(n.child(0))
+                                        a(n.child(2))
+                                    End Sub,
+                                    o) AndAlso
+                   fc(operation_function_name(n.child(1).type_name), o)
         End Function
 
         Public Shared Function without_return(ByVal n As typed_node,

@@ -51,9 +51,7 @@ Partial Public NotInheritable Class b3style
                 assert(Not sdef Is Nothing)
                 assert(sdef.primitive_count() > 0)
                 Return sdef.for_each_primitive(Function(ByVal t As builders.parameter) As Boolean
-                                                   Return value_declaration.declare_primitive_type(t.non_ref_type(),
-                                                                                                   t.name,
-                                                                                                   o)
+                                                   Return value_declaration.declare_primitive_type(t, o)
                                                End Function) AndAlso
                        builders.start_scope(o).of(
                            Function() As Boolean
