@@ -23,6 +23,7 @@ Partial Public NotInheritable Class b3style
     Private Shared _disable_namespace As Boolean
 
     Public Shared Function disable_namespace() As IDisposable
+        assert(Not _disable_namespace)
         _disable_namespace = True
         Return defer.to(Sub()
                             _disable_namespace = False
