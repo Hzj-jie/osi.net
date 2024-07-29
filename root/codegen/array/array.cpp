@@ -24,10 +24,8 @@ const char* types[] = {"Decimal",
 #define IS_EMPTY_ARRAY_1 "        Return i Is Nothing OrElse i.GetLength(0) = 0\n"
 #define COMPARE_ARRAY_0 "        assert(array_size(first) >= first_start + len)\n" \
                         "        assert(array_size(second) >= second_start + len)\n" \
-                        "        Dim fs As Int32 = 0\n" \
-                        "        fs = CInt(first_start)\n" \
-                        "        Dim ss As Int32 = 0\n" \
-                        "        ss = CInt(second_start)\n" \
+                        "        Dim fs As Int32 = CInt(first_start)\n" \
+                        "        Dim ss As Int32 = CInt(second_start)\n" \
                         "        For i As Int32 = 0 To CInt(len) - 1\n" \
                         "            Dim cmp As Int32 = 0\n" \
                         "            cmp = compare(first(i + fs), second(i + ss))\n" \
@@ -37,10 +35,8 @@ const char* types[] = {"Decimal",
                         "        Next\n" \
                         "        Return 0\n"
 #define COMPARE_ARRAY_1 "        Return memcmp(first, uint32_0, second, uint32_0, len)\n"
-#define COMPARE_ARRAY_2 "        Dim ll As UInt32 = 0\n" \
-                        "        Dim rl As UInt32 = 0\n" \
-                        "        ll = array_size(first)\n" \
-                        "        rl = array_size(second)\n" \
+#define COMPARE_ARRAY_2 "        Dim ll As UInt32 = array_size(first)\n" \
+                        "        Dim rl As UInt32 = array_size(second)\n" \
                         "        If ll <> rl Then\n" \
                         "            Return compare(ll, rl)\n" \
                         "        End If\n" \
@@ -48,14 +44,12 @@ const char* types[] = {"Decimal",
 #define TO_STRINGS_1 "        If isemptyarray(i) Then\n" \
                      "            Return Nothing\n" \
                      "        End If\n" \
-                     "        Dim r() As String = Nothing\n" \
-                     "        ReDim r(array_size_i(i) - 1)\n" \
+                     "        Dim r(array_size_i(i) - 1) As String\n" \
                      "        For j As Int32 = 0 To array_size_i(i) - 1\n" \
                      "            r(j) = Convert.ToString(i(j))\n" \
                      "        Next\n" \
                      "        Return r\n"
-#define TO_STRINGS_2 "        Dim r() As String = Nothing\n" \
-                     "        ReDim r(array_size_i(j))\n" \
+#define TO_STRINGS_2 "        Dim r(array_size_i(j)) As String\n" \
                      "        r(0) = Convert.ToString(i)\n" \
                      "        For k As Int32 = 0 To array_size_i(j) - 1\n" \
                      "            r(k + 1) = Convert.ToString(j(k))\n" \
