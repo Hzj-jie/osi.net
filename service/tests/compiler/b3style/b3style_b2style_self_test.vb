@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.root.utt.attributes
 Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
@@ -25,6 +26,6 @@ Public NotInheritable Class b3style_b2style_self_test
 
     Protected Overrides Function ignore_case(ByVal name As String) As Boolean
         assert(Not name.null_or_whitespace())
-        Return False
+        Return unordered_set.of("").find(name).is_not_end()
     End Function
 End Class
