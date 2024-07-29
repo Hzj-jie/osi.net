@@ -27,8 +27,7 @@ const char* types[] = {"Decimal",
                         "        Dim fs As Int32 = CInt(first_start)\n" \
                         "        Dim ss As Int32 = CInt(second_start)\n" \
                         "        For i As Int32 = 0 To CInt(len) - 1\n" \
-                        "            Dim cmp As Int32 = 0\n" \
-                        "            cmp = compare(first(i + fs), second(i + ss))\n" \
+                        "            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))\n" \
                         "            If cmp <> 0 Then\n" \
                         "                Return cmp\n" \
                         "            End If\n" \

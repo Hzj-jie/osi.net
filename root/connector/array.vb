@@ -73,8 +73,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -218,8 +217,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -363,8 +361,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -508,8 +505,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -653,8 +649,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -798,8 +793,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -943,8 +937,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1088,8 +1081,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1233,8 +1225,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1378,8 +1369,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1523,8 +1513,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1668,8 +1657,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1815,8 +1803,7 @@ Public Module _array
         Dim fs As Int32 = CInt(first_start)
         Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
