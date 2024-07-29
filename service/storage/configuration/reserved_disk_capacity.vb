@@ -9,7 +9,7 @@ Imports osi.root.formation
 Imports osi.root.connector
 
 Public NotInheritable Class reserved_disk_capacity
-    Private Const default_reserved_capacity As UInt64 = 256 * 1024 * 1024
+    Private Const default_reserved_capacity As UInt64 = 64 * 1024 * 1024
     Private ReadOnly m As New map(Of String, UInt64)()
     Private l As duallock
 
