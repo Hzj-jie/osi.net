@@ -35,15 +35,6 @@ Public Module _memory_stream
         Return CUInt(i.Length() - i.Position())
     End Function
 
-    ' TODO: Remove. Do not use, should be same as ToArray().
-    <Extension()> Public Function export(ByVal i As MemoryStream) As Byte()
-        i.assert_valid()
-        Dim o() As Byte = Nothing
-        ReDim o(CInt(i.Length()) - 1)
-        arrays.copy(o, i.GetBuffer(), CUInt(i.Length()))
-        Return o
-    End Function
-
     <Extension()> Public Sub get_buffer(ByVal this As MemoryStream,
                                         ByRef o() As Byte,
                                         ByRef offset As UInt32,
@@ -241,8 +232,15 @@ Public Module _memory_stream
         If this.unread_length() > that.unread_length() Then
             Return 1
         End If
-        ' This is wrong, should use GetBuffer(), Position() and Length().
-        Return memcmp(this.export(), that.export())
+        assert(this.Position() >= 0)
+        assert(this.Position() <= max_uint32)
+        assert(that.Position() >= 0)
+        assert(that.Position() <= max_uint32)
+        Return memcmp(this.GetBuffer(),
+                      CUInt(this.Position()),
+                      that.GetBuffer(),
+                      CUInt(that.Position()),
+                      this.unread_length())
     End Function
 
     <Extension()> Public Function content_compare_to(ByVal this As MemoryStream, ByVal that As MemoryStream) As Int32
