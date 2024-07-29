@@ -35,6 +35,7 @@ Public Module _memory_stream
         Return CUInt(i.Length() - i.Position())
     End Function
 
+    ' TODO: Remove. Do not use, should be same as ToArray().
     <Extension()> Public Function export(ByVal i As MemoryStream) As Byte()
         i.assert_valid()
         Dim o() As Byte = Nothing
@@ -131,7 +132,10 @@ Public Module _memory_stream
         assert(Not memory_stream.is_wrapper(this))
         Try
             Using fs As New FileStream(o, FileMode.Create)
+                ' File.WriteAllText may not flush the data to the disk, see
+                ' https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
                 this.WriteTo(fs)
+                this.Flush()
             End Using
             Return True
         Catch ex As Exception
@@ -237,6 +241,7 @@ Public Module _memory_stream
         If this.unread_length() > that.unread_length() Then
             Return 1
         End If
+        ' This is wrong, should use GetBuffer(), Position() and Length().
         Return memcmp(this.export(), that.export())
     End Function
 

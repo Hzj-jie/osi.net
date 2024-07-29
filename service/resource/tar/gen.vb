@@ -31,13 +31,13 @@ Partial Public NotInheritable Class tar
         Public Shared Sub dump(ByVal input As MemoryStream, ByVal root As String)
             reader_of(input).foreach(Sub(ByVal file As String, ByVal m As MemoryStream)
                                          assert(Not file Is Nothing)
-                                         assert(Not m Is Nothing)
+                                         m.assert_valid()
                                          Try
                                              Directory.GetParent(Path.Combine(root, file)).Create()
                                          Catch ex As Exception
                                              assert(False, ex)
                                          End Try
-                                         IO.File.WriteAllBytes(Path.Combine(root, file), m.bytes())
+                                         assert(m.dump_to_file(Path.Combine(root, file)))
                                      End Sub)
         End Sub
 
