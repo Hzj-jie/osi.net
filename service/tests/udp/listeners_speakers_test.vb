@@ -15,14 +15,8 @@ Imports osi.service.udp
 Public NotInheritable Class listeners_speakers_test
     Inherits event_comb_case
 
-    Private ReadOnly listener_port As UInt16
-    Private ReadOnly speaker_port As UInt16
-
-    Public Sub New()
-        MyBase.New()
-        listener_port = rnd_port()
-        speaker_port = rnd_port()
-    End Sub
+    Private ReadOnly listener_port As UInt16 = rnd_port()
+    Private ReadOnly speaker_port As UInt16 = rnd_port()
 
     Private Function retrieve_listener(ByRef r As listener) As Boolean
         Return listeners.[New](powerpoint.creator.

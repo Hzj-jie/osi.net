@@ -15,28 +15,17 @@ Imports osi.root.utt
 Imports osi.service.selector
 Imports osi.service.udp
 
-Public Class udp_sharedtransmitter_test
+Public NotInheritable Class udp_sharedtransmitter_test
     Inherits event_comb_case
 
-    Private Shared ReadOnly end_bytes() As Byte
-    Private Shared ReadOnly local_port As UInt16
-    Private ReadOnly c As collection
-    Private ReadOnly failure_count As atomic_int
+    Private Shared ReadOnly end_bytes() As Byte = random_data()
+    Private Shared ReadOnly local_port As UInt16 = rnd_port()
+    Private ReadOnly c As New collection()
+    Private ReadOnly failure_count As New atomic_int()
     Private incoming_powerpoint As powerpoint
     Private outgoing_powerpoint As powerpoint
     Private listen_component As ref_instance(Of UdpClient)
     Private listen_dispenser As dispenser(Of Byte(), const_pair(Of String, UInt16))
-
-    Shared Sub New()
-        end_bytes = random_data()
-        local_port = rnd_port()
-    End Sub
-
-    Public Sub New()
-        MyBase.New()
-        c = New collection()
-        failure_count = New atomic_int()
-    End Sub
 
     Private Shared Function random_data() As Byte()
         Dim r() As Byte = Nothing
