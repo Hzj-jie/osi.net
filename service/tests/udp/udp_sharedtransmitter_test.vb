@@ -38,11 +38,11 @@ Public NotInheritable Class udp_sharedtransmitter_test
     Public Overrides Function prepare() As Boolean
         If MyBase.prepare() Then
             incoming_powerpoint = powerpoint.creator.[New]().
-                                                     with_ipv4().
+                                                     with_ipv6().
                                                      with_local_port(local_port).
                                                      create()
             outgoing_powerpoint = powerpoint.creator.[New]().
-                                                     with_ipv4().
+                                                     with_ipv6().
                                                      with_remote_port(local_port).
                                                      with_host_or_ip("localhost").
                                                      create()
