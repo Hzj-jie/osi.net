@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.DateTime
 Imports osi.root.connector
+Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.threadpool
 Imports osi.root.utils
@@ -24,6 +25,8 @@ Public Module _app
             set_not_debug_mode()
         End If
 
+        ' Ensure the cases are loaded before selfhealth.run.
+        assert(Not host.cases.null_or_empty())
         Dim run_case_count As Int32 = 0
         If Not selfhealth.run() Then
             failed("selfhealth failure")
