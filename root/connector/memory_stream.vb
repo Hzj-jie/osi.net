@@ -126,7 +126,7 @@ Public Module _memory_stream
                 ' File.WriteAllText may not flush the data to the disk, see
                 ' https://stackoverflow.com/questions/25366534/file-writealltext-not-flushing-data-to-disk
                 this.WriteTo(fs)
-                this.Flush()
+                fs.Flush()
             End Using
             Return True
         Catch ex As Exception
