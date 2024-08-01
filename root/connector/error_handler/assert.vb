@@ -63,7 +63,7 @@ Public Module _assert
                                 callstack()}
         ' This function should be rarely reached, the performance is less critical.
         If ignore_assertion_failure Then
-            assertion_break.at_here(error_message.p(msgs))
+            assertion_break.at_here(error_message.merge(msgs))
             ' Never reach
             Return False
         End If

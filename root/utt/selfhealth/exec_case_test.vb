@@ -11,8 +11,8 @@ Public Class exec_case_test
 
     Public Sub New(ByVal arg As String)
         MyBase.New(exec_case_exe, arg)
-        attach_receive_output(AddressOf output_received)
-        attach_receive_error(AddressOf error_received)
+        AddHandler receive_output, AddressOf output_received
+        AddHandler receive_error, AddressOf error_received
         out_rec = False
         err_rec = False
     End Sub
@@ -38,7 +38,7 @@ Public Class exec_case_test
     End Function
 End Class
 
-Public Class exec_case_test2
+Public NotInheritable Class exec_case_test2
     Inherits exec_export_case
 
     Private out_rec As Boolean
@@ -46,8 +46,8 @@ Public Class exec_case_test2
 
     Public Sub New()
         MyBase.New(exec_case_exe, "false", expected_return:=-1)
-        attach_receive_output(AddressOf output_received)
-        attach_receive_error(AddressOf error_received)
+        AddHandler receive_output, AddressOf output_received
+        AddHandler receive_error, AddressOf error_received
         out_rec = False
         err_rec = False
     End Sub
@@ -62,7 +62,7 @@ Public Class exec_case_test2
         err_rec = True
     End Sub
 
-    Public NotOverridable Overrides Function finish() As Boolean
+    Public Overrides Function finish() As Boolean
         assertion.is_false(out_rec)
         assertion.is_true(err_rec)
         Return MyBase.finish()
