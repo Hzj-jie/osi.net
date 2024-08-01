@@ -106,49 +106,29 @@ Partial Friend NotInheritable Class host
     End Sub
 
     Private Shared Function [select](ByVal selector As vector(Of String), ByVal c As case_info) As Boolean
-        If selector Is Nothing OrElse selector.empty() Then
+        If selector.null_or_empty() Then
             Return True
         End If
         assert(Not c Is Nothing)
-        Dim has_fit_true As Boolean = False
-        Dim r As Byte = 0
-        r = fit_patterns(c.name(), selector)
-        If r = pattern_match.fit_true Then
-            has_fit_true = True
-        ElseIf r = pattern_match.fit_false Then
-            Return False
-        End If
-
-        r = fit_patterns(c.full_name(), selector)
-        If r = pattern_match.fit_true Then
-            has_fit_true = True
-        ElseIf r = pattern_match.fit_false Then
-            Return False
-        End If
-
-        r = fit_patterns(c.assembly_qualified_name(), selector)
-        If r = pattern_match.fit_true Then
-            has_fit_true = True
-        ElseIf r = pattern_match.fit_false Then
-            Return False
-        End If
-
-        Return has_fit_true
+        For Each n As String In {c.name(), c.full_name(), c.assembly_qualified_name()}
+            Dim r As Byte = fit_patterns(n, selector)
+            If r = pattern_match.fit_true Then
+                Return True
+            ElseIf r = pattern_match.fit_false Then
+                Return False
+            End If
+        Next
+        Return False
     End Function
 
     Public Shared Function run(ByVal selector As vector(Of String)) As Int32
-        cases.stream().foreach(Sub(ByVal x As case_info)
-                                   x.finished = False
-                               End Sub)
         Dim r As Int32 = 0
-        cases.stream().foreach(Sub(ByVal x)
-                                   If [select](selector, x) Then
+        cases.stream().foreach(Sub(ByVal x As case_info)
+                                   x.finished = Not [select](selector, x)
+                                   If Not x.finished Then
                                        r += 1
-                                   Else
-                                       x.finished = True
                                    End If
                                End Sub)
-
         host.run()
         Return r
     End Function
