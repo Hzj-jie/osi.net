@@ -62,46 +62,46 @@ Public NotInheritable Class global_init
         End If
     End Sub
 
-    Private Shared Function not_initialized(ByVal t As Type) As Boolean
+    Private Shared Function initialized(ByVal t As Type) As Boolean
         Dim ct As New comparable_type(t)
         SyncLock inited
             If inited.find(ct) = inited.end() Then
                 assert(inited.insert(ct).second)
-                Return True
+                Return False
             End If
-            Return False
+            Return True
         End SyncLock
     End Function
 
-    Public Shared Sub execute(Optional ByVal level As Byte = global_init_level.all,
-                              Optional ByVal load_assemblies As Boolean = False)
-        If load_assemblies Then
-            AppDomain.CurrentDomain().load_all({envs.application_directory,
-                                                Environment.CurrentDirectory()})
-        End If
+    Public Shared Sub execute(Optional ByVal level As Byte = global_init_level.all)
+        initiating.wait()
         times.increment()
         Dim its(level) As vector(Of Type)
-        For Each i As Assembly In AppDomain.CurrentDomain().GetAssemblies()
-            assert(Not i Is Nothing)
-            Try
-                For Each j As Type In i.GetTypes()
-                    Dim gi As global_init_attribute = Nothing
-                    If is_global_init_type(j, gi) AndAlso
-                       assert(Not gi Is Nothing) AndAlso
-                       gi.level <= level AndAlso
-                       (Not gi.init_once OrElse
-                        not_initialized(j)) Then
-                        If its(gi.level) Is Nothing Then
-                            its(gi.level) = New vector(Of Type)()
-                        End If
-                        its(gi.level).emplace_back(j)
-                    End If
-                Next
-            Catch ex As Exception
-                raise_error("Failed to load types from assembly ", i, ", ex ", ex.details())
-            End Try
-        Next
-        initiating.wait()
+        concurrency_runner.execute(Sub(ByVal i As Assembly)
+                                       assert(Not i Is Nothing)
+                                       Try
+                                           For Each j As Type In i.GetTypes()
+                                               Dim gi As global_init_attribute = Nothing
+                                               If Not is_global_init_type(j, gi) Then
+                                                   Continue For
+                                               End If
+                                               assert(Not gi Is Nothing)
+                                               If gi.level > level Then
+                                                   Continue For
+                                               End If
+                                               If gi.init_once AndAlso initialized(j) Then
+                                                   Continue For
+                                               End If
+                                               If its(gi.level) Is Nothing Then
+                                                   its(gi.level) = New vector(Of Type)()
+                                               End If
+                                               its(gi.level).emplace_back(j)
+                                           Next
+                                       Catch ex As Exception
+                                           raise_error("Failed to load types from assembly ", i, ", ex ", ex.details())
+                                       End Try
+                                   End Sub,
+                                   AppDomain.CurrentDomain().GetAssemblies())
         For k As Int32 = 0 To level
             If its(k).null_or_empty() Then
                 Continue For

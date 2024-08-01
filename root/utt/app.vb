@@ -16,7 +16,8 @@ Public Module _app
         debugpause()
         ' - or / style switcher conflicts with negative string patterns.
         assert(envs.set_env("argument-no-short-switcher", "true"))
-        global_init.execute(load_assemblies:=True)
+        AppDomain.CurrentDomain().load_all({envs.application_directory, Environment.CurrentDirectory()})
+        global_init.execute()
         Dim start_ms As Int64 = Now().milliseconds()
         If envs.utt_no_assert Then
             error_writer_ignore_types(Of file_error_writer).ignore(constants.utt.errortype_char)
