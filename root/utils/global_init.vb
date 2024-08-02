@@ -45,7 +45,7 @@ Public NotInheritable Class global_init
                             "failed to invoke init in type ",
                             t.FullName(),
                             ", ex ",
-                            ex.Message())
+                            ex.details())
             End Try
         Else
             Using scoped.atomic_bool(suppress.alloc_error)

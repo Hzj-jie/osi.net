@@ -102,8 +102,9 @@ Public NotInheritable Class error_event
                         ByVal msg() As Object,
                         ByVal additional_jump As Int32)
         If Not when_log_and_counter_services.executed Then
+            Dim trace As String = backtrace(additional_jump + 1)
             replay_logs.add(Sub()
-                                r(err_type, err_type_char, array_concat({"replay_logs: "}, msg), additional_jump)
+                                r(err_type, err_type_char, array_concat({"replay_logs: "}, msg, {" @ ", trace}), 0)
                             End Sub)
             Return
         End If

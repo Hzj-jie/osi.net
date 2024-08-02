@@ -47,7 +47,7 @@ Partial Public NotInheritable Class var
     End Function
 
     Public Overrides Function ToString() As String
-        Dim s As StringBuilder = New StringBuilder()
+        Dim s As New StringBuilder()
         Dim it As map(Of String, vector(Of String)).iterator = raw.begin()
         While it <> raw.end()
             If (+it).second Is Nothing Then
@@ -72,7 +72,9 @@ Partial Public NotInheritable Class var
                 i += uint32_1
             End While
         End If
-        s.Remove(CInt(strlen(s) - strlen(c.argument_separator)), CInt(strlen(c.argument_separator)))
+        If s.len() >= c.argument_separator.len() Then
+            s.Remove(CInt(strlen(s) - strlen(c.argument_separator)), CInt(strlen(c.argument_separator)))
+        End If
         Return Convert.ToString(s)
     End Function
 End Class
