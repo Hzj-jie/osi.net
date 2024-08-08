@@ -17,18 +17,13 @@ Public NotInheritable Class udp_connector_test
         MyBase.New(New udp_connector_case(), 100)
     End Sub
 
-    Private Class udp_connector_case
+    Private NotInheritable Class udp_connector_case
         Inherits event_comb_case
 
-        Private ReadOnly c As connector
-
-        Public Sub New()
-            MyBase.New()
-            c = New connector(powerpoint.creator.[New]().
-                              with_host_or_ip("www.example.org").
-                              with_remote_port(10000).
-                              with_ipv4().create())
-        End Sub
+        Private ReadOnly c As New connector(powerpoint.creator.[New]().
+                                                               with_host_or_ip("www.example.org").
+                                                               with_remote_port(10000).
+                                                               with_ipv6().create())
 
         Public Overrides Function create() As event_comb
             Dim r As ref(Of delegator) = Nothing
@@ -42,9 +37,8 @@ Public NotInheritable Class udp_connector_test
                                           ec = d.get().get(r)
                                           Return waitfor(ec) AndAlso
                                                  goto_next()
-                                      Else
-                                          Return goto_end()
                                       End If
+                                      Return goto_end()
                                   End Function,
                                   Function() As Boolean
                                       If assertion.is_true(ec.end_result()) AndAlso

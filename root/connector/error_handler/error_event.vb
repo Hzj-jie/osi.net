@@ -102,8 +102,9 @@ Public NotInheritable Class error_event
                         ByVal msg() As Object,
                         ByVal additional_jump As Int32)
         If Not when_log_and_counter_services.executed Then
+            Dim trace As String = backtrace(additional_jump + 1)
             replay_logs.add(Sub()
-                                r(err_type, err_type_char, array_concat({"replay_logs: "}, msg), additional_jump)
+                                r(err_type, err_type_char, array_concat({"replay_logs: "}, msg, {" @ ", trace}), 0)
                             End Sub)
             Return
         End If
@@ -119,14 +120,14 @@ Public NotInheritable Class error_event
 
         Dim merged_msg As String = Nothing
         If r2a OrElse r3a OrElse r4a OrElse r6a Then
-            merged_msg = error_message.p(msg)
+            merged_msg = error_message.merge(msg)
         End If
         Dim full_msg As String = Nothing
         If r3a OrElse r4a OrElse r6a Then
             If merged_msg Is Nothing Then
                 assert_break()
             End If
-            full_msg = error_message.p(err_type, err_type_char, merged_msg, additional_jump + 1)
+            full_msg = error_message.full_message(err_type, err_type_char, merged_msg, additional_jump + 1)
         End If
 
         SyncLock r1lock

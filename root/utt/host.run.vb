@@ -146,17 +146,15 @@ Partial Friend NotInheritable Class host
     End Function
 
     Private Shared Function go_through_all(ByVal finished As EventWaitHandle) As Boolean
-        Dim r As Int32 = 0
         Dim new_case_started As Boolean = False
         While go_through(finished, new_case_started)
-            r += 1
             If new_case_started Then
                 new_case_started = False
             Else
-                Exit While
+                Return True
             End If
         End While
-        Return r > 0
+        Return False
     End Function
 
     Private Shared Sub wait_finish(ByVal finished As EventWaitHandle)
@@ -181,15 +179,14 @@ Partial Friend NotInheritable Class host
     End Function
 
     Public Shared Sub run()
-        expected_end_ms = nowadays.milliseconds()
-        expected_end_ms += expected_running_time_ms()
-        Dim finished As New AutoResetEvent(False)
-        While go_through_all(finished)
-            wait_finish(finished)
-        End While
-        While running_cases > 0
-            wait_finish(finished)
-        End While
-        finished.Close()
+        expected_end_ms = nowadays.milliseconds() + expected_running_time_ms()
+        Using finished As New AutoResetEvent(False)
+            While go_through_all(finished)
+                wait_finish(finished)
+            End While
+            While running_cases > 0
+                wait_finish(finished)
+            End While
+        End Using
     End Sub
 End Class

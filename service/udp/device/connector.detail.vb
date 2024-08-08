@@ -155,36 +155,33 @@ Partial Public NotInheritable Class connector
                                   If p.host_or_ip.null_or_empty() Then
                                       Return eva(r, New delegator(Nothing, new_client(Nothing))) AndAlso
                                              goto_end()
-                                  Else
-                                      result = New ref(Of IPHostEntry)()
-                                      ec = dns_cache.resolve(p.host_or_ip, result, p.response_timeout_ms)
-                                      Return waitfor(ec) AndAlso
-                                             goto_next()
                                   End If
+                                  result = New ref(Of IPHostEntry)()
+                                  ec = dns_cache.resolve(p.host_or_ip, result, p.response_timeout_ms)
+                                  Return waitfor(ec) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
-                                  If ec.end_result() AndAlso Not result.empty() Then
-                                      Dim eps() As IPEndPoint = Nothing
-                                      ReDim eps(array_size_i((+result).AddressList()) - 1)
-                                      Dim selected_remote_host As IPAddress = Nothing
-                                      For i As Int32 = 0 To array_size_i((+result).AddressList()) - 1
-                                          If Not (+result).AddressList()(i) Is Nothing Then
-                                              eps(i) = New IPEndPoint((+result).AddressList()(i), p.remote_port)
-                                              If selected_remote_host Is Nothing AndAlso
-                                                 (+result).AddressList()(i).AddressFamily() = p.address_family Then
-                                                  selected_remote_host = (+result).AddressList()(i)
-                                              End If
-                                          End If
-                                      Next
-                                      If selected_remote_host Is Nothing AndAlso
-                                         Not isemptyarray((+result).AddressList()) Then
-                                          selected_remote_host = (+result).AddressList()(0)
-                                      End If
-                                      Return eva(r, New delegator(eps, new_client(selected_remote_host), p)) AndAlso
-                                             goto_end()
-                                  Else
+                                  If Not ec.end_result() OrElse result.empty() Then
                                       Return False
                                   End If
+                                  Dim eps(array_size_i((+result).AddressList()) - 1) As IPEndPoint
+                                  Dim selected_remote_host As IPAddress = Nothing
+                                  For i As Int32 = 0 To array_size_i((+result).AddressList()) - 1
+                                      If Not (+result).AddressList()(i) Is Nothing Then
+                                          eps(i) = New IPEndPoint((+result).AddressList()(i), p.remote_port)
+                                          If selected_remote_host Is Nothing AndAlso
+                                             (+result).AddressList()(i).AddressFamily() = p.address_family Then
+                                              selected_remote_host = (+result).AddressList()(i)
+                                          End If
+                                      End If
+                                  Next
+                                  If selected_remote_host Is Nothing AndAlso
+                                     Not isemptyarray((+result).AddressList()) Then
+                                      selected_remote_host = (+result).AddressList()(0)
+                                  End If
+                                  Return eva(r, New delegator(eps, new_client(selected_remote_host), p)) AndAlso
+                                         goto_end()
                               End Function)
     End Function
 End Class

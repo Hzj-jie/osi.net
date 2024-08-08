@@ -23,7 +23,7 @@ Public Class isolate_case_wrapper
 
     Private Sub New(ByVal c As [case], ByVal timeout_ms As Int64)
         MyBase.New(envs.application_full_path,
-                   strcat("""", assert_which.of(c).is_not_null().full_name, """"),
+                   String.Concat("""", assert_which.of(c).is_not_null().full_name, """"),
                    ignore_error:=True,
                    timeout_ms:=timeout_ms,
                    expected_return:=If(envs.os.windows_major = envs.os.windows_major_t._5, 128, 0))
@@ -61,16 +61,16 @@ Public Class isolate_case_wrapper
         If Not _assert_death_msg.empty() Then
             _assert_death_msg.AppendLine(s)
         End If
-        If s.StartsWith("c, ") AndAlso s.Contains(", assert failed.") Then
+        If error_message.is_message_line(s, error_type.critical, character.null) Then
             _assert_death_msg.AppendLine(s)
             Return
         End If
-        If Not s.StartsWith("u, ") Then
+        If Not error_message.is_message_line(s, error_type.other, constants.utt.errortype_char) Then
             Return
         End If
-        If s.Contains(strcat(", start running ", c.full_name)) Then
+        If s.Contains(String.Concat(", start running ", c.full_name)) Then
             _case_started = True
-        ElseIf s.Contains(strcat(", finish running ", c.full_name)) Then
+        ElseIf s.Contains(String.Concat(", finish running ", c.full_name)) Then
             _case_finished = True
         ElseIf s.Contains(", assertion failure, ") Then
             _assertion_failures.increment()
@@ -83,8 +83,8 @@ Public Class isolate_case_wrapper
         p.start_info().EnvironmentVariables().Add("no_file_log", "1")
         p.start_info().EnvironmentVariables().Add("utt_report_case_name", "1")
         p.start_info().EnvironmentVariables().Add("strong_assert", "1")
-        attach_receive_output(AddressOf received)
-        attach_receive_error(AddressOf received)
+        AddHandler receive_output, AddressOf received
+        AddHandler receive_error, AddressOf received
         Return MyBase.init_process(p)
     End Function
 
@@ -93,8 +93,9 @@ Public Class isolate_case_wrapper
     End Function
 
     Protected Overridable Function check_results() As Boolean
-        Return assertion.is_true(_case_started) AndAlso
-               assertion.is_true(_case_finished) AndAlso
+        ' Note, assertion failures from sub process may be expected.
+        Return assertion.is_true(_case_started, "case_started") And
+               assertion.is_true(_case_finished, "case_ended") And
                _assertion_failures.get() = 0
     End Function
 
