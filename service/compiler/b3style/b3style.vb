@@ -215,7 +215,15 @@ Partial Public NotInheritable Class b3style
                 with("post-operation-value", New unary_operation_value(1, "_post")).
                 with_delegate("self-value-clause", AddressOf binary_operation_value.without_return).
                 with(Of _class)().
-                with(Of class_initializer)()
+                with(Of class_initializer)().
+ _
+                with_delegate("template",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  Dim name As String = Nothing
+                                  Dim t As scope.template_template = Nothing
+                                  Return scope.template_t.of(n, name, t) AndAlso
+                                         scope.current().template().define(name, t)
+                              End Function)
         End Function
     End Class
 End Class
