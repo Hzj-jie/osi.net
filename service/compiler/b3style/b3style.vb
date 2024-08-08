@@ -223,7 +223,9 @@ Partial Public NotInheritable Class b3style
                                   Dim t As scope.template_template = Nothing
                                   Return scope.template_t.of(n, name, t) AndAlso
                                          scope.current().template().define(name, t)
-                              End Function)
+                              End Function).
+                with(code_gen.of_first_child(Of logic_writer)("type-param-with-comma")).
+                with(code_gen.of_only_descendant_str(Of logic_writer)("type-param"))
         End Function
     End Class
 End Class

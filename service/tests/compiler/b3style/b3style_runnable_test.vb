@@ -26,7 +26,7 @@ Public NotInheritable Class b3style_runnable_test
 
     Protected Overrides Sub execute(ByVal name As String, ByVal content As String)
         Dim e As executor = Nothing
-        assertion.is_true(b3style.with_functions(New interrupts(console_io.null())).parse(content, e), name)
+        assertion.is_true(b3style.with_functions(New interrupts(console_io.null())).compile(content, e), name)
         assertion.is_not_null(e, name)
         e.assert_execute_without_errors(name)
     End Sub

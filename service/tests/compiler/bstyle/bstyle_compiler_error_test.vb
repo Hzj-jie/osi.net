@@ -18,7 +18,7 @@ Public NotInheritable Class bstyle_compiler_error_test
         assertions.of(error_event.capture_log(error_type.user,
             Sub()
                 assertion.is_false(bstyle.with_default_functions().
-                                          parse(_bstyle_test_data.errors_dot_is_disallowed_as_the_end_of_name.as_text(),
+                                          compile(_bstyle_test_data.errors_dot_is_disallowed_as_the_end_of_name.as_text(),
                                                 Nothing))
             End Sub)).contains("[syntaxer]",
                                syntaxer.debug_str("x", "raw-name"),

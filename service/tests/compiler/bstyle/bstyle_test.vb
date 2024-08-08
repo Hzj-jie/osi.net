@@ -161,7 +161,7 @@ Public NotInheritable Class bstyle_test
         Public Overrides Function at(ByRef i As console_io.test_wrapper,
                                      ByRef j As String,
                                      ByRef k As executor) As Boolean
-            Return bstyle.with_functions(New interrupts(+i)).parse(j, k)
+            Return bstyle.with_functions(New interrupts(+i)).compile(j, k)
         End Function
     End Class
 
@@ -176,7 +176,7 @@ Public NotInheritable Class bstyle_test
         Dim e As executor = Nothing
         Using bstyle.parse_wrapper.with_current_file("real__file__.txt")
             assertion.is_true(bstyle.with_functions(New interrupts(+io)).
-                                     parse(_bstyle_test_data.real__file__.as_text(), e))
+                                     compile(_bstyle_test_data.real__file__.as_text(), e))
         End Using
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
@@ -186,7 +186,7 @@ Public NotInheritable Class bstyle_test
     <test>
     Private Shared Sub predefined_def()
         Dim e As executor = Nothing
-        assertion.is_true(bstyle.with_default_functions().parse(_bstyle_test_data.predefined_def.as_text(), e))
+        assertion.is_true(bstyle.with_default_functions().compile(_bstyle_test_data.predefined_def.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
     End Sub
@@ -197,7 +197,7 @@ Public NotInheritable Class bstyle_test
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(bstyle.with_functions(New interrupts(+io)).
-                                 parse(_bstyle_test_data.func_name_with_dot.as_text(), e))
+                                 compile(_bstyle_test_data.func_name_with_dot.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output().Length(), 2)

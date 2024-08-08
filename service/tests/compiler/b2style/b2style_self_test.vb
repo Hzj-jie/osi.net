@@ -76,7 +76,7 @@ Public NotInheritable Class b2style_self_test
     Protected Overrides Function parse(ByVal functions As interrupts,
                                        ByVal content As String,
                                        ByRef e As executor) As Boolean
-        Return b2style.with_functions(functions).parse(content, e)
+        Return b2style.with_functions(functions).compile(content, e)
     End Function
 
     Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
