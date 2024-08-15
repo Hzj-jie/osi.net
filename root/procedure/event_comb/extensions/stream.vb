@@ -1,14 +1,12 @@
 
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.Runtime.CompilerServices
 Imports System.IO
-Imports System.Net.Sockets
-Imports osi.root.template
-Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.utils
-Imports osi.root.formation
-Imports osi.root.envs
 
 Public Module _stream
     <Extension()> Public Function send(ByVal s As Stream,
@@ -23,10 +21,11 @@ Public Module _stream
                                   If s Is Nothing OrElse
                                      Not s.can_write() Then
                                       Return False
-                                  ElseIf array_size(buff) < offset + count Then
+                                  End If
+                                  If array_size(buff) < offset + count Then
                                       Return False
-                                  Else
-                                      ec = New event_comb_async_operation(
+                                  End If
+                                  ec = New event_comb_async_operation(
                                                Function(ac As AsyncCallback) As IAsyncResult
                                                    Return s.BeginWrite(buff,
                                                                        CInt(offset),
@@ -37,18 +36,19 @@ Public Module _stream
                                                Sub(ar As IAsyncResult)
                                                    s.EndWrite(ar)
                                                End Sub)
-                                      Return waitfor(ec, rate_to_ms(rate_sec, count)) AndAlso
-                                             goto_next()
-                                  End If
+                                  Return waitfor(ec, rate_to_ms(rate_sec, count)) AndAlso
+                                         goto_next()
                               End Function,
                               Function() As Boolean
                                   If close_when_finish Then
+                                      s.Flush()
                                       s.Close()
                                       s.Dispose()
                                   ElseIf close_when_fail AndAlso
                                          Not ec.end_result() Then
                                       'last failure shows error
                                       Try
+                                          s.Flush()
                                           s.Close()
                                           s.Dispose()
                                       Catch
