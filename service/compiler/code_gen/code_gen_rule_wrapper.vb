@@ -146,7 +146,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         End Using
     End Function
 
-    Public MustInherit Class compiler_wrapper
+    Public MustInherit Class compile_wrapper
         Protected ReadOnly functions As interrupts
 
         Public Sub New(ByVal functions As interrupts)
@@ -166,7 +166,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         ' TODO: Move to scope?
         Public Shared Function current_file() As String
             Dim r As String = Nothing
-            If instance_stack(Of String, compiler_wrapper).back(r) Then
+            If instance_stack(Of String, compile_wrapper).back(r) Then
                 Return r
             End If
             Return "unknown_file"
@@ -175,10 +175,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         ' @VisibleForTesting
         Public Shared Function with_current_file(ByVal filename As String) As IDisposable
             assert(Not filename.empty_or_whitespace())
-            instance_stack(Of String, compiler_wrapper).current() = filename
-            Return defer.to(Sub()
-                                instance_stack(Of String, compiler_wrapper).current() = Nothing
-                            End Sub)
+            Return instance_stack(Of String, compile_wrapper).with(filename)
         End Function
 
         Public Shared Function with_current_file(ByVal filename As String,
@@ -208,6 +205,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             Return True
         End Function
 
+<<<<<<< HEAD
         Public Function generate(ByVal input As String, ByVal o As WRITER) As Boolean
             Return build(input, o)
         End Function
@@ -216,9 +214,25 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             assert(Not e Is Nothing)
             Dim o As New WRITER()
             Return generate(input, o) AndAlso import(e, o)
+=======
+        Public Function build(ByVal input As String, ByVal o As WRITER) As Boolean
+            Return code_gen_rule_wrapper(Of WRITER,
+                                            _nlexer_rule,
+                                            _syntaxer_rule,
+                                            _prefixes,
+                                            _suffixes,
+                                            _code_gens,
+                                            SCOPE_T).build(input, o)
+>>>>>>> master
         End Function
 
-        Protected MustOverride Function import(ByVal e As exportable, ByVal o As WRITER) As Boolean
+        Public Function compile(ByVal input As String, ByVal e As exportable) As Boolean
+            assert(Not e Is Nothing)
+            Dim o As New WRITER()
+            Return build(input, o) AndAlso import(o, e)
+        End Function
+
+        Protected MustOverride Function import(ByVal o As WRITER, ByVal e As exportable) As Boolean
     End Class
 
     Protected Sub New()

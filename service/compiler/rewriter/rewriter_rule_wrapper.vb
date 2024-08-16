@@ -33,20 +33,24 @@ Public Class rewriter_rule_wrapper(Of _nlexer_rule As __do(Of String),
         Return True
     End Function
 
-    Public MustInherit Shadows Class parse_wrapper
+    Public MustInherit Shadows Class compile_wrapper
         Inherits code_gen_rule_wrapper(Of typed_node_writer,
                                           _nlexer_rule,
                                           _syntaxer_rule,
                                           _prefixes,
                                           _suffixes,
                                           _rewriter_gens,
+<<<<<<< HEAD
                                           SCOPE_T).compiler_wrapper
+=======
+                                          SCOPE_T).compile_wrapper
+>>>>>>> master
         Public Sub New(ByVal functions As interrupts)
             MyBase.New(functions)
         End Sub
 
-        Protected NotOverridable Overrides Function import(ByVal e As exportable,
-                                                           ByVal o As typed_node_writer) As Boolean
+        Protected NotOverridable Overrides Function import(ByVal o As typed_node_writer,
+                                                           ByVal e As exportable) As Boolean
             assert(Not o Is Nothing)
             Return text_import(o.dump(), e)
         End Function

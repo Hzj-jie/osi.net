@@ -32,6 +32,6 @@ Public NotInheritable Class b3style_runnable_test
     End Sub
 
     Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
-        Return b2style.parse_wrapper.with_current_file(filename)
+        Return b2style.compile_wrapper.with_current_file(filename)
     End Function
 End Class

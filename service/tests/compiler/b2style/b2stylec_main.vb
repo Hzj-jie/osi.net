@@ -20,7 +20,7 @@ Public NotInheritable Class b2stylec_main
     Private Shared Sub run()
         Dim e As executor = Nothing
         Using code_block
-            Dim parser As b2style.parse_wrapper = b2style.with_default_functions()
+            Dim parser As b2style.compile_wrapper = b2style.with_default_functions()
             Dim p As _do(Of executor, Boolean) = Nothing
             If (+input).empty_or_whitespace() Then
                 p = Function(ByRef o As executor) As Boolean

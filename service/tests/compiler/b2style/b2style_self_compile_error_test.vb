@@ -70,6 +70,6 @@ Public NotInheritable Class b2style_self_compile_error_test
     End Function
 
     Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
-        Return b2style.parse_wrapper.with_current_file(filename)
+        Return b2style.compile_wrapper.with_current_file(filename)
     End Function
 End Class
