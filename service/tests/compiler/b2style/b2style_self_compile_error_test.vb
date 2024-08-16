@@ -66,10 +66,10 @@ Public NotInheritable Class b2style_self_compile_error_test
     Inherits b2style_self_compile_error_test_runner
 
     Protected Overrides Function parse(ByVal content As String, ByRef o As executor) As Boolean
-        Return b2style.with_default_functions().parse(content, o)
+        Return b2style.with_default_functions().compile(content, o)
     End Function
 
     Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
-        Return b2style.parse_wrapper.with_current_file(filename)
+        Return b2style.compile_wrapper.with_current_file(filename)
     End Function
 End Class

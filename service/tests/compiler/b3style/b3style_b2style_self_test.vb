@@ -16,7 +16,7 @@ Public NotInheritable Class b3style_b2style_self_test
     Protected Overrides Function parse(ByVal functions As interrupts,
                                        ByVal content As String,
                                        ByRef e As executor) As Boolean
-        Return New b3style.parse_wrapper(functions).parse(content, e)
+        Return New b3style.parse_wrapper(functions).compile(content, e)
     End Function
 
     Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable

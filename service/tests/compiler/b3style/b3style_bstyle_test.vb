@@ -22,7 +22,7 @@ Public NotInheritable Class b3style_bstyle_test
                                      ByRef j As String,
                                      ByRef k As executor) As Boolean
             Using b3style.disable_namespace()
-                Return b3style.with_functions(New interrupts(+i)).parse(j, k)
+                Return b3style.with_functions(New interrupts(+i)).compile(j, k)
             End Using
         End Function
     End Class
@@ -38,7 +38,7 @@ Public NotInheritable Class b3style_bstyle_test
         Dim e As executor = Nothing
         Using b3style.parse_wrapper.with_current_file("real__file__.txt")
             assertion.is_true(b3style.with_functions(New interrupts(+io)).
-                                      parse(_bstyle_test_data.real__file__.as_text(), e))
+                                      compile(_bstyle_test_data.real__file__.as_text(), e))
         End Using
         assertion.is_not_null(e)
         e.assert_execute_without_errors()

@@ -140,13 +140,13 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         End Sub
     End Class
 
-    Public Shared Function parse(ByVal input As String, ByVal o As WRITER) As Boolean
+    Protected Shared Function build(ByVal input As String, ByVal o As WRITER) As Boolean
         Using syntaxer.matching.disable_cycle_dependency_check_in_thread()
             Return builder.build(input, o)
         End Using
     End Function
 
-    Public MustInherit Class parse_wrapper
+    Public MustInherit Class compile_wrapper
         Protected ReadOnly functions As interrupts
 
         Public Sub New(ByVal functions As interrupts)
@@ -154,9 +154,9 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             Me.functions = functions
         End Sub
 
-        Public Function parse(ByVal input As String, ByRef e As executor) As Boolean
+        Public Function compile(ByVal input As String, ByRef e As executor) As Boolean
             e = New simulator(functions)
-            If parse(input, direct_cast(Of exportable)(e)) Then
+            If compile(input, direct_cast(Of exportable)(e)) Then
                 Return True
             End If
             e = Nothing
@@ -166,7 +166,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         ' TODO: Move to scope?
         Public Shared Function current_file() As String
             Dim r As String = Nothing
-            If instance_stack(Of String, parse_wrapper).back(r) Then
+            If instance_stack(Of String, compile_wrapper).back(r) Then
                 Return r
             End If
             Return "unknown_file"
@@ -175,10 +175,7 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
         ' @VisibleForTesting
         Public Shared Function with_current_file(ByVal filename As String) As IDisposable
             assert(Not filename.empty_or_whitespace())
-            instance_stack(Of String, parse_wrapper).current() = filename
-            Return defer.to(Sub()
-                                instance_stack(Of String, parse_wrapper).current() = Nothing
-                            End Sub)
+            Return instance_stack(Of String, compile_wrapper).with(filename)
         End Function
 
         Public Shared Function with_current_file(ByVal filename As String,
@@ -197,10 +194,10 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             End Using
         End Function
 
-        Public Function parse_file(ByVal filename As String, ByRef e As executor) As Boolean
+        Public Function compile_file(ByVal filename As String, ByRef e As executor) As Boolean
             Dim o As executor = Nothing
             If Not with_current_file(filename, Function(ByVal s As String) As Boolean
-                                                   Return parse(s, o)
+                                                   Return compile(s, o)
                                                End Function) Then
                 Return False
             End If
@@ -208,20 +205,23 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             Return True
         End Function
 
-        Public Function parse(ByVal input As String, ByVal e As exportable) As Boolean
-            assert(Not e Is Nothing)
-            Dim o As New WRITER()
+        Public Function build(ByVal input As String, ByVal o As WRITER) As Boolean
             Return code_gen_rule_wrapper(Of WRITER,
                                             _nlexer_rule,
                                             _syntaxer_rule,
                                             _prefixes,
                                             _suffixes,
                                             _code_gens,
-                                            SCOPE_T).parse(input, o) AndAlso
-                   import(e, o)
+                                            SCOPE_T).build(input, o)
         End Function
 
-        Protected MustOverride Function import(ByVal e As exportable, ByVal o As WRITER) As Boolean
+        Public Function compile(ByVal input As String, ByVal e As exportable) As Boolean
+            assert(Not e Is Nothing)
+            Dim o As New WRITER()
+            Return build(input, o) AndAlso import(o, e)
+        End Function
+
+        Protected MustOverride Function import(ByVal o As WRITER, ByVal e As exportable) As Boolean
     End Class
 
     Protected Sub New()

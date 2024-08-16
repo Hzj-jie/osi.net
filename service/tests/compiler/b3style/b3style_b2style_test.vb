@@ -18,7 +18,7 @@ Public NotInheritable Class b3style_b2style_test
         Public Overrides Function at(ByRef i As console_io.test_wrapper,
                                      ByRef j As String,
                                      ByRef k As executor) As Boolean
-            Return New b3style.parse_wrapper(New interrupts(+i)).parse(j, k)
+            Return New b3style.parse_wrapper(New interrupts(+i)).compile(j, k)
         End Function
     End Class
 

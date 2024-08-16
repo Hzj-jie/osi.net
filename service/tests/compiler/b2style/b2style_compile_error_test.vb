@@ -180,7 +180,7 @@ Public NotInheritable Class b2style_compile_error_test
         Inherits __do(Of String, executor, Boolean)
 
         Public Overrides Function at(ByRef j As String, ByRef k As executor) As Boolean
-            Return b2style.with_default_functions().parse(j, k)
+            Return b2style.with_default_functions().compile(j, k)
         End Function
     End Class
 

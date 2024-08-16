@@ -757,7 +757,7 @@ Public NotInheritable Class b2style_test
         Public Overrides Function at(ByRef i As console_io.test_wrapper,
                                      ByRef j As String,
                                      ByRef k As executor) As Boolean
-            Return b2style.with_functions(New interrupts(+i)).parse(j, k)
+            Return b2style.with_functions(New interrupts(+i)).compile(j, k)
         End Function
     End Class
 

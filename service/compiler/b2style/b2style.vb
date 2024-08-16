@@ -136,7 +136,7 @@ Partial Public NotInheritable Class b2style
                                              assert(Not n Is Nothing)
                                              assert(Not o Is Nothing)
                                              Return assert(
-                                                 o.append("""" + parse_wrapper.current_file().c_escape() + """"))
+                                                 o.append("""" + compile_wrapper.current_file().c_escape() + """"))
                                          End Function).
                            with(code_gen.of_input(Of typed_node_writer)("kw-func")).
                            with(code_gen.of_input(Of typed_node_writer)("kw-line")).
@@ -223,38 +223,38 @@ Partial Public NotInheritable Class b2style
         End Function
     End Class
 
-    Public Shared Function with_functions(ByVal functions As interrupts) As parse_wrapper
-        Return New parse_wrapper(functions)
+    Public Shared Function with_functions(ByVal functions As interrupts) As compile_wrapper
+        Return New compile_wrapper(functions)
     End Function
 
-    Public Shared Function with_default_functions() As parse_wrapper
+    Public Shared Function with_default_functions() As compile_wrapper
         Return with_functions(interrupts.default)
     End Function
 
-    Public NotInheritable Shadows Class parse_wrapper
+    Public NotInheritable Shadows Class compile_wrapper
         Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
                                           syntaxer_rule_t,
                                           __do.default_of(Of vector(Of Action(Of statements))),
                                           suffixes_t,
                                           rewriter_gens_t,
-                                          scope).parse_wrapper
+                                          scope).compile_wrapper
 
         Public Sub New(ByVal functions As interrupts)
             MyBase.New(functions)
         End Sub
 
         Protected Overrides Function text_import(ByVal s As String, ByVal o As exportable) As Boolean
-            Return bstyle.with_functions(functions).parse(s, o)
+            Return bstyle.with_functions(functions).compile(s, o)
         End Function
     End Class
 
-    Public NotInheritable Shadows Class parse_wrapper_b3style
+    Public NotInheritable Shadows Class compile_wrapper_b3style
         Inherits rewriter_rule_wrapper(Of nlexer_rule_t,
                                           syntaxer_rule_t,
                                           __do.default_of(Of vector(Of Action(Of statements))),
                                           suffixes_t,
                                           rewriter_gens_t,
-                                          scope).parse_wrapper
+                                          scope).compile_wrapper
 
         Public Sub New(ByVal functions As interrupts)
             MyBase.New(functions)
@@ -262,7 +262,7 @@ Partial Public NotInheritable Class b2style
 
         Protected Overrides Function text_import(ByVal s As String, ByVal o As exportable) As Boolean
             Using b3style.disable_namespace()
-                Return b3style.with_functions(functions).parse(s, o)
+                Return b3style.with_functions(functions).compile(s, o)
             End Using
         End Function
     End Class
