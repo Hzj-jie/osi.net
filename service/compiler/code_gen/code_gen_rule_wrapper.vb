@@ -205,16 +205,6 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
             Return True
         End Function
 
-<<<<<<< HEAD
-        Public Function generate(ByVal input As String, ByVal o As WRITER) As Boolean
-            Return build(input, o)
-        End Function
-
-        Public Function compile(ByVal input As String, ByVal e As exportable) As Boolean
-            assert(Not e Is Nothing)
-            Dim o As New WRITER()
-            Return generate(input, o) AndAlso import(e, o)
-=======
         Public Function build(ByVal input As String, ByVal o As WRITER) As Boolean
             Return code_gen_rule_wrapper(Of WRITER,
                                             _nlexer_rule,
@@ -223,7 +213,6 @@ Public Class code_gen_rule_wrapper(Of WRITER As New,
                                             _suffixes,
                                             _code_gens,
                                             SCOPE_T).build(input, o)
->>>>>>> master
         End Function
 
         Public Function compile(ByVal input As String, ByVal e As exportable) As Boolean

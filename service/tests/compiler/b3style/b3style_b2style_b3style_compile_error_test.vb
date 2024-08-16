@@ -16,11 +16,7 @@ Public NotInheritable Class b3style_b2style_b3style_compile_error_test
         Inherits __do(Of String, executor, Boolean)
 
         Public Overrides Function at(ByRef j As String, ByRef k As executor) As Boolean
-<<<<<<< HEAD
-            Return New b2style.parse_wrapper_b3style(interrupts.default).compile(j, k)
-=======
             Return New b2style.compile_wrapper_b3style(interrupts.default).compile(j, k)
->>>>>>> master
         End Function
     End Class
 

@@ -47,11 +47,7 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of String),
                                           _prefixes,
                                           _suffixes,
                                           _logic_gens,
-<<<<<<< HEAD
-                                          SCOPE_T).compiler_wrapper
-=======
                                           SCOPE_T).compile_wrapper
->>>>>>> master
         Public Sub New(ByVal functions As interrupts)
             MyBase.New(functions)
         End Sub
