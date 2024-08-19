@@ -255,8 +255,8 @@ Partial Public NotInheritable Class bstyle
                                                map_type(scope.normalized_type.of).
                                                full_type(),
                        parse_struct_body(n).map(AddressOf scope.struct_def.nested).
-                                            collect_to(Of vector(Of builders.parameter))() +
-                                            id)
+                                            collect_to(Of vector(Of builders.parameter))().
+                                            emplace_with(id))
         End Function
     End Class
 End Class

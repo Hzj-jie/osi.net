@@ -15,6 +15,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     Protected NotInheritable Class current_function_t
         Inherits function_signature(Of builders.parameter)
 
+        ' TODO: normalized_type.of seems wrong.
         Private Shared ReadOnly type0 As String = builders.parameter_type.of("type0").
                                                                           map_type(normalized_type.of).
                                                                           full_type()

@@ -147,7 +147,8 @@ Partial Public NotInheritable Class b3style
             End If
             assert(Not v Is Nothing)
             Return v.for_each_primitive(Function(ByVal m As builders.parameter) As Boolean
-                                            Return value_declaration.declare_primitive_type(m, o)
+                                            assert(Not m Is Nothing)
+                                            Return value_declaration.declare_primitive_type(m.non_ref_type(), m.name, o)
                                         End Function)
         End Function
 
