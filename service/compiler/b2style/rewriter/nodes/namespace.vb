@@ -40,7 +40,7 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public Shared Function in_global_namespace(ByVal i As String) As String
-                Return [of](scope.current_namespace_t.in_global_namespace(i))
+                Return [of](scope.current_namespace_t.fully_qualified_name(i))
             End Function
 
             Public Shared Function operator_function_name(ByVal operator_name As String) As String

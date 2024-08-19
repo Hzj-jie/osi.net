@@ -41,10 +41,10 @@ Partial Public NotInheritable Class b3style
                 End Sub)
             scope.current().
                   call_hierarchy().
-                  to(scope.current_namespace_t.in_global_namespace(scope.class_def.construct))
+                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.construct))
             scope.current().
                   call_hierarchy().
-                  to(scope.current_namespace_t.in_global_namespace(scope.class_def.destruct))
+                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.destruct))
             Return True
         End Function
     End Class
