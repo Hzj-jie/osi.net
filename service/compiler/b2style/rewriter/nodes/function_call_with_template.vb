@@ -22,7 +22,7 @@ Partial Public NotInheritable Class b2style
             End If
             Dim extended_type As String = Nothing
             Return scope.template_t.resolve(n.child(0), extended_type) AndAlso
-                   function_call.build(scope.current_namespace_t.in_global_namespace(
+                   function_call.build(scope.current_namespace_t.fully_qualified_name(
                        If(t.is_null(),
                           extended_type,
                           function_call.build_struct_function(t.first(), extended_type))),

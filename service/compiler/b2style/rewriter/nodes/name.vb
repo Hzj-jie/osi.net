@@ -16,7 +16,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             If n.type_name.Equals("name") AndAlso n.descentdant_of("value-declaration", "struct-body") Then
                 ' Ignore namespace prefix for variables within the structure.
-                o.append(_namespace.bstyle_format.in_global_namespace(n.input_without_ignored()))
+                o.append(_namespace.bstyle_format.fully_qualified_name(n.input_without_ignored()))
                 Return True
             End If
             If n.type_name.Equals("raw-type-name") AndAlso

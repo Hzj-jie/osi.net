@@ -40,7 +40,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not other Is Nothing)
             assert(Not f Is Nothing)
             f = f.with_class(Me)
-            scope(Of T).current().call_hierarchy().to(f.name().in_global_namespace())
+            scope(Of T).current().call_hierarchy().to(f.name().fully_qualified_name())
             Return f.with_content(f.declaration() + "{" + f.forward_to(other) + "}")
         End Function
 
@@ -206,7 +206,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               function_def.type_t.pure,
                               New StringBuilder().
                                   Append("void ").
-                                  Append(current_namespace_t.in_global_namespace(construct)).
+                                  Append(current_namespace_t.fully_qualified_name(construct)).
                                   Append("(").
                                   Append(name.name()).
                                   Append("& this){}").ToString()))
@@ -219,7 +219,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               function_def.type_t.pure,
                               New StringBuilder().
                                   Append("void ").
-                                  Append(current_namespace_t.in_global_namespace(destruct)).
+                                  Append(current_namespace_t.fully_qualified_name(destruct)).
                                   Append("(").
                                   Append(name.name()).
                                   Append("& this){}").ToString()))
