@@ -15,9 +15,14 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     Protected NotInheritable Class current_function_t
         Inherits function_signature(Of builders.parameter)
 
-        Private Shared ReadOnly type0 As String = builders.parameter_type.of("type0").
-                                                                          map_type(normalized_type.of).
-                                                                          full_type()
+        Private Shared ReadOnly type0 As String =
+            Function() As String
+                Dim t As builders.parameter_type = builders.parameter_type.of(logic.scope.type_t.zero_type)
+                If current().features().with_namespace() Then
+                    t.map_type(AddressOf current_namespace_t.in_global_namespace)
+                End If
+                Return t.full_type()
+            End Function()
 
         Public Sub New(ByVal name As String,
                        ByVal return_type As String,
