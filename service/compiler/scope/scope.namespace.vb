@@ -35,9 +35,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Dim s As stack(Of String) = current().current_namespace().s
             assert(Not s Is Nothing)
             If s.empty() Then
-                Return in_global_namespace(i)
+                Return fully_qualified_name(i)
             End If
-            Return in_global_namespace(with_namespace(s.back(), i))
+            Return fully_qualified_name(with_namespace(s.back(), i))
         End Function
 
         Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)
@@ -50,8 +50,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return tuple.of(f.Substring(0, index), f.Substring(index + namespace_separator.Length()))
         End Function
 
-        Public Shared Function in_global_namespace(ByVal n As String) As String
-            assert(current().features().with_namespace())
+        Public Shared Function fully_qualified_name(ByVal n As String) As String
+            ' This function is allowed to be nested-ly called without impacting the results.
+            ' I.e. full_qualified_name(full_qualified_name(x)) = full_qualified_name(x)
             Return with_namespace("", n)
         End Function
 

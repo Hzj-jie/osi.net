@@ -12,7 +12,7 @@ Partial Public NotInheritable Class b3style
 
         Public Shared Function operation_function_name(ByVal op As String) As String
             assert(Not op.null_or_whitespace())
-            Return scope.current_namespace_t.in_global_namespace(
+            Return scope.current_namespace_t.fully_qualified_name(
                            scope.current_namespace_t.with_namespace("b2style", op.Replace("-"c, "_"c)))
         End Function
 
