@@ -40,7 +40,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not other Is Nothing)
             assert(Not f Is Nothing)
             f = f.with_class(Me)
-            scope(Of T).current().call_hierarchy().to(f.name().in_global_namespace())
+            scope(Of T).current().call_hierarchy().to(f.name().fully_qualified_name())
             Return f.with_content(f.declaration() + "{" + f.forward_to(other) + "}")
         End Function
 

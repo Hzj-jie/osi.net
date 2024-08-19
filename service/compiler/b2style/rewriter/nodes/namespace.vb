@@ -39,13 +39,13 @@ Partial Public NotInheritable Class b2style
                 Return [of](n.input_without_ignored())
             End Function
 
-            Public Shared Function in_global_namespace(ByVal i As String) As String
+            Public Shared Function fully_qualified_name(ByVal i As String) As String
                 Return [of](scope.current_namespace_t.fully_qualified_name(i))
             End Function
 
             Public Shared Function operator_function_name(ByVal operator_name As String) As String
                 assert(Not operator_name.null_or_whitespace())
-                Return in_global_namespace(
+                Return fully_qualified_name(
                            scope.current_namespace_t.with_namespace("b2style", operator_name.Replace("-"c, "_"c)))
             End Function
 
