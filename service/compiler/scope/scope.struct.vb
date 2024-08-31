@@ -13,7 +13,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               __BUILDER As func_t(Of String, WRITER, Boolean),
                               __CODE_GENS As func_t(Of code_gens(Of WRITER)),
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
-    Protected NotInheritable Class struct_t
+    Public NotInheritable Class struct_t
         Private ReadOnly s As New unordered_map(Of String, struct_def)()
 
         ' TODO: Support value_definition
@@ -35,10 +35,24 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return True
         End Function
 
-        Public Function define(ByVal type As String, ByVal members As vector(Of builders.parameter)) As Boolean
-            assert(Not type.null_or_whitespace())
-            assert(Not members.null_or_empty())
-            assert(Not builders.parameter_type.is_ref_type(type))
+        Public Shared Function create_type_id(ByVal name As String) As builders.parameter
+            assert(Not name.null_or_whitespace())
+            Return builders.parameter.non_ref(name + "__struct__type__id__type", name + "__struct__type__id")
+        End Function
+
+        Public Function define(ByVal name As String,
+                               ByVal members As vector(Of builders.parameter),
+                               ByVal define_type As Action(Of String, UInt32)) As Boolean
+            assert(Not name.null_or_whitespace())
+            assert(Not members Is Nothing)  ' Allow empty struct
+            assert(Not define_type Is Nothing)
+            Dim full_type As String = builders.parameter_type.of(name).
+                                               map_type(normalized_type.of).
+                                               full_type()
+            assert(Not builders.parameter_type.is_ref_type(full_type))
+            Dim type_id As builders.parameter = create_type_id(name)
+            define_type(type_id.map_type(normalized_type.of).non_ref_type(), uint32_1)
+            members = members.CloneT().emplace_with(type_id)
             Dim d As New struct_def()
             Dim i As UInt32 = 0
             While i < members.size()
@@ -49,11 +63,11 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 End If
                 i += uint32_1
             End While
-            If s.emplace(type, d).second() Then
-                scope(Of T).current().type_alias().remove(type)
+            If s.emplace(full_type, d).second() Then
+                scope(Of T).current().type_alias().remove(full_type)
                 Return True
             End If
-            raise_error(error_type.user, "Struct type ", type, " has been defined already as: ", s(type))
+            raise_error(error_type.user, "Struct type ", full_type, " has been defined already as: ", s(full_type))
             Return False
         End Function
 
@@ -76,8 +90,10 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     End Class
 
     Public Structure struct_proxy
-        Public Function define(ByVal type As String, ByVal members As vector(Of builders.parameter)) As Boolean
-            Return scope(Of T).current().myself().structs().define(type, members)
+        Public Function define(ByVal type As String,
+                               ByVal members As vector(Of builders.parameter),
+                               ByVal define_type As Action(Of String, UInt32)) As Boolean
+            Return scope(Of T).current().myself().structs().define(type, members, define_type)
         End Function
 
         Public Function resolve(ByVal type As String,

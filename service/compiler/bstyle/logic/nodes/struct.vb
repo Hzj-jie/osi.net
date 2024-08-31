@@ -216,30 +216,25 @@ Partial Public NotInheritable Class bstyle
                        End Function)
         End Function
 
-        Public Shared Function create_id(ByVal name As String) As builders.parameter
-            assert(Not name.null_or_whitespace())
-            Return builders.parameter.non_ref(name + "__struct__type__id__type", name + "__struct__type__id")
-        End Function
-
         Public Shared Function parse_struct_body(ByVal n As typed_node) As stream(Of builders.parameter)
             Return n.children_of("struct-body").
-                 stream().
-                 filter(Function(ByVal c As typed_node) As Boolean
-                            assert(Not c Is Nothing)
-                            assert(c.child_count() <= 2)
-                            Return c.child_count() = 2
-                        End Function).
-                 map(Function(ByVal c As typed_node) As typed_node
-                         Return c.child(0)
-                     End Function).
-                 map(Function(ByVal c As typed_node) As builders.parameter
-                         ' TODO: Support value_definition.str_bytes_val
-                         assert(Not c Is Nothing)
-                         assert(c.type_name.Equals("value-declaration"))
-                         assert(c.child_count() = 2)
-                         Return builders.parameter.non_ref(c.child(0).input_without_ignored(),
-                                                           c.child(1).input_without_ignored())
-                     End Function)
+                     stream().
+                     filter(Function(ByVal c As typed_node) As Boolean
+                                assert(Not c Is Nothing)
+                                assert(c.child_count() <= 2)
+                                Return c.child_count() = 2
+                            End Function).
+                     map(Function(ByVal c As typed_node) As typed_node
+                             Return c.child(0)
+                         End Function).
+                     map(Function(ByVal c As typed_node) As builders.parameter
+                             ' TODO: Support value_definition.str_bytes_val
+                             assert(Not c Is Nothing)
+                             assert(c.type_name.Equals("value-declaration"))
+                             assert(c.child_count() = 2)
+                             Return builders.parameter.non_ref(c.child(0).input_without_ignored(),
+                                                               c.child(1).input_without_ignored())
+                         End Function)
         End Function
 
         Private Function build(ByVal n As typed_node,
@@ -247,16 +242,15 @@ Partial Public NotInheritable Class bstyle
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
-            Dim id As builders.parameter = create_id(n.child(1).word().str())
-            assert(builders.of_type(id.map_type(scope.normalized_type.of).
-                                       non_ref_type(), uint32_1).to(o))
             Return scope.current().structs().define(
                        builders.parameter_type.of(n.child(1).word().str()).
                                                map_type(scope.normalized_type.of).
                                                full_type(),
                        parse_struct_body(n).map(AddressOf scope.struct_def.nested).
-                                            collect_to(Of vector(Of builders.parameter))().
-                                            emplace_with(id))
+                                            collect_to(Of vector(Of builders.parameter))(),
+                       Sub(ByVal type As String, ByVal size As UInt32)
+                           assert(builders.of_type(type, size).to(o))
+                       End Sub)
         End Function
     End Class
 End Class
