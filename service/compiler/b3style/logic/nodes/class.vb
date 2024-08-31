@@ -67,7 +67,7 @@ Partial Public NotInheritable Class b3style
                                  Return False
                              End If
                              cd.inherit_from(bcd).
-                                with_var(bstyle.struct.create_id(t.second()))
+                                with_var(scope.struct_t.create_type_id(t.second()))
                              Return True
                          End Function).
                      aggregate(bool_stream.aggregators.all_true) Then
