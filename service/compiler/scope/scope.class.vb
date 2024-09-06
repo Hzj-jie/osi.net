@@ -52,5 +52,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             raise_error(error_type.user, "Class ", name, " has not been defined.")
             Return False
         End Function
+
+        Public Function is_defined(ByVal name As String) As Boolean
+            Return resolve(name, Nothing)
+        End Function
     End Structure
 End Class

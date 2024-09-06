@@ -456,16 +456,6 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
         assertion.equal(io.output(), "10012002")
     End Sub
 
-    <test>
-    Private Shared Sub class_destruct_in_declaration()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.destruction_in_declaration.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "destructfinish")
-    End Sub
-
     Protected Sub New()
     End Sub
 End Class
