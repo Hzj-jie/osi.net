@@ -17,19 +17,29 @@ Partial Public NotInheritable Class b3style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 2)
-            Return build(n.child(0), n.child(1), o)
+            Dim type As String = n.child(0).input_without_ignored()
+            Dim name As String = value_definition.name_of(n.child(1))
+            If struct.define_in_stack(type, name, o) Then
+                If scope.current().classes().is_defined(type) Then
+                    ' No extra parameters to call the constructor.
+                    value_list.with_empty()
+                    Return class_initializer.construct_and_destruct(name, o)
+                End If
+                Return True
+            End If
+            Return declare_primitive_type(type, name, o)
         End Function
 
-        Public Shared Function build(ByVal type As typed_node,
-                                     ByVal name As typed_node,
-                                     ByVal o As logic_writer) As Boolean
+        Public Shared Function [of](ByVal type As typed_node,
+                                    ByVal name As typed_node,
+                                    ByVal o As logic_writer) As Boolean
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
             Dim t As String = type.input_without_ignored()
             Dim n As String = value_definition.name_of(name)
-            Return struct.define_in_stack(t, n, o) OrElse
-                   declare_primitive_type(t, n, o)
+            Return struct.define_in_stack(t, n, o) OrElse declare_primitive_type(t, n, o)
         End Function
+
 
         Public Shared Function declare_struct_type(ByVal type As typed_node,
                                                    ByVal name As typed_node,
@@ -37,12 +47,6 @@ Partial Public NotInheritable Class b3style
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
             Return struct.define_in_stack(type.input_without_ignored(), value_definition.name_of(name), o)
-        End Function
-
-        Public Shared Function declare_primitive_type(ByVal m As builders.parameter,
-                                                      ByVal o As logic_writer) As Boolean
-            assert(Not m Is Nothing)
-            Return declare_primitive_type(m.non_ref_type(), m.name, o)
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,
