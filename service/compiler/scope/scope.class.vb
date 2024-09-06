@@ -54,7 +54,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function is_defined(ByVal name As String) As Boolean
-            Return resolve(name, Nothing)
+            ' It's not very relevant, but b3style can serve as bstyle without namespace and class supported.
+            Return scope(Of T).current().features().with_namespace() AndAlso
+                   resolve(name, Nothing)
         End Function
     End Structure
 End Class
