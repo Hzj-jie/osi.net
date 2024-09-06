@@ -18,6 +18,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     Partial Public NotInheritable Class class_def
         Public Const construct As String = "construct"
         Public Const destruct As String = "destruct"
+        ' This is not a bug, it should always use the void in the global namespace, rather than the one in
+        ' current namespace as function_type_of does.
+        Private Shared ReadOnly void_type As name_with_namespace = name_with_namespace.of_global_namespace("void")
+        Private Shared ReadOnly construct_name As name_with_namespace = function_name_of(construct)
+        Private Shared ReadOnly destruct_name As name_with_namespace = function_name_of(destruct)
+
         Private ReadOnly name As name_with_namespace
         ' The type-name pair directly passes to bstyle/struct.
         Private ReadOnly _vars As New vector(Of builders.parameter)()
@@ -199,35 +205,29 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                           with_func(parse_function(node, t.second(), Nothing))
                       End Sub)
             If Not has_constructor Then
-                ' This is not a bug, it should always use the void in the global namespace, rather than the one in
-                ' current namespace as function_type_of does.
-                Dim ft As name_with_namespace = name_with_namespace.of_global_namespace("void")
-                Dim fn As name_with_namespace = function_name_of(construct)
                 with_func(New function_def(
                               Me,
-                              ft,
-                              fn,
+                              void_type,
+                              construct_name,
                               function_def.type_t.pure,
                               New StringBuilder().
-                                  Append(ft.fully_qualified_name()).
+                                  Append(void_type.fully_qualified_name()).
                                   Append(" ").
-                                  Append(fn.fully_qualified_name()).
+                                  Append(construct_name.fully_qualified_name()).
                                   Append("(").
                                   Append(name.name()).
                                   Append("& this){}").ToString()))
             End If
             If Not has_destructor Then
-                Dim ft As name_with_namespace = name_with_namespace.of_global_namespace("void")
-                Dim fn As name_with_namespace = function_name_of(destruct)
                 with_func(New function_def(
                               Me,
-                              ft,
-                              fn,
+                              void_type,
+                              destruct_name,
                               function_def.type_t.pure,
                               New StringBuilder().
-                                  Append(ft.fully_qualified_name()).
+                                  Append(void_type.fully_qualified_name()).
                                   Append(" ").
-                                  Append(fn.fully_qualified_name()).
+                                  Append(destruct_name.fully_qualified_name()).
                                   Append("(").
                                   Append(name.name()).
                                   Append("& this){}").ToString()))
