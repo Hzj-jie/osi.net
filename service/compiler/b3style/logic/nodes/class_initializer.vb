@@ -10,16 +10,7 @@ Partial Public NotInheritable Class b3style
     Private NotInheritable Class class_initializer
         Implements code_gen(Of logic_writer)
 
-        Public Shared Function construct_and_destruct(ByVal name As String, ByVal o As logic_writer) As Boolean
-            assert(Not name.null_or_whitespace())
-            assert(Not o Is Nothing)
-
-            If Not function_call.without_return(b2style.function_call.build_struct_function(
-                                                    name,
-                                                    scope.class_def.construct),
-                                                o) Then
-                Return False
-            End If
+        Public Shared Sub destruct(ByVal name As String, ByVal o As logic_writer)
             ' Functions are always in global namespace.
             ' Use of this function should only be in the !_disable_namespace.
             scope.current().when_end_scope(
@@ -32,10 +23,24 @@ Partial Public NotInheritable Class b3style
                 End Sub)
             scope.current().
                   call_hierarchy().
-                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.construct))
+                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.destruct))
+        End Sub
+
+        Public Shared Function construct_and_destruct(ByVal name As String, ByVal o As logic_writer) As Boolean
+            assert(Not name.null_or_whitespace())
+            assert(Not o Is Nothing)
+
+            If Not function_call.without_return(b2style.function_call.build_struct_function(
+                                                    name,
+                                                    scope.class_def.construct),
+                                                o) Then
+                Return False
+            End If
             scope.current().
                   call_hierarchy().
-                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.destruct))
+                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.construct))
+
+            destruct(name, o)
             Return True
         End Function
 
