@@ -12,45 +12,34 @@ Partial Public NotInheritable Class b3style
     Private NotInheritable Class value_declaration
         Implements code_gen(Of logic_writer)
 
-        Private Shared Function build(ByVal n As typed_node,
-                                      ByVal class_construct As Func(Of String, Boolean),
-                                      ByVal o As logic_writer) As Boolean
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
-            assert(Not class_construct Is Nothing)
             assert(Not o Is Nothing)
-            assert(n.child_count() >= 2)
+            assert(n.child_count() = 2)
             Dim type As String = n.child(0).input_without_ignored()
             Dim name As String = value_definition.name_of(n.child(1))
             If struct.define_in_stack(type, name, o) Then
                 If scope.current().classes().is_defined(type) Then
-                    If class_construct(name) Then
-                        class_initializer.destruct(name, o)
-                        Return True
-                    End If
-                    Return False
+                    ' No extra parameters to call the constructor.
+                    value_list.with_empty()
+                    Return class_initializer.construct_and_destruct(name, o)
                 End If
                 Return True
             End If
             Return declare_primitive_type(type, name, o)
         End Function
 
-        Private Function build(ByVal n As typed_node,
-                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            Return build(n,
-                         Function(ByVal name As String) As Boolean
-                             value_list.with_empty()
-                             Return class_initializer.construct(name, o)
-                         End Function,
-                         o)
+        Public Shared Function [of](ByVal type As typed_node,
+                                    ByVal name As typed_node,
+                                    ByVal o As logic_writer) As Boolean
+            assert(Not type Is Nothing)
+            assert(Not name Is Nothing)
+            Dim t As String = type.input_without_ignored()
+            Dim n As String = value_definition.name_of(name)
+            Return struct.define_in_stack(t, n, o) OrElse declare_primitive_type(t, n, o)
         End Function
 
-        Public Shared Function [of](ByVal n As typed_node, ByVal o As logic_writer) As Boolean
-            Return build(n,
-                         Function(ByVal name As String) As Boolean
-                             Return True
-                         End Function,
-                         o)
-        End Function
 
         Public Shared Function declare_struct_type(ByVal type As typed_node,
                                                    ByVal name As typed_node,
