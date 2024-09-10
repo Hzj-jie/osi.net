@@ -10,7 +10,7 @@ Partial Public NotInheritable Class b3style
     Private NotInheritable Class class_initializer
         Implements code_gen(Of logic_writer)
 
-        Public Shared Function construct_and_destruct(ByVal name As String, ByVal o As logic_writer) As Boolean
+        Public Shared Function construct(ByVal name As String, ByVal o As logic_writer) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not o Is Nothing)
 
@@ -20,6 +20,14 @@ Partial Public NotInheritable Class b3style
                                                 o) Then
                 Return False
             End If
+            scope.current().
+                  call_hierarchy().
+                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.construct))
+
+            Return True
+        End Function
+
+        Public Shared Sub destruct(ByVal name As String, ByVal o As logic_writer)
             ' Functions are always in global namespace.
             ' Use of this function should only be in the !_disable_namespace.
             scope.current().when_end_scope(
@@ -32,12 +40,8 @@ Partial Public NotInheritable Class b3style
                 End Sub)
             scope.current().
                   call_hierarchy().
-                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.construct))
-            scope.current().
-                  call_hierarchy().
                   to(scope.current_namespace_t.fully_qualified_name(scope.class_def.destruct))
-            Return True
-        End Function
+        End Sub
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
@@ -53,7 +57,12 @@ Partial Public NotInheritable Class b3style
                 Return False
             End If
 
-            Return construct_and_destruct(n.child(1).input_without_ignored(), o)
+            Dim name As String = n.child(1).input_without_ignored()
+            If construct(name, o) Then
+                destruct(name, o)
+                Return True
+            End If
+            Return False
         End Function
     End Class
 End Class
