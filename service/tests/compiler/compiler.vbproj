@@ -216,6 +216,7 @@
     <Content Include="b2style\self-test\virtual-function-compile-only.txt" />
     <Content Include="b2style\self-test\void-variable.txt" />
     <Content Include="b2style\self-test\__file__.txt" />
+    <Content Include="b3style\codegen\destruction_in_definition.txt" />
     <Content Include="b3style\runnable\bstyle-case1.txt" />
     <Content Include="b3style\runnable\empty-main.txt" />
     <Content Include="b3style\runnable\function-call.txt" />
