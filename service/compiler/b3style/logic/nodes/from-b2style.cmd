@@ -4,6 +4,7 @@ setlocal
 path %PATH%;..\..\..\..\..\root\codegen\sed;
 
 call :run class
+call :run function.template
 
 exit /b 0
 
