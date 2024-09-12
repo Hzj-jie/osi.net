@@ -238,7 +238,9 @@ Partial Public NotInheritable Class b3style
                 with_delegate("raw-type-name",
                               Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
                                   Return o.append(n.input_without_ignored())
-                              End Function)
+                              End Function).
+                with(code_gen.of_first_child(Of logic_writer)("type-name-with-comma")).
+                with(Of template_type_name)()
         End Function
     End Class
 End Class

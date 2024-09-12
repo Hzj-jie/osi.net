@@ -63,6 +63,7 @@
     <Compile Include="b2style\b2style_lib.vb" />
     <Compile Include="b2style\rewriter\nodes\function.template.vb" />
     <Compile Include="b2style\rewriter\nodes\function_call_with_template.param_types.vb" />
+    <Compile Include="b2style\rewriter\nodes\template_type_name.template.vb" />
     <Compile Include="b2style\rewriter\nodes\unary_operation_value.vb" />
     <Compile Include="b3style\b3style_lib.vb" />
     <Compile Include="b3style\logic\nodes\biguint.vb" />
@@ -96,6 +97,8 @@
     <Compile Include="b3style\logic\nodes\static_cast.vb" />
     <Compile Include="b3style\logic\nodes\string.vb" />
     <Compile Include="b3style\logic\nodes\struct.vb" />
+    <Compile Include="b3style\logic\nodes\template_type_name.template.vb" />
+    <Compile Include="b3style\logic\nodes\template_type_name.vb" />
     <Compile Include="b3style\logic\nodes\ufloat.vb" />
     <Compile Include="b3style\logic\nodes\unary_operation_value.vb" />
     <Compile Include="b3style\logic\nodes\value_clause.vb" />
