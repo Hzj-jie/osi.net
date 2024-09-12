@@ -7,6 +7,7 @@ call :run class
 call :run function.template
 call :run function_call_with_template
 call :run function_name_with_template
+call :run delegate_with_semi_colon
 
 exit /b 0
 

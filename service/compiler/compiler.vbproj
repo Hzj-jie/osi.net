@@ -72,6 +72,7 @@
     <Compile Include="b3style\logic\nodes\class_initializer.vb" />
     <Compile Include="b3style\logic\nodes\condition.vb" />
     <Compile Include="b3style\logic\nodes\delegate.vb" />
+    <Compile Include="b3style\logic\nodes\delegate_with_semi_colon.vb" />
     <Compile Include="b3style\logic\nodes\for_loop.vb" />
     <Compile Include="b3style\logic\nodes\function.template.vb" />
     <Compile Include="b3style\logic\nodes\function.vb" />

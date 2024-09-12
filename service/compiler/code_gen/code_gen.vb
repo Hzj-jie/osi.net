@@ -135,6 +135,7 @@ Partial Public NotInheritable Class code_gens(Of WRITER As New)
             While i < n.child_count()
                 Dim s As String = Nothing
                 If Not l.of(n.child(i)).dump(s) Then
+                    raise_error(error_type.warning, "Failed to dump ", n.child(i).input())
                     Return False
                 End If
                 o.emplace_back(s)

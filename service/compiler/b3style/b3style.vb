@@ -83,7 +83,6 @@ Partial Public NotInheritable Class b3style
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of logic_writer)))
             Return New code_gens_registrar(Of logic_writer)().
                 with_of_only_childs(
-                    "root-type",
                     "base-root-type",
                     "include",
                     "typedef-type",
@@ -96,7 +95,8 @@ Partial Public NotInheritable Class b3style
                     "for-increase",
                     "base-for-increase",
                     "unary-operation-value",
-                    "ignore-result-function-call-with-template"
+                    "ignore-result-function-call-with-template",
+                    "type-name"
                 ).
                 with_of_all_childrens(
                     "paramtypelist",
@@ -228,7 +228,17 @@ Partial Public NotInheritable Class b3style
                 with(code_gen.of_first_child(Of logic_writer)("type-param-with-comma")).
                 with(code_gen.of_only_descendant_str(Of logic_writer)("type-param")).
                 with(Of function_call_with_template)().
-                with(Of function_name_with_template)()
+                with(Of function_name_with_template)().
+                with_delegate("root-type",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  scope.current().root_type_injector()._new(o)
+                                  Return code_gen_of(n.child()).build(o)
+                              End Function).
+                with(Of delegate_with_semi_colon)().
+                with_delegate("raw-type-name",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  Return o.append(n.input_without_ignored())
+                              End Function)
         End Function
     End Class
 End Class
