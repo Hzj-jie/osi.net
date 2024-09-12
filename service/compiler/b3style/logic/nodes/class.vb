@@ -60,14 +60,13 @@ Partial Public NotInheritable Class b3style
                Not code_gens().of_all_children(n.child(2).child(1)).
                      dump().
                      stream().
-                     with_index().
-                     map(Function(ByVal t As tuple(Of UInt32, String)) As Boolean
+                     map(Function(ByVal t As String) As Boolean
                              Dim bcd As scope.class_def = Nothing
-                             If Not scope.current().classes().resolve(t.second(), bcd) Then
+                             If Not scope.current().classes().resolve(t, bcd) Then
                                  Return False
                              End If
                              cd.inherit_from(bcd).
-                                with_var(scope.struct_t.create_type_id(t.second()))
+                                with_var(scope.struct_t.create_type_id(t))
                              Return True
                          End Function).
                      aggregate(bool_stream.aggregators.all_true) Then
