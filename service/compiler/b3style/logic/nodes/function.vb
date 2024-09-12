@@ -10,7 +10,7 @@ Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class b3style
-    Partial Private NotInheritable Class _function
+    Private NotInheritable Class _function
         Implements code_gen(Of logic_writer)
 
         Private Shared remove_unused_functions As argument(Of Boolean)

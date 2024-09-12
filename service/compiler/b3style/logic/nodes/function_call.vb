@@ -47,10 +47,12 @@ Partial Public NotInheritable Class b3style
             End Using
         End Function
 
-        Private Shared Function build(ByVal n As typed_node,
+        Private Shared Function build(ByVal name As String,
+                                      ByVal n As typed_node,
                                       ByVal o As logic_writer,
                                       ByVal build_caller As Func(Of String, vector(Of String), Boolean),
                                       ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
+            assert(Not name.null_or_whitespace())
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 3)
@@ -59,7 +61,22 @@ Partial Public NotInheritable Class b3style
             ElseIf Not code_gen_of(n.child(2)).build(o) Then
                 Return False
             End If
-            Return build(n.child(0).input_without_ignored(), build_caller, build_caller_ref, o)
+            Return build(name, build_caller, build_caller_ref, o)
+        End Function
+
+        Public Shared Function build(ByVal name As String,
+                                     ByVal n As typed_node,
+                                     ByVal o As logic_writer) As Boolean
+            Return build(name, n, o, caller_builder(o), caller_ref_builder(o))
+        End Function
+
+        Private Shared Function build(ByVal n As typed_node,
+                                      ByVal o As logic_writer,
+                                      ByVal build_caller As Func(Of String, vector(Of String), Boolean),
+                                      ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
+            assert(Not n Is Nothing)
+            assert(n.child_count() > 0)
+            Return build(n.child(0).input_without_ignored(), n, o, build_caller, build_caller_ref)
         End Function
 
         Private Shared Function without_return_caller_builder(ByVal o As logic_writer) _

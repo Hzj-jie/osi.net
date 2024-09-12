@@ -62,6 +62,7 @@
     <Compile Include="b2style\b2style.vb" />
     <Compile Include="b2style\b2style_lib.vb" />
     <Compile Include="b2style\rewriter\nodes\function.template.vb" />
+    <Compile Include="b2style\rewriter\nodes\function_call_with_template.param_types.vb" />
     <Compile Include="b2style\rewriter\nodes\unary_operation_value.vb" />
     <Compile Include="b3style\b3style_lib.vb" />
     <Compile Include="b3style\logic\nodes\biguint.vb" />
@@ -75,6 +76,9 @@
     <Compile Include="b3style\logic\nodes\function.template.vb" />
     <Compile Include="b3style\logic\nodes\function.vb" />
     <Compile Include="b3style\logic\nodes\function_call.vb" />
+    <Compile Include="b3style\logic\nodes\function_call_with_template.param_types.vb" />
+    <Compile Include="b3style\logic\nodes\function_call_with_template.vb" />
+    <Compile Include="b3style\logic\nodes\function_name_with_template.vb" />
     <Compile Include="b3style\logic\nodes\heap_declaration.vb" />
     <Compile Include="b3style\logic\nodes\heap_name.vb" />
     <Compile Include="b3style\logic\nodes\includes.vb" />

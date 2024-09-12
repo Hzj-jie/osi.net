@@ -95,7 +95,8 @@ Partial Public NotInheritable Class b3style
                     "variable-name",
                     "for-increase",
                     "base-for-increase",
-                    "unary-operation-value"
+                    "unary-operation-value",
+                    "ignore-result-function-call-with-template"
                 ).
                 with_of_all_childrens(
                     "paramtypelist",
@@ -222,10 +223,12 @@ Partial Public NotInheritable Class b3style
                                   Dim name As String = Nothing
                                   Dim t As scope.template_template = Nothing
                                   Return scope.template_t.of(n, name, t) AndAlso
-                                         scope.current().template().define(name, t)
+                                            scope.current().template().define(name, t)
                               End Function).
                 with(code_gen.of_first_child(Of logic_writer)("type-param-with-comma")).
-                with(code_gen.of_only_descendant_str(Of logic_writer)("type-param"))
+                with(code_gen.of_only_descendant_str(Of logic_writer)("type-param")).
+                with(Of function_call_with_template)().
+                with(Of function_name_with_template)()
         End Function
     End Class
 End Class
