@@ -9,7 +9,7 @@ Imports osi.root.constants
 
 <global_init(global_init_level.log_and_counter_services)>
 Public NotInheritable Class file_error_writer
-    Private Shared ReadOnly writer As log_writer = New log_writer()
+    Private Shared ReadOnly writer As New log_writer()
 
     Private NotInheritable Class log_writer
         Inherits application_info_writer

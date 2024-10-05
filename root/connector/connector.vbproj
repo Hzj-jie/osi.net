@@ -82,6 +82,7 @@
     <Compile Include="error_handler\assert_which.uint32.vb" />
     <Compile Include="error_handler\assert_which.uint64.vb" />
     <Compile Include="error_handler\assert_which.vb" />
+    <Compile Include="error_handler\error_context.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.endian.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.fixed.vb" />
     <Compile Include="functor\bytes_serializer\bytes_serializer.object.vb" />

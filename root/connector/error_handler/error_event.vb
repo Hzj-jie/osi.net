@@ -121,6 +121,10 @@ Public NotInheritable Class error_event
         Dim merged_msg As String = Nothing
         If r2a OrElse r3a OrElse r4a OrElse r6a Then
             merged_msg = error_message.merge(msg)
+            Dim context As String = error_context.current()
+            If Not context Is Nothing Then
+                merged_msg = String.Concat("[", context, "]", merged_msg)
+            End If
         End If
         Dim full_msg As String = Nothing
         If r3a OrElse r4a OrElse r6a Then
