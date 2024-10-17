@@ -17,10 +17,9 @@ Public MustInherit Class b2style_self_compile_error_test_runner
 
     Private Const error_prefix As String = "// ERROR: "
     Private Const error_pattern_prefix As String = "// ERROR PATTERN: "
-    Private Shared filter As argument(Of String)
 
     Public Sub New()
-        MyBase.New(filter Or "*", b2style_self_compile_error_cases.data)
+        MyBase.New(b2style_self_compile_error_cases.data)
     End Sub
 
     <test>
