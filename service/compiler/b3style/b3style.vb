@@ -96,7 +96,8 @@ Partial Public NotInheritable Class b3style
                     "base-for-increase",
                     "unary-operation-value",
                     "ignore-result-function-call-with-template",
-                    "type-name"
+                    "type-name",
+                    "paramtype"
                 ).
                 with_of_all_childrens(
                     "paramtypelist",
@@ -112,7 +113,6 @@ Partial Public NotInheritable Class b3style
                 with(code_gen.of_first_child(Of logic_writer)("paramtype-with-comma")).
                 with(code_gen.of_children(Of logic_writer)("else-condition", 1)).
                 with(code_gen.of_children(Of logic_writer)("value-with-bracket", 1)).
-                with(code_gen.of_input_without_ignored(Of logic_writer)("paramtype")).
  _
                 with(Of bstyle.logic)().
                 with(Of bstyle.typedef_type_name)().
