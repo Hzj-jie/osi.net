@@ -96,13 +96,13 @@ Partial Public NotInheritable Class b3style
                     "base-for-increase",
                     "unary-operation-value",
                     "ignore-result-function-call-with-template",
-                    "type-name",
-                    "paramtype"
+                    "type-name"
                 ).
                 with_of_all_childrens(
                     "paramtypelist",
                     "raw-value",
                     "paramlist",
+                    "paramtype",
                     "value-with-operation"
                 ).
                 with(code_gen.of_ignore_last_child(Of logic_writer)("root-type-with-semi-colon")).
@@ -113,6 +113,7 @@ Partial Public NotInheritable Class b3style
                 with(code_gen.of_first_child(Of logic_writer)("paramtype-with-comma")).
                 with(code_gen.of_children(Of logic_writer)("else-condition", 1)).
                 with(code_gen.of_children(Of logic_writer)("value-with-bracket", 1)).
+                with(code_gen.of_only_descendant_str(Of logic_writer)("reference")).
  _
                 with(Of bstyle.logic)().
                 with(Of bstyle.typedef_type_name)().
@@ -237,7 +238,7 @@ Partial Public NotInheritable Class b3style
                 with(Of delegate_with_semi_colon)().
                 with_delegate("raw-type-name",
                               Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
-                                  Return o.append(n.input_without_ignored())
+                                  Return o.append(scope.normalized_type.of(n.input_without_ignored()))
                               End Function).
                 with(code_gen.of_first_child(Of logic_writer)("type-name-with-comma")).
                 with(Of template_type_name)()
