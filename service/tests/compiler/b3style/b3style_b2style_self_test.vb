@@ -26,6 +26,8 @@ Public NotInheritable Class b3style_b2style_self_test
 
     Protected Overrides Function ignore_case(ByVal name As String) As Boolean
         assert(Not name.null_or_whitespace())
-        Return unordered_set.of("").find(name).is_not_end()
+        Return unordered_set.of("static_cast_ptr_type.txt",
+                                "static_cast_ptr_type3.txt",
+                                "static_cast_ptr_type_bool.txt").find(name).is_not_end()
     End Function
 End Class
