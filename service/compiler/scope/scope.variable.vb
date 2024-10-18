@@ -179,6 +179,21 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return False
         End Function
 
+        Private Function resolve(ByVal name As String,
+                                 ByRef type As String,
+                                 ByVal signature As ref(Of function_signature),
+                                 ByRef fully_qualified_name As String) As Boolean
+            If try_resolve(name, type, signature, fully_qualified_name) Then
+                Return True
+            End If
+            raise_error(error_type.user, "Variable ", name, " has not been defined.")
+            Return False
+        End Function
+
+        Public Function type_of(ByVal name As String, ByRef type As String) As Boolean
+            Return resolve(name, type, Nothing, Nothing)
+        End Function
+
         Public Function resolve(ByVal name As String,
                                 ByRef type As String,
                                 ByRef fully_qualified_name As String) As Boolean
@@ -187,13 +202,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
         Public Function resolve(ByVal name As String,
                                 ByRef type As String,
-                                ByVal signature As ref(Of function_signature),
-                                ByRef fully_qualified_name As String) As Boolean
-            If try_resolve(name, type, signature, fully_qualified_name) Then
-                Return True
-            End If
-            raise_error(error_type.user, "Variable ", name, " has not been defined.")
-            Return False
+                                ByVal signature As ref(Of function_signature)) As Boolean
+            Return resolve(name, type, signature, Nothing)
         End Function
 
         Public Shared Function define() As Func(Of typed_node, Boolean)

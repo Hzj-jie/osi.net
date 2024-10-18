@@ -20,12 +20,13 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
 
             Dim type As String = Nothing
-            If Not scope.current().variables().resolve(name, type) Then
+            Dim fully_qualified_name As String = Nothing
+            If Not scope.current().variables().resolve(name, type, fully_qualified_name) Then
                 Return False
             End If
             Dim ps As scope.struct_def = Nothing
-            If Not scope.current().structs().resolve(type, name, ps) Then
-                ps = scope.struct_def.of_primitive(type, name)
+            If Not scope.current().structs().resolve(type, fully_qualified_name, ps) Then
+                ps = scope.struct_def.of_primitive(type, fully_qualified_name)
             End If
             Return handle(type, ps.primitives())
         End Function
