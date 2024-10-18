@@ -32,11 +32,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return vs
         End Function
 
-        Public Sub with_value(ByVal type As String, ByVal v As String)
-            assert(Not v.null_or_whitespace())
-            with_value(type, vector.emplace_of(v))
-        End Sub
-
         Public Function value() As read_scoped(Of target).ref
             Return values.pop()
         End Function
@@ -89,7 +84,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End If
             Dim name As String = current().temp_logic_name().variable()
             define_primitive_type_temp_target(type, name)
-            with_value(type, name)
+            with_value(type, vector.emplace_of(name))
             Return vector.emplace_of(name)
         End Function
 
