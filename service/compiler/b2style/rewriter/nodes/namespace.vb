@@ -45,8 +45,8 @@ Partial Public NotInheritable Class b2style
 
             Public Shared Function operator_function_name(ByVal operator_name As String) As String
                 assert(Not operator_name.null_or_whitespace())
-                Return fully_qualified_name(
-                           scope.current_namespace_t.with_namespace("b2style", operator_name.Replace("-"c, "_"c)))
+                Return [of](scope.current_namespace_t.fully_qualified_name("b2style",
+                                                                           operator_name.Replace("-"c, "_"c)))
             End Function
 
             Private Sub New()

@@ -68,7 +68,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                     ' It will trigger the assertion failure anyway if not type_alias is provided.
                     t = builders.parameter_type.of(t).map_type(normalized_type.of).full_type()
                     assert(Not current().structs().types().defined(t))
-                    assert(Not current().variables().try_resolve(n, Nothing))
+                    assert(Not current().variables().defined(n))
                     assert(current().variables().define(t, n))
                     assert(builders.of_define(n, t).to(o))
                 End Sub

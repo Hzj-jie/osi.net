@@ -18,6 +18,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     Protected NotInheritable Class variable_t
         ' name -> type
         Private ReadOnly s As New unordered_map(Of String, String)()
+        Private ReadOnly n As String = current_namespace_t.full_namespace()
 
         Private Function define(ByVal type As String,
                                 ByVal name As String,
@@ -29,7 +30,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
             ' where the variable_t instance Is being defined.
             type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
-            name = current_namespace_t.of(name)
             assert(Not builders.parameter_type.is_ref_type(type))
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
@@ -63,17 +63,21 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function undefine(ByVal name As String) As Boolean
-            name = current_namespace_t.of(name)
             assert(Not name.null_or_whitespace())
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
             Return s.erase(name)
         End Function
 
-        Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-            name = current_namespace_t.of(name)
+        Public Function resolve(ByVal name As String,
+                                ByRef type As String,
+                                ByRef fully_qualified_name As String) As Boolean
             assert(Not name.null_or_whitespace())
-            Return s.find(name, type)
+            If s.find(name, type) Then
+                fully_qualified_name = current_namespace_t.of(n, name)
+                Return True
+            End If
+            Return False
         End Function
     End Class
 
@@ -144,13 +148,14 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return True
         End Function
 
-        Public Function try_resolve(ByVal name As String, ByRef type As String) As Boolean
-            Return try_resolve(name, type, Nothing)
+        Public Function defined(ByVal name As String) As Boolean
+            Return try_resolve(name, Nothing, Nothing, Nothing)
         End Function
 
         Private Function try_resolve(ByVal name As String,
                                      ByRef type As String,
-                                     ByVal signature As ref(Of function_signature)) As Boolean
+                                     ByVal signature As ref(Of function_signature),
+                                     ByRef fully_qualified_name As String) As Boolean
             ' logic_name.of_function_call requires type of the parameter to set function name.
             If variable.is_heap_name(name) Then
                 name = name.Substring(0, name.IndexOf(character.left_mid_bracket))
@@ -158,7 +163,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
             Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
-                If Not s.myself().variables().resolve(name, type) Then
+                If Not s.myself().variables().resolve(name, type, fully_qualified_name) Then
                     s = s.parent
                     Continue While
                 End If
@@ -174,14 +179,17 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return False
         End Function
 
-        Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-            Return resolve(name, type, Nothing)
+        Public Function resolve(ByVal name As String,
+                                ByRef type As String,
+                                ByRef fully_qualified_name As String) As Boolean
+            Return resolve(name, type, Nothing, fully_qualified_name)
         End Function
 
         Public Function resolve(ByVal name As String,
                                 ByRef type As String,
-                                ByVal signature As ref(Of function_signature)) As Boolean
-            If try_resolve(name, type, signature) Then
+                                ByVal signature As ref(Of function_signature),
+                                ByRef fully_qualified_name As String) As Boolean
+            If try_resolve(name, type, signature, fully_qualified_name) Then
                 Return True
             End If
             raise_error(error_type.user, "Variable ", name, " has not been defined.")
