@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.constructor
 Imports typed_node_writer = osi.service.compiler.rewriters.typed_node_writer
@@ -26,9 +25,7 @@ Partial Public NotInheritable Class b2style
         <inject_constructor>
         Public Sub New(ByVal parent As scope)
             MyBase.New(parent)
-            assert(Not parent Is Nothing)
-
-            ' Need to use current_namespace_t.
+            ' Need to use current_namespace_t
             v = New variable_t()
         End Sub
 
@@ -40,7 +37,7 @@ Partial Public NotInheritable Class b2style
             d = New define_t()
             i = New root_type_injector_t()
 
-            ' Need to use current_namespace_t.
+            ' Need to use current_namespace_t
             v = New variable_t()
 
             defines().define("B2STYLE")
