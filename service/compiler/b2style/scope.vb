@@ -18,7 +18,7 @@ Partial Public NotInheritable Class b2style
         Private ReadOnly cn As current_namespace_t
         Private f As String
         Private ReadOnly t As New template_t()
-        Private ReadOnly v As New variable_t()
+        Private ReadOnly v As variable_t
         Private ReadOnly d As define_t
         Private ReadOnly c As New class_t()
         Private ReadOnly i As root_type_injector_t
@@ -26,15 +26,22 @@ Partial Public NotInheritable Class b2style
         <inject_constructor>
         Public Sub New(ByVal parent As scope)
             MyBase.New(parent)
+            assert(Not parent Is Nothing)
+
+            ' Need to use current_namespace_t.
+            v = New variable_t()
         End Sub
 
         Public Sub New()
-            Me.New(Nothing)
+            MyBase.New(Nothing)
             incs = New includes_t()
             fc = New call_hierarchy_t()
             cn = New current_namespace_t()
             d = New define_t()
             i = New root_type_injector_t()
+
+            ' Need to use current_namespace_t.
+            v = New variable_t()
 
             defines().define("B2STYLE")
         End Sub
