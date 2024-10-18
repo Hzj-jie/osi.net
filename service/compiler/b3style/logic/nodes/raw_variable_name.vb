@@ -21,12 +21,10 @@ Partial Public NotInheritable Class b3style
         Implements code_gen(Of logic_writer)
 
         Private Shared Function build(ByVal name As String,
-                                      ByVal struct_handle As Func(Of String, stream(Of builders.parameter), Boolean),
-                                      ByVal primitive_type_handle As Func(Of String, String, Boolean),
+                                      ByVal handle As Func(Of String, stream(Of builders.parameter), Boolean),
                                       ByVal o As logic_writer) As Boolean
             assert(Not name.null_or_whitespace())
-            assert(Not struct_handle Is Nothing)
-            assert(Not primitive_type_handle Is Nothing)
+            assert(Not handle Is Nothing)
             assert(Not o Is Nothing)
 
             Dim type As String = Nothing
@@ -34,28 +32,23 @@ Partial Public NotInheritable Class b3style
                 Return False
             End If
             Dim ps As scope.struct_def = Nothing
-            If scope.current().structs().resolve(type, name, ps) Then
-                Return struct_handle(type, ps.primitives())
+            If Not scope.current().structs().resolve(type, name, ps) Then
+                ps = scope.struct_def.of_primitive(type, name)
             End If
-            Return primitive_type_handle(type, name)
+            Return handle(type, ps.primitives())
         End Function
 
         Public Shared Function build(ByVal n As typed_node,
-                                     ByVal struct_handle As Func(Of String, stream(Of builders.parameter), Boolean),
-                                     ByVal primitive_type_handle As Func(Of String, String, Boolean),
+                                     ByVal handle As Func(Of String, stream(Of builders.parameter), Boolean),
                                      ByVal o As logic_writer) As Boolean
             assert(Not n Is Nothing)
-            Return build(n.input_without_ignored(), struct_handle, primitive_type_handle, o)
+            Return build(n.input_without_ignored(), handle, o)
         End Function
 
         Public Shared Function build(ByVal name As String, ByVal o As logic_writer) As Boolean
             Return build(name,
                          Function(ByVal type As String, ByVal ps As stream(Of builders.parameter)) As Boolean
                              scope.current().value_target().with_value(type, ps)
-                             Return True
-                         End Function,
-                         Function(ByVal type As String, ByVal source As String) As Boolean
-                             scope.current().value_target().with_value(type, source)
                              Return True
                          End Function,
                          o)

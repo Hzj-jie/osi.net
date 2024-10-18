@@ -22,11 +22,6 @@ Partial Public NotInheritable Class b3style
                                                scope.current().value_target().with_value(type, ps)
                                                Return True
                                            End Function,
-                                           Function(ByVal type As String,
-                                                    ByVal source As String) As Boolean
-                                               scope.current().value_target().with_value(type, source)
-                                               Return True
-                                           End Function,
                                            o)
         End Function
     End Class

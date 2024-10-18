@@ -69,14 +69,6 @@ Partial Public NotInheritable Class b3style
                                                            End Function))
                                             Return True
                                         End Function,
-                                        Function(ByVal type As String, ByVal source As String) As Boolean
-                                            scope.
-                                                current().
-                                                value_target().
-                                                with_value(
-                                                    type, variable.name_of(source, indexstr))
-                                            Return True
-                                        End Function,
                                         o)
                          End Function)
         End Function
