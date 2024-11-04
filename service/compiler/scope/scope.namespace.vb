@@ -46,6 +46,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Shared Function [of](ByVal n As String, ByVal i As String) As String
             assert(Not i.null_or_whitespace())
             assert(n Is Nothing OrElse n.StartsWith(namespace_separator))
+            If Not current().features().with_namespace() Then
+                Return i
+            End If
+            If i.StartsWith(namespace_separator) Then
+                Return i
+            End If
             Return assert_fully_qualified_name(String.Concat(n, namespace_separator, i))
         End Function
 
