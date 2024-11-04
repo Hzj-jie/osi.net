@@ -57,7 +57,7 @@ Partial Public NotInheritable Class b2style
                                ByVal o As typed_node_writer) As Boolean Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() >= 4)
-            Using scope.current().current_namespace().define(n.child(1).word().str())
+            Using scope.current().current_namespace().define(scope.current_namespace_t.of(n.child(1).word().str()))
                 For i As UInt32 = 3 To n.child_count() - uint32_2
                     If Not code_gen_of(n.child(i)).build(o) Then
                         Return False

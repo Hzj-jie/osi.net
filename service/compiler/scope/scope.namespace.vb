@@ -13,15 +13,16 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               __CODE_GENS As func_t(Of code_gens(Of WRITER)),
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Public NotInheritable Class current_namespace_t
-        Private ReadOnly s As New vector(Of String)()
+        Private ReadOnly s As New stack(Of String)()
 
         Public Function define(ByVal name As String) As IDisposable
             assert(Not name.null_or_whitespace())
             assert(current().features().with_namespace())
-            s.emplace_back(name)
+            assert(name.StartsWith(namespace_separator))
+            s.emplace(name)
             Return defer.to(Sub()
                                 assert(Not s.empty())
-                                s.pop_back()
+                                s.pop()
                             End Sub)
         End Function
 
@@ -31,9 +32,11 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             If Not current().features().with_namespace() Then
                 Return Nothing
             End If
-            Dim s As vector(Of String) = current().current_namespace().s
-            assert(Not s Is Nothing)
-            Return assert_fully_qualified_name(String.Concat(namespace_separator, s.str(namespace_separator)))
+            Dim s As stack(Of String) = current().current_namespace().s
+            If s.empty() Then
+                Return Nothing
+            End If
+            Return s.back()
         End Function
 
         Public Shared Function [of](ByVal i As String) As String
@@ -43,9 +46,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Shared Function [of](ByVal n As String, ByVal i As String) As String
             assert(Not i.null_or_whitespace())
             assert(n Is Nothing OrElse n.StartsWith(namespace_separator))
-            If n Is Nothing OrElse i.StartsWith(namespace_separator) Then
-                Return i
-            End If
             Return assert_fully_qualified_name(String.Concat(n, namespace_separator, i))
         End Function
 
