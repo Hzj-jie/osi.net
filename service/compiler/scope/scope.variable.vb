@@ -16,30 +16,37 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               __CODE_GENS As func_t(Of code_gens(Of WRITER)),
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Protected NotInheritable Class variable_t
-        ' name -> <type, fully_qualifed_name>
-        Private ReadOnly s As New unordered_map(Of String, tuple(Of String, String))()
+        ' name -> type
+        Private ReadOnly s As New unordered_map(Of String, String)()
+
+        Private Shared Function normalize_name(ByVal name As String) As String
+            assert(Not name.null_or_whitespace())
+            If scope(Of T).current().current_function().defined() Then
+                Return name
+            End If
+            Return current_namespace_t.of(name)
+        End Function
 
         Private Function define(ByVal type As String,
                                 ByVal name As String,
-                                ByVal insert As Func(Of String, tuple(Of String, String), Boolean)) As Boolean
+                                ByVal insert As Func(Of String, String, Boolean)) As Boolean
             assert(Not type.null_or_whitespace())
-            assert(Not name.null_or_whitespace())
             assert(Not insert Is Nothing)
             ' TODO: May consider using builders.parameter.
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
             ' where the variable_t instance Is being defined.
             type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
+            assert(Not type.null_or_whitespace())
+            name = normalize_name(name)
+            assert(Not name.null_or_whitespace())
             assert(Not builders.parameter_type.is_ref_type(type))
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
-            If scope(Of T).current().current_function().defined() Then
-                Return insert(name, tuple.emplace_of(type, name))
-            End If
-            Return insert(name, tuple.emplace_of(type, current_namespace_t.of(name)))
+            Return insert(name, type)
         End Function
 
         Public Function define(ByVal type As String, ByVal name As String) As Boolean
-            If define(type, name, Function(ByVal n As String, ByVal t As tuple(Of String, String)) As Boolean
+            If define(type, name, Function(ByVal n As String, ByVal t As String) As Boolean
                                       Return s.emplace(n, t).second()
                                   End Function) Then
                 Return True
@@ -55,7 +62,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
-            Return define(type, name, Function(ByVal n As String, ByVal t As tuple(Of String, String)) As Boolean
+            Return define(type, name, Function(ByVal n As String, ByVal t As String) As Boolean
                                           If s.find(n) = s.end() Then
                                               Return False
                                           End If
@@ -65,23 +72,17 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function undefine(ByVal name As String) As Boolean
+            name = normalize_name(name)
             assert(Not name.null_or_whitespace())
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
             Return s.erase(name)
         End Function
 
-        Public Function resolve(ByVal name As String,
-                                ByRef type As String,
-                                ByRef fully_qualified_name As String) As Boolean
+        Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
+            name = normalize_name(name)
             assert(Not name.null_or_whitespace())
-            Dim t As tuple(Of String, String) = Nothing
-            If s.find(name, t) Then
-                type = t.first()
-                fully_qualified_name = t.second()
-                Return True
-            End If
-            Return False
+            Return s.find(name, type)
         End Function
     End Class
 
@@ -153,13 +154,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function defined(ByVal name As String) As Boolean
-            Return try_resolve(name, Nothing, Nothing, Nothing)
+            Return try_resolve(name, Nothing, Nothing)
         End Function
 
         Private Function try_resolve(ByVal name As String,
                                      ByRef type As String,
-                                     ByVal signature As ref(Of function_signature),
-                                     ByRef fully_qualified_name As String) As Boolean
+                                     ByVal signature As ref(Of function_signature)) As Boolean
             ' logic_name.of_function_call requires type of the parameter to set function name.
             If variable.is_heap_name(name) Then
                 name = name.Substring(0, name.IndexOf(character.left_mid_bracket))
@@ -167,7 +167,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
             Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
-                If Not s.myself().variables().resolve(name, type, fully_qualified_name) Then
+                If Not s.myself().variables().resolve(name, type) Then
                     s = s.parent
                     Continue While
                 End If
@@ -183,31 +183,22 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return False
         End Function
 
-        Private Function resolve(ByVal name As String,
-                                 ByRef type As String,
-                                 ByVal signature As ref(Of function_signature),
-                                 ByRef fully_qualified_name As String) As Boolean
-            If try_resolve(name, type, signature, fully_qualified_name) Then
-                Return True
-            End If
-            raise_error(error_type.user, "Variable ", name, " has not been defined.")
-            Return False
-        End Function
-
         Public Function type_of(ByVal name As String, ByRef type As String) As Boolean
-            Return resolve(name, type, Nothing, Nothing)
+            Return resolve(name, type, Nothing)
         End Function
 
-        Public Function resolve(ByVal name As String,
-                                ByRef type As String,
-                                ByRef fully_qualified_name As String) As Boolean
-            Return resolve(name, type, Nothing, fully_qualified_name)
+        Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
+            Return resolve(name, type, Nothing)
         End Function
 
         Public Function resolve(ByVal name As String,
                                 ByRef type As String,
                                 ByVal signature As ref(Of function_signature)) As Boolean
-            Return resolve(name, type, signature, Nothing)
+            If try_resolve(name, type, signature) Then
+                Return True
+            End If
+            raise_error(error_type.user, "Variable ", name, " has not been defined.")
+            Return False
         End Function
 
         Public Shared Function define() As Func(Of typed_node, Boolean)

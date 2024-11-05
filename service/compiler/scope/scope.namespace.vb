@@ -28,28 +28,23 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
         Public Const namespace_separator As String = "::"
 
-        Public Shared Function full_namespace() As String
-            If Not current().features().with_namespace() Then
-                Return Nothing
-            End If
-            Dim s As stack(Of String) = current().current_namespace().s
-            If s.empty() Then
-                Return Nothing
-            End If
-            Return s.back()
-        End Function
-
         Public Shared Function [of](ByVal i As String) As String
             assert(Not i.null_or_whitespace())
-            Dim n As String = full_namespace()
-            assert(n Is Nothing OrElse n.StartsWith(namespace_separator))
             If Not current().features().with_namespace() Then
                 Return i
             End If
             If i.StartsWith(namespace_separator) Then
                 Return i
             End If
-            Return assert_fully_qualified_name(String.Concat(n, namespace_separator, i))
+            Dim n As String = Nothing
+            Dim s As stack(Of String) = current().current_namespace().s
+            If Not s.empty() Then
+                n = s.back()
+            End If
+            assert(n Is Nothing OrElse n.StartsWith(namespace_separator))
+            Dim r As String = String.Concat(n, namespace_separator, i)
+            assert(String.Equals(r, fully_qualified_name(r)))
+            Return r
         End Function
 
         Public Shared Function of_namespace_and_name(ByVal i As String) As tuple(Of String, String)
@@ -60,12 +55,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 Return tuple.of("", f)
             End If
             Return tuple.of(f.Substring(0, index), f.Substring(index + namespace_separator.Length()))
-        End Function
-
-        Private Shared Function assert_fully_qualified_name(ByVal s As String) As String
-            assert(Not s.null_or_whitespace())
-            assert(String.Equals(s, fully_qualified_name(s)))
-            Return s
         End Function
 
         ' This function is allowed to be nested-ly called without impacting the results.

@@ -33,7 +33,7 @@ Partial Public NotInheritable Class b3style
         End Sub
 
         Public Sub New()
-            MyBase.New(Nothing)
+            Me.New(Nothing)
             incs = New includes_t()
             fc = New call_hierarchy_t()
             d = New define_t()
