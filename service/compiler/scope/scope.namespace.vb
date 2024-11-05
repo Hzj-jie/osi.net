@@ -40,11 +40,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Shared Function [of](ByVal i As String) As String
-            Return [of](full_namespace(), i)
-        End Function
-
-        Public Shared Function [of](ByVal n As String, ByVal i As String) As String
             assert(Not i.null_or_whitespace())
+            Dim n As String = full_namespace()
             assert(n Is Nothing OrElse n.StartsWith(namespace_separator))
             If Not current().features().with_namespace() Then
                 Return i

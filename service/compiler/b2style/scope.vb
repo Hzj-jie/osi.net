@@ -17,7 +17,7 @@ Partial Public NotInheritable Class b2style
         Private ReadOnly cn As current_namespace_t
         Private f As String
         Private ReadOnly t As New template_t()
-        Private ReadOnly v As variable_t
+        Private ReadOnly v As New variable_t()
         Private ReadOnly d As define_t
         Private ReadOnly c As New class_t()
         Private ReadOnly i As root_type_injector_t
@@ -25,8 +25,6 @@ Partial Public NotInheritable Class b2style
         <inject_constructor>
         Public Sub New(ByVal parent As scope)
             MyBase.New(parent)
-            ' Need to use current_namespace_t
-            v = New variable_t()
         End Sub
 
         Public Sub New()
@@ -36,9 +34,6 @@ Partial Public NotInheritable Class b2style
             cn = New current_namespace_t()
             d = New define_t()
             i = New root_type_injector_t()
-
-            ' Need to use current_namespace_t
-            v = New variable_t()
 
             defines().define("B2STYLE")
         End Sub
@@ -109,6 +104,10 @@ Partial Public NotInheritable Class b2style
             Inherits scope(Of typed_node_writer, code_builder_proxy, code_gens_proxy, scope).features_t
 
             Public Overrides Function with_type_alias() As Boolean
+                Return False
+            End Function
+
+            Public Overrides Function with_current_function() As Boolean
                 Return False
             End Function
         End Class

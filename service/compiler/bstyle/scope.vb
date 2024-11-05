@@ -15,7 +15,7 @@ Partial Public NotInheritable Class bstyle
         Private ReadOnly d As define_t
         Private ReadOnly ta As New type_alias_t()
         Private ReadOnly s As New struct_t()
-        Private ReadOnly v As variable_t
+        Private ReadOnly v As New variable_t()
         Private ReadOnly f As function_t
         Private ReadOnly vt As New value_target_t()
         Private ReadOnly ps As New params_t()
@@ -26,9 +26,6 @@ Partial Public NotInheritable Class bstyle
         <inject_constructor>
         Public Sub New(ByVal parent As scope)
             MyBase.New(parent)
-
-            ' Need to use current_namespace_t
-            v = New variable_t()
         End Sub
 
         Public Sub New()
@@ -38,9 +35,6 @@ Partial Public NotInheritable Class bstyle
             d = New define_t()
             f = New function_t()
             t = New temp_logic_name_t()
-
-            ' Need to use current_namespace_t
-            v = New variable_t()
 
             defines().define("BSTYLE")
         End Sub

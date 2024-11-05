@@ -55,6 +55,10 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return [optional].of(s.myself().current_function())
         End Function
 
+        Public Function defined() As Boolean
+            Return scope(Of T).current().features().with_current_function() AndAlso Not current_function().empty()
+        End Function
+
         Public Function allow_return_value() As Boolean
             Return (+current_function()).allow_return_value()
         End Function

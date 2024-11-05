@@ -16,13 +16,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               __CODE_GENS As func_t(Of code_gens(Of WRITER)),
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     Protected NotInheritable Class variable_t
-        ' name -> type
-        Private ReadOnly s As New unordered_map(Of String, String)()
-        Private ReadOnly my_namespace As String = current_namespace_t.full_namespace()
+        ' name -> <type, fully_qualifed_name>
+        Private ReadOnly s As New unordered_map(Of String, tuple(Of String, String))()
 
         Private Function define(ByVal type As String,
                                 ByVal name As String,
-                                ByVal insert As Func(Of String, String, Boolean)) As Boolean
+                                ByVal insert As Func(Of String, tuple(Of String, String), Boolean)) As Boolean
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
             assert(Not insert Is Nothing)
@@ -33,11 +32,14 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not builders.parameter_type.is_ref_type(type))
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
-            Return insert(name, type)
+            If scope(Of T).current().current_function().defined() Then
+                Return insert(name, tuple.emplace_of(type, name))
+            End If
+            Return insert(name, tuple.emplace_of(type, current_namespace_t.of(name)))
         End Function
 
         Public Function define(ByVal type As String, ByVal name As String) As Boolean
-            If define(type, name, Function(ByVal n As String, ByVal t As String) As Boolean
+            If define(type, name, Function(ByVal n As String, ByVal t As tuple(Of String, String)) As Boolean
                                       Return s.emplace(n, t).second()
                                   End Function) Then
                 Return True
@@ -53,7 +55,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
-            Return define(type, name, Function(ByVal n As String, ByVal t As String) As Boolean
+            Return define(type, name, Function(ByVal n As String, ByVal t As tuple(Of String, String)) As Boolean
                                           If s.find(n) = s.end() Then
                                               Return False
                                           End If
@@ -73,8 +75,10 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                                 ByRef type As String,
                                 ByRef fully_qualified_name As String) As Boolean
             assert(Not name.null_or_whitespace())
-            If s.find(name, type) Then
-                fully_qualified_name = current_namespace_t.of(my_namespace, name)
+            Dim t As tuple(Of String, String) = Nothing
+            If s.find(name, t) Then
+                type = t.first()
+                fully_qualified_name = t.second()
                 Return True
             End If
             Return False
