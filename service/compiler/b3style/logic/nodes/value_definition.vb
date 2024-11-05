@@ -10,19 +10,6 @@ Partial Public NotInheritable Class b3style
     Private NotInheritable Class value_definition
         Implements code_gen(Of logic_writer)
 
-        Public Shared Function name_of(ByVal r As String) As String
-            assert(Not r.null_or_whitespace())
-            If _disable_namespace OrElse Not scope.current().is_root() Then
-                Return r
-            End If
-            Return scope.current_namespace_t.of(r)
-        End Function
-
-        Public Shared Function name_of(ByVal n As typed_node) As String
-            assert(Not n Is Nothing)
-            Return name_of(n.input_without_ignored())
-        End Function
-
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)

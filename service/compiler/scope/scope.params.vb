@@ -17,12 +17,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
         Public Sub pack(ByVal n As stream(Of builders.parameter))
             assert(Not n Is Nothing)
-            pack(n.to_array())
-        End Sub
-
-        Public Sub pack(ByVal n() As builders.parameter)
-            assert(Not n Is Nothing)
-            v.emplace_back(n)
+            v.emplace_back(n.to_array())
         End Sub
 
         Public Function unpack() As vector(Of builders.parameter)
