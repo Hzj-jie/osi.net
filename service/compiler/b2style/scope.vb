@@ -106,10 +106,6 @@ Partial Public NotInheritable Class b2style
             Public Overrides Function with_type_alias() As Boolean
                 Return False
             End Function
-
-            Public Overrides Function with_current_function() As Boolean
-                Return False
-            End Function
         End Class
     End Class
 End Class

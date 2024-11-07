@@ -31,9 +31,5 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Overridable Function with_namespace() As Boolean
             Return True
         End Function
-
-        Public Overridable Function with_current_function() As Boolean
-            Return True
-        End Function
     End Class
 End Class
