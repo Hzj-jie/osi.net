@@ -82,6 +82,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End If
             ' name can be null to check the availability of a struct definition.
             If Not name Is Nothing Then
+                name = current_namespace_t.of(name)
                 assert(Not name.null_or_whitespace())
                 o = o.append_prefix(name)
             End If
