@@ -19,7 +19,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Function() As String
                 Dim t As builders.parameter_type = builders.parameter_type.of(logic.scope.type_t.zero_type)
                 If current().features().with_namespace() Then
-                    t.map_type(AddressOf current_namespace_t.fully_qualified_name)
+                    t.map_type(AddressOf namespace_t.fully_qualified_name)
                 End If
                 Return t.full_type()
             End Function()

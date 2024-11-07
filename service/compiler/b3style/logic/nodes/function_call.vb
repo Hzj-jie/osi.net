@@ -34,7 +34,7 @@ Partial Public NotInheritable Class b3style
                         Return False
                     End If
                     parameters = (+scope.current().value_target().value()).names + parameters
-                    function_name = scope.current_namespace_t.fully_qualified_name(struct_func.second())
+                    function_name = scope.namespace_t.fully_qualified_name(struct_func.second())
                 Else
                     function_name = _function.name_of(raw_function_name)
                 End If

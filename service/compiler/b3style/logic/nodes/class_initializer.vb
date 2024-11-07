@@ -22,7 +22,7 @@ Partial Public NotInheritable Class b3style
             End If
             scope.current().
                   call_hierarchy().
-                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.construct))
+                  to(scope.namespace_t.fully_qualified_name(scope.class_def.construct))
 
             Return True
         End Function
@@ -40,7 +40,7 @@ Partial Public NotInheritable Class b3style
                 End Sub)
             scope.current().
                   call_hierarchy().
-                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.destruct))
+                  to(scope.namespace_t.fully_qualified_name(scope.class_def.destruct))
         End Sub
 
         Private Function build(ByVal n As typed_node,

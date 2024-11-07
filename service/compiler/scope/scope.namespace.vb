@@ -43,7 +43,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End If
             assert(n Is Nothing OrElse n.StartsWith(namespace_separator))
             Dim r As String = String.Concat(n, namespace_separator, i)
-            assert(String.Equals(r, fully_qualified_name(r)))
+            assert(String.Equals(r, namespace_t.fully_qualified_name(r)))
             Return r
         End Function
 
@@ -56,26 +56,31 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End If
             Return tuple.of(f.Substring(0, index), f.Substring(index + namespace_separator.Length()))
         End Function
+    End Class
 
+    Public NotInheritable Class namespace_t
         ' This function is allowed to be nested-ly called without impacting the results.
         ' I.e. fully_qualified_name(fully_qualified_name(x)) = fully_qualified_name(x)
         Public Shared Function fully_qualified_name(ByVal n As String) As String
             assert(current().features().with_namespace())
             assert(Not n.null_or_whitespace())
-            If n.StartsWith(namespace_separator) Then
+            If n.StartsWith(current_namespace_t.namespace_separator) Then
                 Return n
             End If
-            Return String.Concat(namespace_separator, n)
+            Return String.Concat(current_namespace_t.namespace_separator, n)
         End Function
 
         Public Shared Function fully_qualified_name(ByVal n As String, ByVal i As String) As String
             assert(current().features().with_namespace())
             assert(Not i.null_or_whitespace())
             assert(n.null_or_empty() OrElse Not n.null_or_whitespace())
-            If i.StartsWith(namespace_separator) Then
+            If i.StartsWith(current_namespace_t.namespace_separator) Then
                 Return i
             End If
-            Return fully_qualified_name(String.Concat(n, namespace_separator, i))
+            Return fully_qualified_name(String.Concat(n, current_namespace_t.namespace_separator, i))
         End Function
+
+        Private Sub New()
+        End Sub
     End Class
 End Class
