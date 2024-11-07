@@ -40,13 +40,12 @@ Partial Public NotInheritable Class b2style
             End Function
 
             Public Shared Function fully_qualified_name(ByVal i As String) As String
-                Return [of](scope.current_namespace_t.fully_qualified_name(i))
+                Return [of](scope.namespace_t.fully_qualified_name(i))
             End Function
 
             Public Shared Function operator_function_name(ByVal operator_name As String) As String
                 assert(Not operator_name.null_or_whitespace())
-                Return [of](scope.current_namespace_t.fully_qualified_name("b2style",
-                                                                           operator_name.Replace("-"c, "_"c)))
+                Return [of](scope.namespace_t.fully_qualified_name("b2style", operator_name.Replace("-"c, "_"c)))
             End Function
 
             Private Sub New()

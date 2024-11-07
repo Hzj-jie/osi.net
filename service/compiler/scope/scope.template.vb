@@ -86,7 +86,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                     End If
                 End Using
             End If
-            extended_type_name = current_namespace_t.fully_qualified_name(
+            extended_type_name = namespace_t.fully_qualified_name(
                                      name.namespace(),
                                      d.extended_type_name(types))
             Return ternary.true

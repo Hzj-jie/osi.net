@@ -43,10 +43,10 @@ Partial Public NotInheritable Class b2style
                 End Sub)
             scope.current().
                   call_hierarchy().
-                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.construct))
+                  to(scope.namespace_t.fully_qualified_name(scope.class_def.construct))
             scope.current().
                   call_hierarchy().
-                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.destruct))
+                  to(scope.namespace_t.fully_qualified_name(scope.class_def.destruct))
             Return True
         End Function
     End Class

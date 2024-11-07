@@ -30,7 +30,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function fully_qualified_name() As String
-            Return current_namespace_t.fully_qualified_name([namespace](), name())
+            Return namespace_t.fully_qualified_name([namespace](), name())
         End Function
     End Structure
 End Class

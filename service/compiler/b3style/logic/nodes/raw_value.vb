@@ -29,7 +29,7 @@ Partial Public NotInheritable Class b3style
             assert(Not code_type.null_or_whitespace())
             assert(Not o Is Nothing)
             If Not _disable_namespace Then
-                code_type = scope.current_namespace_t.fully_qualified_name(code_type)
+                code_type = scope.namespace_t.fully_qualified_name(code_type)
             End If
             Return compiler.logic.builders.of_copy_const(
                         scope.current().value_target().with_temp_target(code_type, o).only(), i).to(o)
