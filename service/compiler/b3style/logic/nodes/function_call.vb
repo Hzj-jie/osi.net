@@ -23,7 +23,7 @@ Partial Public NotInheritable Class b3style
             Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
                 Dim function_name As String = value_definition.name_of(raw_function_name)
                 Dim parameters As vector(Of String) = +targets
-                If scope.current().variables().try_resolve(function_name, Nothing) Then
+                If scope.current().variables().defined(function_name) Then
                     Return build_caller_ref(function_name, parameters)
                 End If
 

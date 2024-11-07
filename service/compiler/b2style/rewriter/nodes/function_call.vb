@@ -42,7 +42,7 @@ Partial Public NotInheritable Class b2style
 
             Dim p As tuple(Of String, String) = Nothing
             If Not split_struct_function(name, p) Then
-                If scope.current().variables().try_resolve(name, Nothing) Then
+                If scope.current().variables().defined(name) Then
                     ' This should be a delegate function call.
                     Return code_gens().of_all_children(n).build(o)
                 End If
