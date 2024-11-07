@@ -21,9 +21,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
         Private Shared Function normalize_name(ByVal name As String) As String
             assert(Not name.null_or_whitespace())
-            If scope(Of T).current().current_function().defined() Then
-                Return name
-            End If
+            'If scope(Of T).current().current_function().defined() Then
+            '    Return name
+            'End If
             Return current_namespace_t.of(name)
         End Function
 
