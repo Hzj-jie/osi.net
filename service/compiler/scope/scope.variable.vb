@@ -19,14 +19,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         ' name -> type
         Private ReadOnly s As New unordered_map(Of String, String)()
 
-        Private Shared Function normalize_name(ByVal name As String) As String
-            assert(Not name.null_or_whitespace())
-            'If scope(Of T).current().current_function().defined() Then
-            '    Return name
-            'End If
-            Return current_namespace_t.of(name)
-        End Function
-
         Private Function define(ByVal type As String,
                                 ByVal name As String,
                                 ByVal insert As Func(Of String, String, Boolean)) As Boolean
@@ -37,7 +29,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             ' where the variable_t instance Is being defined.
             type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
             assert(Not type.null_or_whitespace())
-            name = normalize_name(name)
+            name = current_namespace_t.of(name)
             assert(Not name.null_or_whitespace())
             assert(Not builders.parameter_type.is_ref_type(type))
             ' The name should not be an array with index.
@@ -72,7 +64,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function undefine(ByVal name As String) As Boolean
-            name = normalize_name(name)
+            name = current_namespace_t.of(name)
             assert(Not name.null_or_whitespace())
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
@@ -80,7 +72,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-            name = normalize_name(name)
+            name = current_namespace_t.of(name)
             assert(Not name.null_or_whitespace())
             Return s.find(name, type)
         End Function
