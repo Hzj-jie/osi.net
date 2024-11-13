@@ -30,8 +30,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 assert(Not types.null_or_empty())
                 If current().features().with_type_alias() Then
                     types = types.stream().
-                                  map(AddressOf builders.parameter_type.of).
-                                  map(builders.parameter_type.map_type_with(normalized_type.of)).
+                                  map(AddressOf normalized_type.parameter_type_of).
                                   map(AddressOf builders.parameter_type.full_type).
                                   collect_to(Of vector(Of String))()
                 End If

@@ -266,9 +266,7 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             Return scope.current().structs().define(
-                       builders.parameter_type.of(n.child(1).word().str()).
-                                               map_type(scope.normalized_type.of).
-                                               full_type(),
+                       scope.normalized_type.parameter_type_of(n.child(1)).full_type(),
                        parse_struct_body(n).map(AddressOf scope.struct_def.nested).
                                             collect_to(Of vector(Of builders.parameter))(),
                        Sub(ByVal type As String, ByVal size As UInt32)

@@ -23,7 +23,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not d Is Nothing)
             ' Struct member types are always resolved during the define / build stage, so scope.current() equals to
             ' the scope where the struct_t instance is being defined.
-            type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
+            type = normalized_type.parameter_type_of(type).full_type()
             Dim sub_type As struct_def = Nothing
             If Not s.find(type, sub_type) Then
                 d.with_primitive(type, name)
@@ -46,12 +46,10 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not name.null_or_whitespace())
             assert(Not members Is Nothing)  ' Allow empty struct
             assert(Not define_type Is Nothing)
-            Dim full_type As String = builders.parameter_type.of(name).
-                                               map_type(normalized_type.of).
-                                               full_type()
+            Dim full_type As String = normalized_type.parameter_type_of(name).full_type()
             assert(Not builders.parameter_type.is_ref_type(full_type))
             Dim type_id As builders.parameter = create_type_id(name)
-            define_type(type_id.map_type(normalized_type.of).non_ref_type(), uint32_1)
+            define_type(type_id.map_type(AddressOf normalized_type.of).non_ref_type(), uint32_1)
             members = members.CloneT().emplace_with(type_id)
             Dim d As New struct_def()
             Dim i As UInt32 = 0
@@ -75,7 +73,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                                 ByVal name As String,
                                 ByRef o As struct_def) As Boolean
             assert(Not type.null_or_whitespace())
-            If Not s.find(builders.parameter_type.of(type).map_type(normalized_type.of).full_type(), o) Then
+            If Not s.find(normalized_type.parameter_type_of(type).full_type(), o) Then
                 ' Do not log, value_declaration and value_definition always check if a struct is defined before
                 ' forwarding the defintion directly to the logic.
                 Return False

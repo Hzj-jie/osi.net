@@ -35,8 +35,8 @@ Partial Public NotInheritable Class b3style
                    heap_name.build(length,
                                    o,
                                    Function(ByVal len_name As String) As Boolean
-                                       Return declare_primitive_type(type.input_without_ignored(),
-                                                                     name.input_without_ignored(),
+                                       Return declare_primitive_type(scope.normalized_type.of(type),
+                                                                     scope.fully_qualified_variable_name.of(name),
                                                                      len_name,
                                                                      o)
                                    End Function)
@@ -46,7 +46,7 @@ Partial Public NotInheritable Class b3style
                                                       ByVal name As String,
                                                       ByVal length As String,
                                                       ByVal o As logic_writer) As Boolean
-            type = builders.parameter_type.of(type).map_type(scope.normalized_type.of).full_type()
+            type = scope.normalized_type.parameter_type_of(type).full_type()
             assert(Not scope.current().structs().types().defined(type))
             assert(Not o Is Nothing)
             Return scope.current().variables().define(type, name) AndAlso

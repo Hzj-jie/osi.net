@@ -18,9 +18,8 @@ Partial Public NotInheritable Class b3style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 2)
-            Dim type As String = n.child(0).input_without_ignored()
-            ' May use word().str()
-            Dim name As String = n.child(1).input_without_ignored()
+            Dim type As String = scope.normalized_type.of(n.child(0))
+            Dim name As String = scope.fully_qualified_variable_name.of(n.child(1))
             If Not struct.define_in_stack(n.child(0), n.child(1), o) Then
                 Return declare_primitive_type(type, name, o)
             End If
