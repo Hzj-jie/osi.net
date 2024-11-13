@@ -13,10 +13,9 @@ Partial Public NotInheritable Class b3style
         Implements code_gen(Of logic_writer)
 
         Private Shared Function build(ByVal n As typed_node,
-                                      ByVal class_construct As Func(Of String, Boolean),
+                                      ByVal class_construct As Boolean,
                                       ByVal o As logic_writer) As Boolean
             assert(Not n Is Nothing)
-            assert(Not class_construct Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 2)
             Dim type As String = n.child(0).input_without_ignored()
@@ -25,31 +24,24 @@ Partial Public NotInheritable Class b3style
                 Return declare_primitive_type(type, name, o)
             End If
             If scope.current().classes().is_defined(type) Then
-                If class_construct(name) Then
-                    class_initializer.destruct(name, o)
-                    Return True
+                If class_construct Then
+                    value_list.with_empty()
+                    If Not class_initializer.construct(name, o) Then
+                        Return False
+                    End If
                 End If
-                Return False
+                class_initializer.destruct(name, o)
             End If
             Return True
         End Function
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            Return build(n,
-                         Function(ByVal name As String) As Boolean
-                             value_list.with_empty()
-                             Return class_initializer.construct(name, o)
-                         End Function,
-                         o)
+            Return build(n, True, o)
         End Function
 
-        Public Shared Function [of](ByVal n As typed_node, ByVal o As logic_writer) As Boolean
-            Return build(n,
-                         Function(ByVal name As String) As Boolean
-                             Return True
-                         End Function,
-                         o)
+        Public Shared Function without_class_construct(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+            Return build(n, False, o)
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,

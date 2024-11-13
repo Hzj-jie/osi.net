@@ -145,7 +145,7 @@ Partial Public NotInheritable Class b3style
                                   assert(Not n Is Nothing)
                                   assert(Not o Is Nothing)
                                   assert(n.child_count() = 4)
-                                  Return value_declaration.of(n, o) AndAlso
+                                  Return value_declaration.without_class_construct(n, o) AndAlso
                                          value_clause.stack_name_build(n.child(1), n.child(3), o)
                               End Function).
                 with(Of heap_name)().
