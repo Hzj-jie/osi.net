@@ -24,6 +24,7 @@ Partial Public NotInheritable Class b3style
             Return r
         End Function
 
+        ' TODO: Remove?
         Public Shared Function name_of(ByVal n As typed_node) As String
             assert(Not n Is Nothing)
             Return name_of(n.input_without_ignored())

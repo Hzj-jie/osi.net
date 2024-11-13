@@ -124,9 +124,8 @@ Partial Public NotInheritable Class bstyle
         Public Shared Sub forward_in_stack(ByVal type_node As typed_node, ByVal name_node As typed_node)
             assert(Not type_node Is Nothing)
             assert(Not name_node Is Nothing)
-            Dim type As String = type_node.input_without_ignored()
-            ' May use word().str()
-            Dim name As String = name_node.input_without_ignored()
+            Dim type As String = scope.normalized_type.of(type_node)
+            Dim name As String = scope.fully_qualified_variable_name.of(name_node)
             Dim v As scope.struct_def = Nothing
             If scope.current().structs().resolve(type, name, v) Then
                 define(type, name, v)
@@ -139,9 +138,8 @@ Partial Public NotInheritable Class bstyle
             assert(Not type_node Is Nothing)
             assert(Not name_node Is Nothing)
             assert(Not o Is Nothing)
-            Dim type As String = type_node.input_without_ignored()
-            ' May use word().str()
-            Dim name As String = name_node.input_without_ignored()
+            Dim type As String = scope.normalized_type.of(type_node)
+            Dim name As String = scope.fully_qualified_variable_name.of(name_node)
             Dim v As scope.struct_def = Nothing
             If Not scope.current().structs().resolve(type, name, v) OrElse
                Not define(type, name, v) Then
@@ -162,9 +160,8 @@ Partial Public NotInheritable Class bstyle
             assert(Not name_node Is Nothing)
             assert(Not length Is Nothing)
             assert(Not o Is Nothing)
-            Dim type As String = type_node.input_without_ignored()
-            ' May use word().str()
-            Dim name As String = name_node.input_without_ignored()
+            Dim type As String = scope.normalized_type.of(type_node)
+            Dim name As String = scope.fully_qualified_variable_name.of(name_node)
             Dim v As scope.struct_def = Nothing
             If Not scope.current().structs().resolve(type, name, v) OrElse Not define(type, name, v) Then
                 Return False
@@ -247,8 +244,8 @@ Partial Public NotInheritable Class bstyle
                              assert(Not c Is Nothing)
                              assert(c.type_name.Equals("value-declaration"))
                              assert(c.child_count() = 2)
-                             Return builders.parameter.non_ref(c.child(0).input_without_ignored(),
-                                                               c.child(1).input_without_ignored())
+                             Return builders.parameter.non_ref(scope.normalized_type.of(c.child(0)),
+                                                               scope.fully_qualified_variable_name.of(c.child(1)))
                          End Function)
         End Function
 

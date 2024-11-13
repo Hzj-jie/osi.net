@@ -57,7 +57,7 @@ Partial Public NotInheritable Class b3style
                 Return False
             End If
 
-            Dim name As String = n.child(1).input_without_ignored()
+            Dim name As String = scope.fully_qualified_variable_name.of(n.child(1))
             If construct(name, o) Then
                 destruct(name, o)
                 Return True
