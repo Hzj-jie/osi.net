@@ -27,9 +27,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             ' TODO: May consider using builders.parameter.
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
             ' where the variable_t instance Is being defined.
-            type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
+            type = normalized_type.parameter_type_of(type).full_type()
             assert(Not type.null_or_whitespace())
-            name = current_namespace_t.of(name)
+            name = fully_qualified_variable_name.of(name)
             assert(Not name.null_or_whitespace())
             assert(Not builders.parameter_type.is_ref_type(type))
             ' The name should not be an array with index.
@@ -64,7 +64,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function undefine(ByVal name As String) As Boolean
-            name = current_namespace_t.of(name)
+            name = fully_qualified_variable_name.of(name)
             assert(Not name.null_or_whitespace())
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
@@ -72,7 +72,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-            name = current_namespace_t.of(name)
+            name = fully_qualified_variable_name.of(name)
             assert(Not name.null_or_whitespace())
             Return s.find(name, type)
         End Function

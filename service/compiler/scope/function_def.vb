@@ -25,8 +25,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End Enum
 
             ' TODO: A better way to check the return type.
-            Private Shared ReadOnly void_type As String =
-                     builders.parameter_type.of("void").map_type(normalized_type.of).non_ref_type()
+            Private Shared ReadOnly void_type As String = normalized_type.parameter_type_of("void").non_ref_type()
             Private ReadOnly class_def As class_def
             Private ReadOnly return_type As name_with_namespace
             Private ReadOnly signature As vector(Of name_with_namespace)

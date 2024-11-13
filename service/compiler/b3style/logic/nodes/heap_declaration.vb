@@ -31,13 +31,14 @@ Partial Public NotInheritable Class b3style
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
             assert(Not length Is Nothing)
-            Dim type_str As String = type.input_without_ignored()
-            Dim name_str As String = name.input_without_ignored()
-            Return struct.define_in_heap(type_str, name_str, length, o) OrElse
+            Return struct.define_in_heap(type, name, length, o) OrElse
                    heap_name.build(length,
                                    o,
                                    Function(ByVal len_name As String) As Boolean
-                                       Return declare_primitive_type(type_str, name_str, len_name, o)
+                                       Return declare_primitive_type(scope.normalized_type.of(type),
+                                                                     scope.fully_qualified_variable_name.of(name),
+                                                                     len_name,
+                                                                     o)
                                    End Function)
         End Function
 
@@ -45,7 +46,7 @@ Partial Public NotInheritable Class b3style
                                                       ByVal name As String,
                                                       ByVal length As String,
                                                       ByVal o As logic_writer) As Boolean
-            type = builders.parameter_type.of(type).map_type(scope.normalized_type.of).full_type()
+            type = scope.normalized_type.parameter_type_of(type).full_type()
             assert(Not scope.current().structs().types().defined(type))
             assert(Not o Is Nothing)
             Return scope.current().variables().define(type, name) AndAlso

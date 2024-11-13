@@ -140,7 +140,14 @@ Partial Public NotInheritable Class b3style
                 with(Of value_clause)().
                 with(Of value_declaration)().
                 with(Of heap_declaration)().
-                with(Of value_definition)().
+                with_delegate("value-definition",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  assert(Not n Is Nothing)
+                                  assert(Not o Is Nothing)
+                                  assert(n.child_count() = 4)
+                                  Return value_declaration.without_class_construct(n, o) AndAlso
+                                         value_clause.stack_name_build(n.child(1), n.child(3), o)
+                              End Function).
                 with(Of heap_name)().
                 with(Of struct)().
                 without(Of raw_variable_name)().
