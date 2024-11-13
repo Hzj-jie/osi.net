@@ -31,13 +31,14 @@ Partial Public NotInheritable Class b3style
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
             assert(Not length Is Nothing)
-            Dim type_str As String = type.input_without_ignored()
-            Dim name_str As String = name.input_without_ignored()
-            Return struct.define_in_heap(type_str, name_str, length, o) OrElse
+            Return struct.define_in_heap(type, name, length, o) OrElse
                    heap_name.build(length,
                                    o,
                                    Function(ByVal len_name As String) As Boolean
-                                       Return declare_primitive_type(type_str, name_str, len_name, o)
+                                       Return declare_primitive_type(type.input_without_ignored(),
+                                                                     name.input_without_ignored(),
+                                                                     len_name,
+                                                                     o)
                                    End Function)
         End Function
 

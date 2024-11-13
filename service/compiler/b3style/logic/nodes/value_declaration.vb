@@ -19,8 +19,9 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             assert(n.child_count() >= 2)
             Dim type As String = n.child(0).input_without_ignored()
+            ' May use word().str()
             Dim name As String = n.child(1).input_without_ignored()
-            If Not struct.define_in_stack(type, name, o) Then
+            If Not struct.define_in_stack(n.child(0), n.child(1), o) Then
                 Return declare_primitive_type(type, name, o)
             End If
             If scope.current().classes().is_defined(type) Then

@@ -121,17 +121,27 @@ Partial Public NotInheritable Class bstyle
         End Function
 
         ' Forward the definition of, or declare the {type, name} pair in the scope.variable in stack.
-        Public Shared Sub forward_in_stack(ByVal type As String, ByVal name As String)
+        Public Shared Sub forward_in_stack(ByVal type_node As typed_node, ByVal name_node As typed_node)
+            assert(Not type_node Is Nothing)
+            assert(Not name_node Is Nothing)
+            Dim type As String = type_node.input_without_ignored()
+            ' May use word().str()
+            Dim name As String = name_node.input_without_ignored()
             Dim v As scope.struct_def = Nothing
             If scope.current().structs().resolve(type, name, v) Then
                 define(type, name, v)
             End If
         End Sub
 
-        Public Shared Function define_in_stack(ByVal type As String,
-                                               ByVal name As String,
+        Public Shared Function define_in_stack(ByVal type_node As typed_node,
+                                               ByVal name_node As typed_node,
                                                ByVal o As logic_writer) As Boolean
+            assert(Not type_node Is Nothing)
+            assert(Not name_node Is Nothing)
             assert(Not o Is Nothing)
+            Dim type As String = type_node.input_without_ignored()
+            ' May use word().str()
+            Dim name As String = name_node.input_without_ignored()
             Dim v As scope.struct_def = Nothing
             If Not scope.current().structs().resolve(type, name, v) OrElse
                Not define(type, name, v) Then
@@ -144,12 +154,17 @@ Partial Public NotInheritable Class bstyle
                                         End Function)
         End Function
 
-        Public Shared Function define_in_heap(ByVal type As String,
-                                              ByVal name As String,
+        Public Shared Function define_in_heap(ByVal type_node As typed_node,
+                                              ByVal name_node As typed_node,
                                               ByVal length As typed_node,
                                               ByVal o As logic_writer) As Boolean
+            assert(Not type_node Is Nothing)
+            assert(Not name_node Is Nothing)
             assert(Not length Is Nothing)
             assert(Not o Is Nothing)
+            Dim type As String = type_node.input_without_ignored()
+            ' May use word().str()
+            Dim name As String = name_node.input_without_ignored()
             Dim v As scope.struct_def = Nothing
             If Not scope.current().structs().resolve(type, name, v) OrElse Not define(type, name, v) Then
                 Return False
