@@ -122,7 +122,7 @@
     <Compile Include="b2style\rewriter\nodes\multi_sentence_paragraph.vb" />
     <Compile Include="b2style\rewriter\nodes\paramtype_with_comma.vb" />
     <Compile Include="b2style\rewriter\nodes\template_type_name.vb" />
-    <Compile Include="scope\normalized_type.vb" />
+    <Compile Include="scope\normalized.vb" />
     <Compile Include="scope\scope.class.vb" />
     <Compile Include="b2style\scope.current_function.vb" />
     <Compile Include="scope\scope.features.vb" />

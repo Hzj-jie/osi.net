@@ -20,7 +20,7 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             assert(n.child_count() >= 2)
             Dim type As String = n.child(0).input_without_ignored()
-            Dim name As String = value_definition.name_of(n.child(1))
+            Dim name As String = n.child(1).input_without_ignored()
             If struct.define_in_stack(type, name, o) Then
                 If scope.current().classes().is_defined(type) Then
                     If class_construct(name) Then
@@ -57,7 +57,7 @@ Partial Public NotInheritable Class b3style
                                                    ByVal o As logic_writer) As Boolean
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
-            Return struct.define_in_stack(type.input_without_ignored(), value_definition.name_of(name), o)
+            Return struct.define_in_stack(type.input_without_ignored(), name.input_without_ignored(), o)
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,
@@ -66,7 +66,8 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             If Not scope.current().structs().types().defined(type) AndAlso
                scope.current().variables().define(type, name) AndAlso
-               builders.of_define(name, scope.normalized_type.of(type)).to(o) Then
+               builders.of_define(scope.fully_qualified_variable_name.of(name),
+                                  scope.normalized_type.of(type)).to(o) Then
                 Return True
             End If
             raise_error(error_type.user,

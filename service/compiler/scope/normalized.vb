@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.connector
 Imports osi.root.delegates
 
 Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
@@ -11,10 +12,27 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               T As scope(Of WRITER, __BUILDER, __CODE_GENS, T))
     ' A helper to always de-alias and apply namespace.
     Public NotInheritable Class normalized_type
+        ' Calling this function twice shouldn't make a difference.
         Public Shared ReadOnly [of] As Func(Of String, String) =
             Function(ByVal type As String) As String
                 Return current().type_alias()(current_namespace_t.of(type))
             End Function
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    ' A helper to apply namespace.
+    Public NotInheritable Class fully_qualified_variable_name
+        ' Calling this function twice shouldn't make a difference.
+        Public Shared Function [of](ByVal name As String) As String
+            assert(Not name.null_or_whitespace())
+            ' Not in a function, treat the variable namespace-qualified.
+            If scope(Of T).current().is_root() Then
+                Return current_namespace_t.of(name)
+            End If
+            Return name
+        End Function
 
         Private Sub New()
         End Sub
