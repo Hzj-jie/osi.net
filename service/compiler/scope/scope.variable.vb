@@ -76,6 +76,15 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not name.null_or_whitespace())
             Return s.find(name, type)
         End Function
+
+        Public Shared Function fully_qualified_name(ByVal name As String) As String
+            assert(Not name.null_or_whitespace())
+            ' Not in a function, treat the variable namespace-qualified.
+            If scope(Of T).current().is_root() Then
+                Return current_namespace_t.of(name)
+            End If
+            Return name
+        End Function
     End Class
 
     Public Structure variable_proxy
