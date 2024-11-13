@@ -48,7 +48,8 @@ Partial Public NotInheritable Class b3style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4 OrElse n.child_count() = 5)
-            If Not value_declaration.declare_struct_type(n.child(0), n.child(1), o) Then
+            If Not struct.define_in_stack(n.child(0).input_without_ignored(),
+                                          n.child(1).input_without_ignored(), o) Then
                 Return False
             End If
             If n.child_count() = 4 Then

@@ -93,7 +93,6 @@
     <Compile Include="b3style\logic\nodes\unary_operation_value.vb" />
     <Compile Include="b3style\logic\nodes\value_clause.vb" />
     <Compile Include="b3style\logic\nodes\value_declaration.vb" />
-    <Compile Include="b3style\logic\nodes\value_definition.vb" />
     <Compile Include="b3style\logic\nodes\value_list.vb" />
     <Compile Include="b3style\logic\nodes\while.vb" />
     <Compile Include="bstyle\logic\nodes\logic.vb" />

@@ -21,17 +21,17 @@ Partial Public NotInheritable Class b3style
             assert(n.child_count() >= 2)
             Dim type As String = n.child(0).input_without_ignored()
             Dim name As String = n.child(1).input_without_ignored()
-            If struct.define_in_stack(type, name, o) Then
-                If scope.current().classes().is_defined(type) Then
-                    If class_construct(name) Then
-                        class_initializer.destruct(name, o)
-                        Return True
-                    End If
-                    Return False
-                End If
-                Return True
+            If Not struct.define_in_stack(type, name, o) Then
+                Return declare_primitive_type(type, name, o)
             End If
-            Return declare_primitive_type(type, name, o)
+            If scope.current().classes().is_defined(type) Then
+                If class_construct(name) Then
+                    class_initializer.destruct(name, o)
+                    Return True
+                End If
+                Return False
+            End If
+            Return True
         End Function
 
         Private Function build(ByVal n As typed_node,
@@ -50,14 +50,6 @@ Partial Public NotInheritable Class b3style
                              Return True
                          End Function,
                          o)
-        End Function
-
-        Public Shared Function declare_struct_type(ByVal type As typed_node,
-                                                   ByVal name As typed_node,
-                                                   ByVal o As logic_writer) As Boolean
-            assert(Not type Is Nothing)
-            assert(Not name Is Nothing)
-            Return struct.define_in_stack(type.input_without_ignored(), name.input_without_ignored(), o)
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,
