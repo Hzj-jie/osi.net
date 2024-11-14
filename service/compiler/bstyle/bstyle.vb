@@ -133,7 +133,7 @@ Partial Public NotInheritable Class bstyle
                                              assert(Not n Is Nothing)
                                              assert(Not o Is Nothing)
                                              assert(n.child_count() = 4)
-                                             Dim name As String = scope.fully_qualified_variable_name.of(n.child(2))
+                                             Dim name As String = scope.variable_name.of(n.child(2))
                                              Return struct.undefine(name, o) OrElse
                                                     (builders.of_undefine(name).to(o) AndAlso
                                                      scope.current().variables().undefine(name))
@@ -143,7 +143,7 @@ Partial Public NotInheritable Class bstyle
                                              assert(Not n Is Nothing)
                                              assert(Not o Is Nothing)
                                              assert(n.child_count() = 4)
-                                             Dim name As String = scope.fully_qualified_variable_name.of(n.child(2))
+                                             Dim name As String = scope.variable_name.of(n.child(2))
                                              Return struct.dealloc_from_heap(name, o) OrElse
                                                     builders.of_dealloc_heap(name).to(o)
                                          End Function).
