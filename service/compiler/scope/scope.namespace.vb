@@ -62,8 +62,10 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         ' This function is allowed to be nested-ly called without impacting the results.
         ' I.e. fully_qualified_name(fully_qualified_name(x)) = fully_qualified_name(x)
         Public Shared Function fully_qualified_name(ByVal n As String) As String
-            assert(current().features().with_namespace())
             assert(Not n.null_or_whitespace())
+            If Not current().features().with_namespace() Then
+                Return n
+            End If
             If n.StartsWith(current_namespace_t.namespace_separator) Then
                 Return n
             End If
