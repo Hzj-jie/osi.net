@@ -18,19 +18,6 @@ Partial Public NotInheritable Class b3style
 
     Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "service/compiler/b3style")
 
-    ' TODO: Also disable the namespace of function / function_call.
-    ' TODO: Remove
-    <ThreadStatic>
-    Private Shared _disable_namespace As Boolean
-
-    Public Shared Function disable_namespace() As IDisposable
-        assert(Not _disable_namespace)
-        _disable_namespace = True
-        Return defer.to(Sub()
-                            _disable_namespace = False
-                        End Sub)
-    End Function
-
     Public NotInheritable Class nlexer_rule_t
         Inherits __do(Of String)
 

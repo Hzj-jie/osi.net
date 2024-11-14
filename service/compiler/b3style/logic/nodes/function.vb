@@ -18,7 +18,7 @@ Partial Public NotInheritable Class b3style
         Public Shared Function name_of(ByVal r As String) As String
             assert(Not r.null_or_whitespace())
             ' TODO: Avoid the hack of not adding :: for main.
-            If Not r.Equals("main") AndAlso Not _disable_namespace Then
+            If Not r.Equals("main") Then
                 Return scope.current_namespace_t.of(r)
             End If
             Return r

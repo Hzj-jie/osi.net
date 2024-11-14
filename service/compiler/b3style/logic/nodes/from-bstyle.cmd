@@ -23,6 +23,7 @@ call :run for_loop
 call :run while
 call :run delegate
 call :run reinterpret_cast
+call :run raw_value
 
 exit /b 0
 
