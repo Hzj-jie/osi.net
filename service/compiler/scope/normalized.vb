@@ -76,4 +76,33 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Private Sub New()
         End Sub
     End Class
+
+    Public NotInheritable Class function_name
+        Public Shared Function [of](ByVal name As typed_node) As String
+            assert(Not name Is Nothing)
+            ' May use word().str()
+            Return name.input_without_ignored()
+        End Function
+
+        Private Sub New()
+        End Sub
+    End Class
+
+    Public NotInheritable Class fully_qualified_function_name
+        Public Shared Function [of](ByVal name As typed_node) As String
+            Return [of](function_name.of(name))
+        End Function
+
+        Public Shared Function [of](ByVal name As String) As String
+            assert(Not name.null_or_whitespace())
+            ' TODO: Avoid the hack of not adding :: for main.
+            If name.Equals("main") Then
+                Return "main"
+            End If
+            Return current_namespace_t.of(name)
+        End Function
+
+        Private Sub New()
+        End Sub
+    End Class
 End Class

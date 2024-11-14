@@ -36,7 +36,7 @@ Partial Public NotInheritable Class b3style
                     parameters = (+scope.current().value_target().value()).names + parameters
                     function_name = scope.namespace_t.fully_qualified_name(struct_func.second())
                 Else
-                    function_name = _function.name_of(raw_function_name)
+                    function_name = scope.fully_qualified_function_name.of(raw_function_name)
                 End If
                 assert(Not function_name Is Nothing)
                 Dim name As String = Nothing
