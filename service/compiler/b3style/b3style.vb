@@ -19,6 +19,7 @@ Partial Public NotInheritable Class b3style
     Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "service/compiler/b3style")
 
     ' TODO: Also disable the namespace of function / function_call.
+    ' TODO: Remove
     <ThreadStatic>
     Private Shared _disable_namespace As Boolean
 
@@ -200,7 +201,7 @@ Partial Public NotInheritable Class b3style
                                   assert(Not n Is Nothing)
                                   assert(Not o Is Nothing)
                                   assert(n.child_count() = 4)
-                                  Dim name As String = n.child(2).input_without_ignored()
+                                  Dim name As String = scope.variable_name.of(n.child(2))
                                   Return struct.dealloc_from_heap(name, o) OrElse
                                          builders.of_dealloc_heap(name).to(o)
                               End Function).
@@ -209,7 +210,7 @@ Partial Public NotInheritable Class b3style
                                   assert(Not n Is Nothing)
                                   assert(Not o Is Nothing)
                                   assert(n.child_count() = 4)
-                                  Dim name As String = n.child(2).input_without_ignored()
+                                  Dim name As String = scope.variable_name.of(n.child(2))
                                   Return struct.undefine(name, o) OrElse
                                          (builders.of_undefine(name).to(o) AndAlso
                                           scope.current().variables().undefine(name))

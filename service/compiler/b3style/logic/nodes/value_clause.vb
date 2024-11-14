@@ -23,7 +23,7 @@ Partial Public NotInheritable Class b3style
             assert(Not struct_copy Is Nothing)
             assert(Not primitive_copy Is Nothing)
             assert(Not o Is Nothing)
-            Dim name As String = scope.fully_qualified_variable_name.of(name_node.input_without_ignored())
+            Dim name As String = scope.fully_qualified_variable_name.of(name_node)
             Dim type As String = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
             If Not scope.current().variables().resolve(name,
