@@ -101,12 +101,13 @@
     <Compile Include="b3style\logic\nodes\template_type_name.vb" />
     <Compile Include="b3style\logic\nodes\ufloat.vb" />
     <Compile Include="b3style\logic\nodes\unary_operation_value.vb" />
+    <Compile Include="b3style\logic\nodes\value_clause.build.vb" />
     <Compile Include="b3style\logic\nodes\value_clause.vb" />
     <Compile Include="b3style\logic\nodes\value_declaration.vb" />
-    <Compile Include="b3style\logic\nodes\value_definition.vb" />
     <Compile Include="b3style\logic\nodes\value_list.vb" />
     <Compile Include="b3style\logic\nodes\while.vb" />
     <Compile Include="bstyle\logic\nodes\logic.vb" />
+    <Compile Include="bstyle\logic\nodes\value_clause.build.vb" />
     <Compile Include="scope\class_def.vb" />
     <Compile Include="scope\function_def.vb" />
     <None Include="b2style\lib\std\vector" />
@@ -132,7 +133,7 @@
     <Compile Include="b2style\rewriter\nodes\multi_sentence_paragraph.vb" />
     <Compile Include="b2style\rewriter\nodes\paramtype_with_comma.vb" />
     <Compile Include="b2style\rewriter\nodes\template_type_name.vb" />
-    <Compile Include="scope\normalized_type.vb" />
+    <Compile Include="scope\normalized.vb" />
     <Compile Include="scope\scope.class.vb" />
     <Compile Include="b2style\scope.current_function.vb" />
     <Compile Include="scope\scope.features.vb" />

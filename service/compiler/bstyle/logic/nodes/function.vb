@@ -27,10 +27,10 @@ Partial Public NotInheritable Class bstyle
                         Return False
                     End If
                 End If
-                Dim function_name As String = n.child(1).input_without_ignored()
+                Dim function_name As String = scope.function_name.of(n.child(1))
                 Dim params As vector(Of builders.parameter) = new_scope.params().unpack()
                 Return logic_name.of_callee(function_name,
-                                            n.child(0).input_without_ignored(),
+                                            scope.type_name.of(n.child(0)),
                                             params,
                                             Function() As Boolean
                                                 Dim gi As UInt32 = CUInt(If(has_paramlist, 5, 4))

@@ -144,7 +144,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Private Shared Function function_type_of(ByVal type As String) As name_with_namespace
-            Return name_with_namespace.of(builders.parameter_type.of(type).map_type(normalized_type.of).full_type())
+            Return name_with_namespace.of(normalized_type.parameter_type_of(type).full_type())
         End Function
 
         Private Function parse_function(ByVal node As typed_node,
@@ -161,12 +161,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                         p = p.child(0)
                     End If
                     assert(p.type_name.Equals("param"))
-                    signature.emplace_back(function_type_of(p.child(0).input_without_ignored()))
+                    signature.emplace_back(function_type_of(type_name.of(p.child(0))))
                     param_names.emplace_back(p.child(1).input())
                 Next
             End If
             Dim f As New function_def(Me,
-                                      function_type_of(node.child(0).input_without_ignored()),
+                                      function_type_of(type_name.of(node.child(0))),
                                       signature,
                                       type,
                                       "// This content should never be used.")

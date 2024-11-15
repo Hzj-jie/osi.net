@@ -16,14 +16,14 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             If n.type_name.Equals("name") AndAlso n.descentdant_of("value-declaration", "struct-body") Then
                 ' Ignore namespace prefix for variables within the structure.
-                o.append(_namespace.bstyle_format.fully_qualified_name(n.input_without_ignored()))
+                o.append(_namespace.bstyle_format.fully_qualified_name(scope.variable_name.of(n)))
                 Return True
             End If
             If n.type_name.Equals("raw-type-name") AndAlso
                n.descentdant_of("paramtype") AndAlso
                (n.descentdant_of("template-type-name") OrElse n.descentdant_of("function-name-with-template")) Then
                 ' Local type name should be used when expanding templates.
-                o.append(scope.current_namespace_t.of(n.input_without_ignored()))
+                o.append(scope.current_namespace_t.of(scope.variable_name.of(n)))
                 Return True
             End If
             o.append(_namespace.bstyle_format.of(n))

@@ -13,51 +13,35 @@ Partial Public NotInheritable Class b3style
         Implements code_gen(Of logic_writer)
 
         Private Shared Function build(ByVal n As typed_node,
-                                      ByVal class_construct As Func(Of String, Boolean),
+                                      ByVal class_construct As Boolean,
                                       ByVal o As logic_writer) As Boolean
             assert(Not n Is Nothing)
-            assert(Not class_construct Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 2)
-            Dim type As String = n.child(0).input_without_ignored()
-            Dim name As String = value_definition.name_of(n.child(1))
-            If struct.define_in_stack(type, name, o) Then
-                If scope.current().classes().is_defined(type) Then
-                    If class_construct(name) Then
-                        class_initializer.destruct(name, o)
-                        Return True
-                    End If
-                    Return False
-                End If
-                Return True
+            Dim type As String = scope.normalized_type.of(n.child(0))
+            Dim name As String = scope.fully_qualified_variable_name.of(n.child(1))
+            If Not struct.define_in_stack(n.child(0), n.child(1), o) Then
+                Return declare_primitive_type(type, name, o)
             End If
-            Return declare_primitive_type(type, name, o)
+            If scope.current().classes().is_defined(type) Then
+                If class_construct Then
+                    value_list.with_empty()
+                    If Not class_initializer.construct(name, o) Then
+                        Return False
+                    End If
+                End If
+                class_initializer.destruct(name, o)
+            End If
+            Return True
         End Function
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            Return build(n,
-                         Function(ByVal name As String) As Boolean
-                             value_list.with_empty()
-                             Return class_initializer.construct(name, o)
-                         End Function,
-                         o)
+            Return build(n, True, o)
         End Function
 
-        Public Shared Function [of](ByVal n As typed_node, ByVal o As logic_writer) As Boolean
-            Return build(n,
-                         Function(ByVal name As String) As Boolean
-                             Return True
-                         End Function,
-                         o)
-        End Function
-
-        Public Shared Function declare_struct_type(ByVal type As typed_node,
-                                                   ByVal name As typed_node,
-                                                   ByVal o As logic_writer) As Boolean
-            assert(Not type Is Nothing)
-            assert(Not name Is Nothing)
-            Return struct.define_in_stack(type.input_without_ignored(), value_definition.name_of(name), o)
+        Public Shared Function without_class_construct(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+            Return build(n, False, o)
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,
@@ -66,7 +50,8 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             If Not scope.current().structs().types().defined(type) AndAlso
                scope.current().variables().define(type, name) AndAlso
-               builders.of_define(name, scope.normalized_type.of(type)).to(o) Then
+               builders.of_define(scope.fully_qualified_variable_name.of(name),
+                                  scope.normalized_type.of(type)).to(o) Then
                 Return True
             End If
             raise_error(error_type.user,

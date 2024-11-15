@@ -22,7 +22,7 @@ Partial Public NotInheritable Class b3style
             End If
             scope.current().
                   call_hierarchy().
-                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.construct))
+                  to(scope.namespace_t.fully_qualified_name(scope.class_def.construct))
 
             Return True
         End Function
@@ -40,7 +40,7 @@ Partial Public NotInheritable Class b3style
                 End Sub)
             scope.current().
                   call_hierarchy().
-                  to(scope.current_namespace_t.fully_qualified_name(scope.class_def.destruct))
+                  to(scope.namespace_t.fully_qualified_name(scope.class_def.destruct))
         End Sub
 
         Private Function build(ByVal n As typed_node,
@@ -48,7 +48,7 @@ Partial Public NotInheritable Class b3style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4 OrElse n.child_count() = 5)
-            If Not value_declaration.declare_struct_type(n.child(0), n.child(1), o) Then
+            If Not struct.define_in_stack(n.child(0), n.child(1), o) Then
                 Return False
             End If
             If n.child_count() = 4 Then
@@ -57,7 +57,7 @@ Partial Public NotInheritable Class b3style
                 Return False
             End If
 
-            Dim name As String = n.child(1).input_without_ignored()
+            Dim name As String = scope.fully_qualified_variable_name.of(n.child(1))
             If construct(name, o) Then
                 destruct(name, o)
                 Return True

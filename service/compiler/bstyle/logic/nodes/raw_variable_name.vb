@@ -34,7 +34,7 @@ Partial Public NotInheritable Class bstyle
                                      ByVal handle As Func(Of String, stream(Of builders.parameter), Boolean),
                                      ByVal o As logic_writer) As Boolean
             assert(Not n Is Nothing)
-            Return build(n.input_without_ignored(), handle, o)
+            Return build(scope.variable_name.of(n), handle, o)
         End Function
 
         Public Shared Function build(ByVal name As String, ByVal o As logic_writer) As Boolean
@@ -50,7 +50,7 @@ Partial Public NotInheritable Class bstyle
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() = 1)
-            Return build(n.child().input_without_ignored(), o)
+            Return build(scope.variable_name.of(n.child()), o)
         End Function
     End Class
 End Class

@@ -66,9 +66,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Dim define_primitive_type_temp_target As Action(Of String, String) =
                 Sub(ByVal t As String, ByVal n As String)
                     ' It will trigger the assertion failure anyway if not type_alias is provided.
-                    t = builders.parameter_type.of(t).map_type(normalized_type.of).full_type()
+                    t = normalized_type.parameter_type_of(t).full_type()
                     assert(Not current().structs().types().defined(t))
-                    assert(Not current().variables().try_resolve(n, Nothing))
+                    assert(Not current().variables().defined(n))
                     assert(current().variables().define(t, n))
                     assert(builders.of_define(n, t).to(o))
                 End Sub
@@ -107,7 +107,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 assert(Not type.null_or_whitespace())
                 ' Allow empty struct, so the names can be empty.
                 assert(Not names Is Nothing)
-                type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
+                type = normalized_type.parameter_type_of(type).full_type()
                 If Not current().structs().types().defined(type) Then
                     assert(names.size() = 1)
                 End If
