@@ -86,7 +86,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Function define(ByVal n As typed_node) As Boolean
             assert(Not n Is Nothing)
             assert(n.child_count() >= 2)
-            Return define(n.child(0).input_without_ignored(), n.child(1).input_without_ignored())
+            Return define(type_name.of(n.child(0)), variable_name.of(n.child(1)))
         End Function
 
         Public Function redefine(ByVal type As String, ByVal name As String) As Boolean

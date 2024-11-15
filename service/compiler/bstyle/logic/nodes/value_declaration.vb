@@ -26,7 +26,7 @@ Partial Public NotInheritable Class bstyle
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
             Return struct.define_in_stack(type, name, o) OrElse
-                   declare_primitive_type(type.input_without_ignored(), name.input_without_ignored(), o)
+                   declare_primitive_type(scope.type_name.of(type), scope.variable_name.of(name), o)
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,

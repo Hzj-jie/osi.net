@@ -60,7 +60,7 @@ Partial Public NotInheritable Class b3style
             ElseIf Not code_gen_of(n.child(2)).build(o) Then
                 Return False
             End If
-            Return build(n.child(0).input_without_ignored(), build_caller, build_caller_ref, o)
+            Return build(scope.function_name.of(n.child(0)), build_caller, build_caller_ref, o)
         End Function
 
         Private Shared Function without_return_caller_builder(ByVal o As logic_writer) _

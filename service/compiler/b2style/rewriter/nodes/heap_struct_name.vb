@@ -15,6 +15,7 @@ Partial Public NotInheritable Class b2style
         Private Shared Function bstyle_format(ByVal n As typed_node) As String
             assert(n.child_count() = 3)
             assert(n.child(0).child_count() = 4)
+            ' Convert heap_name[index].value to heap_name.value[index]
             Return streams.of(n.child(0).child(0),
                               n.child(1),
                               n.child(2),

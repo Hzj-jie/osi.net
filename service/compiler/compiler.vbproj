@@ -91,11 +91,13 @@
     <Compile Include="b3style\logic\nodes\struct.vb" />
     <Compile Include="b3style\logic\nodes\ufloat.vb" />
     <Compile Include="b3style\logic\nodes\unary_operation_value.vb" />
+    <Compile Include="b3style\logic\nodes\value_clause.build.vb" />
     <Compile Include="b3style\logic\nodes\value_clause.vb" />
     <Compile Include="b3style\logic\nodes\value_declaration.vb" />
     <Compile Include="b3style\logic\nodes\value_list.vb" />
     <Compile Include="b3style\logic\nodes\while.vb" />
     <Compile Include="bstyle\logic\nodes\logic.vb" />
+    <Compile Include="bstyle\logic\nodes\value_clause.build.vb" />
     <Compile Include="scope\class_def.vb" />
     <Compile Include="scope\function_def.vb" />
     <None Include="b2style\lib\std\vector" />
