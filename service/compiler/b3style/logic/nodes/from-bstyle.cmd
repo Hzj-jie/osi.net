@@ -24,6 +24,7 @@ call :run while
 call :run delegate
 call :run reinterpret_cast
 call :run raw_value
+call :run value_clause
 
 exit /b 0
 
