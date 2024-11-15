@@ -9,6 +9,7 @@ Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.logic
 
+' TODO: Merge with b3style/value_clause
 Partial Public NotInheritable Class bstyle
     Private NotInheritable Class value_clause
         Implements code_gen(Of logic_writer)
@@ -25,22 +26,22 @@ Partial Public NotInheritable Class bstyle
             assert(Not o Is Nothing)
             Dim type As String = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
-            If Not scope.current().variables().resolve(name.input_without_ignored(), type, delegate_definition) Then
+            If Not scope.current().variables().resolve(scope.variable_name.of(name), type, delegate_definition) Then
                 ' Emmmm, scope.variable should log the error already.
                 Return False
             End If
             If delegate_definition Then
                 ' TODO: Avoid copying.
                 Dim target_function_name As String = logic_name.of_function(
-                                                         value.input_without_ignored(),
+                                                         scope.function_name.of(value),
                                                          +delegate_definition.get().parameters)
                 If scope.current().functions().is_defined(target_function_name) Then
                     ' Use address-of to copy a function address to the target.
                     ' TODO: Need to use logic_name here.
                     scope.current().call_hierarchy().to(target_function_name)
-                    Return builders.of_address_of(name.input_without_ignored(), target_function_name).to(o)
+                    Return builders.of_address_of(scope.variable_name.of(name), target_function_name).to(o)
                 End If
-                Return builders.of_copy(name.input_without_ignored(), value.input_without_ignored()).to(o)
+                Return builders.of_copy(scope.variable_name.of(name), scope.function_name.of(value)).to(o)
             End If
             If Not code_gen_of(value).build(o) Then
                 Return False
@@ -52,7 +53,7 @@ Partial Public NotInheritable Class bstyle
                                     "Type ",
                                     type,
                                     " of ",
-                                    name.input_without_ignored(),
+                                    scope.variable_name.of(name),
                                     " does not match the rvalue ",
                                     (+r).type)
                         Return False
@@ -83,10 +84,10 @@ Partial Public NotInheritable Class bstyle
             Return build(name,
                          value,
                          Function(ByVal r As vector(Of String)) As Boolean
-                             Return struct.copy(r, name.input_without_ignored(), o)
+                             Return struct.copy(r, scope.variable_name.of(name), o)
                          End Function,
                          Function(ByVal r As String) As Boolean
-                             Return builders.of_copy(name.input_without_ignored(), r).to(o)
+                             Return builders.of_copy(scope.fully_qualified_variable_name.of(name), r).to(o)
                          End Function,
                          o)
         End Function

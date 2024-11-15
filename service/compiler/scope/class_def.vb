@@ -161,12 +161,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                         p = p.child(0)
                     End If
                     assert(p.type_name.Equals("param"))
-                    signature.emplace_back(function_type_of(p.child(0).input_without_ignored()))
+                    signature.emplace_back(function_type_of(type_name.of(p.child(0))))
                     param_names.emplace_back(p.child(1).input())
                 Next
             End If
             Dim f As New function_def(Me,
-                                      function_type_of(node.child(0).input_without_ignored()),
+                                      function_type_of(type_name.of(node.child(0))),
                                       signature,
                                       type,
                                       "// This content should never be used.")

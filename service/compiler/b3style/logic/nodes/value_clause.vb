@@ -43,7 +43,7 @@ Partial Public NotInheritable Class b3style
                     scope.current().call_hierarchy().to(target_function_name)
                     Return builders.of_address_of(name, target_function_name).to(o)
                 End If
-                Return builders.of_copy(name, value.input_without_ignored()).to(o)
+                Return builders.of_copy(name, scope.function_name.of(value)).to(o)
             End If
             If Not code_gen_of(value).build(o) Then
                 Return False

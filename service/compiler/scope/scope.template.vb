@@ -163,7 +163,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
         Public Shared Function name_of(ByVal n As typed_node, ByVal type_count As UInt32) As String
             assert(Not n Is Nothing)
-            Return name_of(n.input_without_ignored(), type_count)
+            Return name_of(template_name.of(n), type_count)
         End Function
 
         ' @VisibleForTesting
@@ -202,7 +202,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                types.stream().collect_by(stream(Of String).collectors.unique()).size() Then
                 raise_error(error_type.user,
                             "Template ",
-                            name_node.input_without_ignored(),
+                            template_name.of(name_node),
                             " has duplicated template type parameters: [",
                             types.str(", "),
                             "]")
