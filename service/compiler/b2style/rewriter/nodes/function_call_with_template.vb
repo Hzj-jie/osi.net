@@ -16,7 +16,7 @@ Partial Public NotInheritable Class b2style
                 Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             Dim t As tuple(Of String, String) = Nothing
-            If Not function_call.split_struct_function(scope.function_name.of(n.child(0).child(0)), t) Then
+            If Not b2style.function_call.split_struct_function(scope.function_name.of(n.child(0).child(0)), t) Then
                 t = Nothing
             End If
             Dim extended_type As String = Nothing
@@ -42,7 +42,7 @@ Partial Public NotInheritable Class b2style
                                                                                      param_types)
                                                End Function
             Dim t As tuple(Of String, String) = Nothing
-            If function_call.split_struct_function(scope.function_name.of(n.child(0)), t) Then
+            If b2style.function_call.split_struct_function(scope.function_name.of(n.child(0)), t) Then
                 o = f(t.second())
             Else
                 o = f(scope.function_name.of(n.child(0)))
