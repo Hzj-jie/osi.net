@@ -16,12 +16,12 @@ Partial Public NotInheritable Class b2style
                 Implements code_gen(Of typed_node_writer).build
             assert(Not n Is Nothing)
             Dim t As tuple(Of String, String) = Nothing
-            If Not b2style.function_call.split_struct_function(n.child(0).child(0).input_without_ignored(), t) Then
+            If Not function_call.split_struct_function(scope.function_name.of(n.child(0).child(0)), t) Then
                 t = Nothing
             End If
             Dim extended_type As String = Nothing
             Return scope.template_t.resolve(n.child(0), extended_type) AndAlso
-                   function_call.build(scope.current_namespace_t.fully_qualified_name(
+                   function_call.build(scope.namespace_t.fully_qualified_name(
                        If(t.is_null(),
                           extended_type,
                           b2style.function_call.build_struct_function(t.first(), extended_type))),
@@ -42,10 +42,10 @@ Partial Public NotInheritable Class b2style
                                                                                      param_types)
                                                End Function
             Dim t As tuple(Of String, String) = Nothing
-            If b2style.function_call.split_struct_function(n.child(0).input_without_ignored(), t) Then
+            If function_call.split_struct_function(scope.function_name.of(n.child(0)), t) Then
                 o = f(t.second())
             Else
-                o = f(n.child(0).input_without_ignored())
+                o = f(scope.function_name.of(n.child(0)))
             End If
             Return True
         End Function

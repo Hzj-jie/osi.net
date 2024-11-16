@@ -25,13 +25,13 @@ Partial Public NotInheritable Class b3style
             assert(Not n Is Nothing)
             assert(n.child_count() = 2)
             Dim type_node As typed_node = n.child(0)
-            struct.forward_in_stack(type_node.child(0).input_without_ignored(), n.last_child().word().str())
+            struct.forward_in_stack(type_node.child(0), n.last_child())
             Dim params As scope.struct_def = Nothing
-            If Not scope.current().structs().resolve(type_node.child(0).input_without_ignored(),
-                                                     n.last_child().word().str(),
+            If Not scope.current().structs().resolve(scope.type_name.of(type_node.child(0)),
+                                                     scope.variable_name.of(n.last_child()),
                                                      params) Then
-                params = scope.struct_def.of_primitive(type_node.child(0).input_without_ignored(),
-                                                       n.last_child().word().str())
+                params = scope.struct_def.of_primitive(scope.type_name.of(type_node.child(0)),
+                                                       scope.variable_name.of(n.last_child()))
             End If
             Dim ps As stream(Of builders.parameter) = params.primitives()
             If type_node.child_count() = 2 Then

@@ -21,23 +21,24 @@ Partial Public NotInheritable Class b3style
             assert(Not build_caller Is Nothing)
             assert(Not build_caller_ref Is Nothing)
             Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
-                Dim function_name As String = value_definition.name_of(raw_function_name)
                 Dim parameters As vector(Of String) = +targets
-                If scope.current().variables().try_resolve(function_name, Nothing) Then
-                    Return build_caller_ref(function_name, parameters)
+                If scope.current().variables().defined(raw_function_name) Then
+                    Return build_caller_ref(raw_function_name, parameters)
                 End If
 
                 Dim struct_func As tuple(Of String, String) = Nothing
+                Dim function_name As String = Nothing
                 If b2style.function_call.split_struct_function(raw_function_name, struct_func) Then
                     If Not raw_variable_name.build(struct_func.first(), o) Then
                         raise_error(error_type.user, "Cannot find class instance ", struct_func.first())
                         Return False
                     End If
                     parameters = (+scope.current().value_target().value()).names + parameters
-                    function_name = scope.current_namespace_t.fully_qualified_name(struct_func.second())
+                    function_name = scope.namespace_t.fully_qualified_name(struct_func.second())
                 Else
-                    function_name = _function.name_of(raw_function_name)
+                    function_name = scope.fully_qualified_function_name.of(raw_function_name)
                 End If
+                assert(Not function_name Is Nothing)
                 Dim name As String = Nothing
                 If Not logic_name.of_function_call(function_name, parameters, name) Then
                     Return False
@@ -76,7 +77,7 @@ Partial Public NotInheritable Class b3style
                                       ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
             assert(Not n Is Nothing)
             assert(n.child_count() > 0)
-            Return build(n.child(0).input_without_ignored(), n, o, build_caller, build_caller_ref)
+            Return build(scope.function_name.of(n.child(0)), n, o, build_caller, build_caller_ref)
         End Function
 
         Private Shared Function without_return_caller_builder(ByVal o As logic_writer) _

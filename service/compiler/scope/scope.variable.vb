@@ -23,13 +23,14 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                                 ByVal name As String,
                                 ByVal insert As Func(Of String, String, Boolean)) As Boolean
             assert(Not type.null_or_whitespace())
-            assert(Not name.null_or_whitespace())
             assert(Not insert Is Nothing)
             ' TODO: May consider using builders.parameter.
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
             ' where the variable_t instance Is being defined.
-            type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
-            name = current_namespace_t.of(name)
+            type = normalized_type.parameter_type_of(type).full_type()
+            assert(Not type.null_or_whitespace())
+            name = fully_qualified_variable_name.of(name)
+            assert(Not name.null_or_whitespace())
             assert(Not builders.parameter_type.is_ref_type(type))
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
@@ -63,7 +64,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function undefine(ByVal name As String) As Boolean
-            name = current_namespace_t.of(name)
+            name = fully_qualified_variable_name.of(name)
             assert(Not name.null_or_whitespace())
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
@@ -71,7 +72,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-            name = current_namespace_t.of(name)
+            name = fully_qualified_variable_name.of(name)
             assert(Not name.null_or_whitespace())
             Return s.find(name, type)
         End Function
@@ -85,7 +86,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Function define(ByVal n As typed_node) As Boolean
             assert(Not n Is Nothing)
             assert(n.child_count() >= 2)
-            Return define(n.child(0).input_without_ignored(), n.child(1).input_without_ignored())
+            Return define(type_name.of(n.child(0)), variable_name.of(n.child(1)))
         End Function
 
         Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
@@ -144,8 +145,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return True
         End Function
 
-        Public Function try_resolve(ByVal name As String, ByRef type As String) As Boolean
-            Return try_resolve(name, type, Nothing)
+        Public Function defined(ByVal name As String) As Boolean
+            Return try_resolve(name, Nothing, Nothing)
         End Function
 
         Private Function try_resolve(ByVal name As String,
@@ -172,6 +173,10 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 Return True
             End While
             Return False
+        End Function
+
+        Public Function type_of(ByVal name As String, ByRef type As String) As Boolean
+            Return resolve(name, type, Nothing)
         End Function
 
         Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
