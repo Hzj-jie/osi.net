@@ -38,7 +38,7 @@ Partial Public NotInheritable Class b3style
 
         Private Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean _
                                 Implements scope.template_t.name.of
-            o = template_name_of(scope.template_t.name_node_of(n).input_without_ignored(),
+            o = template_name_of(scope.function_name.of(scope.template_t.name_node_of(n)),
                                  scope.template_t.type_param_count(n),
                                  param_types(scope.template_t.body_of(n)))
             Return True

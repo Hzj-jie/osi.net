@@ -233,7 +233,7 @@ Partial Public NotInheritable Class b3style
                 with(Of delegate_with_semi_colon)().
                 with_delegate("raw-type-name",
                               Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
-                                  Return o.append(scope.normalized_type.of(n.input_without_ignored()))
+                                  Return o.append(scope.normalized_type.of(n))
                               End Function).
                 with(code_gen.of_first_child(Of logic_writer)("type-name-with-comma")).
                 with(Of template_type_name)()
