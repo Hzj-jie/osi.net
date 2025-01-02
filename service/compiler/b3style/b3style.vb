@@ -123,7 +123,7 @@ Partial Public NotInheritable Class b3style
                 with_delegate("ignore-result-function-call",
                               Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
                                   assert(Not n Is Nothing)
-                                  Return function_call.without_return(n.child(), o)
+                                  Return function_call.with_parameters.without_return(n.child(), o)
                               End Function).
                 with(Of param)().
                 with(Of return_clause)().

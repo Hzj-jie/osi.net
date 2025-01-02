@@ -62,17 +62,6 @@ Partial Public NotInheritable Class b3style
                    End Function
         End Function
 
-        Public Shared Function without_return(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
-            Return build(scope.function_name.of(n.child(0)),
-                         without_return_caller_builder(o),
-                         without_return_caller_ref_builder(o),
-                         o)
-        End Function
-
-        Public Shared Function without_return(ByVal function_name As String, ByVal o As logic_writer) As Boolean
-            Return build(function_name, without_return_caller_builder(o), without_return_caller_ref_builder(o), o)
-        End Function
-
         Private Shared Function builder(ByVal logic_builder As Func(Of String, String, vector(Of String), Boolean),
                                         ByVal return_type_of As _do_val_ref(Of String, String, Boolean),
                                         ByVal o As logic_writer) _
@@ -142,28 +131,72 @@ Partial Public NotInheritable Class b3style
                            o)
         End Function
 
+        Public NotInheritable Class ignore_parameters
+            Public Shared Function without_return(ByVal function_name As String, ByVal o As logic_writer) As Boolean
+                Return function_call.build(function_name,
+                                           without_return_caller_builder(o),
+                                           without_return_caller_ref_builder(o),
+                                           o)
+            End Function
+
+            Public Shared Function build(ByVal function_name As String, ByVal o As logic_writer) As Boolean
+                Return function_call.build(function_name, caller_builder(o), caller_ref_builder(o), o)
+            End Function
+
+            Private Sub New()
+            End Sub
+        End Class
+
+        Public NotInheritable Class with_parameters
+            Private Shared Function build(ByVal name As String,
+                                          ByVal n As typed_node,
+                                          ByVal build_caller As Func(Of String, vector(Of String), Boolean),
+                                          ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean),
+                                          ByVal o As logic_writer) As Boolean
+                assert(Not n Is Nothing)
+                assert(Not o Is Nothing)
+                If name Is Nothing Then
+                    name = scope.function_name.of(n.child(0))
+                End If
+                assert(n.child_count() >= 3)
+                If n.child_count() = 3 Then
+                    value_list.with_empty()
+                ElseIf Not code_gen_of(n.child(2)).build(o) Then
+                    Return False
+                End If
+                Return function_call.build(name, build_caller, build_caller_ref, o)
+            End Function
+
+            Public Shared Function without_return(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                Return build(Nothing, n, without_return_caller_builder(o), without_return_caller_ref_builder(o), o)
+            End Function
+
+            Public Shared Function build(ByVal function_name As String,
+                                         ByVal n As typed_node,
+                                         ByVal o As logic_writer) As Boolean
+                Return build(function_name, n, caller_builder(o), caller_ref_builder(o), o)
+            End Function
+
+            Public Shared Function build(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                Return build(Nothing, n, o)
+            End Function
+
+            Private Sub New()
+            End Sub
+        End Class
+
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            assert(n.child_count() >= 3)
-            If n.child_count() = 3 Then
-                value_list.with_empty()
-            ElseIf Not code_gen_of(n.child(2)).build(o) Then
-                Return False
-            End If
-            Return build(scope.function_name.of(n.child(0)), caller_builder(o), caller_ref_builder(o), o)
+            Return with_parameters.build(n, o)
         End Function
 
-        Public Shared Function build(ByVal function_name As String, ByVal o As logic_writer) As Boolean
-            Return build(function_name, caller_builder(o), caller_ref_builder(o), o)
-        End Function
-
-        ' Reuse by function_call_with_template.
+        ' Reuse by function_call_with_template; with_parameters
         Public Shared Function build(ByVal function_name As String,
                                      ByVal n As typed_node,
                                      ByVal o As logic_writer) As Boolean
-            Return build(function_name, caller_builder(o), caller_ref_builder(o), o)
+            Return with_parameters.build(function_name, n, o)
         End Function
     End Class
 End Class

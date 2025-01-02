@@ -32,7 +32,7 @@ Partial Public NotInheritable Class b3style
                                         a(n.child(uint32_1 - operator_index))
                                     End Sub,
                                     o) AndAlso
-                   function_call.build(function_name, o)
+                   function_call.ignore_parameters.build(function_name, o)
         End Function
     End Class
 End Class
