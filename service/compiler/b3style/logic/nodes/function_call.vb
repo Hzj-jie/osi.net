@@ -48,23 +48,6 @@ Partial Public NotInheritable Class b3style
             End Using
         End Function
 
-        Private Shared Function build(ByVal name As String,
-                                      ByVal n As typed_node,
-                                      ByVal o As logic_writer,
-                                      ByVal build_caller As Func(Of String, vector(Of String), Boolean),
-                                      ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean)) As Boolean
-            assert(Not name.null_or_whitespace())
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
-            assert(n.child_count() >= 3)
-            If n.child_count() = 3 Then
-                value_list.with_empty()
-            ElseIf Not code_gen_of(n.child(2)).build(o) Then
-                Return False
-            End If
-            Return build(scope.function_name.of(n.child(0)), build_caller, build_caller_ref, o)
-        End Function
-
         Private Shared Function without_return_caller_builder(ByVal o As logic_writer) _
                                                              As Func(Of String, vector(Of String), Boolean)
             Return Function(ByVal name As String, ByVal parameters As vector(Of String)) As Boolean
