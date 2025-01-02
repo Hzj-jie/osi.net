@@ -5,7 +5,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.utt.attributes
@@ -22,10 +21,9 @@ Public MustInherit Class b2style_self_test_runner
     Private Shared ReadOnly ignored_test As unordered_set(Of String) = unordered_set.of(
         "delegate_in_class.txt",
         "delegate_in_class_on_heap.txt")
-    Private Shared filter As argument(Of String)
 
     Public Sub New()
-        MyBase.New(filter Or "*", b2style_self_test_cases.data)
+        MyBase.New(b2style_self_test_cases.data)
     End Sub
 
     <test>

@@ -71,7 +71,6 @@ Partial Public NotInheritable Class b3style
         Protected Overrides Function at() As vector(Of Action(Of code_gens(Of logic_writer)))
             Return New code_gens_registrar(Of logic_writer)().
                 with_of_only_childs(
-                    "root-type",
                     "base-root-type",
                     "include",
                     "typedef-type",
@@ -83,12 +82,15 @@ Partial Public NotInheritable Class b3style
                     "variable-name",
                     "for-increase",
                     "base-for-increase",
-                    "unary-operation-value"
+                    "unary-operation-value",
+                    "ignore-result-function-call-with-template",
+                    "type-name"
                 ).
                 with_of_all_childrens(
                     "paramtypelist",
                     "raw-value",
                     "paramlist",
+                    "paramtype",
                     "value-with-operation"
                 ).
                 with(code_gen.of_ignore_last_child(Of logic_writer)("root-type-with-semi-colon")).
@@ -99,7 +101,7 @@ Partial Public NotInheritable Class b3style
                 with(code_gen.of_first_child(Of logic_writer)("paramtype-with-comma")).
                 with(code_gen.of_children(Of logic_writer)("else-condition", 1)).
                 with(code_gen.of_children(Of logic_writer)("value-with-bracket", 1)).
-                with(code_gen.of_input_without_ignored(Of logic_writer)("paramtype")).
+                with(code_gen.of_only_descendant_str(Of logic_writer)("reference")).
  _
                 with(Of bstyle.logic)().
                 with(Of bstyle.typedef_type_name)().
@@ -121,7 +123,7 @@ Partial Public NotInheritable Class b3style
                 with_delegate("ignore-result-function-call",
                               Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
                                   assert(Not n Is Nothing)
-                                  Return function_call.without_return(n.child(), o)
+                                  Return function_call.with_parameters.without_return(n.child(), o)
                               End Function).
                 with(Of param)().
                 with(Of return_clause)().
@@ -210,7 +212,31 @@ Partial Public NotInheritable Class b3style
                 with("post-operation-value", New unary_operation_value(1, "_post")).
                 with_delegate("self-value-clause", AddressOf binary_operation_value.without_return).
                 with(Of _class)().
-                with(Of class_initializer)()
+                with(Of class_initializer)().
+ _
+                with_delegate("template",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  Dim name As String = Nothing
+                                  Dim t As scope.template_template = Nothing
+                                  Return scope.template_t.of(n, name, t) AndAlso
+                                            scope.current().template().define(name, t)
+                              End Function).
+                with(code_gen.of_first_child(Of logic_writer)("type-param-with-comma")).
+                with(code_gen.of_only_descendant_str(Of logic_writer)("type-param")).
+                with(Of function_call_with_template)().
+                with(Of function_name_with_template)().
+                with_delegate("root-type",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  scope.current().root_type_injector()._new(o)
+                                  Return code_gen_of(n.child()).build(o)
+                              End Function).
+                with(Of delegate_with_semi_colon)().
+                with_delegate("raw-type-name",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  Return o.append(scope.normalized_type.of(n))
+                              End Function).
+                with(code_gen.of_first_child(Of logic_writer)("type-name-with-comma")).
+                with(Of template_type_name)()
         End Function
     End Class
 End Class

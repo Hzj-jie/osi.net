@@ -6,6 +6,7 @@ Option Strict On
 Imports System.IO
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
@@ -13,13 +14,11 @@ Imports osi.service.resource
 Imports envs = osi.root.envs
 
 Public MustInherit Class compiler_self_test_runner
-    Private ReadOnly filter As String
+    Private Shared filter As argument(Of String)
     Private ReadOnly data() As Byte
 
-    Protected Sub New(ByVal filter As String, ByVal data() As Byte)
-        assert(Not filter Is Nothing)
+    Protected Sub New(ByVal data() As Byte)
         assert(Not data.null_or_empty())
-        Me.filter = filter
         Me.data = data
     End Sub
 
@@ -31,8 +30,8 @@ Public MustInherit Class compiler_self_test_runner
                 ByVal content As StreamReader)
                 Dim text As String = content.ReadToEnd()
                 a.emplace_back(Sub()
-                                   If Not name.match_pattern(filter) AndAlso
-                                      Not name.match_pattern(filter + ".txt") Then
+                                   If Not name.match_pattern(filter Or "*") AndAlso
+                                      Not name.match_pattern(filter Or "*" + ".txt") Then
                                        If envs.deploys.dev_env Then
                                            raise_error(error_type.user,
                                                        "Ignore test case ",

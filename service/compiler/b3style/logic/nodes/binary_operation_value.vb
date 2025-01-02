@@ -33,12 +33,12 @@ Partial Public NotInheritable Class b3style
 
         Public Shared Function without_return(ByVal n As typed_node,
                                               ByVal o As logic_writer) As Boolean
-            Return build(n, AddressOf function_call.without_return, o)
+            Return build(n, AddressOf function_call.ignore_parameters.without_return, o)
         End Function
 
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            Return build(n, AddressOf function_call.build, o)
+            Return build(n, AddressOf function_call.ignore_parameters.build, o)
         End Function
     End Class
 End Class

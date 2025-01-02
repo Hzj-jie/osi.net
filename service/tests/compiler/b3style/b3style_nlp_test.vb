@@ -61,7 +61,7 @@ Public NotInheritable Class b3style_nlp_tests
         Inherits compiler_self_test_runner
 
         Public Sub New()
-            MyBase.New("*", b2style_self_test_cases.data)
+            MyBase.New(b2style_self_test_cases.data)
         End Sub
 
         Protected Overrides Sub execute(ByVal name As String, ByVal text As String)
@@ -95,7 +95,7 @@ Public NotInheritable Class b3style_nlp_tests
         )
 
         Public Sub New()
-            MyBase.New("*", b2style_self_compile_error_cases.data)
+            MyBase.New(b2style_self_compile_error_cases.data)
         End Sub
 
         Protected Overrides Sub execute(ByVal name As String, ByVal text As String)
