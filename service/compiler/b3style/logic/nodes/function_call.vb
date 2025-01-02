@@ -146,6 +146,12 @@ Partial Public NotInheritable Class b3style
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
+            assert(n.child_count() >= 3)
+            If n.child_count() = 3 Then
+                value_list.with_empty()
+            ElseIf Not code_gen_of(n.child(2)).build(o) Then
+                Return False
+            End If
             Return build(scope.function_name.of(n.child(0)), caller_builder(o), caller_ref_builder(o), o)
         End Function
 
