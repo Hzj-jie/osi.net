@@ -22,11 +22,11 @@ Partial Public NotInheritable Class b2style
             Dim extended_type As String = Nothing
             Return scope.template_t.resolve(n.child(0), extended_type) AndAlso
                    function_call.build(scope.namespace_t.fully_qualified_name(
-                       If(t.is_null(),
-                          extended_type,
-                          b2style.function_call.build_struct_function(t.first(), extended_type))),
-                       n,
-                       o)
+                                           If(t.is_null(),
+                                              extended_type,
+                                              b2style.function_call.build_struct_function(t.first(), extended_type))),
+                                       n,
+                                       o)
         End Function
 
         Public Shared Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean

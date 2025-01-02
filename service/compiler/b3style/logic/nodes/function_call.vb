@@ -80,7 +80,10 @@ Partial Public NotInheritable Class b3style
         End Function
 
         Public Shared Function without_return(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
-            Return build(n, o, without_return_caller_builder(o), without_return_caller_ref_builder(o))
+            Return build(scope.function_name.of(n.child(0)),
+                         without_return_caller_builder(o),
+                         without_return_caller_ref_builder(o),
+                         o)
         End Function
 
         Public Shared Function without_return(ByVal function_name As String, ByVal o As logic_writer) As Boolean
@@ -160,10 +163,17 @@ Partial Public NotInheritable Class b3style
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Return build(n, o, caller_builder(o), caller_ref_builder(o))
+            Return build(scope.function_name.of(n.child(0)), caller_builder(o), caller_ref_builder(o), o)
         End Function
 
         Public Shared Function build(ByVal function_name As String, ByVal o As logic_writer) As Boolean
+            Return build(function_name, caller_builder(o), caller_ref_builder(o), o)
+        End Function
+
+        ' Reuse by function_call_with_template.
+        Public Shared Function build(ByVal function_name As String,
+                                     ByVal n As typed_node,
+                                     ByVal o As logic_writer) As Boolean
             Return build(function_name, caller_builder(o), caller_ref_builder(o), o)
         End Function
     End Class
