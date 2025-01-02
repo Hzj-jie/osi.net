@@ -23,4 +23,7 @@ Public NotInheritable Class b3style_compile_only_test
         assertion.is_true(b3style.with_default_functions().build(
                           _b2style_test_data.two_template_type_parameters.as_text(), New logic_writer()))
     End Sub
+
+    Private Sub New()
+    End Sub
 End Class
