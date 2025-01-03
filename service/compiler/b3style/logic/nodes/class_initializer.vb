@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.service.automata
 
 Partial Public NotInheritable Class b3style
@@ -33,10 +34,21 @@ Partial Public NotInheritable Class b3style
             scope.current().when_end_scope(
                 Sub()
                     value_list.with_empty()
-                    assert(function_call.ignore_parameters.without_return(b2style.function_call.build_struct_function(
+                    ' when_end_scope uses IDisposable, even the build failed in the middle, it will still be executed
+                    ' and may cause the crash if reinterpret_cast is used. See
+                    ' b2style_compile_error_test.class_initializer_for_non_class.
+                    ' Likely the destructor shouldn't be executed in the case.
+                    ' TODO: Avoid running this when_end_scope callback if the build failed in the middle.
+                    If Not function_call.ignore_parameters.without_return(b2style.function_call.build_struct_function(
                                                                               name,
                                                                               scope.class_def.destruct),
-                                                                          o))
+                                                                          o) Then
+                        raise_error(error_type.user,
+                                    "Failed to build the destructor of the variable ",
+                                    name,
+                                    ", this shouldn't happen unless the reinterpret_cast is used ",
+                                    "which changed the definition of the variable.")
+                    End If
                 End Sub)
             scope.current().
                   call_hierarchy().

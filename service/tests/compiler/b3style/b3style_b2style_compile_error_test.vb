@@ -20,6 +20,16 @@ Public NotInheritable Class b3style_b2style_compile_error_test
         End Function
     End Class
 
+    <test>
+    Private Shared Sub cycle_typedef()
+        run(_b2style_test_data.errors_cycle_typedef, "::CYCLE_TYPEDEF::A", "typedef C A")
+    End Sub
+
+    <test>
+    Private Shared Sub reinterpret_cast_without_type_id()
+        run(_b2style_test_data.errors_reinterpret_cast_without_type_id, "s.::S2__struct__type__id")
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
