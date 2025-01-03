@@ -30,6 +30,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             If canonical.ref Then
                 raise_error(error_type.user,
                             "Reference type ",
+                            [alias],
+                            " or canonical ",
                             canonical,
                             " is not allowed to be used as a canonical type. ")
                 Return False
@@ -38,8 +40,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 raise_error(error_type.user,
                             "Cycle typedefs detected, alias ",
                             [alias],
-                            " equals to its canonical ",
-                            canonical)
+                            " equals to its canonical.")
                 Return False
             End If
             m([alias]) = canonical.non_ref_type()

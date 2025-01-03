@@ -110,6 +110,8 @@
     <Compile Include="b2style\template_template_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_compile_error_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_self_compile_error_test.vb" />
+    <Compile Include="b3style\b3style_b2style_compile_error_test.vb" />
+    <Compile Include="b3style\b3style_b2style_self_compile_error_test.vb" />
     <Compile Include="b3style\b3style_b2style_self_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_self_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_test.vb" />
