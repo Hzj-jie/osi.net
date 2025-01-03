@@ -15,9 +15,9 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
 
             If Not function_call.ignore_parameters.without_return(b2style.function_call.build_struct_function(
-                                                                    name,
-                                                                    scope.class_def.construct),
-                                                                o) Then
+                                                                      name,
+                                                                      scope.class_def.construct),
+                                                                  o) Then
                 Return False
             End If
             scope.current().
@@ -34,9 +34,9 @@ Partial Public NotInheritable Class b3style
                 Sub()
                     value_list.with_empty()
                     assert(function_call.ignore_parameters.without_return(b2style.function_call.build_struct_function(
-                                                                            name,
-                                                                            scope.class_def.destruct),
-                                                                        o))
+                                                                              name,
+                                                                              scope.class_def.destruct),
+                                                                          o))
                 End Sub)
             scope.current().
                   call_hierarchy().
