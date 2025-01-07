@@ -68,18 +68,24 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         ' another word, the raw name itself.
         Private Shared Function find(Of RT)(ByVal name As String,
                                             ByVal f As _do_val_ref(Of String, RT, Boolean),
+                                            ByRef fully_qualified_name As String,
                                             ByRef o As RT) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not f Is Nothing)
             Dim fn As String = current_namespace_t.of(name)
             assert(Not fn.null_or_whitespace())
             If f(name, o) Then
+                fully_qualified_name = name
                 Return True
             End If
             If fn.Equals(name) Then
                 Return False
             End If
-            Return f(fn, o)
+            If f(fn, o) Then
+                fully_qualified_name = fn
+                Return True
+            End If
+            Return False
         End Function
 
         Public Function undefine(ByVal name As String) As Boolean
@@ -89,14 +95,18 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                             assert(Not variable.is_heap_name(n))
                             Return s.erase(n)
                         End Function,
+                        Nothing,
                         0)
         End Function
 
-        Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
+        Public Function resolve(ByVal name As String,
+                                ByRef fully_qualified_name As String,
+                                ByRef type As String) As Boolean
             Return find(name,
                         Function(ByVal n As String, ByRef o As String) As Boolean
                             Return s.find(n, o)
                         End Function,
+                        fully_qualified_name,
                         type)
         End Function
     End Class
@@ -169,10 +179,11 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function defined(ByVal name As String) As Boolean
-            Return try_resolve(name, Nothing, Nothing)
+            Return try_resolve(name, Nothing, Nothing, Nothing)
         End Function
 
         Private Function try_resolve(ByVal name As String,
+                                     ByRef fully_qualified_name As String,
                                      ByRef type As String,
                                      ByVal signature As ref(Of function_signature)) As Boolean
             ' logic_name.of_function_call requires type of the parameter to set function name.
@@ -182,7 +193,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
             Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
-                If Not s.myself().variables().resolve(name, type) Then
+                If Not s.myself().variables().resolve(name, fully_qualified_name, type) Then
                     s = s.parent
                     Continue While
                 End If
@@ -198,18 +209,17 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return False
         End Function
 
-        Public Function type_of(ByVal name As String, ByRef type As String) As Boolean
-            Return resolve(name, type, Nothing)
-        End Function
-
-        Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-            Return resolve(name, type, Nothing)
+        Public Function type_of(ByVal name As String,
+                                ByRef fully_qualified_name As String,
+                                ByRef type As String) As Boolean
+            Return resolve(name, fully_qualified_name, type, Nothing)
         End Function
 
         Public Function resolve(ByVal name As String,
+                                ByRef fully_qualified_name As String,
                                 ByRef type As String,
                                 ByVal signature As ref(Of function_signature)) As Boolean
-            If try_resolve(name, type, signature) Then
+            If try_resolve(name, fully_qualified_name, type, signature) Then
                 Return True
             End If
             raise_error(error_type.user, "Variable ", name, " has not been defined.")
