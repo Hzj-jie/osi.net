@@ -122,19 +122,18 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Public Function resolve(ByVal name As String, ByRef o As tuple(Of String, struct_def)) As Boolean
                 Dim s As T = scope(Of T).current()
                 While Not s Is Nothing
-                    Dim fully_qualified_name As String = Nothing
-                    Dim type As String = Nothing
-                    If Not s.myself().variables().resolve(name, fully_qualified_name, type) Then
+                    Dim p As builders.parameter = Nothing
+                    If Not s.myself().variables().resolve(name, p) Then
                         s = s.parent
                         Continue While
                     End If
                     Dim v As struct_def = Nothing
                     ' The type may not be a struct at all. Note, the struct only applies to the variables after it's
                     ' defined.
-                    If Not s.structs().resolve(type, fully_qualified_name, v) Then
+                    If Not s.structs().resolve(p.full_type(), p.name, v) Then
                         Return False
                     End If
-                    o = tuple.of(type, v)
+                    o = tuple.of(p.full_type(), v)
                     Return True
                 End While
                 Return False

@@ -177,7 +177,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Public Function defined(ByVal name As String) As Boolean
-            Return try_resolve(name, Nothing, Nothing, Nothing)
+            Return try_resolve(name, Nothing, Nothing)
         End Function
 
         Private Function try_resolve(ByVal name As String,
@@ -190,13 +190,14 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
             Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
-                If Not s.myself().variables().resolve(name, fully_qualified_name, Type) Then
+                If Not s.myself().variables().resolve(name, o) Then
                     s = s.parent
                     Continue While
                 End If
+                assert(Not o Is Nothing)
                 If Not signature Is Nothing Then
                     Dim f As function_signature = Nothing
-                    If s.delegates().retrieve(Type, f) Then
+                    If s.delegates().retrieve(o.full_type(), f) Then
                         assert(Not f Is Nothing)
                         signature.set(f)
                     End If
@@ -206,17 +207,20 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return False
         End Function
 
-        Public Function type_of(ByVal name As String,
-                                ByRef fully_qualified_name As String,
-                                ByRef type As String) As Boolean
-            Return resolve(name, fully_qualified_name, type, Nothing)
+        Public Function type_of(ByVal name As String, ByRef type As String) As Boolean
+            Dim o As builders.parameter = Nothing
+            If resolve(name, o, Nothing) Then
+                assert(Not o Is Nothing)
+                type = o.full_type()
+                Return True
+            End If
+            Return False
         End Function
 
         Public Function resolve(ByVal name As String,
-                                ByRef fully_qualified_name As String,
-                                ByRef type As String,
+                                ByRef o As builders.parameter,
                                 ByVal signature As ref(Of function_signature)) As Boolean
-            If try_resolve(name, fully_qualified_name, type, signature) Then
+            If try_resolve(name, o, signature) Then
                 Return True
             End If
             raise_error(error_type.user, "Variable ", name, " has not been defined.")
