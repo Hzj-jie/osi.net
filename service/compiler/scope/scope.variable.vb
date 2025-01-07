@@ -66,9 +66,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         ' When finding the variable in a function, there are two candidates, 1) the variable defined in the function
         ' itself, 2) the variable in the same namespace / root scope. Prefer the one in the function itself, or in
         ' another word, the raw name itself.
-        Private Shared Function find(Of T)(ByVal name As String,
-                                           ByVal f As _do_val_ref(Of String, T, Boolean),
-                                           ByRef o As T) As Boolean
+        Private Shared Function find(Of RT)(ByVal name As String,
+                                            ByVal f As _do_val_ref(Of String, RT, Boolean),
+                                            ByRef o As RT) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not f Is Nothing)
             Dim fn As String = current_namespace_t.of(name)
