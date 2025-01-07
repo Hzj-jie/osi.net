@@ -63,18 +63,41 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                                       End Function)
         End Function
 
-        Public Function undefine(ByVal name As String) As Boolean
-            name = fully_qualified_variable_name.of(name)
+        ' When finding the variable in a function, there are two candidates, 1) the variable defined in the function
+        ' itself, 2) the variable in the same namespace / root scope. Prefer the one in the function itself, or in
+        ' another word, the raw name itself.
+        Private Shared Function find(Of T)(ByVal name As String,
+                                           ByVal f As _do_val_ref(Of String, T, Boolean),
+                                           ByRef o As T) As Boolean
             assert(Not name.null_or_whitespace())
-            ' The name should not be an array with index.
-            assert(Not variable.is_heap_name(name))
-            Return s.erase(name)
+            assert(Not f Is Nothing)
+            Dim fn As String = current_namespace_t.of(name)
+            assert(Not fn.null_or_whitespace())
+            If f(name, o) Then
+                Return True
+            End If
+            If fn.Equals(name) Then
+                Return False
+            End If
+            Return f(fn, o)
+        End Function
+
+        Public Function undefine(ByVal name As String) As Boolean
+            Return find(name,
+                        Function(ByVal n As String, ByRef o As Int32) As Boolean
+                            ' The name should not be an array with index.
+                            assert(Not variable.is_heap_name(n))
+                            Return s.erase(n)
+                        End Function,
+                        0)
         End Function
 
         Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-            name = fully_qualified_variable_name.of(name)
-            assert(Not name.null_or_whitespace())
-            Return s.find(name, type)
+            Return find(name,
+                        Function(ByVal n As String, ByRef o As String) As Boolean
+                            Return s.find(n, o)
+                        End Function,
+                        type)
         End Function
     End Class
 
