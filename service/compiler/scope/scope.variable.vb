@@ -176,10 +176,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return True
         End Function
 
-        Public Function defined(ByVal name As String) As Boolean
-            Return try_resolve(name, Nothing, Nothing)
-        End Function
-
         Private Function try_resolve(ByVal name As String,
                                      ByRef o As builders.parameter,
                                      ByVal signature As ref(Of function_signature)) As Boolean
@@ -207,6 +203,20 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return False
         End Function
 
+        Public Function resolve(ByVal name As String,
+                                ByRef o As builders.parameter,
+                                ByVal signature As ref(Of function_signature)) As Boolean
+            If try_resolve(name, o, signature) Then
+                Return True
+            End If
+            raise_error(error_type.user, "Variable ", name, " has not been defined.")
+            Return False
+        End Function
+
+        Public Function defined(ByVal name As String) As Boolean
+            Return try_resolve(name, Nothing, Nothing)
+        End Function
+
         Public Function type_of(ByVal name As String, ByRef type As String) As Boolean
             Dim o As builders.parameter = Nothing
             If resolve(name, o, Nothing) Then
@@ -217,14 +227,25 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return False
         End Function
 
-        Public Function resolve(ByVal name As String,
-                                ByRef o As builders.parameter,
-                                ByVal signature As ref(Of function_signature)) As Boolean
-            If try_resolve(name, o, signature) Then
-                Return True
+        Public Function delegate_of(ByVal name As String, ByRef signature As function_signature) As Boolean
+            assert(signature Is Nothing)
+            Dim o As builders.parameter = Nothing
+            Dim s As New ref(Of function_signature)()
+            If Not resolve(name, o, s) Then
+                Return False
             End If
-            raise_error(error_type.user, "Variable ", name, " has not been defined.")
-            Return False
+            assert(Not o Is Nothing)
+            If Not s Then
+                raise_error(error_type.user,
+                            "Delegate type ",
+                            o.full_type(),
+                            " for ",
+                            name,
+                            " is not defined.")
+                Return False
+            End If
+            signature = +s
+            Return True
         End Function
 
         Public Shared Function define() As Func(Of typed_node, Boolean)

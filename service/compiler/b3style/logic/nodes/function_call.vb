@@ -111,21 +111,12 @@ Partial Public NotInheritable Class b3style
                                Return builders.of_caller_ref(name, result, parameters).to(o)
                            End Function,
                            Function(ByVal name As String, ByRef type As String) As Boolean
-                               Dim signature As New ref(Of function_signature)()
-                               Dim delegate_type As String = Nothing
-                               If Not scope.current().variables().resolve(name, delegate_type, signature) Then
+                               Dim signature As function_signature = Nothing
+                               If Not scope.current().variables().delegate_of(name, signature) Then
                                    Return False
                                End If
-                               If Not signature Then
-                                   raise_error(error_type.user,
-                                               "Delegate type ",
-                                               delegate_type,
-                                               " for ",
-                                               name,
-                                               " is not defined.")
-                                   Return False
-                               End If
-                               type = signature.get().return_type
+                               assert(Not signature Is Nothing)
+                               type = signature.return_type
                                Return True
                            End Function,
                            o)
