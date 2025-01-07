@@ -68,21 +68,18 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         ' another word, the raw name itself.
         Private Shared Function find(Of RT)(ByVal name As String,
                                             ByVal f As _do_val_ref(Of String, RT, Boolean),
-                                            ByRef fully_qualified_name As String,
                                             ByRef o As RT) As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not f Is Nothing)
             Dim fn As String = current_namespace_t.of(name)
             assert(Not fn.null_or_whitespace())
             If f(name, o) Then
-                fully_qualified_name = name
                 Return True
             End If
             If fn.Equals(name) Then
                 Return False
             End If
             If f(fn, o) Then
-                fully_qualified_name = fn
                 Return True
             End If
             Return False
@@ -95,19 +92,20 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                             assert(Not variable.is_heap_name(n))
                             Return s.erase(n)
                         End Function,
-                        Nothing,
                         0)
         End Function
 
-        Public Function resolve(ByVal name As String,
-                                ByRef fully_qualified_name As String,
-                                ByRef type As String) As Boolean
+        Public Function resolve(ByVal name As String, ByRef o As builders.parameter) As Boolean
             Return find(name,
-                        Function(ByVal n As String, ByRef o As String) As Boolean
-                            Return s.find(n, o)
+                        Function(ByVal n As String, ByRef r As builders.parameter) As Boolean
+                            Dim t As String = Nothing
+                            If Not s.find(n, t) Then
+                                Return False
+                            End If
+                            r = New builders.parameter(t, n)
+                            Return True
                         End Function,
-                        fully_qualified_name,
-                        type)
+                        o)
         End Function
     End Class
 
@@ -183,8 +181,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Private Function try_resolve(ByVal name As String,
-                                     ByRef fully_qualified_name As String,
-                                     ByRef type As String,
+                                     ByRef o As builders.parameter,
                                      ByVal signature As ref(Of function_signature)) As Boolean
             ' logic_name.of_function_call requires type of the parameter to set function name.
             If variable.is_heap_name(name) Then
@@ -193,13 +190,13 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
             Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
-                If Not s.myself().variables().resolve(name, fully_qualified_name, type) Then
+                If Not s.myself().variables().resolve(name, fully_qualified_name, Type) Then
                     s = s.parent
                     Continue While
                 End If
                 If Not signature Is Nothing Then
                     Dim f As function_signature = Nothing
-                    If s.delegates().retrieve(type, f) Then
+                    If s.delegates().retrieve(Type, f) Then
                         assert(Not f Is Nothing)
                         signature.set(f)
                     End If
