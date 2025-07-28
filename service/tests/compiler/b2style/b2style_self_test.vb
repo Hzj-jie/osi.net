@@ -82,7 +82,14 @@ Public NotInheritable Class b2style_self_test
     End Function
 
     Protected Overrides Function ignore_case(ByVal name As String) As Boolean
+        Return is_ignored_case(name)
+    End Function
+
+    Public Shared Function is_ignored_case(ByVal name As String) As Boolean
         assert(Not name.null_or_whitespace())
-        Return name.Equals("struct-and-primitive-type-with-same-name.txt")
+        Dim s As unordered_set(Of String) = unordered_set.emplace_of(
+            "struct-and-primitive-type-with-same-name.txt",
+            "recursive.txt")
+        Return s.find(name) <> s.end()
     End Function
 End Class
