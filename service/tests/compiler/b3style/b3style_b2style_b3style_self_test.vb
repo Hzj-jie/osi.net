@@ -24,7 +24,7 @@ Public NotInheritable Class b3style_b2style_b3style_self_test
 
     Protected Overrides Function ignore_case(ByVal name As String) As Boolean
         assert(Not name.null_or_whitespace())
-        If b2style_self_test.is_ignored_case(name) Then
+        If MyBase.ignore_case(name) OrElse b2style_self_test.is_ignored_case(name) Then
             ' Unsupported scenario
             Return True
         End If
