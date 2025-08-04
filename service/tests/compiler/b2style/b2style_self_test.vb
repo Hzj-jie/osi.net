@@ -18,9 +18,6 @@ Public MustInherit Class b2style_self_test_runner
     Public Const failure As String = "Failure: "
     Public Const success As String = "Success: "
     Public Const no_extra_inforamtion As String = "no extra information."
-    Private Shared ReadOnly ignored_test As unordered_set(Of String) = unordered_set.of(
-        "delegate_in_class.txt",
-        "delegate_in_class_on_heap.txt")
 
     Public Sub New()
         MyBase.New(b2style_self_test_cases.data)
@@ -32,9 +29,6 @@ Public MustInherit Class b2style_self_test_runner
     End Sub
 
     Protected NotOverridable Overrides Sub execute(ByVal name As String, ByVal content As String)
-        If ignored_test.find(name) <> ignored_test.end() Then
-            Return
-        End If
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(New interrupts(+io), content, e), name)
@@ -62,6 +56,12 @@ Public MustInherit Class b2style_self_test_runner
         End While
     End Sub
 
+    Protected Overrides Function ignore_case(ByVal name As String) As Boolean
+        Return unordered_set.of(
+            "delegate_in_class.txt",
+            "delegate_in_class_on_heap.txt").find(name).is_not_end()
+    End Function
+
     Protected MustOverride Function parse(ByVal functions As interrupts,
                                           ByVal content As String,
                                           ByRef e As executor) As Boolean
@@ -82,13 +82,12 @@ Public NotInheritable Class b2style_self_test
     End Function
 
     Protected Overrides Function ignore_case(ByVal name As String) As Boolean
-        Return is_ignored_case(name)
+        Return MyBase.ignore_case(name) OrElse is_ignored_case(name)
     End Function
 
     Public Shared Function is_ignored_case(ByVal name As String) As Boolean
         assert(Not name.null_or_whitespace())
         Return unordered_set.emplace_of(
-            "struct-and-primitive-type-with-same-name.txt",
-            "recursive.txt").find(name).is_not_end()
+            "struct-and-primitive-type-with-same-name.txt").find(name).is_not_end()
     End Function
 End Class
