@@ -36,7 +36,7 @@ Partial Public NotInheritable Class b3style
                     value_list.with_empty()
                     ' when_end_scope uses IDisposable, even the build failed in the middle, it will still be executed
                     ' and may cause the crash if reinterpret_cast is used. See
-                    ' b2style_compile_error_test.class_initializer_for_non_class.
+                    ' b2style_compile_error_test.reinterpret_cast_without_type_id.
                     ' Likely the destructor shouldn't be executed in the case.
                     ' TODO: Avoid running this when_end_scope callback if the build failed in the middle.
                     If Not function_call.ignore_parameters.without_return(b2style.function_call.build_struct_function(
