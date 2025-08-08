@@ -8,7 +8,8 @@ Imports osi.root.constants
 Imports osi.service.automata
 
 Partial Public NotInheritable Class b3style
-    Private NotInheritable Class class_initializer
+    ' VisibleForTesting
+    Public NotInheritable Class class_initializer
         Implements code_gen(Of logic_writer)
 
         Public Shared Function construct(ByVal name As String, ByVal o As logic_writer) As Boolean
@@ -28,6 +29,14 @@ Partial Public NotInheritable Class b3style
             Return True
         End Function
 
+        ' VisibleForTesting
+        Public Shared Function failed_to_build_destructor_message(ByVal name As String) As String
+            Return String.Concat("Failed to build the destructor of the variable ",
+                                 name,
+                                 ", this shouldn't happen unless the reinterpret_cast is used ",
+                                 "which changed the definition of the variable.")
+        End Function
+
         Public Shared Sub destruct(ByVal name As String, ByVal o As logic_writer)
             ' Functions are always in global namespace.
             ' Use of this function should only be in the !_disable_namespace.
@@ -43,11 +52,7 @@ Partial Public NotInheritable Class b3style
                                                                               name,
                                                                               scope.class_def.destruct),
                                                                           o) Then
-                        raise_error(error_type.user,
-                                    "Failed to build the destructor of the variable ",
-                                    name,
-                                    ", this shouldn't happen unless the reinterpret_cast is used ",
-                                    "which changed the definition of the variable.")
+                        raise_error(error_type.user, failed_to_build_destructor_message(name))
                     End If
                 End Sub)
             scope.current().

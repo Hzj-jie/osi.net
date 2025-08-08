@@ -30,6 +30,14 @@ Public NotInheritable Class b3style_b2style_compile_error_test
         run(_b2style_test_data.errors_reinterpret_cast_without_type_id, "s.::S2__struct__type__id")
     End Sub
 
+    <test>
+    Private Shared Sub reinterpret_cast_to_a_different_class_type()
+        ' b3style can detect the error correctly.
+        run(_b2style_test_data.reinterpret_cast_to_a_different_class_type,
+            "s.::S2__struct__type__id",
+            b3style.class_initializer.failed_to_build_destructor_message("s"))
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
