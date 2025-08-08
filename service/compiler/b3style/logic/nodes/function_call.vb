@@ -162,6 +162,16 @@ Partial Public NotInheritable Class b3style
                 Return build(Nothing, n, without_return_caller_builder(o), without_return_caller_ref_builder(o), o)
             End Function
 
+            Public Shared Function without_return(ByVal function_name As String,
+                                                  ByVal n As typed_node,
+                                                  ByVal o As logic_writer) As Boolean
+                Return build(function_name,
+                             n,
+                             without_return_caller_builder(o),
+                             without_return_caller_ref_builder(o),
+                             o)
+            End Function
+
             Public Shared Function build(ByVal function_name As String,
                                          ByVal n As typed_node,
                                          ByVal o As logic_writer) As Boolean
@@ -183,7 +193,8 @@ Partial Public NotInheritable Class b3style
             Return with_parameters.build(n, o)
         End Function
 
-        ' Reuse by function_call_with_template; with_parameters
+        ' Reuse by function_call_with_template; with_parameters.
+        ' Needed by the reuse of b2style.function_call_with_paramter.
         Public Shared Function build(ByVal function_name As String,
                                      ByVal n As typed_node,
                                      ByVal o As logic_writer) As Boolean

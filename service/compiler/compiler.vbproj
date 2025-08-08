@@ -80,6 +80,7 @@
     <Compile Include="b3style\logic\nodes\function_call.vb" />
     <Compile Include="b3style\logic\nodes\function_call_with_template.param_types.vb" />
     <Compile Include="b3style\logic\nodes\function_call_with_template.vb" />
+    <Compile Include="b3style\logic\nodes\function_call_with_template_without_return.vb" />
     <Compile Include="b3style\logic\nodes\function_name_with_template.vb" />
     <Compile Include="b3style\logic\nodes\heap_declaration.vb" />
     <Compile Include="b3style\logic\nodes\heap_name.vb" />

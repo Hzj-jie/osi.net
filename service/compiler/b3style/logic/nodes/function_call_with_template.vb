@@ -30,14 +30,22 @@ Partial Public NotInheritable Class b3style
 
         Private Function build(ByVal n As typed_node, ByVal o As logic_writer) As Boolean _
                 Implements code_gen(Of logic_writer).build
+            Return build(n, o, AddressOf function_call.build)
+        End Function
+
+        Private Shared Function build(
+                ByVal n As typed_node,
+                ByVal o As logic_writer,
+                ByVal function_call_build As Func(Of String, typed_node, logic_writer, Boolean)) As Boolean
             assert(Not n Is Nothing)
+            assert(Not function_call_build Is Nothing)
             Dim t As tuple(Of String, String) = Nothing
             If Not b2style.function_call.split_struct_function(scope.function_name.of(n.child(0).child(0)), t) Then
                 t = Nothing
             End If
             Dim extended_type As String = Nothing
             Return scope.template_t.resolve(n.child(0), extended_type) AndAlso
-                   function_call.build(scope.namespace_t.fully_qualified_name(
+                   function_call_build(scope.namespace_t.fully_qualified_name(
                                            If(t.is_null(),
                                               extended_type,
                                               b2style.function_call.build_struct_function(t.first(), extended_type))),
