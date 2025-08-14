@@ -123,9 +123,12 @@
     <Compile Include="b3style\b3style_runnable_test_cases.vb" />
     <Compile Include="b3style\b3style_test.vb" />
     <Compile Include="b3style\b3style_test_data.vb" />
+    <Compile Include="compiler_self_assertion_test_runner.vb" />
+    <Compile Include="compile_error_test_runner.vb" />
+    <Compile Include="compiler_self_compile_error_test_runner.vb" />
     <Compile Include="compiler_self_test_runner.vb" />
     <Compile Include="b3style\b3style_nlp_test.vb" />
-    <Compile Include="bstyle\bstyle_compiler_error_test.vb" />
+    <Compile Include="bstyle\bstyle_compile_error_test.vb" />
     <Compile Include="bstyle\bstyle_test.vb" />
     <Compile Include="bstyle\bstyle_test_data.vb" />
     <Compile Include="dotnet\dotnet_test_data.vb" />

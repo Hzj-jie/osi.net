@@ -10,6 +10,7 @@ Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utils
 Imports osi.root.utt
+Imports osi.root.utt.attributes
 Imports osi.service.resource
 Imports envs = osi.root.envs
 
@@ -22,7 +23,8 @@ Public MustInherit Class compiler_self_test_runner
         Me.data = data
     End Sub
 
-    Protected Sub run()
+    <test>
+    Private Sub run()
         Dim a As New vector(Of Action)()
         tar.gen.reader_of(data).foreach(
             Sub(ByVal name As String,

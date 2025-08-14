@@ -71,11 +71,6 @@ Public NotInheritable Class b3style_nlp_tests
         Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
             Return b3style.parse_wrapper.with_current_file(filename)
         End Function
-
-        <test>
-        Private Shadows Sub run()
-            MyBase.run()
-        End Sub
     End Class
 
     <test>
@@ -109,11 +104,6 @@ Public NotInheritable Class b3style_nlp_tests
         Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
             Return b3style.parse_wrapper.with_current_file(filename)
         End Function
-
-        <test>
-        Private Shadows Sub run()
-            MyBase.run()
-        End Sub
     End Class
 
     Private Sub New()

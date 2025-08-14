@@ -16,11 +16,6 @@ Public NotInheritable Class b3style_runnable_test
         MyBase.New(b3style_runnable_test_cases.data)
     End Sub
 
-    <test>
-    Private Shadows Sub run()
-        MyBase.run()
-    End Sub
-
     Protected Overrides Sub execute(ByVal name As String, ByVal content As String)
         Dim e As executor = Nothing
         assertion.is_true(b3style.with_functions(New interrupts(console_io.null())).compile(content, e), name)

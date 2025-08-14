@@ -14,11 +14,13 @@ Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 Imports osi.service.resource
 
-Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, executor, Boolean))
-    Private Shared ReadOnly parse As _do(Of console_io.test_wrapper, String, executor, Boolean) = -(alloc(Of _PARSE)())
+Public MustInherit Class bstyle_test_runner
+    Protected MustOverride Function parse(ByVal io As console_io.test_wrapper,
+                                          ByVal content As String,
+                                          ByRef o As executor) As Boolean
 
     <test>
-    Private Shared Sub case1()
+    Private Sub case1()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.case1.as_text(), e))
@@ -28,7 +30,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub case2()
+    Private Sub case2()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.case2.as_text(), e))
@@ -38,7 +40,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub global_variable()
+    Private Sub global_variable()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.global_variable.as_text(), e))
@@ -48,7 +50,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub overload_function()
+    Private Sub overload_function()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.overload_function.as_text(), e))
@@ -58,7 +60,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub single_level_struct()
+    Private Sub single_level_struct()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.single_level_struct.as_text(), e))
@@ -68,7 +70,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub nested_struct()
+    Private Sub nested_struct()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.nested_struct.as_text(), e))
@@ -78,7 +80,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub function_struct()
+    Private Sub function_struct()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.function_struct.as_text(), e))
@@ -88,7 +90,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub return_struct()
+    Private Sub return_struct()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.return_struct.as_text(), e))
@@ -98,7 +100,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub call_struct_on_heap()
+    Private Sub call_struct_on_heap()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.call_struct_on_heap.as_text(), e))
@@ -108,7 +110,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub for_loop()
+    Private Sub for_loop()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.for_loop.as_text(), e))
@@ -118,7 +120,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub empty_struct_overloads()
+    Private Sub empty_struct_overloads()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.empty_struct_overloads.as_text(), e))
@@ -128,7 +130,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub delegate_()
+    Private Sub delegate_()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.[delegate].as_text(), e))
@@ -138,7 +140,7 @@ Public Class bstyle_test(Of _PARSE As __do(Of console_io.test_wrapper, String, e
     End Sub
 
     <test>
-    Private Shared Sub statement()
+    Private Sub statement()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _bstyle_test_data.statement.as_text(), e))
@@ -153,25 +155,21 @@ End Class
 
 <test>
 Public NotInheritable Class bstyle_test
-    Inherits bstyle_test(Of parse)
+    Inherits bstyle_test_runner
 
-    Public NotInheritable Class parse
-        Inherits __do(Of console_io.test_wrapper, String, executor, Boolean)
-
-        Public Overrides Function at(ByRef i As console_io.test_wrapper,
-                                     ByRef j As String,
-                                     ByRef k As executor) As Boolean
-            Return bstyle.with_functions(New interrupts(+i)).compile(j, k)
-        End Function
-    End Class
+    Protected Overrides Function parse(ByVal io As console_io.test_wrapper,
+                                       ByVal content As String,
+                                       ByRef o As executor) As Boolean
+        Return bstyle.with_functions(New interrupts(+io)).compile(content, o)
+    End Function
 
     <test>
-    Private Shared Sub nlp_parsable()
+    Private Sub nlp_parsable()
         assertion.is_true(nlp.of_file(bstyle.nlexer_rule, bstyle.syntaxer_rule, Nothing))
     End Sub
 
     <test>
-    Private Shared Sub real__file__()
+    Private Sub real__file__()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         Using bstyle.parse_wrapper.with_current_file("real__file__.txt")
@@ -184,7 +182,7 @@ Public NotInheritable Class bstyle_test
     End Sub
 
     <test>
-    Private Shared Sub predefined_def()
+    Private Sub predefined_def()
         Dim e As executor = Nothing
         assertion.is_true(bstyle.with_default_functions().compile(_bstyle_test_data.predefined_def.as_text(), e))
         assertion.is_not_null(e)
@@ -193,7 +191,7 @@ Public NotInheritable Class bstyle_test
 
     ' b3style treat f.f() as f(f) / class function.
     <test>
-    Private Shared Sub func_name_with_dot()
+    Private Sub func_name_with_dot()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(bstyle.with_functions(New interrupts(+io)).
