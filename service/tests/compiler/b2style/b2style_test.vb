@@ -5,7 +5,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.template
 Imports osi.root.utt
@@ -15,11 +14,13 @@ Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 Imports osi.service.resource
 
-Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test_wrapper, String, executor, Boolean))
-    Protected Shared ReadOnly parse As _do(Of console_io.test_wrapper, String, executor, Boolean) = -(alloc(Of _PARSE)())
+Public MustInherit Class b2style_test_runner_b3style_supported
+    Protected MustOverride Function parse(ByVal io As console_io.test_wrapper,
+                                          ByVal content As String,
+                                          ByRef o As executor) As Boolean
 
     <test>
-    Private Shared Sub case1()
+    Private Sub case1()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.case1.as_text(), e))
@@ -29,7 +30,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub case2()
+    Private Sub case2()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.case2.as_text(), e))
@@ -39,7 +40,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub bool_and_bool()
+    Private Sub bool_and_bool()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.bool_and_bool.as_text(), e))
@@ -49,7 +50,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub str_unescape()
+    Private Sub str_unescape()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.str_unescape.as_text(), e))
@@ -59,7 +60,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub _1_to_100()
+    Private Sub _1_to_100()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data._1_to_100.as_text(), e))
@@ -69,7 +70,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub self_add()
+    Private Sub self_add()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.self_add.as_text(), e))
@@ -79,7 +80,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub biguint()
+    Private Sub biguint()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.biguint.as_text(), e))
@@ -89,7 +90,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub another_1_to_100()
+    Private Sub another_1_to_100()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.another_1_to_100.as_text(), e))
@@ -99,7 +100,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub loaded_method()
+    Private Sub loaded_method()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.loaded_method.as_text(), e))
@@ -109,7 +110,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub while_1_to_100()
+    Private Sub while_1_to_100()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.while_1_to_100.as_text(), e))
@@ -120,7 +121,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
 
     <command_line_specified>
     <test>
-    Private Shared Sub pi_integral_0_1()
+    Private Sub pi_integral_0_1()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.pi_integral_0_1.as_text(), e))
@@ -131,7 +132,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub shift()
+    Private Sub shift()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.shift.as_text(), e))
@@ -141,7 +142,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub include()
+    Private Sub include()
         Dim io As New console_io.test_wrapper("abc")
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.include.as_text(), e))
@@ -151,7 +152,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub include2()
+    Private Sub include2()
         Dim io As New console_io.test_wrapper("def")
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.include2.as_text(), e))
@@ -161,7 +162,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub ifndef()
+    Private Sub ifndef()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.ifndef.as_text(), e))
@@ -171,7 +172,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub namespaces()
+    Private Sub namespaces()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.namespaces.as_text(), e))
@@ -185,7 +186,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub multiline_string()
+    Private Sub multiline_string()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.multiline_string.as_text(), e))
@@ -200,7 +201,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub comments()
+    Private Sub comments()
         Dim io As New console_io.test_wrapper("good")
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.comments.as_text(), e))
@@ -210,7 +211,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub typedef()
+    Private Sub typedef()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.typedef.as_text(), e))
@@ -220,7 +221,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub legacy_biguint_to_str()
+    Private Sub legacy_biguint_to_str()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.legacy_biguint_to_str.as_text(), e))
@@ -230,7 +231,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub heap_declaration()
+    Private Sub heap_declaration()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.heap_declaration.as_text(), e))
@@ -239,7 +240,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub struct_function_ref()
+    Private Sub struct_function_ref()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.struct_function_ref.as_text(), e))
@@ -249,7 +250,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub __i__()
+    Private Sub __i__()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.__i__.as_text(), e))
@@ -259,7 +260,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub for_loop()
+    Private Sub for_loop()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.for_loop.as_text(), e))
@@ -269,7 +270,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub i__()
+    Private Sub i__()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.i__.as_text(), e))
@@ -279,7 +280,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub i__2()
+    Private Sub i__2()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.i__2.as_text(), e))
@@ -292,7 +293,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub __i()
+    Private Sub __i()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.__i.as_text(), e))
@@ -305,7 +306,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub heap_function_ref()
+    Private Sub heap_function_ref()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.heap_function_ref.as_text(), e))
@@ -321,7 +322,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub nested_paragraph()
+    Private Sub nested_paragraph()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.nested_paragraph.as_text(), e))
@@ -335,7 +336,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub function_with_global_namespace()
+    Private Sub function_with_global_namespace()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.function_with_global_namespace.as_text(), e))
@@ -345,7 +346,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub nested_heap_access()
+    Private Sub nested_heap_access()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.nested_heap_access.as_text(), e))
@@ -355,7 +356,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub heap_ptr_to_int64()
+    Private Sub heap_ptr_to_int64()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.heap_ptr_to_int64.as_text(), e))
@@ -365,7 +366,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub unused_functions_should_be_removed()
+    Private Sub unused_functions_should_be_removed()
         Dim bstyle_str As String = Nothing
         assertion.is_true(b2style.parse(_b2style_test_data.case1.as_text(), bstyle_str))
         ' b2style does not handle overload itself, so b2style::std_out(ufloat) and b2style::ufloat_to_str are included
@@ -377,7 +378,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub empty_struct()
+    Private Sub empty_struct()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.empty_struct.as_text(), e))
@@ -387,7 +388,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub delegate_()
+    Private Sub delegate_()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.[delegate].as_text(), e))
@@ -397,7 +398,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub delegate2()
+    Private Sub delegate2()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.delegate2.as_text(), e))
@@ -407,7 +408,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub struct_in_namespace()
+    Private Sub struct_in_namespace()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.struct_in_namespace.as_text(), e))
@@ -417,7 +418,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub [class]()
+    Private Sub [class]()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.[class].as_text(), e))
@@ -427,7 +428,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub nested_class()
+    Private Sub nested_class()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.nested_class.as_text(), e))
@@ -437,7 +438,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub class_in_namespace()
+    Private Sub class_in_namespace()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.class_in_namespace.as_text(), e))
@@ -447,7 +448,7 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 
     <test>
-    Private Shared Sub class_constructor()
+    Private Sub class_constructor()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.class_constructor.as_text(), e))
@@ -460,12 +461,11 @@ Public Class b2style_test_b3style_supported(Of _PARSE As __do(Of console_io.test
     End Sub
 End Class
 
-<test>
-Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, executor, Boolean))
-    Inherits b2style_test_b3style_supported(Of _PARSE)
+Public MustInherit Class b2style_test_runner
+    Inherits b2style_test_runner_b3style_supported
 
     <test>
-    Private Shared Sub negative_int()
+    Private Sub negative_int()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.negative_int.as_text(), e))
@@ -475,7 +475,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub ufloat_std_out()
+    Private Sub ufloat_std_out()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.ufloat_std_out.as_text(), e))
@@ -485,7 +485,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub ufloat_operators()
+    Private Sub ufloat_operators()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.ufloat_operators.as_text(), e))
@@ -495,7 +495,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub while_0_to_1()
+    Private Sub while_0_to_1()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.while_0_to_1.as_text(), e))
@@ -505,7 +505,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub calculate_pi_bbp()
+    Private Sub calculate_pi_bbp()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.calculate_pi_bbp.as_text(), e))
@@ -516,7 +516,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub function_ref()
+    Private Sub function_ref()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.function_ref.as_text(), e))
@@ -526,7 +526,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub class_on_heap()
+    Private Sub class_on_heap()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.class_on_heap.as_text(), e))
@@ -542,7 +542,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub class_function_with_namespace()
+    Private Sub class_function_with_namespace()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.class_function_with_namespace.as_text(), e))
@@ -552,7 +552,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub class_inheritance()
+    Private Sub class_inheritance()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.class_inheritance.as_text(), e))
@@ -562,7 +562,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub heap()
+    Private Sub heap()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.heap.as_text(), e))
@@ -572,7 +572,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub template()
+    Private Sub template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.template.as_text(), e))
@@ -582,7 +582,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub primitive_template()
+    Private Sub primitive_template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.primitive_template.as_text(), e))
@@ -592,7 +592,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub nested_template()
+    Private Sub nested_template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.nested_template.as_text(), e))
@@ -602,7 +602,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub template_wont_be_extended_twice()
+    Private Sub template_wont_be_extended_twice()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.template_wont_be_extended_twice.as_text(), e))
@@ -612,7 +612,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub template_with_different_length()
+    Private Sub template_with_different_length()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.template_with_different_length.as_text(), e))
@@ -622,7 +622,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub reinterpret_cast()
+    Private Sub reinterpret_cast()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.reinterpret_cast.as_text(), e))
@@ -632,7 +632,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub reinterpret_cast_heap()
+    Private Sub reinterpret_cast_heap()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.reinterpret_cast_heap.as_text(), e))
@@ -642,7 +642,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub lots_of_semi_colons()
+    Private Sub lots_of_semi_colons()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.lots_of_semi_colons.as_text(), e))
@@ -652,7 +652,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub delegate_template()
+    Private Sub delegate_template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.delegate_template.as_text(), e))
@@ -662,7 +662,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub function_ptr()
+    Private Sub function_ptr()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.function_ptr.as_text(), e))
@@ -672,7 +672,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub delegate_ref()
+    Private Sub delegate_ref()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.delegate_ref.as_text(), e))
@@ -682,7 +682,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub test_assert()
+    Private Sub test_assert()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.test_assert.as_text(), e))
@@ -696,7 +696,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub vector_destructor()
+    Private Sub vector_destructor()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.vector_destructor.as_text(), e))
@@ -710,7 +710,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub __func__()
+    Private Sub __func__()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.__func__.as_text(), e))
@@ -724,7 +724,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub assert_()
+    Private Sub assert_()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.assert_.as_text(), e))
@@ -734,7 +734,7 @@ Public Class b2style_test(Of _PARSE As __do(Of console_io.test_wrapper, String, 
     End Sub
 
     <test>
-    Private Shared Sub assert_with_statement()
+    Private Sub assert_with_statement()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.assert_with_statement.as_text(), e))
@@ -749,7 +749,7 @@ End Class
 
 <test>
 Public NotInheritable Class b2style_test
-    Inherits b2style_test(Of _parse)
+    Inherits b2style_test_runner
 
     Public NotInheritable Class _parse
         Inherits __do(Of console_io.test_wrapper, String, executor, Boolean)
@@ -761,15 +761,21 @@ Public NotInheritable Class b2style_test
         End Function
     End Class
 
+    Protected Overrides Function parse(ByVal io As console_io.test_wrapper,
+                                       ByVal content As String,
+                                       ByRef o As executor) As Boolean
+        Return b2style.with_functions(New interrupts(+io)).compile(content, o)
+    End Function
+
     <test>
-    Private Shared Sub nlp_parsable()
+    Private Sub nlp_parsable()
         assertion.is_true(nlp.of_file(b2style.nlexer_rule, b2style.syntaxer_rule, Nothing))
     End Sub
 
     ' TODO: This test is very slow in b3style_b2style_b3style_test due to the rule matching performance.
     ' 3 seconds vs 10 minutes.
     <test>
-    Private Shared Sub order_of_operators()
+    Private Sub order_of_operators()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
         assertion.is_true(parse(io, _b2style_test_data.order_of_operators.as_text(), e))
@@ -788,7 +794,7 @@ Public NotInheritable Class b2style_test
     End Sub
 
     <test>
-    Private Shared Sub reinterpret_cast_to_a_different_class_type()
+    Private Sub reinterpret_cast_to_a_different_class_type()
         Dim e As executor = Nothing
         assertion.is_true(parse(New console_io.test_wrapper(),
                                 _b2style_test_data.reinterpret_cast_to_a_different_class_type.as_text(),

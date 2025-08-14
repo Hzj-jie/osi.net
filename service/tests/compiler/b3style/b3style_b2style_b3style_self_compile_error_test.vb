@@ -11,8 +11,8 @@ Imports osi.service.interpreter.primitive
 Public NotInheritable Class b3style_b2style_b3style_self_compile_error_test
     Inherits b2style_self_compile_error_test_runner
 
-    Protected Overrides Function parse(ByVal content As String, ByRef o As executor) As Boolean
-        Return New b2style.compile_wrapper_b3style(interrupts.default).compile(content, o)
+    Protected Overrides Function parse(ByVal content As String) As Boolean
+        Return New b2style.compile_wrapper_b3style(interrupts.default).compile(content, Nothing)
     End Function
 
     Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable

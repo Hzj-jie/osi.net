@@ -3,7 +3,6 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.template
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.automata
@@ -13,19 +12,15 @@ Imports osi.service.resource
 
 <test>
 Public NotInheritable Class b3style_bstyle_test
-    Inherits bstyle_test(Of parse)
+    Inherits bstyle_test_runner
 
-    Public NotInheritable Class parse
-        Inherits __do(Of console_io.test_wrapper, String, executor, Boolean)
-
-        Public Overrides Function at(ByRef i As console_io.test_wrapper,
-                                     ByRef j As String,
-                                     ByRef k As executor) As Boolean
-            Using b3style.disable_namespace()
-                Return b3style.with_functions(New interrupts(+i)).compile(j, k)
-            End Using
-        End Function
-    End Class
+    Protected Overrides Function parse(ByVal io As console_io.test_wrapper,
+                                       ByVal content As String,
+                                       ByRef o As executor) As Boolean
+        Using b3style.disable_namespace()
+            Return b3style.with_functions(New interrupts(+io)).compile(content, o)
+        End Using
+    End Function
 
     <test>
     Private Shared Sub nlp_parsable()
