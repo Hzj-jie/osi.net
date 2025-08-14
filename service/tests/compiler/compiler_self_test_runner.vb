@@ -9,7 +9,6 @@ Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utils
-Imports osi.root.utt.attributes
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.resource

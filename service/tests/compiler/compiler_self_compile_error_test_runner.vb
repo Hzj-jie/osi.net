@@ -7,9 +7,8 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
-Imports osi.service.interpreter.primitive
 
-Public MustInherit Class compiler_self_compile_error_test_runner
+Public MustInherit Class compiler_self_compile_errr_test_runner
     Inherits compiler_self_test_runner
 
     Private Const error_prefix As String = "// ERROR: "
@@ -49,4 +48,5 @@ Public MustInherit Class compiler_self_compile_error_test_runner
                                                       End Sub)
     End Sub
 
+    Protected MustOverride Function parse(ByVal content As String) As Boolean
 End Class
