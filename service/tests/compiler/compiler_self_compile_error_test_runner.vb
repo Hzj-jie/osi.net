@@ -8,7 +8,7 @@ Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.root.utt
 
-Public MustInherit Class compiler_self_compile_errr_test_runner
+Public MustInherit Class compiler_self_compile_error_test_runner
     Inherits compiler_self_test_runner
 
     Private Const error_prefix As String = "// ERROR: "
