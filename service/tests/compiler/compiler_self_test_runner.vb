@@ -9,6 +9,7 @@ Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utils
+Imports osi.root.utt.attributes
 Imports osi.root.utt
 Imports osi.service.resource
 Imports envs = osi.root.envs
@@ -22,7 +23,8 @@ Public MustInherit Class compiler_self_test_runner
         Me.data = data
     End Sub
 
-    Protected Sub run()
+    <test>
+    Private Sub run()
         Dim a As New vector(Of Action)()
         tar.gen.reader_of(data).foreach(
             Sub(ByVal name As String,
@@ -50,7 +52,15 @@ Public MustInherit Class compiler_self_test_runner
                                        raise_error(error_type.user, "Execute test case ", name)
                                    End If
                                    Using with_current_file(name)
-                                       execute(name, text)
+                                       expect_assertion_failure(
+                                           Sub()
+                                               execute(name, text)
+                                           End Sub,
+                                           Sub()
+                                           End Sub,
+                                           Sub(ByVal msg As String)
+                                               raise_error("Assertion failure happened when running ", name, ", ", msg)
+                                           End Sub)
                                    End Using
                                End Sub)
             End Sub)

@@ -12,7 +12,7 @@ Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 
 Public MustInherit Class b2style_self_compile_error_test_runner
-    Inherits compiler_self_test_runner
+    Inherits compiler_self_compile_error_test_runner
 
     Private Const error_prefix As String = "// ERROR: "
     Private Const error_pattern_prefix As String = "// ERROR PATTERN: "

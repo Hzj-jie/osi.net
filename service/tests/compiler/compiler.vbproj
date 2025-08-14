@@ -117,12 +117,14 @@
     <Compile Include="b3style\b3style_b2style_b3style_self_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_test.vb" />
     <Compile Include="b3style\b3style_b2style_test.vb" />
+    <Compile Include="b3style\b3style_compile_error_test.vb" />
     <Compile Include="b3style\b3style_compile_only_test.vb" />
     <Compile Include="b3style\b3style_runnable_test.vb" />
     <Compile Include="b3style\b3style_bstyle_test.vb" />
     <Compile Include="b3style\b3style_runnable_test_cases.vb" />
     <Compile Include="b3style\b3style_test.vb" />
     <Compile Include="b3style\b3style_test_data.vb" />
+    <Compile Include="compiler_error_test_runner.vb" />
     <Compile Include="compiler_self_test_runner.vb" />
     <Compile Include="b3style\b3style_nlp_test.vb" />
     <Compile Include="bstyle\bstyle_compiler_error_test.vb" />
@@ -158,6 +160,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="compiler_self_compile_error_test_runner.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -222,6 +225,7 @@
     <Content Include="b2style\self-test\__file__.txt" />
     <Content Include="b3style\codegen\destruction_in_definition.txt" />
     <Content Include="b2style\codegen\reinterpret_cast_to_a_different_class_type.txt" />
+    <Content Include="b3style\codegen\errors\define-class-constructor-for-non-class.txt" />
     <Content Include="b3style\runnable\bstyle-case1.txt" />
     <Content Include="b3style\runnable\empty-main.txt" />
     <Content Include="b3style\runnable\function-call.txt" />
