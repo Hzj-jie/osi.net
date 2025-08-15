@@ -35,18 +35,20 @@ Partial Friend NotInheritable Class host
     End Function
 
     ' Call from a different thread with
-    ' Dim c As [case] = current_case()
-    ' Thread.post(forward_current_case(d, current_case()))
-    Public Shared Function forward_current_case(ByVal d As Action, ByVal c As [case]) As Action
+    ' Thread.post(forward_current_case(d))
+    Public Shared Function forward_current_case(ByVal d As Action) As Action
         assert(Not d Is Nothing)
+        Dim c As [case] = current_case()
         assert(Not c Is Nothing)
-        assert(_current_case Is Nothing)
-        _current_case = c
-        Using defer.to(Sub()
-                           _current_case = Nothing
-                       End Sub)
-            d()
-        End Using
+        Return Sub()
+                   assert(_current_case Is Nothing)
+                   _current_case = c
+                   Using defer.to(Sub()
+                                      _current_case = Nothing
+                                  End Sub)
+                       d()
+                   End Using
+               End Sub
     End Function
 
     Public Shared Function current_case() As [case]
