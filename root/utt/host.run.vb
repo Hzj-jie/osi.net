@@ -23,6 +23,7 @@ Partial Friend NotInheritable Class host
 
     Public Shared Function execute_case(ByVal c As [case]) As Boolean
         assert(Not c Is Nothing)
+        assert(_current_case Is Nothing)
         _current_case = c
         Using defer.to(Sub()
                            _current_case = Nothing
@@ -31,6 +32,23 @@ Partial Friend NotInheritable Class host
                     assertion.is_true(do_(AddressOf c.run, False), "failed to run case ", c.full_name)) And
                    assertion.is_true(do_(AddressOf c.finish, False), "failed to finish case ", c.full_name)
         End Using
+    End Function
+
+    ' Call from a different thread with
+    ' Thread.post(forward_current_case(d))
+    Public Shared Function forward_current_case(ByVal d As Action) As Action
+        assert(Not d Is Nothing)
+        Dim c As [case] = current_case()
+        assert(Not c Is Nothing)
+        Return Sub()
+                   assert(_current_case Is Nothing)
+                   _current_case = c
+                   Using defer.to(Sub()
+                                      _current_case = Nothing
+                                  End Sub)
+                       d()
+                   End Using
+               End Sub
     End Function
 
     Public Shared Function current_case() As [case]
