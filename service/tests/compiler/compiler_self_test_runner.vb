@@ -31,7 +31,7 @@ Public MustInherit Class compiler_self_test_runner
                 ByVal enc_precision As Double,
                 ByVal content As StreamReader)
                 Dim text As String = content.ReadToEnd()
-                a.emplace_back(forward_current_case(
+                a.emplace_back(host.forward_current_case(
                     Sub()
                         If Not name.match_pattern(filter Or "*") AndAlso
                            Not name.match_pattern(filter Or "*" + ".txt") Then
