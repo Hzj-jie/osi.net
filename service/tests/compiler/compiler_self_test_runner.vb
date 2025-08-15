@@ -31,7 +31,7 @@ Public MustInherit Class compiler_self_test_runner
                 ByVal enc_precision As Double,
                 ByVal content As StreamReader)
                 Dim text As String = content.ReadToEnd()
-                a.emplace_back(host.forward_current_case(
+                a.emplace_back(current_case.forward(
                     Sub()
                         If Not name.match_pattern(filter Or "*") AndAlso
                            Not name.match_pattern(filter Or "*" + ".txt") Then
@@ -56,7 +56,7 @@ Public MustInherit Class compiler_self_test_runner
                                         execute(name, text)
                                     Catch ex As Exception
                                         ignore_assertion_break(ex)
-                                        raise_error("Exception caught when running ", name, ", ", msg)
+                                        raise_error("Exception caught when running ", name, ", ", ex)
                                     End Try
                                 End Sub,
                                 Sub(ByVal msg As String)
