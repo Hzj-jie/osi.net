@@ -6,12 +6,12 @@ Option Strict On
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports counter = osi.root.utils.counter
 
 Partial Friend NotInheritable Class host
-    <ThreadStatic()> Private Shared _current_case As [case]
     Private Shared expected_end_ms As Int64
     Private Shared using_threads As Int32 = 0
     Private Shared running_cases As Int32 = 0
@@ -23,11 +23,7 @@ Partial Friend NotInheritable Class host
 
     Public Shared Function execute_case(ByVal c As [case]) As Boolean
         assert(Not c Is Nothing)
-        assert(_current_case Is Nothing)
-        _current_case = c
-        Using defer.to(Sub()
-                           _current_case = Nothing
-                       End Sub)
+        Using instance_stack(Of [case], host).with(c)
             Return (assertion.is_true(do_(AddressOf c.prepare, False), "failed to prepare case ", c.full_name) AndAlso
                     assertion.is_true(do_(AddressOf c.run, False), "failed to run case ", c.full_name)) And
                    assertion.is_true(do_(AddressOf c.finish, False), "failed to finish case ", c.full_name)
@@ -38,21 +34,21 @@ Partial Friend NotInheritable Class host
     ' Thread.post(forward_current_case(d))
     Public Shared Function forward_current_case(ByVal d As Action) As Action
         assert(Not d Is Nothing)
-        Dim c As [case] = current_case()
+        Dim c As [case] = instance_stack(Of [case], host).current()
         assert(Not c Is Nothing)
         Return Sub()
-                   assert(_current_case Is Nothing)
-                   _current_case = c
-                   Using defer.to(Sub()
-                                      _current_case = Nothing
-                                  End Sub)
+                   Using instance_stack(Of [case], host).with(c)
                        d()
                    End Using
                End Sub
     End Function
 
     Public Shared Function current_case() As [case]
-        Return _current_case
+        Dim r As [case] = Nothing
+        If instance_stack(Of [case], host).back(r) Then
+            Return r
+        End If
+        Return Nothing
     End Function
 
     Private Shared Function execute_case(ByVal c As case_info) As Boolean
