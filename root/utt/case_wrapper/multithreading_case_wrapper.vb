@@ -97,9 +97,9 @@ Public Class multithreading_case_wrapper
         ReDim ts(CInt(threadcount()) - 1)
         For i As Int32 = 0 To CInt(threadcount()) - 1
             Dim j As Int32 = i
-            ts(i) = New Thread(host.forward_current_case(Sub()
-                                                             workon(j)
-                                                         End Sub).
+            ts(i) = New Thread(current_case.forward(Sub()
+                                                        workon(j)
+                                                    End Sub).
                                to_thread_start())
             ts(i).Name() = "MULTITHREADING_CASE_WRAPPER_THREAD"
             ts(i).Start()
