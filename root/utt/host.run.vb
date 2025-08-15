@@ -6,7 +6,6 @@ Option Strict On
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports counter = osi.root.utils.counter
@@ -23,32 +22,11 @@ Partial Friend NotInheritable Class host
 
     Public Shared Function execute_case(ByVal c As [case]) As Boolean
         assert(Not c Is Nothing)
-        Using instance_stack(Of [case], host).with(c)
+        Using current_case.with(c)
             Return (assertion.is_true(do_(AddressOf c.prepare, False), "failed to prepare case ", c.full_name) AndAlso
                     assertion.is_true(do_(AddressOf c.run, False), "failed to run case ", c.full_name)) And
                    assertion.is_true(do_(AddressOf c.finish, False), "failed to finish case ", c.full_name)
         End Using
-    End Function
-
-    ' Call from a different thread with
-    ' Thread.post(forward_current_case(d))
-    Public Shared Function forward_current_case(ByVal d As Action) As Action
-        assert(Not d Is Nothing)
-        Dim c As [case] = instance_stack(Of [case], host).current()
-        assert(Not c Is Nothing)
-        Return Sub()
-                   Using instance_stack(Of [case], host).with(c)
-                       d()
-                   End Using
-               End Sub
-    End Function
-
-    Public Shared Function current_case() As [case]
-        Dim r As [case] = Nothing
-        If instance_stack(Of [case], host).back(r) Then
-            Return r
-        End If
-        Return Nothing
     End Function
 
     Private Shared Function execute_case(ByVal c As case_info) As Boolean
