@@ -143,6 +143,7 @@
     <Compile Include="selfhealth\fake_rnd_test.vb" />
     <Compile Include="selfhealth\isolate_case_wrapper_test.vb" />
     <Compile Include="selfhealth\memory_usage_limited_test.vb" />
+    <Compile Include="selfhealth\running_myself_test.vb" />
     <Compile Include="selfhealth\selfhealth.vb" />
     <Compile Include="selfhealth\utt_diff.vb" />
   </ItemGroup>

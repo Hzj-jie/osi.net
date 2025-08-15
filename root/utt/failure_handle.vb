@@ -10,7 +10,11 @@ Imports osi.root.constants.utt
 Friend Module failure_handle
     Private Sub utt_raise_error(ByVal msg() As Object, ByVal additional_jump As Int32)
         If Not selfhealth.in_stage() Then
-            raise_error(error_type.other, errortype_char, additional_jump + 1, msg)
+            raise_error(error_type.other,
+                        errortype_char,
+                        additional_jump + 1,
+                        If(host.current_case() Is Nothing, Nothing, {"[", host.current_case().name, "] - "}),
+                        msg)
         End If
     End Sub
 

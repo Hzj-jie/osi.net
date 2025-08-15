@@ -11,6 +11,7 @@ Imports osi.root.utils
 Imports counter = osi.root.utils.counter
 
 Partial Friend NotInheritable Class host
+    <ThreadStatic()> Private Shared _current_case As [case]
     Private Shared expected_end_ms As Int64
     Private Shared using_threads As Int32 = 0
     Private Shared running_cases As Int32 = 0
@@ -22,9 +23,18 @@ Partial Friend NotInheritable Class host
 
     Public Shared Function execute_case(ByVal c As [case]) As Boolean
         assert(Not c Is Nothing)
-        Return (assertion.is_true(do_(AddressOf c.prepare, False), "failed to prepare case ", c.full_name) AndAlso
-                assertion.is_true(do_(AddressOf c.run, False), "failed to run case ", c.full_name)) And
-               assertion.is_true(do_(AddressOf c.finish, False), "failed to finish case ", c.full_name)
+        _current_case = c
+        Using defer.to(Sub()
+                           _current_case = Nothing
+                       End Sub)
+            Return (assertion.is_true(do_(AddressOf c.prepare, False), "failed to prepare case ", c.full_name) AndAlso
+                    assertion.is_true(do_(AddressOf c.run, False), "failed to run case ", c.full_name)) And
+                   assertion.is_true(do_(AddressOf c.finish, False), "failed to finish case ", c.full_name)
+        End Using
+    End Function
+
+    Public Shared Function current_case() As [case]
+        Return _current_case
     End Function
 
     Private Shared Function execute_case(ByVal c As case_info) As Boolean
