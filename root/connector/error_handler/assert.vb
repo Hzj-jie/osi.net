@@ -23,6 +23,20 @@ Public Module _assert
     <ThreadStatic>
     Private ignore_assertion_failure As Boolean
 
+    Public Sub ignore_assertion_break(ByVal ex As Exception)
+        If TypeOf ex Is assertion_break Then
+            Throw ex
+        End If
+    End Sub
+
+    ' Slightly better name.
+    Public Sub catch_assertion_failure(ByVal d As Action, ByVal msg As Action(Of String))
+        expect_assertion_failure(d,
+                                 Sub()
+                                 End Sub,
+                                 msg)
+    End Sub
+
     Public Sub expect_assertion_failure(ByVal d As Action,
                                         ByVal not_reach As Action,
                                         ByVal check_exception As Action(Of String))
