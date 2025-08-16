@@ -31,6 +31,7 @@ Partial Public NotInheritable Class b3style
 
         ' VisibleForTesting
         Public Shared Function failed_to_build_destructor_message(ByVal name As String) As String
+            assert(Not name.null_or_whitespace())
             Return String.Concat("Failed to build the destructor of the variable ",
                                  name,
                                  ", this shouldn't happen unless the reinterpret_cast is used ",
@@ -60,12 +61,25 @@ Partial Public NotInheritable Class b3style
                   to(scope.namespace_t.fully_qualified_name(scope.class_def.destruct))
         End Sub
 
+        ' VisibleForTesting
+        Public Shared Function failed_to_build_constructor_message(ByVal class_name As String,
+                                                                   ByVal var_name As String) As String
+            assert(Not class_name.null_or_whitespace())
+            assert(Not var_name.null_or_whitespace())
+            Return String.Concat(class_name,
+                                 " is not a class or struct, and the variable ",
+                                 var_name,
+                                 " cannot be initialized as a class variable.")
+        End Function
+
         Private Function build(ByVal n As typed_node,
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4 OrElse n.child_count() = 5)
             If Not struct.define_in_stack(n.child(0), n.child(1), o) Then
+                raise_error(error_type.user,
+                            failed_to_build_constructor_message(n.child(0).input(), n.child(1).input()))
                 Return False
             End If
             If n.child_count() = 4 Then

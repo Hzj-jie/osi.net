@@ -111,21 +111,12 @@ Partial Public NotInheritable Class b3style
                                Return builders.of_caller_ref(name, result, parameters).to(o)
                            End Function,
                            Function(ByVal name As String, ByRef type As String) As Boolean
-                               Dim signature As New ref(Of function_signature)()
-                               Dim delegate_type As String = Nothing
-                               If Not scope.current().variables().resolve(name, delegate_type, signature) Then
+                               Dim signature As function_signature = Nothing
+                               If Not scope.current().variables().delegate_of(name, signature) Then
                                    Return False
                                End If
-                               If Not signature Then
-                                   raise_error(error_type.user,
-                                               "Delegate type ",
-                                               delegate_type,
-                                               " for ",
-                                               name,
-                                               " is not defined.")
-                                   Return False
-                               End If
-                               type = signature.get().return_type
+                               assert(Not signature Is Nothing)
+                               type = signature.return_type
                                Return True
                            End Function,
                            o)
@@ -171,6 +162,16 @@ Partial Public NotInheritable Class b3style
                 Return build(Nothing, n, without_return_caller_builder(o), without_return_caller_ref_builder(o), o)
             End Function
 
+            Public Shared Function without_return(ByVal function_name As String,
+                                                  ByVal n As typed_node,
+                                                  ByVal o As logic_writer) As Boolean
+                Return build(function_name,
+                             n,
+                             without_return_caller_builder(o),
+                             without_return_caller_ref_builder(o),
+                             o)
+            End Function
+
             Public Shared Function build(ByVal function_name As String,
                                          ByVal n As typed_node,
                                          ByVal o As logic_writer) As Boolean
@@ -192,7 +193,8 @@ Partial Public NotInheritable Class b3style
             Return with_parameters.build(n, o)
         End Function
 
-        ' Reuse by function_call_with_template; with_parameters
+        ' Reuse by function_call_with_template; with_parameters.
+        ' Needed by the reuse of b2style.function_call_with_paramter.
         Public Shared Function build(ByVal function_name As String,
                                      ByVal n As typed_node,
                                      ByVal o As logic_writer) As Boolean

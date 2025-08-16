@@ -83,7 +83,6 @@ Partial Public NotInheritable Class b3style
                     "for-increase",
                     "base-for-increase",
                     "unary-operation-value",
-                    "ignore-result-function-call-with-template",
                     "type-name"
                 ).
                 with_of_all_childrens(
@@ -224,6 +223,11 @@ Partial Public NotInheritable Class b3style
                 with(code_gen.of_first_child(Of logic_writer)("type-param-with-comma")).
                 with(code_gen.of_only_descendant_str(Of logic_writer)("type-param")).
                 with(Of function_call_with_template)().
+                with_delegate("ignore-result-function-call-with-template",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  assert(Not n Is Nothing)
+                                  Return function_call_with_template.without_return(n.child(), o)
+                              End Function).
                 with(Of function_name_with_template)().
                 with_delegate("root-type",
                               Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean

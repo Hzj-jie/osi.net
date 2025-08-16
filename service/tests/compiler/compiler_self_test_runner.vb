@@ -31,30 +31,39 @@ Public MustInherit Class compiler_self_test_runner
                 ByVal enc_precision As Double,
                 ByVal content As StreamReader)
                 Dim text As String = content.ReadToEnd()
-                a.emplace_back(Sub()
-                                   If Not name.match_pattern(filter Or "*") AndAlso
-                                      Not name.match_pattern(filter Or "*" + ".txt") Then
-                                       If envs.deploys.dev_env Then
-                                           raise_error(error_type.user,
-                                                       "Ignore test case ",
-                                                       name,
-                                                       " through the filter.")
-                                       End If
-                                       Return
-                                   End If
-                                   If ignore_case(name) Then
-                                       If envs.deploys.dev_env Then
-                                           raise_error(error_type.user, "Ignore test case ", name)
-                                       End If
-                                       Return
-                                   End If
-                                   If envs.deploys.dev_env Then
-                                       raise_error(error_type.user, "Execute test case ", name)
-                                   End If
-                                   Using with_current_file(name)
-                                       execute(name, text)
-                                   End Using
-                               End Sub)
+                a.emplace_back(current_case.forward(
+                    Sub()
+                        If Not name.match_pattern(filter Or "*") AndAlso
+                           Not name.match_pattern(filter Or "*" + ".txt") Then
+                            If envs.deploys.dev_env Then
+                                raise_error(error_type.user, "Ignore test case ", name, " through the filter.")
+                            End If
+                            Return
+                        End If
+                        If ignore_case(name) Then
+                            If envs.deploys.dev_env Then
+                                raise_error(error_type.user, "Ignore test case ", name)
+                            End If
+                            Return
+                        End If
+                        If envs.deploys.dev_env Then
+                            raise_error(error_type.user, "Execute test case ", name)
+                        End If
+                        Using with_current_file(name)
+                            catch_assertion_failure(
+                                Sub()
+                                    Try
+                                        execute(name, text)
+                                    Catch ex As Exception
+                                        ignore_assertion_break(ex)
+                                        raise_error("Exception caught when running ", name, ", ", ex)
+                                    End Try
+                                End Sub,
+                                Sub(ByVal msg As String)
+                                    raise_error("Assertion failure happened when running ", name, ", ", msg)
+                                End Sub)
+                        End Using
+                    End Sub))
             End Sub)
         assertions.of(a).not_empty()
         concurrency_runner.execute(+a)

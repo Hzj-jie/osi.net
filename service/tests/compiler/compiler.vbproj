@@ -72,6 +72,7 @@
     <Content Include="b2style\codegen\assert_with_statement.txt" />
     <Content Include="b2style\codegen\class-constructor.txt" />
     <Content Include="b2style\codegen\delegate.txt" />
+    <Content Include="b2style\self-compile-error-test\mismatch_constructor_parameters.txt" />
     <Content Include="b2style\self-test\recursive.txt" />
     <Content Include="b3style\codegen\destruction_in_declaration.txt" />
     <Content Include="b2style\codegen\vector_destructor.txt" />
@@ -117,6 +118,7 @@
     <Compile Include="b3style\b3style_b2style_b3style_self_test.vb" />
     <Compile Include="b3style\b3style_b2style_b3style_test.vb" />
     <Compile Include="b3style\b3style_b2style_test.vb" />
+    <Compile Include="b3style\b3style_compile_error_test.vb" />
     <Compile Include="b3style\b3style_compile_only_test.vb" />
     <Compile Include="b3style\b3style_runnable_test.vb" />
     <Compile Include="b3style\b3style_bstyle_test.vb" />
@@ -225,6 +227,7 @@
     <Content Include="b2style\self-test\__file__.txt" />
     <Content Include="b3style\codegen\destruction_in_definition.txt" />
     <Content Include="b2style\codegen\reinterpret_cast_to_a_different_class_type.txt" />
+    <Content Include="b3style\codegen\errors\define-class-constructor-for-non-class.txt" />
     <Content Include="b3style\runnable\bstyle-case1.txt" />
     <Content Include="b3style\runnable\empty-main.txt" />
     <Content Include="b3style\runnable\function-call.txt" />

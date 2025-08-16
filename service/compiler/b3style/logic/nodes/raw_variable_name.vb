@@ -27,15 +27,16 @@ Partial Public NotInheritable Class b3style
             assert(Not handle Is Nothing)
             assert(Not o Is Nothing)
 
-            Dim type As String = Nothing
-            If Not scope.current().variables().resolve(name, type) Then
+            Dim p As builders.parameter = Nothing
+            If Not scope.current().variables().resolve(name, p, Nothing) Then
                 Return False
             End If
+            assert(Not p Is Nothing)
             Dim ps As scope.struct_def = Nothing
-            If Not scope.current().structs().resolve(type, name, ps) Then
-                ps = scope.struct_def.of_primitive(type, name)
+            If Not scope.current().structs().resolve(p.full_type(), p.name, ps) Then
+                ps = scope.struct_def.of_primitive(p.full_type(), p.name)
             End If
-            Return handle(type, ps.primitives())
+            Return handle(p.full_type(), ps.primitives())
         End Function
 
         Public Shared Function build(ByVal n As typed_node,

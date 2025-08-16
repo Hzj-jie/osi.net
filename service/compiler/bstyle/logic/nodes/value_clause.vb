@@ -24,12 +24,13 @@ Partial Public NotInheritable Class bstyle
             assert(Not primitive_copy Is Nothing)
             assert(Not o Is Nothing)
             Dim name As String = scope.fully_qualified_variable_name.of(name_node)
-            Dim type As String = Nothing
+            Dim p As builders.parameter = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
-            If Not scope.current().variables().resolve(name, type, delegate_definition) Then
+            If Not scope.current().variables().resolve(name, p, delegate_definition) Then
                 ' Emmmm, scope.variable should log the error already.
                 Return False
             End If
+            assert(Not p Is Nothing)
             If delegate_definition Then
                 ' TODO: Avoid copying.
                 Dim target_function_name As String = logic_name.of_function(
@@ -46,19 +47,19 @@ Partial Public NotInheritable Class bstyle
             If Not code_gen_of(value).build(o) Then
                 Return False
             End If
-            If scope.current().structs().types().defined(type) Then
+            If scope.current().structs().types().defined(p.full_type()) Then
                 Using r As read_scoped(Of scope.value_target_t.target).ref = scope.current().value_target().value()
-                    If Not (+r).type.Equals(type) Then
+                    If Not (+r).type.Equals(p.full_type()) Then
                         raise_error(error_type.user,
                                     "Type ",
-                                    type,
+                                    p.full_type(),
                                     " of ",
                                     name,
                                     " does not match the rvalue ",
                                     (+r).type)
                         Return False
                     End If
-                    Return struct_copy(name, (+r).names)
+                    Return struct_copy(p.name, (+r).names)
                 End Using
             End If
             Using r As read_scoped(Of scope.value_target_t.target).ref(Of String) =
@@ -71,7 +72,7 @@ Partial Public NotInheritable Class bstyle
                                 "Failed to retrieve a primitive-type target from the r-value, received a struct?")
                     Return False
                 End If
-                Return primitive_copy(name, s)
+                Return primitive_copy(p.name, s)
             End Using
         End Function
 
