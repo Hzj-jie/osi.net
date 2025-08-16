@@ -12,7 +12,8 @@ Public NotInheritable Class b3style_compile_error_test
 
     <test>
     Private Sub define_class_constructor_for_non_class()
-        run(_b3style_test_data.errors_define_class_constructor_for_non_class, " int ", " x ", " class ")
+        run(_b3style_test_data.errors_define_class_constructor_for_non_class,
+            b3style.class_initializer.failed_to_build_constructor_message("int", "x"))
     End Sub
 
     Protected Overrides Function parse(ByVal content As String) As Boolean
