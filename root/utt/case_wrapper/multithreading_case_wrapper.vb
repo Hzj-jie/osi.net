@@ -48,6 +48,7 @@ Public Class multithreading_case_wrapper
     Private Sub workon(ByVal id As Int32)
         Interlocked.Increment(running_thread)
         assert(start_are.Set())
+        multithreading_case_wrapper.id = id
         this = Me
         Using defer.to(Sub()
                            id = npos
