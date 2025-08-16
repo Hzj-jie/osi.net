@@ -72,6 +72,7 @@
     <Content Include="b2style\codegen\assert_with_statement.txt" />
     <Content Include="b2style\codegen\class-constructor.txt" />
     <Content Include="b2style\codegen\delegate.txt" />
+    <Content Include="b2style\self-compile-error-test\mismatch_constructor_parameters.txt" />
     <Content Include="b2style\self-test\recursive.txt" />
     <Content Include="b3style\codegen\destruction_in_declaration.txt" />
     <Content Include="b2style\codegen\vector_destructor.txt" />

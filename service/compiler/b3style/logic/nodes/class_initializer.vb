@@ -66,6 +66,11 @@ Partial Public NotInheritable Class b3style
             assert(Not o Is Nothing)
             assert(n.child_count() = 4 OrElse n.child_count() = 5)
             If Not struct.define_in_stack(n.child(0), n.child(1), o) Then
+                raise_error(error_type.user,
+                            n.child(0).input(),
+                            " is not a class or struct, and the variable ",
+                            n.child(1).input(),
+                            " cannot be initialized as a class variable.")
                 Return False
             End If
             If n.child_count() = 4 Then
