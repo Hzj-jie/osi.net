@@ -13,7 +13,7 @@ Friend Module failure_handle
             raise_error(error_type.other,
                         errortype_char,
                         additional_jump + 1,
-                        If(current_case.is_null(), Nothing, {"[", current_case.[of]().name, "] - "}),
+                        If(current_case.is_null(), Nothing, {"[", current_case.[of]().full_name, "] - "}),
                         msg)
         End If
     End Sub
