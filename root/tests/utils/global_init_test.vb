@@ -193,7 +193,8 @@ Public NotInheritable Class global_init_test
         global_init.execute()
         global_init.execute(global_init_level.max - 1)
 
-        assertion.more_or_equal(global_init.init_times(), 2 + 3)
+        ' global_init is executd at least once in utt/app.
+        assertion.more(global_init.init_times(), 3)
 
         assertion.equal(init_in_class_init.invoke_times(), 1)
 
