@@ -24,8 +24,6 @@ Public NotInheritable Class b3style_b2style_self_test
 
     Protected Overrides Function ignore_case(ByVal name As String) As Boolean
         Dim r As Boolean = False
-        ' Expect return value of ::type0@kw-return - should fix first.
-        r = r OrElse unordered_set.emplace_of("linked-list.txt").find(name).is_not_end()
         ' Missing heap-struct-name - assertion failure
         r = r OrElse unordered_set.of("static_cast_ptr_type3.txt",
                                       "static_cast_ptr_type_bool.txt",

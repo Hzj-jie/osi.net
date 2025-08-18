@@ -15,15 +15,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     Protected NotInheritable Class current_function_t
         Inherits function_signature(Of builders.parameter)
 
-        Private Shared ReadOnly type0 As String =
-            Function() As String
-                Dim t As builders.parameter_type = builders.parameter_type.of(logic.scope.type_t.zero_type)
-                If current().features().with_namespace() Then
-                    t = t.map_type(AddressOf namespace_t.fully_qualified_name)
-                End If
-                Return t.full_type()
-            End Function()
-
         Public Sub New(ByVal name As String,
                        ByVal return_type As String,
                        ByVal params As vector(Of builders.parameter))
@@ -31,8 +22,20 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Sub
 
         Public Function allow_return_value() As Boolean
-            ' This constant needs to match the implementation in logic/scope.type_t.zero_type.
-            Return Not return_type.Equals(type0)
+            ' Note, b3style can run with or without namespace, the type0 isn't a constant for b3style. This can be done
+            ' by creating a b3style.scope_1 with disabled namespace, but the effort isn't very meaningful to test only
+            ' the behavior of bstyle compatibility.
+            ' So instead of caching the constant, calculating its value each time calling this function is a little bit
+            ' wasteful but much simpler.
+            ' A proper solution is indeed to fix the b3style's bstyle compatibility with the namespace enabled.
+            Return Not return_type.Equals(Function() As String
+                                              Dim t As builders.parameter_type =
+                                                  builders.parameter_type.of(logic.scope.type_t.zero_type)
+                                              If current().features().with_namespace() Then
+                                                  t = t.map_type(AddressOf namespace_t.fully_qualified_name)
+                                              End If
+                                              Return t.full_type()
+                                          End Function())
         End Function
     End Class
 
