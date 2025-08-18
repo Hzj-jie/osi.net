@@ -86,7 +86,8 @@ Public NotInheritable Class b3style_nlp_tests
             "duplicate-func-name-in-class.txt",
             "struct-with-myself.txt",
             "templates-with-same-name.txt",
-            "type-parameters-with-same-name.txt"
+            "type-parameters-with-same-name.txt",
+            "mismatch_constructor_parameters.txt"
         )
 
         Public Sub New()
