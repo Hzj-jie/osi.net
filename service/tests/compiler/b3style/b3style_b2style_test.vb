@@ -21,7 +21,6 @@ Public NotInheritable Class b3style_b2style_test
     End Sub
 End Class
 
-<command_line_specified>
 <test>
 Public NotInheritable Class b3style_b2style_test_all
     Inherits b2style_test_runner
