@@ -8,11 +8,23 @@
 
 namespace b2style {
 
-string str_mid(string s, int i, int l) {
-  ::assert(__STATEMENT__ + "@" + __FILE__, (i >= 0) && (l >= 0));
+#ifdef B3STYLE
+string _str_mid(string s, int i, int l) {
+  string r;
+  logic "cut_len r s i l";
+  return r;
+}
+#else
+string _str_mid(string s, int i, int l) {
   string r;
   logic "cut_len b2style__r b2style__s b2style__i b2style__l";
   return r;
+}
+#endif
+
+string str_mid(string s, int i, int l) {
+  ::assert(__STATEMENT__ + "@" + __FILE__, (i >= 0) && (l >= 0));
+  return _str_mid(s, i, l);
 }
 
 bool str_ends_with(string i, string j) {

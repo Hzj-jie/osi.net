@@ -11,8 +11,21 @@ void load_method(string m) {
   ::load_method(m);
 }
 
-// Unsupported yet.
-#ifndef B3STYLE
+#ifdef B3STYLE
+template <T>
+T execute_loaded_method() {
+  T result;
+  logic "interrupt execute_loaded_method @@prefixes@temps@string result";
+  return result;
+}
+
+template <T, RT>
+RT execute_loaded_method(T p) {
+  RT result;
+  logic "interrupt execute_loaded_method p result";
+  return result;
+}
+#else
 template <T>
 T execute_loaded_method() {
   T result;

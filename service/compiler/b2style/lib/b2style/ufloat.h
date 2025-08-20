@@ -9,6 +9,57 @@
 
 namespace b2style {
 
+#ifdef B3STYLE
+bool equal(ufloat i, ufloat j) {
+  bool result;
+  logic "float_equal result i j";
+  return result;
+}
+
+bool not_equal(ufloat i, ufloat j) {
+  bool result;
+  logic "float_equal result i j";
+  return not(result);
+}
+
+bool greater_than(ufloat i, ufloat j) {
+  bool result;
+  logic "float_more result i j";
+  return result;
+}
+
+bool less_than(ufloat i, ufloat j) {
+  bool result;
+  logic "float_less result i j";
+  return result;
+}
+
+ufloat add(ufloat i, ufloat j) {
+  logic "float_add i i j";
+  return i;
+}
+
+ufloat minus(ufloat i, ufloat j) {
+  logic "float_subtract i i j";
+  return i;
+}
+
+ufloat multiply(ufloat i, ufloat j) {
+  logic "float_multiply i i j";
+  return i;
+}
+
+ufloat divide(ufloat i, ufloat j) {
+  ufloat result;
+  logic "float_divide result i j";
+  return result;
+}
+
+ufloat power(ufloat i, ufloat j) {
+  logic "float_power i i j";
+  return i;
+}
+#else
 bool equal(ufloat i, ufloat j) {
   bool result;
   logic "float_equal b2style__result b2style__i b2style__j";
@@ -27,18 +78,10 @@ bool greater_than(ufloat i, ufloat j) {
   return result;
 }
 
-bool greater_or_equal(ufloat i, ufloat j) {
-  return or(greater_than(i, j), equal(i, j));
-}
-
 bool less_than(ufloat i, ufloat j) {
   bool result;
   logic "float_less b2style__result b2style__i b2style__j";
   return result;
-}
-
-bool less_or_equal(ufloat i, ufloat j) {
-  return or(less_than(i, j), equal(i, j));
 }
 
 ufloat add(ufloat i, ufloat j) {
@@ -65,6 +108,15 @@ ufloat divide(ufloat i, ufloat j) {
 ufloat power(ufloat i, ufloat j) {
   logic "float_power b2style__i b2style__i b2style__j";
   return i;
+}
+#endif
+
+bool greater_or_equal(ufloat i, ufloat j) {
+  return or(greater_than(i, j), equal(i, j));
+}
+
+bool less_or_equal(ufloat i, ufloat j) {
+  return or(less_than(i, j), equal(i, j));
 }
 
 void std_out(ufloat i) {
