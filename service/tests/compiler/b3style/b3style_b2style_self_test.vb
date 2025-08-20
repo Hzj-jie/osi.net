@@ -35,7 +35,6 @@ Public NotInheritable Class b3style_b2style_self_test
                                               "delegate_in_class.txt",
                                               "heap_ptr_test.txt",
                                               "heap.txt",
-                                              "include__FILE__.txt",
                                               "more-closing-angle-brackets.txt",
                                               "non-overridable-class-template-function.txt",
                                               "ptr_offset.txt",

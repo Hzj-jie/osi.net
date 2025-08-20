@@ -11,11 +11,19 @@ namespace b2style {
 class raw_heap_ptr {
   type_ptr p;
 
+#ifdef B3STYLE
+  bool is_null() {
+    bool r;
+    logic "empty r this.p";
+    return r;
+  }
+#else
   bool is_null() {
     bool r;
     logic "empty b2style__r this.p";
     return r;
   }
+#endif
 
   template <T>
   T get() {
