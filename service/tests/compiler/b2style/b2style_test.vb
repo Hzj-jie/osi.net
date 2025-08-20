@@ -457,13 +457,6 @@ Public MustInherit Class b2style_test_runner_b3style_supported
         assertion.equal(io.output(), "10012002")
     End Sub
 
-    Protected Sub New()
-    End Sub
-End Class
-
-Public MustInherit Class b2style_test_runner
-    Inherits b2style_test_runner_b3style_supported
-
     <test>
     Private Sub negative_int()
         Dim io As New console_io.test_wrapper()
@@ -526,6 +519,77 @@ Public MustInherit Class b2style_test_runner
     End Sub
 
     <test>
+    Private Sub class_inheritance()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.class_inheritance.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "3f21f2")
+    End Sub
+
+    <test>
+    Private Sub lots_of_semi_colons()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.lots_of_semi_colons.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "100")
+    End Sub
+
+    <test>
+    Private Sub test_assert()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.test_assert.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertions.of(io.output().Split(character.newline)).equal(
+            b2style_self_test.failure + b2style_self_test.no_extra_inforamtion,
+            b2style_self_test.success + b2style_self_test.no_extra_inforamtion,
+            b2style_self_test.total_assertions + "2",
+            "")
+    End Sub
+
+    <test>
+    Private Sub assert_()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.assert_.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "This assertion should not pass.")
+    End Sub
+
+    <test>
+    Private Sub assert_with_statement()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.assert_with_statement.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "assert ( __STATEMENT__ , i < 100 , ""line 8"" ) ;: line 8")
+    End Sub
+
+    Protected Sub New()
+    End Sub
+End Class
+
+Public MustInherit Class b2style_test_runner
+    Inherits b2style_test_runner_b3style_supported
+
+    <test>
+    Private Sub class_function_with_namespace()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.class_function_with_namespace.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "100200")
+    End Sub
+
+    <test>
     Private Sub class_on_heap()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
@@ -542,23 +606,47 @@ Public MustInherit Class b2style_test_runner
     End Sub
 
     <test>
-    Private Sub class_function_with_namespace()
+    Private Sub delegate_ref()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.class_function_with_namespace.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.delegate_ref.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "100200")
+        assertion.equal(io.output(), "100101")
     End Sub
 
     <test>
-    Private Sub class_inheritance()
+    Private Sub delegate_template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.class_inheritance.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.delegate_template.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "3f21f2")
+        assertion.equal(io.output(), "2abc1")
+    End Sub
+
+    <test>
+    Private Sub __func__()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.__func__.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output().Trim(), String.Join(character.newline,
+            "type0 main([])",
+            "type0 std_out:C__struct__type__id__type([this.C__struct__type__id: C__struct__type__id__type&])",
+            "type0 N__print([])",
+            "type0 N__f2:Integer:String([N__x: Integer, N__s: String])"))
+    End Sub
+
+    <test>
+    Private Sub function_ptr()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.function_ptr.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "10199")
     End Sub
 
     <test>
@@ -572,26 +660,6 @@ Public MustInherit Class b2style_test_runner
     End Sub
 
     <test>
-    Private Sub template()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.template.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "DE")
-    End Sub
-
-    <test>
-    Private Sub primitive_template()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.primitive_template.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "101101.11")
-    End Sub
-
-    <test>
     Private Sub nested_template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
@@ -602,23 +670,13 @@ Public MustInherit Class b2style_test_runner
     End Sub
 
     <test>
-    Private Sub template_wont_be_extended_twice()
+    Private Sub primitive_template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.template_wont_be_extended_twice.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.primitive_template.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "24")
-    End Sub
-
-    <test>
-    Private Sub template_with_different_length()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.template_with_different_length.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "12abc")
+        assertion.equal(io.output(), "101101.11")
     End Sub
 
     <test>
@@ -642,57 +700,33 @@ Public MustInherit Class b2style_test_runner
     End Sub
 
     <test>
-    Private Sub lots_of_semi_colons()
+    Private Sub template()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.lots_of_semi_colons.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.template.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "100")
+        assertion.equal(io.output(), "DE")
     End Sub
 
     <test>
-    Private Sub delegate_template()
+    Private Sub template_with_different_length()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.delegate_template.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.template_with_different_length.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "2abc1")
+        assertion.equal(io.output(), "12abc")
     End Sub
 
     <test>
-    Private Sub function_ptr()
+    Private Sub template_wont_be_extended_twice()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.function_ptr.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.template_wont_be_extended_twice.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "10199")
-    End Sub
-
-    <test>
-    Private Sub delegate_ref()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.delegate_ref.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "100101")
-    End Sub
-
-    <test>
-    Private Sub test_assert()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.test_assert.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertions.of(io.output().Split(character.newline)).equal(
-            b2style_self_test.failure + b2style_self_test.no_extra_inforamtion,
-            b2style_self_test.success + b2style_self_test.no_extra_inforamtion,
-            b2style_self_test.total_assertions + "2",
-            "")
+        assertion.equal(io.output(), "24")
     End Sub
 
     <test>
@@ -707,40 +741,6 @@ Public MustInherit Class b2style_test_runner
                                                        direct_cast(Of simulator)(e).access_heap(0)
                                                    End Sub).error_type,
                         executor.error_type.heap_access_out_of_boundary)
-    End Sub
-
-    <test>
-    Private Sub __func__()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.__func__.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output().Trim(), String.Join(character.newline,
-            "type0 main([])",
-            "type0 std_out:C__struct__type__id__type([this.C__struct__type__id: C__struct__type__id__type&])",
-            "type0 N__print([])",
-            "type0 N__f2:Integer:String([N__x: Integer, N__s: String])"))
-    End Sub
-
-    <test>
-    Private Sub assert_()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.assert_.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "This assertion should not pass.")
-    End Sub
-
-    <test>
-    Private Sub assert_with_statement()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.assert_with_statement.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "assert ( __STATEMENT__ , i < 100 , ""line 8"" ) ;: line 8")
     End Sub
 
     Protected Sub New()
