@@ -14,7 +14,7 @@ Imports osi.service.compiler
 Imports osi.service.interpreter.primitive
 Imports osi.service.resource
 
-Public MustInherit Class b2style_test_runner_b3style_supported
+Public MustInherit Class b2style_test_runner
     Protected MustOverride Function parse(ByVal io As console_io.test_wrapper,
                                           ByVal content As String,
                                           ByRef o As executor) As Boolean
@@ -456,13 +456,6 @@ Public MustInherit Class b2style_test_runner_b3style_supported
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "10012002")
     End Sub
-
-    Protected Sub New()
-    End Sub
-End Class
-
-Public MustInherit Class b2style_test_runner
-    Inherits b2style_test_runner_b3style_supported
 
     <test>
     Private Sub negative_int()

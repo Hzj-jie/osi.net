@@ -9,21 +9,6 @@ Imports osi.service.interpreter.primitive
 
 <test>
 Public NotInheritable Class b3style_b2style_test
-    Inherits b2style_test_runner_b3style_supported
-
-    Protected Overrides Function parse(ByVal io As console_io.test_wrapper,
-                                       ByVal content As String,
-                                       ByRef o As executor) As Boolean
-        Return New b3style.parse_wrapper(New interrupts(+io)).compile(content, o)
-    End Function
-
-    Private Sub New()
-    End Sub
-End Class
-
-<command_line_specified>
-<test>
-Public NotInheritable Class b3style_b2style_test_all
     Inherits b2style_test_runner
 
     Protected Overrides Function parse(ByVal io As console_io.test_wrapper,
