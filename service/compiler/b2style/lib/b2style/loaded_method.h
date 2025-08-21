@@ -21,6 +21,7 @@ T execute_loaded_method() {
 #else
   // TODO: Trigger an #error
 #endif
+#endif
   return result;
 }
 
@@ -33,6 +34,7 @@ RT execute_loaded_method(T p) {
   logic "interrupt execute_loaded_method b2style__p b2style__result";
 #else
   // TODO: Trigger an #error
+#endif
 #endif
   return result;
 }

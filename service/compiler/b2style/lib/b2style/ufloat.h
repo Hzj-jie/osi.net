@@ -81,7 +81,7 @@ ufloat divide(ufloat i, ufloat j) {
 #ifdef B3STYLE
   logic "float_divide result i j";
 #else
-  logic "float_divide b2style__i b2style__i b2style__j";
+  logic "float_divide b2style__result b2style__i b2style__j";
 #endif
   return result;
 }

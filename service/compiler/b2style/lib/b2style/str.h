@@ -17,6 +17,7 @@ string _str_mid(string s, int i, int l) {
 #else
   // TODO: Trigger an #error.
 #endif
+#endif
   return r;
 }
 
