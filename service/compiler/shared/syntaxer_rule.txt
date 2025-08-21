@@ -10,7 +10,7 @@ param-with-comma param comma
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, condition, while, for-loop]
 
-multi-sentence-paragraph start-paragraph [paragraph]* end-paragraph
+multi-sentence-paragraph start-paragraph [paragraph, ifdef-wrapped, ifndef-wrapped]* end-paragraph
 
 value-definition type-name name assignment value
 value-declaration type-name name
