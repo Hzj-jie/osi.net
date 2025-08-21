@@ -30,12 +30,12 @@ Public NotInheritable Class error_event
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1009:DeclareEventHandlersCorrectly")>
     Public Shared Event a1()
 
-    Private Shared ReadOnly r1lock As Object = New Object()
-    Private Shared ReadOnly r2lock As Object = New Object()
-    Private Shared ReadOnly r3lock As Object = New Object()
-    Private Shared ReadOnly r4lock As Object = New Object()
-    Private Shared ReadOnly r5lock As Object = New Object()
-    Private Shared ReadOnly r6lock As Object = New Object()
+    Private Shared ReadOnly r1lock As New Object()
+    Private Shared ReadOnly r2lock As New Object()
+    Private Shared ReadOnly r3lock As New Object()
+    Private Shared ReadOnly r4lock As New Object()
+    Private Shared ReadOnly r5lock As New Object()
+    Private Shared ReadOnly r6lock As New Object()
 
     <global_init(global_init_level.log_and_counter_services + byte_1)>
     Private NotInheritable Class when_log_and_counter_services

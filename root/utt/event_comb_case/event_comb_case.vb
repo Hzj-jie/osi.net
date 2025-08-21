@@ -12,8 +12,8 @@ Public MustInherit Class event_comb_case
     Public MustOverride Function create() As event_comb
 
     Public NotOverridable Overrides Function run() As Boolean
-        Dim ec As event_comb = Nothing
-        ec = create()
+        ' TODO: Find a way to forward the case name without creating a wrapper event_comb.
+        Dim ec As event_comb = create()
         Using New thread_lazy()
             Return async_sync(ec)
         End Using

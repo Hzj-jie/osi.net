@@ -55,7 +55,8 @@ Public Class isolate_case_wrapper
     End Function
 
     Private Sub received(ByVal s As String)
-        If commandline.specified(Me) Then
+        If env_vars.utt_debug_isolate_case_wrapper AndAlso Not commandline.specified(Me) Then
+            ' Forward the output into the log of the main process.
             raise_error("isolate_case_wrapper received: ", s)
         End If
         If Not _assert_death_msg.empty() Then
@@ -72,7 +73,8 @@ Public Class isolate_case_wrapper
             _case_started = True
         ElseIf s.Contains(String.Concat(", finish running ", c.full_name)) Then
             _case_finished = True
-        ElseIf s.Contains(", assertion failure, ") Then
+        ElseIf s.Contains(" assertion failure, ") Then
+            ' cover both "] - assertion failure, " and " assertion failure, " from event_comb_case.
             _assertion_failures.increment()
         ElseIf s.Contains(", unsatisfied expectation, ") Then
             _unsatisfied_expectations.increment()
