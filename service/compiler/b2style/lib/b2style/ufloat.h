@@ -9,107 +9,91 @@
 
 namespace b2style {
 
+bool equal(ufloat i, ufloat j) {
+  bool result;
 #ifdef B3STYLE
-bool equal(ufloat i, ufloat j) {
-  bool result;
   logic "float_equal result i j";
-  return result;
-}
-
-bool not_equal(ufloat i, ufloat j) {
-  bool result;
-  logic "float_equal result i j";
-  return not(result);
-}
-
-bool greater_than(ufloat i, ufloat j) {
-  bool result;
-  logic "float_more result i j";
-  return result;
-}
-
-bool less_than(ufloat i, ufloat j) {
-  bool result;
-  logic "float_less result i j";
-  return result;
-}
-
-ufloat add(ufloat i, ufloat j) {
-  logic "float_add i i j";
-  return i;
-}
-
-ufloat minus(ufloat i, ufloat j) {
-  logic "float_subtract i i j";
-  return i;
-}
-
-ufloat multiply(ufloat i, ufloat j) {
-  logic "float_multiply i i j";
-  return i;
-}
-
-ufloat divide(ufloat i, ufloat j) {
-  ufloat result;
-  logic "float_divide result i j";
-  return result;
-}
-
-ufloat power(ufloat i, ufloat j) {
-  logic "float_power i i j";
-  return i;
-}
 #else
-bool equal(ufloat i, ufloat j) {
-  bool result;
   logic "float_equal b2style__result b2style__i b2style__j";
+#endif
   return result;
 }
 
 bool not_equal(ufloat i, ufloat j) {
   bool result;
+#ifdef B3STYLE
+  logic "float_equal result i j";
+#else
   logic "float_equal b2style__result b2style__i b2style__j";
+#endif
   return not(result);
 }
 
 bool greater_than(ufloat i, ufloat j) {
   bool result;
+#ifdef B3STYLE
+  logic "float_more result i j";
+#else
   logic "float_more b2style__result b2style__i b2style__j";
+#endif
   return result;
 }
 
 bool less_than(ufloat i, ufloat j) {
   bool result;
+#ifdef B3STYLE
+  logic "float_less result i j";
+#else
   logic "float_less b2style__result b2style__i b2style__j";
+#endif
   return result;
 }
 
 ufloat add(ufloat i, ufloat j) {
+#ifdef B3STYLE
+  logic "float_add i i j";
+#else
   logic "float_add b2style__i b2style__i b2style__j";
+#endif
   return i;
 }
 
 ufloat minus(ufloat i, ufloat j) {
+#ifdef B3STYLE
+  logic "float_subtract i i j";
+#else
   logic "float_subtract b2style__i b2style__i b2style__j";
+#endif
   return i;
 }
 
 ufloat multiply(ufloat i, ufloat j) {
+#ifdef B3STYLE
+  logic "float_multiply i i j";
+#else
   logic "float_multiply b2style__i b2style__i b2style__j";
+#endif
   return i;
 }
 
 ufloat divide(ufloat i, ufloat j) {
   ufloat result;
+#ifdef B3STYLE
+  logic "float_divide result i j";
+#else
   logic "float_divide b2style__result b2style__i b2style__j";
+#endif
   return result;
 }
 
 ufloat power(ufloat i, ufloat j) {
+#ifdef B3STYLE
+  logic "float_power i i j";
+#else
   logic "float_power b2style__i b2style__i b2style__j";
+#endif
   return i;
 }
-#endif
 
 bool greater_or_equal(ufloat i, ufloat j) {
   return or(greater_than(i, j), equal(i, j));

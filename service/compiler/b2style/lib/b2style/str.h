@@ -8,19 +8,18 @@
 
 namespace b2style {
 
+string _str_mid(string s, int i, int l) {
+  string r;
 #ifdef B3STYLE
-string _str_mid(string s, int i, int l) {
-  string r;
   logic "cut_len r s i l";
-  return r;
-}
-#else
-string _str_mid(string s, int i, int l) {
-  string r;
+#else #ifdef B2STYLE
   logic "cut_len b2style__r b2style__s b2style__i b2style__l";
+#else
+  // TODO: Trigger an #error.
+#endif
+#endif
   return r;
 }
-#endif
 
 string str_mid(string s, int i, int l) {
   ::assert(__STATEMENT__ + "@" + __FILE__, (i >= 0) && (l >= 0));
