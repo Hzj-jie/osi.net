@@ -5,8 +5,6 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
-Imports osi.root.delegates
-Imports osi.root.template
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.automata
@@ -147,6 +145,16 @@ Public MustInherit Class bstyle_test_runner
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "std_out ( __STATEMENT__ ) ;string s = __STATEMENT__ ;")
+    End Sub
+
+    <test>
+    Private Sub b2style_class_inheritance()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _bstyle_test_data.b2style_class_inheritance.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "3f21f2")
     End Sub
 
     Protected Sub New()

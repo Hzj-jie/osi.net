@@ -237,6 +237,7 @@
     <Content Include="b3style\runnable\namespace.txt" />
     <Content Include="b3style\runnable\predefined-macros.txt" />
     <Content Include="b3style\codegen\__func__.txt" />
+    <Content Include="bstyle\codegen\b2style_class_inheritance.txt" />
     <Content Include="bstyle\codegen\delegate.txt" />
     <Content Include="bstyle\codegen\func_name_with_dot.txt" />
     <Content Include="b2style\codegen\heap_ptr_to_int64.txt" />
