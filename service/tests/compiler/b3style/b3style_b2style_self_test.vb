@@ -24,10 +24,6 @@ Public NotInheritable Class b3style_b2style_self_test
 
     Protected Overrides Function ignore_case(ByVal name As String) As Boolean
         Dim r As Boolean = False
-        ' Missing heap-struct-name - assertion failure
-        r = r OrElse unordered_set.of("static_cast_ptr_type3.txt",
-                                      "static_cast_ptr_type_bool.txt",
-                                      "static_cast_ptr_type.txt").find(name).is_not_end()
         ' template class is not supported yet.
         r = r OrElse unordered_set.emplace_of("bool-heap.txt",
                                               "delegate-functions-with-same-name.txt",
