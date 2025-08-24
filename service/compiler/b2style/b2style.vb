@@ -78,12 +78,7 @@ Partial Public NotInheritable Class b2style
                            with("pre-operation-value", New unary_operation_value(0, "_pre")).
                            with("post-operation-value", New unary_operation_value(1, "_post")).
                            with(Of function_call)().
-                           with_delegate("heap-struct-function-call",
-                                         Function(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean
-                                             assert(Not n Is Nothing)
-                                             Return function_call.build(
-                                                        heap_struct_name.bstyle_function(n.child(0)), n, o)
-                                         End Function).
+                           with(Of function_call)("heap-struct-function-call").
                            with(Of include_with_string)().
                            with(Of include_with_file)().
                            with(Of _class)().

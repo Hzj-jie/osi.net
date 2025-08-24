@@ -30,15 +30,6 @@ Partial Public NotInheritable Class b2style
                            ToString()
         End Function
 
-        Public Shared Function bstyle_function(ByVal n As typed_node) As String
-            Dim s As String = bstyle_format(n)
-            Dim start As Int32 = s.LastIndexOf(".")
-            Dim e As Int32 = s.LastIndexOf("[")
-            assert(start > 0 AndAlso start < e)
-            Dim last_part As String = s.Substring(start, e - start)
-            Return strcat(s.Remove(start, e - start), last_part)
-        End Function
-
         Private Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
                 Implements code_gen(Of typed_node_writer).build
             assert(Not o Is Nothing)
