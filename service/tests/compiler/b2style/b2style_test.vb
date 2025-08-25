@@ -6,7 +6,6 @@ Option Strict On
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.formation
-Imports osi.root.template
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.automata
@@ -636,20 +635,6 @@ Public MustInherit Class b2style_test_runner
     End Sub
 
     <test>
-    Private Sub __func__()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.__func__.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output().Trim(), String.Join(character.newline,
-            "type0 main([])",
-            "type0 std_out:C__struct__type__id__type([this.C__struct__type__id: C__struct__type__id__type&])",
-            "type0 N__print([])",
-            "type0 N__f2:Integer:String([N__x: Integer, N__s: String])"))
-    End Sub
-
-    <test>
     Private Sub function_ptr()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
@@ -751,16 +736,6 @@ End Class
 Public NotInheritable Class b2style_test
     Inherits b2style_test_runner
 
-    Public NotInheritable Class _parse
-        Inherits __do(Of console_io.test_wrapper, String, executor, Boolean)
-
-        Public Overrides Function at(ByRef i As console_io.test_wrapper,
-                                     ByRef j As String,
-                                     ByRef k As executor) As Boolean
-            Return b2style.with_functions(New interrupts(+i)).compile(j, k)
-        End Function
-    End Class
-
     Protected Overrides Function parse(ByVal io As console_io.test_wrapper,
                                        ByVal content As String,
                                        ByRef o As executor) As Boolean
@@ -793,6 +768,7 @@ Public NotInheritable Class b2style_test
         ' But it may not be handled by b2style.
     End Sub
 
+    ' This test triggers a compiler error on b3style.
     <test>
     Private Sub reinterpret_cast_to_a_different_class_type()
         Dim e As executor = Nothing
@@ -801,6 +777,21 @@ Public NotInheritable Class b2style_test
                                 e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
+    End Sub
+
+    ' b3style uses ::type0 instead of type0, etc.
+    <test>
+    Private Sub __func__()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.__func__.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output().Trim(), String.Join(character.newline,
+            "type0 main([])",
+            "type0 std_out:C__struct__type__id__type([this.C__struct__type__id: C__struct__type__id__type&])",
+            "type0 N__print([])",
+            "type0 N__f2:Integer:String([N__x: Integer, N__s: String])"))
     End Sub
 
     Private Sub New()
