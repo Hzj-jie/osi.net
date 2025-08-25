@@ -9,7 +9,7 @@ Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
-    Private NotInheritable Class heap_struct_name
+    Public NotInheritable Class heap_struct_name
         Implements code_gen(Of typed_node_writer)
 
         ' Return name + index_node

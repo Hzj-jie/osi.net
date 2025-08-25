@@ -4,7 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
+Imports osi.root.formation
 Imports osi.service.automata
 
 Partial Public NotInheritable Class b3style
@@ -23,8 +23,8 @@ Partial Public NotInheritable Class b3style
                 Return heap_name_build(name, value, o)
             End If
             If name.type_name.Equals("heap-struct-name") Then
-                raise_error(error_type.user, "heap-struct-name.value_clause hasn't been supported yet.")
-                Return False
+                Dim t As tuple(Of String, typed_node) = b2style.heap_struct_name.logic_order(name)
+                Return heap_name_build(t.second(), t.first(), value, o)
             End If
             assert(False, "Unsupported assignee: ", name.type_name, " from [", name.input(), "]")
             Return False
