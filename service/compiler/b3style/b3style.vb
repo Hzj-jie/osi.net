@@ -124,6 +124,12 @@ Partial Public NotInheritable Class b3style
                                   assert(Not n Is Nothing)
                                   Return function_call.with_parameters.without_return(n.child(), o)
                               End Function).
+                with(Of function_call)("heap-struct-function-call").
+                with_delegate("ignore-result-heap-struct-function-call",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  assert(Not n Is Nothing)
+                                  Return function_call.with_parameters.without_return(n.child(), o)
+                              End Function).
                 with(Of param)().
                 with(Of return_clause)().
                 with(Of value_clause)().

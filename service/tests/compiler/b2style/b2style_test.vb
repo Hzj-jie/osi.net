@@ -581,6 +581,22 @@ Public MustInherit Class b2style_test_runner_b3style_supported
         assertion.equal(io.output(), "abcdefghi100")
     End Sub
 
+    <test>
+    Private Sub class_on_heap()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.class_on_heap.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), streams.range(0, 100).
+                                             map(Function(ByVal x As Int32) As String
+                                                     Return strcat(x, " ", x, " ", x)
+                                                 End Function).
+                                             collect_by(stream(Of String).collectors.to_str(character.newline)).
+                                             Append(character.newline).
+                                             ToString())
+    End Sub
+
     Protected Sub New()
     End Sub
 End Class
@@ -596,22 +612,6 @@ Public MustInherit Class b2style_test_runner
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "100200")
-    End Sub
-
-    <test>
-    Private Sub class_on_heap()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.class_on_heap.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), streams.range(0, 100).
-                                             map(Function(ByVal x As Int32) As String
-                                                     Return strcat(x, " ", x, " ", x)
-                                                 End Function).
-                                             collect_by(stream(Of String).collectors.to_str(character.newline)).
-                                             Append(character.newline).
-                                             ToString())
     End Sub
 
     <test>
