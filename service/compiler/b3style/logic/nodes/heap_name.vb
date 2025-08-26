@@ -68,8 +68,7 @@ Partial Public NotInheritable Class b3style
                                                                        End Function)
                                                            End Function))
                                             Return True
-                                        End Function,
-                                        o)
+                                        End Function)
                          End Function)
         End Function
     End Class

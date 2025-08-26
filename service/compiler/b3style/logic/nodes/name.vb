@@ -21,8 +21,7 @@ Partial Public NotInheritable Class b3style
                                                     ByVal ps As stream(Of builders.parameter)) As Boolean
                                                scope.current().value_target().with_value(type, ps)
                                                Return True
-                                           End Function,
-                                           o)
+                                           End Function)
         End Function
     End Class
 End Class

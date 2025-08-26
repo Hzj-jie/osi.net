@@ -60,8 +60,7 @@ Partial Public NotInheritable Class bstyle
                                                                        End Function)
                                                            End Function))
                                             Return True
-                                        End Function,
-                                        o)
+                                        End Function)
                          End Function)
         End Function
     End Class
