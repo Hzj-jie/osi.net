@@ -14,6 +14,21 @@ Partial Public NotInheritable Class b3style
     Private NotInheritable Class function_call
         Implements code_gen(Of logic_writer)
 
+        Private Shared Function build_function_caller(
+                                    ByVal function_name As String,
+                                    ByVal parameters As vector(Of String),
+                                    ByVal build_caller As Func(Of String, vector(Of String), Boolean)) As Boolean
+            assert(Not function_name.null_or_whitespace())
+            assert(Not parameters Is Nothing)
+            assert(Not build_caller Is Nothing)
+            Dim name As String = Nothing
+            If Not logic_name.of_function_call(function_name, parameters, name) Then
+                Return False
+            End If
+            scope.current().call_hierarchy().to(name)
+            Return build_caller(name, parameters)
+        End Function
+
         Private Shared Function build(ByVal raw_function_name As String,
                                       ByVal build_caller As Func(Of String, vector(Of String), Boolean),
                                       ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean),
@@ -22,29 +37,22 @@ Partial Public NotInheritable Class b3style
             assert(Not build_caller_ref Is Nothing)
             Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
                 Dim parameters As vector(Of String) = +targets
-                If scope.current().variables().defined(raw_function_name) Then
-                    Return build_caller_ref(raw_function_name, parameters)
-                End If
-
                 Dim struct_func As tuple(Of String, String) = Nothing
-                Dim function_name As String = Nothing
                 If b2style.function_call.split_struct_function(raw_function_name, struct_func) Then
                     If Not raw_variable_name.build(struct_func.first(), o) Then
                         raise_error(error_type.user, "Cannot find class instance ", struct_func.first())
                         Return False
                     End If
-                    parameters = (+scope.current().value_target().value()).names + parameters
-                    function_name = scope.namespace_t.fully_qualified_name(struct_func.second())
-                Else
-                    function_name = scope.fully_qualified_function_name.of(raw_function_name)
+                    Return build_function_caller(scope.namespace_t.fully_qualified_name(struct_func.second()),
+                                                 (+scope.current().value_target().value()).names + parameters,
+                                                 build_caller)
                 End If
-                assert(Not function_name Is Nothing)
-                Dim name As String = Nothing
-                If Not logic_name.of_function_call(function_name, parameters, name) Then
-                    Return False
+                If scope.current().variables().defined(raw_function_name) Then
+                    Return build_caller_ref(raw_function_name, parameters)
                 End If
-                scope.current().call_hierarchy().to(name)
-                Return build_caller(name, parameters)
+                Return build_function_caller(scope.fully_qualified_function_name.of(raw_function_name),
+                                             parameters,
+                                             build_caller)
             End Using
         End Function
 
