@@ -29,7 +29,7 @@ Partial Public NotInheritable Class b3style
                 Dim struct_func As tuple(Of String, String) = Nothing
                 Dim function_name As String = Nothing
                 If b2style.function_call.split_struct_function(raw_function_name, struct_func) Then
-                    If Not raw_variable_name.build(struct_func.first(), o) Then
+                    If Not raw_variable_name.build(struct_func.first()) Then
                         raise_error(error_type.user, "Cannot find class instance ", struct_func.first())
                         Return False
                     End If
