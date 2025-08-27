@@ -56,11 +56,11 @@ Public MustInherit Class compiler_self_test_runner
                                         execute(name, text)
                                     Catch ex As Exception
                                         ignore_assertion_break(ex)
-                                        raise_error("Exception caught when running ", name, ", ", ex)
+                                        assertion.not_reach("Exception caught when running ", name, ", ", ex)
                                     End Try
                                 End Sub,
                                 Sub(ByVal msg As String)
-                                    raise_error("Assertion failure happened when running ", name, ", ", msg)
+                                    assertion.not_reach("Assertion failure happened when running ", name, ", ", msg)
                                 End Sub)
                         End Using
                     End Sub))
