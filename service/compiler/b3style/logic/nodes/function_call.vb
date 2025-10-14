@@ -40,7 +40,7 @@ Partial Public NotInheritable Class b3style
                 Dim struct_func As tuple(Of String, String) = Nothing
                 ' The split_struct_function needs to be executed first, otherwise the
                 ' scope.current().variables().defined() will check is_heap_name which expects the [] to be at the end
-                ' and triggers an assertion failure.
+                ' or triggers an assertion failure.
                 If b2style.function_call.split_struct_function(raw_function_name, struct_func) Then
                     ' TODO: Need to support heap variables here. See b3style_b2style_test_all.class_on_heap,
                     ' cs[i].print() generates print(cs) rather than print(cs[i]).
