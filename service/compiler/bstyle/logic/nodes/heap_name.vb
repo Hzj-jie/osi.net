@@ -35,16 +35,16 @@ Partial Public NotInheritable Class bstyle
             Return f(indexstr)
         End Function
 
-        Private Function build(ByVal n As typed_node,
-                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
-            assert(n.child_count() = 4)
-            Return build(n.child(2),
+        Public Shared Function as_raw_variable_name(ByVal index As typed_node,
+                                                    ByVal name As String,
+                                                    ByVal o As logic_writer) As Boolean
+            assert(Not index Is Nothing)
+            assert(Not String.IsNullOrWhiteSpace(name))
+            Return build(index,
                          o,
                          Function(ByVal indexstr As String) As Boolean
                              Return raw_variable_name.build(
-                                        n.child(0),
+                                        name,
                                         Function(ByVal type As String,
                                                  ByVal ps As stream(Of builders.parameter)) As Boolean
                                             scope.
@@ -55,13 +55,21 @@ Partial Public NotInheritable Class bstyle
                                                     ps.map(Function(ByVal d As builders.parameter) As builders.parameter
                                                                assert(Not d Is Nothing)
                                                                Return d.map_name(
-                                                                       Function(ByVal name As String) As String
-                                                                           Return variable.name_of(name, indexstr)
+                                                                       Function(ByVal n As String) As String
+                                                                           Return variable.name_of(n, indexstr)
                                                                        End Function)
                                                            End Function))
                                             Return True
                                         End Function)
                          End Function)
+        End Function
+
+        Private Function build(ByVal n As typed_node,
+                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+            assert(Not n Is Nothing)
+            assert(Not o Is Nothing)
+            assert(n.child_count() = 4)
+            Return as_raw_variable_name(n.child(2), scope.variable_name.of(n.child(0)), o)
         End Function
     End Class
 End Class

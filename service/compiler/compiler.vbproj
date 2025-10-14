@@ -84,6 +84,7 @@
     <Compile Include="b3style\logic\nodes\function_name_with_template.vb" />
     <Compile Include="b3style\logic\nodes\heap_declaration.vb" />
     <Compile Include="b3style\logic\nodes\heap_name.vb" />
+    <Compile Include="b3style\logic\nodes\heap_struct_name.vb" />
     <Compile Include="b3style\logic\nodes\includes.vb" />
     <Compile Include="b3style\logic\nodes\integer.vb" />
     <Compile Include="b3style\logic\nodes\logic_name.vb" />

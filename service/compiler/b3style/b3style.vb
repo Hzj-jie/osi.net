@@ -246,7 +246,8 @@ Partial Public NotInheritable Class b3style
                                   Return o.append(scope.normalized_type.of(n))
                               End Function).
                 with(code_gen.of_first_child(Of logic_writer)("type-name-with-comma")).
-                with(Of template_type_name)()
+                with(Of template_type_name)().
+                with(Of heap_struct_name)()
         End Function
     End Class
 End Class
