@@ -39,7 +39,7 @@ Partial Public NotInheritable Class bstyle
                                                     ByVal name As String,
                                                     ByVal o As logic_writer) As Boolean
             assert(Not index Is Nothing)
-            assert(Not String.IsNullOrWhiteSpace(name))
+            assert(Not name.null_or_whitespace())
             Return build(index,
                          o,
                          Function(ByVal indexstr As String) As Boolean
@@ -64,12 +64,16 @@ Partial Public NotInheritable Class bstyle
                          End Function)
         End Function
 
-        Private Function build(ByVal n As typed_node,
-                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+        Public Shared Function build(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 4)
             Return as_raw_variable_name(n.child(2), scope.variable_name.of(n.child(0)), o)
+        End Function
+
+        Private Function build_impl(ByVal n As typed_node,
+                                    ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+            Return build(n, o)
         End Function
     End Class
 End Class

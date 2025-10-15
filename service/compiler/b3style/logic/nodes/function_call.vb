@@ -11,7 +11,7 @@ Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class b3style
-    Private Class function_call(Of _name_builder As func_t(Of String, Boolean))
+    Private Class function_call(Of _name_builder As func_t(Of String, typed_node, logic_writer, Boolean))
         Implements code_gen(Of logic_writer)
 
         Private Shared ReadOnly name_builder As _name_builder = alloc(Of _name_builder)()
@@ -32,11 +32,17 @@ Partial Public NotInheritable Class b3style
         End Function
 
         Private Shared Function build(ByVal raw_function_name As String,
+                                      ByVal name_node As typed_node,
                                       ByVal build_caller As Func(Of String, vector(Of String), Boolean),
                                       ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean),
                                       ByVal o As logic_writer) As Boolean
             assert(Not build_caller Is Nothing)
             assert(Not build_caller_ref Is Nothing)
+            assert(Not raw_function_name.null_or_whitespace() OrElse Not name_node Is Nothing)
+            If raw_function_name Is Nothing Then
+                raw_function_name = scope.function_name.of(name_node)
+            End If
+            assert(Not raw_function_name.null_or_whitespace())
             Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
                 Dim parameters As vector(Of String) = +targets
                 Dim struct_func As tuple(Of String, String) = Nothing
@@ -44,7 +50,7 @@ Partial Public NotInheritable Class b3style
                 ' scope.current().variables().defined() will check is_heap_name which expects the [] to be at the end
                 ' or triggers an assertion failure.
                 If b2style.function_call.split_struct_function(raw_function_name, struct_func) Then
-                    If Not name_builder.run(struct_func.first()) Then
+                    If Not name_builder.run(struct_func.first(), name_node, o) Then
                         raise_error(error_type.user, "Cannot find class instance ", struct_func.first())
                         Return False
                     End If
@@ -138,13 +144,18 @@ Partial Public NotInheritable Class b3style
         Public NotInheritable Class ignore_parameters
             Public Shared Function without_return(ByVal function_name As String, ByVal o As logic_writer) As Boolean
                 Return function_call(Of _name_builder).build(function_name,
+                                                             Nothing,
                                                              without_return_caller_builder(o),
                                                              without_return_caller_ref_builder(o),
                                                              o)
             End Function
 
             Public Shared Function build(ByVal function_name As String, ByVal o As logic_writer) As Boolean
-                Return function_call(Of _name_builder).build(function_name, caller_builder(o), caller_ref_builder(o), o)
+                Return function_call(Of _name_builder).build(function_name,
+                                                             Nothing,
+                                                             caller_builder(o),
+                                                             caller_ref_builder(o),
+                                                             o)
             End Function
 
             Private Sub New()
@@ -159,16 +170,13 @@ Partial Public NotInheritable Class b3style
                                           ByVal o As logic_writer) As Boolean
                 assert(Not n Is Nothing)
                 assert(Not o Is Nothing)
-                If name Is Nothing Then
-                    name = scope.function_name.of(n.child(0))
-                End If
                 assert(n.child_count() >= 3)
                 If n.child_count() = 3 Then
                     value_list.with_empty()
                 ElseIf Not code_gen_of(n.child(2)).build(o) Then
                     Return False
                 End If
-                Return function_call(Of _name_builder).build(name, build_caller, build_caller_ref, o)
+                Return function_call(Of _name_builder).build(name, n.child(0), build_caller, build_caller_ref, o)
             End Function
 
             Public Shared Function without_return(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
@@ -219,9 +227,10 @@ Partial Public NotInheritable Class b3style
         Inherits function_call(Of raw_variable_name_of)
 
         Public Structure raw_variable_name_of
-            Implements func_t(Of String, Boolean)
+            Implements func_t(Of String, typed_node, logic_writer, Boolean)
 
-            Public Function run(ByVal i As String) As Boolean Implements func_t(Of String, Boolean).run
+            Public Function run(ByVal i As String, ByVal j As typed_node, ByVal k As logic_writer) As Boolean _
+                               Implements func_t(Of String, typed_node, logic_writer, Boolean).run
                 Return raw_variable_name.build(i)
             End Function
         End Structure
@@ -231,12 +240,11 @@ Partial Public NotInheritable Class b3style
         Inherits function_call(Of heap_struct_name_of)
 
         Public Structure heap_struct_name_of
-            Implements func_t(Of String, Boolean)
+            Implements func_t(Of String, typed_node, logic_writer, Boolean)
 
-            Public Function run(ByVal i As String) As Boolean Implements func_t(Of String, Boolean).run
-                debugpause()
-                Return False
-                ' Return heap_struct_name.build(i)
+            Public Function run(ByVal i As String, ByVal j As typed_node, ByVal k As logic_writer) As Boolean _
+                               Implements func_t(Of String, typed_node, logic_writer, Boolean).run
+                Return heap_name.build(j.child(0), k)
             End Function
         End Structure
     End Class
