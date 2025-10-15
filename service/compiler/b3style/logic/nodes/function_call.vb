@@ -11,8 +11,10 @@ Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class b3style
-    Private NotInheritable Class function_call
+    Private Class function_call(Of _name_builder As func_t(Of String, Boolean))
         Implements code_gen(Of logic_writer)
+
+        Private Shared ReadOnly name_builder As _name_builder = alloc(Of _name_builder)()
 
         Private Shared Function build_function_caller(
                                     ByVal function_name As String,
@@ -42,9 +44,7 @@ Partial Public NotInheritable Class b3style
                 ' scope.current().variables().defined() will check is_heap_name which expects the [] to be at the end
                 ' or triggers an assertion failure.
                 If b2style.function_call.split_struct_function(raw_function_name, struct_func) Then
-                    ' TODO: Need to support heap variables here. See b3style_b2style_test_all.class_on_heap,
-                    ' cs[i].print() generates print(cs) rather than print(cs[i]).
-                    If Not raw_variable_name.build(struct_func.first()) Then
+                    If Not name_builder.run(struct_func.first()) Then
                         raise_error(error_type.user, "Cannot find class instance ", struct_func.first())
                         Return False
                     End If
@@ -137,14 +137,14 @@ Partial Public NotInheritable Class b3style
 
         Public NotInheritable Class ignore_parameters
             Public Shared Function without_return(ByVal function_name As String, ByVal o As logic_writer) As Boolean
-                Return function_call.build(function_name,
-                                           without_return_caller_builder(o),
-                                           without_return_caller_ref_builder(o),
-                                           o)
+                Return function_call(Of _name_builder).build(function_name,
+                                                             without_return_caller_builder(o),
+                                                             without_return_caller_ref_builder(o),
+                                                             o)
             End Function
 
             Public Shared Function build(ByVal function_name As String, ByVal o As logic_writer) As Boolean
-                Return function_call.build(function_name, caller_builder(o), caller_ref_builder(o), o)
+                Return function_call(Of _name_builder).build(function_name, caller_builder(o), caller_ref_builder(o), o)
             End Function
 
             Private Sub New()
@@ -168,7 +168,7 @@ Partial Public NotInheritable Class b3style
                 ElseIf Not code_gen_of(n.child(2)).build(o) Then
                     Return False
                 End If
-                Return function_call.build(name, build_caller, build_caller_ref, o)
+                Return function_call(Of _name_builder).build(name, build_caller, build_caller_ref, o)
             End Function
 
             Public Shared Function without_return(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
@@ -213,6 +213,32 @@ Partial Public NotInheritable Class b3style
                                      ByVal o As logic_writer) As Boolean
             Return with_parameters.build(function_name, n, o)
         End Function
+    End Class
+
+    Private NotInheritable Class function_call
+        Inherits function_call(Of raw_variable_name_of)
+
+        Public Structure raw_variable_name_of
+            Implements func_t(Of String, Boolean)
+
+            Public Function run(ByVal i As String) As Boolean Implements func_t(Of String, Boolean).run
+                Return raw_variable_name.build(i)
+            End Function
+        End Structure
+    End Class
+
+    Private NotInheritable Class heap_struct_function_call
+        Inherits function_call(Of heap_struct_name_of)
+
+        Public Structure heap_struct_name_of
+            Implements func_t(Of String, Boolean)
+
+            Public Function run(ByVal i As String) As Boolean Implements func_t(Of String, Boolean).run
+                debugpause()
+                Return False
+                ' Return heap_struct_name.build(i)
+            End Function
+        End Structure
     End Class
 End Class
 
