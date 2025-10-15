@@ -13,17 +13,16 @@ Partial Public NotInheritable Class bstyle
     Partial Private NotInheritable Class value_clause
         Implements code_gen(Of logic_writer)
 
-        Private Shared Function build(ByVal name_node As typed_node,
+        Private Shared Function build(ByVal name As String,
                                       ByVal value As typed_node,
                                       ByVal struct_copy As Func(Of String, vector(Of String), Boolean),
                                       ByVal primitive_copy As Func(Of String, String, Boolean),
                                       ByVal o As logic_writer) As Boolean
-            assert(Not name_node Is Nothing)
+            assert(Not name.null_or_whitespace())
             assert(Not value Is Nothing)
             assert(Not struct_copy Is Nothing)
             assert(Not primitive_copy Is Nothing)
             assert(Not o Is Nothing)
-            Dim name As String = scope.fully_qualified_variable_name.of(name_node)
             Dim p As builders.parameter = Nothing
             Dim delegate_definition As New ref(Of function_signature)()
             If Not scope.current().variables().resolve(name, p, delegate_definition) Then
@@ -76,6 +75,14 @@ Partial Public NotInheritable Class bstyle
             End Using
         End Function
 
+        Private Shared Function build(ByVal name_node As typed_node,
+                                      ByVal value As typed_node,
+                                      ByVal struct_copy As Func(Of String, vector(Of String), Boolean),
+                                      ByVal primitive_copy As Func(Of String, String, Boolean),
+                                      ByVal o As logic_writer) As Boolean
+            Return build(scope.fully_qualified_variable_name.of(name_node), value, struct_copy, primitive_copy, o)
+        End Function
+
         Public Shared Function stack_name_build(ByVal name As typed_node,
                                                 ByVal value As typed_node,
                                                 ByVal o As logic_writer) As Boolean
@@ -93,17 +100,19 @@ Partial Public NotInheritable Class bstyle
                          o)
         End Function
 
-        Private Shared Function heap_name_build(ByVal name As typed_node,
+        ' Technically speaking, this is for b3style/heap_struct_name_build.
+        Private Shared Function heap_name_build(ByVal index_node As typed_node,
+                                                ByVal name As String,
                                                 ByVal value As typed_node,
                                                 ByVal o As logic_writer) As Boolean
-            assert(Not name Is Nothing)
+            assert(Not index_node Is Nothing)
+            assert(Not name.null_or_whitespace())
             assert(Not value Is Nothing)
             assert(Not o Is Nothing)
-            assert(name.type_name.Equals("heap-name"))
-            Return heap_name.build(name.child(2),
+            Return heap_name.build(index_node,
                                    o,
                                    Function(ByVal indexstr As String) As Boolean
-                                       Return build(name.child(0),
+                                       Return build(name,
                                                     value,
                                                     Function(ByVal n2 As String,
                                                              ByVal r As vector(Of String)) As Boolean
@@ -116,6 +125,14 @@ Partial Public NotInheritable Class bstyle
                                                     End Function,
                                                     o)
                                    End Function)
+        End Function
+
+        Private Shared Function heap_name_build(ByVal name As typed_node,
+                                                ByVal value As typed_node,
+                                                ByVal o As logic_writer) As Boolean
+            assert(Not name Is Nothing)
+            assert(name.type_name.Equals("heap-name"))
+            Return heap_name_build(name.child(2), scope.fully_qualified_variable_name.of(name.child(0)), value, o)
         End Function
 
         Private Function build(ByVal n As typed_node,

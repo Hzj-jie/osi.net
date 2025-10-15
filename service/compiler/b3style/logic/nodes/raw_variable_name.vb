@@ -20,9 +20,9 @@ Partial Public NotInheritable Class b3style
     Private NotInheritable Class raw_variable_name
         Implements code_gen(Of logic_writer)
 
-        Private Shared Function build(ByVal name As String,
-                                      ByVal handle As Func(Of String, stream(Of builders.parameter), Boolean)) _
-                                     As Boolean
+        Public Shared Function build(ByVal name As String,
+                                     ByVal handle As Func(Of String, stream(Of builders.parameter), Boolean)) _
+                                    As Boolean
             assert(Not name.null_or_whitespace())
             assert(Not handle Is Nothing)
 
@@ -36,12 +36,6 @@ Partial Public NotInheritable Class b3style
                 ps = scope.struct_def.of_primitive(p.full_type(), p.name)
             End If
             Return handle(p.full_type(), ps.primitives())
-        End Function
-
-        Public Shared Function build(ByVal n As typed_node,
-                                     ByVal handle As Func(Of String, stream(Of builders.parameter), Boolean)) As Boolean
-            assert(Not n Is Nothing)
-            Return build(scope.variable_name.of(n), handle)
         End Function
 
         Public Shared Function build(ByVal name As String) As Boolean

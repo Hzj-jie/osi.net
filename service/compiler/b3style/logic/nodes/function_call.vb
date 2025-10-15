@@ -11,40 +11,59 @@ Imports osi.service.automata
 Imports builders = osi.service.compiler.logic.builders
 
 Partial Public NotInheritable Class b3style
-    Private NotInheritable Class function_call
+    Private Class function_call(Of _name_builder As func_t(Of String, typed_node, logic_writer, Boolean))
         Implements code_gen(Of logic_writer)
 
+        Private Shared ReadOnly name_builder As _name_builder = alloc(Of _name_builder)()
+
+        Private Shared Function build_function_caller(
+                                    ByVal function_name As String,
+                                    ByVal parameters As vector(Of String),
+                                    ByVal build_caller As Func(Of String, vector(Of String), Boolean)) As Boolean
+            assert(Not function_name.null_or_whitespace())
+            assert(Not parameters Is Nothing)
+            assert(Not build_caller Is Nothing)
+            Dim name As String = Nothing
+            If Not logic_name.of_function_call(function_name, parameters, name) Then
+                Return False
+            End If
+            scope.current().call_hierarchy().to(name)
+            Return build_caller(name, parameters)
+        End Function
+
         Private Shared Function build(ByVal raw_function_name As String,
+                                      ByVal name_node As typed_node,
                                       ByVal build_caller As Func(Of String, vector(Of String), Boolean),
                                       ByVal build_caller_ref As Func(Of String, vector(Of String), Boolean),
                                       ByVal o As logic_writer) As Boolean
             assert(Not build_caller Is Nothing)
             assert(Not build_caller_ref Is Nothing)
+            assert(Not raw_function_name.null_or_whitespace() OrElse Not name_node Is Nothing)
+            If raw_function_name Is Nothing Then
+                raw_function_name = scope.function_name.of(name_node)
+            End If
+            assert(Not raw_function_name.null_or_whitespace())
             Using targets As read_scoped(Of vector(Of String)).ref = value_list.current_targets()
                 Dim parameters As vector(Of String) = +targets
-                If scope.current().variables().defined(raw_function_name) Then
-                    Return build_caller_ref(raw_function_name, parameters)
-                End If
-
                 Dim struct_func As tuple(Of String, String) = Nothing
-                Dim function_name As String = Nothing
+                ' The split_struct_function needs to be executed first, otherwise the
+                ' scope.current().variables().defined() will check is_heap_name which expects the [] to be at the end
+                ' or triggers an assertion failure.
                 If b2style.function_call.split_struct_function(raw_function_name, struct_func) Then
-                    If Not raw_variable_name.build(struct_func.first()) Then
+                    If Not name_builder.run(struct_func.first(), name_node, o) Then
                         raise_error(error_type.user, "Cannot find class instance ", struct_func.first())
                         Return False
                     End If
-                    parameters = (+scope.current().value_target().value()).names + parameters
-                    function_name = scope.namespace_t.fully_qualified_name(struct_func.second())
-                Else
-                    function_name = scope.fully_qualified_function_name.of(raw_function_name)
+                    Return build_function_caller(scope.namespace_t.fully_qualified_name(struct_func.second()),
+                                                 (+scope.current().value_target().value()).names + parameters,
+                                                 build_caller)
                 End If
-                assert(Not function_name Is Nothing)
-                Dim name As String = Nothing
-                If Not logic_name.of_function_call(function_name, parameters, name) Then
-                    Return False
+                If scope.current().variables().defined(raw_function_name) Then
+                    Return build_caller_ref(raw_function_name, parameters)
                 End If
-                scope.current().call_hierarchy().to(name)
-                Return build_caller(name, parameters)
+                Return build_function_caller(scope.fully_qualified_function_name.of(raw_function_name),
+                                             parameters,
+                                             build_caller)
             End Using
         End Function
 
@@ -124,14 +143,19 @@ Partial Public NotInheritable Class b3style
 
         Public NotInheritable Class ignore_parameters
             Public Shared Function without_return(ByVal function_name As String, ByVal o As logic_writer) As Boolean
-                Return function_call.build(function_name,
-                                           without_return_caller_builder(o),
-                                           without_return_caller_ref_builder(o),
-                                           o)
+                Return function_call(Of _name_builder).build(function_name,
+                                                             Nothing,
+                                                             without_return_caller_builder(o),
+                                                             without_return_caller_ref_builder(o),
+                                                             o)
             End Function
 
             Public Shared Function build(ByVal function_name As String, ByVal o As logic_writer) As Boolean
-                Return function_call.build(function_name, caller_builder(o), caller_ref_builder(o), o)
+                Return function_call(Of _name_builder).build(function_name,
+                                                             Nothing,
+                                                             caller_builder(o),
+                                                             caller_ref_builder(o),
+                                                             o)
             End Function
 
             Private Sub New()
@@ -146,16 +170,13 @@ Partial Public NotInheritable Class b3style
                                           ByVal o As logic_writer) As Boolean
                 assert(Not n Is Nothing)
                 assert(Not o Is Nothing)
-                If name Is Nothing Then
-                    name = scope.function_name.of(n.child(0))
-                End If
                 assert(n.child_count() >= 3)
                 If n.child_count() = 3 Then
                     value_list.with_empty()
                 ElseIf Not code_gen_of(n.child(2)).build(o) Then
                     Return False
                 End If
-                Return function_call.build(name, build_caller, build_caller_ref, o)
+                Return function_call(Of _name_builder).build(name, n.child(0), build_caller, build_caller_ref, o)
             End Function
 
             Public Shared Function without_return(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
@@ -200,6 +221,32 @@ Partial Public NotInheritable Class b3style
                                      ByVal o As logic_writer) As Boolean
             Return with_parameters.build(function_name, n, o)
         End Function
+    End Class
+
+    Private NotInheritable Class function_call
+        Inherits function_call(Of raw_variable_name_of)
+
+        Public Structure raw_variable_name_of
+            Implements func_t(Of String, typed_node, logic_writer, Boolean)
+
+            Public Function run(ByVal i As String, ByVal j As typed_node, ByVal k As logic_writer) As Boolean _
+                               Implements func_t(Of String, typed_node, logic_writer, Boolean).run
+                Return raw_variable_name.build(i)
+            End Function
+        End Structure
+    End Class
+
+    Private NotInheritable Class heap_struct_function_call
+        Inherits function_call(Of heap_struct_name_of)
+
+        Public Structure heap_struct_name_of
+            Implements func_t(Of String, typed_node, logic_writer, Boolean)
+
+            Public Function run(ByVal i As String, ByVal j As typed_node, ByVal k As logic_writer) As Boolean _
+                               Implements func_t(Of String, typed_node, logic_writer, Boolean).run
+                Return heap_name.build(j.child(0), k)
+            End Function
+        End Structure
     End Class
 End Class
 

@@ -16,7 +16,7 @@ Partial Public NotInheritable Class b3style
                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             ' TODO: This is a temporary solution to make bstyle work in b3style.
             assert(Not n Is Nothing)
-            Return raw_variable_name.build(n,
+            Return raw_variable_name.build(scope.variable_name.of(n),
                                            Function(ByVal type As String,
                                                     ByVal ps As stream(Of builders.parameter)) As Boolean
                                                scope.current().value_target().with_value(type, ps)

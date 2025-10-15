@@ -571,21 +571,14 @@ Public MustInherit Class b2style_test_runner_b3style_supported
         assertion.equal(io.output(), "assert ( __STATEMENT__ , i < 100 , ""line 8"" ) ;: line 8")
     End Sub
 
-    Protected Sub New()
-    End Sub
-End Class
-
-Public MustInherit Class b2style_test_runner
-    Inherits b2style_test_runner_b3style_supported
-
     <test>
-    Private Sub class_function_with_namespace()
+    Private Sub heap()
         Dim io As New console_io.test_wrapper()
         Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.class_function_with_namespace.as_text(), e))
+        assertion.is_true(parse(io, _b2style_test_data.heap.as_text(), e))
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
-        assertion.equal(io.output(), "100200")
+        assertion.equal(io.output(), "abcdefghi100")
     End Sub
 
     <test>
@@ -602,6 +595,23 @@ Public MustInherit Class b2style_test_runner
                                              collect_by(stream(Of String).collectors.to_str(character.newline)).
                                              Append(character.newline).
                                              ToString())
+    End Sub
+
+    Protected Sub New()
+    End Sub
+End Class
+
+Public MustInherit Class b2style_test_runner
+    Inherits b2style_test_runner_b3style_supported
+
+    <test>
+    Private Sub class_function_with_namespace()
+        Dim io As New console_io.test_wrapper()
+        Dim e As executor = Nothing
+        assertion.is_true(parse(io, _b2style_test_data.class_function_with_namespace.as_text(), e))
+        assertion.is_not_null(e)
+        e.assert_execute_without_errors()
+        assertion.equal(io.output(), "100200")
     End Sub
 
     <test>
@@ -632,16 +642,6 @@ Public MustInherit Class b2style_test_runner
         assertion.is_not_null(e)
         e.assert_execute_without_errors()
         assertion.equal(io.output(), "10199")
-    End Sub
-
-    <test>
-    Private Sub heap()
-        Dim io As New console_io.test_wrapper()
-        Dim e As executor = Nothing
-        assertion.is_true(parse(io, _b2style_test_data.heap.as_text(), e))
-        assertion.is_not_null(e)
-        e.assert_execute_without_errors()
-        assertion.equal(io.output(), "abcdefghi100")
     End Sub
 
     <test>

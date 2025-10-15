@@ -124,6 +124,12 @@ Partial Public NotInheritable Class b3style
                                   assert(Not n Is Nothing)
                                   Return function_call.with_parameters.without_return(n.child(), o)
                               End Function).
+                with(Of heap_struct_function_call)().
+                with_delegate("ignore-result-heap-struct-function-call",
+                              Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
+                                  assert(Not n Is Nothing)
+                                  Return heap_struct_function_call.with_parameters.without_return(n.child(), o)
+                              End Function).
                 with(Of param)().
                 with(Of return_clause)().
                 with(Of value_clause)().
@@ -240,7 +246,8 @@ Partial Public NotInheritable Class b3style
                                   Return o.append(scope.normalized_type.of(n))
                               End Function).
                 with(code_gen.of_first_child(Of logic_writer)("type-name-with-comma")).
-                with(Of template_type_name)()
+                with(Of template_type_name)().
+                with(Of heap_struct_name)()
         End Function
     End Class
 End Class
