@@ -35,7 +35,6 @@ Public NotInheritable Class b3style_b2style_self_test
                                               "non-overridable-class-template-function.txt",
                                               "ptr_offset.txt",
                                               "ref_test.txt",
-                                              "static_cast_ptr_type2.txt",
                                               "struct-and-primitive-type-with-same-name.txt",
                                               "template_before_type.txt",
                                               "template_class_with_ref.txt",
