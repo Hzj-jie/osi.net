@@ -54,6 +54,8 @@ Partial Public NotInheritable Class b3style
                         raise_error(error_type.user, "Cannot find class instance ", struct_func.first())
                         Return False
                     End If
+                    ' Note, class functions shouldn't use the current namespace, i.e.
+                    ' scope.fully_qualified_function_name.of().
                     Return build_function_caller(scope.namespace_t.fully_qualified_name(struct_func.second()),
                                                  (+scope.current().value_target().value()).names + parameters,
                                                  build_caller)
