@@ -10,7 +10,7 @@ Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
-    Private NotInheritable Class function_call
+    Public NotInheritable Class function_call
         Implements code_gen(Of typed_node_writer)
 
         Public Shared Function build_struct_function(ByVal this As String, ByVal name As String) As String
@@ -32,12 +32,6 @@ Partial Public NotInheritable Class b2style
             Return True
         End Function
 
-        Private Shared Function split_struct_function(ByVal name As String) As tuple(Of String, String)
-            Dim o As tuple(Of String, String) = Nothing
-            assert(split_struct_function(name, o))
-            Return o
-        End Function
-
         Public Shared Function build(ByVal name As String,
                                      ByVal n As typed_node,
                                      ByVal o As typed_node_writer) As Boolean
@@ -46,8 +40,9 @@ Partial Public NotInheritable Class b2style
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
             assert(Not o Is Nothing)
 
-            If Not name.Contains(".") Then
-                If scope.current().variables().try_resolve(name, Nothing) Then
+            Dim p As tuple(Of String, String) = Nothing
+            If Not split_struct_function(name, p) Then
+                If scope.current().variables().defined(name) Then
                     ' This should be a delegate function call.
                     Return code_gens().of_all_children(n).build(o)
                 End If
@@ -62,8 +57,7 @@ Partial Public NotInheritable Class b2style
                 Return True
             End If
 
-            Dim p As tuple(Of String, String) = split_struct_function(name)
-            Dim function_name As String = _namespace.bstyle_format.in_global_namespace(p.second())
+            Dim function_name As String = _namespace.bstyle_format.fully_qualified_name(p.second())
             ' TODO: This never works, class variables are not defined in scope.current().variables().
             ' If scope.current().variables().resolve(function_name, Nothing) Then
             '     Return code_gens().of_all_children(n).build(o)
@@ -88,7 +82,7 @@ Partial Public NotInheritable Class b2style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() = 3 OrElse n.child_count() = 4)
-            Return build(n.child(0).input_without_ignored(), n, o)
+            Return build(scope.function_name.of(n.child(0)), n, o)
         End Function
     End Class
 End Class

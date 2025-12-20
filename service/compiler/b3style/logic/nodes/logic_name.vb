@@ -68,7 +68,7 @@ Partial Public NotInheritable Class b3style
             Dim i As UInt32 = 0
             While i < parameters.size()
                 Dim type As String = Nothing
-                If Not scope.current().variables().resolve(parameters(i), type) Then
+                If Not scope.current().variables().type_of(parameters(i), type) Then
                     Return False
                 End If
                 types.emplace_back(type)

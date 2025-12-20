@@ -30,21 +30,29 @@ Public NotInheritable Class disposable
 
     Private Shared ReadOnly td As List(Of type_disposer) = New List(Of type_disposer)()
 
+    Public Shared Sub dispose(ByVal s As Stream)
+        If Not s Is Nothing Then
+            s.Flush()
+            s.Close()
+            s.Dispose()
+        End If
+    End Sub
+
+    Public Shared Sub dispose(ByVal s As WaitHandle)
+        If Not s Is Nothing Then
+            s.Close()
+            s.Dispose()
+        End If
+    End Sub
+
     ' The order is important.
     <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2202:Do not dispose objects multiple times")>
     Shared Sub New()
         register_base_type(Sub(ByVal s As Stream)
-                               If Not s Is Nothing Then
-                                   s.Flush()
-                                   s.Close()
-                                   s.Dispose()
-                               End If
+                               dispose(s)
                            End Sub)
         register_base_type(Sub(ByVal s As WaitHandle)
-                               If Not s Is Nothing Then
-                                   s.Close()
-                                   s.Dispose()
-                               End If
+                               dispose(s)
                            End Sub)
         register_base_type(Sub(ByVal s As TcpClient)
                                If Not s Is Nothing Then

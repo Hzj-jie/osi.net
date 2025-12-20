@@ -32,11 +32,6 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return vs
         End Function
 
-        Public Sub with_value(ByVal type As String, ByVal v As String)
-            assert(Not v.null_or_whitespace())
-            with_value(type, vector.emplace_of(v))
-        End Sub
-
         Public Function value() As read_scoped(Of target).ref
             Return values.pop()
         End Function
@@ -71,9 +66,9 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Dim define_primitive_type_temp_target As Action(Of String, String) =
                 Sub(ByVal t As String, ByVal n As String)
                     ' It will trigger the assertion failure anyway if not type_alias is provided.
-                    t = builders.parameter_type.of(t).map_type(normalized_type.of).full_type()
+                    t = normalized_type.parameter_type_of(t).full_type()
                     assert(Not current().structs().types().defined(t))
-                    assert(Not current().variables().try_resolve(n, Nothing))
+                    assert(Not current().variables().defined(n))
                     assert(current().variables().define(t, n))
                     assert(builders.of_define(n, t).to(o))
                 End Sub
@@ -89,7 +84,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End If
             Dim name As String = current().temp_logic_name().variable()
             define_primitive_type_temp_target(type, name)
-            with_value(type, name)
+            with_value(type, vector.emplace_of(name))
             Return vector.emplace_of(name)
         End Function
 
@@ -112,7 +107,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 assert(Not type.null_or_whitespace())
                 ' Allow empty struct, so the names can be empty.
                 assert(Not names Is Nothing)
-                type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
+                type = normalized_type.parameter_type_of(type).full_type()
                 If Not current().structs().types().defined(type) Then
                     assert(names.size() = 1)
                 End If

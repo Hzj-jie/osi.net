@@ -11,7 +11,14 @@ namespace b2style {
 string str_mid(string s, int i, int l) {
   ::assert(__STATEMENT__ + "@" + __FILE__, (i >= 0) && (l >= 0));
   string r;
+#ifdef B3STYLE
+  logic "cut_len r s i l";
+#else #ifdef B2STYLE
   logic "cut_len b2style__r b2style__s b2style__i b2style__l";
+#else
+  // TODO: Trigger an #error.
+#endif
+#endif
   return r;
 }
 

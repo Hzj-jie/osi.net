@@ -25,8 +25,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             End Enum
 
             ' TODO: A better way to check the return type.
-            Private Shared ReadOnly void_type As String =
-                     builders.parameter_type.of("void").map_type(normalized_type.of).non_ref_type()
+            Private Shared ReadOnly void_type As String = normalized_type.parameter_type_of("void").non_ref_type()
             Private ReadOnly class_def As class_def
             Private ReadOnly return_type As name_with_namespace
             Private ReadOnly signature As vector(Of name_with_namespace)
@@ -90,12 +89,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 assert(Not other Is Nothing)
                 Dim content As New StringBuilder()
                 content.Append("reinterpret_cast(this,").
-                        Append(other.name.in_global_namespace()).
+                        Append(other.name.fully_qualified_name()).
                         Append(");")
-                If Not return_type.in_global_namespace().Equals(void_type) Then
+                If Not return_type.fully_qualified_name().Equals(void_type) Then
                     content.Append("return ")
                 End If
-                content.Append(name().in_global_namespace()).
+                content.Append(name().fully_qualified_name()).
                         Append("(this").
                         Append(default_param_names().stream().
                                                      map(Function(ByVal s As String) As String
@@ -115,15 +114,15 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 Dim get_type As Func(Of name_with_namespace, String) =
                         Function(ByVal x As name_with_namespace) As String
                             If ignored_types Is Nothing OrElse ignored_types.find(x.name()) = ignored_types.end() Then
-                                Return x.in_global_namespace()
+                                Return x.fully_qualified_name()
                             End If
                             Return x.name()
                         End Function
                 content.Append(get_type(return_type)).
                         Append(" ").
-                        Append(name().in_global_namespace()).
+                        Append(name().fully_qualified_name()).
                         Append("(").
-                        Append(class_def.name.in_global_namespace()).
+                        Append(class_def.name.fully_qualified_name()).
                         Append("& this")
                 Dim i As UInt32 = 1
                 While i < signature.size()

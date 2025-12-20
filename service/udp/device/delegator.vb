@@ -1,4 +1,8 @@
 
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 #Const SINGLE_OPERATION = True
 Imports System.Net
 Imports System.Net.Sockets
@@ -13,14 +17,14 @@ Imports envs = osi.root.envs
 ' Maintain a very basic send / receive lock to ensure only one single direction operation is ongoing.
 ' Receive data from a certain set of remote hosts.
 <type_attribute()>
-Public Class delegator
+Public NotInheritable Class delegator
     Inherits disposer(Of UdpClient)
 
-    Public ReadOnly p As powerpoint
+    Public Shadows ReadOnly p As powerpoint
     Public ReadOnly id As String
 #If SINGLE_OPERATION Then
-    Private ReadOnly send_lock As ref(Of event_comb_lock)
-    Private ReadOnly receive_lock As ref(Of event_comb_lock)
+    Private ReadOnly send_lock As New ref(Of event_comb_lock)()
+    Private ReadOnly receive_lock As New ref(Of event_comb_lock)()
 #End If
     Private ReadOnly sources As const_array(Of IPEndPoint)
     Private ReadOnly c As UdpClient
@@ -41,31 +45,28 @@ Public Class delegator
                        End If
                    End Sub)
         assert(Not c Is Nothing)
-#If SINGLE_OPERATION Then
-        send_lock = New ref(Of event_comb_lock)()
-        receive_lock = New ref(Of event_comb_lock)()
-#End If
         Me.c = c
         Me.sources = sources
         Me.id = c.identity()
         Me.p = p
-        If Not p Is Nothing Then
-            If envs.udp_trace Then
-                raise_error("new conneciton ",
-                            id,
-                            " has been generated to the powerpoint ",
-                            p.identity)
-            End If
+        If Not p Is Nothing AndAlso envs.udp_trace Then
+            raise_error("new conneciton ",
+                        id,
+                        " has been generated to the powerpoint ",
+                        p.identity)
         End If
 
         Try
             ' max_packet_size is usually larger than MTU (1500 for ethernet), so we allow datagrams to be fragmented.
             Me.c.DontFragment() = False
         Catch ex As Exception
-            raise_error(error_type.exclamation,
-                        "Cannot set DontFragment flag, ex ",
-                        ex.Message(),
-                        ", this usually means configurations of ipv4 / ipv6 in the system are not correct.")
+            typed_once_action(Of delegator).do(Sub()
+                                                   raise_error(error_type.exclamation,
+                                                               "Cannot set DontFragment flag, ex ",
+                                                               ex.Message(),
+                                                               ", this usually means configurations of ipv4 / ipv6 in ",
+                                                               "the system are not correct.")
+                                               End Sub)
         End Try
         ' We do not want icmp reset connect signal to make any trouble.
         Me.c.disable_icmp_reset()
@@ -128,22 +129,20 @@ Public Class delegator
                                          goto_next()
                               End Function,
                               Function() As Boolean
-                                  If ec.end_result() Then
-                                      If fixed_sources() Then
-                                          assert(Not +source Is Nothing)
-                                          For i As UInt32 = uint32_0 To sources.size() - uint32_1
-                                              If (+source).match_endpoint(sources(i)) Then
-                                                  Return goto_end()
-                                              End If
-                                          Next
-                                          ' Drop datagrams from unknown sources.
-                                          Return goto_begin()
-                                      Else
-                                          Return goto_end()
-                                      End If
-                                  Else
+                                  If Not ec.end_result() Then
                                       Return False
                                   End If
+                                  If Not fixed_sources() Then
+                                      Return goto_end()
+                                  End If
+                                  assert(Not +source Is Nothing)
+                                  For i As UInt32 = uint32_0 To sources.size() - uint32_1
+                                      If (+source).match_endpoint(sources(i)) Then
+                                          Return goto_end()
+                                      End If
+                                  Next
+                                  ' Drop datagrams from unknown sources.
+                                  Return goto_begin()
                               End Function)
     End Function
 

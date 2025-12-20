@@ -27,12 +27,18 @@ Partial Public NotInheritable Class b3style
             assert(n.child_count() = 1 OrElse n.child_count() = 2)
             If scope.current().current_function().allow_return_value() Then
                 If n.child_count() <> 2 Then
-                    raise_error(error_type.user, "Expect return value ", n.child().trace_back_str())
+                    raise_error(error_type.user,
+                                "Expect return value of ",
+                                scope.current().current_function().return_type(),
+                                n.child().trace_back_str())
                     Return False
                 End If
             Else
                 If n.child_count() <> 1 Then
-                    raise_error(error_type.user, "Unexpected return value ", n.child(1).trace_back_str())
+                    raise_error(error_type.user,
+                                "Unexpected return value of ",
+                                scope.current().current_function().return_type(),
+                                n.child(1).trace_back_str())
                     Return False
                 End If
             End If

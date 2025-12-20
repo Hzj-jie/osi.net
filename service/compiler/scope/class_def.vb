@@ -18,6 +18,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
     Partial Public NotInheritable Class class_def
         Public Const construct As String = "construct"
         Public Const destruct As String = "destruct"
+        ' This is not a bug, it should always use the void in the global namespace, rather than the one in
+        ' current namespace as function_type_of does.
+        Private Shared ReadOnly void_type As name_with_namespace = name_with_namespace.of_global_namespace("void")
+        Private Shared ReadOnly construct_name As name_with_namespace = function_name_of(construct)
+        Private Shared ReadOnly destruct_name As name_with_namespace = function_name_of(destruct)
+
         Private ReadOnly name As name_with_namespace
         ' The type-name pair directly passes to bstyle/struct.
         Private ReadOnly _vars As New vector(Of builders.parameter)()
@@ -40,7 +46,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not other Is Nothing)
             assert(Not f Is Nothing)
             f = f.with_class(Me)
-            scope(Of T).current().call_hierarchy().to(f.name().in_global_namespace())
+            scope(Of T).current().call_hierarchy().to(f.name().fully_qualified_name())
             Return f.with_content(f.declaration() + "{" + f.forward_to(other) + "}")
         End Function
 
@@ -132,11 +138,13 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         End Function
 
         Private Shared Function function_name_of(ByVal name As String) As name_with_namespace
+            ' Note, the function can be overloaded by the class type itself without needing to define the functions
+            ' themselves in the current namespace.
             Return name_with_namespace.of_global_namespace(name)
         End Function
 
         Private Shared Function function_type_of(ByVal type As String) As name_with_namespace
-            Return name_with_namespace.of(builders.parameter_type.of(type).map_type(normalized_type.of).full_type())
+            Return name_with_namespace.of(normalized_type.parameter_type_of(type).full_type())
         End Function
 
         Private Function parse_function(ByVal node As typed_node,
@@ -153,12 +161,12 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                         p = p.child(0)
                     End If
                     assert(p.type_name.Equals("param"))
-                    signature.emplace_back(function_type_of(p.child(0).input_without_ignored()))
+                    signature.emplace_back(function_type_of(type_name.of(p.child(0))))
                     param_names.emplace_back(p.child(1).input())
                 Next
             End If
             Dim f As New function_def(Me,
-                                      function_type_of(node.child(0).input_without_ignored()),
+                                      function_type_of(type_name.of(node.child(0))),
                                       signature,
                                       type,
                                       "// This content should never be used.")
@@ -199,12 +207,13 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             If Not has_constructor Then
                 with_func(New function_def(
                               Me,
-                              function_type_of("void"),
-                              function_name_of(construct),
+                              void_type,
+                              construct_name,
                               function_def.type_t.pure,
                               New StringBuilder().
-                                  Append("void ").
-                                  Append(current_namespace_t.in_global_namespace(construct)).
+                                  Append(void_type.fully_qualified_name()).
+                                  Append(" ").
+                                  Append(construct_name.fully_qualified_name()).
                                   Append("(").
                                   Append(name.name()).
                                   Append("& this){}").ToString()))
@@ -212,12 +221,13 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             If Not has_destructor Then
                 with_func(New function_def(
                               Me,
-                              function_type_of("void"),
-                              function_name_of(destruct),
+                              void_type,
+                              destruct_name,
                               function_def.type_t.pure,
                               New StringBuilder().
-                                  Append("void ").
-                                  Append(current_namespace_t.in_global_namespace(destruct)).
+                                  Append(void_type.fully_qualified_name()).
+                                  Append(" ").
+                                  Append(destruct_name.fully_qualified_name()).
                                   Append("(").
                                   Append(name.name()).
                                   Append("& this){}").ToString()))

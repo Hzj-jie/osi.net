@@ -61,7 +61,7 @@ Public NotInheritable Class b3style_nlp_tests
         Inherits compiler_self_test_runner
 
         Public Sub New()
-            MyBase.New("*", b2style_self_test_cases.data)
+            MyBase.New(b2style_self_test_cases.data)
         End Sub
 
         Protected Overrides Sub execute(ByVal name As String, ByVal text As String)
@@ -71,11 +71,6 @@ Public NotInheritable Class b3style_nlp_tests
         Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
             Return b3style.parse_wrapper.with_current_file(filename)
         End Function
-
-        <test>
-        Private Shadows Sub run()
-            MyBase.run()
-        End Sub
     End Class
 
     <test>
@@ -91,11 +86,12 @@ Public NotInheritable Class b3style_nlp_tests
             "duplicate-func-name-in-class.txt",
             "struct-with-myself.txt",
             "templates-with-same-name.txt",
-            "type-parameters-with-same-name.txt"
+            "type-parameters-with-same-name.txt",
+            "mismatch_constructor_parameters.txt"
         )
 
         Public Sub New()
-            MyBase.New("*", b2style_self_compile_error_cases.data)
+            MyBase.New(b2style_self_compile_error_cases.data)
         End Sub
 
         Protected Overrides Sub execute(ByVal name As String, ByVal text As String)
@@ -109,11 +105,6 @@ Public NotInheritable Class b3style_nlp_tests
         Protected Overrides Function with_current_file(ByVal filename As String) As IDisposable
             Return b3style.parse_wrapper.with_current_file(filename)
         End Function
-
-        <test>
-        Private Shadows Sub run()
-            MyBase.run()
-        End Sub
     End Class
 
     Private Sub New()

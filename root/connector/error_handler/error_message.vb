@@ -36,31 +36,32 @@ Public NotInheritable Class error_message
         End If
     End Sub
 
-    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
-    Public Shared Function p(ByVal err_type As error_type,
-                             ByVal err_type_char As Char,
-                             ByVal errmsg As String,
-                             ByVal additional_jump As Int32) As String
-        Dim prefix As String = Nothing
+    Private Shared Function prefix(ByVal err_type As error_type, ByVal err_type_char As Char) As String
         If err_type <= error_type.first OrElse err_type >= error_type.last OrElse err_type = error_type.other Then
             If err_type_char = character.null Then
-                prefix = character.x
+                err_type_char = character.x
             Else
-                prefix = Char.ToLower(err_type_char)
+                err_type_char = err_type_char
             End If
         Else
-            prefix = Char.ToLower(error_type_char(err_type))
+            err_type_char = error_type_char(err_type)
         End If
-        prefix = strcat(prefix, seperator, short_time(), seperator)
-        errmsg = strcat(prefix, errmsg)
-        If err_type <> error_type.information Then
-            errmsg.append(seperator, backtrace(additional_jump + 1))
-        End If
-
-        Return errmsg.Replace(newline.incode(), character.newline)
+        Return String.Concat(Char.ToLower(err_type_char), seperator)
     End Function
 
-    Public Shared Function p(ByVal m() As Object) As String
+    <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)>
+    Public Shared Function full_message(ByVal err_type As error_type,
+                                        ByVal err_type_char As Char,
+                                        ByVal errmsg As String,
+                                        ByVal additional_jump As Int32) As String
+        Dim r As String = String.Concat(prefix(err_type, err_type_char), short_time(), seperator, errmsg)
+        If err_type <> error_type.information Then
+            r = String.Concat(r, seperator, backtrace(additional_jump + 1))
+        End If
+        Return r.Replace(newline.incode(), character.newline)
+    End Function
+
+    Public Shared Function merge(ByVal m() As Object) As String
         assert(Not m Is Nothing)
         ' shortcut
         If m.Length() = 1 AndAlso TypeOf m(0) Is String Then
@@ -69,6 +70,15 @@ Public NotInheritable Class error_message
         Dim s As New StringBuilder()
         process_obj_array(m, s)
         Return Convert.ToString(s)
+    End Function
+
+    Public Shared Function is_message_line(ByVal message As String,
+                                           ByVal err_type As error_type,
+                                           ByVal err_type_char As Char) As Boolean
+        If message.null_or_empty() Then
+            Return False
+        End If
+        Return message.StartsWith(prefix(err_type, err_type_char))
     End Function
 
     Private Shared Sub process_obj_array(ByVal m() As Object, ByVal s As StringBuilder)

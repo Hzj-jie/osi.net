@@ -24,11 +24,9 @@ Partial Public NotInheritable Class b3style
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
-            Dim return_type As builders.parameter_type =
-                    New builders.parameter_type(n.child(1).input_without_ignored()).map_type(scope.normalized_type.of)
+            Dim return_type As builders.parameter_type = scope.normalized_type.parameter_type_of(n.child(1))
             ' The user side treat the delegate "name" as a type.
-            Dim name As builders.parameter_type =
-                    New builders.parameter_type(n.child(2).input_without_ignored()).map_type(scope.normalized_type.of)
+            Dim name As builders.parameter_type = scope.normalized_type.parameter_type_of(n.child(2))
             Dim ps As vector(Of builders.parameter_type) = Nothing
             If n.child_count() = 5 Then
                 ps = New vector(Of builders.parameter_type)()
@@ -36,8 +34,7 @@ Partial Public NotInheritable Class b3style
                 ps = code_gens().of_all_children(n.child(4)).
                                  dump().
                                  stream().
-                                 map(AddressOf builders.parameter_type.of).
-                                 map(builders.parameter_type.map_type_with(scope.normalized_type.of)).
+                                 map(AddressOf scope.normalized_type.parameter_type_of).
                                  collect_to(Of vector(Of builders.parameter_type))()
             End If
             Return scope.current().delegates().define(return_type.full_type(),

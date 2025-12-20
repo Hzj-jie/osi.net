@@ -4,7 +4,6 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.service.constructor
 Imports typed_node_writer = osi.service.compiler.rewriters.typed_node_writer

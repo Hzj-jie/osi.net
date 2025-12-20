@@ -16,7 +16,7 @@ Namespace logic
 
         Private Shared Function rnd_name() As String
             While True
-                Dim s As String = rnd_chars(rnd_int(1, 10))
+                Dim s As String = rnd_utf8_chars(rnd_int(1, 10))
                 If Not s.empty_or_whitespace() Then
                     Return s
                 End If

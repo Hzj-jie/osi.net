@@ -16,14 +16,26 @@ subst T: D:\
 REM This script should be started from osi folder, such as c:\deploys\src\osi\
 
 set SRC_ROOT=%CD%
+del build.log
+del run.log
 for /l %%i in (0,0,1) do (
     if exist prepare.cmd call prepare.cmd
     call force-sync.cmd
-    call build.cmd
+
+    echo ------------ >> %SRC_ROOT%\build.log
+    time /t >> %SRC_ROOT%\build.log
+    date /t >> %SRC_ROOT%\build.log
+    call build.cmd >> %SRC_ROOT%\build.log 2>&1
+
     mkdir \deploys\apps\osi.root.utt 1>nul 2>&1
     pushd \deploys\apps\osi.root.utt
     call %SRC_ROOT%\root\utt\batch\sync.cmd
-    osi.root.utt.exe
+
+    echo ------------ >> %SRC_ROOT%\run.log
+    time /t >> %SRC_ROOT%\run.log
+    date /t >> %SRC_ROOT%\run.log
+    osi.root.utt.exe >> %SRC_ROOT%\run.log 2>&1
+
     popd
     if not "x%EXIT_NOW%" == "x" goto :end
 )

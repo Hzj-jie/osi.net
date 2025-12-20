@@ -16,12 +16,12 @@ Public NotInheritable Class b2style_main
     <command_line_specified>
     <test>
     Private Shared Sub run()
-        Dim c As b2style.parse_wrapper = b2style.with_default_functions()
+        Dim c As b2style.compile_wrapper = b2style.with_default_functions()
         Dim e As executor = Nothing
         If (+input).empty_or_whitespace() Then
-            assert(c.parse(Console.In().ReadToEnd(), e))
+            assert(c.compile(Console.In().ReadToEnd(), e))
         Else
-            assert(c.parse_file(+input, e))
+            assert(c.compile_file(+input, e))
         End If
         e.execute()
     End Sub

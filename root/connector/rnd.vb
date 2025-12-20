@@ -196,11 +196,11 @@ Public Module _rnd
         If sample <= 0 OrElse true_set <= 0 Then
             'cannot select anything from an empty sample
             Return False
-        ElseIf true_set >= sample Then
-            Return True
-        Else
-            Return rnd_int(r, 0, sample) < true_set
         End If
+        If true_set >= sample Then
+            Return True
+        End If
+        Return rnd_int(r, 0, sample) < true_set
     End Function
 
     Public Function rnd_bool(ByVal true_set As Int32,
@@ -211,11 +211,11 @@ Public Module _rnd
     Public Function rnd_bool(ByVal rate As Double) As Boolean
         If rate <= 0 Then
             Return False
-        ElseIf rate >= 1 Then
-            Return True
-        Else
-            Return rnd_double(0, 1) < rate
         End If
+        If rate >= 1 Then
+            Return True
+        End If
+        Return rnd_double(0, 1) < rate
     End Function
 
     Public Function rnd_int64(ByVal min As Int64, ByVal max As Int64) As Int64
@@ -268,10 +268,9 @@ Public Module _rnd
         assert(Not r Is Nothing)
         If buff Is Nothing Then
             Return False
-        Else
-            r.NextBytes(buff)
-            Return True
         End If
+        r.NextBytes(buff)
+        Return True
     End Function
 
     Public Function next_bytes(ByVal r As Random, ByVal count As UInt32) As Byte()
@@ -293,10 +292,8 @@ Public Module _rnd
     End Function
 
     Private Function rd(ByVal min As Double, ByVal max As Double) As Double
-        Dim rtn As Double = 0
-        rtn = next_double()
-        Dim len As Double = 0
-        len = max - min
+        Dim rtn As Double = next_double()
+        Dim len As Double = max - min
         If len <> 1 Then
             rtn *= len
         End If
@@ -309,41 +306,36 @@ Public Module _rnd
     End Function
 
     Public Function rnd_double() As Double
-        Dim d As Double = 0
-        d = rnd_double(0, max_double)
+        Dim d As Double = rnd_double(0, max_double)
         Return If(rnd_bool(), -d, d)
     End Function
 
     Public Function rnd(ByVal min As Int32, ByVal max As Int32, ByVal int As Boolean) As Double
         If int Then
             Return ri(min, max)
-        Else
-            Return rd(min, max)
         End If
+        Return rd(min, max)
     End Function
 
     Public Function rnd(ByVal min As Int64, ByVal max As Int64, ByVal int As Boolean) As Double
         If int Then
             Return ri(i(min), i(max))
-        Else
-            Return rd(min, max)
         End If
+        Return rd(min, max)
     End Function
 
     Public Function rnd(ByVal min As Int32, ByVal max As Int64, ByVal int As Boolean) As Double
         If int Then
             Return ri(min, i(max))
-        Else
-            Return rd(min, max)
         End If
+        Return rd(min, max)
     End Function
 
     Public Function rnd(ByVal min As Int64, ByVal max As Int32, ByVal int As Boolean) As Double
         If int Then
             Return ri(i(min), max)
-        Else
-            Return rd(min, max)
         End If
+        Return rd(min, max)
     End Function
 
     Public Function rnd(ByVal min As Double, ByVal max As Double) As Double
@@ -353,9 +345,8 @@ Public Module _rnd
     Public Function rnd(ByVal min As Double, ByVal max As Double, ByVal int As Boolean) As Double
         If int Then
             Return ri(i(min), i(max))
-        Else
-            Return rd(min, max)
         End If
+        Return rd(min, max)
     End Function
 #End If
 
@@ -372,8 +363,7 @@ Public Module _rnd
     End Function
 
     Public Function rnd_chars(ByVal r As Random, ByVal len As Int32) As String
-        Dim s As StringBuilder = Nothing
-        s = New StringBuilder(If(len < 0, 0, len))
+        Dim s As New StringBuilder(If(len < 0, 0, len))
         For i As Int32 = 0 To len - 1
             s.Append(rnd_char(r))
         Next
@@ -397,8 +387,7 @@ Public Module _rnd
     End Function
 
     Public Function rnd_utf8_chars(ByVal r As Random, ByVal len As Int32) As String
-        Dim s As StringBuilder = Nothing
-        s = New StringBuilder(If(len < 0, 0, len))
+        Dim s As New StringBuilder(If(len < 0, 0, len))
         For ri As Int32 = 0 To len - 1
             s.Append(rnd_utf8_char(r))
         Next
@@ -412,8 +401,7 @@ Public Module _rnd
     Public Function rnd_en_chars(ByVal r As Random,
                                  ByVal length As Int32,
                                  Optional ByVal case_sensitive As Boolean = True) As String
-        Dim rtn As StringBuilder = Nothing
-        rtn = New StringBuilder(If(length < 0, 0, length))
+        Dim rtn As New StringBuilder(If(length < 0, 0, length))
         For i As Int32 = 0 To length - 1
             rtn.Append(rnd_en_char(r, case_sensitive))
         Next
@@ -444,8 +432,7 @@ Public Module _rnd
     End Function
 
     Public Function rnd_bytes(Optional ByVal size As UInt32 = 1024) As Byte()
-        Dim rtn() As Byte = Nothing
-        ReDim rtn(CInt(size) - 1)
+        Dim rtn(CInt(size) - 1) As Byte
         assert(next_bytes(rtn))
         Return rtn
     End Function
@@ -462,8 +449,7 @@ Public Module _rnd
         If count = 0 Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(CInt(count) - 1)
+        Dim r(CInt(count) - 1) As String
         For i As Int32 = 0 To CInt(count) - 1
             r(i) = guid_str()
             If i > 0 Then
@@ -497,8 +483,7 @@ Public Module _rnd
     Public Function rnd_ascii_display_chars(ByVal r As Random,
                                             ByVal length As Int32,
                                             ByVal ParamArray excepts() As Char) As String
-        Dim rtn As StringBuilder = Nothing
-        rtn = New StringBuilder(If(length < 0, 0, length))
+        Dim rtn As New StringBuilder(If(length < 0, 0, length))
         For i As Int32 = 0 To length - 1
             rtn.Append(rnd_ascii_display_char(r, excepts))
         Next
@@ -530,8 +515,7 @@ Public Module _rnd
         If count <= 0 Then
             Return Nothing
         End If
-        Dim b() As Int32 = Nothing
-        ReDim b(count - 1)
+        Dim b(count - 1) As Int32
         assert(rnd_ints(r, b))
         Return b
     End Function
@@ -549,8 +533,7 @@ Public Module _rnd
             Return v
         End If
         For i As Int32 = 0 To array_size_i(v) - 1
-            Dim j As Int32 = 0
-            j = rnd_int(r, 0, array_size_i(v))
+            Dim j As Int32 = rnd_int(r, 0, array_size_i(v))
             If j <> i Then
                 swap(v(i), v(j))
             End If

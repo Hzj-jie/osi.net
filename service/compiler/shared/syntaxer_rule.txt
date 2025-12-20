@@ -10,7 +10,7 @@ param-with-comma param comma
 paragraph [sentence, multi-sentence-paragraph]
 sentence [sentence-with-semi-colon, condition, while, for-loop]
 
-multi-sentence-paragraph start-paragraph [paragraph]* end-paragraph
+multi-sentence-paragraph start-paragraph [paragraph, ifdef-wrapped, ifndef-wrapped]* end-paragraph
 
 value-definition type-name name assignment value
 value-declaration type-name name
@@ -47,9 +47,9 @@ include [include-with-string, include-with-file]
 
 define-with-separator raw-name or
 defines [define-with-separator]* raw-name
-delse-wrapped kw-delse [root-type]*
-ifdef-wrapped kw-ifdef defines [root-type]* [delse-wrapped]? kw-endif
-ifndef-wrapped kw-ifndef defines [root-type]* [delse-wrapped]? kw-endif
+delse-wrapped kw-delse [root-type, paragraph]*
+ifdef-wrapped kw-ifdef defines [root-type, paragraph]* [delse-wrapped]? kw-endif
+ifndef-wrapped kw-ifndef defines [root-type, paragraph]* [delse-wrapped]? kw-endif
 define kw-define raw-name
 
 # Allow type* to be used as a string.

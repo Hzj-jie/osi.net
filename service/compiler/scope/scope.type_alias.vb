@@ -21,8 +21,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             [alias] = current_namespace_t.of([alias])
             assert(Not [alias].null_or_whitespace())
             assert(Not canonical_type.null_or_whitespace())
-            Dim canonical As builders.parameter_type =
-                    New builders.parameter_type(canonical_type).map_type(normalized_type.of)
+            Dim canonical As builders.parameter_type = normalized_type.parameter_type_of(canonical_type)
             assert(Not canonical Is Nothing)
             If builders.parameter_type.is_ref_type([alias]) Then
                 raise_error(error_type.user, "Reference type ", [alias], " is not allowed to be aliased. ")
@@ -31,6 +30,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             If canonical.ref Then
                 raise_error(error_type.user,
                             "Reference type ",
+                            [alias],
+                            " or canonical ",
                             canonical,
                             " is not allowed to be used as a canonical type. ")
                 Return False
@@ -39,8 +40,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                 raise_error(error_type.user,
                             "Cycle typedefs detected, alias ",
                             [alias],
-                            " equals to its canonical ",
-                            canonical)
+                            " equals to its canonical.")
                 Return False
             End If
             m([alias]) = canonical.non_ref_type()

@@ -25,17 +25,14 @@ Partial Public NotInheritable Class bstyle
                                      ByVal o As logic_writer) As Boolean
             assert(Not type Is Nothing)
             assert(Not name Is Nothing)
-            Dim t As String = type.input_without_ignored()
-            Dim n As String = name.input_without_ignored()
-            Return struct.define_in_stack(t, n, o) OrElse
-                   declare_primitive_type(t, n, o)
+            Return struct.define_in_stack(type, name, o) OrElse
+                   declare_primitive_type(scope.type_name.of(type), scope.variable_name.of(name), o)
         End Function
 
         Public Shared Function declare_primitive_type(ByVal type As String,
                                                       ByVal name As String,
                                                       ByVal o As logic_writer) As Boolean
             assert(Not o Is Nothing)
-
             If Not scope.current().structs().types().defined(type) AndAlso
                scope.current().variables().define(type, name) AndAlso
                builders.of_define(name, scope.normalized_type.of(type)).to(o) Then

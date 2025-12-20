@@ -25,7 +25,7 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of String),
 
     Public Overloads Shared Function parse(ByVal input As String, ByRef o As String) As Boolean
         Dim w As New logic_writer()
-        If Not parse(input, w) Then
+        If Not build(input, w) Then
             Return False
         End If
         o = w.dump()
@@ -47,12 +47,12 @@ Public Class logic_rule_wrapper(Of _nlexer_rule As __do(Of String),
                                           _prefixes,
                                           _suffixes,
                                           _logic_gens,
-                                          SCOPE_T).parse_wrapper
+                                          SCOPE_T).compile_wrapper
         Public Sub New(ByVal functions As interrupts)
             MyBase.New(functions)
         End Sub
 
-        Protected Overrides Function import(ByVal e As exportable, ByVal o As logic_writer) As Boolean
+        Protected Overrides Function import(ByVal o As logic_writer, ByVal e As exportable) As Boolean
             Return New importer(functions).import(o.dump(), e)
         End Function
     End Class

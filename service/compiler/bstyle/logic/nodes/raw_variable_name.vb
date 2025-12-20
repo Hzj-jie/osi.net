@@ -12,40 +12,37 @@ Partial Public NotInheritable Class bstyle
     Private NotInheritable Class raw_variable_name
         Implements code_gen(Of logic_writer)
 
-        Public Shared Function build(ByVal n As typed_node,
-                                     ByVal struct_handle As Func(Of String, stream(Of builders.parameter), Boolean),
-                                     ByVal primitive_type_handle As Func(Of String, String, Boolean),
-                                     ByVal o As logic_writer) As Boolean
-            assert(Not n Is Nothing)
-            assert(Not struct_handle Is Nothing)
-            assert(Not primitive_type_handle Is Nothing)
-            assert(Not o Is Nothing)
+        Public Shared Function build(ByVal name As String,
+                                     ByVal handle As Func(Of String, stream(Of builders.parameter), Boolean)) _
+                                    As Boolean
+            assert(Not name.null_or_whitespace())
+            assert(Not handle Is Nothing)
 
-            Dim type As String = Nothing
-            If Not scope.current().variables().resolve(n.input_without_ignored(), type) Then
+            Dim p As builders.parameter = Nothing
+            If Not scope.current().variables().resolve(name, p, Nothing) Then
                 Return False
             End If
+            assert(Not p Is Nothing)
             Dim ps As scope.struct_def = Nothing
-            If scope.current().structs().resolve(type, n.input_without_ignored(), ps) Then
-                Return struct_handle(type, ps.primitives())
+            If Not scope.current().structs().resolve(p.full_type(), p.name, ps) Then
+                ps = scope.struct_def.of_primitive(p.full_type(), p.name)
             End If
-            Return primitive_type_handle(type, n.input_without_ignored())
+            Return handle(p.full_type(), ps.primitives())
         End Function
 
-        Private Function build(ByVal n As typed_node,
-                               ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
-            assert(Not n Is Nothing)
-            assert(n.child_count() = 1)
-            Return build(n.child(),
+        Public Shared Function build(ByVal name As String) As Boolean
+            Return build(name,
                          Function(ByVal type As String, ByVal ps As stream(Of builders.parameter)) As Boolean
                              scope.current().value_target().with_value(type, ps)
                              Return True
-                         End Function,
-                         Function(ByVal type As String, ByVal source As String) As Boolean
-                             scope.current().value_target().with_value(type, source)
-                             Return True
-                         End Function,
-                         o)
+                         End Function)
+        End Function
+
+        Private Function build(ByVal n As typed_node,
+                               ByVal _not_used As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
+            assert(Not n Is Nothing)
+            assert(n.child_count() = 1)
+            Return build(scope.variable_name.of(n.child()))
         End Function
     End Class
 End Class

@@ -70,13 +70,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -96,10 +93,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As Decimal,
                            ByVal second() As Decimal) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -112,8 +107,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -123,8 +117,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As Decimal, ByVal ParamArray j() As Decimal) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -221,13 +214,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -247,10 +237,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As Int64,
                            ByVal second() As Int64) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -263,8 +251,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -274,8 +261,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As Int64, ByVal ParamArray j() As Int64) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -372,13 +358,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -398,10 +381,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As Int32,
                            ByVal second() As Int32) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -414,8 +395,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -425,8 +405,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As Int32, ByVal ParamArray j() As Int32) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -523,13 +502,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -549,10 +525,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As Int16,
                            ByVal second() As Int16) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -565,8 +539,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -576,8 +549,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As Int16, ByVal ParamArray j() As Int16) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -674,13 +646,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -700,10 +669,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As SByte,
                            ByVal second() As SByte) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -716,8 +683,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -727,8 +693,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As SByte, ByVal ParamArray j() As SByte) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -825,13 +790,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -851,10 +813,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As UInt64,
                            ByVal second() As UInt64) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -867,8 +827,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -878,8 +837,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As UInt64, ByVal ParamArray j() As UInt64) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -976,13 +934,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1002,10 +957,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As UInt32,
                            ByVal second() As UInt32) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -1018,8 +971,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -1029,8 +981,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As UInt32, ByVal ParamArray j() As UInt32) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -1127,13 +1078,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1153,10 +1101,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As UInt16,
                            ByVal second() As UInt16) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -1169,8 +1115,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -1180,8 +1125,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As UInt16, ByVal ParamArray j() As UInt16) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -1278,13 +1222,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1304,10 +1245,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As Byte,
                            ByVal second() As Byte) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -1320,8 +1259,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -1331,8 +1269,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As Byte, ByVal ParamArray j() As Byte) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -1429,13 +1366,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1455,10 +1389,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As Single,
                            ByVal second() As Single) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -1471,8 +1403,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -1482,8 +1413,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As Single, ByVal ParamArray j() As Single) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -1580,13 +1510,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1606,10 +1533,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As Double,
                            ByVal second() As Double) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -1622,8 +1547,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -1633,8 +1557,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As Double, ByVal ParamArray j() As Double) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -1731,13 +1654,10 @@ Public Module _array
                            ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1757,10 +1677,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(ByVal first() As String,
                            ByVal second() As String) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -1773,8 +1691,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -1784,8 +1701,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As String, ByVal ParamArray j() As String) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -1884,13 +1800,10 @@ Public Module _array
                                  ByVal len As UInt32) As Int32
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
-            Dim cmp As Int32 = 0
-            cmp = compare(first(i + fs), second(i + ss))
+            Dim cmp As Int32 = compare(first(i + fs), second(i + ss))
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -1910,10 +1823,8 @@ Public Module _array
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function memcmp(Of T)(ByVal first() As T,
                                  ByVal second() As T) As Int32
-        Dim ll As UInt32 = 0
-        Dim rl As UInt32 = 0
-        ll = array_size(first)
-        rl = array_size(second)
+        Dim ll As UInt32 = array_size(first)
+        Dim rl As UInt32 = array_size(second)
         If ll <> rl Then
             Return compare(ll, rl)
         End If
@@ -1926,8 +1837,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -1937,8 +1847,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(Of T)(ByVal i As T, ByVal ParamArray j() As T) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))
@@ -1984,8 +1893,7 @@ Public Module _array
         If isemptyarray(i) Then
             Return Nothing
         End If
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(i) - 1)
+        Dim r(array_size_i(i) - 1) As String
         For j As Int32 = 0 To array_size_i(i) - 1
             r(j) = Convert.ToString(i(j))
         Next
@@ -1995,8 +1903,7 @@ Public Module _array
     <Extension()>
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function with_strings(ByVal i As Object, ByVal ParamArray j() As Object) As String()
-        Dim r() As String = Nothing
-        ReDim r(array_size_i(j))
+        Dim r(array_size_i(j)) As String
         r(0) = Convert.ToString(i)
         For k As Int32 = 0 To array_size_i(j) - 1
             r(k + 1) = Convert.ToString(j(k))

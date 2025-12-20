@@ -20,15 +20,15 @@ Public NotInheritable Class b2stylec_main
     Private Shared Sub run()
         Dim e As executor = Nothing
         Using code_block
-            Dim parser As b2style.parse_wrapper = b2style.with_default_functions()
+            Dim parser As b2style.compile_wrapper = b2style.with_default_functions()
             Dim p As _do(Of executor, Boolean) = Nothing
             If (+input).empty_or_whitespace() Then
                 p = Function(ByRef o As executor) As Boolean
-                        Return parser.parse(Console.In().ReadToEnd(), o)
+                        Return parser.compile(Console.In().ReadToEnd(), o)
                     End Function
             Else
                 p = Function(ByRef o As executor) As Boolean
-                        Return parser.parse_file(+input, o)
+                        Return parser.compile_file(+input, o)
                     End Function
             End If
             assert(p(e))

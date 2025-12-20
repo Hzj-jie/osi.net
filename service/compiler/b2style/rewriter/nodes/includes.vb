@@ -21,7 +21,7 @@ Partial Public NotInheritable Class b2style
                 ' The file has been included already.
                 Return True
             End If
-            Return parse_wrapper.with_current_file(i, Function(ByVal s As String) As Boolean
+            Return compile_wrapper.with_current_file(i, Function(ByVal s As String) As Boolean
                                                           Return code_builder.build(s, j)
                                                       End Function)
         End Function

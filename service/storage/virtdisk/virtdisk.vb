@@ -28,7 +28,7 @@ Partial Public Class virtdisk
         AddHandler Me.s.dispose_exception,
                    Sub(ex As Exception)
                        raise_error(error_type.warning,
-                                   "failed to close underlaid stream ",
+                                   "failed to close underlying stream ",
                                    file_name(),
                                    ", ex ",
                                    ex.Message())
@@ -256,7 +256,7 @@ Partial Public Class virtdisk
     End Function
 
     'drop the following data after l as the position, so l is the new length of the stream
-    'return false if underlaid stream is not accessable or the length of the stream is shorter than l
+    'return false if underlying stream is not accessable or the length of the stream is shorter than l
     Public Function drop(ByVal l As UInt64) As event_comb
         Return Me.l.locked(Function() As Boolean
                                Return unlocked_drop(l)
@@ -349,7 +349,7 @@ Partial Public Class virtdisk
                 stream().Flush()
             Catch ex As Exception
                 raise_error(error_type.warning,
-                            "failed to flush data into the underlaid stream ",
+                            "failed to flush data into the underlying stream ",
                             file_name(),
                             ", ex ",
                             ex.details())

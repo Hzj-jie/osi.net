@@ -24,12 +24,12 @@ Partial Public NotInheritable Class bstyle
             assert(n.child_count() >= 3)
             Dim bc As Func(Of vector(Of String), Boolean) =
                 Function(ByVal parameters As vector(Of String)) As Boolean
-                    If scope.current().variables().try_resolve(n.child(0).input_without_ignored(), Nothing) Then
-                        Return build_caller_ref(n.child(0).input_without_ignored(), parameters)
+                    If scope.current().variables().defined(scope.variable_name.of(n.child(0))) Then
+                        Return build_caller_ref(scope.variable_name.of(n.child(0)), parameters)
                     End If
 
                     Dim name As String = Nothing
-                    If Not logic_name.of_function_call(n.child(0).input_without_ignored(), parameters, name) Then
+                    If Not logic_name.of_function_call(scope.function_name.of(n.child(0)), parameters, name) Then
                         Return False
                     End If
                     scope.current().call_hierarchy().to(name)
@@ -108,21 +108,12 @@ Partial Public NotInheritable Class bstyle
                                Return builders.of_caller_ref(name, result, parameters).to(o)
                            End Function,
                            Function(ByVal name As String, ByRef type As String) As Boolean
-                               Dim signature As New ref(Of function_signature)()
-                               Dim delegate_type As String = Nothing
-                               If Not scope.current().variables().resolve(name, delegate_type, signature) Then
+                               Dim signature As function_signature = Nothing
+                               If Not scope.current().variables().delegate_of(name, signature) Then
                                    Return False
                                End If
-                               If Not signature Then
-                                   raise_error(error_type.user,
-                                               "Delegate type ",
-                                               delegate_type,
-                                               " for ",
-                                               name,
-                                               " is not defined.")
-                                   Return False
-                               End If
-                               type = signature.get().return_type
+                               assert(Not signature Is Nothing)
+                               type = signature.return_type
                                Return True
                            End Function))
         End Function

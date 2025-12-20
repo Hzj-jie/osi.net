@@ -35,6 +35,7 @@ Public NotInheritable Class tar_test
                         v2.stream().
                            map(Function(ByVal t As tuple(Of String, MemoryStream)) As String
                                    assertion.equal(fs.stream_of(t.first()).unread_compare_to(t.second()), 0)
+                                   assertion.equal(fs.stream_of(t.first()).content_compare_to(t.second()), 0)
                                    Return t.first()
                                End Function).
                            collect_to(Of vector(Of String))())

@@ -15,19 +15,13 @@ Imports osi.service.udp
 Public NotInheritable Class listeners_speakers_test
     Inherits event_comb_case
 
-    Private ReadOnly listener_port As UInt16
-    Private ReadOnly speaker_port As UInt16
-
-    Public Sub New()
-        MyBase.New()
-        listener_port = rnd_port()
-        speaker_port = rnd_port()
-    End Sub
+    Private ReadOnly listener_port As UInt16 = rnd_port()
+    Private ReadOnly speaker_port As UInt16 = rnd_port()
 
     Private Function retrieve_listener(ByRef r As listener) As Boolean
         Return listeners.[New](powerpoint.creator.
                                    [New]().
-                                   with_ipv4().
+                                   with_ipv6().
                                    with_local_port(listener_port).
                                    with_accept_new_connection(False).
                                    create(), r)
@@ -49,13 +43,13 @@ Public NotInheritable Class listeners_speakers_test
                                           send_data = New vector(Of Byte())()
                                           receive_data = New vector(Of Byte())()
                                           accepter = New listener.one_accepter(
-                                                         New IPEndPoint(IPAddress.Loopback, speaker_port))
+                                                         New IPEndPoint(IPAddress.IPv6Loopback, speaker_port))
                                           AddHandler accepter.received,
                                                      Sub(received_data() As Byte, remote_host As IPEndPoint)
                                                          receive_data.emplace_back(received_data)
-                                                         assertion.equal(remote_host.Address(), IPAddress.Loopback)
+                                                         assertion.equal(remote_host.Address(), IPAddress.IPv6Loopback)
                                                          assertion.equal(remote_host.AddressFamily(),
-                                                                      Sockets.AddressFamily.InterNetwork)
+                                                                         Sockets.AddressFamily.InterNetworkV6)
                                                          assertion.equal(remote_host.Port(), speaker_port)
                                                      End Sub
                                           If Not assertion.is_true(listener.attach(accepter)) Then
@@ -65,28 +59,28 @@ Public NotInheritable Class listeners_speakers_test
                                       i += 1
                                       Return waitfor_nap() AndAlso
                                              goto_next()
-                                  ElseIf receive_data.size() < send_data.size() AndAlso Not waited Then
+                                  End If
+                                  If receive_data.size() < send_data.size() AndAlso Not waited Then
                                       waited = True
                                       Return waitfor(Function() As Boolean
                                                          Return receive_data.size() = send_data.size()
                                                      End Function,
                                                      seconds_to_milliseconds(100))
-                                  Else
-                                      assertion.equal(receive_data.size(), send_data.size())
-                                      Dim j As UInt32 = 0
-                                      While j < receive_data.size()
-                                          assertion.array_equal(send_data(j), receive_data(j))
-                                          j += uint32_1
-                                      End While
-                                      Return assertion.is_true(listener.detach(accepter)) AndAlso
-                                             goto_end()
                                   End If
+                                  assertion.equal(receive_data.size(), send_data.size())
+                                  Dim j As UInt32 = 0
+                                  While j < receive_data.size()
+                                      assertion.array_equal(send_data(j), receive_data(j))
+                                      j += uint32_1
+                                  End While
+                                  Return assertion.is_true(listener.detach(accepter)) AndAlso
+                                         goto_end()
                               End Function,
                               Function() As Boolean
                                   ' <= 500 bytes should be safe for one datagram.
                                   send_data.emplace_back(rnd_bytes(rnd_uint(100, 500)))
                                   sent.renew()
-                                  ec = speaker.send(IPAddress.Loopback, listener_port, send_data.back(), sent)
+                                  ec = speaker.send(IPAddress.IPv6Loopback, listener_port, send_data.back(), sent)
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,
@@ -94,9 +88,8 @@ Public NotInheritable Class listeners_speakers_test
                                   If assertion.is_true(ec.end_result()) Then
                                       assertion.equal(+sent, array_size(send_data.back()))
                                       Return goto_begin()
-                                  Else
-                                      Return False
                                   End If
+                                  Return False
                               End Function)
     End Function
 
@@ -108,16 +101,15 @@ Public NotInheritable Class listeners_speakers_test
                                   If assertion.is_true(retrieve_listener(listener)) AndAlso
                                      assertion.is_true(speakers.[New](powerpoint.creator.
                                                                     [New]().
-                                                                    with_ipv4().
+                                                                    with_ipv6().
                                                                     with_local_port(speaker_port).
                                                                     with_accept_new_connection(False).
                                                                     create(), speaker)) Then
                                       ec = send_and_receive(listener, speaker)
                                       Return waitfor(ec) AndAlso
                                              goto_next()
-                                  Else
-                                      Return False
                                   End If
+                                  Return False
                               End Function,
                               Function() As Boolean
                                   Return ec.end_result() AndAlso

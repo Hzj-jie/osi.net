@@ -45,10 +45,10 @@ Public Class multithreading_case_wrapper
         Return tc
     End Function
 
-    Private Sub workon(ByVal input As Object)
+    Private Sub workon(ByVal id As Int32)
         Interlocked.Increment(running_thread)
         assert(start_are.Set())
-        id = direct_cast(Of Int32)(input)
+        multithreading_case_wrapper.id = id
         this = Me
         Using defer.to(Sub()
                            id = npos
@@ -97,9 +97,13 @@ Public Class multithreading_case_wrapper
         Dim ts() As Thread = Nothing
         ReDim ts(CInt(threadcount()) - 1)
         For i As Int32 = 0 To CInt(threadcount()) - 1
-            ts(i) = New Thread(AddressOf workon)
+            Dim j As Int32 = i
+            ts(i) = New Thread(current_case.forward(Sub()
+                                                        workon(j)
+                                                    End Sub).
+                               to_thread_start())
             ts(i).Name() = "MULTITHREADING_CASE_WRAPPER_THREAD"
-            ts(i).Start(i)
+            ts(i).Start()
         Next
         Dim wait_round As Int32 = 1000
         While _dec(wait_round) > 0

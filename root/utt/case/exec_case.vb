@@ -57,14 +57,6 @@ Public Class exec_case
         Return True
     End Function
 
-    Protected Sub attach_receive_output(ByVal v As receive_outputEventHandler)
-        AddHandler receive_output, v
-    End Sub
-
-    Protected Sub attach_receive_error(ByVal v As receive_errorEventHandler)
-        AddHandler receive_error, v
-    End Sub
-
     Private Sub received(ByVal s As String, ByVal output As Boolean)
         If (output AndAlso Not ignore_output) OrElse
            (Not output AndAlso Not ignore_error) Then

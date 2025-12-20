@@ -33,6 +33,8 @@ Friend NotInheritable Class env_vars
             End If
             Return CULng(r)
         End Function()
+    Public Shared ReadOnly utt_debug_isolate_case_wrapper As Boolean =
+        env_bool(env_keys("utt", "debug", "isolate", "case", "wrapper"))
 
     Private Sub New()
     End Sub

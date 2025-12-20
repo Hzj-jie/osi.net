@@ -4,66 +4,37 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.formation
 Imports osi.service.automata
 Imports osi.service.compiler.rewriters
 
 Partial Public NotInheritable Class b2style
-    Private NotInheritable Class function_call_with_template
+    Partial Private NotInheritable Class function_call_with_template
         Implements code_gen(Of typed_node_writer)
 
         Private Function build(ByVal n As typed_node, ByVal o As typed_node_writer) As Boolean _
                 Implements code_gen(Of typed_node_writer).build
+            Return build(n, o, AddressOf function_call.build)
+        End Function
+
+        Private Shared Function build(
+                ByVal n As typed_node,
+                ByVal o As typed_node_writer,
+                ByVal function_call_build As Func(Of String, typed_node, typed_node_writer, Boolean)) As Boolean
             assert(Not n Is Nothing)
+            assert(Not function_call_build Is Nothing)
             Dim t As tuple(Of String, String) = Nothing
-            If Not function_call.split_struct_function(n.child(0).child(0).input_without_ignored(), t) Then
+            If Not b2style.function_call.split_struct_function(scope.function_name.of(n.child(0).child(0)), t) Then
                 t = Nothing
             End If
             Dim extended_type As String = Nothing
             Return scope.template_t.resolve(n.child(0), extended_type) AndAlso
-                   function_call.build(scope.current_namespace_t.in_global_namespace(
-                       If(t.is_null(),
-                          extended_type,
-                          function_call.build_struct_function(t.first(), extended_type))),
-                       n,
-                       o)
-        End Function
-
-        Private Shared Function param_types(ByVal n As typed_node, ByRef o As vector(Of String)) As Boolean
-            assert(Not n Is Nothing)
-            o.renew()
-            Return True
-
-            ' Following implementation does not work, b2style has no information about the types, the
-            ' function_call_with_template cannot create correct parameter types.
-#If 0 Then
-            If n.child_count() = 3 Then
-                Return True
-            End If
-            assert(n.child_count() = 4)
-            Dim v As vector(Of String) = o
-            Return n.child(2).
-                     children().
-                     map(Function(ByVal node As typed_node) As String
-                             assert(Not node Is Nothing)
-                             If node.type_name.Equals("value-with-comma") Then
-                                 node = node.child(0)
-                             End If
-                             assert(node.type_name.Equals("value"))
-                             Return node.input_without_ignored()
-                         End Function).
-                     map(Function(ByVal param As String) As Boolean
-                             Dim type As String = Nothing
-                             If Not scope.current().variables().try_resolve(param, type) Then
-                                 raise_error(error_type.user, "Cannot find the type of parameter ", param)
-                                 Return False
-                             End If
-                             v.emplace_back(type)
-                             Return True
-                         End Function).
-                     aggregate(bool_stream.aggregators.all_true)
-#End If
+                   function_call_build(scope.namespace_t.fully_qualified_name(
+                                           If(t.is_null(),
+                                              extended_type,
+                                              b2style.function_call.build_struct_function(t.first(), extended_type))),
+                                       n,
+                                       o)
         End Function
 
         Public Shared Function name_of(ByVal n As typed_node, ByRef o As String) As Boolean
@@ -79,10 +50,10 @@ Partial Public NotInheritable Class b2style
                                                                                      param_types)
                                                End Function
             Dim t As tuple(Of String, String) = Nothing
-            If function_call.split_struct_function(n.child(0).input_without_ignored(), t) Then
+            If b2style.function_call.split_struct_function(scope.function_name.of(n.child(0)), t) Then
                 o = f(t.second())
             Else
-                o = f(n.child(0).input_without_ignored())
+                o = f(scope.function_name.of(n.child(0)))
             End If
             Return True
         End Function

@@ -23,13 +23,14 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                                 ByVal name As String,
                                 ByVal insert As Func(Of String, String, Boolean)) As Boolean
             assert(Not type.null_or_whitespace())
-            assert(Not name.null_or_whitespace())
             assert(Not insert Is Nothing)
             ' TODO: May consider using builders.parameter.
             ' Types are always resolved during the define / build stage, so scope(Of T).current() equals to the scope
             ' where the variable_t instance Is being defined.
-            type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
-            name = current_namespace_t.of(name)
+            type = normalized_type.parameter_type_of(type).full_type()
+            assert(Not type.null_or_whitespace())
+            name = fully_qualified_variable_name.of(name)
+            assert(Not name.null_or_whitespace())
             assert(Not builders.parameter_type.is_ref_type(type))
             ' The name should not be an array with index.
             assert(Not variable.is_heap_name(name))
@@ -62,18 +63,49 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                                       End Function)
         End Function
 
-        Public Function undefine(ByVal name As String) As Boolean
-            name = current_namespace_t.of(name)
+        ' When finding the variable in a function, there are two candidates, 1) the variable defined in the function
+        ' itself, 2) the variable in the same namespace / root scope. Prefer the one in the function itself, or in
+        ' another word, the raw name itself.
+        Private Shared Function find(Of RT)(ByVal name As String,
+                                            ByVal f As _do_val_ref(Of String, RT, Boolean),
+                                            ByRef o As RT) As Boolean
             assert(Not name.null_or_whitespace())
-            ' The name should not be an array with index.
-            assert(Not variable.is_heap_name(name))
-            Return s.erase(name)
+            assert(Not f Is Nothing)
+            Dim fn As String = current_namespace_t.of(name)
+            assert(Not fn.null_or_whitespace())
+            If f(name, o) Then
+                Return True
+            End If
+            If fn.Equals(name) Then
+                Return False
+            End If
+            If f(fn, o) Then
+                Return True
+            End If
+            Return False
         End Function
 
-        Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-            name = current_namespace_t.of(name)
-            assert(Not name.null_or_whitespace())
-            Return s.find(name, type)
+        Public Function undefine(ByVal name As String) As Boolean
+            Return find(name,
+                        Function(ByVal n As String, ByRef o As Int32) As Boolean
+                            ' The name should not be an array with index.
+                            assert(Not variable.is_heap_name(n))
+                            Return s.erase(n)
+                        End Function,
+                        0)
+        End Function
+
+        Public Function resolve(ByVal name As String, ByRef o As builders.parameter) As Boolean
+            Return find(name,
+                        Function(ByVal n As String, ByRef r As builders.parameter) As Boolean
+                            Dim t As String = Nothing
+                            If Not s.find(n, t) Then
+                                Return False
+                            End If
+                            r = New builders.parameter(t, n)
+                            Return True
+                        End Function,
+                        o)
         End Function
     End Class
 
@@ -85,7 +117,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Function define(ByVal n As typed_node) As Boolean
             assert(Not n Is Nothing)
             assert(n.child_count() >= 2)
-            Return define(n.child(0).input_without_ignored(), n.child(1).input_without_ignored())
+            Return define(type_name.of(n.child(0)), variable_name.of(n.child(1)))
         End Function
 
         Public Function redefine(ByVal type As String, ByVal name As String) As Boolean
@@ -144,12 +176,8 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return True
         End Function
 
-        Public Function try_resolve(ByVal name As String, ByRef type As String) As Boolean
-            Return try_resolve(name, type, Nothing)
-        End Function
-
         Private Function try_resolve(ByVal name As String,
-                                     ByRef type As String,
+                                     ByRef o As builders.parameter,
                                      ByVal signature As ref(Of function_signature)) As Boolean
             ' logic_name.of_function_call requires type of the parameter to set function name.
             If variable.is_heap_name(name) Then
@@ -158,13 +186,14 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
 
             Dim s As scope(Of WRITER, __BUILDER, __CODE_GENS, T) = scope(Of T).current()
             While Not s Is Nothing
-                If Not s.myself().variables().resolve(name, type) Then
+                If Not s.myself().variables().resolve(name, o) Then
                     s = s.parent
                     Continue While
                 End If
+                assert(Not o Is Nothing)
                 If Not signature Is Nothing Then
                     Dim f As function_signature = Nothing
-                    If s.delegates().retrieve(type, f) Then
+                    If s.delegates().retrieve(o.full_type(), f) Then
                         assert(Not f Is Nothing)
                         signature.set(f)
                     End If
@@ -174,18 +203,49 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             Return False
         End Function
 
-        Public Function resolve(ByVal name As String, ByRef type As String) As Boolean
-            Return resolve(name, type, Nothing)
-        End Function
-
         Public Function resolve(ByVal name As String,
-                                ByRef type As String,
+                                ByRef o As builders.parameter,
                                 ByVal signature As ref(Of function_signature)) As Boolean
-            If try_resolve(name, type, signature) Then
+            If try_resolve(name, o, signature) Then
                 Return True
             End If
             raise_error(error_type.user, "Variable ", name, " has not been defined.")
             Return False
+        End Function
+
+        Public Function defined(ByVal name As String) As Boolean
+            Return try_resolve(name, Nothing, Nothing)
+        End Function
+
+        Public Function type_of(ByVal name As String, ByRef type As String) As Boolean
+            Dim o As builders.parameter = Nothing
+            If resolve(name, o, Nothing) Then
+                assert(Not o Is Nothing)
+                type = o.full_type()
+                Return True
+            End If
+            Return False
+        End Function
+
+        Public Function delegate_of(ByVal name As String, ByRef signature As function_signature) As Boolean
+            assert(signature Is Nothing)
+            Dim o As builders.parameter = Nothing
+            Dim s As New ref(Of function_signature)()
+            If Not resolve(name, o, s) Then
+                Return False
+            End If
+            assert(Not o Is Nothing)
+            If Not s Then
+                raise_error(error_type.user,
+                            "Delegate type ",
+                            o.full_type(),
+                            " for ",
+                            name,
+                            " is not defined.")
+                Return False
+            End If
+            signature = +s
+            Return True
         End Function
 
         Public Shared Function define() As Func(Of typed_node, Boolean)

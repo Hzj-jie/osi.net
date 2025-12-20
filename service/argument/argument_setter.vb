@@ -16,10 +16,11 @@ Public NotInheritable Class argument_setter
     Private NotInheritable Class argument_reporter
         Private Shared Sub init()
             raise_error(error_type.user,
-                        "process arguments from ",
+                        "process arguments from """,
                         Microsoft.VisualBasic.Command(),
-                        ", parsed arguments ",
-                        var.application)
+                        """, parsed arguments """,
+                        var.application,
+                        """")
         End Sub
 
         Private Sub New()

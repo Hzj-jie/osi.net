@@ -129,17 +129,25 @@ Partial Public NotInheritable Class b3style
         End Function
 
         ' Forward the definition of, or declare the {type, name} pair in the scope.variable in stack.
-        Public Shared Sub forward_in_stack(ByVal type As String, ByVal name As String)
+        Public Shared Sub forward_in_stack(ByVal type_node As typed_node, ByVal name_node As typed_node)
+            assert(Not type_node Is Nothing)
+            assert(Not name_node Is Nothing)
+            Dim type As String = scope.type_name.of(type_node)
+            Dim name As String = scope.variable_name.of(name_node)
             Dim v As scope.struct_def = Nothing
             If scope.current().structs().resolve(type, name, v) Then
                 define(type, name, v)
             End If
         End Sub
 
-        Public Shared Function define_in_stack(ByVal type As String,
-                                               ByVal name As String,
+        Public Shared Function define_in_stack(ByVal type_node As typed_node,
+                                               ByVal name_node As typed_node,
                                                ByVal o As logic_writer) As Boolean
+            assert(Not type_node Is Nothing)
+            assert(Not name_node Is Nothing)
             assert(Not o Is Nothing)
+            Dim type As String = scope.type_name.of(type_node)
+            Dim name As String = scope.variable_name.of(name_node)
             Dim v As scope.struct_def = Nothing
             If Not scope.current().structs().resolve(type, name, v) OrElse
                Not define(type, name, v) Then
@@ -152,12 +160,16 @@ Partial Public NotInheritable Class b3style
                                         End Function)
         End Function
 
-        Public Shared Function define_in_heap(ByVal type As String,
-                                              ByVal name As String,
+        Public Shared Function define_in_heap(ByVal type_node As typed_node,
+                                              ByVal name_node As typed_node,
                                               ByVal length As typed_node,
                                               ByVal o As logic_writer) As Boolean
+            assert(Not type_node Is Nothing)
+            assert(Not name_node Is Nothing)
             assert(Not length Is Nothing)
             assert(Not o Is Nothing)
+            Dim type As String = scope.type_name.of(type_node)
+            Dim name As String = scope.variable_name.of(name_node)
             Dim v As scope.struct_def = Nothing
             If Not scope.current().structs().resolve(type, name, v) OrElse Not define(type, name, v) Then
                 Return False
@@ -224,30 +236,25 @@ Partial Public NotInheritable Class b3style
                        End Function)
         End Function
 
-        Public Shared Function create_id(ByVal name As String) As builders.parameter
-            assert(Not name.null_or_whitespace())
-            Return builders.parameter.non_ref(name + "__struct__type__id__type", name + "__struct__type__id")
-        End Function
-
         Public Shared Function parse_struct_body(ByVal n As typed_node) As stream(Of builders.parameter)
             Return n.children_of("struct-body").
-                 stream().
-                 filter(Function(ByVal c As typed_node) As Boolean
-                            assert(Not c Is Nothing)
-                            assert(c.child_count() <= 2)
-                            Return c.child_count() = 2
-                        End Function).
-                 map(Function(ByVal c As typed_node) As typed_node
-                         Return c.child(0)
-                     End Function).
-                 map(Function(ByVal c As typed_node) As builders.parameter
-                         ' TODO: Support value_definition.str_bytes_val
-                         assert(Not c Is Nothing)
-                         assert(c.type_name.Equals("value-declaration"))
-                         assert(c.child_count() = 2)
-                         Return builders.parameter.non_ref(c.child(0).input_without_ignored(),
-                                                          c.child(1).input_without_ignored())
-                     End Function)
+                     stream().
+                     filter(Function(ByVal c As typed_node) As Boolean
+                                assert(Not c Is Nothing)
+                                assert(c.child_count() <= 2)
+                                Return c.child_count() = 2
+                            End Function).
+                     map(Function(ByVal c As typed_node) As typed_node
+                             Return c.child(0)
+                         End Function).
+                     map(Function(ByVal c As typed_node) As builders.parameter
+                             ' TODO: Support value_definition.str_bytes_val
+                             assert(Not c Is Nothing)
+                             assert(c.type_name.Equals("value-declaration"))
+                             assert(c.child_count() = 2)
+                             Return builders.parameter.non_ref(scope.type_name.of(c.child(0)),
+                                                               scope.variable_name.of(c.child(1)))
+                         End Function)
         End Function
 
         Private Function build(ByVal n As typed_node,
@@ -255,15 +262,13 @@ Partial Public NotInheritable Class b3style
             assert(Not n Is Nothing)
             assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
-            Dim id As builders.parameter = create_id(n.child(1).word().str())
-            assert(builders.of_type(id.non_ref_type(), uint32_1).to(o))
             Return scope.current().structs().define(
-                       builders.parameter_type.of(n.child(1).word().str()).
-                                               map_type(scope.normalized_type.of).
-                                               full_type(),
+                       scope.normalized_type.parameter_type_of(n.child(1)).full_type(),
                        parse_struct_body(n).map(AddressOf scope.struct_def.nested).
-                                            collect_to(Of vector(Of builders.parameter))() +
-                                            id)
+                                            collect_to(Of vector(Of builders.parameter))(),
+                       Sub(ByVal type As String, ByVal size As UInt32)
+                           assert(builders.of_type(type, size).to(o))
+                       End Sub)
         End Function
     End Class
 End Class

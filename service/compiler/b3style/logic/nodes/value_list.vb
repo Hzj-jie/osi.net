@@ -16,6 +16,7 @@ Partial Public NotInheritable Class b3style
                                ByVal o As logic_writer) As Boolean Implements code_gen(Of logic_writer).build
             assert(Not n Is Nothing)
             assert(n.child_count() > 0)
+            assert(n.type_name.Equals("value-list"))
             Return build(Sub(ByVal a As Action(Of typed_node))
                              assert(Not a Is Nothing)
                              Dim i As UInt32 = 0
@@ -23,8 +24,7 @@ Partial Public NotInheritable Class b3style
                                  a(n.child(i))
                                  i += uint32_1
                              End While
-                         End Sub,
-                         o)
+                         End Sub, o)
         End Function
 
         Public Shared Function build(ByVal foreach As Action(Of Action(Of typed_node)),

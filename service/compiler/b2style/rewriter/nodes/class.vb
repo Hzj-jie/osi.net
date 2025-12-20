@@ -34,9 +34,7 @@ Partial Public NotInheritable Class b2style
         End Function
 
         Protected Overrides Function dump(ByVal n As typed_node, ByRef s As String) As Boolean
-            Dim o As New StringBuilder()
             assert(Not n Is Nothing)
-            assert(Not o Is Nothing)
             assert(n.child_count() >= 5)
             Dim class_name As String = n.child(1).input()
             Dim cd As New scope.class_def(class_name)
@@ -46,14 +44,13 @@ Partial Public NotInheritable Class b2style
                Not code_gens().of_all_children(n.child(2).child(1)).
                      dump().
                      stream().
-                     with_index().
-                     map(Function(ByVal t As tuple(Of UInt32, String)) As Boolean
+                     map(Function(ByVal t As String) As Boolean
                              Dim bcd As scope.class_def = Nothing
-                             If Not scope.current().classes().resolve(t.second(), bcd) Then
+                             If Not scope.current().classes().resolve(t, bcd) Then
                                  Return False
                              End If
                              cd.inherit_from(bcd).
-                                with_var(bstyle.struct.create_id(t.second()))
+                                with_var(scope.struct_t.create_type_id(t))
                              Return True
                          End Function).
                      aggregate(bool_stream.aggregators.all_true) Then
@@ -62,6 +59,7 @@ Partial Public NotInheritable Class b2style
             If Not scope.current().classes().define(class_name, cd) Then
                 Return False
             End If
+            Dim o As New StringBuilder()
             ' Append struct-body back into the structure.
             o.Append("struct ").
               Append(class_name).

@@ -63,7 +63,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
             assert(Not body Is Nothing)
             assert(Not name_node Is Nothing)
             assert(Not types.null_or_empty())
-            Me._extended_type_name = New extended_type_name_t(name_node.input_without_ignored())
+            Me._extended_type_name = New extended_type_name_t(template_name.of(name_node))
             Me.type_refs.resize(types.size(),
                             Function() As ref(Of String)
                                 Return New ref(Of String)()

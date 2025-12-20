@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Threading
 Imports osi.root.constants
 
 Public Module _delegate2
@@ -84,5 +85,12 @@ Public Module _delegate2
         End If
 
         Return "#CANNOT_GET_INVOKE_IDENTITY#"
+    End Function
+
+    <Extension()> Public Function to_thread_start(ByVal a As Action) As ThreadStart
+        assert(Not a Is Nothing)
+        Return Sub()
+                   a()
+               End Sub
     End Function
 End Module

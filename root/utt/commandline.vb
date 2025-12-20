@@ -10,7 +10,7 @@ Imports osi.root.formation
 
 <global_init(global_init_level.other)>
 Friend NotInheritable Class commandline
-    Private Shared ReadOnly s As [set](Of String) = New [set](Of String)()
+    Private Shared ReadOnly s As New [set](Of String)()
     Private Shared others As argument(Of vector(Of String))
 
     Private Shared Sub init()

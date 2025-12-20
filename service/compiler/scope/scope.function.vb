@@ -7,7 +7,6 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
-Imports builders = osi.service.compiler.logic.builders
 
 Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
                               __BUILDER As func_t(Of String, WRITER, Boolean),
@@ -19,7 +18,7 @@ Partial Public Class scope(Of WRITER As {lazy_list_writer, New},
         Public Function define(ByVal type As String, ByVal name As String) As Boolean
             assert(Not type.null_or_whitespace())
             assert(Not name.null_or_whitespace())
-            type = builders.parameter_type.of(type).map_type(normalized_type.of).full_type()
+            type = normalized_type.parameter_type_of(type).full_type()
             name = current_namespace_t.of(name)
             If s.emplace(name, type).second() Then
                 Return True

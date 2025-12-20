@@ -23,6 +23,20 @@ Public Module _assert
     <ThreadStatic>
     Private ignore_assertion_failure As Boolean
 
+    Public Sub ignore_assertion_break(ByVal ex As Exception)
+        If TypeOf ex Is assertion_break Then
+            Throw ex
+        End If
+    End Sub
+
+    ' Slightly better name.
+    Public Sub catch_assertion_failure(ByVal d As Action, ByVal msg As Action(Of String))
+        expect_assertion_failure(d,
+                                 Sub()
+                                 End Sub,
+                                 msg)
+    End Sub
+
     Public Sub expect_assertion_failure(ByVal d As Action,
                                         ByVal not_reach As Action,
                                         ByVal check_exception As Action(Of String))
@@ -63,7 +77,7 @@ Public Module _assert
                                 callstack()}
         ' This function should be rarely reached, the performance is less critical.
         If ignore_assertion_failure Then
-            assertion_break.at_here(error_message.p(msgs))
+            assertion_break.at_here(error_message.merge(msgs))
             ' Never reach
             Return False
         End If

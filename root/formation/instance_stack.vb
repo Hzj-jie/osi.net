@@ -94,6 +94,11 @@ Public Class instance_stack(Of T, PROTECTOR)
         Return If(s Is Nothing, uint32_0, s.size())
     End Function
 
+    Public Shared Function [with](ByVal v As T) As IDisposable
+        push(v)
+        Return defer.to(AddressOf pop)
+    End Function
+
     Protected Sub New()
     End Sub
 End Class

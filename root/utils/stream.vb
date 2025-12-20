@@ -69,8 +69,7 @@ Public Module _stream
 
     <Extension()> Public Function keep_position(ByVal i As Stream) As IDisposable
         assert(Not i Is Nothing)
-        Dim p As Int64 = 0
-        p = i.Position()
+        Dim p As Int64 = i.Position()
         Return defer.to(Sub()
                             i.Position() = p
                         End Sub)
