@@ -72,9 +72,9 @@ Namespace wordtracer.cjk
 
         <test>
         <command_line_specified>
-        Private Shared Sub multiply()
-            model.load(input Or "cjk.words.2.bin.e0.9").
-                  multiply(model.load(input2 Or "cjk.words.2.bin.reverse.e0.9").reverse()).
+        Private Shared Sub bidirectional()
+            model.bidirectional(model.load(input Or "cjk.words.2.bin.e0.9"),
+                                model.load(input2 Or "cjk.words.2.bin.reverse.e0.9")).
                   dump(output Or "cjk.words.2.bin.e0.9.bidirectional")
         End Sub
 

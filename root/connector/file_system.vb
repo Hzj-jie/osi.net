@@ -19,15 +19,22 @@ Public Module _file_system
         both_invalid = min_int32
     End Enum
 
-    Public ReadOnly file_system_case_sensitive As Boolean = Function() As Boolean
-                                                                Dim tf As String = guid_str()
-                                                                Try
-                                                                    File.WriteAllText(strtoupper(tf), character.null)
-                                                                    Return Not File.Exists(strtolower(tf))
-                                                                Finally
-                                                                    File.Delete(strtoupper(tf))
-                                                                End Try
-                                                            End Function()
+    Public ReadOnly file_system_case_sensitive As Boolean =
+            Function() As Boolean
+                Try
+                    Dim tf As String = guid_str()
+                    Try
+                        File.WriteAllText(strtoupper(tf), character.null)
+                        Return Not File.Exists(strtolower(tf))
+                    Finally
+                        File.Delete(strtoupper(tf))
+                    End Try
+                Catch ex As Exception
+                    raise_error(error_type.warning, "Cannot detect the case sensitivity of the file system, ex ", ex)
+                    ' No access to osi.root.envs.os.family
+                    Return False
+                End Try
+            End Function()
 
     <Extension()> Public Function full_path(ByVal this As String, ByRef output As String) As Boolean
         If this Is Nothing Then

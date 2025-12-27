@@ -19,10 +19,18 @@ Partial Public NotInheritable Class onebound(Of K)
         End Function
 
         Public Shared Function exponential(ByVal i As model, ByVal p As Double) As model
+            Return exponential(i, p, 0)
+        End Function
+
+        Public Shared Function exponential(ByVal i As model, ByVal p As Double, ByVal lambda As Double) As model
             assert(Not i Is Nothing)
             assert(p >= 0 AndAlso p <= 1)
+            assert(lambda >= 0)
             Return New model(i.map_each(Function(ByVal x As unordered_map(Of K, Double)) As unordered_map(Of K, Double)
                                             Dim ex As ed = exponential_distribution(x)
+                                            If ex.lambda < lambda Then
+                                                Return New unordered_map(Of K, Double)()
+                                            End If
                                             Return x.stream().
                                                      map(x.second_mapper(Function(ByVal y As Double) As Double
                                                                              Return ex.cumulative_distribute(y)

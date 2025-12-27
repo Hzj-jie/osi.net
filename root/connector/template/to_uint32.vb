@@ -9,19 +9,16 @@ Imports osi.root.template
 Public NotInheritable Class fast_to_uint32(Of T)
     Inherits _to_uint32(Of T)
 
-    Private Shared ReadOnly f As Func(Of T, UInt32) = Function() As Func(Of T, UInt32)
-                                                          If type_info(Of T).is_valuetype Then
-                                                              Return Function(i As T) As UInt32
-                                                                         Return int32_uint32(i.GetHashCode())
-                                                                     End Function
-                                                          End If
-                                                          Return Function(i As T) As UInt32
-                                                                     If i Is Nothing Then
-                                                                         Return 0
-                                                                     End If
-                                                                     Return int32_uint32(i.GetHashCode())
-                                                                 End Function
-                                                      End Function()
+    Private Shared ReadOnly f As Func(Of T, UInt32) = If(type_info(Of T).is_valuetype,
+                                                         Function(i As T) As UInt32
+                                                             Return int32_uint32(i.GetHashCode())
+                                                         End Function,
+                                                         Function(i As T) As UInt32
+                                                             If i Is Nothing Then
+                                                                 Return 0
+                                                             End If
+                                                             Return int32_uint32(i.GetHashCode())
+                                                         End Function)
 
     Public Shared Function [on](ByVal i As T) As UInt32
         Return f(i)

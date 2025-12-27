@@ -30,4 +30,17 @@ Public Module _filesystem
     Public Function with_file_extension(ByVal filename As String, ByVal extension As String) As String
         Return String.Concat(filename, filesystem.extension_prefix, extension)
     End Function
+
+    <Extension()>
+    Public Function replace_file_extension(ByVal filename As String, ByVal extension As String) As String
+        If filename Is Nothing Then
+            filename = ""
+        End If
+        Dim i As Int32 = filename.LastIndexOf(filesystem.extension_prefix)
+        ' Do not treat .txt as a file with txt as extension.
+        If i > 0 Then
+            filename = filename.Substring(0, i)
+        End If
+        Return filename.with_file_extension(extension)
+    End Function
 End Module

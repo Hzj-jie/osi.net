@@ -99,6 +99,12 @@ Partial Public NotInheritable Class onebound(Of K)
             Return m(a)(b)
         End Function
 
+        Public Shared Function bidirectional(ByVal i As model, ByVal j As model) As model
+            assert(Not i Is Nothing)
+            assert(Not j Is Nothing)
+            Return i.multiply(j.reverse())
+        End Function
+
         Public Function reverse() As model
             Dim r As New unordered_map(Of K, unordered_map(Of K, Double))()
             flat_map().foreach(Sub(ByVal v As first_const_pair(Of const_pair(Of K, K), Double))
@@ -153,6 +159,19 @@ Partial Public NotInheritable Class onebound(Of K)
 
         Public Overrides Function ToString() As String
             Return json_serializer.to_str(m)
+        End Function
+
+        Public Function normalize() As model
+            Return New model(map_each(Function(ByVal x As unordered_map(Of K, Double)) As unordered_map(Of K, Double)
+                                          Dim s As Double = x.stream().
+                                                              map(x.second_selector).
+                                                              aggregate(stream(Of Double).aggregators.sum)
+                                          Return x.stream().
+                                                     map(x.second_mapper(Function(ByVal y As Double) As Double
+                                                                             Return y / s
+                                                                         End Function)).
+                                                     collect_to(Of unordered_map(Of K, Double))()
+                                      End Function))
         End Function
 
         Public Function filter(ByVal lower_bound As Double) As model

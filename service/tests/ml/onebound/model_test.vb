@@ -5,11 +5,13 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.ml
+Imports osi.service.resource
 Imports osi.service.ml.onebound(Of String)
 
 Namespace onebound
@@ -67,12 +69,20 @@ Namespace onebound
 
         <command_line_specified>
         <test>
+        Private Shared Sub pattern_load()
+            model.combo_load(+(New tar.selector() With {.pattern = input Or "*.bin"}.absolute())).
+                  filter(lower_bound Or 0).
+                  dump(output Or "combo.bin")
+        End Sub
+
+        <command_line_specified>
+        <test>
         Private Shared Sub filter()
             model.load(+input).filter(+lower_bound).dump(+output)
         End Sub
 
-        Private Shared Function load_to_pairs() As stream(Of first_const_pair(Of String, Double))
-            Return model.load(+input).
+        Private Shared Function load_to_pairs(ByVal input As String) As stream(Of first_const_pair(Of String, Double))
+            Return model.load(input).
                          filter(lower_bound Or 0).
                          flat_map().
                          map(Function(ByVal p As first_const_pair(Of const_pair(Of String, String), Double)) _
@@ -81,20 +91,41 @@ Namespace onebound
                              End Function)
         End Function
 
+        Private Shared Sub dump_to_stream(ByVal input As String, ByVal w As TextWriter)
+            assert(Not w Is Nothing)
+            load_to_pairs(input).foreach(Sub(ByVal p As first_const_pair(Of String, Double))
+                                             w.WriteLine(String.Concat(p.first, " ", p.second))
+                                         End Sub)
+        End Sub
+
+        <command_line_specified>
+        <test>
+        Private Shared Sub dump_to_text()
+            If -inputs Then
+                For Each input As String In ++inputs
+                    Using w As New StreamWriter(input.replace_file_extension("txt"))
+                        dump_to_stream(input, w)
+                    End Using
+                Next
+            Else
+                Using w As New StreamWriter(output Or ((+input).replace_file_extension("txt")))
+                    dump_to_stream(+input, w)
+                End Using
+            End If
+        End Sub
+
         <command_line_specified>
         <test>
         Private Shared Sub dump_to_console()
-            load_to_pairs().foreach(Sub(ByVal p As first_const_pair(Of String, Double))
-                                        Console.WriteLine(strcat(p.first, " ", p.second))
-                                    End Sub)
+            dump_to_stream(+input, Console.Out)
         End Sub
 
         <command_line_specified>
         <test>
         Private Shared Sub sort_to_console()
-            load_to_pairs().sort().foreach(Sub(ByVal p As first_const_pair(Of String, Double))
-                                               Console.WriteLine(strcat(p.first, " ", p.second))
-                                           End Sub)
+            load_to_pairs(+input).sort().foreach(Sub(ByVal p As first_const_pair(Of String, Double))
+                                                     Console.WriteLine(strcat(p.first, " ", p.second))
+                                                 End Sub)
         End Sub
 
         <command_line_specified>
@@ -173,6 +204,21 @@ Namespace onebound
                            foreach(Sub(ByVal c As Char)
                                        Console.WriteLine(c)
                                    End Sub)
+        End Sub
+
+        <command_line_specified>
+        <test>
+        Private Shared Sub intersect_and_dump()
+            Using w As New StreamWriter(output Or "intersect.txt")
+                dump_results.intersect(+inputs,
+                                       Function(ByVal input As String) As unordered_map(Of String, Double)
+                                           Return load_to_pairs(input).collect_to(Of unordered_map(Of String, Double))()
+                                       End Function).
+                         stream().
+                         foreach(Sub(ByVal p As first_const_pair(Of String, Double))
+                                     w.WriteLine(String.Concat(p.first, " ", p.second))
+                                 End Sub)
+            End Using
         End Sub
 
         Private Sub New()
