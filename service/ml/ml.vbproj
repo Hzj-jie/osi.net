@@ -56,6 +56,7 @@
     <Compile Include="boolaffinity\model.vb" />
     <Compile Include="boolaffinity\trainer.vb" />
     <Compile Include="binomial_distribution\binomial_distribution.vb" />
+    <Compile Include="cjk.vb" />
     <Compile Include="combinatories.vb" />
     <Compile Include="confidence.vb" />
     <Compile Include="distribution.vb" />
@@ -86,6 +87,7 @@
     <Compile Include="percentile\filter.vb" />
     <Compile Include="percentile\ranking.vb" />
     <Compile Include="permutations.vb" />
+    <Compile Include="typo\cjk\from_onebound.vb" />
     <Compile Include="wordbreaker\cjk\coupling_ratio.vb" />
     <Compile Include="wordbreaker\cjk\evaluator.vb" />
     <Compile Include="wordbreaker\cjk\golden_words.vb" />

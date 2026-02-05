@@ -92,6 +92,12 @@ Partial Public NotInheritable Class onebound(Of K)
             Return o
         End Function
 
+        Default Public ReadOnly Property _affinity(ByVal a As K, ByVal b As K) As Double
+            Get
+                Return affinity(a, b)
+            End Get
+        End Property
+
         Public Function affinity(ByVal a As K, ByVal b As K) As Double
             If m.find(a) = m.end() OrElse m(a).find(b) = m(a).end() Then
                 Return 0
@@ -103,6 +109,19 @@ Partial Public NotInheritable Class onebound(Of K)
             assert(Not i Is Nothing)
             assert(Not j Is Nothing)
             Return i.multiply(j.reverse())
+        End Function
+
+        Public Function peak() As const_pair(Of K, K)
+            Dim it As unordered_map(Of K, unordered_map(Of K, Double)).iterator = m.begin()
+            While it <> m.end()
+                assert(Not (+it).second Is Nothing)
+                ' Very likely this shouldn't happen.
+                If (+it).second.empty() Then
+                    it = it + 1
+                End If
+                Return const_pair.emplace_of((+it).first, (+(+it).second.begin()).first)
+            End While
+            Return Nothing
         End Function
 
         Public Function reverse() As model

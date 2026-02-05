@@ -29,7 +29,7 @@ Partial Public NotInheritable Class wordtracer
             End Sub
 
             Protected Overrides Sub sentence(ByVal s As String, ByVal start As UInt32, ByVal [end] As UInt32)
-                If [end] - start <= n Then
+                If [end] - start < n Then
                     Return
                 End If
 
@@ -42,6 +42,7 @@ Partial Public NotInheritable Class wordtracer
 
                     t.accumulate(l, r)
                 Next
+                t.accumulate(s.strmid([end] - n, n), character.null)
             End Sub
 
             Public Function dump(ByVal percentage As Double) As onebound(Of String).model
