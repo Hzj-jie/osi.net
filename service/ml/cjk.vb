@@ -16,9 +16,9 @@ Partial Public NotInheritable Class cjk
             Return
         End If
         s.strsep(AddressOf _character.not_cjk,
-                                           Sub(ByVal a As UInt32, ByVal b As UInt32)
-                                               f(s, a, b)
-                                           End Sub)
+                 Sub(ByVal a As UInt32, ByVal b As UInt32)
+                     f(s, a, b)
+                 End Sub)
     End Sub
 
     Public Shared Sub per_str_from(ByVal ss As IEnumerable(Of String), ByVal f As Action(Of String, UInt32, UInt32))

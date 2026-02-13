@@ -18,6 +18,10 @@ Public NotInheritable Class concurrency_runner
         instance.execute(v, c)
     End Sub
 
+    Public Shared Sub execute(ByVal c As UInt32, ByVal v As Action(Of UInt32))
+        instance.execute(c, v)
+    End Sub
+
     Private Sub New()
     End Sub
 End Class
@@ -96,6 +100,16 @@ Public NotInheritable Class concurrency_runner(Of _SIZE As _int64)
                    End Sub
         Next
         execute(a)
+    End Sub
+
+    ' Make the uint32 as the first parameter to avoid confusing with the above overload.
+    Public Sub execute(ByVal c As UInt32, ByVal v As Action(Of UInt32))
+        assert(c > 0 AndAlso c <= max_int32)
+        Dim r(CInt(c - uint32_1)) As UInt32
+        For i As UInt32 = 0 To c - uint32_1
+            r(CInt(i)) = i
+        Next
+        execute(v, r)
     End Sub
 
     Private Sub e(ByVal v As Action)

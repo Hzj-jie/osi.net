@@ -29,19 +29,23 @@ Partial Public NotInheritable Class wordtracer
             End Sub
 
             Protected Overrides Sub sentence(ByVal s As String, ByVal start As UInt32, ByVal [end] As UInt32)
+                assert([end] >= start)
                 If [end] - start < n Then
                     Return
                 End If
 
-                For i As UInt32 = start To [end] - n - uint32_1
+                Dim i As UInt32 = start
+                While i < [end] - n
                     Dim l As String = s.strmid(i, n)
                     Dim r As String = s.strmid(i + n, 1)
                     If Not Me.s(l) Then
-                        Continue For
+                        Continue While
                     End If
 
                     t.accumulate(l, r)
-                Next
+                    i += uint32_1
+                End While
+
                 t.accumulate(s.strmid([end] - n, n), character.null)
             End Sub
 
