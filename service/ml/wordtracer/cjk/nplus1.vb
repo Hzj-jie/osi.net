@@ -38,12 +38,12 @@ Partial Public NotInheritable Class wordtracer
                 While i < [end] - n
                     Dim l As String = s.strmid(i, n)
                     Dim r As String = s.strmid(i + n, 1)
+                    i += uint32_1
                     If Not Me.s(l) Then
                         Continue While
                     End If
 
                     t.accumulate(l, r)
-                    i += uint32_1
                 End While
 
                 t.accumulate(s.strmid([end] - n, n), character.null)
