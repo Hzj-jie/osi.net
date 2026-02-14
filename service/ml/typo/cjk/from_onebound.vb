@@ -31,7 +31,7 @@ Partial Public NotInheritable Class typo
                 Return New from_onebound(New shard(Of String)(index, count), m)
             End Function
 
-            Public Shared Function form_dump(ByVal filename As String) As from_onebound
+            Public Shared Function from_dump(ByVal filename As String) As from_onebound
                 Return from_dump(0, 1, filename)
             End Function
 

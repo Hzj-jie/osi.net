@@ -82,6 +82,7 @@
     <Compile Include="percentile\filter_test.vb" />
     <Compile Include="percentile\ranking_test.vb" />
     <Compile Include="permutations_test.vb" />
+    <Compile Include="typo\cjk\from_onebound_test.vb" />
     <Compile Include="wordbreaker\cjk\evaluator_test.vb" />
     <Compile Include="wordbreaker\cjk\model_test.vb" />
     <Compile Include="wordbreaker\cjk\trainer_test.vb" />
