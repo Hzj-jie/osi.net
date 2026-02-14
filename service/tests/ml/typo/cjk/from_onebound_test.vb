@@ -4,8 +4,10 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.delegates
 Imports osi.root.formation
+Imports osi.root.template
 Imports osi.root.utt.attributes
 Imports osi.service.resource
 Imports from_onebound = osi.service.ml.typo.cjk.from_onebound
@@ -17,6 +19,17 @@ Namespace typo.cjk
         Private Shared shards As argument(Of UInt32)
         Private Shared use_raw As argument(Of Boolean)
         Private Shared input As argument(Of String)
+        Private Shared concurrency As argument(Of UInt32)
+
+        Private NotInheritable Class concurrency_t
+            Inherits _int64
+
+            Protected Overrides Function at() As Int64
+                Return concurrency Or uint32_2
+            End Function
+        End Class
+
+        Private Shared ReadOnly runner As New concurrency_runner(Of concurrency_t)()
 
         <test>
         <command_line_specified>
