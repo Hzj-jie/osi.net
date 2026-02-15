@@ -30,7 +30,7 @@ Namespace typo.cjk
                                                              If(use_raw Or True, ".raw", ""),
                                                              ".bin")
                     from_onebound.from_dump(i, num_of_shards, model_name) _
-                                           (New tar.reader(New tar.selector() With
+                                           (tar.reader.unzip(New tar.selector() With
                                                {.pattern = input Or "tar_manual_test.zip_*"})).
                                   stream().
                                   foreach(Sub(ByVal s As String)

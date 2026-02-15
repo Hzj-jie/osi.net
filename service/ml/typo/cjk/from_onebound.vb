@@ -35,15 +35,14 @@ Partial Public NotInheritable Class typo
                 Return from_dump(0, 1, filename)
             End Function
 
-            Private Function eva_word(ByVal f As String, ByVal s As String) As String
+            Private Sub eva_word(ByVal f As String, ByVal s As String, ByVal r As vector(Of String))
                 If Not Me.s(f) Then
-                    Return Nothing
+                    Return
                 End If
                 If m(f, s) < (threshold Or 0.01) Then
-                    Return f + s
+                    r.emplace_back(f + s)
                 End If
-                Return Nothing
-            End Function
+            End Sub
 
             Default Public ReadOnly Property eva(ByVal reader As tar.reader) As vector(Of String)
                 Get
@@ -51,19 +50,18 @@ Partial Public NotInheritable Class typo
                     assert(Not p Is Nothing)
                     Dim fl As UInt32 = p.first.len()
                     Dim sl As UInt32 = p.second.len()
-                    Dim r As New vector(Of String)
+                    Dim r As New vector(Of String)()
                     ml.cjk.per_str_from(reader, Sub(ByVal s As String, ByVal a As UInt32, ByVal b As UInt32)
-                                                    Dim v As String
-                                                    For i As UInt32 = a To b - fl - uint32_1
-                                                        v = eva_word(s.strmid(i, fl), s.char_at(i + fl + uint32_1))
-                                                        If Not v Is Nothing Then
-                                                            r.emplace_back(v)
-                                                        End If
-                                                    Next
-                                                    v = eva_word(s.strmid(b - fl, fl), character.null)
-                                                    If Not v Is Nothing Then
-                                                        r.emplace_back(v)
+                                                    assert(b >= a)
+                                                    If b - a < fl Then
+                                                        Return
                                                     End If
+                                                    Dim i As UInt32 = a
+                                                    While i < b - fl
+                                                        eva_word(s.strmid(i, fl), s.char_at(i + fl), r)
+                                                        i += uint32_1
+                                                    End While
+                                                    eva_word(s.strmid(b - fl, fl), character.null, r)
                                                 End Sub)
                     Return r
                 End Get

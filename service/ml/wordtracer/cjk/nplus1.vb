@@ -28,6 +28,12 @@ Partial Public NotInheritable Class wordtracer
                 Me.New(shard(Of String).all, n)
             End Sub
 
+            Private Sub accumulate(ByVal l As String, ByVal r As String)
+                If s(l) Then
+                    t.accumulate(l, r)
+                End If
+            End Sub
+
             Protected Overrides Sub sentence(ByVal s As String, ByVal start As UInt32, ByVal [end] As UInt32)
                 assert([end] >= start)
                 If [end] - start < n Then
@@ -36,17 +42,11 @@ Partial Public NotInheritable Class wordtracer
 
                 Dim i As UInt32 = start
                 While i < [end] - n
-                    Dim l As String = s.strmid(i, n)
-                    Dim r As String = s.strmid(i + n, 1)
+                    accumulate(s.strmid(i, n), s.char_at(i + n))
                     i += uint32_1
-                    If Not Me.s(l) Then
-                        Continue While
-                    End If
-
-                    t.accumulate(l, r)
                 End While
 
-                t.accumulate(s.strmid([end] - n, n), character.null)
+                accumulate(s.strmid([end] - n, n), character.null)
             End Sub
 
             Public Function dump(ByVal percentage As Double) As onebound(Of String).model
