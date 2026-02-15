@@ -3,10 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
-Imports osi.root.connector
-Imports osi.root.constants
 Imports osi.root.delegates
-Imports osi.root.template
 Imports osi.root.utils
 Imports osi.root.utt.attributes
 Imports osi.service.resource
@@ -20,17 +17,6 @@ Namespace wordtracer.cjk
         Private Shared shards As argument(Of UInt32)
         Private Shared percent As argument(Of Double)
         Private Shared percentage As argument(Of Double)
-        Private Shared concurrency As argument(Of UInt32)
-
-        Private NotInheritable Class concurrency_t
-            Inherits _int64
-
-            Protected Overrides Function at() As Int64
-                Return concurrency Or uint32_2
-            End Function
-        End Class
-
-        Private Shared ReadOnly runner As New concurrency_runner(Of concurrency_t)()
 
         <test>
         <command_line_specified>
@@ -54,7 +40,7 @@ Namespace wordtracer.cjk
         <command_line_specified>
         Private Shared Sub from_tar_2()
             Dim num_of_shards As UInt32 = (shards Or 3)
-            runner.execute(
+            concurrency_runner.execute(
                 num_of_shards,
                 Sub(ByVal i As UInt32)
                     Dim n As New nplus1(New shard(Of String)(i, num_of_shards), 2)
@@ -68,7 +54,7 @@ Namespace wordtracer.cjk
         <command_line_specified>
         Private Shared Sub from_tar_raw_2()
             Dim num_of_shards As UInt32 = (shards Or 3)
-            runner.execute(
+            concurrency_runner.execute(
                 num_of_shards,
                 Sub(ByVal i As UInt32)
                     Dim n As New nplus1(New shard(Of String)(i, num_of_shards), 2)
@@ -82,7 +68,7 @@ Namespace wordtracer.cjk
         <command_line_specified>
         Private Shared Sub from_tar_3()
             Dim num_of_shards As UInt32 = (shards Or 7)
-            runner.execute(
+            concurrency_runner.execute(
                 num_of_shards,
                 Sub(ByVal i As UInt32)
                     Dim n As New nplus1(New shard(Of String)(i, num_of_shards), 3)
@@ -96,7 +82,7 @@ Namespace wordtracer.cjk
         <command_line_specified>
         Private Shared Sub from_tar_raw_3()
             Dim num_of_shards As UInt32 = (shards Or 7)
-            runner.execute(
+            concurrency_runner.execute(
                 num_of_shards,
                 Sub(ByVal i As UInt32)
                     Dim n As New nplus1(New shard(Of String)(i, num_of_shards), 3)
@@ -110,7 +96,7 @@ Namespace wordtracer.cjk
         <command_line_specified>
         Private Shared Sub from_tar_4()
             Dim num_of_shards As UInt32 = (shards Or 15)
-            runner.execute(
+            concurrency_runner.execute(
                 num_of_shards,
                 Sub(ByVal i As UInt32)
                     Dim n As New nplus1(New shard(Of String)(i, num_of_shards), 4)
