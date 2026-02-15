@@ -9,6 +9,8 @@ Imports osi.root.utt.attributes
 Imports osi.service.resource
 Imports nplus1 = osi.service.ml.wordtracer.cjk.nplus1
 
+' C:\Users\Hzj_j\git\osi.net\root\utt\bin\Release\training-data\zh>v:\Users\hzj_jie\git\osi.net\root\utt\bin\Release\osi.root.utt nplus1_test.from_tar_raw_2 --percent=0
+
 Namespace wordtracer.cjk
     <test>
     Public NotInheritable Class nplus1_test

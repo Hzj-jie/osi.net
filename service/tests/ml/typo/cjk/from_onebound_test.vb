@@ -9,6 +9,8 @@ Imports osi.root.utt.attributes
 Imports osi.service.resource
 Imports from_onebound = osi.service.ml.typo.cjk.from_onebound
 
+' C:\Users\Hzj_j\git\osi.net\root\utt\bin\Release\training-data\zh\heavy-typo-book>v:\Users\hzj_jie\git\osi.net\root\utt\bin\Release\osi.root.utt from_onebound_test --model="..\cjk.nplus1.2" > typos.txt
+
 Namespace typo.cjk
     <test>
     Public NotInheritable Class from_onebound_test
