@@ -39,7 +39,7 @@ Partial Public NotInheritable Class typo
                 If Not Me.s(f) Then
                     Return Nothing
                 End If
-                If m(f, s) < (threshold Or 0.5) Then
+                If m(f, s) < (threshold Or 0.01) Then
                     Return f + s
                 End If
                 Return Nothing
