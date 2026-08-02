@@ -11,6 +11,7 @@ Imports osi.root.formation
 Partial Public NotInheritable Class logic
     Partial Public NotInheritable Class builders
         Public Shared ReadOnly debug_dump As Boolean = env_bool(env_keys("compiler", "debug", "dump"))
+        Public Shared ReadOnly debug_dump_file As Boolean = env_bool(env_keys("compiler", "debug", "dump", "file"))
 
         ' Stores a type in logic with type(string) and ref(boolean). It's also widely used in bstyle and b2style since
         ' the same & mark is used for reference types.
