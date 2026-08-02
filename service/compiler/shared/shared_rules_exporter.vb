@@ -10,7 +10,7 @@ Imports osi.service.resource
 
 <global_init(global_init_level.services)>
 Public NotInheritable Class shared_rules_exporter
-    Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "service/compiler/shared")
+    Private Shared ReadOnly folder As String = Path.Combine(deploys.temp_folder, "service/compiler/shared")
 
     Private Shared Sub init()
         shared_rules.nlexer_rule.sync_export(Path.Combine(folder, "nlexer_rule.txt"))

@@ -32,7 +32,7 @@ Partial Public NotInheritable Class b2style
             Private Shared ReadOnly folder As String = init_inc_folder()
 
             Private Shared Function init_inc_folder() As String
-                Dim folder As String = Path.Combine(temp_folder, "b2style-inc")
+                Dim folder As String = Path.Combine(deploys.temp_folder, "b2style-inc")
                 tar.gen.dump(b2style_lib.data, folder)
                 Return folder
             End Function

@@ -13,12 +13,13 @@ Imports osi.root.utt
 Imports osi.service.configuration
 Imports c = osi.service.configuration
 Imports envs = osi.root.envs
+Imports utils = osi.root.utils
 
 Public NotInheritable Class configuration_test2
     Inherits [case]
 
     Private ReadOnly config_file As String =
-        Path.Combine(temp_folder, strcat(guid_str(), filesystem.extension_prefix, "ini"))
+        Path.Combine(utils.deploys.temp_folder, strcat(guid_str(), filesystem.extension_prefix, "ini"))
 
     Public Overrides Function prepare() As Boolean
         If MyBase.prepare() Then

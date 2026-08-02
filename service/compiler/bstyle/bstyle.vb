@@ -16,7 +16,7 @@ Imports statements = osi.service.compiler.statements(Of osi.service.compiler.log
 Partial Public NotInheritable Class bstyle
     Inherits logic_rule_wrapper(Of nlexer_rule_t, syntaxer_rule_t, prefixes_t, suffixes_t, logic_gens_t, scope)
 
-    Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "service/compiler/bstyle")
+    Private Shared ReadOnly folder As String = Path.Combine(deploys.temp_folder, "service/compiler/bstyle")
 
     Public NotInheritable Class nlexer_rule_t
         Inherits __do(Of String)

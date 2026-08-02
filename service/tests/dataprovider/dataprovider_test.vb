@@ -12,7 +12,7 @@ Imports osi.service.dataprovider
 Public Class dataprovider_test
     Inherits [case]
 
-    Private Shared ReadOnly filename As String = Path.Combine(temp_folder, guid_str())
+    Private Shared ReadOnly filename As String = Path.Combine(deploys.temp_folder, guid_str())
     Private Shared ReadOnly ds() As String = {"first text",
                                               "second text",
                                               "third text",

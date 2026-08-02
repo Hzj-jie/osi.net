@@ -8,14 +8,14 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 <global_init(global_init_level.foundamental)>
-Public Module deploys
+Public NotInheritable Class deploys
     Public Const temp_folder_name As String = "temp"
-    Public ReadOnly temp_folder As String = Path.Combine(envs.deploys.deploys_folder,
-                                                         temp_folder_name,
-                                                         envs.application_name,
-                                                         guid_str())
+    Public Shared ReadOnly temp_folder As String = Path.Combine(envs.deploys.deploys_folder,
+                                                                temp_folder_name,
+                                                                envs.application_name,
+                                                                guid_str())
 
-    Private Sub init()
+    Private Shared Sub init()
         Try
             assert(Not Directory.CreateDirectory(temp_folder) Is Nothing)
         Catch ex As Exception
@@ -38,4 +38,5 @@ Public Module deploys
         Private Sub New()
         End Sub
     End Class
-End Module
+End Class
+

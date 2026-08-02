@@ -9,8 +9,9 @@ Imports osi.root.constants
 Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.configuration
-Imports envs = osi.root.envs
 Imports c = osi.service.configuration
+Imports envs = osi.root.envs
+Imports utils = osi.root.utils
 
 Public NotInheritable Class configuration_test
     Inherits [case]
@@ -20,7 +21,7 @@ Public NotInheritable Class configuration_test
         Private Shared write_times As Int32 = 0
 
         Shared Sub New()
-            file = Path.Combine(temp_folder, guid_str().with_file_extension("ini"))
+            file = Path.Combine(utils.deploys.temp_folder, guid_str().with_file_extension("ini"))
         End Sub
 
         Public Shared Sub write()

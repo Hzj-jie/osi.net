@@ -23,11 +23,11 @@ Public NotInheritable Class process_io_test
     Shared Sub New()
         Dim filename As String = Nothing
         filename = guid_str()
-        process_io_exe_full_path = Path.Combine(temp_folder,
+        process_io_exe_full_path = Path.Combine(deploys.temp_folder,
                                                 strcat(filename,
                                                        filesystem.extension_prefix,
                                                        filesystem.extensions.executable_file))
-        process_io_pdb_full_path = Path.Combine(temp_folder,
+        process_io_pdb_full_path = Path.Combine(deploys.temp_folder,
                                                 strcat(filename,
                                                        filesystem.extension_prefix,
                                                        filesystem.extensions.program_database))

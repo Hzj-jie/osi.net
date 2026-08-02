@@ -1,14 +1,18 @@
 
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.ComponentModel
 Imports System.IO
-Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.constants
 Imports osi.root.procedure
-Imports osi.root.utils
 Imports osi.root.threadpool
+Imports osi.root.utils
 Imports osi.root.utt
 
-Public Class shell_less_process_test
+Public NotInheritable Class shell_less_process_test
     Inherits [case]
 
     Private Shared ReadOnly shell_less_process_test_exe_full_path As String
@@ -17,11 +21,11 @@ Public Class shell_less_process_test
 
     Shared Sub New()
         shell_less_process_test_name = guid_str()
-        shell_less_process_test_exe_full_path = Path.Combine(temp_folder,
+        shell_less_process_test_exe_full_path = Path.Combine(deploys.temp_folder,
                                                              strcat(shell_less_process_test_name,
                                                                     filesystem.extension_prefix,
                                                                     filesystem.extensions.executable_file))
-        shell_less_process_test_pdb_full_path = Path.Combine(temp_folder,
+        shell_less_process_test_pdb_full_path = Path.Combine(deploys.temp_folder,
                                                              strcat(shell_less_process_test_name,
                                                                     filesystem.extension_prefix,
                                                                     filesystem.extensions.program_database))
