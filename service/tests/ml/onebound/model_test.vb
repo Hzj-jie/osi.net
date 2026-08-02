@@ -21,6 +21,8 @@ Namespace onebound
         Private Shared inputs As argument(Of vector(Of String))
         Private Shared lower_bound As argument(Of Double)
         Private Shared output As argument(Of String)
+        Private Shared shards As argument(Of UInt32)
+        Private Shared upper_bound As argument(Of Double)
 
         <test>
         <repeat(100)>
@@ -215,6 +217,32 @@ Namespace onebound
                                      w.WriteLine(String.Concat(p.first, " ", p.second))
                                  End Sub)
             End Using
+        End Sub
+
+        <command_line_specified>
+        <test>
+        Private Shared Sub low_percent_to_console()
+            For i As UInt32 = 0 To (shards Or 15) - uint32_1
+                load_to_pairs(String.Concat(input Or "cjk.nplus1.2", ".", i, ".raw.bin")).
+                    foreach(Sub(ByVal p As first_const_pair(Of String, Double))
+                                If p.second < (upper_bound Or 0.01) Then
+                                    Console.WriteLine(String.Concat(p.first, " ", p.second))
+                                End If
+                            End Sub)
+            Next
+        End Sub
+
+        <command_line_specified>
+        <test>
+        Private Shared Sub low_percentile_to_console()
+            For i As UInt32 = 0 To (shards Or 15) - uint32_1
+                load_to_pairs(String.Concat(input Or "cjk.nplus1.2", ".", i, ".bin")).
+                    foreach(Sub(ByVal p As first_const_pair(Of String, Double))
+                                If p.second < (upper_bound Or 0.01) Then
+                                    Console.WriteLine(String.Concat(p.first, " ", p.second))
+                                End If
+                            End Sub)
+            Next
         End Sub
 
         Private Sub New()
