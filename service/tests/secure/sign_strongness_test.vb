@@ -103,17 +103,22 @@ Public Class sign_strongness_test
     Private Class sign_strongness_case3
         Inherits sign_strongness_case
 
-        Private Shared ReadOnly weak_signer() As signer = {
-            bypass.instance,
-            bypass2.instance,
-            ring.instance,
-            md5_merge_hasher.ring,
-            hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.md5_new).ring,
-            hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.ripemd160_new).ring,
-            hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.sha1_new).ring,
-            hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.sha256_new).ring,
-            hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.sha384_new).ring,
-            hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.sha512_new).ring}
+        Private Shared ReadOnly weak_signer() As signer = Function() As signer()
+                                                              Dim r() As signer = {
+                                                                  bypass.instance,
+                                                                  bypass2.instance,
+                                                                  ring.instance,
+                                                                  md5_merge_hasher.ring,
+                                                                  hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.md5_new).ring,
+                                                                  hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.sha1_new).ring,
+                                                                  hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.sha256_new).ring,
+                                                                  hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.sha384_new).ring,
+                                                                  hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.sha512_new).ring}
+#If Not NET8_0_OR_GREATER Then
+                                                              r = array_concat(r, {hash_algorithm_merge_hasher(Of hash_algorithm_merge_hasher.ripemd160_new).ring})
+#End If
+                                                              Return r
+                                                          End Function()
         Private ReadOnly expected_weak As Boolean
         Private ReadOnly b() As Byte
 

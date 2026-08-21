@@ -7,6 +7,7 @@ Imports System.Runtime.CompilerServices
 Imports System.IO
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.envs
 Imports osi.root.utils
 
 Public Module _resource

@@ -111,14 +111,17 @@ Public Class cryptography_behavior_test
         End Function
 
         Public Shared Function cases() As [case]()
-            Return {
+            Dim r() As [case] = {
                 create(AddressOf MD5.Create),
-                create(AddressOf RIPEMD160.Create),
                 create(AddressOf SHA1.Create),
                 create(AddressOf SHA256.Create),
                 create(AddressOf SHA384.Create),
                 create(AddressOf SHA512.Create)
             }
+#If Not NET8_0_OR_GREATER Then
+            r = array_concat(r, {create(AddressOf RIPEMD160.Create)})
+#End If
+            Return r
         End Function
     End Class
 
@@ -165,14 +168,17 @@ Public Class cryptography_behavior_test
         End Function
 
         Public Shared Function cases() As [case]()
-            Return {
+            Dim r() As [case] = {
                 create(MD5.Create()),
-                create(RIPEMD160.Create()),
                 create(SHA1.Create()),
                 create(SHA256.Create()),
                 create(SHA384.Create()),
                 create(SHA512.Create())
             }
+#If Not NET8_0_OR_GREATER Then
+            r = array_concat(r, {create(RIPEMD160.Create())})
+#End If
+            Return r
         End Function
     End Class
 
@@ -225,15 +231,19 @@ Public Class cryptography_behavior_test
         End Function
 
         Public Shared Function cases() As [case]()
-            Return {
-                create(MACTripleDES.Create()),
-                create(HMACMD5.Create()),
-                create(HMACRIPEMD160.Create()),
-                create(HMACSHA1.Create()),
-                create(HMACSHA256.Create()),
-                create(HMACSHA384.Create()),
-                create(HMACSHA512.Create())
+            Dim r() As [case] = {
+                create(New HMACMD5()),
+                create(New HMACSHA1()),
+                create(New HMACSHA256()),
+                create(New HMACSHA384()),
+                create(New HMACSHA512())
             }
+#If Not NET8_0_OR_GREATER Then
+            r = array_concat({create(MACTripleDES.Create())},
+                             r,
+                             {create(HMACRIPEMD160.Create())})
+#End If
+            Return r
         End Function
     End Class
 

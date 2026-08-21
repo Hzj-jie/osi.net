@@ -1,4 +1,5 @@
 
+#If Not NET8_0_OR_GREATER Then
 Imports osi.root.utt
 
 Public Class string_null_or_whitespace_perf
@@ -8,3 +9,4 @@ Public Class string_null_or_whitespace_perf
         MyBase.New(string_null_or_whitespace_perf_exe)
     End Sub
 End Class
+#End If

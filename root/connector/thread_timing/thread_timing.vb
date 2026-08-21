@@ -132,14 +132,28 @@ Public Class priority
             p = Process.GetCurrentProcess()
             ppc = p.PriorityClass()
             If ppc <> n.target_process_priority() Then
+#If NET8_0_OR_GREATER Then
+                Try
+                    p.PriorityClass() = n.target_process_priority()
+                Catch
+                End Try
+#Else
                 p.PriorityClass() = n.target_process_priority()
+#End If
             End If
         End If
         If Not n.keep_thread_priority() Then
             t = Thread.CurrentThread()
             otp = t.Priority()
             If otp <> n.target_thread_priority() Then
+#If NET8_0_OR_GREATER Then
+                Try
+                    t.Priority() = n.target_thread_priority()
+                Catch
+                End Try
+#Else
                 t.Priority() = n.target_thread_priority()
+#End If
             End If
         End If
     End Sub
@@ -149,13 +163,27 @@ Public Class priority
         If Not n.keep_process_priority() Then
             assert(Not p Is Nothing)
             If ppc <> n.target_process_priority() Then
+#If NET8_0_OR_GREATER Then
+                Try
+                    p.PriorityClass() = ppc
+                Catch
+                End Try
+#Else
                 p.PriorityClass() = ppc
+#End If
             End If
         End If
         If Not n.keep_thread_priority() Then
             assert(Not t Is Nothing)
             If otp <> n.target_thread_priority() Then
+#If NET8_0_OR_GREATER Then
+                Try
+                    t.Priority() = otp
+                Catch
+                End Try
+#Else
                 t.Priority() = otp
+#End If
             End If
         End If
         GC.SuppressFinalize(Me)

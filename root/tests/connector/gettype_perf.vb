@@ -65,7 +65,7 @@ Public NotInheritable Class gettype_perf
         End Function
 
         Public Sub New()
-            MyBase.New(round, build_cases(Of I)(New B()).append(r(New gettype_run2(Of I)(New B()))))
+            MyBase.New(round, array_concat(build_cases(Of I)(New B()), {r(New gettype_run2(Of I)(New B()))}))
         End Sub
     End Class
 
@@ -77,7 +77,7 @@ Public NotInheritable Class gettype_perf
         End Function
 
         Public Sub New()
-            MyBase.New(round, build_cases(Of B)(New D()).append(r(New gettype_run2(Of B)(New D()))))
+            MyBase.New(round, array_concat(build_cases(Of B)(New D()), {r(New gettype_run2(Of B)(New D()))}))
         End Sub
     End Class
 

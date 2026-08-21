@@ -7,7 +7,7 @@ Imports osi.root.connector
 Imports osi.root.utt
 Imports osi.root.utils
 Imports osi.root.procedure
-Imports envs = osi.root.envs
+Imports osi.root.envs
 
 Public Class chmod_test
     Inherits [case]

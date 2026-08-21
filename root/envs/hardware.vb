@@ -3,7 +3,9 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+#If Not NET8_0_OR_GREATER Then
 Imports System.Management
+#End If
 Imports osi.root.connector
 Imports osi.root.constants
 
@@ -35,6 +37,7 @@ Public Module _hardware
     Public ReadOnly report_hardware_info As Boolean = env_bool(env_keys("report", "hardware", "info"))
 
     Private Function search_management_object(ByVal item_name As String) As String
+#If Not NET8_0_OR_GREATER Then
         Using searcher As New ManagementObjectSearcher("select * from Win32_ComputerSystem")
             Using items As ManagementObjectCollection = searcher.Get()
                 For Each item As ManagementBaseObject In items
@@ -47,6 +50,7 @@ Public Module _hardware
                 Next
             End Using
         End Using
+#End If
         Return ""
     End Function
 

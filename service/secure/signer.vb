@@ -29,32 +29,39 @@ Namespace sign
         End Function
 
         Public Function all_signers() As signer()
-            Return array_concat(Of signer)({
-                                               secure.sign.bypass.instance,
-                                               bypass2.instance,
-                                               ring.instance,
-                                               [xor].instance
-                                           },
-                                           {
-                                               md5_merge_hasher.concat,
-                                               md5_merge_hasher.ring,
-                                               md5_merge_hasher.xor
-                                           },
-                                           merged(Of hash_algorithm_merge_hasher.md5_new)(),
-                                           merged(Of hash_algorithm_merge_hasher.ripemd160_new)(),
-                                           merged(Of hash_algorithm_merge_hasher.sha1_new)(),
-                                           merged(Of hash_algorithm_merge_hasher.sha256_new)(),
-                                           merged(Of hash_algorithm_merge_hasher.sha384_new)(),
-                                           merged(Of hash_algorithm_merge_hasher.sha512_new)(),
-                                           {
-                                               keyed(Of keyed_hasher.mac_triple_des_new)(),
-                                               keyed(Of keyed_hasher.md5_new)(),
-                                               keyed(Of keyed_hasher.ripemd160_new)(),
-                                               keyed(Of keyed_hasher.sha1_new)(),
-                                               keyed(Of keyed_hasher.sha256_new)(),
-                                               keyed(Of keyed_hasher.sha384_new)(),
-                                               keyed(Of keyed_hasher.sha512_new)()
-                                           })
+            Dim r() As signer = Nothing
+            r = array_concat(Of signer)({
+                                            secure.sign.bypass.instance,
+                                            bypass2.instance,
+                                            ring.instance,
+                                            [xor].instance
+                                        },
+                                        {
+                                            md5_merge_hasher.concat,
+                                            md5_merge_hasher.ring,
+                                            md5_merge_hasher.xor
+                                        },
+                                        merged(Of hash_algorithm_merge_hasher.md5_new)(),
+                                        merged(Of hash_algorithm_merge_hasher.sha1_new)(),
+                                        merged(Of hash_algorithm_merge_hasher.sha256_new)(),
+                                        merged(Of hash_algorithm_merge_hasher.sha384_new)(),
+                                        merged(Of hash_algorithm_merge_hasher.sha512_new)(),
+                                        {
+                                            keyed(Of keyed_hasher.md5_new)(),
+                                            keyed(Of keyed_hasher.sha1_new)(),
+                                            keyed(Of keyed_hasher.sha256_new)(),
+                                            keyed(Of keyed_hasher.sha384_new)(),
+                                            keyed(Of keyed_hasher.sha512_new)()
+                                        })
+#If Not NET8_0_OR_GREATER Then
+            r = array_concat(r,
+                             merged(Of hash_algorithm_merge_hasher.ripemd160_new)(),
+                             {
+                                 keyed(Of keyed_hasher.mac_triple_des_new)(),
+                                 keyed(Of keyed_hasher.ripemd160_new)()
+                             })
+#End If
+            Return r
         End Function
 
         <Extension()> Public Function bypass(ByVal e As signer) As Boolean

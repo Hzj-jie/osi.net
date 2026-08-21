@@ -3,10 +3,17 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.InteropServices
 Imports osi.root.connector
 Imports osi.root.constants
 
 Public Module _chmod
+#If NET8_0_OR_GREATER Then
+    <DllImport("libc", EntryPoint:="chmod", SetLastError:=True)>
+    Private Function sys_chmod(ByVal path As String, ByVal mode As UInt32) As Int32
+    End Function
+#End If
+
     Public Enum FilePermissions As UInt32
         S_ISUID = &H800 ' Set user ID on execution
         S_ISGID = &H400 ' Set group ID on execution
@@ -40,9 +47,20 @@ Public Module _chmod
         S_IFSOCK = &HC000 ' Socket
     End Enum
 
-    ' TODO: Implement native Linux chmod using File.SetUnixFileMode or libc P/Invoke on modern .NET / Linux.
     Public Sub chmod(ByVal file As String, ByVal permissions As FilePermissions, ByRef o As Int32)
+#If NET8_0_OR_GREATER Then
+        If OperatingSystem.IsLinux() OrElse OperatingSystem.IsMacOS() Then
+            Try
+                o = sys_chmod(file, CUInt(permissions))
+            Catch
+                o = -1
+            End Try
+            Return
+        End If
+        o = 0
+#Else
         o = -2
+#End If
     End Sub
 
     Public Function chmod(ByVal file As String, ByVal permissions As FilePermissions) As Boolean

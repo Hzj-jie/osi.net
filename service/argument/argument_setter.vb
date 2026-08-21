@@ -141,7 +141,7 @@ Public NotInheritable Class argument_setter
         If Not field.GetValue(Nothing) Is Nothing Then
             Return [optional].empty(Of Type)()
         End If
-        Return [optional].of(field.FieldType().GetGenericArguments(0))
+        Return [optional].of(field.FieldType().GetGenericArguments()(0))
     End Function
 
     Private Sub New()

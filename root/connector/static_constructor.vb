@@ -12,7 +12,11 @@ Public NotInheritable Class static_constructor
         ' https://stackoverflow.com/questions/11593615/why-would-finding-a-types-initializer-throw-a-nullreferenceexception
         ' about the reason of casting t to _Type.
         ' It may randomly throw System.NullReferenceException within System.RuntimeType.GetConstructorImpl().
+#If NET8_0_OR_GREATER Then
+        Return If(t Is Nothing, Nothing, t.TypeInitializer())
+#Else
         Return If(t Is Nothing, Nothing, direct_cast(Of Runtime.InteropServices._Type)(t).TypeInitializer())
+#End If
     End Function
 
     Private Shared Function as_action(ByVal c As ConstructorInfo) As Action

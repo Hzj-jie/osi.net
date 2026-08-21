@@ -26,7 +26,11 @@ Public Module _assembly
         files = Directory.GetFiles(path, file_pattern)
         concurrency_runner.execute(Sub(file As String)
                                        Try
+#If NET8_0_OR_GREATER Then
+                                           Assembly.LoadFrom(file)
+#Else
                                            this.Load(AssemblyName.GetAssemblyName(file))
+#End If
                                        Catch ex As Exception
                                            raise_error(error_type.exclamation,
                                                        "failed to load assembly ",

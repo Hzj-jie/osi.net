@@ -21,6 +21,11 @@ Public NotInheritable Class deploys
                              deploys_folder_name) Then
                 Return Path.GetDirectoryName(Path.GetDirectoryName(application_directory))
             End If
+#If NET8_0_OR_GREATER Then
+            If os.family = os.family_t.unix OrElse os.family = os.family_t.macosx Then
+                Return Path.GetTempPath()
+            End If
+#End If
             Return Path.GetPathRoot(application_directory)
         End Function()
     Public Shared ReadOnly dev_env As Boolean = (deploys_root = Path.GetPathRoot(application_directory))

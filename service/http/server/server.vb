@@ -37,6 +37,7 @@ Partial Public NotInheritable Class server
         assert(HttpListener.IsSupported())
         ServicePointManager.DefaultConnectionLimit() = max_int32
         ServicePointManager.UseNagleAlgorithm() = False
+#If Not NET8_0_OR_GREATER Then
         Try
             DirectCast(Web.Configuration.WebConfigurationManager.OpenWebConfiguration(Nothing) _
                 .GetSection("system.web/httpRuntime"),
@@ -44,6 +45,7 @@ Partial Public NotInheritable Class server
         Catch ex As Exception
             raise_error(error_type.warning, "failed to set EnableHeaderChecking to false, ex ", ex.Message())
         End Try
+#End If
     End Sub
 
     Public Sub New(ByVal c As configuration)

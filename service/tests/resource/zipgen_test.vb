@@ -24,6 +24,7 @@ Public Class zipgen_test
         Return True
     End Function
 
+#If Not NET8_0_OR_GREATER Then
     Protected Overrides Sub Finalize()
         Dim v As valuer(Of Byte()) = Nothing
         v = New valuer(Of Byte())(GetType(_data), binding_flags.static_public, "data")
@@ -32,4 +33,5 @@ Public Class zipgen_test
         v.set(Nothing)
         MyBase.Finalize()
     End Sub
+#End If
 End Class

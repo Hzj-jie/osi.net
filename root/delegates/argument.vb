@@ -25,7 +25,7 @@ Public NotInheritable Class argument(Of T)
             Console.WriteLine("argument has not been initialized, " +
                               "did you forget to call global_init.execute(arguments) or " +
                               "access an argument before arguments?")
-            Console.WriteLine(New Exception().StackTrace())
+            Console.WriteLine(Environment.StackTrace)
             Environment.Exit(1)
         End If
     End Sub

@@ -42,10 +42,17 @@ End Class
 <global_init(global_init_level.foundamental)>
 Public NotInheritable Class disable_windows_error_popup
     Private Shared Sub init()
-        windows_error_mode.[set](windows_error_mode.SEM_FAILCRITICALERRORS Or
-                                 windows_error_mode.SEM_NOALIGNMENTFAULTEXCEPT Or
-                                 windows_error_mode.SEM_NOGPFAULTERRORBOX Or
-                                 windows_error_mode.SEM_NOOPENFILEERRORBOX)
+#If NET8_0_OR_GREATER Then
+        If OperatingSystem.IsWindows() Then
+#Else
+        Dim p As PlatformID = Environment.OSVersion().Platform()
+        If p = PlatformID.Win32NT OrElse p = PlatformID.Win32Windows OrElse p = PlatformID.Win32S OrElse p = PlatformID.WinCE Then
+#End If
+            windows_error_mode.[set](windows_error_mode.SEM_FAILCRITICALERRORS Or
+                                     windows_error_mode.SEM_NOALIGNMENTFAULTEXCEPT Or
+                                     windows_error_mode.SEM_NOGPFAULTERRORBOX Or
+                                     windows_error_mode.SEM_NOOPENFILEERRORBOX)
+        End If
     End Sub
 
     Private Sub New()

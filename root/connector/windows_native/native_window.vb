@@ -55,6 +55,7 @@ Public NotInheritable Class native_window
         End Try
     End Function
 
+#If Not NET8_0_OR_GREATER Then
     Public Shared Function get_rect(ByVal wnd As Windows.Forms.Control, ByRef rect As rect) As Boolean
         If wnd Is Nothing Then
             Return False
@@ -62,6 +63,7 @@ Public NotInheritable Class native_window
             Return get_rect(New HandleRef(wnd, wnd.Handle()), rect)
         End If
     End Function
+#End If
 
     Public Shared Function get_client_rect(ByVal wnd As HandleRef, ByRef rect As rect) As Boolean
         Try
@@ -72,6 +74,7 @@ Public NotInheritable Class native_window
         End Try
     End Function
 
+#If Not NET8_0_OR_GREATER Then
     Public Shared Function get_client_rect(ByVal wnd As Windows.Forms.Control, ByRef rect As rect) As Boolean
         If wnd Is Nothing Then
             Return False
@@ -79,6 +82,7 @@ Public NotInheritable Class native_window
             Return get_client_rect(New HandleRef(wnd, wnd.Handle()), rect)
         End If
     End Function
+#End If
 
     Public Shared Function get_thread_process_id(ByVal wnd As HandleRef,
                                                  Optional ByRef process_id As UInt32 = 0,
@@ -92,11 +96,13 @@ Public NotInheritable Class native_window
         End Try
     End Function
 
+#If Not NET8_0_OR_GREATER Then
     Public Shared Function get_thread_process_id(ByVal wnd As Windows.Forms.Control,
                                                  Optional ByRef process_id As UInt32 = 0,
                                                  Optional ByRef thread_id As UInt32 = 0) As Boolean
         Return get_thread_process_id(New HandleRef(wnd, wnd.Handle()), process_id, thread_id)
     End Function
+#End If
 
     Public Shared Function get_window(ByVal wnd As HandleRef,
                                       ByVal cmd As get_window_command,
@@ -110,11 +116,13 @@ Public NotInheritable Class native_window
         End Try
     End Function
 
+#If Not NET8_0_OR_GREATER Then
     Public Shared Function get_window(ByVal wnd As Windows.Forms.Control,
                                       ByVal cmd As get_window_command,
                                       ByRef result As IntPtr) As Boolean
         Return get_window(New HandleRef(wnd, wnd.Handle()), cmd, result)
     End Function
+#End If
 
     Public Shared Function get_ancestor(ByVal wnd As HandleRef,
                                         ByVal flag As get_ancestor_flag,
@@ -128,11 +136,13 @@ Public NotInheritable Class native_window
         End Try
     End Function
 
+#If Not NET8_0_OR_GREATER Then
     Public Shared Function get_ancestor(ByVal wnd As Windows.Forms.Control,
                                         ByVal flag As get_ancestor_flag,
                                         ByRef result As IntPtr) As Boolean
         Return get_ancestor(New HandleRef(wnd, wnd.Handle()), flag, result)
     End Function
+#End If
 
     Private Sub New()
     End Sub

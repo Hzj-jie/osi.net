@@ -36,9 +36,15 @@ Public NotInheritable Class os
         _unknown
     End Enum
 
+#If NET8_0_OR_GREATER Then
+    Public Shared ReadOnly full_name As String = System.Runtime.InteropServices.RuntimeInformation.OSDescription
+    Public Shared ReadOnly platform As String = System.Runtime.InteropServices.RuntimeInformation.OSDescription
+    Public Shared ReadOnly version As String = Environment.OSVersion().VersionString()
+#Else
     Public Shared ReadOnly full_name As String = computer.Info().OSFullName()
     Public Shared ReadOnly platform As String = computer.Info().OSPlatform()
     Public Shared ReadOnly version As String = computer.Info().OSVersion()
+#End If
     Public Shared ReadOnly family As family_t = Function() As family_t
                                                     Dim p As PlatformID = Environment.OSVersion().Platform()
                                                     Select Case p

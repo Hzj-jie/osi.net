@@ -8,7 +8,9 @@ Namespace sign
     Public NotInheritable Class hash_algorithm_merge_hasher
         Shared Sub New()
             hash_algorithm_merge_hasher(Of md5_new).register("md5_2")
+#If Not NET8_0_OR_GREATER Then
             hash_algorithm_merge_hasher(Of ripemd160_new).register("ripemd160")
+#End If
             hash_algorithm_merge_hasher(Of sha1_new).register("sha1")
             hash_algorithm_merge_hasher(Of sha256_new).register("sha256")
             hash_algorithm_merge_hasher(Of sha384_new).register("sha384")
@@ -24,6 +26,7 @@ Namespace sign
             End Function
         End Class
 
+#If Not NET8_0_OR_GREATER Then
         Public Class ripemd160_new
             Inherits __do(Of HashAlgorithm)
 
@@ -31,6 +34,7 @@ Namespace sign
                 Return RIPEMD160.Create()
             End Function
         End Class
+#End If
 
         Public Class sha1_new
             Inherits __do(Of HashAlgorithm)
