@@ -30,12 +30,10 @@ Public Module test_http_server
 
     Sub New()
         enable_domain_unhandled_exception_handler()
-        register_slimqless2_threadpool()
     End Sub
 
     Public Sub main(ByVal args() As String)
         set_not_debug_mode()
-        register_slimqless2_threadpool()
         ServicePointManager.DefaultConnectionLimit() = max_int32
         ServicePointManager.MaxServicePoints() = max_int32
         Dim port As UInt16 = 0
@@ -49,6 +47,6 @@ Public Module test_http_server
         assert(s.start())
         write_console_line(strcat("server started on port ", port))
         AddHandler control_c.press, Sub() s.stop(30)
-        gc_trigger()
+        garbage_collector.trigger()
     End Sub
 End Module

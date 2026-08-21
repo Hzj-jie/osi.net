@@ -16,6 +16,7 @@ Imports osi.service.configuration
 Imports osi.service.device
 Imports osi.service.storage
 Imports osi.service.commander
+Imports osi.service.selector
 Imports configuration = osi.service.storage.configuration
 
 Public Module _init
@@ -44,26 +45,22 @@ Public Module _init
             Return
         End If
         For i As UInt32 = 0 To keys.size() - uint32_1
-            configuration.preserved_disk_capacity(keys(i)) = UInt64.Parse(s(keys(i)))
+            configuration.reserved_disk_capacity(keys(i)) = UInt64.Parse(s(keys(i)))
         Next
     End Sub
 
     Public Function load_istrkeyvt(ByVal s As section,
                                    Optional ByVal r As ref(Of istrkeyvt) = Nothing) As event_comb
-        Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   assert(Not s Is Nothing)
                                   r.renew()
-                                  ec = async_device_constructor.resolve(
+                                  Dim obj As istrkeyvt = Nothing
+                                  If constructor.resolve(
                                            New var(s.values().env_transform(env_start_str, env_end_str)),
-                                           r)
-                                  Return waitfor(ec) AndAlso
-                                         goto_next()
-                              End Function,
-                              Function() As Boolean
-                                  If ec.end_result() AndAlso Not r.empty() Then
-                                      application_lifetime.stopping_handle(AddressOf (+r).stop)
-                                      Return manager.register(New var(s.values()), +r) AndAlso
+                                           obj) Then
+                                      r.set(obj)
+                                      application_lifetime.stopping_handle(AddressOf obj.stop)
+                                      Return manager.register(New var(s.values()), obj) AndAlso
                                              goto_end()
                                   Else
                                       Return False
@@ -78,9 +75,9 @@ Public Module _init
         If Not ss.empty() Then
             Dim loaded As atomic_int = Nothing
             loaded = New atomic_int()
-            Using New scoped_environments({{"data", data_folder},
-                                             {"service", service_name},
-                                             {"service_data", service_data_folder}})
+            Using New scoped_environments({{"data", osi.root.envs.deploys.data_folder},
+                                             {"service", osi.root.envs.deploys.service_name},
+                                             {"service_data", osi.root.envs.deploys.service_data_folder}})
                 For i As UInt32 = 0 To ss.size() - uint32_1
                     Dim ec As event_comb = Nothing
                     Dim s As section = Nothing
@@ -102,21 +99,19 @@ Public Module _init
     End Sub
 
     Public Function load_server(ByVal s As section, ByVal o As ref(Of responder)) As event_comb
-        Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
                                   o.renew()
-                                  ec = async_device_constructor.resolve(New var(s.values()),
-                                                                        executor,
-                                                                        application_lifetime.stopping_signal(),
-                                                                        o)
-                                  Return waitfor(ec) AndAlso
-                                         goto_next()
-                              End Function,
-                              Function() As Boolean
-                                  Return ec.end_result() AndAlso
-                                         assert(Not +o Is Nothing) AndAlso
-                                         -+o AndAlso
-                                         goto_end()
+                                  Dim resp As responder = Nothing
+                                  If parameter_resolve(AddressOf constructor.resolve,
+                                                       New var(s.values()),
+                                                       executor,
+                                                       application_lifetime.stopping_signal(),
+                                                       resp) Then
+                                      o.set(resp)
+                                      Return -resp AndAlso goto_end()
+                                  Else
+                                      Return False
+                                  End If
                               End Function)
     End Function
 

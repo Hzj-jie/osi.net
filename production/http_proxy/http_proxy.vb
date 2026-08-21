@@ -9,7 +9,6 @@ Imports osi.service.http
 Public Module http_proxy
     Sub New()
         enable_domain_unhandled_exception_handler()
-        register_slimqless2_threadpool()
     End Sub
 
     Private Sub load_configuration(ByVal args() As String)

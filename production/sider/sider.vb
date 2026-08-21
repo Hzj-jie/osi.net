@@ -7,11 +7,11 @@ Imports osi.service.device
 Public Module sider
     Sub New()
         debugpause()
-        global_init.execute(load_assemblies:=True)
+        global_init.execute()
     End Sub
 
     Public Sub main()
         init()
-        gc_trigger()
+        garbage_collector.trigger()
     End Sub
 End Module

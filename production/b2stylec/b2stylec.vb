@@ -27,7 +27,7 @@ Public Module b2stylec
             binary_output = New FileStream(args(1), FileMode.Create)
         End If
         Dim e As executor = Nothing
-        assert(compiler.with_default_functions().parse(source, e))
+        assert(compiler.with_default_functions().compile(source, e))
         If Not text_output Is Nothing Then
             Dim s As String = Nothing
             assert(e.export(s))

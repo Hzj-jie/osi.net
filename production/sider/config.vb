@@ -7,10 +7,9 @@ Public Module _config
 
     Sub New()
         Dim config_file As String = "sider.ini"
-        If Not My.Application().CommandLineArgs() Is Nothing AndAlso
-           My.Application().CommandLineArgs().Count() > 0 AndAlso
-           Not My.Application(.null_or_empty().CommandLineArgs()(0)) Then
-            config_file = My.Application().CommandLineArgs()(0)
+        Dim args() As String = Environment.GetCommandLineArgs()
+        If array_size(args) > 1 AndAlso Not args(1).null_or_empty() Then
+            config_file = args(1)
         End If
         raise_error("using configuration file ", config_file)
         assert_load(config_file)

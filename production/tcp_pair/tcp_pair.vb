@@ -27,19 +27,19 @@ Imports td = osi.service.tcp.constants.default_value.outgoing
 Public Module tcp_pair
 
     Sub New()
-        global_init.execute(load_assemblies:=True)
+        global_init.execute()
     End Sub
 
     Public Sub main(ByVal args() As String)
         debugpause()
-        argument.parse(args)
+        Dim v As New argument.var(args)
         Dim p As idevice_pool(Of herald) = Nothing
-        p = powerpoint.create(argument.default).herald_device_pool()
+        p = powerpoint.create(v).herald_device_pool()
         Dim c As Int64 = 0
-        If argument.switch("question") Then
+        If v.switch("question") Then
             For i As Int32 = 0 To min(max(1, p.max_count()), td.max_connected) - 1
-                Dim r As pointer(Of Byte()) = Nothing
-                r = New pointer(Of Byte())
+                Dim r As ref(Of Byte()) = Nothing
+                r = New ref(Of Byte())
                 Dim ec As event_comb = Nothing
                 Dim s As String = Nothing
                 begin_application_lifetime_event_comb(Function() As Boolean
@@ -55,10 +55,10 @@ Public Module tcp_pair
                                                           Else
                                                               raise_error(error_type.warning,
                                                                           "failed to question ",
-                                                                          argument.value("host"),
+                                                                          v.value("host"),
                                                                           ":",
-                                                                          argument.value("port"))
-                                                              assert_waitfor(sixteen_timeslice_length_ms)
+                                                                          v.value("port"))
+                                                              assert_waitfor(16 * timeslice_length_ms)
                                                           End If
                                                           Return goto_begin()
                                                       End Function)
@@ -66,7 +66,7 @@ Public Module tcp_pair
         Else
             assert(-(New responder(p,
                                    New execution_wrapper(
-                                       Function(i() As Byte, o As pointer(Of Byte())) As event_comb
+                                       Function(i() As Byte, o As ref(Of Byte())) As event_comb
                                            Return New event_comb(Function() As Boolean
                                                                      Dim s As String = Nothing
                                                                      s = guid_str()
@@ -94,6 +94,6 @@ Public Module tcp_pair
                                                                   (Now().milliseconds() - start_ms))
                                                   Return goto_begin()
                                               End Function)
-        gc_trigger()
+        garbage_collector.trigger()
     End Sub
 End Module

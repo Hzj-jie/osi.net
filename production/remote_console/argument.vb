@@ -27,10 +27,10 @@ Public Class argument
     Public Shared ReadOnly start_app As String
 
     Shared Sub New()
-        var.default.bind(_server,
-                         _start_app)
-        server = var.default.switch(_server)
-        If Not var.default.value(_start_app, start_app) AndAlso
+        var.application.bind(_server,
+                             _start_app)
+        server = var.application.switch(_server)
+        If Not var.application.value(_start_app, start_app) AndAlso
            Not env_value("ComSpec", start_app) Then
             start_app = "cmd.exe"
         End If

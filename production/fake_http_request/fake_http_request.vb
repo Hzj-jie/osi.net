@@ -20,7 +20,6 @@ Public Module fake_http_request
 
     Sub New()
         enable_domain_unhandled_exception_handler()
-        register_slimqless2_threadpool()
         set_connection_reuse(Not env_bool(env_keys("shutdown", "connection")) AndAlso
                              Not env_bool(env_keys("reset", "connection")))
         add_rnd_request_headers = env_bool(env_keys("add", "random", "request", "headers"))
@@ -80,21 +79,21 @@ Public Module fake_http_request
                 For i As Int32 = 0 To tc - 1
                     Dim ts As Int64 = 0
                     Dim ec As event_comb = Nothing
-                    Dim status As pointer(Of HttpStatusCode) = Nothing
+                    Dim resp As client.response = Nothing
                     assert_begin(New event_comb(Function() As Boolean
                                                     ts = Now().milliseconds()
-                                                    status.renew()
-                                                    ec = client.spider(random_url(),
-                                                                       rnd_request_headers(),
-                                                                       status,
-                                                                       consume_data:=consume_data)
+                                                    resp = New client.response()
+                                                    ec = request_builder.[New]().
+                                                             with_url(random_url()).
+                                                             with_headers(rnd_request_headers()).
+                                                             spider(resp, consume_data:=consume_data)
                                                     Return waitfor(ec) AndAlso
                                                            goto_next()
                                                 End Function,
                                                 Function() As Boolean
                                                     If ec.end_result() Then
                                                         Interlocked.Increment(suc_times)
-                                                        If (+status) = HttpStatusCode.OK Then
+                                                        If resp.status() = HttpStatusCode.OK Then
                                                             Interlocked.Increment(ok_times)
                                                         End If
                                                     End If
@@ -130,7 +129,7 @@ Public Module fake_http_request
                                                                 "ms")
                                                 Return goto_prev()
                                             End Function))
-                gc_trigger()
+                garbage_collector.trigger()
             End If
         End If
     End Sub

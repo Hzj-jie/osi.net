@@ -92,7 +92,7 @@ Public Module utt_diff
     End Sub
 
     Private Sub output_no_found(ByVal add_tab As Boolean)
-        Console.Write(strcat("---(---)", If(add_tab, character.tab, empty_string)))
+        Console.Write(strcat("---(---)", If(add_tab, character.tab, "")))
     End Sub
 
     Private Sub output(ByVal nv As Int64, ByVal base As Int64, ByVal add_tab As Boolean)
@@ -100,7 +100,7 @@ Public Module utt_diff
         orc = Console.ForegroundColor()
         Dim perc As Double = 0
         Console.ForegroundColor() = choose_color(nv, base, perc)
-        Console.Write(strcat(nv, "(", strleft(perc, 6), "%)", If(add_tab, character.tab, empty_string)))
+        Console.Write(strcat(nv, "(", strleft(perc, 6), "%)", If(add_tab, character.tab, "")))
         Console.ForegroundColor() = orc
     End Sub
 
