@@ -29,7 +29,13 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As SByte, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.try_write(BitConverter.GetBytes(endian.to_little_endian(i)))
+                                            #If "SByte" = "Byte" Then
+                                                Return o.try_write(New Byte() {i})
+                                            #ElseIf "SByte" = "SByte" Then
+                                                Return o.try_write(New Byte() {sbyte_byte(i)})
+                                            #Else
+                                                Return o.try_write(BitConverter.GetBytes(endian.to_little_endian(i)))
+                                            #End If
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As SByte) As Boolean
                                             assert(Not i Is Nothing)
@@ -58,7 +64,13 @@ Friend NotInheritable Class bytes_serializer_registry
 
         bytes_serializer.fixed.register(Function(ByVal i As Byte, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.try_write(BitConverter.GetBytes(endian.to_little_endian(i)))
+                                            #If "Byte" = "Byte" Then
+                                                Return o.try_write(New Byte() {i})
+                                            #ElseIf "Byte" = "SByte" Then
+                                                Return o.try_write(New Byte() {sbyte_byte(i)})
+                                            #Else
+                                                Return o.try_write(BitConverter.GetBytes(endian.to_little_endian(i)))
+                                            #End If
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As Byte) As Boolean
                                             assert(Not i Is Nothing)
