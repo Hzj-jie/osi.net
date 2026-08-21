@@ -1,9 +1,6 @@
-﻿
+
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup>
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Web" />
-  </ItemGroup>
+
   <Import Project="..\..\root\root.net8.props" Condition="'$(RootProps)'==''" />
   <Import Project="$(ServicePath)\convertor\convertor.net8.props" Condition="'$(ConvertorProps)'==''" />
   <Import Project="$(ServicePath)\commander\commander.net8.props" Condition="'$(CommanderProps)'==''" />

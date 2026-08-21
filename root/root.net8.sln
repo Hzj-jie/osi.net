@@ -10,9 +10,6 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "lock", "lock\lock.net8.vbproj", "{5BB4ADDE-7C12-4221-AE69-C669255C931E}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "envs", "envs\envs.net8.vbproj", "{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}"
-	ProjectSection(ProjectDependencies) = postProject
-		{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B} = {AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}
-	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "connector", "connector\connector.net8.vbproj", "{37EC873B-1EA8-449D-AC58-75A2F26FE5EA}"
 EndProject
@@ -33,8 +30,6 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "formation", "tests\formation\formation.net8.vbproj", "{ED8B849E-27C6-474E-A5D5-F3BF955173D3}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "utt", "utt\utt.net8.vbproj", "{C56C84B9-F739-4BAF-8795-FC7CAA6CC549}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "codegen", "codegen\codegen.vbproj", "{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "utils", "tests\utils\utils.net8.vbproj", "{E3173F00-770A-4202-9C5E-E2AEBB81CD09}"
 EndProject
@@ -117,10 +112,6 @@ Global
 		{C56C84B9-F739-4BAF-8795-FC7CAA6CC549}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C56C84B9-F739-4BAF-8795-FC7CAA6CC549}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C56C84B9-F739-4BAF-8795-FC7CAA6CC549}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}.Debug|Any CPU.Build.0 = Debug|x86
-		{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}.Release|Any CPU.ActiveCfg = Debug|x86
-		{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}.Release|Any CPU.Build.0 = Debug|x86
 		{E3173F00-770A-4202-9C5E-E2AEBB81CD09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E3173F00-770A-4202-9C5E-E2AEBB81CD09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3173F00-770A-4202-9C5E-E2AEBB81CD09}.Release|Any CPU.ActiveCfg = Release|Any CPU

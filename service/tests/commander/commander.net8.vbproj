@@ -8,10 +8,13 @@
     <OptionStrict>Off</OptionStrict>
     <OptionInfer>On</OptionInfer>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
 
   <ItemGroup>
     <Import Include="System" />
+    <Compile Remove="My Project\**" />
   </ItemGroup>
 
   <Import Project="..\..\..\root\root.utt.net8.props" />
@@ -20,4 +23,8 @@
   <Import Project="$(ServicePath)\tcp\tcp.net8.props" />
   <Import Project="$(ServicePath)\udp\udp.net8.props" />
   <Import Project="$(ServicePath)\http\http.net8.props" />
+
+  <ItemGroup>
+    <ProjectReference Include="$(ServicePath)\tests\transmitter\transmitter.net8.vbproj" />
+  </ItemGroup>
 </Project>

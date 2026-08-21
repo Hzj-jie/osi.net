@@ -4,6 +4,7 @@
     <RootPath Condition="!Exists('$(RootPath)\root.net8.props')">$(MSBuildThisFileDirectory)</RootPath>
     <ServicePath>$(RootPath)..\service\</ServicePath>
     <ProductionPath>$(RootPath)..\production\</ProductionPath>
+    <RollForward>LatestMajor</RollForward>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$(RootPath)constants\constants.net8.vbproj" />

@@ -8,16 +8,18 @@
     <OptionStrict>Off</OptionStrict>
     <OptionInfer>On</OptionInfer>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
 
   <ItemGroup>
     <Import Include="System" />
+    <Compile Remove="My Project\**" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\connector\connector.net8.vbproj" />
     <ProjectReference Include="..\constants\constants.net8.vbproj" />
-    <ProjectReference Include="..\codegen\codegen.net8.vbproj" />
     <ProjectReference Include="..\template\template.net8.vbproj" />
   </ItemGroup>
 </Project>
