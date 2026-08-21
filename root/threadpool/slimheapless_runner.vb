@@ -18,6 +18,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.delegates
 Imports osi.root.formation
 Imports osi.root.lock
 
@@ -78,7 +79,10 @@ Public NotInheritable Class slimheapless_runner
         If Not s.mark_in_use() Then
             Return False
         End If
-        t.Abort()
+        ' Thread.Abort() is permanently unsupported and throws PlatformNotSupportedException in modern .NET.
+        ' Pushing action_empty wakes up the worker thread if it is blocked waiting on an empty queue,
+        ' allowing it to re-check stopping() and exit cleanly.
+        push(action_empty)
         GC.SuppressFinalize(Me)
         Return True
     End Function
