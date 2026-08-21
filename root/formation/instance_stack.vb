@@ -16,8 +16,6 @@ Public NotInheritable Class instance_stack(Of T)
 End Class
 
 Public Class instance_stack(Of T, PROTECTOR)
-    'the implementation of threadstatic valuetype object is not consistent between mono and .net
-    'while .net has boxing by default
 #If use_thread_static Then
     Private Shared ReadOnly c As New thread_static(Of stack(Of T))()
 #Else

@@ -28,7 +28,7 @@ Public NotInheritable Class assertion
                             callstack())
             If Not envs.utt_no_assert Then
                 Interlocked.Increment(failure)
-                assert(atomic.read(failure) < If(envs.mono, 10000, 1000), "too many assertion failures")
+                assert(atomic.read(failure) < 1000, "too many assertion failures")
             End If
         End Sub
     End Class

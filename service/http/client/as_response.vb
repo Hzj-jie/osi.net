@@ -54,17 +54,8 @@ Partial Public NotInheritable Class client
                 Return False
             ElseIf Not this Is Nothing Then
                 this._headers = o.Headers()
-                'for mono
-                Try
-                    this._mutually_authenticated = o.IsMutuallyAuthenticated()
-                Catch
-                    this._mutually_authenticated = False
-                End Try
-                Try
-                    this._from_cache = o.IsFromCache()
-                Catch
-                    this._from_cache = False
-                End Try
+                this._mutually_authenticated = o.IsMutuallyAuthenticated()
+                this._from_cache = o.IsFromCache()
                 this._protocol_version = o.ProtocolVersion()
                 this._response_uri = o.ResponseUri()
                 this._status = o.StatusCode()

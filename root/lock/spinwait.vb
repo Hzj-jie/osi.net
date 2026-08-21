@@ -25,7 +25,7 @@ Public Module spinwait
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function should_yield() As Boolean
-        Return single_cpu OrElse mono
+        Return single_cpu
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
@@ -52,11 +52,7 @@ Public Module spinwait
         Return Thread.Yield()
 #Else
         Dim start_ms As Int64 = environment_milliseconds()
-        If mono Then
-            sleep(1)
-        Else
-            sleep(0)
-        End If
+        sleep(0)
         Return (environment_milliseconds() - start_ms) >= 8 * timeslice_length_ms
 #End If
     End Function
@@ -203,11 +199,6 @@ Public Module spinwait
             If e.WaitOne(0) Then
                 Return True
             End If
-#If USE_MEASURE_YIELD_WAIT Then
-            If mono Then
-                Return measure_yield_wait(e, wait_ms)
-            End If
-#End If
             not_force_yield()
             Return e.WaitOne(wait_ms)
         Catch ex As ObjectDisposedException

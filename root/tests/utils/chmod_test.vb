@@ -13,7 +13,8 @@ Public Class chmod_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        If envs.mono Then
+        ' TODO: Enable chmod execution test on Linux when native Unix file permissions are integrated in modern .NET.
+        If os.family = os.family_t.unix OrElse os.family = os.family_t.macosx Then
             Dim file_name As String = Nothing
             file_name = Path.Combine(temp_folder,
                                      strcat(guid_str(),

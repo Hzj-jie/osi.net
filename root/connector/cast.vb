@@ -90,8 +90,6 @@ Public Module _cast
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function change_type(Of T, IT)(ByVal i As IT, ByRef o As T) As Boolean
-        'for mono, the CType = Conversions.ToGenericParameter here,
-        'but the function does not implement correctly now
         Try
             o = DirectCast(Convert.ChangeType(i, GetType(T)), T)
             Return True
@@ -338,9 +336,6 @@ Public Module _cast
             Return True
         End If
         If _direct_cast(i, o) Then
-            Return True
-        End If
-        If on_mono() AndAlso change_type(i, o) Then
             Return True
         End If
         If c_type(i, o) Then

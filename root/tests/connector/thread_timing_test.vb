@@ -8,11 +8,7 @@ Public Class thread_timing_test
     Inherits [case]
 
     Private Shared Sub assert_process_priority(ByVal ppc As ProcessPriorityClass)
-        'for mono
-        Try
-            assertion.is_true(ppc = Process.GetCurrentProcess().PriorityClass())
-        Catch
-        End Try
+        assertion.is_true(ppc = Process.GetCurrentProcess().PriorityClass())
     End Sub
 
     Private Shared Sub assert_thread_priority(ByVal tpc As ThreadPriority)

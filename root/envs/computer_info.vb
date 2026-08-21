@@ -6,36 +6,20 @@ Option Strict On
 Public Module _computer_info
     Public ReadOnly processor_architecture As String = Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE")
 
-    'for mono
+    ' TODO: Implement Linux memory inspection via /proc/meminfo or GC.GetGCMemoryInfo() in modern .NET.
     Public Function available_physical_memory() As UInt64
-        Try
-            Return computer.Info().AvailablePhysicalMemory()
-        Catch
-            Return 0
-        End Try
+        Return computer.Info().AvailablePhysicalMemory()
     End Function
 
     Public Function available_virtual_memory() As UInt64
-        Try
-            Return computer.Info().AvailableVirtualMemory()
-        Catch
-            Return 0
-        End Try
+        Return computer.Info().AvailableVirtualMemory()
     End Function
 
     Public Function total_physical_memory() As UInt64
-        Try
-            Return computer.Info().TotalPhysicalMemory()
-        Catch
-            Return 0
-        End Try
+        Return computer.Info().TotalPhysicalMemory()
     End Function
 
     Public Function total_virtual_memory() As UInt64
-        Try
-            Return computer.Info().TotalVirtualMemory()
-        Catch
-            Return 0
-        End Try
+        Return computer.Info().TotalVirtualMemory()
     End Function
 End Module

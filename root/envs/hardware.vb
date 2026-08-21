@@ -10,14 +10,16 @@ Imports osi.root.constants
 <global_init(global_init_level.other)>
 Public Module _hardware
     Public ReadOnly hardware_manufacturer As String = Function() As String
-                                                          If envs.mono Then
-                                                              Return "Mono"
+                                                          ' TODO: Implement cross-platform hardware detection for Linux (e.g. /sys/class/dmi/id/sys_vendor).
+                                                          If os.family <> os.family_t.windows Then
+                                                              Return String.Empty
                                                           End If
                                                           Return search_management_object("Manufacturer")
                                                       End Function()
     Public ReadOnly hardware_model As String = Function() As String
-                                                   If envs.mono Then
-                                                       Return "Mono"
+                                                   ' TODO: Implement cross-platform hardware model detection for Linux (e.g. /sys/class/dmi/id/product_name).
+                                                   If os.family <> os.family_t.windows Then
+                                                       Return String.Empty
                                                    End If
                                                    Return search_management_object("Model")
                                                End Function()

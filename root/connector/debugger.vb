@@ -11,12 +11,7 @@ Public Module _debugger
             Debugger.Break()
             Return True
         Else
-            'for mono
-            Try
-                Return Debugger.Launch()
-            Catch
-            End Try
-            Return False
+            Return Debugger.Launch()
         End If
     End Function
 

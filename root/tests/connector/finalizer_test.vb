@@ -90,10 +90,6 @@ Public Class finalizer_test
         For i As Int32 = 0 To test_size - 1
             Dim o As T = Nothing
             o = ctor(f)
-            If envs.mono Then
-                o = Nothing
-                garbage_collector.repeat_collect()
-            End If
         Next
         validate(f)
     End Sub

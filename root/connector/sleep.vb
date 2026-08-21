@@ -25,16 +25,8 @@ Public Module _sleep
     End Sub
 
     Public Sub sleep(ByVal ms As Int32)
-        If ms = 0 Then
+        If ms >= 0 Then
             Thread.Sleep(ms)
-        ElseIf ms > 0 Then
-            'for mono
-            'Thread.Sleep has huge difference on mono
-            If on_mono() Then
-                measure_sleep(ms)
-            Else
-                Thread.Sleep(ms)
-            End If
         End If
     End Sub
 

@@ -109,10 +109,6 @@ Partial Friend NotInheritable Class host
             End If
         End If
 
-        If envs.mono Then
-            garbage_collector.waitfor_collect()
-        End If
-
         Interlocked.Decrement(running_cases)
         assert(finished.Set())
     End Sub

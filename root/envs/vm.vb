@@ -17,6 +17,4 @@ Public Module _vm
     Public ReadOnly framework_4 As Boolean = (Not Type.GetType("System.Threading.Tasks.Parallel", False) Is Nothing)
     Public ReadOnly framework_4_5 As Boolean =
         (Not Type.GetType("System.Reflection.ReflectionContext", False) Is Nothing)
-
-    Public ReadOnly mono As Boolean = connector.on_mono()
 End Module

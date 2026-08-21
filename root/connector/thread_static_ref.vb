@@ -7,9 +7,6 @@ Imports System.Runtime.CompilerServices
 Imports osi.root.constants
 Imports osi.root.delegates
 
-'For mono debug purpose, the perf is a little bit worse than .net framework TheadStatic attribute.
-' Mono cannot work well with thread-static primary types. But this class uses a set function to make sure even for
-' primary types, using this class in Mono is safe.
 Public NotInheritable Class thread_static_ref(Of T As Class)
     Private ReadOnly v As thread_static(Of T)
 

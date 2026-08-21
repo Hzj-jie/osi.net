@@ -28,8 +28,7 @@ Public NotInheritable Class comparable_type
 
     Private Shared Function use_recursive_compare() As Boolean
 #If recursive_compare Then
-        ' mono does not support Type.GUID, it always returns an identical GUID.
-        Return Not envs.mono
+        Return True
 #Else
         Return False
 #End If

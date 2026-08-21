@@ -130,16 +130,9 @@ Public Class priority
         Me.n = n
         If Not n.keep_process_priority() Then
             p = Process.GetCurrentProcess()
-            'for mono
-            Try
-                ppc = p.PriorityClass()
-            Catch
-            End Try
+            ppc = p.PriorityClass()
             If ppc <> n.target_process_priority() Then
-                Try
-                    p.PriorityClass() = n.target_process_priority()
-                Catch
-                End Try
+                p.PriorityClass() = n.target_process_priority()
             End If
         End If
         If Not n.keep_thread_priority() Then
@@ -156,11 +149,7 @@ Public Class priority
         If Not n.keep_process_priority() Then
             assert(Not p Is Nothing)
             If ppc <> n.target_process_priority() Then
-                'for mono
-                Try
-                    p.PriorityClass() = ppc
-                Catch
-                End Try
+                p.PriorityClass() = ppc
             End If
         End If
         If Not n.keep_thread_priority() Then

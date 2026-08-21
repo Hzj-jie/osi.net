@@ -23,29 +23,19 @@ Public Module _headers
                                  build()
         assert(_unsafe_add_header.post_binding())
 
-        'for mono
-        If Not invoker.of(_allow_http_response_header).
-                   with_type(Of WebHeaderCollection)().
-                   with_binding_flags(binding_flags.instance_private_method).
-                   with_name("get_AllowHttpResponseHeader").
-                   build(_allow_http_response_header) OrElse
-           Not _allow_http_response_header.post_binding() Then
-            raise_error(error_type.warning,
-                        "get_AllowHttpResponseHeader is not presented in the implementation, ",
-                        "the performance of get method will be impacted")
-        End If
+        _allow_http_response_header = invoker.of(_allow_http_response_header).
+                                          with_type(Of WebHeaderCollection)().
+                                          with_binding_flags(binding_flags.instance_private_method).
+                                          with_name("get_AllowHttpResponseHeader").
+                                          build()
+        assert(_allow_http_response_header.post_binding())
 
-        'for mono
-        If Not invoker.of(_allow_http_request_header).
-                   with_type(Of WebHeaderCollection)().
-                   with_binding_flags(binding_flags.instance_private_method).
-                   with_name("get_AllowHttpRequestHeader").
-                   build(_allow_http_request_header) OrElse
-           Not _allow_http_request_header.post_binding() Then
-            raise_error(error_type.warning,
-                        "get_AllowHttpRequestHeader is not presented in the implementation, ",
-                        "the performance of get method will be impacted")
-        End If
+        _allow_http_request_header = invoker.of(_allow_http_request_header).
+                                         with_type(Of WebHeaderCollection)().
+                                         with_binding_flags(binding_flags.instance_private_method).
+                                         with_name("get_AllowHttpRequestHeader").
+                                         build()
+        assert(_allow_http_request_header.post_binding())
     End Sub
 
     <Extension()> Public Function unsafe_add_header(ByVal c As WebHeaderCollection,
@@ -66,11 +56,7 @@ Public Module _headers
     <Extension()> Public Function response_header(ByVal c As WebHeaderCollection) As Boolean
         Dim o As Func(Of Boolean) = Nothing
         If _allow_http_response_header.post_bind(c, o) Then
-            Try
-                Return o()
-            Catch
-                Return False
-            End Try
+            Return o()
         Else
             Return False
         End If
@@ -79,11 +65,7 @@ Public Module _headers
     <Extension()> Public Function request_header(ByVal c As WebHeaderCollection) As Boolean
         Dim o As Func(Of Boolean) = Nothing
         If _allow_http_request_header.post_bind(c, o) Then
-            Try
-                Return o()
-            Catch
-                Return False
-            End Try
+            Return o()
         Else
             Return False
         End If

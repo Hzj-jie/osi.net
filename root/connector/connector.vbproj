@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -121,7 +121,6 @@
     <Compile Include="GlobalSuppressions.vb" />
     <Compile Include="implementation_of\thread_static_argument_default.vb" />
     <Compile Include="managed_thread_pool.vb" />
-    <Compile Include="mono.vb" />
     <Compile Include="ref\array_ref.vb" />
     <Compile Include="ref\ref.vb" />
     <Compile Include="ref\weak_ref.vb" />

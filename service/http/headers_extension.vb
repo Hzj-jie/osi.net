@@ -31,16 +31,6 @@ Public Module _headers_extension
             Return i(reqh)
         End If
 
-        Try
-            Return i(resh)
-        Catch
-        End Try
-
-        Try
-            Return i(reqh)
-        Catch
-        End Try
-
         Return Nothing
     End Function
 
