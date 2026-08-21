@@ -45,7 +45,7 @@ Public Module _memory_stream
         len = CUInt(this.Length())
     End Sub
 
-    <Extension()> Public Function write(ByVal this As MemoryStream, ByVal b() As Byte) As Boolean
+    <Extension()> Public Function try_write(ByVal this As MemoryStream, ByVal b() As Byte) As Boolean
         Return try_write(this, b, 0, array_size(b))
     End Function
 
@@ -78,7 +78,7 @@ Public Module _memory_stream
         Return True
     End Function
 
-    <Extension()> Public Function read(ByVal this As MemoryStream, ByVal o() As Byte) As Boolean
+    <Extension()> Public Function try_read(ByVal this As MemoryStream, ByVal o() As Byte) As Boolean
         this.assert_valid()
         If o Is Nothing Then
             Return False
@@ -99,7 +99,7 @@ Public Module _memory_stream
         this.assert_valid()
         Dim r() As Byte = Nothing
         ReDim r(CInt(this.unread_length() - 1))
-        assert(this.read(r))
+        assert(this.try_read(r))
         Return r
     End Function
 

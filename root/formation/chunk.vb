@@ -22,7 +22,7 @@ Public NotInheritable Class chunk
             Return False
         End If
 
-        If Not v Is Nothing AndAlso Not ms.write(v) Then
+        If Not v Is Nothing AndAlso Not ms.try_write(v) Then
             Return False
         End If
 
@@ -76,7 +76,7 @@ Public NotInheritable Class chunk
         If o Is Nothing Then
             Return True
         End If
-        Return ms.read(o)
+        Return ms.try_read(o)
     End Function
 
     Public Shared Function head() As Byte()

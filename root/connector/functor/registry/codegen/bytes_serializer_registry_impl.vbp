@@ -2,7 +2,7 @@
 ##DEFAULT TYPE Byte
         bytes_serializer.fixed.register(Function(ByVal i As ##TYPE##, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
-                                            Return o.write(BitConverter.GetBytes(endian.to_little_endian(i)))
+                                            Return o.try_write(BitConverter.GetBytes(endian.to_little_endian(i)))
                                         End Function,
                                         Function(ByVal i As MemoryStream, ByRef o As ##TYPE##) As Boolean
                                             assert(Not i Is Nothing)

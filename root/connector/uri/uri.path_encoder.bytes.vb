@@ -123,7 +123,7 @@ Namespace uri
                         Return False
                     End Try
 
-                    Return o.write(b)
+                    Return o.try_write(b)
                 End Function
 
                 Private Sub New()

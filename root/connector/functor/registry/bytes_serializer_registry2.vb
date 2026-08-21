@@ -17,7 +17,7 @@ Friend NotInheritable Class bytes_serializer_registry2
                                                 If i.null_or_empty() Then
                                                     Return True
                                                 End If
-                                                Return o.write(str_bytes(i))
+                                                Return o.try_write(str_bytes(i))
                                             End Function,
                                             Function(ByVal l As UInt32,
                                                      ByVal i As MemoryStream,
@@ -40,7 +40,7 @@ Friend NotInheritable Class bytes_serializer_registry2
                                                 If isemptyarray(i) Then
                                                     Return True
                                                 End If
-                                                Return o.write(i)
+                                                Return o.try_write(i)
                                             End Function,
                                             Function(ByVal l As UInt32,
                                                      ByVal i As MemoryStream,
@@ -49,7 +49,7 @@ Friend NotInheritable Class bytes_serializer_registry2
                                                     Return True
                                                 End If
                                                 ReDim o(CInt(l - uint32_1))
-                                                Return i.read(o)
+                                                Return i.try_read(o)
                                             End Function)
         bytes_serializer.fixed.register(Function(ByVal i As Decimal, ByVal o As MemoryStream) As Boolean
                                             assert(Not o Is Nothing)
@@ -60,7 +60,7 @@ Friend NotInheritable Class bytes_serializer_registry2
                                             ' https://github.com/Microsoft/referencesource/blob/master/mscorlib/system/decimal.cs#L567
                                             ' The Decimal.GetBits() always uses little endian.
                                             For j As Int32 = 0 To array_size_i(b) - 1
-                                                If Not o.write(BitConverter.GetBytes(
+                                                If Not o.try_write(BitConverter.GetBytes(
                                                                    endian.to_little_endian(b(j)))) Then
                                                     Return False
                                                 End If
@@ -102,7 +102,7 @@ Friend NotInheritable Class bytes_serializer_registry2
                                                 End If
                                                 Dim b() As Byte = Nothing
                                                 ReDim b(CInt(l - uint32_1))
-                                                If Not i.read(b) Then
+                                                If Not i.try_read(b) Then
                                                     Return False
                                                 End If
                                                 o = memory_stream.of(b)

@@ -168,7 +168,7 @@ Partial Public NotInheritable Class tar
             If it = m.end() Then
                 Return False
             End If
-            o.write((+it).second.ToArray())
+            assert(o.try_write((+it).second.ToArray()))
             Return True
         End Function
 
