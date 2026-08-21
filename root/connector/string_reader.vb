@@ -22,6 +22,30 @@ Public Module _string_reader
             Return _pos
         End Function()
 
+#If NET8_0_OR_GREATER Then
+    Private ReadOnly _s As FieldInfo =
+        Function() As FieldInfo
+            Dim _s As FieldInfo = Nothing
+            Try
+                _s = GetType(StringReader).GetField("_s", binding_flags.instance_private)
+            Catch ex As Exception
+                assert(False, ex.details())
+            End Try
+            assert(Not _s Is Nothing)
+            assert(Not _s.IsStatic())
+            Return _s
+        End Function()
+
+    <Extension()> Public Function length(ByVal this As StringReader) As UInt32
+        assert(Not this Is Nothing)
+        Dim s As String = direct_cast(Of String)(_s.GetValue(this))
+        If s Is Nothing Then
+            Return 0
+        Else
+            Return CUInt(s.Length)
+        End If
+    End Function
+#Else
     Private ReadOnly _length As FieldInfo =
         Function() As FieldInfo
             Dim _length As FieldInfo = Nothing
@@ -42,6 +66,7 @@ Public Module _string_reader
         assert(r >= 0)
         Return CUInt(r)
     End Function
+#End If
 
     <Extension()> Public Function position(ByVal this As StringReader) As UInt32
         assert(Not this Is Nothing)
