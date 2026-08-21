@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <IosysProps>true</IosysProps>
+  </PropertyGroup>
+  <Import Project="iosys.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)iosys.net8.vbproj" />
+  </ItemGroup>
+</Project>

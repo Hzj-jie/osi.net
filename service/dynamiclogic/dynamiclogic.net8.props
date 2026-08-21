@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <DynamiclogicProps>true</DynamiclogicProps>
+  </PropertyGroup>
+  <Import Project="dynamiclogic.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)dynamiclogic.net8.vbproj" />
+  </ItemGroup>
+</Project>

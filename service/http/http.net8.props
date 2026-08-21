@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <HttpProps>true</HttpProps>
+  </PropertyGroup>
+  <Import Project="http.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)http.net8.vbproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <RootProductionProps>true</RootProductionProps>
+  </PropertyGroup>
+  <Import Project="root.net8.props" Condition="'$(RootProps)'==''" />
+</Project>

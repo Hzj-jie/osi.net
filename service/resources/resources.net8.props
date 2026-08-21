@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <ResourcesProps>true</ResourcesProps>
+  </PropertyGroup>
+  <Import Project="resources.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)resources.net8.vbproj" />
+  </ItemGroup>
+</Project>

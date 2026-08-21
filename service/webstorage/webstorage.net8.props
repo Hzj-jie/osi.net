@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <WebstorageProps>true</WebstorageProps>
+  </PropertyGroup>
+  <Import Project="webstorage.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)webstorage.net8.vbproj" />
+  </ItemGroup>
+</Project>

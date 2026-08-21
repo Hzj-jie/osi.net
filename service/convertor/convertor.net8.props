@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <ConvertorProps>true</ConvertorProps>
+  </PropertyGroup>
+  <Import Project="convertor.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)convertor.net8.vbproj" />
+  </ItemGroup>
+</Project>

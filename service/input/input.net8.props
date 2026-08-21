@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <InputProps>true</InputProps>
+  </PropertyGroup>
+  <Import Project="input.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)input.net8.vbproj" />
+  </ItemGroup>
+</Project>

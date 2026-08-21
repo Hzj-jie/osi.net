@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <MathProps>true</MathProps>
+  </PropertyGroup>
+  <Import Project="math.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)math.net8.vbproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <StreamerProps>true</StreamerProps>
+  </PropertyGroup>
+  <Import Project="streamer.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)streamer.net8.vbproj" />
+  </ItemGroup>
+</Project>

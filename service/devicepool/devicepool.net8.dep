@@ -1,0 +1,5 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\root\root.net8.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\device\device.net8.props" Condition="'$(DeviceProps)'==''" />
+</Project>

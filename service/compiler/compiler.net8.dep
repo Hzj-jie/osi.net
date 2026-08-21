@@ -1,0 +1,8 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\root\root.net8.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\automata\automata.net8.props" Condition="'$(AutomataProps)'==''" />
+  <Import Project="$(ServicePath)\constructor\constructor.net8.props" Condition="'$(ConstructorProps)'==''" />
+  <Import Project="$(ServicePath)\interpreter\interpreter.net8.props" Condition="'$(InterpreterProps)'==''" />
+</Project>
+

@@ -1,0 +1,6 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\root\root.net8.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\configuration\configuration.net8.props" Condition="'$(ConfigurationProps)'==''" />
+  <Import Project="$(ServicePath)\resource\resource.net8.props" Condition="'$(ResourceProps)'==''" />
+</Project>

@@ -1,0 +1,6 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\root\root.net8.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\http\http.net8.props" Condition="'$(HttpProps)'==''" />
+  <Import Project="$(ServicePath)\storage\storage.net8.props" Condition="'$(StorageProps)'==''" />
+</Project>

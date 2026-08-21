@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <RootUttProps>true</RootUttProps>
+  </PropertyGroup>
+  <Import Project="root.net8.props" Condition="'$(RootProps)'==''" />
+  <ItemGroup>
+    <ProjectReference Include="$(RootPath)utt\utt.net8.vbproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,7 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\root\root.net8.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\convertor\convertor.net8.props" Condition="'$(ConvertorProps)'==''" />
+  <Import Project="$(ServicePath)\dataprovider\dataprovider.net8.props" Condition="'$(DataproviderProps)'==''" />
+  <Import Project="$(ServicePath)\cache\cache.net8.props" Condition="'$(CacheProps)'==''" />
+</Project>

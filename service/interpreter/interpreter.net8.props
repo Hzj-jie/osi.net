@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <InterpreterProps>true</InterpreterProps>
+  </PropertyGroup>
+  <Import Project="interpreter.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)interpreter.net8.vbproj" />
+  </ItemGroup>
+</Project>

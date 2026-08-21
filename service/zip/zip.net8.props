@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <ZipProps>true</ZipProps>
+  </PropertyGroup>
+  <Import Project="zip.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)zip.net8.vbproj" />
+  </ItemGroup>
+</Project>

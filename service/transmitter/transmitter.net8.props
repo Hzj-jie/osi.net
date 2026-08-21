@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <TransmitterProps>true</TransmitterProps>
+  </PropertyGroup>
+  <Import Project="transmitter.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)transmitter.net8.vbproj" />
+  </ItemGroup>
+</Project>

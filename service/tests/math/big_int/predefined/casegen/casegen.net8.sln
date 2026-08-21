@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "big_int_case_gen", "big_int_case_gen\big_int_case_gen.csproj", "{806B2163-85E2-4715-A991-6383ED9525E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "big_int_case_verifier", "big_int_case_verifier\big_int_case_verifier.csproj", "{4B7A85AD-5BB3-4BCB-A276-946DFDB42857}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = big_int_case_gen\\big_int_case_gen.csproj
+		SccProjectName1 = big_int_case_gen
+		SccLocalPath1 = big_int_case_gen
+		SccProjectUniqueName2 = big_int_case_verifier\\big_int_case_verifier.csproj
+		SccProjectName2 = big_int_case_verifier
+		SccLocalPath2 = big_int_case_verifier
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{806B2163-85E2-4715-A991-6383ED9525E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{806B2163-85E2-4715-A991-6383ED9525E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{806B2163-85E2-4715-A991-6383ED9525E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{806B2163-85E2-4715-A991-6383ED9525E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B7A85AD-5BB3-4BCB-A276-946DFDB42857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B7A85AD-5BB3-4BCB-A276-946DFDB42857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B7A85AD-5BB3-4BCB-A276-946DFDB42857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B7A85AD-5BB3-4BCB-A276-946DFDB42857}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

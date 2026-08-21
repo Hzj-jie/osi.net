@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <CommanderProps>true</CommanderProps>
+  </PropertyGroup>
+  <Import Project="commander.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)commander.net8.vbproj" />
+  </ItemGroup>
+</Project>

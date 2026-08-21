@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <SharedtransmitterProps>true</SharedtransmitterProps>
+  </PropertyGroup>
+  <Import Project="sharedtransmitter.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)sharedtransmitter.net8.vbproj" />
+  </ItemGroup>
+</Project>

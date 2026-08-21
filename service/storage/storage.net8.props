@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <StorageProps>true</StorageProps>
+  </PropertyGroup>
+  <Import Project="storage.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)storage.net8.vbproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <MlProps>true</MlProps>
+  </PropertyGroup>
+  <Import Project="ml.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)ml.net8.vbproj" />
+  </ItemGroup>
+</Project>

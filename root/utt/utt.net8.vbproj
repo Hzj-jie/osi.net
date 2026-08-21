@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>osi.root.utt</RootNamespace>
+    <AssemblyName>osi.root.utt</AssemblyName>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\connector\connector.net8.vbproj" />
+    <ProjectReference Include="..\constants\constants.net8.vbproj" />
+    <ProjectReference Include="..\delegates\delegates.net8.vbproj" />
+    <ProjectReference Include="..\envs\envs.net8.vbproj" />
+    <ProjectReference Include="..\event\event.net8.vbproj" />
+    <ProjectReference Include="..\formation\formation.net8.vbproj" />
+    <ProjectReference Include="..\lock\lock.net8.vbproj" />
+    <ProjectReference Include="..\procedure\procedure.net8.vbproj" />
+    <ProjectReference Include="..\template\template.net8.vbproj" />
+    <ProjectReference Include="..\threadpool\threadpool.net8.vbproj" />
+    <ProjectReference Include="..\utils\utils.net8.vbproj" />
+  </ItemGroup>
+</Project>

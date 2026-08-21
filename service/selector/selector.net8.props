@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <SelectorProps>true</SelectorProps>
+  </PropertyGroup>
+  <Import Project="selector.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)selector.net8.vbproj" />
+  </ItemGroup>
+</Project>

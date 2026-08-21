@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <TcpProps>true</TcpProps>
+  </PropertyGroup>
+  <Import Project="tcp.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)tcp.net8.vbproj" />
+  </ItemGroup>
+</Project>

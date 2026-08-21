@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>osi.production.b2stylec</RootNamespace>
+    <AssemblyName>osi.production.b2stylec</AssemblyName>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+
+  <Import Project="..\..\root\root.production.net8.props" />
+  <Import Project="$(ServicePath)\compiler\compiler.net8.props" />
+</Project>

@@ -1,0 +1,9 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\root\root.net8.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\streamer\streamer.net8.props" Condition="'$(StreamerProps)'==''" />
+  <Import Project="$(ServicePath)\commander\commander.net8.props" Condition="'$(CommanderProps)'==''" />
+  <Import Project="$(ServicePath)\convertor\convertor.net8.props" Condition="'$(ConvertorProps)'==''" />
+  <Import Project="$(ServicePath)\transmitter\transmitter.net8.props" Condition="'$(TransmitterProps)'==''" />
+  <Import Project="$(ServicePath)\resource\resource.net8.props" Condition="'$(ResourceProps)'==''" />
+</Project>

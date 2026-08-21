@@ -1,0 +1,6 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\root\root.net8.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\convertor\convertor.net8.props" Condition="'$(ConvertorProps)'==''" />
+  <Import Project="$(ServicePath)\transmitter\transmitter.net8.props" Condition="'$(TransmitterProps)'==''" />
+</Project>

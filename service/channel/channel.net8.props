@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <ChannelProps>true</ChannelProps>
+  </PropertyGroup>
+  <Import Project="channel.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)channel.net8.vbproj" />
+  </ItemGroup>
+</Project>

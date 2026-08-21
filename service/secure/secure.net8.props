@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <SecureProps>true</SecureProps>
+  </PropertyGroup>
+  <Import Project="secure.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)secure.net8.vbproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <AutomataProps>true</AutomataProps>
+  </PropertyGroup>
+  <Import Project="automata.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)automata.net8.vbproj" />
+  </ItemGroup>
+</Project>

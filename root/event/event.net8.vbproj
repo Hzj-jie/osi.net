@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>osi.root.event</RootNamespace>
+    <AssemblyName>osi.root.event</AssemblyName>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\connector\connector.net8.vbproj" />
+    <ProjectReference Include="..\constants\constants.net8.vbproj" />
+    <ProjectReference Include="..\delegates\delegates.net8.vbproj" />
+    <ProjectReference Include="..\formation\formation.net8.vbproj" />
+    <ProjectReference Include="..\lock\lock.net8.vbproj" />
+    <ProjectReference Include="..\template\template.net8.vbproj" />
+  </ItemGroup>
+</Project>

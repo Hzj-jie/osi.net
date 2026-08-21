@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <CompilerProps>true</CompilerProps>
+  </PropertyGroup>
+  <Import Project="compiler.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)compiler.net8.vbproj" />
+  </ItemGroup>
+</Project>

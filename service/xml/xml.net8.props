@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <XmlProps>true</XmlProps>
+  </PropertyGroup>
+  <Import Project="xml.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)xml.net8.vbproj" />
+  </ItemGroup>
+</Project>

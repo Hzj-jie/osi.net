@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <DevicepoolProps>true</DevicepoolProps>
+  </PropertyGroup>
+  <Import Project="devicepool.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)devicepool.net8.vbproj" />
+  </ItemGroup>
+</Project>

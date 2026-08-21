@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <DnsProps>true</DnsProps>
+  </PropertyGroup>
+  <Import Project="dns.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)dns.net8.vbproj" />
+  </ItemGroup>
+</Project>

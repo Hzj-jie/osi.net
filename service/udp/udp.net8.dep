@@ -1,0 +1,9 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\root\root.net8.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\commander\commander.net8.props" Condition="'$(CommanderProps)'==''" />
+  <Import Project="$(ServicePath)\device\device.net8.props" Condition="'$(DeviceProps)'==''" />
+  <Import Project="$(ServicePath)\dns\dns.net8.props" Condition="'$(DnsProps)'==''" />
+  <Import Project="$(ServicePath)\sharedtransmitter\sharedtransmitter.net8.props" Condition="'$(SharedtransmitterProps)'==''" />
+  <Import Project="$(ServicePath)\transmitter\transmitter.net8.props" Condition="'$(TransmitterProps)'==''" />
+</Project>

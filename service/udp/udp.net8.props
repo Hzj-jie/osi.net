@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <UdpProps>true</UdpProps>
+  </PropertyGroup>
+  <Import Project="udp.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)udp.net8.vbproj" />
+  </ItemGroup>
+</Project>

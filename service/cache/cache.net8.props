@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <CacheProps>true</CacheProps>
+  </PropertyGroup>
+  <Import Project="cache.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)cache.net8.vbproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <ConstructorProps>true</ConstructorProps>
+  </PropertyGroup>
+  <Import Project="constructor.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)constructor.net8.vbproj" />
+  </ItemGroup>
+</Project>

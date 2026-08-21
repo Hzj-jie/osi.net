@@ -1,0 +1,11 @@
+﻿
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\root\root.net8.props" Condition="'$(RootProps)'==''" />
+  <Import Project="$(ServicePath)\cache\cache.net8.props" Condition="'$(CacheProps)'==''" />
+  <Import Project="$(ServicePath)\convertor\convertor.net8.props" Condition="'$(ConvertorProps)'==''" />
+  <Import Project="$(ServicePath)\commander\commander.net8.props" Condition="'$(CommanderProps)'==''" />
+  <Import Project="$(ServicePath)\argument\argument.net8.props" Condition="'$(ArgumentProps)'==''" />
+  <Import Project="$(ServicePath)\selector\selector.net8.props" Condition="'$(SelectorProps)'==''" />
+  <Import Project="$(ServicePath)\device\device.net8.props" Condition="'$(DeviceProps)'==''" />
+  <Import Project="$(ServicePath)\transmitter\transmitter.net8.props" Condition="'$(TransmitterProps)'==''" />
+</Project>

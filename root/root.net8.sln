@@ -1,0 +1,289 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "utils", "utils\utils.net8.vbproj", "{066119D7-850D-4191-B7AF-5294A941B8C2}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "formation", "formation\formation.net8.vbproj", "{DA3051DC-A250-488F-AACA-F46977DD0F17}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "lock", "lock\lock.net8.vbproj", "{5BB4ADDE-7C12-4221-AE69-C669255C931E}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "envs", "envs\envs.net8.vbproj", "{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}"
+	ProjectSection(ProjectDependencies) = postProject
+		{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B} = {AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "connector", "connector\connector.net8.vbproj", "{37EC873B-1EA8-449D-AC58-75A2F26FE5EA}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "constants", "constants\constants.net8.vbproj", "{F251286B-8EE9-4292-B117-1630D5F93B37}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{58AF0D5C-B84F-4256-92E0-B6436F3AE391}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "envs", "tests\envs\envs.net8.vbproj", "{8E52D342-DEC3-4CCB-AF7C-1700087187F3}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "delegates", "delegates\delegates.net8.vbproj", "{B2A4A210-3AD5-41CA-A650-CE8C86BF1FFC}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "template", "template\template.net8.vbproj", "{8EF461F7-2F05-42A3-B65B-8E644F992582}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "lock", "tests\lock\lock.net8.vbproj", "{0A0FE656-A2F9-480E-ADC3-280D3A158C86}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "connector", "tests\connector\connector.net8.vbproj", "{9ABAE24A-D0AF-4D67-A2D6-A85BA885FC21}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "formation", "tests\formation\formation.net8.vbproj", "{ED8B849E-27C6-474E-A5D5-F3BF955173D3}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "utt", "utt\utt.net8.vbproj", "{C56C84B9-F739-4BAF-8795-FC7CAA6CC549}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "codegen", "codegen\codegen.vbproj", "{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "utils", "tests\utils\utils.net8.vbproj", "{E3173F00-770A-4202-9C5E-E2AEBB81CD09}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "procedure", "procedure\procedure.net8.vbproj", "{30A0C7B4-877E-479F-8A74-BD81CA3900E6}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "threadpool", "threadpool\threadpool.net8.vbproj", "{48F338B3-6AB8-4C0C-AD83-20FA9B9B01DE}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "threadpool", "tests\threadpool\threadpool.net8.vbproj", "{BBDFA2BE-726F-4FC4-8004-F0900839A69F}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "procedure", "tests\procedure\procedure.net8.vbproj", "{A5366B03-5A08-46D7-ADAF-B0C7C0756E20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{77D71E4E-7EE4-4837-909C-2B07805CAD45}"
+	ProjectSection(SolutionItems) = preProject
+		root.production.net8.props = root.production.net8.props
+		root.net8.props = root.net8.props
+		root.utt.net8.props = root.utt.net8.props
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "event", "event\event.net8.vbproj", "{93ADC952-439D-4968-9640-51BC34B066DD}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "event", "tests\event\event.net8.vbproj", "{5D5B05F7-0664-4813-A925-2FF39840FE8D}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "constants", "tests\constants\constants.net8.vbproj", "{F50B84DD-2DFD-40FA-9A9B-D680E8EAB315}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{066119D7-850D-4191-B7AF-5294A941B8C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{066119D7-850D-4191-B7AF-5294A941B8C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{066119D7-850D-4191-B7AF-5294A941B8C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{066119D7-850D-4191-B7AF-5294A941B8C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA3051DC-A250-488F-AACA-F46977DD0F17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA3051DC-A250-488F-AACA-F46977DD0F17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA3051DC-A250-488F-AACA-F46977DD0F17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA3051DC-A250-488F-AACA-F46977DD0F17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BB4ADDE-7C12-4221-AE69-C669255C931E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BB4ADDE-7C12-4221-AE69-C669255C931E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BB4ADDE-7C12-4221-AE69-C669255C931E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BB4ADDE-7C12-4221-AE69-C669255C931E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D310BA86-0FA6-42BB-8EFD-2DEE526E6981}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37EC873B-1EA8-449D-AC58-75A2F26FE5EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37EC873B-1EA8-449D-AC58-75A2F26FE5EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37EC873B-1EA8-449D-AC58-75A2F26FE5EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37EC873B-1EA8-449D-AC58-75A2F26FE5EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F251286B-8EE9-4292-B117-1630D5F93B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F251286B-8EE9-4292-B117-1630D5F93B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F251286B-8EE9-4292-B117-1630D5F93B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F251286B-8EE9-4292-B117-1630D5F93B37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E52D342-DEC3-4CCB-AF7C-1700087187F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E52D342-DEC3-4CCB-AF7C-1700087187F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E52D342-DEC3-4CCB-AF7C-1700087187F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E52D342-DEC3-4CCB-AF7C-1700087187F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2A4A210-3AD5-41CA-A650-CE8C86BF1FFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2A4A210-3AD5-41CA-A650-CE8C86BF1FFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2A4A210-3AD5-41CA-A650-CE8C86BF1FFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2A4A210-3AD5-41CA-A650-CE8C86BF1FFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EF461F7-2F05-42A3-B65B-8E644F992582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EF461F7-2F05-42A3-B65B-8E644F992582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EF461F7-2F05-42A3-B65B-8E644F992582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EF461F7-2F05-42A3-B65B-8E644F992582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A0FE656-A2F9-480E-ADC3-280D3A158C86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A0FE656-A2F9-480E-ADC3-280D3A158C86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A0FE656-A2F9-480E-ADC3-280D3A158C86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A0FE656-A2F9-480E-ADC3-280D3A158C86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ABAE24A-D0AF-4D67-A2D6-A85BA885FC21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ABAE24A-D0AF-4D67-A2D6-A85BA885FC21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ABAE24A-D0AF-4D67-A2D6-A85BA885FC21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ABAE24A-D0AF-4D67-A2D6-A85BA885FC21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED8B849E-27C6-474E-A5D5-F3BF955173D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8B849E-27C6-474E-A5D5-F3BF955173D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8B849E-27C6-474E-A5D5-F3BF955173D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED8B849E-27C6-474E-A5D5-F3BF955173D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C56C84B9-F739-4BAF-8795-FC7CAA6CC549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C56C84B9-F739-4BAF-8795-FC7CAA6CC549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C56C84B9-F739-4BAF-8795-FC7CAA6CC549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C56C84B9-F739-4BAF-8795-FC7CAA6CC549}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}.Debug|Any CPU.Build.0 = Debug|x86
+		{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}.Release|Any CPU.ActiveCfg = Debug|x86
+		{AC0AAE9B-F314-4FD3-AE6A-4B430D7AA01B}.Release|Any CPU.Build.0 = Debug|x86
+		{E3173F00-770A-4202-9C5E-E2AEBB81CD09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3173F00-770A-4202-9C5E-E2AEBB81CD09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3173F00-770A-4202-9C5E-E2AEBB81CD09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3173F00-770A-4202-9C5E-E2AEBB81CD09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30A0C7B4-877E-479F-8A74-BD81CA3900E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30A0C7B4-877E-479F-8A74-BD81CA3900E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30A0C7B4-877E-479F-8A74-BD81CA3900E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30A0C7B4-877E-479F-8A74-BD81CA3900E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48F338B3-6AB8-4C0C-AD83-20FA9B9B01DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48F338B3-6AB8-4C0C-AD83-20FA9B9B01DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48F338B3-6AB8-4C0C-AD83-20FA9B9B01DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48F338B3-6AB8-4C0C-AD83-20FA9B9B01DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBDFA2BE-726F-4FC4-8004-F0900839A69F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBDFA2BE-726F-4FC4-8004-F0900839A69F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBDFA2BE-726F-4FC4-8004-F0900839A69F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBDFA2BE-726F-4FC4-8004-F0900839A69F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5366B03-5A08-46D7-ADAF-B0C7C0756E20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5366B03-5A08-46D7-ADAF-B0C7C0756E20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5366B03-5A08-46D7-ADAF-B0C7C0756E20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5366B03-5A08-46D7-ADAF-B0C7C0756E20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93ADC952-439D-4968-9640-51BC34B066DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93ADC952-439D-4968-9640-51BC34B066DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93ADC952-439D-4968-9640-51BC34B066DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93ADC952-439D-4968-9640-51BC34B066DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D5B05F7-0664-4813-A925-2FF39840FE8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D5B05F7-0664-4813-A925-2FF39840FE8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D5B05F7-0664-4813-A925-2FF39840FE8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D5B05F7-0664-4813-A925-2FF39840FE8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F50B84DD-2DFD-40FA-9A9B-D680E8EAB315}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F50B84DD-2DFD-40FA-9A9B-D680E8EAB315}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F50B84DD-2DFD-40FA-9A9B-D680E8EAB315}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F50B84DD-2DFD-40FA-9A9B-D680E8EAB315}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8E52D342-DEC3-4CCB-AF7C-1700087187F3} = {58AF0D5C-B84F-4256-92E0-B6436F3AE391}
+		{0A0FE656-A2F9-480E-ADC3-280D3A158C86} = {58AF0D5C-B84F-4256-92E0-B6436F3AE391}
+		{9ABAE24A-D0AF-4D67-A2D6-A85BA885FC21} = {58AF0D5C-B84F-4256-92E0-B6436F3AE391}
+		{ED8B849E-27C6-474E-A5D5-F3BF955173D3} = {58AF0D5C-B84F-4256-92E0-B6436F3AE391}
+		{E3173F00-770A-4202-9C5E-E2AEBB81CD09} = {58AF0D5C-B84F-4256-92E0-B6436F3AE391}
+		{BBDFA2BE-726F-4FC4-8004-F0900839A69F} = {58AF0D5C-B84F-4256-92E0-B6436F3AE391}
+		{A5366B03-5A08-46D7-ADAF-B0C7C0756E20} = {58AF0D5C-B84F-4256-92E0-B6436F3AE391}
+		{5D5B05F7-0664-4813-A925-2FF39840FE8D} = {58AF0D5C-B84F-4256-92E0-B6436F3AE391}
+		{F50B84DD-2DFD-40FA-9A9B-D680E8EAB315} = {58AF0D5C-B84F-4256-92E0-B6436F3AE391}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 21
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs02
+		SccProjectUniqueName0 = constants\\constants.net8.vbproj
+		SccProjectName0 = constants
+		SccAuxPath0 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath0 = constants
+		SccProvider0 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName1 = delegates\\delegates.net8.vbproj
+		SccProjectName1 = delegates
+		SccAuxPath1 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath1 = delegates
+		SccProvider1 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName2 = template\\template.net8.vbproj
+		SccProjectName2 = template
+		SccAuxPath2 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath2 = template
+		SccProvider2 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName3 = connector\\connector.net8.vbproj
+		SccProjectName3 = connector
+		SccAuxPath3 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath3 = connector
+		SccProvider3 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName4 = codegen\\codegen.net8.vbproj
+		SccProjectName4 = codegen
+		SccAuxPath4 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath4 = codegen
+		SccProvider4 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName5 = envs\\envs.net8.vbproj
+		SccProjectName5 = envs
+		SccAuxPath5 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath5 = envs
+		SccProvider5 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName6 = lock\\lock.net8.vbproj
+		SccProjectName6 = lock
+		SccAuxPath6 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath6 = lock
+		SccProvider6 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName7 = formation\\formation.net8.vbproj
+		SccProjectName7 = formation
+		SccAuxPath7 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath7 = formation
+		SccProvider7 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName8 = event\\event.net8.vbproj
+		SccProjectName8 = event
+		SccAuxPath8 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath8 = event
+		SccProvider8 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName9 = utils\\utils.net8.vbproj
+		SccProjectName9 = utils
+		SccAuxPath9 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath9 = utils
+		SccProvider9 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName10 = threadpool\\threadpool.net8.vbproj
+		SccProjectName10 = threadpool
+		SccAuxPath10 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath10 = threadpool
+		SccProvider10 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName11 = procedure\\procedure.net8.vbproj
+		SccProjectName11 = procedure
+		SccAuxPath11 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath11 = procedure
+		SccProvider11 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName12 = utt\\utt.net8.vbproj
+		SccProjectName12 = utt
+		SccAuxPath12 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath12 = utt
+		SccProvider12 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName13 = tests\\envs\\envs.net8.vbproj
+		SccProjectTopLevelParentUniqueName13 = root.sln
+		SccProjectName13 = tests/envs
+		SccAuxPath13 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath13 = tests\\envs
+		SccProvider13 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName14 = tests\\lock\\lock.net8.vbproj
+		SccProjectTopLevelParentUniqueName14 = root.sln
+		SccProjectName14 = tests/lock
+		SccAuxPath14 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath14 = tests\\lock
+		SccProvider14 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName15 = tests\\connector\\connector.net8.vbproj
+		SccProjectTopLevelParentUniqueName15 = root.sln
+		SccProjectName15 = tests/connector
+		SccAuxPath15 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath15 = tests\\connector
+		SccProvider15 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName16 = tests\\formation\\formation.net8.vbproj
+		SccProjectTopLevelParentUniqueName16 = root.sln
+		SccProjectName16 = tests/formation
+		SccAuxPath16 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath16 = tests\\formation
+		SccProvider16 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName17 = tests\\utils\\utils.net8.vbproj
+		SccProjectTopLevelParentUniqueName17 = root.sln
+		SccProjectName17 = tests/utils
+		SccAuxPath17 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath17 = tests\\utils
+		SccProvider17 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName18 = tests\\threadpool\\threadpool.net8.vbproj
+		SccProjectTopLevelParentUniqueName18 = root.sln
+		SccProjectName18 = tests/threadpool
+		SccAuxPath18 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath18 = tests\\threadpool
+		SccProvider18 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName19 = tests\\procedure\\procedure.net8.vbproj
+		SccProjectTopLevelParentUniqueName19 = root.sln
+		SccProjectName19 = tests/procedure
+		SccAuxPath19 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath19 = tests\\procedure
+		SccProvider19 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccProjectUniqueName20 = tests\\event\\event.net8.vbproj
+		SccProjectTopLevelParentUniqueName20 = root.sln
+		SccProjectName20 = tests/event
+		SccAuxPath20 = https://tfs.codeplex.com/tfs/tfs02
+		SccLocalPath20 = tests\\event
+		SccProvider20 = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+	EndGlobalSection
+EndGlobal

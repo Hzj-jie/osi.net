@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <DataproviderProps>true</DataproviderProps>
+  </PropertyGroup>
+  <Import Project="dataprovider.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)dataprovider.net8.vbproj" />
+  </ItemGroup>
+</Project>

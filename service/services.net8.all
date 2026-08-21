@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <ServicesAll>true</ServicesAll>
+  </PropertyGroup>
+  <Import Project="$(ServicePath)\**\*.net8.props" />
+</Project>

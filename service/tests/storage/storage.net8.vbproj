@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>osi.tests.service.storage</RootNamespace>
+    <AssemblyName>osi.tests.service.storage</AssemblyName>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Import Include="System" />
+  </ItemGroup>
+
+  <Import Project="..\..\..\root\root.utt.net8.props" />
+  <Import Project="$(ServicePath)\storage\storage.net8.props" />
+  <Import Project="$(ServicePath)\http\http.net8.props" />
+  <Import Project="$(ServicePath)\tcp\tcp.net8.props" />
+  <Import Project="$(ServicePath)\argument\argument.net8.props" />
+</Project>

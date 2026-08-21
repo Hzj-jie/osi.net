@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <ProtectorProps>true</ProtectorProps>
+  </PropertyGroup>
+  <Import Project="protector.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)protector.net8.vbproj" />
+  </ItemGroup>
+</Project>

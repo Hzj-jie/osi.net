@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <OutputProps>true</OutputProps>
+  </PropertyGroup>
+  <Import Project="output.net8.dep" />
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)output.net8.vbproj" />
+  </ItemGroup>
+</Project>
