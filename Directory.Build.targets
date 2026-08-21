@@ -1,0 +1,6 @@
+<Project>
+  <ItemGroup>
+    <Import Remove="System.Linq" />
+    <Import Remove="System.Xml.Linq" />
+  </ItemGroup>
+</Project>
