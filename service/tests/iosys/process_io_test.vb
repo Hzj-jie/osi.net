@@ -7,6 +7,7 @@ Imports System.IO
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.lock
 Imports osi.root.utils
 Imports osi.root.utt
