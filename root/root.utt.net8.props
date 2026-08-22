@@ -1,9 +1,9 @@
-<Project>
-  <PropertyGroup>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows'">
     <RootUttProps>true</RootUttProps>
   </PropertyGroup>
-  <Import Project="root.net8.props" Condition="'$(RootProps)'==''" />
-  <ItemGroup>
+  <Import Project="root.net8.props" Condition="('$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows') And '$(RootProps)'==''" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows'">
     <ProjectReference Include="$(RootPath)utt\utt.net8.vbproj" />
   </ItemGroup>
 </Project>

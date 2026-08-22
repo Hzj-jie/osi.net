@@ -1,9 +1,9 @@
-<Project>
-  <PropertyGroup>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows'">
     <IosysProps>true</IosysProps>
   </PropertyGroup>
-  <Import Project="iosys.net8.dep" />
-  <ItemGroup>
+  <Import Project="iosys.net8.dep" Condition="'$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows'" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows'">
     <ProjectReference Include="$(MSBuildThisFileDirectory)iosys.net8.vbproj" />
   </ItemGroup>
 </Project>

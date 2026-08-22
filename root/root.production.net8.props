@@ -1,6 +1,6 @@
-<Project>
-  <PropertyGroup>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows'">
     <RootProductionProps>true</RootProductionProps>
   </PropertyGroup>
-  <Import Project="root.net8.props" Condition="'$(RootProps)'==''" />
+  <Import Project="root.net8.props" Condition="('$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows') And '$(RootProps)'==''" />
 </Project>

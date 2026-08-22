@@ -1,12 +1,12 @@
-<Project>
-  <PropertyGroup>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows'">
     <RootProps>true</RootProps>
     <RootPath Condition="!Exists('$(RootPath)\root.net8.props')">$(MSBuildThisFileDirectory)</RootPath>
     <ServicePath>$(RootPath)..\service\</ServicePath>
     <ProductionPath>$(RootPath)..\production\</ProductionPath>
     <RollForward>LatestMajor</RollForward>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows'">
     <ProjectReference Include="$(RootPath)constants\constants.net8.vbproj" />
     <ProjectReference Include="$(RootPath)template\template.net8.vbproj" />
     <ProjectReference Include="$(RootPath)delegates\delegates.net8.vbproj" />
