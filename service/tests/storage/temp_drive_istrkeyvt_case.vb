@@ -13,29 +13,27 @@ Imports osi.service.storage
 Public MustInherit Class temp_drive_istrkeyvt_case
     Inherits istrkeyvt_case
 
-    Private Const data_dir_base As String = "T:\"
-    Private Shared ReadOnly temp_dir As String
+    Private Shared ReadOnly data_dir_base As String =
+        If(Directory.Exists("T:\"), "T:\", Path.Combine(Path.GetTempPath(), "osi_temp"))
+    Private Shared ReadOnly temp_dir As String = Path.Combine(data_dir_base, "temp")
     Protected ReadOnly data_dir As String
     Private ReadOnly valid As Boolean
 
     Shared Sub New()
-        If Directory.Exists(data_dir_base) Then
-            temp_dir = Path.Combine(data_dir_base, "temp")
-            void_(Sub()
-                      If Directory.Exists(temp_dir) Then
-                          Directory.Delete(temp_dir, True)
-                      End If
-                  End Sub)
-            void_(Sub()
-                      Directory.CreateDirectory(temp_dir)
-                  End Sub)
-        End If
+        void_(Sub()
+                  If Directory.Exists(temp_dir) Then
+                      Directory.Delete(temp_dir, True)
+                  End If
+              End Sub)
+        void_(Sub()
+                  Directory.CreateDirectory(temp_dir)
+              End Sub)
     End Sub
 
     Protected Sub New(ByVal i As iistrkeyvt_case)
         MyBase.New(i)
         data_dir = Path.Combine(temp_dir, guid_str())
-        valid = Directory.Exists(data_dir_base)
+        valid = Directory.Exists(temp_dir)
     End Sub
 
     Protected Sub New()
