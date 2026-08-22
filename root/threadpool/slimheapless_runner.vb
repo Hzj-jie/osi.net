@@ -79,10 +79,21 @@ Public NotInheritable Class slimheapless_runner
         If Not s.mark_in_use() Then
             Return False
         End If
-        ' Thread.Abort() is permanently unsupported and throws PlatformNotSupportedException in modern .NET.
-        ' Pushing action_empty wakes up the worker thread if it is blocked waiting on an empty queue,
-        ' allowing it to re-check stopping() and exit cleanly.
-        push(action_empty)
+#If NET8_0_OR_GREATER Then
+        ' Thread.Abort() is not supported in modern .NET (.NET Core / .NET 5+).
+        ' When multiple runners share the same queue (e.g., in a threadpool), pushing a single
+        ' action_empty may be consumed by another worker thread. Repeating push(action_empty)
+        ' until stopped() ensures this specific worker thread receives a wake-up signal,
+        ' observes stopping(), and exits cleanly.
+        If Not running_in_current_thread() Then
+            While Not stopped()
+                push(action_empty)
+                t.Join(1)
+            End While
+        End If
+#Else
+        t.Abort()
+#End If
         GC.SuppressFinalize(Me)
         Return True
     End Function
