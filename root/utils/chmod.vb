@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Runtime.InteropServices
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 
 Public Module _chmod
 #If NET8_0_OR_GREATER Then
@@ -49,7 +50,7 @@ Public Module _chmod
 
     Public Sub chmod(ByVal file As String, ByVal permissions As FilePermissions, ByRef o As Int32)
 #If NET8_0_OR_GREATER Then
-        If OperatingSystem.IsLinux() OrElse OperatingSystem.IsMacOS() Then
+        If os.is_nix Then
             Try
                 o = sys_chmod(file, CUInt(permissions))
             Catch

@@ -184,7 +184,7 @@ Public Module _socket
             Return npos
         End If
 #If NET8_0_OR_GREATER Then
-        If Not OperatingSystem.IsWindows() Then
+        If Not os.is_windows Then
             Return 0
         End If
 #End If

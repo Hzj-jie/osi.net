@@ -73,7 +73,7 @@ Public Module _resource
                               Function() As Boolean
                                   ' TODO: Integrate native chmod_exe on Linux in modern .NET
                                   Return ec.end_result() AndAlso
-                                         (os.family = os.family_t.windows OrElse chmod_exe(file_name)) AndAlso
+                                         (os.is_windows OrElse chmod_exe(file_name)) AndAlso
                                          goto_end()
                               End Function)
     End Function

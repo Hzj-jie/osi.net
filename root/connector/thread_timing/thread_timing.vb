@@ -135,7 +135,8 @@ Public Class priority
 #If NET8_0_OR_GREATER Then
                 Try
                     p.PriorityClass() = n.target_process_priority()
-                Catch
+                Catch ex As Exception
+                    assert(Not OperatingSystem.IsWindows(), ex)
                 End Try
 #Else
                 p.PriorityClass() = n.target_process_priority()
@@ -149,7 +150,8 @@ Public Class priority
 #If NET8_0_OR_GREATER Then
                 Try
                     t.Priority() = n.target_thread_priority()
-                Catch
+                Catch ex As Exception
+                    assert(Not OperatingSystem.IsWindows(), ex)
                 End Try
 #Else
                 t.Priority() = n.target_thread_priority()
@@ -166,7 +168,8 @@ Public Class priority
 #If NET8_0_OR_GREATER Then
                 Try
                     p.PriorityClass() = ppc
-                Catch
+                Catch ex As Exception
+                    assert(Not OperatingSystem.IsWindows(), ex)
                 End Try
 #Else
                 p.PriorityClass() = ppc
@@ -179,7 +182,8 @@ Public Class priority
 #If NET8_0_OR_GREATER Then
                 Try
                     t.Priority() = otp
-                Catch
+                Catch ex As Exception
+                    assert(Not OperatingSystem.IsWindows(), ex)
                 End Try
 #Else
                 t.Priority() = otp

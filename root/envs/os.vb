@@ -45,23 +45,39 @@ Public NotInheritable Class os
     Public Shared ReadOnly platform As String = computer.Info().OSPlatform()
     Public Shared ReadOnly version As String = computer.Info().OSVersion()
 #End If
-    Public Shared ReadOnly family As family_t = Function() As family_t
-                                                    Dim p As PlatformID = Environment.OSVersion().Platform()
-                                                    Select Case p
-                                                        Case PlatformID.MacOSX
-                                                            Return family_t.macosx
-                                                        Case PlatformID.Unix
-                                                            Return family_t.unix
-                                                        Case PlatformID.Win32NT,
-                                                             PlatformID.Win32S,
-                                                             PlatformID.Win32Windows,
-                                                             PlatformID.WinCE
-                                                            Return family_t.windows
-                                                        Case PlatformID.Xbox
-                                                            Return family_t.xbox
-                                                    End Select
-                                                    Return family_t.unknown
-                                                End Function()
+    Public Shared ReadOnly family As family_t =
+        Function() As family_t
+#If NET8_0_OR_GREATER Then
+            If OperatingSystem.IsWindows() Then
+                Return family_t.windows
+            ElseIf OperatingSystem.IsMacOS() OrElse OperatingSystem.IsMacCatalyst() Then
+                Return family_t.macosx
+            ElseIf OperatingSystem.IsLinux() OrElse OperatingSystem.IsFreeBSD() OrElse OperatingSystem.IsAndroid() Then
+                Return family_t.unix
+            End If
+            Return family_t.unknown
+#Else
+            Dim p As PlatformID = Environment.OSVersion().Platform()
+            Select Case p
+                Case PlatformID.MacOSX
+                    Return family_t.macosx
+                Case PlatformID.Unix
+                    Return family_t.unix
+                Case PlatformID.Win32NT,
+                     PlatformID.Win32S,
+                     PlatformID.Win32Windows,
+                     PlatformID.WinCE
+                    Return family_t.windows
+                Case PlatformID.Xbox
+                    Return family_t.xbox
+            End Select
+            Return family_t.unknown
+#End If
+        End Function()
+    Public Shared ReadOnly is_windows As Boolean = (family = family_t.windows)
+    Public Shared ReadOnly is_unix As Boolean = (family = family_t.unix)
+    Public Shared ReadOnly is_macosx As Boolean = (family = family_t.macosx)
+    Public Shared ReadOnly is_nix As Boolean = (is_unix OrElse is_macosx)
     Public Shared ReadOnly windows_major As windows_major_t =
         Function() As windows_major_t
             Dim p As PlatformID = Environment.OSVersion().Platform()

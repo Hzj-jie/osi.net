@@ -13,14 +13,14 @@ Imports osi.root.constants
 Public Module _hardware
     Public ReadOnly hardware_manufacturer As String = Function() As String
                                                           ' TODO: Implement cross-platform hardware detection for Linux (e.g. /sys/class/dmi/id/sys_vendor).
-                                                          If os.family <> os.family_t.windows Then
+                                                          If Not os.is_windows Then
                                                               Return String.Empty
                                                           End If
                                                           Return search_management_object("Manufacturer")
                                                       End Function()
     Public ReadOnly hardware_model As String = Function() As String
                                                    ' TODO: Implement cross-platform hardware model detection for Linux (e.g. /sys/class/dmi/id/product_name).
-                                                   If os.family <> os.family_t.windows Then
+                                                   If Not os.is_windows Then
                                                        Return String.Empty
                                                    End If
                                                    Return search_management_object("Model")

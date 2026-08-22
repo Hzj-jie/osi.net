@@ -10,7 +10,7 @@ Imports osi.root.constants
 Public NotInheritable Class this_process
     Public Shared ReadOnly ref As Process = Process.GetCurrentProcess()
     Public Shared ReadOnly end_of_file As Char =
-        If(os.family = os.family_t.windows OrElse os.family = os.family_t.xbox,
+        If(os.is_windows OrElse os.family = os.family_t.xbox,
            character.sub,
            character.eot)
 
