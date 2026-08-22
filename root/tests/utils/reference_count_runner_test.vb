@@ -76,7 +76,8 @@ Public NotInheritable Class reference_count_runner_test
         End Function
     End Class
 
-    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design",
+                                              "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
     Private NotInheritable Class multi_threading_case
         Inherits [case]
 

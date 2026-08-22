@@ -29,15 +29,17 @@ Namespace percentile
         <test>
         Private Shared Sub ascent()
             Dim v As vector(Of tuple(Of String, UInt32)) = samples()
-            assertion.equal(v.stream().filter(p.ascent.filter(v, 0.1)).collect_to(Of vector(Of tuple(Of String, UInt32))),
-                            samples(0, 11))
+            assertion.equal(
+                v.stream().filter(p.ascent.filter(v, 0.1)).collect_to(Of vector(Of tuple(Of String, UInt32))),
+                samples(0, 11))
         End Sub
 
         <test>
         Private Shared Sub desent()
             Dim v As vector(Of tuple(Of String, UInt32)) = samples()
-            assertion.equal(v.stream().filter(p.descent.filter(v, 0.1)).collect_to(Of vector(Of tuple(Of String, UInt32))),
-                            samples(89, 100))
+            assertion.equal(
+                v.stream().filter(p.descent.filter(v, 0.1)).collect_to(Of vector(Of tuple(Of String, UInt32))),
+                samples(89, 100))
         End Sub
 
         <test>

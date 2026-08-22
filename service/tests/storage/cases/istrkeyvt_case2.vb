@@ -30,9 +30,9 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
                                 _ROUND_BASE As _int64)
     Implements iistrkeyvt_case
 
-    Private Shared ReadOnly rand_data As istrkeyvt_random_data(Of _KEY_LENGTH_LOW, 
-                                                                  _KEY_LENGTH_UP, 
-                                                                  _BYTES_LENGTH_LOW, 
+    Private Shared ReadOnly rand_data As istrkeyvt_random_data(Of _KEY_LENGTH_LOW,
+                                                                  _KEY_LENGTH_UP,
+                                                                  _BYTES_LENGTH_LOW,
                                                                   _BYTES_LENGTH_UP)
     Private Shared ReadOnly round_count As Int64
 

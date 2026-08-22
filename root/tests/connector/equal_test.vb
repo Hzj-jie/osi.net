@@ -48,7 +48,8 @@ Public Class equal_test
             Me.v = v
         End Sub
 
-        Public Overloads Function Equals(ByVal other As test_class) As Boolean Implements IEquatable(Of test_class).Equals
+        Public Overloads Function Equals(ByVal other As test_class) As Boolean _
+            Implements IEquatable(Of test_class).Equals
             If other Is Nothing Then
                 Return False
             Else
@@ -76,10 +77,12 @@ Public Class equal_test
         assertion.is_true(equal(New test_class2(10), New test_class(10)))
         assertion.is_false(equal(New test_class2(101), New test_class(10)))
         assertion.is_true(equal(direct_cast(Of Object)(New test_class2(10)), New test_class(10)))
-        assertion.is_true(equal(direct_cast(Of Object)(New test_class2(10)), direct_cast(Of Object)(New test_class(10))))
+        assertion.is_true(equal(direct_cast(Of Object)(New test_class2(10)),
+                          direct_cast(Of Object)(New test_class(10))))
         assertion.is_true(equal(New test_class2(10), direct_cast(Of Object)(New test_class(10))))
         assertion.is_false(equal(direct_cast(Of Object)(New test_class2(101)), New test_class(10)))
-        assertion.is_false(equal(direct_cast(Of Object)(New test_class2(101)), direct_cast(Of Object)(New test_class(10))))
+        assertion.is_false(equal(direct_cast(Of Object)(New test_class2(101)),
+                           direct_cast(Of Object)(New test_class(10))))
         assertion.is_false(equal(New test_class2(10), direct_cast(Of Object)(New test_class(101))))
         Return True
     End Function

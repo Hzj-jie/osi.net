@@ -4,22 +4,22 @@ Imports osi.root.connector
 Imports osi.root.utils
 
 Public Class parser(Of _MAX_TYPE As _int64, RESULT_T)
-    Public Const start_status As UInt32 = automata.dfa(Of lexer.typed_word, 
-                                                          lexer.MAX_TYPE(Of _MAX_TYPE), 
-                                                          lexer.typed_word_to_uint32, 
+    Public Const start_status As UInt32 = automata.dfa(Of lexer.typed_word,
+                                                          lexer.MAX_TYPE(Of _MAX_TYPE),
+                                                          lexer.typed_word_to_uint32,
                                                           RESULT_T).start_status
-    Public Const end_status As UInt32 = automata.dfa(Of lexer.typed_word, 
-                                                        lexer.MAX_TYPE(Of _MAX_TYPE), 
-                                                        lexer.typed_word_to_uint32, 
+    Public Const end_status As UInt32 = automata.dfa(Of lexer.typed_word,
+                                                        lexer.MAX_TYPE(Of _MAX_TYPE),
+                                                        lexer.typed_word_to_uint32,
                                                         RESULT_T).end_status
-    Public Const first_user_status As UInt32 = automata.dfa(Of lexer.typed_word, 
-                                                               lexer.MAX_TYPE(Of _MAX_TYPE), 
-                                                               lexer.typed_word_to_uint32, 
+    Public Const first_user_status As UInt32 = automata.dfa(Of lexer.typed_word,
+                                                               lexer.MAX_TYPE(Of _MAX_TYPE),
+                                                               lexer.typed_word_to_uint32,
                                                                RESULT_T).first_user_status
 
-    Private ReadOnly dfa As dfa(Of lexer.typed_word, 
-                                   lexer.MAX_TYPE(Of _MAX_TYPE), 
-                                   lexer.typed_word_to_uint32, 
+    Private ReadOnly dfa As dfa(Of lexer.typed_word,
+                                   lexer.MAX_TYPE(Of _MAX_TYPE),
+                                   lexer.typed_word_to_uint32,
                                    RESULT_T)
 
     Public Sub New()

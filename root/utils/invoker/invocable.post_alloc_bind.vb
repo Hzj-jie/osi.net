@@ -101,7 +101,8 @@ Public Module _invocable_post_alloc_bind
     End Function
 
     <Extension()> Public Function pre_or_post_alloc_bind(Of T, RT) _
-                                                        (ByVal invocable As invocable(Of Func(Of T, RT))) As Func(Of T, RT)
+                                                        (ByVal invocable As invocable(Of Func(Of T, RT))) _
+                                                        As Func(Of T, RT)
         Dim o As Func(Of T, RT) = Nothing
         assert(pre_or_post_alloc_bind(invocable, o))
         Return o

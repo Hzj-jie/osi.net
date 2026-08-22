@@ -33,12 +33,12 @@ Public Class concurrency_event_test
 
         Public Overrides Function run() As Boolean
             assertion.is_true(e.attach(Sub()
-                                     c.increment()
-                                     i.increment()
-                                     assertion.more_or_equal(+i, 1)
-                                     assertion.less_or_equal(CUInt(+i), concurrency_count)
-                                     i.decrement()
-                                 End Sub))
+                                           c.increment()
+                                           i.increment()
+                                           assertion.more_or_equal(+i, 1)
+                                           assertion.less_or_equal(CUInt(+i), concurrency_count)
+                                           i.decrement()
+                                       End Sub))
             Return True
         End Function
 

@@ -87,14 +87,14 @@ Public Class out_generic_behavior_test
         assertion.is_true(TypeOf f() Is C3)
 
         assertion.is_false(cast(Function() As C
-                              Return New C()
-                          End Function, f))
+                                    Return New C()
+                                End Function, f))
         assertion.is_false(cast(Function() As C2
-                              Return New C2()
-                          End Function, f))
+                                    Return New C2()
+                                End Function, f))
         assertion.is_false(cast(Function() As C3
-                              Return New C3()
-                          End Function, f))
+                                    Return New C3()
+                                End Function, f))
 
         Return True
     End Function

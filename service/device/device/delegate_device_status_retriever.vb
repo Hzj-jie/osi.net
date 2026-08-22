@@ -58,10 +58,10 @@ Public Class delegate_device_status_retriever(Of T,
                                                  _CHECKER As __void(Of T))
     Inherits delegate_device_status_retriever(Of T)
 
-    Public Shared ReadOnly instance As delegate_device_status_retriever(Of T, 
-                                                                           _VALIDATOR, 
-                                                                           _CLOSER, 
-                                                                           _IDENTIFIER, 
+    Public Shared ReadOnly instance As delegate_device_status_retriever(Of T,
+                                                                           _VALIDATOR,
+                                                                           _CLOSER,
+                                                                           _IDENTIFIER,
                                                                            _CHECKER)
 
     Private Shared ReadOnly validator As Func(Of T, Boolean)

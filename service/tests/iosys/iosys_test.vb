@@ -73,10 +73,10 @@ Public Class iosys_test
 
         Public Sub start(ByVal round As Int64, ByVal interval_ms As Int64)
             assertion.is_true(async_sync(New event_comb(Function() As Boolean
-                                                      Return waitfor(Function() q.size() < flower_size,
-                                                                     minutes_to_milliseconds(1)) AndAlso
-                                                             goto_next()
-                                                  End Function,
+                                                            Return waitfor(Function() q.size() < flower_size,
+                                                                           minutes_to_milliseconds(1)) AndAlso
+                                                                   goto_next()
+                                                        End Function,
                                                   Function() As Boolean
                                                       assertion.less_or_equal(q.size(), flower_size)
                                                       Dim c As iosys_test_case = Nothing

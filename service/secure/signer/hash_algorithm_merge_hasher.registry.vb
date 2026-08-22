@@ -1,7 +1,7 @@
 
 Imports System.Security.Cryptography
 Imports osi.root.constants
-Imports osi.root.template 
+Imports osi.root.template
 
 Namespace sign
     <global_init(global_init_level.services)>

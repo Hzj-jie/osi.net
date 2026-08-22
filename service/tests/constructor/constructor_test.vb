@@ -30,8 +30,8 @@ Partial Public Class constructor_test
                                                Return New test_prefer_type_constructor_class(1)
                                            End Function))
         assertion.is_true(c.constructor.register(Function(ByVal v As var) As test_prefer_type_constructor_class
-                                               Return New test_prefer_type_constructor_class(2)
-                                           End Function))
+                                                     Return New test_prefer_type_constructor_class(2)
+                                                 End Function))
         Dim r As test_prefer_type_constructor_class = Nothing
         assertion.is_true(c.constructor.sync_resolve(New var(strcat("--type=", type)), r))
         assertion.is_not_null(r)
@@ -75,8 +75,8 @@ Partial Public Class constructor_test
         assertion.is_true(c.constructor.register(Function(ByVal v As var,
                                                     ByRef o As test_return_false_when_constructor_failed2_class) _
                                                    As Boolean
-                                               Return False
-                                           End Function))
+                                                     Return False
+                                                 End Function))
         Dim r As test_return_false_when_constructor_failed2_class = Nothing
         assertion.is_false(c.constructor.sync_resolve(New var(), r))
         assertion.is_null(r)

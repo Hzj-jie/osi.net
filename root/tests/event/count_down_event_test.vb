@@ -18,7 +18,8 @@ Public NotInheritable Class count_down_event_test
         MyBase.New(New count_down_event_case(), thread_count)
     End Sub
 
-    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design",
+                                              "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
     Private NotInheritable Class count_down_event_case
         Inherits [case]
 

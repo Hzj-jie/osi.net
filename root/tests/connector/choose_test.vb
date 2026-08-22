@@ -24,17 +24,17 @@ Public Class choose_test
         Dim cl As Int32 = 0
         cl = rnd_int(0, 5 + 1)
         assertion.is_true(choose(Sub(a() As Int32)
-                               assertion.equal(CUInt(cl), array_size(a))
-                               If cl > 1 Then
-                                   For i As UInt32 = 0 To CUInt(array_size(a) - 2)
-                                       assertion.less(a(i), a(i + 1))
-                                   Next
-                               End If
-                               Dim t As String = Nothing
-                               t = strcat(a)
-                               assertion.is_true(s.find(t) = s.end())
-                               s.insert(t)
-                           End Sub,
+                                     assertion.equal(CUInt(cl), array_size(a))
+                                     If cl > 1 Then
+                                         For i As UInt32 = 0 To CUInt(array_size(a) - 2)
+                                             assertion.less(a(i), a(i + 1))
+                                         Next
+                                     End If
+                                     Dim t As String = Nothing
+                                     t = strcat(a)
+                                     assertion.is_true(s.find(t) = s.end())
+                                     s.insert(t)
+                                 End Sub,
                            v,
                            cl))
         assertion.equal(CInt(s.size()), choose(cl, array_size(v)))
@@ -45,11 +45,11 @@ Public Class choose_test
         Dim v() As Int32 = Nothing
         v = init_array()
         assertion.is_false(choose(Sub(a() As Int32)
-                            End Sub,
+                                  End Sub,
                             v,
                             array_size(v) + 1))
         assertion.is_false(choose(Sub(a() As Int32)
-                            End Sub,
+                                  End Sub,
                             v,
                             -1))
         Return True

@@ -126,8 +126,9 @@ Partial Public NotInheritable Class wrapper_test
                                                o = Nothing
                                                Return True
                                            End Function))
+        Dim tc As New test_class(Of return_null_if_wrapper_returns_null_protector)()
         Dim r As test_class(Of return_null_if_wrapper_returns_null_protector) = Nothing
-        assertion.is_true(wrapper.wrap(New var(), New test_class(Of return_null_if_wrapper_returns_null_protector)(), r))
+        assertion.is_true(wrapper.wrap(New var(), tc, r))
         assertion.is_null(r)
         assertion.is_true(wrapper(Of test_class(Of return_null_if_wrapper_returns_null_protector)).erase())
     End Sub

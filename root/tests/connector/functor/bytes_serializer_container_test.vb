@@ -82,7 +82,8 @@ Public NotInheritable Class bytes_serializer_container_test
                 pair.emplace_of("bcd", vector.of(2, 3, 4, 5)),
                 pair.emplace_of("cde", vector.of(3, 3)))
         Dim r As vector(Of Byte()) = Nothing
-        assertion.is_true(bytes_serializer.from_container(Of first_const_pair(Of String, vector(Of Int32)))().of(m).to(r))
+        assertion.is_true(bytes_serializer.from_container(Of first_const_pair(Of String,
+                          vector(Of Int32)))().of(m).to(r))
         assertion.equal(m.size(), r.size())
         Dim m2 As map(Of String, vector(Of Int32)) = Nothing
         For i As Int32 = 0 To 1

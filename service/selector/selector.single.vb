@@ -25,10 +25,10 @@ Public Class selector_alloc(Of T, PARA_T As IComparable(Of PARA_T))
 End Class
 
 Public Class selector(Of T, PARA_T As IComparable(Of PARA_T))
-    Inherits selector(Of T, 
-                         PARA_T, 
-                         singleton(Of T, PARA_T), 
-                         singleton_alloc(Of T, PARA_T), 
+    Inherits selector(Of T,
+                         PARA_T,
+                         singleton(Of T, PARA_T),
+                         singleton_alloc(Of T, PARA_T),
                          singleton_invoke(Of T, PARA_T))
 
     Public Sub New(ByVal alloc As allocator(Of T, PARA_T))
@@ -45,10 +45,10 @@ Public Class lazier_alloc(Of T, PARA_T As IComparable(Of PARA_T))
 End Class
 
 Public Class lazier(Of T, PARA_T As IComparable(Of PARA_T))
-    Inherits selector(Of T, 
-                         PARA_T, 
-                         multiton(Of T, PARA_T), 
-                         multiton_alloc(Of T, PARA_T), 
+    Inherits selector(Of T,
+                         PARA_T,
+                         multiton(Of T, PARA_T),
+                         multiton_alloc(Of T, PARA_T),
                          multiton_invoke(Of T, PARA_T))
 
     Public Sub New(ByVal alloc As allocator(Of T, PARA_T))

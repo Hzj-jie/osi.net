@@ -46,7 +46,8 @@ Public NotInheritable Class disable_windows_error_popup
         If OperatingSystem.IsWindows() Then
 #Else
         Dim p As PlatformID = Environment.OSVersion().Platform()
-        If p = PlatformID.Win32NT OrElse p = PlatformID.Win32Windows OrElse p = PlatformID.Win32S OrElse p = PlatformID.WinCE Then
+        If p = PlatformID.Win32NT OrElse p = PlatformID.Win32Windows OrElse
+           p = PlatformID.Win32S OrElse p = PlatformID.WinCE Then
 #End If
             windows_error_mode.[set](windows_error_mode.SEM_FAILCRITICALERRORS Or
                                      windows_error_mode.SEM_NOALIGNMENTFAULTEXCEPT Or

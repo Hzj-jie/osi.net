@@ -15,239 +15,239 @@ Imports osi.root.connector
 Imports osi.root.constants
 
 Partial Public Class big_uint
-Private NotInheritable Class adaptive_array_uint32
-    Implements ICloneable, ICloneable(Of adaptive_array_uint32), IComparable(Of adaptive_array_uint32), IComparable
+    Private NotInheritable Class adaptive_array_uint32
+        Implements ICloneable, ICloneable(Of adaptive_array_uint32), IComparable(Of adaptive_array_uint32), IComparable
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32
-        assert(n < max_array_size)
-        If n <= 2 Then
-            Return 4
-        End If
-        n <<= 1
-        Return If(n > max_array_size, max_array_size, n)
-    End Function
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Private Shared Function expected_capacity(ByVal n As UInt32) As UInt32
+            assert(n < max_array_size)
+            If n <= 2 Then
+                Return 4
+            End If
+            n <<= 1
+            Return If(n > max_array_size, max_array_size, n)
+        End Function
 
-    Private d() As UInt32
-    Private s As UInt32
+        Private d() As UInt32
+        Private s As UInt32
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub New()
-        ReDim d(-1)
-    End Sub
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub New()
+            ReDim d(-1)
+        End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub New(ByVal n As UInt32)
-        reserve(n)
-    End Sub
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub New(ByVal n As UInt32)
+            reserve(n)
+        End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Function move(ByVal that As adaptive_array_uint32) As adaptive_array_uint32
-        If that Is Nothing Then
-            Return Nothing
-        End If
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Shared Function move(ByVal that As adaptive_array_uint32) As adaptive_array_uint32
+            If that Is Nothing Then
+                Return Nothing
+            End If
 
-        Dim r As adaptive_array_uint32 = Nothing
-        r = New adaptive_array_uint32()
-        r.d = that.d
-        r.s = that.s
-        that.d = Nothing
-        that.s = 0
-        Return r
-    End Function
+            Dim r As adaptive_array_uint32 = Nothing
+            r = New adaptive_array_uint32()
+            r.d = that.d
+            r.s = that.s
+            that.d = Nothing
+            that.s = 0
+            Return r
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Function swap(ByVal this As adaptive_array_uint32, ByVal that As adaptive_array_uint32) As Boolean
-        If this Is Nothing OrElse that Is Nothing Then
-            Return False
-        End If
-        connector.swap(this.d, that.d)
-        connector.swap(this.s, that.s)
-        Return True
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function replace_by(ByVal d() As UInt32, ByVal s As UInt32) As Boolean
-        If array_size(d) >= s Then
-            Me.d = d
-            Me.s = s
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Shared Function swap(ByVal this As adaptive_array_uint32, ByVal that As adaptive_array_uint32) As Boolean
+            If this Is Nothing OrElse that Is Nothing Then
+                Return False
+            End If
+            connector.swap(this.d, that.d)
+            connector.swap(this.s, that.s)
             Return True
-        End If
-        Return False
-    End Function
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub replace_by(ByVal d() As UInt32)
-        assert(replace_by(d, array_size(d)))
-    End Sub
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function max_size() As UInt32
-        Return max_array_size
-    End Function
-
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function data() As UInt32()
-        Return d
-    End Function
-
-    Default Public Property at(ByVal p As UInt32) As UInt32
         <MethodImpl(method_impl_options.aggressive_inlining)>
-        Get
-            Return [get](p)
-        End Get
+        Public Function replace_by(ByVal d() As UInt32, ByVal s As UInt32) As Boolean
+            If array_size(d) >= s Then
+                Me.d = d
+                Me.s = s
+                Return True
+            End If
+            Return False
+        End Function
+
         <MethodImpl(method_impl_options.aggressive_inlining)>
-        Set(ByVal value As UInt32)
-            [set](p, value)
-        End Set
-    End Property
+        Public Sub replace_by(ByVal d() As UInt32)
+            assert(replace_by(d, array_size(d)))
+        End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function [get](ByVal p As UInt32) As UInt32
-        Return d(CInt(p))
-    End Function
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function max_size() As UInt32
+            Return max_array_size
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub [set](ByVal p As UInt32, ByVal v As UInt32)
-        d(CInt(p)) = v
-    End Sub
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function data() As UInt32()
+            Return d
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function size() As UInt32
-        Return s
-    End Function
+        Default Public Property at(ByVal p As UInt32) As UInt32
+            <MethodImpl(method_impl_options.aggressive_inlining)>
+            Get
+                Return [get](p)
+            End Get
+            <MethodImpl(method_impl_options.aggressive_inlining)>
+            Set(ByVal value As UInt32)
+                [set](p, value)
+            End Set
+        End Property
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function empty() As Boolean
-        Return size() = uint32_0
-    End Function
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function [get](ByVal p As UInt32) As UInt32
+            Return d(CInt(p))
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function capacity() As UInt32
-        Return array_size(d)
-    End Function
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub [set](ByVal p As UInt32, ByVal v As UInt32)
+            d(CInt(p)) = v
+        End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function back() As UInt32
-        Return d(CInt(size() - uint32_1))
-    End Function
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function size() As UInt32
+            Return s
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub clear()
-        If size() > uint32_0 Then
-            arrays.clear(data(), uint32_0, size())
-            s = uint32_0
-        End If
-    End Sub
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function empty() As Boolean
+            Return size() = uint32_0
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub push_back(ByVal v As UInt32)
-        reserve(size() + uint32_1)
-        d(CInt(size())) = v
-        s += uint32_1
-    End Sub
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function capacity() As UInt32
+            Return array_size(d)
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub pop_back()
-        s -= uint32_1
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function back() As UInt32
+            Return d(CInt(size() - uint32_1))
+        End Function
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub clear()
+            If size() > uint32_0 Then
+                arrays.clear(data(), uint32_0, size())
+                s = uint32_0
+            End If
+        End Sub
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub push_back(ByVal v As UInt32)
+            reserve(size() + uint32_1)
+            d(CInt(size())) = v
+            s += uint32_1
+        End Sub
+
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub pop_back()
+            s -= uint32_1
 #If "UInt32" = "UInt32" Then
-        d(CInt(size())) = uint32_0
+            d(CInt(size())) = uint32_0
 #Else
         d(CInt(size())) = [default](Of T).null
 #End If
-    End Sub
+        End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub reserve(ByVal n As UInt32)
-        If capacity() >= n Then
-            Return
-        End If
-        Dim ec As UInt32 = 0
-        ec = expected_capacity(n)
-        assert(ec >= uint32_1)
-        If empty() Then
-            ReDim d(CInt(ec - uint32_1))
-        Else
-            ReDim Preserve d(CInt(ec - uint32_1))
-        End If
-    End Sub
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub reserve(ByVal n As UInt32)
+            If capacity() >= n Then
+                Return
+            End If
+            Dim ec As UInt32 = 0
+            ec = expected_capacity(n)
+            assert(ec >= uint32_1)
+            If empty() Then
+                ReDim d(CInt(ec - uint32_1))
+            Else
+                ReDim Preserve d(CInt(ec - uint32_1))
+            End If
+        End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub resize(ByVal n As UInt32)
-        If capacity() < n Then
-            reserve(n)
-        ElseIf size() > n Then
-            arrays.clear(d, n, size() - n)
-        End If
-        s = n
-    End Sub
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub resize(ByVal n As UInt32)
+            If capacity() < n Then
+                reserve(n)
+            ElseIf size() > n Then
+                arrays.clear(d, n, size() - n)
+            End If
+            s = n
+        End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function shrink_to_fit() As Boolean
-        assert(capacity() >= size())
-        If capacity() = size() Then
-            Return False
-        End If
-        If empty() Then
-            ReDim d(-1)
-        Else
-            assert(size() >= uint32_1)
-            ReDim Preserve d(CInt(size() - uint32_1))
-        End If
-        Return True
-    End Function
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function shrink_to_fit() As Boolean
+            assert(capacity() >= size())
+            If capacity() = size() Then
+                Return False
+            End If
+            If empty() Then
+                ReDim d(-1)
+            Else
+                assert(size() >= uint32_1)
+                ReDim Preserve d(CInt(size() - uint32_1))
+            End If
+            Return True
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function Clone() As Object Implements ICloneable.Clone
-        Return CloneT()
-    End Function
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function Clone() As Object Implements ICloneable.Clone
+            Return CloneT()
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Sub copy_from(ByVal i As adaptive_array_uint32)
-        assert(Not i Is Nothing)
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Sub copy_from(ByVal i As adaptive_array_uint32)
+            assert(Not i Is Nothing)
 #If "UInt32" = "UInt32" Then
-        ReDim d(array_size_i(i.d) - 1)
-        arrays.copy(d, i.d, i.s)
+            ReDim d(array_size_i(i.d) - 1)
+            arrays.copy(d, i.d, i.s)
 #Else
         d = i.d.deep_clone()
 #End If
-        s = i.s
-    End Sub
+            s = i.s
+        End Sub
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function CloneT() As adaptive_array_uint32 Implements ICloneable(Of adaptive_array_uint32).Clone
-        Dim r As New adaptive_array_uint32()
-        r.copy_from(Me)
-        Return r
-    End Function
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function CloneT() As adaptive_array_uint32 Implements ICloneable(Of adaptive_array_uint32).Clone
+            Dim r As New adaptive_array_uint32()
+            r.copy_from(Me)
+            Return r
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Function compare(ByVal this As adaptive_array_uint32, ByVal that As adaptive_array_uint32) As Int32
-        Dim c As Int32 = 0
-        c = object_compare(this, that)
-        If c <> object_compare_undetermined Then
-            Return c
-        End If
-        assert(Not this Is Nothing)
-        assert(Not that Is Nothing)
-        If this.size() < that.size() Then
-            Return -1
-        End If
-        If this.size() > that.size() Then
-            Return 1
-        End If
-        Return this.d.deep_compare(that.d, this.size())
-    End Function
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Shared Function compare(ByVal this As adaptive_array_uint32, ByVal that As adaptive_array_uint32) As Int32
+            Dim c As Int32 = 0
+            c = object_compare(this, that)
+            If c <> object_compare_undetermined Then
+                Return c
+            End If
+            assert(Not this Is Nothing)
+            assert(Not that Is Nothing)
+            If this.size() < that.size() Then
+                Return -1
+            End If
+            If this.size() > that.size() Then
+                Return 1
+            End If
+            Return this.d.deep_compare(that.d, this.size())
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
-        Return CompareTo(cast(Of adaptive_array_uint32)(obj, False))
-    End Function
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function CompareTo(ByVal obj As Object) As Int32 Implements IComparable.CompareTo
+            Return CompareTo(cast(Of adaptive_array_uint32)(obj, False))
+        End Function
 
-    <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Function CompareTo(ByVal other As adaptive_array_uint32) As Int32 Implements IComparable(Of adaptive_array_uint32).CompareTo
-        Return compare(Me, other)
-    End Function
+        <MethodImpl(method_impl_options.aggressive_inlining)>
+        Public Function CompareTo(ByVal other As adaptive_array_uint32) As Int32 Implements IComparable(Of adaptive_array_uint32).CompareTo
+            Return compare(Me, other)
+        End Function
 
-End Class
+    End Class
 End Class

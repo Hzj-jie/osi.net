@@ -65,11 +65,13 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
 #End If
 
     Shared Sub New()
-        bytes_serializer.fixed.register(Function(ByVal i As first_const_pair(Of FT, ST), ByVal o As MemoryStream) As Boolean
-                                            Return bytes_serializer.append_to(i.first_or_null(), o) AndAlso
-                                                   bytes_serializer.append_to(i.second_or_null(), o)
-                                        End Function,
-                                        Function(ByVal i As MemoryStream, ByRef o As first_const_pair(Of FT, ST)) As Boolean
+        bytes_serializer.fixed.register(
+                Function(ByVal i As first_const_pair(Of FT, ST), ByVal o As MemoryStream) As Boolean
+                    Return bytes_serializer.append_to(i.first_or_null(), o) AndAlso
+                           bytes_serializer.append_to(i.second_or_null(), o)
+                End Function,
+                                        Function(ByVal i As MemoryStream,
+                                                 ByRef o As first_const_pair(Of FT, ST)) As Boolean
                                             Dim f As FT = Nothing
                                             Dim s As ST = Nothing
                                             If bytes_serializer.consume_from(i, f) AndAlso
@@ -218,7 +220,8 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
             Return compare(l.second, r.second)
         End Function
 
-    Public Shared ReadOnly second_first_comparer As Func(Of first_const_pair(Of FT, ST), first_const_pair(Of FT, ST), Int32) =
+    Public Shared ReadOnly second_first_comparer As _
+        Func(Of first_const_pair(Of FT, ST), first_const_pair(Of FT, ST), Int32) =
         Function(ByVal l As first_const_pair(Of FT, ST),
                  ByVal r As first_const_pair(Of FT, ST)) As Int32
             assert(Not l Is Nothing)
@@ -317,7 +320,8 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Operator =(ByVal this As first_const_pair(Of FT, ST), ByVal that As first_const_pair(Of FT, ST)) As Boolean
+    Public Shared Operator =(ByVal this As first_const_pair(Of FT, ST),
+                             ByVal that As first_const_pair(Of FT, ST)) As Boolean
         Return compare(this, that) = 0
     End Operator
 
@@ -327,7 +331,8 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
     End Operator
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
-    Public Shared Operator <>(ByVal this As first_const_pair(Of FT, ST), ByVal that As first_const_pair(Of FT, ST)) As Boolean
+    Public Shared Operator <>(ByVal this As first_const_pair(Of FT, ST),
+                              ByVal that As first_const_pair(Of FT, ST)) As Boolean
         Return compare(this, that) <> 0
     End Operator
 

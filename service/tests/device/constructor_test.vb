@@ -70,8 +70,8 @@ Public Class constructor_test
         assertion.equal(mock_dev(Of protector2).destructed(), uint32_0)
         If assertion.is_true(device_pool_manager.register(name, singleton_device_pool.[New](r.make_device()))) Then
             Dim p As singleton_device_pool(Of mock_dev_interface) = Nothing
-            assertion.is_true(device_pool_manager.get(Of mock_dev_interface, singleton_device_pool(Of mock_dev_interface)) _
-                                               (name, p))
+            assertion.is_true(
+                device_pool_manager.get(Of mock_dev_interface, singleton_device_pool(Of mock_dev_interface))(name, p))
             If assertion.is_not_null(p) Then
                 Dim i As idevice(Of mock_dev_interface) = Nothing
                 assertion.is_true(p.get(i))

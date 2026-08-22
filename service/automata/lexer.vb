@@ -19,10 +19,10 @@ Public Class lexer
         Next
     End Sub
 
-    Private ReadOnly adfa As adfa(Of Byte, 
-                                     _max_uint8, 
-                                     _byte_to_uint32, 
-                                     vector(Of word), 
+    Private ReadOnly adfa As adfa(Of Byte,
+                                     _max_uint8,
+                                     _byte_to_uint32,
+                                     vector(Of word),
                                      stringtrie(Of Func(Of Byte(), UInt32, vector(Of word), Boolean)))
 
     Public Class MAX_TYPE(Of _MAX_TYPE As _int64)
@@ -112,10 +112,10 @@ Public Class lexer
     End Class
 
     Public Sub New(ByVal use_default_separators As Boolean, ByVal ignore_separators As Boolean)
-        adfa = New adfa(Of Byte, 
-                           _max_uint8, 
-                           _byte_to_uint32, 
-                           vector(Of word), 
+        adfa = New adfa(Of Byte,
+                           _max_uint8,
+                           _byte_to_uint32,
+                           vector(Of word),
                            stringtrie(Of Func(Of Byte(), UInt32, vector(Of word), Boolean)))()
         If use_default_separators Then
             Me.use_default_separators(ignore_separators)

@@ -12,18 +12,20 @@ Imports p = osi.service.ml.percentile
 Public NotInheritable Class ranking_test
     <test>
     Private Shared Sub ascent_case()
-        assertion.near_match(p.ascent.ranking(streams.range(0, 100).collect_to(Of vector(Of Int32))(), 79), 0.8, 0.00001)
-        assertion.near_match(p.ascent.ranking(streams.range(0, 100).collect_to(Of vector(Of Int32))(), 99), 1, 0.00001)
-        assertion.near_match(p.ascent.ranking(streams.range(0, 100).collect_to(Of vector(Of Int32))(), 0), 0.01, 0.00001)
-        assertion.near_match(p.ascent.ranking(streams.range(0, 100).collect_to(Of vector(Of Int32))(), 1), 0.02, 0.00001)
+        Dim v As vector(Of Int32) = streams.range(0, 100).collect_to(Of vector(Of Int32))()
+        assertion.near_match(p.ascent.ranking(v, 79), 0.8, 0.00001)
+        assertion.near_match(p.ascent.ranking(v, 99), 1, 0.00001)
+        assertion.near_match(p.ascent.ranking(v, 0), 0.01, 0.00001)
+        assertion.near_match(p.ascent.ranking(v, 1), 0.02, 0.00001)
     End Sub
 
     <test>
     Private Shared Sub descent_case()
-        assertion.near_match(p.descent.ranking(streams.range(0, 100).collect_to(Of vector(Of Int32))(), 80), 0.2, 0.00001)
-        assertion.near_match(p.descent.ranking(streams.range(0, 100).collect_to(Of vector(Of Int32))(), 99), 0.01, 0.00001)
-        assertion.near_match(p.descent.ranking(streams.range(0, 100).collect_to(Of vector(Of Int32))(), 0), 1, 0.00001)
-        assertion.near_match(p.descent.ranking(streams.range(0, 100).collect_to(Of vector(Of Int32))(), 1), 0.99, 0.00001)
+        Dim v As vector(Of Int32) = streams.range(0, 100).collect_to(Of vector(Of Int32))()
+        assertion.near_match(p.descent.ranking(v, 80), 0.2, 0.00001)
+        assertion.near_match(p.descent.ranking(v, 99), 0.01, 0.00001)
+        assertion.near_match(p.descent.ranking(v, 0), 1, 0.00001)
+        assertion.near_match(p.descent.ranking(v, 1), 0.99, 0.00001)
     End Sub
 
     <test>

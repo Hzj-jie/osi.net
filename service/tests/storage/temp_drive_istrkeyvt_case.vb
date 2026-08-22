@@ -19,13 +19,17 @@ Public MustInherit Class temp_drive_istrkeyvt_case
     Private ReadOnly valid As Boolean
 
     Shared Sub New()
-        temp_dir = Path.Combine(data_dir_base, "temp")
-        void_(Sub()
-                  Directory.Delete(temp_dir, True)
-              End Sub)
-        void_(Sub()
-                  Directory.CreateDirectory(temp_dir)
-              End Sub)
+        If Directory.Exists(data_dir_base) Then
+            temp_dir = Path.Combine(data_dir_base, "temp")
+            void_(Sub()
+                      If Directory.Exists(temp_dir) Then
+                          Directory.Delete(temp_dir, True)
+                      End If
+                  End Sub)
+            void_(Sub()
+                      Directory.CreateDirectory(temp_dir)
+                  End Sub)
+        End If
     End Sub
 
     Protected Sub New(ByVal i As iistrkeyvt_case)

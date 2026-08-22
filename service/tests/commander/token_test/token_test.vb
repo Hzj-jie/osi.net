@@ -15,15 +15,15 @@ Partial Public Class token_test
     Private Const mock_ppt_count_upper_bound As UInt32 = 40
 
     Private ReadOnly forward_questioner_responder As forward_questioner_responder
-    Private ReadOnly defender_creator As Func(Of token_info(Of mock_ppt, mock_conn), 
+    Private ReadOnly defender_creator As Func(Of token_info(Of mock_ppt, mock_conn),
                                                  itoken_defender(Of mock_ppt, mock_conn))
-    Private ReadOnly challenger_creator As Func(Of token_info(Of mock_ppt, mock_conn), 
-                                                   mock_ppt, 
-                                                   mock_conn, 
+    Private ReadOnly challenger_creator As Func(Of token_info(Of mock_ppt, mock_conn),
+                                                   mock_ppt,
+                                                   mock_conn,
                                                    itoken_challenger(Of mock_ppt, mock_conn))
-    Private ReadOnly token_info_creator As Func(Of forward_questioner_responder, 
-                                                   UInt32, 
-                                                   mock_conn, 
+    Private ReadOnly token_info_creator As Func(Of forward_questioner_responder,
+                                                   UInt32,
+                                                   mock_conn,
                                                    token_info(Of mock_ppt, mock_conn))
     Private ReadOnly with_empty_token As Boolean
 
@@ -34,15 +34,15 @@ Partial Public Class token_test
                True)
     End Sub
 
-    Protected Sub New(ByVal defender_creator As Func(Of token_info(Of mock_ppt, mock_conn), 
+    Protected Sub New(ByVal defender_creator As Func(Of token_info(Of mock_ppt, mock_conn),
                                                         itoken_defender(Of mock_ppt, mock_conn)),
-                      ByVal challenger_creator As Func(Of token_info(Of mock_ppt, mock_conn), 
-                                                          mock_ppt, 
-                                                          mock_conn, 
+                      ByVal challenger_creator As Func(Of token_info(Of mock_ppt, mock_conn),
+                                                          mock_ppt,
+                                                          mock_conn,
                                                           itoken_challenger(Of mock_ppt, mock_conn)),
-                      ByVal token_info_creator As Func(Of forward_questioner_responder, 
-                                                          UInt32, 
-                                                          mock_conn, 
+                      ByVal token_info_creator As Func(Of forward_questioner_responder,
+                                                          UInt32,
+                                                          mock_conn,
                                                           token_info(Of mock_ppt, mock_conn)),
                       ByVal with_empty_token As Boolean)
         assert(Not defender_creator Is Nothing)

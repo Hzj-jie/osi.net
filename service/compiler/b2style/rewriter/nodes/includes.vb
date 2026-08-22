@@ -22,8 +22,8 @@ Partial Public NotInheritable Class b2style
                 Return True
             End If
             Return compile_wrapper.with_current_file(i, Function(ByVal s As String) As Boolean
-                                                          Return code_builder.build(s, j)
-                                                      End Function)
+                                                            Return code_builder.build(s, j)
+                                                        End Function)
         End Function
 
         Public Structure folders

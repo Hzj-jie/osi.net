@@ -7,7 +7,8 @@ Public NotInheritable Class singleton_device_pool
     Private Sub New()
     End Sub
 
-    Public Shared Function [New](Of T)(ByVal d As idevice(Of T), ByVal identity As String) As singleton_device_pool(Of T)
+    Public Shared Function [New](Of T)(ByVal d As idevice(Of T),
+                                       ByVal identity As String) As singleton_device_pool(Of T)
         Return New singleton_device_pool(Of T)(d, identity)
     End Function
 

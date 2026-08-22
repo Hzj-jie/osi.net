@@ -11,20 +11,24 @@ Imports osi.root.constants
 
 <global_init(global_init_level.other)>
 Public Module _hardware
-    Public ReadOnly hardware_manufacturer As String = Function() As String
-                                                          ' TODO: Implement cross-platform hardware detection for Linux (e.g. /sys/class/dmi/id/sys_vendor).
-                                                          If Not os.is_windows Then
-                                                              Return String.Empty
-                                                          End If
-                                                          Return search_management_object("Manufacturer")
-                                                      End Function()
-    Public ReadOnly hardware_model As String = Function() As String
-                                                   ' TODO: Implement cross-platform hardware model detection for Linux (e.g. /sys/class/dmi/id/product_name).
-                                                   If Not os.is_windows Then
-                                                       Return String.Empty
-                                                   End If
-                                                   Return search_management_object("Model")
-                                               End Function()
+    Public ReadOnly hardware_manufacturer As String =
+        Function() As String
+            ' TODO: Implement cross-platform hardware detection for Linux
+            ' (e.g. /sys/class/dmi/id/sys_vendor).
+            If Not os.is_windows Then
+                Return String.Empty
+            End If
+            Return search_management_object("Manufacturer")
+        End Function()
+    Public ReadOnly hardware_model As String =
+        Function() As String
+            ' TODO: Implement cross-platform hardware model detection for Linux
+            ' (e.g. /sys/class/dmi/id/product_name).
+            If Not os.is_windows Then
+                Return String.Empty
+            End If
+            Return search_management_object("Model")
+        End Function()
     Public ReadOnly hyper_v_virtual_machine As Boolean =
         strsame(hardware_manufacturer, "microsoft corporation", False) AndAlso
         strcontains(hardware_model, "virtual", False)

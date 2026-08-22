@@ -5,24 +5,24 @@ Imports osi.root.formation
 Imports osi.root.utils
 
 Public Class lazier(Of T, TYPE_T As IComparable(Of TYPE_T), PARA_T As IComparable(Of PARA_T))
-    Inherits selector(Of T, 
-                         TYPE_T, 
-                         PARA_T, 
-                         multiton(Of T, PARA_T), 
-                         multiton_alloc(Of T, PARA_T), 
-                         multiton_invoke(Of T, PARA_T), 
-                         lazier(Of T, PARA_T), 
+    Inherits selector(Of T,
+                         TYPE_T,
+                         PARA_T,
+                         multiton(Of T, PARA_T),
+                         multiton_alloc(Of T, PARA_T),
+                         multiton_invoke(Of T, PARA_T),
+                         lazier(Of T, PARA_T),
                          lazier_alloc(Of T, PARA_T))
 End Class
 
 Public Class selector(Of T, TYPE_T As IComparable(Of TYPE_T), PARA_T As IComparable(Of PARA_T))
-    Inherits selector(Of T, 
-                         TYPE_T, 
-                         PARA_T, 
-                         singleton(Of T, PARA_T), 
-                         singleton_alloc(Of T, PARA_T), 
-                         singleton_invoke(Of T, PARA_T), 
-                         selector(Of T, PARA_T), 
+    Inherits selector(Of T,
+                         TYPE_T,
+                         PARA_T,
+                         singleton(Of T, PARA_T),
+                         singleton_alloc(Of T, PARA_T),
+                         singleton_invoke(Of T, PARA_T),
+                         selector(Of T, PARA_T),
                          selector_alloc(Of T, PARA_T))
 End Class
 

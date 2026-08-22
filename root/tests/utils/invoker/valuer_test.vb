@@ -51,7 +51,7 @@ Public Class valuer_test
                    run_case(Of Int32)("i", rnd_int(), binding_flags.static_private) AndAlso
                    run_case(Of Int32)("j", rnd_int(), binding_flags.static_public) AndAlso
                    run_case(Of Int32)("k", rnd_int(), binding_flags.static_private) AndAlso
- _
+                                                                                           _
                    set_only_case(Of test_imp, test_inh)("c", binding_flags.instance_public) AndAlso
                    get_only_case(Of test_imp, test_inh)("e", binding_flags.instance_public) AndAlso
                    fail_case(Of Int32)("f", binding_flags.instance_private) AndAlso

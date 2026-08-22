@@ -322,10 +322,14 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                 assertion.more_or_equal_and_less_or_equal(+tcp_suc, run_times() / div * 0.9, run_times() / div * 1.1)
             End If
             If enable_http_get Then
-                assertion.more_or_equal_and_less_or_equal(+http_get_suc, run_times() / div * 0.9, run_times() / div * 1.1)
+                assertion.more_or_equal_and_less_or_equal(+http_get_suc,
+                                                          run_times() / div * 0.9,
+                                                          run_times() / div * 1.1)
             End If
             If enable_http_post Then
-                assertion.more_or_equal_and_less_or_equal(+http_post_suc, run_times() / div * 0.9, run_times() / div * 1.1)
+                assertion.more_or_equal_and_less_or_equal(+http_post_suc,
+                                                          run_times() / div * 0.9,
+                                                          run_times() / div * 1.1)
             End If
             If enable_udp Then
                 assertion.more_or_equal_and_less_or_equal(+udp_suc, run_times() / div * 0.9, run_times() / div * 1.1)

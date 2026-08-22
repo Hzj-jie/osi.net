@@ -26,7 +26,8 @@ Public NotInheritable Class waitable_slimheapless_test
         MyBase.New(New waitable_slimheapless_case(), waitable_slimheapless_case.push_threads << 1)
     End Sub
 
-    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
+    <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design",
+                                              "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
     Private NotInheritable Class waitable_slimheapless_case
         Inherits [case]
 

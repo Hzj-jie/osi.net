@@ -30,15 +30,15 @@ Public Class constructor_wrapper_test
     Public Overrides Function prepare() As Boolean
         Return MyBase.prepare() AndAlso
                assertion.is_true(constructor.register(Function(i As var) As int
-                                                    assertion.is_not_null(i)
-                                                    Return New impl()
-                                                End Function)) AndAlso
+                                                          assertion.is_not_null(i)
+                                                          Return New impl()
+                                                      End Function)) AndAlso
                assertion.is_true(wrapper.register(Function(v As var, i As int) As int
-                                                assertion.is_not_null(v)
-                                                assertion.is_not_null(i)
-                                                assertion.is_true(TypeOf i Is impl)
-                                                Return New wrap(i)
-                                            End Function))
+                                                      assertion.is_not_null(v)
+                                                      assertion.is_not_null(i)
+                                                      assertion.is_true(TypeOf i Is impl)
+                                                      Return New wrap(i)
+                                                  End Function))
     End Function
 
     Public Overrides Function run() As Boolean

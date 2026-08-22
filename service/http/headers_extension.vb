@@ -138,7 +138,7 @@ Public Module _headers_extension
         Return i.UrlReferrer().AbsoluteUri()
     End Function
 
-    <Extension()> Public Function range_series(ByVal i As HttpListenerContext) As  _
+    <Extension()> Public Function range_series(ByVal i As HttpListenerContext) As _
                                               pair(Of String, vector(Of pair(Of Int64, Int64)))
         If i Is Nothing Then
             Return Nothing
@@ -146,7 +146,7 @@ Public Module _headers_extension
         Return range_series(i.Request())
     End Function
 
-    <Extension()> Public Function range_series(ByVal i As HttpListenerRequest) As  _
+    <Extension()> Public Function range_series(ByVal i As HttpListenerRequest) As _
                                               pair(Of String, vector(Of pair(Of Int64, Int64)))
         If i Is Nothing Then
             Return Nothing
@@ -154,7 +154,7 @@ Public Module _headers_extension
         Return range_series(i.cast_headers())
     End Function
 
-    <Extension()> Public Function range_series(ByVal i As WebHeaderCollection) As  _
+    <Extension()> Public Function range_series(ByVal i As WebHeaderCollection) As _
                                               pair(Of String, vector(Of pair(Of Int64, Int64)))
         If i Is Nothing Then
             Return Nothing

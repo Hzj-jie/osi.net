@@ -32,8 +32,10 @@ Public Class byte_test
         assertion.equal(hex_str(max_uint16), "FFFF")
         assertion.equal(hex_str(max_uint32), "FFFFFFFF")
         assertion.equal(hex_str(max_uint64), "FFFFFFFFFFFFFFFF")
-        assertion.equal(hex_str((CUInt(&H12) << 24) + (CUInt(&H34) << 16) + (CUInt(&H56) << 8) + CUInt(&H78)), "12345678")
-        assertion.equal(hex_str((CUInt(&HAB) << 24) + (CUInt(&HCD) << 16) + (CUInt(&HEF) << 8) + CUInt(&H12)), "ABCDEF12")
+        assertion.equal(hex_str((CUInt(&H12) << 24) + (CUInt(&H34) << 16) + (CUInt(&H56) << 8) + CUInt(&H78)),
+                        "12345678")
+        assertion.equal(hex_str((CUInt(&HAB) << 24) + (CUInt(&HCD) << 16) + (CUInt(&HEF) << 8) + CUInt(&H12)),
+                        "ABCDEF12")
         assertion.equal(hex_str((CULng(&HAB) << 24) + (CULng(&HCD) << 16) + (CULng(&HEF) << 8) + CULng(&H12)),
                      "00000000ABCDEF12")
         assertion.equal(hex_str((CULng(&H87) << 24) + (CULng(&H65) << 16) + (CULng(&H43) << 8) + CULng(&HDE)),

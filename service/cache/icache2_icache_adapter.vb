@@ -43,7 +43,8 @@ Public NotInheritable Class icache2_icache_adapter(Of KEY_T As IComparable(Of KE
         Return Nothing
     End Function
 
-    Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean Implements islimcache(Of KEY_T, VALUE_T).get
+    Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean _
+        Implements islimcache(Of KEY_T, VALUE_T).get
         Dim r As ref(Of VALUE_T) = Nothing
         r = New ref(Of VALUE_T)()
         If async_sync(i.get(key, r)) Then

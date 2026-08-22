@@ -9,8 +9,21 @@ UTT_BIN_DIR="$SCRIPT_DIR/root/utt/bin/$CONFIGURATION/net8.0"
 mkdir -p "$UTT_BIN_DIR"
 
 # Sync all built libraries and tests to UTT directory so UTT can discover and run them
-find "$SCRIPT_DIR/root" "$SCRIPT_DIR/service" -name "*.dll" -path "*/bin/$CONFIGURATION/net8.0/*" -exec cp -u {} "$UTT_BIN_DIR/" \; 2>/dev/null || true
-find "$SCRIPT_DIR/root" "$SCRIPT_DIR/service" -name "*.pdb" -path "*/bin/$CONFIGURATION/net8.0/*" -exec cp -u {} "$UTT_BIN_DIR/" \; 2>/dev/null || true
+for proj in $(find "$SCRIPT_DIR/root" "$SCRIPT_DIR/service" -name "*.net8.vbproj"); do
+    proj_dir="$(dirname "$proj")"
+    asm="$(grep -oPm1 "(?<=<AssemblyName>)[^<]+" "$proj" || true)"
+    if [ -z "$asm" ]; then
+        asm="$(basename "$proj" .net8.vbproj)"
+    fi
+    src_dll="$proj_dir/bin/$CONFIGURATION/net8.0/$asm.dll"
+    if [ -f "$src_dll" ] && [ "$src_dll" != "$UTT_BIN_DIR/$asm.dll" ]; then
+        cp -f "$src_dll" "$UTT_BIN_DIR/"
+    fi
+    src_pdb="$proj_dir/bin/$CONFIGURATION/net8.0/$asm.pdb"
+    if [ -f "$src_pdb" ] && [ "$src_pdb" != "$UTT_BIN_DIR/$asm.pdb" ]; then
+        cp -f "$src_pdb" "$UTT_BIN_DIR/"
+    fi
+done
 
 export utt_no_debug_mode=true
 export utt_report_case_name="${utt_report_case_name:-true}"

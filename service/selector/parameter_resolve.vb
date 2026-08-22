@@ -49,7 +49,7 @@ Public Module _parameter_resolve
     End Function
 
     Public Function parameter_resolve(Of T, PT1, PT2, PT3, PT4) _
-                                     (ByVal r As _do_val_ref(Of PT1, 
+                                     (ByVal r As _do_val_ref(Of PT1,
                                                                 _do_val_val_val_ref(Of PT2, PT3, PT4, T, Boolean),
                                                                 Boolean),
                                       ByVal p1 As PT1,
@@ -69,7 +69,7 @@ Public Module _parameter_resolve
     End Function
 
     Public Function parameter_resolve(Of T, PT1, PT2, PT3, PT4, PT5) _
-                        (ByVal r As _do_val_ref(Of PT1, 
+                        (ByVal r As _do_val_ref(Of PT1,
                                                    _do_val_val_val_val_ref(Of PT2, PT3, PT4, PT5, T, Boolean),
                                                   Boolean),
                          ByVal p1 As PT1,

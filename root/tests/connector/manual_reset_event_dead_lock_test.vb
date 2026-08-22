@@ -25,7 +25,8 @@ Public NotInheritable Class manual_reset_event_dead_lock_test
             MyBase.New(New executor(), thread_count)
         End Sub
 
-        <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
+        <Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design",
+                                                  "CA1001:TypesThatOwnDisposableFieldsShouldBeDisposable")>
         Private NotInheritable Class executor
             Inherits [case]
 

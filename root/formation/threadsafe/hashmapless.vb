@@ -50,8 +50,8 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
     Private Function scoped_lock(ByVal index As UInt32) As IDisposable
         _lock(CInt(index)).wait()
         Return defer.to(Sub()
-                                _lock(CInt(index)).release()
-                            End Sub)
+                            _lock(CInt(index)).release()
+                        End Sub)
     End Function
 
     Private Function valid_index(ByVal index As UInt32) As Boolean

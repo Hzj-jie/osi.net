@@ -78,11 +78,11 @@ Public NotInheritable Class convertor_test
     <test>
     Private Shared Sub simple_no_type_case()
         assertion.is_true(c.constructor.register(Function(ByVal v As var) As test_class
-                                               Return New test_class(3)
-                                           End Function))
+                                                     Return New test_class(3)
+                                                 End Function))
         assertion.is_true(c.convertor.register(Function(ByVal v As var, ByVal i As test_class) As test_class2
-                                             Return New test_class2(i, 3)
-                                         End Function,
+                                                   Return New test_class2(i, 3)
+                                               End Function,
                                          "test_class"))
 
         Dim r As test_class2 = Nothing
@@ -121,7 +121,8 @@ Public NotInheritable Class convertor_test
             Dim tw As test_class_wrapper = Nothing
             Dim t2 As test_class2 = Nothing
             Dim t2w As test_class2_wrapper = Nothing
-            assertion.is_true(c.constructor.sync_resolve(New var(strcat("--type=", type, " --test_class.type=", type)), t2))
+            Dim arg As String = strcat("--type=", type, " --test_class.type=", type)
+            assertion.is_true(c.constructor.sync_resolve(New var(arg), t2))
             assertion.is_not_null(t2)
             assertion.equal(t2.s, 2)
             assertion.is_not_null(t2.t)

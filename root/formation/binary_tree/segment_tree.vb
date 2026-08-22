@@ -220,7 +220,7 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
             emplace(root, min, max, value)
             Return True
         Else
-        Return False
+            Return False
         End If
     End Function
 

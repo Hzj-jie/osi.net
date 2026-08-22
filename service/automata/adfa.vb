@@ -15,10 +15,10 @@ Public Class adfa(Of KEY_T,
                      CHILD_COUNT As _int64,
                      KEY_TO_INDEX As _to_uint32(Of KEY_T),
                      RESULT_T)
-    Inherits adfa(Of KEY_T, 
-                     CHILD_COUNT, 
-                     KEY_TO_INDEX, 
-                     RESULT_T, 
+    Inherits adfa(Of KEY_T,
+                     CHILD_COUNT,
+                     KEY_TO_INDEX,
+                     RESULT_T,
                      trie(Of KEY_T, Func(Of KEY_T(), UInt32, RESULT_T, Boolean), CHILD_COUNT, KEY_TO_INDEX))
 End Class
 
@@ -51,7 +51,7 @@ Public Class adfa(Of KEY_T,
         trie.clear()
     End Sub
 
-    Public Function insert(ByVal kvs() As pair(Of KEY_T(), 
+    Public Function insert(ByVal kvs() As pair(Of KEY_T(),
                                                   Func(Of KEY_T(), UInt32, RESULT_T, Boolean))) As Boolean
         If isemptyarray(kvs) Then
             Return False
@@ -76,9 +76,9 @@ Public Class adfa(Of KEY_T,
             Dim l As Int32 = 0
             l = array_size(s)
             While i < l
-                Dim it As trie(Of KEY_T, 
-                                  Func(Of KEY_T(), UInt32, RESULT_T, Boolean), 
-                                  CHILD_COUNT, 
+                Dim it As trie(Of KEY_T,
+                                  Func(Of KEY_T(), UInt32, RESULT_T, Boolean),
+                                  CHILD_COUNT,
                                   KEY_TO_INDEX).iterator = Nothing
                 it = trie.findfront(s, i)
                 assert(Not it.is_null() AndAlso (it = trie.end() OrElse Not (+it) Is Nothing))

@@ -37,13 +37,13 @@ Public NotInheritable Class thread_safe_resolver(Of T As Class)
 #If True Then
         SyncLock l
 #End If
-        If registered() Then
-            assert(when_registered)
-        Else
-            assert(when_not_registered)
-        End If
-        Me.f = f
-        Me.cached = cached
+            If registered() Then
+                assert(when_registered)
+            Else
+                assert(when_not_registered)
+            End If
+            Me.f = f
+            Me.cached = cached
 #If True Then
         End SyncLock
 #End If
@@ -87,12 +87,12 @@ Public NotInheritable Class thread_safe_resolver(Of T As Class)
 #If True Then
             SyncLock l
 #End If
-            If cached Is Nothing Then
-                If f Is Nothing Then
-                    Return False
+                If cached Is Nothing Then
+                    If f Is Nothing Then
+                        Return False
+                    End If
+                    cached = f()
                 End If
-                cached = f()
-            End If
 #If True Then
             End SyncLock
 #End If

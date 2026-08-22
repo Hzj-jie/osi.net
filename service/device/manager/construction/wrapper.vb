@@ -12,7 +12,7 @@ Imports osi.root.utils
 Imports osi.service.argument
 
 Public Class wrapper(Of T)
-    Private Shared ReadOnly wt As unique_strong_map(Of String, 
+    Private Shared ReadOnly wt As unique_strong_map(Of String,
                                                        collectionless(Of _do_val_val_ref(Of var, T, T, Boolean)))
     Private Shared ReadOnly w As collectionless(Of _do_val_val_ref(Of var, T, T, Boolean))
 

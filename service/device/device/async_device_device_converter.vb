@@ -116,11 +116,11 @@ Public Class async_device_device_converter(Of T)
                 Return True
             End If
         Else
-        ' The initialization may fail, so we still cannot get the device.
-        If Not ad.to_device(o) Then
-            o = device(Of T).empty()
-        End If
-        Return True
+            ' The initialization may fail, so we still cannot get the device.
+            If Not ad.to_device(o) Then
+                o = device(Of T).empty()
+            End If
+            Return True
         End If
     End Function
 End Class

@@ -92,10 +92,12 @@ Public NotInheritable Class global_init
                                                If gi.init_once AndAlso initialized(j) Then
                                                    Continue For
                                                End If
-                                               If its(gi.level) Is Nothing Then
-                                                   its(gi.level) = New vector(Of Type)()
-                                               End If
-                                               its(gi.level).emplace_back(j)
+                                               SyncLock its
+                                                   If its(gi.level) Is Nothing Then
+                                                       its(gi.level) = New vector(Of Type)()
+                                                   End If
+                                                   its(gi.level).emplace_back(j)
+                                               End SyncLock
                                            Next
                                        Catch ex As Exception
                                            raise_error("Failed to load types from assembly ", i, ", ex ", ex.details())

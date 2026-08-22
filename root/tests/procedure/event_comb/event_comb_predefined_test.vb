@@ -12,22 +12,22 @@ Public NotInheritable Class event_comb_predefined_test
     <test>
     Private Shared Sub suppress_error()
         assertion.is_false(async_sync(New event_comb(Function() As Boolean
-                                                   Return False
-                                               End Function)))
+                                                         Return False
+                                                     End Function)))
         assertion.is_true(async_sync(New event_comb(Function() As Boolean
-                                                  Return False
-                                              End Function).suppress_error()))
+                                                        Return False
+                                                    End Function).suppress_error()))
         assertion.is_false(async_sync(New event_comb(Function() As Boolean
-                                                   Return waitfor_yield() AndAlso
-                                                          goto_next()
-                                               End Function,
+                                                         Return waitfor_yield() AndAlso
+                                                                goto_next()
+                                                     End Function,
                                                Function() As Boolean
                                                    Return False
                                                End Function)))
         assertion.is_true(async_sync(New event_comb(Function() As Boolean
-                                                  Return waitfor_yield() AndAlso
-                                                         goto_next()
-                                              End Function,
+                                                        Return waitfor_yield() AndAlso
+                                                               goto_next()
+                                                    End Function,
                                               Function() As Boolean
                                                   Return False
                                               End Function).suppress_error()))

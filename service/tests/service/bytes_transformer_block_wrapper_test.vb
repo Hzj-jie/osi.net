@@ -107,14 +107,20 @@ Public Class bytes_transformer_block_wrapper_test
 
         Public Overrides Function run() As Boolean
             If token.null_or_empty() Then
-                assertion.is_false(create_encrypt_bytes_transformer_block_wrapper(encryptor, token, v, block_dev, Nothing))
+                assertion.is_false(create_encrypt_bytes_transformer_block_wrapper(
+                    encryptor,
+                    token,
+                    v,
+                    block_dev,
+                    Nothing))
             Else
                 Dim p As bytes_transformer_block_wrapper = Nothing
-                If assertion.is_true(create_encrypt_bytes_transformer_block_wrapper(encryptor,
-                                                                              token,
-                                                                              v,
-                                                                              block_dev,
-                                                                              p)) AndAlso
+                If assertion.is_true(create_encrypt_bytes_transformer_block_wrapper(
+                        encryptor,
+                        token,
+                        v,
+                        block_dev,
+                        p)) AndAlso
                    assertion.is_true(create_zip_bytes_transformer_block_wrapper(zipper, v, p, p)) Then
                     If Not run_case(p) Then
                         Return False

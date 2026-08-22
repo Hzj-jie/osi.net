@@ -51,9 +51,9 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
     Private b As Int32
     Private l As lock_t
 
-    Public Sub New(Optional ByVal start_process As  _
+    Public Sub New(Optional ByVal start_process As _
                                   Action(Of reference_count_runner(Of AUTO_MARK_STARTED, AUTO_MARK_STOPPED)) = Nothing,
-                   Optional ByVal stop_process As  _
+                   Optional ByVal stop_process As _
                                   Action(Of reference_count_runner(Of AUTO_MARK_STARTED, AUTO_MARK_STOPPED)) = Nothing)
         Me._start_process = start_process
         Me._stop_process = stop_process

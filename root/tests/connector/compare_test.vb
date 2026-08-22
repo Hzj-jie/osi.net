@@ -285,7 +285,7 @@ Public Class compare_test
                    compare_case(Of Object, Object)(cc, cc, 0) AndAlso
                    compare_case(Of Object, Object)(cc, Nothing, 1) AndAlso
                    compare_case(Of Object, Object)(Nothing, cc, npos) AndAlso
- _
+                                                                             _
                    compare_case(Of comparable_class, Object)(cc, nc, cc.v.CompareTo(nc.v)) AndAlso
                    compare_case(Of comparable_class, Object)(cc, nc, cc.CompareTo(nc)) AndAlso
                    compare_case(Of not_comparable, Object)(nc, cc, comparer.reverse(cc.v.CompareTo(nc.v))) AndAlso
@@ -296,7 +296,7 @@ Public Class compare_test
                    compare_case(Of comparable_class, Object)(cc, Nothing, 1) AndAlso
                    compare_case(Of comparable_class, Object)(Nothing, cc, npos) AndAlso
                    compare_case(Of not_comparable, Object)(Nothing, cc, npos) AndAlso
- _
+                                                                                     _
                    compare_case(Of Object, not_comparable)(cc, nc, cc.v.CompareTo(nc.v)) AndAlso
                    compare_case(Of Object, not_comparable)(cc, nc, cc.CompareTo(nc)) AndAlso
                    compare_case(Of Object, comparable_class)(nc, cc, comparer.reverse(cc.v.CompareTo(nc.v))) AndAlso
@@ -317,11 +317,11 @@ Public Class compare_test
             Return compare_case(Of Object, Object)(i, Convert.ToInt64(j), i.CompareTo(j)) AndAlso
                    compare_case(Of Object, Object)(i, j, i.CompareTo(j)) AndAlso
                    compare_case(Of Object, Object)(Convert.ToInt64(i), j, i.CompareTo(j)) AndAlso
- _
+                                                                                                 _
                    not_comparable_case(Of Int32, Object)(i, Convert.ToInt64(j)) AndAlso  ' TODO: Make these two workable
                    compare_case(Of Int32, Object)(i, j, i.CompareTo(j)) AndAlso
                    not_comparable_case(Of Int64, Object)(Convert.ToInt64(i), j) AndAlso
- _
+                                                                                       _
                    not_comparable_case(Of Object, Int64)(i, Convert.ToInt64(j)) AndAlso
                    compare_case(Of Object, Int32)(i, j, i.CompareTo(j)) AndAlso
                    not_comparable_case(Of Object, Int32)(Convert.ToInt64(i), j)

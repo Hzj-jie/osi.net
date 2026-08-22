@@ -276,7 +276,10 @@ Public NotInheritable Class utt_diff
         End Try
     End Function
 
-    Private Shared Function parse(ByVal f As String, ByRef o As map(Of String, case_info), ByRef failure As Int64) As Boolean
+    Private Shared Function parse(ByVal f As String,
+                                  ByRef o As map(Of String,
+                                  case_info),
+                                  ByRef failure As Int64) As Boolean
         Dim v As vector(Of case_info) = Nothing
         If Not parse(f, v, failure) Then
             Return False

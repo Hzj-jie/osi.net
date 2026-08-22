@@ -280,7 +280,7 @@ Public Module _socket
     End Function
 
     <Extension()> Public Function enable_keepalive(ByVal c As Socket,
-                                                   Optional ByVal first_keepalive_ms As UInt32 = 
+                                                   Optional ByVal first_keepalive_ms As UInt32 =
                                                        socket_first_keepalive_ms,
                                                    Optional ByVal interval_ms As UInt32 = _
                                                        socket_keepalive_interval_ms) As Boolean

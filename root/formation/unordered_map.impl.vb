@@ -111,7 +111,8 @@ End Class
 
 Partial Public NotInheritable Class unordered_map(Of KEY_T, VALUE_T)
     Inherits unordered_map(Of KEY_T, VALUE_T, fast_to_uint32(Of KEY_T), default_equaler(Of KEY_T))
-    Implements ICloneable, ICloneable(Of unordered_map(Of KEY_T, VALUE_T)), IEquatable(Of unordered_map(Of KEY_T, VALUE_T))
+    Implements ICloneable, ICloneable(Of unordered_map(Of KEY_T, VALUE_T)),
+               IEquatable(Of unordered_map(Of KEY_T, VALUE_T))
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub New()

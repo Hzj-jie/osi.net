@@ -50,8 +50,8 @@ Public NotInheritable Class garbage_collector
     Public Shared Function force_aggressive_collecting() As IDisposable
         GC.AddMemoryPressure(max_int32)
         Return defer.to(Sub()
-                                GC.RemoveMemoryPressure(max_int32)
-                            End Sub)
+                            GC.RemoveMemoryPressure(max_int32)
+                        End Sub)
     End Function
 
     Private Sub New()

@@ -88,10 +88,10 @@ Public Module _init
                                                            goto_next()
                                                 End Function,
                                                 Function() As Boolean
-                                                assert(ec.end_result())
-                                                loaded.increment()
-                                                Return goto_end()
-                                            End Function))
+                                                    assert(ec.end_result())
+                                                    loaded.increment()
+                                                    Return goto_end()
+                                                End Function))
                 Next
                 timeslice_sleep_wait_until(Function() (+loaded) = ss.size())
             End Using

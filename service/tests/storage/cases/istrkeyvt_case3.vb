@@ -29,9 +29,9 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
     Implements iistrkeyvt_case
 
     Private Shared ReadOnly round_count As UInt32
-    Private Shared ReadOnly rnd As istrkeyvt_random_data(Of _KEY_LENGTH_LOW, 
-                                                            _KEY_LENGTH_UP, 
-                                                            _BYTES_LENGTH_LOW, 
+    Private Shared ReadOnly rnd As istrkeyvt_random_data(Of _KEY_LENGTH_LOW,
+                                                            _KEY_LENGTH_UP,
+                                                            _BYTES_LENGTH_LOW,
                                                             _BYTES_LENGTH_UP)
     Private ReadOnly m As map(Of String, Int64)
 
