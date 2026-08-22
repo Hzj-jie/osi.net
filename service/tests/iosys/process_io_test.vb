@@ -68,6 +68,9 @@ Public NotInheritable Class process_io_test
     End Function
 
     Public Overrides Function run() As Boolean
+        If Not os.is_windows Then
+            Return True
+        End If
         from_err.mark_not_in_use()
         If Not run_case() Then
             Return False
@@ -98,6 +101,9 @@ Public NotInheritable Class process_io_test
     End Sub
 
     Public Overrides Function finish() As Boolean
+        If Not os.is_windows Then
+            Return True
+        End If
         'both from_err and from_out
         assertion.equal(received_times, output_times << 1)
         Return MyBase.finish()

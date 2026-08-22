@@ -122,7 +122,9 @@ Public Class multithreading_case_wrapper
         While assert(finish_are.WaitOne()) AndAlso running_thread > 0
         End While
         For i As Int32 = 0 To CInt(threadcount()) - 1
+#If Not NET8_0_OR_GREATER Then
             ts(i).Abort()
+#End If
             ts(i).Join()
         Next
         Return Not failed

@@ -35,7 +35,7 @@ Namespace sign
             Inherits __do(Of KeyedHashAlgorithm)
 
             Protected Overrides Function at() As KeyedHashAlgorithm
-                Return HMACMD5.Create()
+                Return New HMACMD5()
             End Function
         End Class
 
@@ -44,7 +44,7 @@ Namespace sign
             Inherits __do(Of KeyedHashAlgorithm)
 
             Protected Overrides Function at() As KeyedHashAlgorithm
-                Return HMACRIPEMD160.Create()
+                Return New HMACRIPEMD160()
             End Function
         End Class
 #End If
@@ -53,7 +53,7 @@ Namespace sign
             Inherits __do(Of KeyedHashAlgorithm)
 
             Protected Overrides Function at() As KeyedHashAlgorithm
-                Return HMACSHA1.Create()
+                Return New HMACSHA1()
             End Function
         End Class
 
@@ -61,7 +61,7 @@ Namespace sign
             Inherits __do(Of KeyedHashAlgorithm)
 
             Protected Overrides Function at() As KeyedHashAlgorithm
-                Return HMACSHA256.Create()
+                Return New HMACSHA256()
             End Function
         End Class
 
@@ -69,7 +69,7 @@ Namespace sign
             Inherits __do(Of KeyedHashAlgorithm)
 
             Protected Overrides Function at() As KeyedHashAlgorithm
-                Return HMACSHA384.Create()
+                Return New HMACSHA384()
             End Function
         End Class
 
@@ -77,7 +77,7 @@ Namespace sign
             Inherits __do(Of KeyedHashAlgorithm)
 
             Protected Overrides Function at() As KeyedHashAlgorithm
-                Return HMACSHA512.Create()
+                Return New HMACSHA512()
             End Function
         End Class
 

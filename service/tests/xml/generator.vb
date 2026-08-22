@@ -16,7 +16,7 @@ Friend Module _generator
                              constants.value_leading_2,
                              constants.value_final_2,
                              constants.tag_close_mark}
-            tag_excepts = space_chars.c_str().append(value_excepts).append(constants.attribute_separator)
+            tag_excepts = array_concat(space_chars.c_str(), value_excepts, {constants.attribute_separator})
         End Sub
 
         Public Shared Function tag() As String
