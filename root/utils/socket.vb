@@ -183,6 +183,11 @@ Public Module _socket
         If this Is Nothing Then
             Return npos
         End If
+#If NET8_0_OR_GREATER Then
+        If Not OperatingSystem.IsWindows() Then
+            Return 0
+        End If
+#End If
         Dim r As Int32 = 0
         Try
             r = this.IOControl(CType(control_code, IOControlCode), in_value, out_value)
