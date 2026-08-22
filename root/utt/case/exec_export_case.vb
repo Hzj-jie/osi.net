@@ -20,7 +20,7 @@ Public Class exec_export_case
                    Optional ByVal ignore_error As Boolean = default_ignore_error,
                    Optional ByVal expected_return As Int32 = default_expected_return,
                    Optional ByVal export_to_temp_folder As Boolean = True)
-        MyBase.New(Path.Combine(If(export_to_temp_folder, temp_folder, envs.deploys.app_folder),
+        MyBase.New(Path.Combine(If(export_to_temp_folder, deploys.temp_folder, envs.deploys.app_folder),
                                 strcat(guid_str(),
                                        filesystem.extension_prefix,
                                        filesystem.extensions.executable_file)),

@@ -35,7 +35,7 @@ Public Class dataprovider(Of T)
         Me.v = Nothing
         Me.lr = 0
         Me.lu = 0
-        Me.localfile = Path.Combine(temp_folder, guid_str())
+        Me.localfile = Path.Combine(deploys.temp_folder, guid_str())
         Me.exp = expiration_controller.settable.[New]()
         Me.on_update = New weak_event()
         Me.start()

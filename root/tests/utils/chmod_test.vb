@@ -1,22 +1,24 @@
 
-Imports System.Diagnostics
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
-Imports System.IO.Compression
 Imports osi.root.constants
 Imports osi.root.connector
-Imports osi.root.utt
-Imports osi.root.utils
-Imports osi.root.procedure
 Imports osi.root.envs
+Imports osi.root.procedure
+Imports osi.root.utils
+Imports osi.root.utt
 
-Public Class chmod_test
+Public NotInheritable Class chmod_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
         ' TODO: Enable chmod execution test on Linux when native Unix file permissions are integrated in modern .NET.
         If os.is_nix Then
             Dim file_name As String = Nothing
-            file_name = Path.Combine(temp_folder,
+            file_name = Path.Combine(osi.root.utils.deploys.temp_folder,
                                      strcat(guid_str(),
                                             filesystem.extension_prefix,
                                             filesystem.extensions.executable_file))

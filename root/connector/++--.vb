@@ -391,33 +391,33 @@ Public Module ____
     End Function
 
     Public Function _inc(Of T)(ByRef i As T, ByVal j As T) As T
-        i = cast(Of T)(_inc(cast(Of Object)(i), cast(Of Object)(j)))
-        Return i
+         i = cast(Of T)(_inc(cast(Of Object)(i), cast(Of Object)(j)))
+         Return i
     End Function
 
     Public Function _dec(Of T)(ByRef i As T, ByVal j As T) As T
-        i = cast(Of T)(_dec(cast(Of Object)(i), cast(Of Object)(j)))
-        Return i
+         i = cast(Of T)(_dec(cast(Of Object)(i), cast(Of Object)(j)))
+         Return i
     End Function
 
     Public Function inc_(Of T)(ByRef i As T, ByVal j As T) As T
-        i = cast(Of T)(inc_(cast(Of Object)(i), cast(Of Object)(j)))
-        Return i
+         i = cast(Of T)(inc_(cast(Of Object)(i), cast(Of Object)(j)))
+         Return i
     End Function
 
     Public Function dec_(Of T)(ByRef i As T, ByVal j As T) As T
-        i = cast(Of T)(dec_(cast(Of Object)(i), cast(Of Object)(j)))
-        Return i
+         i = cast(Of T)(dec_(cast(Of Object)(i), cast(Of Object)(j)))
+         Return i
     End Function
 
     Public Function inc(Of T)(ByRef i As T, ByVal j As T) As T
-        i = cast(Of T)(inc(cast(Of Object)(i), cast(Of Object)(j)))
-        Return i
+         i = cast(Of T)(inc(cast(Of Object)(i), cast(Of Object)(j)))
+         Return i
     End Function
 
     Public Function dec(Of T)(ByRef i As T, ByVal j As T) As T
-        i = cast(Of T)(dec(cast(Of Object)(i), cast(Of Object)(j)))
-        Return i
+         i = cast(Of T)(dec(cast(Of Object)(i), cast(Of Object)(j)))
+         Return i
     End Function
 
 End Module

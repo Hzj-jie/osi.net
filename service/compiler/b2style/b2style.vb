@@ -22,7 +22,7 @@ Partial Public NotInheritable Class b2style
                                       rewriter_gens_t,
                                       scope)
 
-    Private Shared ReadOnly folder As String = Path.Combine(temp_folder, "service/compiler/b2style")
+    Private Shared ReadOnly folder As String = Path.Combine(deploys.temp_folder, "service/compiler/b2style")
 
     Public NotInheritable Class nlexer_rule_t
         Inherits __do(Of String)

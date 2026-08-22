@@ -9,10 +9,10 @@ Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.lock
-Imports osi.root.utils
 Imports osi.root.utt
 Imports osi.service.resource
 Imports osi.service.iosys
+Imports deploys = osi.root.utils.deploys
 
 Public NotInheritable Class process_io_test
     Inherits [case]
@@ -24,11 +24,11 @@ Public NotInheritable Class process_io_test
     Shared Sub New()
         Dim filename As String = Nothing
         filename = guid_str()
-        process_io_exe_full_path = Path.Combine(temp_folder,
+        process_io_exe_full_path = Path.Combine(deploys.temp_folder,
                                                 strcat(filename,
                                                        filesystem.extension_prefix,
                                                        filesystem.extensions.executable_file))
-        process_io_pdb_full_path = Path.Combine(temp_folder,
+        process_io_pdb_full_path = Path.Combine(deploys.temp_folder,
                                                 strcat(filename,
                                                        filesystem.extension_prefix,
                                                        filesystem.extensions.program_database))

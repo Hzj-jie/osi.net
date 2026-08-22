@@ -389,33 +389,27 @@ Public Module _unchecked
         Return int8_uint8(unchecked_dec(uint8_int8(this), uint8_int8(that)))
     End Function
 
-    <Extension()> Public Function unchecked_inc(ByVal this As uint16,
-                                                Optional ByVal that As uint16 = uint16_1) As uint16
+    <Extension()> Public Function unchecked_inc(ByVal this As uint16, Optional ByVal that As uint16 = uint16_1) As uint16
         Return int16_uint16(unchecked_inc(uint16_int16(this), uint16_int16(that)))
     End Function
 
-    <Extension()> Public Function unchecked_dec(ByVal this As uint16,
-                                                Optional ByVal that As uint16 = uint16_1) As uint16
+    <Extension()> Public Function unchecked_dec(ByVal this As uint16, Optional ByVal that As uint16 = uint16_1) As uint16
         Return int16_uint16(unchecked_dec(uint16_int16(this), uint16_int16(that)))
     End Function
 
-    <Extension()> Public Function unchecked_inc(ByVal this As uint32,
-                                                Optional ByVal that As uint32 = uint32_1) As uint32
+    <Extension()> Public Function unchecked_inc(ByVal this As uint32, Optional ByVal that As uint32 = uint32_1) As uint32
         Return int32_uint32(unchecked_inc(uint32_int32(this), uint32_int32(that)))
     End Function
 
-    <Extension()> Public Function unchecked_dec(ByVal this As uint32,
-                                                Optional ByVal that As uint32 = uint32_1) As uint32
+    <Extension()> Public Function unchecked_dec(ByVal this As uint32, Optional ByVal that As uint32 = uint32_1) As uint32
         Return int32_uint32(unchecked_dec(uint32_int32(this), uint32_int32(that)))
     End Function
 
-    <Extension()> Public Function unchecked_inc(ByVal this As uint64,
-                                                Optional ByVal that As uint64 = uint64_1) As uint64
+    <Extension()> Public Function unchecked_inc(ByVal this As uint64, Optional ByVal that As uint64 = uint64_1) As uint64
         Return int64_uint64(unchecked_inc(uint64_int64(this), uint64_int64(that)))
     End Function
 
-    <Extension()> Public Function unchecked_dec(ByVal this As uint64,
-                                                Optional ByVal that As uint64 = uint64_1) As uint64
+    <Extension()> Public Function unchecked_dec(ByVal this As uint64, Optional ByVal that As uint64 = uint64_1) As uint64
         Return int64_uint64(unchecked_dec(uint64_int64(this), uint64_int64(that)))
     End Function
 
@@ -481,14 +475,12 @@ Public Module _unchecked
         Return try_dec(this, that, this)
     End Function
 
-    <Extension()> Public Function self_unchecked_inc(ByRef this As int16,
-                                                     Optional ByVal that As int16 = int16_1) As int16
+    <Extension()> Public Function self_unchecked_inc(ByRef this As int16, Optional ByVal that As int16 = int16_1) As int16
         this = this.unchecked_inc(that)
         Return this
     End Function
 
-    <Extension()> Public Function self_unchecked_dec(ByVal this As int16,
-                                                     Optional ByVal that As int16 = int16_1) As int16
+    <Extension()> Public Function self_unchecked_dec(ByVal this As int16, Optional ByVal that As int16 = int16_1) As int16
         this = this.unchecked_dec(that)
         Return this
     End Function
@@ -519,14 +511,12 @@ Public Module _unchecked
         Return try_dec(this, that, this)
     End Function
 
-    <Extension()> Public Function self_unchecked_inc(ByRef this As int32,
-                                                     Optional ByVal that As int32 = int32_1) As int32
+    <Extension()> Public Function self_unchecked_inc(ByRef this As int32, Optional ByVal that As int32 = int32_1) As int32
         this = this.unchecked_inc(that)
         Return this
     End Function
 
-    <Extension()> Public Function self_unchecked_dec(ByVal this As int32,
-                                                     Optional ByVal that As int32 = int32_1) As int32
+    <Extension()> Public Function self_unchecked_dec(ByVal this As int32, Optional ByVal that As int32 = int32_1) As int32
         this = this.unchecked_dec(that)
         Return this
     End Function
@@ -557,14 +547,12 @@ Public Module _unchecked
         Return try_dec(this, that, this)
     End Function
 
-    <Extension()> Public Function self_unchecked_inc(ByRef this As int64,
-                                                     Optional ByVal that As int64 = int64_1) As int64
+    <Extension()> Public Function self_unchecked_inc(ByRef this As int64, Optional ByVal that As int64 = int64_1) As int64
         this = this.unchecked_inc(that)
         Return this
     End Function
 
-    <Extension()> Public Function self_unchecked_dec(ByVal this As int64,
-                                                     Optional ByVal that As int64 = int64_1) As int64
+    <Extension()> Public Function self_unchecked_dec(ByVal this As int64, Optional ByVal that As int64 = int64_1) As int64
         this = this.unchecked_dec(that)
         Return this
     End Function
@@ -595,14 +583,12 @@ Public Module _unchecked
         Return try_dec(this, that, this)
     End Function
 
-    <Extension()> Public Function self_unchecked_inc(ByRef this As uint8,
-                                                     Optional ByVal that As uint8 = uint8_1) As uint8
+    <Extension()> Public Function self_unchecked_inc(ByRef this As uint8, Optional ByVal that As uint8 = uint8_1) As uint8
         this = this.unchecked_inc(that)
         Return this
     End Function
 
-    <Extension()> Public Function self_unchecked_dec(ByVal this As uint8,
-                                                     Optional ByVal that As uint8 = uint8_1) As uint8
+    <Extension()> Public Function self_unchecked_dec(ByVal this As uint8, Optional ByVal that As uint8 = uint8_1) As uint8
         this = this.unchecked_dec(that)
         Return this
     End Function
@@ -633,14 +619,12 @@ Public Module _unchecked
         Return try_dec(this, that, this)
     End Function
 
-    <Extension()> Public Function self_unchecked_inc(ByRef this As uint16,
-                                                     Optional ByVal that As uint16 = uint16_1) As uint16
+    <Extension()> Public Function self_unchecked_inc(ByRef this As uint16, Optional ByVal that As uint16 = uint16_1) As uint16
         this = this.unchecked_inc(that)
         Return this
     End Function
 
-    <Extension()> Public Function self_unchecked_dec(ByVal this As uint16,
-                                                     Optional ByVal that As uint16 = uint16_1) As uint16
+    <Extension()> Public Function self_unchecked_dec(ByVal this As uint16, Optional ByVal that As uint16 = uint16_1) As uint16
         this = this.unchecked_dec(that)
         Return this
     End Function
@@ -671,14 +655,12 @@ Public Module _unchecked
         Return try_dec(this, that, this)
     End Function
 
-    <Extension()> Public Function self_unchecked_inc(ByRef this As uint32,
-                                                     Optional ByVal that As uint32 = uint32_1) As uint32
+    <Extension()> Public Function self_unchecked_inc(ByRef this As uint32, Optional ByVal that As uint32 = uint32_1) As uint32
         this = this.unchecked_inc(that)
         Return this
     End Function
 
-    <Extension()> Public Function self_unchecked_dec(ByVal this As uint32,
-                                                     Optional ByVal that As uint32 = uint32_1) As uint32
+    <Extension()> Public Function self_unchecked_dec(ByVal this As uint32, Optional ByVal that As uint32 = uint32_1) As uint32
         this = this.unchecked_dec(that)
         Return this
     End Function
@@ -709,14 +691,12 @@ Public Module _unchecked
         Return try_dec(this, that, this)
     End Function
 
-    <Extension()> Public Function self_unchecked_inc(ByRef this As uint64,
-                                                     Optional ByVal that As uint64 = uint64_1) As uint64
+    <Extension()> Public Function self_unchecked_inc(ByRef this As uint64, Optional ByVal that As uint64 = uint64_1) As uint64
         this = this.unchecked_inc(that)
         Return this
     End Function
 
-    <Extension()> Public Function self_unchecked_dec(ByVal this As uint64,
-                                                     Optional ByVal that As uint64 = uint64_1) As uint64
+    <Extension()> Public Function self_unchecked_dec(ByVal this As uint64, Optional ByVal that As uint64 = uint64_1) As uint64
         this = this.unchecked_dec(that)
         Return this
     End Function

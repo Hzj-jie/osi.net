@@ -18,7 +18,7 @@ Public NotInheritable Class configuration_test2
     Inherits [case]
 
     Private ReadOnly config_file As String =
-        Path.Combine(temp_folder, strcat(guid_str(), filesystem.extension_prefix, "ini"))
+        Path.Combine(deploys.temp_folder, strcat(guid_str(), filesystem.extension_prefix, "ini"))
 
     Public Overrides Function prepare() As Boolean
         If MyBase.prepare() Then

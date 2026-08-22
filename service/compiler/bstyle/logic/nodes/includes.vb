@@ -31,7 +31,7 @@ Partial Public NotInheritable Class bstyle
             Private Shared ReadOnly folder As String = init_inc_folder()
 
             Private Shared Function init_inc_folder() As String
-                Dim folder As String = Path.Combine(temp_folder, "bstyle-inc")
+                Dim folder As String = Path.Combine(deploys.temp_folder, "bstyle-inc")
                 tar.gen.dump(bstyle_lib.data, folder)
                 Return folder
             End Function

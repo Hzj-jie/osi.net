@@ -1,4 +1,8 @@
 
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports System.IO
 Imports osi.root.constants
 Imports osi.root.connector
@@ -25,7 +29,7 @@ transitions -----------
 #End If
     Private Const tab As Char = character.tab
     Private Const nl As Char = character.newline
-    Private Shared ReadOnly syntax_file_name As String = Path.Combine(temp_folder, "lp_test.syntax.txt")
+    Private Shared ReadOnly syntax_file_name As String = Path.Combine(deploys.temp_folder, "lp_test.syntax.txt")
     Private Shared ReadOnly syntax As String = strcat(
         "default_separators ----", nl,
         tab, "use ignore", nl,

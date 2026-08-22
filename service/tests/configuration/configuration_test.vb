@@ -20,7 +20,7 @@ Public NotInheritable Class configuration_test
         Private Shared write_times As Int32 = 0
 
         Shared Sub New()
-            file = Path.Combine(temp_folder, guid_str().with_file_extension("ini"))
+            file = Path.Combine(deploys.temp_folder, guid_str().with_file_extension("ini"))
         End Sub
 
         Public Shared Sub write()
