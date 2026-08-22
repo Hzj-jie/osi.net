@@ -10,10 +10,11 @@ Imports osi.root.constants
 <global_init(global_init_level.foundamental)>
 Public Module deploys
     Public Const temp_folder_name As String = "temp"
-    Public ReadOnly temp_folder As String = Path.Combine(envs.deploys.deploys_folder,
-                                                         temp_folder_name,
-                                                         envs.application_name,
-                                                         guid_str())
+    Public Shared ReadOnly temp_folder As String = Path.Combine(envs.deploys.deploys_folder,
+                                                                temp_folder_name,
+                                                                envs.application_name,
+                                                                guid_str())
+    Private Shared ReadOnly preserve_temp As Boolean = envs.env_bool(envs.env_keys("preserve", "temp"))
 
     Private Sub init()
         Try
@@ -22,7 +23,9 @@ Public Module deploys
             assert(False, ex.Message())
         End Try
         application_lifetime.stopping_handle(Sub()
-                                                 Directory.Delete(temp_folder, True)
+                                                 If Not preserve_temp Then
+                                                     Directory.Delete(temp_folder, True)
+                                                 End If
                                              End Sub)
         assert(envs.set_env("temp_folder", temp_folder))
     End Sub

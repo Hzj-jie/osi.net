@@ -9,9 +9,11 @@ Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.service.interpreter.primitive
+Imports utils = osi.root.utils
 
 Public Module _instruction_gen
     Public ReadOnly debug_dump As Boolean = env_bool(env_keys("logic", "debug", "dump"))
+    Public ReadOnly debug_dump_file As Boolean = env_bool(env_keys("logic", "debug", "dump", "file"))
 
     ' TODO: Reconsider the way to share interrupts between simulator and scope.
     <Extension()> Public Function import(ByVal e As exportable, ByVal es() As logic.instruction_gen) As Boolean
@@ -36,6 +38,11 @@ Public Module _instruction_gen
         Dim r As String = o.str(character.newline)
         If debug_dump Then
             raise_error(error_type.user, "Debug dump of primitive ", character.newline, r)
+        End If
+        If debug_dump_file Then
+            IO.File.WriteAllText(IO.Path.Combine(utils.deploys.temp_folder,
+                                                 String.Concat(guid_str(), filesystem.extension_prefix, "primitive")),
+                                 r)
         End If
         Return assert(e.import(r))
     End Function
