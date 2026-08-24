@@ -3,4 +3,11 @@
     <Import Remove="System.Linq" />
     <Import Remove="System.Xml.Linq" />
   </ItemGroup>
+
+  <!-- Library projects should not copy dependencies around -->
+  <ItemDefinitionGroup Condition="'$(OutputType)' != 'Exe'">
+    <ProjectReference>
+      <Private>false</Private>
+    </ProjectReference>
+  </ItemDefinitionGroup>
 </Project>
