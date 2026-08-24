@@ -6,6 +6,11 @@ source "$SCRIPT_DIR/setenv.sh"
 
 CONFIGURATION="${CONFIGURATION:-Release}"
 
+# Generate gitver.vb if gitver.sh exists
+if [ -f "$SCRIPT_DIR/root/codegen/gitver/gitver.sh" ]; then
+    "$SCRIPT_DIR/root/codegen/gitver/gitver.sh" > "$SCRIPT_DIR/root/envs/gitver.vb"
+fi
+
 echo "=== Building root.net8.sln ($CONFIGURATION) ==="
 dotnet build "$SCRIPT_DIR/root/root.net8.sln" -c "$CONFIGURATION" "$@"
 

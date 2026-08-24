@@ -1,4 +1,15 @@
 <Project>
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0' Or '$(TargetFramework)' == 'net8.0-windows'">
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <_NowTicks>$([System.DateTime]::UtcNow.Ticks)</_NowTicks>
+    <_DiffTicks>$([MSBuild]::Subtract($(_NowTicks), 630822816000000000))</_DiffTicks>
+    <_DaysSince2000>$([MSBuild]::Divide($(_DiffTicks), 864000000000).ToString("0"))</_DaysSince2000>
+    <_SecsSinceMidnight>$([MSBuild]::Divide($([System.DateTime]::UtcNow.TimeOfDay.TotalSeconds), 2).ToString("0"))</_SecsSinceMidnight>
+    <AssemblyVersion>1.0.$(_DaysSince2000).$(_SecsSinceMidnight)</AssemblyVersion>
+    <FileVersion>1.0.$(_DaysSince2000).$(_SecsSinceMidnight)</FileVersion>
+    <Version>1.0.$(_DaysSince2000).$(_SecsSinceMidnight)</Version>
+  </PropertyGroup>
+
   <ItemGroup>
     <Import Remove="System.Linq" />
     <Import Remove="System.Xml.Linq" />
