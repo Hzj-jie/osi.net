@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/setenv.sh"
 
 CONFIGURATION="${CONFIGURATION:-Release}"
-UTT_BIN_DIR="$SCRIPT_DIR/root/utt/bin/$CONFIGURATION/net8.0"
+UTT_BIN_DIR="$SCRIPT_DIR/root/utt/bin/$CONFIGURATION"
 mkdir -p "$UTT_BIN_DIR"
 
 # Sync all built libraries and tests to UTT directory so UTT can discover and run them
@@ -15,11 +15,11 @@ for proj in $(find "$SCRIPT_DIR/root" "$SCRIPT_DIR/service" -name "*.net8.vbproj
     if [ -z "$asm" ]; then
         asm="$(basename "$proj" .net8.vbproj)"
     fi
-    src_dll="$proj_dir/bin/$CONFIGURATION/net8.0/$asm.dll"
+    src_dll="$proj_dir/bin/$CONFIGURATION/$asm.dll"
     if [ -f "$src_dll" ] && [ "$src_dll" != "$UTT_BIN_DIR/$asm.dll" ]; then
         cp -f "$src_dll" "$UTT_BIN_DIR/"
     fi
-    src_pdb="$proj_dir/bin/$CONFIGURATION/net8.0/$asm.pdb"
+    src_pdb="$proj_dir/bin/$CONFIGURATION/$asm.pdb"
     if [ -f "$src_pdb" ] && [ "$src_pdb" != "$UTT_BIN_DIR/$asm.pdb" ]; then
         cp -f "$src_pdb" "$UTT_BIN_DIR/"
     fi
