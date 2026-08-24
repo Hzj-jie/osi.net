@@ -16,7 +16,7 @@ Public Module _computer_info
     ' Furthermore, querying ComputerInfo incurs Win32 GlobalMemoryStatusEx syscalls and kernel lock
     ' contention. We cache the memory values with a 1-second TTL using atomic operations to guarantee
     ' thread safety and drastically improve performance under heavy concurrent usage.
-    Private last_refresh_ms As Int64 = Int64.MinValue
+    Private last_refresh_ms As Int64 = 0
     Private updating As Int32 = 0
     Private cached_avail_phys As Int64 = 0
     Private cached_avail_virt As Int64 = 0
@@ -25,7 +25,8 @@ Public Module _computer_info
 
     Private Sub refresh()
         Dim now_ms As Int64 = nowadays.milliseconds()
-        If now_ms - Interlocked.Read(last_refresh_ms) < 1000 Then
+        Dim last_ms As Int64 = Interlocked.Read(last_refresh_ms)
+        If last_ms > 0 AndAlso now_ms - last_ms < 1000 Then
             Return
         End If
         If Interlocked.CompareExchange(updating, 1, 0) <> 0 Then
