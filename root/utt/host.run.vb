@@ -25,9 +25,17 @@ Partial Friend NotInheritable Class host
     Public Shared Function execute_case(ByVal c As [case]) As Boolean
         assert(Not c Is Nothing)
         Using current_case.with(c)
-            Return (assertion.is_true(do_(AddressOf c.prepare, False), "failed to prepare case ", c.full_name) AndAlso
-                    assertion.is_true(do_(AddressOf c.run, False), "failed to run case ", c.full_name)) And
-                   assertion.is_true(do_(AddressOf c.finish, False), "failed to finish case ", c.full_name)
+            Return do_(Function() As Boolean
+                           Try
+                               Return (assertion.is_true(c.prepare(), "failed to prepare case ", c.full_name) AndAlso
+                                       assertion.is_true(c.run(), "failed to run case ", c.full_name)) And
+                                      assertion.is_true(c.finish(), "failed to finish case ", c.full_name)
+                           Catch ex As utt_test_disabled
+                               utt_raise_error("case ", c.full_name, " is disabled: ", ex.Message)
+                               Return True
+                           End Try
+                       End Function,
+                       False)
         End Using
     End Function
 

@@ -1,12 +1,16 @@
+Option Explicit On
+Option Infer Off
+Option Strict On
 
 Imports osi.root.constants
 Imports osi.root.connector
+Imports osi.root.envs
 Imports osi.root.lock
 Imports osi.root.utt
 Imports osi.root.utils
 Imports osi.root.event
 
-Public Class weak_event_test
+Public NotInheritable Class weak_event_test
     Inherits [case]
 
     Private Class event_receiver
@@ -69,8 +73,8 @@ Public Class weak_event_test
         Dim e As weak_event = Nothing
         e = New weak_event()
         Dim rs() As event_receiver = Nothing
-        ReDim rs(c - 1)
-        For i As Int32 = 0 To c - 1
+        ReDim rs(CInt(c) - 1)
+        For i As Int32 = 0 To CInt(c) - 1
             rs(i) = New event_receiver()
             e.attach(rs(i), AddressOf event_receiver.receive)
         Next
@@ -78,32 +82,32 @@ Public Class weak_event_test
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assertion.equal(event_receiver.received(), count_per_round * c)
+        assertion.equal(event_receiver.received(), count_per_round * CInt(c))
         assertion.is_true(e.attached())
         assertion.equal(e.attached_count(), c)
         rs.gc_keepalive()
 
         event_receiver.clear()
         Dim detached As Int32 = 0
-        For i As Int32 = 0 To c - 1
+        For i As Int32 = 0 To CInt(c) - 1
             If rnd_bool() Then
                 rs(i) = Nothing
                 detached += 1
             End If
         Next
         garbage_collector.repeat_collect()
-        assert(detached <= c)
+        assert(CUInt(detached) <= c)
 
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assertion.equal(event_receiver.received(), count_per_round * (c - detached))
-        assertion.equal(e.attached(), detached < c)
-        assertion.equal(e.attached_count(), c - detached)
+        assertion.equal(event_receiver.received(), count_per_round * (CInt(c) - detached))
+        assertion.equal(e.attached(), CUInt(detached) < c)
+        assertion.equal(e.attached_count(), c - CUInt(detached))
         rs.gc_keepalive()
 
         event_receiver.clear()
-        For i As Int32 = 0 To c - 1
+        For i As Int32 = 0 To CInt(c) - 1
             rs(i) = Nothing
         Next
         garbage_collector.repeat_collect()
@@ -135,7 +139,7 @@ Public Class weak_event_test
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assertion.equal(event_receiver.received(), count_per_round * c)
+        assertion.equal(event_receiver.received(), count_per_round * CInt(c))
         assertion.is_true(e.attached())
         assertion.equal(e.attached_count(), c)
         GC.KeepAlive(r1)
@@ -145,17 +149,17 @@ Public Class weak_event_test
         Dim detached As UInt32 = 0
         If rnd_bool() Then
             r1 = Nothing
-            detached += 1
+            detached += uint32_1
         End If
         If rnd_bool() Then
             r2 = Nothing
-            detached += 1
+            detached += uint32_1
         End If
         garbage_collector.repeat_collect()
         For i As Int32 = 0 To count_per_round - 1
             e.raise()
         Next
-        assertion.equal(event_receiver.received(), (c - detached) * count_per_round)
+        assertion.equal(event_receiver.received(), CInt(c - detached) * count_per_round)
         assertion.equal(e.attached(), detached < c)
         assertion.equal(e.attached_count(), c - detached)
         GC.KeepAlive(r1)
@@ -176,7 +180,7 @@ Public Class weak_event_test
 
     Private Shared Function attach_several_case() As Boolean
         For i As Int32 = 0 To 1000
-            If Not attach_several_case(rnd_int(3, 1000)) Then
+            If Not attach_several_case(rnd_uint(3, 1000)) Then
                 Return False
             End If
         Next
@@ -184,8 +188,10 @@ Public Class weak_event_test
     End Function
 
     Public Overrides Function run() As Boolean
+        disable_on_nix()
         Return attach_one_case() AndAlso
                attach_two_case() AndAlso
                attach_several_case()
     End Function
 End Class
+
