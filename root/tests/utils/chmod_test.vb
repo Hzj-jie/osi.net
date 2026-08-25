@@ -15,7 +15,7 @@ Public NotInheritable Class chmod_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        disable_on_nix("embedded test binary is Windows PE .exe")
+        disable_not_on_windows("embedded test binary is Windows PE .exe")
         ' TODO: Enable chmod execution test on Linux when native Unix file permissions are integrated in modern .NET.
         If os.is_nix Then
             Dim file_name As String = Nothing

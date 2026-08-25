@@ -56,6 +56,12 @@ Public MustInherit Class [case]
             Throw New utt_test_disabled(msg)
         End If
     End Sub
+
+    Protected Sub disable_not_on_windows(Optional ByVal msg As String = "disabled not on Windows")
+        If Not os.is_windows Then
+            Throw New utt_test_disabled(msg)
+        End If
+    End Sub
 End Class
 
 Public NotInheritable Class utt_test_disabled

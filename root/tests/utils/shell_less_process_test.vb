@@ -65,7 +65,7 @@ Public NotInheritable Class shell_less_process_test
     End Function
 
     Public Overrides Function run() As Boolean
-        disable_on_nix("embedded test binary is Windows PE .exe")
+        disable_not_on_windows("embedded test binary is Windows PE .exe")
         Return raise_on_invoke_case()
     End Function
 End Class
