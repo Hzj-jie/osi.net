@@ -183,14 +183,19 @@ Public Module _socket
         If this Is Nothing Then
             Return npos
         End If
-#If NET8_0_OR_GREATER Then
         If Not os.is_windows Then
+            raise_error(error_type.warning,
+                        "set_iocontrol [",
+                        control_code_str(),
+                        "] is ignored on non-Windows platforms on client ",
+                        this.identity())
             Return 0
         End If
-#End If
         Dim r As Int32 = 0
         Try
+#Disable Warning CA1416
             r = this.IOControl(CType(control_code, IOControlCode), in_value, out_value)
+#Enable Warning CA1416
             assert(r >= 0)
         Catch ex As Exception
             raise_error(error_type.warning,
