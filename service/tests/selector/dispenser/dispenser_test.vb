@@ -4,6 +4,7 @@ Option Infer Off
 Option Strict On
 
 Imports osi.root.connector
+Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.utt
 Imports osi.service.selector
@@ -33,11 +34,12 @@ Partial Public NotInheritable Class dispenser_test
             Next
         Next
 
+        Dim timeout_ms As UInt32 = CUInt(seconds_to_milliseconds(If(os.is_nix, 30, 10)))
         For i As Int32 = 0 To accepter_count - 1
             Dim j As Int32 = 0
             j = i
             If Not assertion.happening_in(Function() accepters(j).q.size() = data_size,
-                                          CUInt(seconds_to_milliseconds(30))) Then
+                                          timeout_ms) Then
                 Return False
             End If
         Next

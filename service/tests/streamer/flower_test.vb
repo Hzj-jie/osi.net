@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.procedure
@@ -49,15 +50,16 @@ Public MustInherit Class flower_test
         ended = New ref(Of Boolean)()
         execute(f, ended)
         Dim v() As Int32 = Nothing
-        v = rnd_ints(rnd_int(2048, 4096))
+        v = rnd_ints(rnd_int(16384, 32768))
         For i As Int32 = 0 To array_size_i(v) - 1
             assert(v(i) <> max_int32)
             first.receive_pump.emplace(v(i))
         Next
         first.receive_pump.emplace(max_int32)
-        assertion.is_true(timeslice_sleep_wait_until(Function() f.stopped(), minutes_to_milliseconds(1)))
+        Dim timeout_ms As Int64 = minutes_to_milliseconds(If(os.is_nix, 3, 1))
+        assertion.is_true(timeslice_sleep_wait_until(Function() f.stopped(), timeout_ms))
         assertion.is_true(last.send_pump_equal(v))
-        assertion.is_true(timeslice_sleep_wait_until(Function() +ended, minutes_to_milliseconds(1)))
+        assertion.is_true(timeslice_sleep_wait_until(Function() +ended, timeout_ms))
         Return True
     End Function
 End Class
