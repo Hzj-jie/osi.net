@@ -18,8 +18,10 @@ Public NotInheritable Class async_result_destructor
     Private Shared ReadOnly q As slimqless2(Of Action) = New slimqless2(Of Action)()
 
     Shared Sub New()
+#If NETFRAMEWORK Then
         Dim ready_to_abort As singleentry
         ready_to_abort.mark_in_use()
+#End If
         Dim th As Thread = New Thread(Sub()
                                           Dim v As Action = Nothing
                                           While q.pop(v) OrElse are.WaitOne()
@@ -27,18 +29,20 @@ Public NotInheritable Class async_result_destructor
                                                   Dim n As Int64 = 0
                                                   n = Now().milliseconds()
                                                   Try
+#If NETFRAMEWORK Then
                                                       ready_to_abort.mark_not_in_use()
+#End If
                                                       v()
+#If NETFRAMEWORK Then
                                                   Catch ex As ThreadAbortException
                                                       If application_lifetime.running() Then
-#Disable Warning SYSLIB0006
                                                           Thread.ResetAbort()
-#Enable Warning SYSLIB0006
                                                       End If
+#End If
                                                   Catch
                                                   Finally
                                                       counter.increase(ASYNC_OPERATION_FORCE_FINISH_TIMEMS,
-                                                 Now().milliseconds() - n)
+                                                                       Now().milliseconds() - n)
                                                   End Try
                                               End If
                                           End While
@@ -46,7 +50,7 @@ Public NotInheritable Class async_result_destructor
         th.IsBackground() = True
         th.Name() = "ASYNC_RESULT_DESTRUCTOR_THREAD"
         th.Start()
-#Disable Warning SYSLIB0006
+#If NETFRAMEWORK Then
         application_lifetime_binder.instance.insert(New disposer(Of Thread)(th, disposer:=Sub(x) x.Abort()))
 
         stopwatch.repeat(timeslice_length_ms,
@@ -55,7 +59,7 @@ Public NotInheritable Class async_result_destructor
                                  th.Abort()
                              End If
                          End Sub)
-#Enable Warning SYSLIB0006
+#End If
     End Sub
 
     Public Shared Sub queue(ByVal state As async_state_t, ByVal ar As IAsyncResult)

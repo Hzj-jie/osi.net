@@ -24,6 +24,7 @@ Public NotInheritable Class managed_thread_pool
             push(d)
             Return
         End If
+#If NETFRAMEWORK Then
         Using are As AutoResetEvent = New AutoResetEvent(False)
             Dim t As Thread = Nothing
             push(Sub()
@@ -32,9 +33,7 @@ Public NotInheritable Class managed_thread_pool
                          d()
                          assert(are.Set())
                      Catch ex As ThreadAbortException
-#Disable Warning SYSLIB0006
                          Thread.ResetAbort()
-#Enable Warning SYSLIB0006
                      End Try
                  End Sub)
             If are.WaitOne(CInt(timeout_ms)) Then
@@ -45,10 +44,13 @@ Public NotInheritable Class managed_thread_pool
                             End Function,
                             1)
             assert(t.ManagedThreadId() <> Thread.CurrentThread().ManagedThreadId())
-#Disable Warning SYSLIB0006
             t.Abort()
-#Enable Warning SYSLIB0006
         End Using
+#Else
+        raise_error(error_type.warning,
+                    "managed_thread_pool.with_timeout is not supported in .NET 8 or higher, delegating to push.")
+        push(d)
+#End If
     End Sub
 
     Private Sub New()
