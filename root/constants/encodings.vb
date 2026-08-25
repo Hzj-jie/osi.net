@@ -19,10 +19,7 @@ Public NotInheritable Class encodings
 
         Private Sub New()
 #If NET8_0_OR_GREATER Then
-            Try
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance)
-            Catch
-            End Try
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance)
 #End If
             Try
                 gbk = Encoding.GetEncoding("gbk")
