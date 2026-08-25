@@ -69,13 +69,6 @@ Public NotInheritable Class static_constructor_test
         Private Shared ReadOnly instance As G_executor = New G_executor()
     End Class
 
-    Public Overrides Function prepare() As Boolean
-        v = def
-        F_holder.v = False
-        G_holder.v = False
-        Return MyBase.prepare()
-    End Function
-
     Public Overrides Function run() As Boolean
         Dim c As C = Nothing
         assertion.equal(v, def)
@@ -101,11 +94,18 @@ Public NotInheritable Class static_constructor_test
         static_constructor(Of E).execute()
         static_constructor(Of E).execute()
 
+#If NETFRAMEWORK Then
+        ' Types with beforefieldinit (like F and G) may be initialized earlier in modern .NET
+        ' during test discovery / reflection, so F_holder.v and G_holder.v are not guaranteed
+        ' to be False before explicit execution.
         assertion.is_false(F_holder.v)
+#End If
         static_constructor(Of F).execute()
         assertion.is_true(F_holder.v)
 
+#If NETFRAMEWORK Then
         assertion.is_false(G_holder.v)
+#End If
         static_constructor(Of G).execute()
         assertion.is_true(G_holder.v)
         Return True
