@@ -38,47 +38,63 @@ Public Class valuer_test
         Private Shared k As Int32
     End Class
 
+    Private Shared Function net_independent_cases() As Boolean
+        Return run_case(Of Int32)("a", rnd_int(), binding_flags.instance_public) AndAlso
+               run_case(Of Int32)("b", rnd_int(), binding_flags.instance_public) AndAlso
+               run_case(Of test_int)("c", New test_imp(), binding_flags.instance_public) AndAlso
+               run_case(Of test_imp)("d", New test_imp(), binding_flags.instance_public) AndAlso
+               run_case(Of test_inh)("e", New test_inh(), binding_flags.instance_public) AndAlso
+               run_case(Of String)("f", rnd_chars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
+               run_case(Of String)("g", rnd_chars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
+               run_case(Of Int32)("j", rnd_int(), binding_flags.static_public) AndAlso
+               run_case(Of Int32)("k", rnd_int(), binding_flags.static_private) AndAlso
+                                                                                       _
+               set_only_case(Of test_imp, test_inh)("c", binding_flags.instance_public) AndAlso
+               get_only_case(Of test_imp, test_inh)("e", binding_flags.instance_public) AndAlso
+               fail_case(Of Int32)("f", binding_flags.instance_private) AndAlso
+               fail_case(Of String)("f", binding_flags.instance_public) AndAlso
+               fail_case(Of String)("f", binding_flags.static_all) AndAlso
+               fail_case(Of String)("F", binding_flags.instance_private) AndAlso
+               fail_case(Of String)("z", binding_flags.all)
+    End Function
+
+#If Not NETFRAMEWORK Then
+    ' In .NET Framework, FieldInfo.SetValue permitted modifying static initonly (Shared ReadOnly) fields
+    ' via reflection. In modern .NET (.NET Core / .NET 8+), CoreCLR disallows setting static initonly fields
+    ' after type initialization for JIT optimization and immutability guarantees, throwing FieldAccessException.
+    Private Shared Function run_static_readonly_case(Of T)(ByVal name As String,
+                                                           ByVal value As T,
+                                                           ByVal bindingflags As BindingFlags) As Boolean
+        Dim v As valuer(Of T) = Nothing
+        v = new_valuer(Of T)(name, bindingflags)
+        If assertion.is_true(v.valid()) Then
+            assertion.is_true(assertion.thrown(Of FieldAccessException)(Sub()
+                                                                            v.set(value)
+                                                                        End Sub))
+            assertion.is_false(v.try_set(value))
+            Dim w As T = Nothing
+            assertion.is_true(v.try_get(w))
+        End If
+        Return True
+    End Function
+#End If
+
+    Private Shared Function net_dependent_cases() As Boolean
+#If NETFRAMEWORK Then
+        ' h and i are Shared ReadOnly (static initonly) fields, which can be modified via reflection in .NET Framework.
+        Return run_case(Of Int32)("h", rnd_int(), binding_flags.static_public) AndAlso
+               run_case(Of Int32)("i", rnd_int(), binding_flags.static_private)
+#Else
+        ' In modern .NET, modifying static initonly fields h and i throws FieldAccessException.
+        Return run_static_readonly_case(Of Int32)("h", rnd_int(), binding_flags.static_public) AndAlso
+               run_static_readonly_case(Of Int32)("i", rnd_int(), binding_flags.static_private)
+#End If
+    End Function
+
     Public Overrides Function run() As Boolean
         Using scoped.atomic_bool(suppress.valuer_error)
-#If NETFRAMEWORK Then
-            Return run_case(Of Int32)("a", rnd_int(), binding_flags.instance_public) AndAlso
-                   run_case(Of Int32)("b", rnd_int(), binding_flags.instance_public) AndAlso
-                   run_case(Of test_int)("c", New test_imp(), binding_flags.instance_public) AndAlso
-                   run_case(Of test_imp)("d", New test_imp(), binding_flags.instance_public) AndAlso
-                   run_case(Of test_inh)("e", New test_inh(), binding_flags.instance_public) AndAlso
-                   run_case(Of String)("f", rnd_chars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
-                   run_case(Of String)("g", rnd_chars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
-                   run_case(Of Int32)("h", rnd_int(), binding_flags.static_public) AndAlso
-                   run_case(Of Int32)("i", rnd_int(), binding_flags.static_private) AndAlso
-                   run_case(Of Int32)("j", rnd_int(), binding_flags.static_public) AndAlso
-                   run_case(Of Int32)("k", rnd_int(), binding_flags.static_private) AndAlso
-                                                                                           _
-                   set_only_case(Of test_imp, test_inh)("c", binding_flags.instance_public) AndAlso
-                   get_only_case(Of test_imp, test_inh)("e", binding_flags.instance_public) AndAlso
-                   fail_case(Of Int32)("f", binding_flags.instance_private) AndAlso
-                   fail_case(Of String)("f", binding_flags.instance_public) AndAlso
-                   fail_case(Of String)("f", binding_flags.static_all) AndAlso
-                   fail_case(Of String)("F", binding_flags.instance_private) AndAlso
-                   fail_case(Of String)("z", binding_flags.all)
-#Else
-            Return run_case(Of Int32)("a", rnd_int(), binding_flags.instance_public) AndAlso
-                   run_case(Of Int32)("b", rnd_int(), binding_flags.instance_public) AndAlso
-                   run_case(Of test_int)("c", New test_imp(), binding_flags.instance_public) AndAlso
-                   run_case(Of test_imp)("d", New test_imp(), binding_flags.instance_public) AndAlso
-                   run_case(Of test_inh)("e", New test_inh(), binding_flags.instance_public) AndAlso
-                   run_case(Of String)("f", rnd_chars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
-                   run_case(Of String)("g", rnd_chars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
-                   run_case(Of Int32)("j", rnd_int(), binding_flags.static_public) AndAlso
-                   run_case(Of Int32)("k", rnd_int(), binding_flags.static_private) AndAlso
-                                                                                           _
-                   set_only_case(Of test_imp, test_inh)("c", binding_flags.instance_public) AndAlso
-                   get_only_case(Of test_imp, test_inh)("e", binding_flags.instance_public) AndAlso
-                   fail_case(Of Int32)("f", binding_flags.instance_private) AndAlso
-                   fail_case(Of String)("f", binding_flags.instance_public) AndAlso
-                   fail_case(Of String)("f", binding_flags.static_all) AndAlso
-                   fail_case(Of String)("F", binding_flags.instance_private) AndAlso
-                   fail_case(Of String)("z", binding_flags.all)
-#End If
+            Return net_independent_cases() AndAlso
+                   net_dependent_cases()
         End Using
     End Function
 
