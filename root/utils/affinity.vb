@@ -22,7 +22,9 @@ Public Module _affinity
             Next
 
             Try
+#Disable Warning CA1416
                 current_process_thread().ProcessorAffinity() = New IntPtr(mask)
+#Enable Warning CA1416
                 Return True
             Catch ex As Exception
                 raise_error(error_type.warning, "failed to set thread processor affinity, ex ", ex.Message())

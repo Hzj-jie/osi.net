@@ -1,5 +1,6 @@
 
 Imports osi.root.connector
+Imports osi.root.envs
 Imports osi.root.lock
 Imports osi.root.formation
 Imports osi.root.utils
@@ -24,12 +25,14 @@ Public Class console_keyboard_agent
                                     ki = Console.ReadKey(True)
                                     Dim ks As vector(Of Int32) = Nothing
                                     ks = New vector(Of Int32)()
-                                    If Console.CapsLock() Then
+#Disable Warning CA1416
+                                    If os.is_windows AndAlso Console.CapsLock() Then
                                         ks.emplace_back(constants.keyboard.caps_lock)
                                     End If
-                                    If Console.NumberLock() Then
+                                    If os.is_windows AndAlso Console.NumberLock() Then
                                         ks.emplace_back(constants.keyboard.num_lock)
                                     End If
+#Enable Warning CA1416
                                     If ki.ctrl() Then
                                         ks.emplace_back(constants.keyboard.ctrl)
                                     End If

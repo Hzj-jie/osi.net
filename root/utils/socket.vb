@@ -276,7 +276,9 @@ Public Module _socket
         assert(uint32_bytes(first_keepalive_ms, v, offset))
         assert(uint32_bytes(interval_ms, v, offset))
         assert(offset = array_size(v))
+#Disable Warning CA1416
         Return c.set_iocontrol(IOControlCode.KeepAliveValues, v, Nothing) <> npos
+#Enable Warning CA1416
     End Function
 
     <Extension()> Public Function enable_keepalive(ByVal c As Socket,
