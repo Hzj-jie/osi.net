@@ -139,7 +139,7 @@ Partial Public Class channel
                                                     ' TODO
                                                 End If
                                             Next
-                                            Return goto_end()
+                                            Return False
                                         End Function))
         End If
     End Sub
