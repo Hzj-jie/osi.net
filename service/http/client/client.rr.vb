@@ -417,7 +417,9 @@ Public Module _client_rr
 
     Public Function try_create_web_request(ByVal uri As String, ByRef o As WebRequest) As Boolean
         Try
+#Disable Warning SYSLIB0014
             o = WebRequest.Create(uri)
+#Enable Warning SYSLIB0014
             Return True
         Catch ex As Exception
             raise_error(error_type.warning,

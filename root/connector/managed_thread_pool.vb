@@ -32,7 +32,9 @@ Public NotInheritable Class managed_thread_pool
                          d()
                          assert(are.Set())
                      Catch ex As ThreadAbortException
+#Disable Warning SYSLIB0006
                          Thread.ResetAbort()
+#Enable Warning SYSLIB0006
                      End Try
                  End Sub)
             If are.WaitOne(CInt(timeout_ms)) Then
@@ -43,7 +45,9 @@ Public NotInheritable Class managed_thread_pool
                             End Function,
                             1)
             assert(t.ManagedThreadId() <> Thread.CurrentThread().ManagedThreadId())
+#Disable Warning SYSLIB0006
             t.Abort()
+#Enable Warning SYSLIB0006
         End Using
     End Sub
 

@@ -178,8 +178,10 @@ Public NotInheritable Class connectivity
                                       Return goto_end()
                                   End If
                                   dns_resolve_result.set(True)
+#Disable Warning SYSLIB0014
                                   ec = Net.WebRequest.Create(strcat("http://", host)).get_response(
                                            New ref(Of Net.WebResponse)())
+#Enable Warning SYSLIB0014
                                   Return waitfor(ec) AndAlso
                                          goto_next()
                               End Function,

@@ -31,7 +31,9 @@ Public NotInheritable Class async_result_destructor
                                                       v()
                                                   Catch ex As ThreadAbortException
                                                       If application_lifetime.running() Then
+#Disable Warning SYSLIB0006
                                                           Thread.ResetAbort()
+#Enable Warning SYSLIB0006
                                                       End If
                                                   Catch
                                                   Finally
@@ -44,6 +46,7 @@ Public NotInheritable Class async_result_destructor
         th.IsBackground() = True
         th.Name() = "ASYNC_RESULT_DESTRUCTOR_THREAD"
         th.Start()
+#Disable Warning SYSLIB0006
         application_lifetime_binder.instance.insert(New disposer(Of Thread)(th, disposer:=Sub(x) x.Abort()))
 
         stopwatch.repeat(timeslice_length_ms,
@@ -52,6 +55,7 @@ Public NotInheritable Class async_result_destructor
                                  th.Abort()
                              End If
                          End Sub)
+#Enable Warning SYSLIB0006
     End Sub
 
     Public Shared Sub queue(ByVal state As async_state_t, ByVal ar As IAsyncResult)
