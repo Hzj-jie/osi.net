@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports osi.root.envs
 Imports osi.root.utt
 Imports osi.root.utt.attributes
 Imports osi.service.compiler.dotnet
@@ -13,6 +14,9 @@ Namespace dotnet
     Public NotInheritable Class source_executor_test
         <test>
         Private Shared Sub execute_from_source()
+            If os.is_nix Then
+                Throw New utt_test_disabled("System.CodeDom is not supported on *nix")
+            End If
             Dim se As source_executor = Nothing
             assertion.is_true(source_executor.
                             [New]().
@@ -29,6 +33,9 @@ Namespace dotnet
         <test>
         <command_line_specified>
         Private Shared Sub execute_from_source_perf()
+            If os.is_nix Then
+                Throw New utt_test_disabled("System.CodeDom is not supported on *nix")
+            End If
             Dim se As source_executor = Nothing
             assertion.is_true(source_executor.
                             [New]().

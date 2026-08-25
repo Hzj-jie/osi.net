@@ -32,6 +32,7 @@ Public Class exec_export_case
     End Sub
 
     Public Overrides Function prepare() As Boolean
+        disable_on_nix("embedded test binary is Windows PE .exe")
         Return MyBase.prepare() AndAlso
                b.sync_export_exec(exec_file)
     End Function

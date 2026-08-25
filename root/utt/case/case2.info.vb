@@ -128,7 +128,12 @@ Partial Public NotInheritable Class case2
         Public Shared Shadows Function from(ByVal method As MethodInfo) As function_info
             assert(Not method Is Nothing)
             Return New function_info(Function(ByVal obj As Object) As Boolean
-                                         Return _object_extensions.is_null_or_true(method.Invoke(obj, Nothing))
+                                         Try
+                                             Return _object_extensions.is_null_or_true(method.Invoke(obj, Nothing))
+                                         Catch ex As TargetInvocationException When Not ex.InnerException Is Nothing AndAlso
+                                                                                    TypeOf ex.InnerException Is utt_test_disabled
+                                             Throw ex.InnerException
+                                         End Try
                                      End Function,
                                      info.from(method))
         End Function

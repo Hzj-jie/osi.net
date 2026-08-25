@@ -40,6 +40,7 @@ Public Class valuer_test
 
     Public Overrides Function run() As Boolean
         Using scoped.atomic_bool(suppress.valuer_error)
+#If NETFRAMEWORK Then
             Return run_case(Of Int32)("a", rnd_int(), binding_flags.instance_public) AndAlso
                    run_case(Of Int32)("b", rnd_int(), binding_flags.instance_public) AndAlso
                    run_case(Of test_int)("c", New test_imp(), binding_flags.instance_public) AndAlso
@@ -59,6 +60,25 @@ Public Class valuer_test
                    fail_case(Of String)("f", binding_flags.static_all) AndAlso
                    fail_case(Of String)("F", binding_flags.instance_private) AndAlso
                    fail_case(Of String)("z", binding_flags.all)
+#Else
+            Return run_case(Of Int32)("a", rnd_int(), binding_flags.instance_public) AndAlso
+                   run_case(Of Int32)("b", rnd_int(), binding_flags.instance_public) AndAlso
+                   run_case(Of test_int)("c", New test_imp(), binding_flags.instance_public) AndAlso
+                   run_case(Of test_imp)("d", New test_imp(), binding_flags.instance_public) AndAlso
+                   run_case(Of test_inh)("e", New test_inh(), binding_flags.instance_public) AndAlso
+                   run_case(Of String)("f", rnd_chars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
+                   run_case(Of String)("g", rnd_chars(rnd_int(10, 100)), binding_flags.instance_private) AndAlso
+                   run_case(Of Int32)("j", rnd_int(), binding_flags.static_public) AndAlso
+                   run_case(Of Int32)("k", rnd_int(), binding_flags.static_private) AndAlso
+                                                                                           _
+                   set_only_case(Of test_imp, test_inh)("c", binding_flags.instance_public) AndAlso
+                   get_only_case(Of test_imp, test_inh)("e", binding_flags.instance_public) AndAlso
+                   fail_case(Of Int32)("f", binding_flags.instance_private) AndAlso
+                   fail_case(Of String)("f", binding_flags.instance_public) AndAlso
+                   fail_case(Of String)("f", binding_flags.static_all) AndAlso
+                   fail_case(Of String)("F", binding_flags.instance_private) AndAlso
+                   fail_case(Of String)("z", binding_flags.all)
+#End If
         End Using
     End Function
 

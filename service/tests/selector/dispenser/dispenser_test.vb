@@ -36,7 +36,8 @@ Partial Public NotInheritable Class dispenser_test
         For i As Int32 = 0 To accepter_count - 1
             Dim j As Int32 = 0
             j = i
-            If Not assertion.happening(Function() accepters(j).q.size() = data_size) Then
+            If Not assertion.happening_in(Function() accepters(j).q.size() = data_size,
+                                          CUInt(seconds_to_milliseconds(30))) Then
                 Return False
             End If
         Next

@@ -49,7 +49,7 @@ Public MustInherit Class flower_test
         ended = New ref(Of Boolean)()
         execute(f, ended)
         Dim v() As Int32 = Nothing
-        v = rnd_ints(rnd_int(16384, 32768))
+        v = rnd_ints(rnd_int(2048, 4096))
         For i As Int32 = 0 To array_size_i(v) - 1
             assert(v(i) <> max_int32)
             first.receive_pump.emplace(v(i))

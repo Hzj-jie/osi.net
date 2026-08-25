@@ -16,6 +16,7 @@ Public Class thread_timing_test
     End Sub
 
     Public Overrides Function run() As Boolean
+        disable_on_nix("process/thread priority manipulation requires CAP_SYS_NICE on Linux")
         Using New moderate()
             assert_process_priority(ProcessPriorityClass.Normal)
             assert_thread_priority(ThreadPriority.Normal)

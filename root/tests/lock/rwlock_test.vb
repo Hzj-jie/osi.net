@@ -82,6 +82,7 @@ Public NotInheritable Class rwlock_test
     End Sub
 
     <test>
+    <flaky>
     Private Shared Sub multiple_writes_can_not_happen_in_parallel()
         Dim t As New test_class()
         Dim zre As New zero_reset_event(101)

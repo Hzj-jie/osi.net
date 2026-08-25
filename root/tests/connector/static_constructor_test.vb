@@ -69,6 +69,13 @@ Public NotInheritable Class static_constructor_test
         Private Shared ReadOnly instance As G_executor = New G_executor()
     End Class
 
+    Public Overrides Function prepare() As Boolean
+        v = def
+        F_holder.v = False
+        G_holder.v = False
+        Return MyBase.prepare()
+    End Function
+
     Public Overrides Function run() As Boolean
         Dim c As C = Nothing
         assertion.equal(v, def)

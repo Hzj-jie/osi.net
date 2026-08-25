@@ -16,11 +16,13 @@ Public Class reference_count_runner_test2
                                            this.mark_started()
                                            sleep(10)
                                        End Sub)
+        Dim stop_thread As Boolean = False
         Dim t As Thread = Nothing
         t = New Thread(Sub()
-                           While True
-                               assert(are.wait())
-                               r.mark_stopped()
+                           While Not stop_thread
+                               If are.wait(50) Then
+                                   r.mark_stopped()
+                               End If
                            End While
                        End Sub)
         t.Start()
@@ -28,7 +30,8 @@ Public Class reference_count_runner_test2
             assertion.is_true(r.bind())
             assertion.is_true(r.release())
         Next
-        t.Abort()
+        stop_thread = True
+        are.force_set()
         t.Join()
         are.Close()
         Return True

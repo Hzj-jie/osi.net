@@ -32,8 +32,13 @@ Public Class sizeof_test
         assertion.equal(sizeof(Of Int32)(), 32 \ bit_count_in_byte)
         assertion.equal(sizeof(Of s1)(), 1)
         assertion.equal(sizeof(New s1()), 1)
+#If NETFRAMEWORK Then
         assertion.equal(sizeof(Of s2)(), 3 * cpu_address_width \ bit_count_in_byte)
         assertion.equal(sizeof(New s2()), 3 * cpu_address_width \ bit_count_in_byte)
+#Else
+        assertion.equal(sizeof(Of s2)(), npos)
+        assertion.equal(sizeof(New s2()), npos)
+#End If
         assertion.equal(sizeof(Of c1)(), npos)
         assertion.equal(sizeof(New c1()), npos)
         assertion.equal(sizeof(Of c2)(), npos)

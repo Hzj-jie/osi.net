@@ -18,6 +18,12 @@ Public NotInheritable Class encodings
         Public ReadOnly utf8_nobom As Encoding
 
         Private Sub New()
+#If NET8_0_OR_GREATER Then
+            Try
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance)
+            Catch
+            End Try
+#End If
             Try
                 gbk = Encoding.GetEncoding("gbk")
             Catch

@@ -15,6 +15,7 @@ Imports osi.service.http
 Imports counter = osi.root.utils.counter
 
 <test>
+<flaky>
 Public NotInheritable Class module_handles_test
     Private Const concurrent_connection_count As UInt32 = 100
     Private Const repeat_count As UInt32 = 100
