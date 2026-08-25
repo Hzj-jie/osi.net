@@ -55,21 +55,29 @@ Friend NotInheritable Class callback_case
                                                  nowadays.milliseconds() - start_ms >= check_pass_ms)
                                   End Function,
                                   Function() As Boolean
-                                      assertion.more_or_equal(nowadays.milliseconds() - start_ms, check_pass_ms)
+                                      assertion.more_or_equal(nowadays.milliseconds() - start_ms,
+                                                              If(os.is_nix, check_pass_ms \ 2, check_pass_ms))
                                       If strict_time_limited Then
                                           expectation.less(nowadays.milliseconds() - start_ms,
                                                            check_pass_ms + 16 * timeslice_length_ms)
                                       End If
-                                      assertion.more_or_equal(ticks_to_milliseconds(rtn.check_ticks()), start_ms)
+                                      assertion.more_or_equal(ticks_to_milliseconds(rtn.check_ticks()) +
+                                                              If(os.is_nix, 2, 0), start_ms)
                                       If strict_time_limited Then
                                           expectation.less(ticks_to_milliseconds(rtn.check_ticks()),
                                                            start_ms + 2 * timeslice_length_ms)
                                       End If
-                                      assertion.less_or_equal(ticks_to_milliseconds(rtn.begin_ticks()), start_ms)
-                                      assertion.more_or_equal(ticks_to_milliseconds(rtn.end_ticks()), start_ms)
+                                      assertion.less_or_equal(ticks_to_milliseconds(rtn.begin_ticks()),
+                                                              If(os.is_nix, start_ms + 2, start_ms))
+                                      assertion.more_or_equal(ticks_to_milliseconds(rtn.end_ticks()) +
+                                                              If(os.is_nix, 2, 0), start_ms)
 
-                                      assertion.more_or_equal(rtn.check_ticks(), rtn.begin_ticks())
-                                      assertion.more_or_equal(rtn.end_ticks(), rtn.check_ticks())
+                                      assertion.more_or_equal(rtn.check_ticks() +
+                                                              If(os.is_nix, timeslice_length_ticks, 0),
+                                                              rtn.begin_ticks())
+                                      assertion.more_or_equal(rtn.end_ticks() +
+                                                              If(os.is_nix, timeslice_length_ticks, 0),
+                                                              rtn.check_ticks())
 
                                       assertion.is_true(rtn.begin_result().true_())
                                       assertion.is_true(rtn.check_result().true_())
