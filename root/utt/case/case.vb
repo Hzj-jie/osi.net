@@ -50,18 +50,6 @@ Public MustInherit Class [case]
         Return max_physical_memory_usage < expected_memory_usage OrElse
                max_virtual_memory_usage < expected_memory_usage
     End Function
-
-    Protected Sub disable_on_nix(Optional ByVal msg As String = "disabled on *nix")
-        If os.is_nix Then
-            Throw New utt_test_disabled(msg)
-        End If
-    End Sub
-
-    Protected Sub disable_not_on_windows(Optional ByVal msg As String = "disabled not on Windows")
-        If Not os.is_windows Then
-            Throw New utt_test_disabled(msg)
-        End If
-    End Sub
 End Class
 
 Public NotInheritable Class utt_test_disabled

@@ -188,7 +188,7 @@ Public NotInheritable Class weak_event_test
     End Function
 
     Public Overrides Function run() As Boolean
-        disable_on_nix()
+        assertion.disable_on_nix()
         Return attach_one_case() AndAlso
                attach_two_case() AndAlso
                attach_several_case()

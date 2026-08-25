@@ -73,7 +73,7 @@ Public Class event_disposer_test
     End Function
 
     Public Overrides Function run() As Boolean
-        disable_on_nix("GC/finalizer timing under Linux")
+        assertion.disable_on_nix("GC/finalizer timing under Linux")
         Return binding_case() AndAlso
                event_case()
     End Function

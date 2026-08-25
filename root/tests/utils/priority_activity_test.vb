@@ -41,7 +41,7 @@ Public NotInheritable Class priority_activity_test
     End Sub
 
     Public Overrides Function run() As Boolean
-        disable_not_on_windows("embedded test binary is Windows PE .exe")
+        assertion.disable_not_on_windows("embedded test binary is Windows PE .exe")
         enum_def(Of ProcessPriorityClass).foreach(
             Sub(ByVal ppc As ProcessPriorityClass, ByVal s As String)
                 Using p As New shell_less_process()
