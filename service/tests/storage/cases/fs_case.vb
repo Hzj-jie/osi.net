@@ -12,6 +12,6 @@ Public MustInherit Class fs_case
     Inherits event_comb_case
 
     Public Overrides Function create() As event_comb
-
+        Return Nothing
     End Function
 End Class

@@ -139,19 +139,20 @@ Partial Public Class channel
                                                     ' TODO
                                                 End If
                                             Next
+                                            Return goto_end()
                                         End Function))
         End If
     End Sub
 
     Private Function execute_connect(ByVal i As command, ByVal o As command) As event_comb
-
+        Return Nothing
     End Function
 
     Private Function execute_close(ByVal i As command, ByVal o As command) As event_comb
-
+        Return Nothing
     End Function
 
     Private Function execute_send(ByVal i As command, ByVal o As command) As event_comb
-
+        Return Nothing
     End Function
 End Class

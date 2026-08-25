@@ -17,14 +17,14 @@ Public Class token_herald_wrapper
 
     Public Function sense(ByVal pending As ref(Of Boolean),
                           ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
-
+        Return Nothing
     End Function
 
     Public Function send(ByVal i As command) As event_comb Implements T_injector(Of command).send
-
+        Return Nothing
     End Function
 
     Public Function receive(ByVal o As ref(Of command)) As event_comb Implements T_pump(Of command).receive
-
+        Return Nothing
     End Function
 End Class

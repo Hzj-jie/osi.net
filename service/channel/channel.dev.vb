@@ -28,16 +28,16 @@ Partial Public Class channel
         Public Function send(ByVal buff() As Byte,
                              ByVal offset As UInt32,
                              ByVal count As UInt32) As event_comb Implements block_injector.send
-
+            Return Nothing
         End Function
 
         Public Function receive(ByVal result As ref(Of Byte())) As event_comb Implements block_pump.receive
-
+            Return Nothing
         End Function
 
         Public Function sense(ByVal pending As ref(Of Boolean),
                               ByVal timeout_ms As Int64) As event_comb Implements sensor.sense
-
+            Return Nothing
         End Function
 
         Public Function last_active_ms() As Int64
