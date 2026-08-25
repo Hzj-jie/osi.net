@@ -40,8 +40,13 @@ Public NotInheritable Class connectivity
                                             "www.wikipedia.org")
 
         ServicePointManager.Expect100Continue() = True
+#If NETFRAMEWORK Then
+        Dim ssl3_val As SecurityProtocolType = SecurityProtocolType.Ssl3
+#Else
+        Dim ssl3_val As SecurityProtocolType = direct_cast(Of SecurityProtocolType)(48)
+#End If
         For Each i As SecurityProtocolType In {SecurityProtocolType.Tls,
-                                               direct_cast(Of SecurityProtocolType)(48),      ' ssl3
+                                               ssl3_val,
                                                direct_cast(Of SecurityProtocolType)(768),     ' tls11
                                                direct_cast(Of SecurityProtocolType)(3072),    ' tls12
                                                direct_cast(Of SecurityProtocolType)(12288)}   ' tls13
