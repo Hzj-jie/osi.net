@@ -2,5 +2,39 @@
   <PropertyGroup>
     <ServicesAll>true</ServicesAll>
   </PropertyGroup>
-  <Import Project="$(ServicePath)\**\*.net8.props" />
+  <Import Project="$(ServicePath)\argument\argument.net8.props" Condition="'$(ArgumentProps)'==''" />
+  <Import Project="$(ServicePath)\automata\automata.net8.props" Condition="'$(AutomataProps)'==''" />
+  <Import Project="$(ServicePath)\cache\cache.net8.props" Condition="'$(CacheProps)'==''" />
+  <Import Project="$(ServicePath)\channel\channel.net8.props" Condition="'$(ChannelProps)'==''" />
+  <Import Project="$(ServicePath)\commander\commander.net8.props" Condition="'$(CommanderProps)'==''" />
+  <Import Project="$(ServicePath)\compiler\compiler.net8.props" Condition="'$(CompilerProps)'==''" />
+  <Import Project="$(ServicePath)\configuration\configuration.net8.props" Condition="'$(ConfigurationProps)'==''" />
+  <Import Project="$(ServicePath)\constructor\constructor.net8.props" Condition="'$(ConstructorProps)'==''" />
+  <Import Project="$(ServicePath)\convertor\convertor.net8.props" Condition="'$(ConvertorProps)'==''" />
+  <Import Project="$(ServicePath)\dataprovider\dataprovider.net8.props" Condition="'$(DataproviderProps)'==''" />
+  <Import Project="$(ServicePath)\device\device.net8.props" Condition="'$(DeviceProps)'==''" />
+  <Import Project="$(ServicePath)\devicepool\devicepool.net8.props" Condition="'$(DevicepoolProps)'==''" />
+  <Import Project="$(ServicePath)\dns\dns.net8.props" Condition="'$(DnsProps)'==''" />
+  <Import Project="$(ServicePath)\dynamiclogic\dynamiclogic.net8.props" Condition="'$(DynamiclogicProps)'==''" />
+  <Import Project="$(ServicePath)\http\http.net8.props" Condition="'$(HttpProps)'==''" />
+  <Import Project="$(ServicePath)\input\input.net8.props" Condition="'$(InputProps)'==''" />
+  <Import Project="$(ServicePath)\interpreter\interpreter.net8.props" Condition="'$(InterpreterProps)'==''" />
+  <Import Project="$(ServicePath)\iosys\iosys.net8.props" Condition="'$(IosysProps)'==''" />
+  <Import Project="$(ServicePath)\math\math.net8.props" Condition="'$(MathProps)'==''" />
+  <Import Project="$(ServicePath)\ml\ml.net8.props" Condition="'$(MlProps)'==''" />
+  <Import Project="$(ServicePath)\output\output.net8.props" Condition="'$(OutputProps)'==''" />
+  <Import Project="$(ServicePath)\protector\protector.net8.props" Condition="'$(ProtectorProps)'==''" />
+  <Import Project="$(ServicePath)\resource\resource.net8.props" Condition="'$(ResourceProps)'==''" />
+  <Import Project="$(ServicePath)\resources\resources.net8.props" Condition="'$(ResourcesProps)'==''" />
+  <Import Project="$(ServicePath)\secure\secure.net8.props" Condition="'$(SecureProps)'==''" />
+  <Import Project="$(ServicePath)\selector\selector.net8.props" Condition="'$(SelectorProps)'==''" />
+  <Import Project="$(ServicePath)\sharedtransmitter\sharedtransmitter.net8.props" Condition="'$(SharedtransmitterProps)'==''" />
+  <Import Project="$(ServicePath)\storage\storage.net8.props" Condition="'$(StorageProps)'==''" />
+  <Import Project="$(ServicePath)\streamer\streamer.net8.props" Condition="'$(StreamerProps)'==''" />
+  <Import Project="$(ServicePath)\tcp\tcp.net8.props" Condition="'$(TcpProps)'==''" />
+  <Import Project="$(ServicePath)\transmitter\transmitter.net8.props" Condition="'$(TransmitterProps)'==''" />
+  <Import Project="$(ServicePath)\udp\udp.net8.props" Condition="'$(UdpProps)'==''" />
+  <Import Project="$(ServicePath)\webstorage\webstorage.net8.props" Condition="'$(WebstorageProps)'==''" />
+  <Import Project="$(ServicePath)\xml\xml.net8.props" Condition="'$(XmlProps)'==''" />
+  <Import Project="$(ServicePath)\zip\zip.net8.props" Condition="'$(ZipProps)'==''" />
 </Project>

@@ -19,6 +19,6 @@
   </ItemGroup>
 
   <Import Project="..\..\root\root.production.net8.props" />
-  <Import Project="$(ServicePath)\http\http.net8.props" />
-  <Import Project="$(ServicePath)\configuration\configuration.net8.props" />
+  <Import Project="$(ServicePath)\http\http.net8.props" Condition="'$(HttpProps)'==''" />
+  <Import Project="$(ServicePath)\configuration\configuration.net8.props" Condition="'$(ConfigurationProps)'==''" />
 </Project>
