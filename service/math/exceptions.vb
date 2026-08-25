@@ -18,10 +18,12 @@ Public Class ImaginaryNumberException
         MyBase.New(message, inner_exception)
     End Sub
 
+#If NETFRAMEWORK Then
     Public Sub New(ByVal info As Runtime.Serialization.SerializationInfo,
                    ByVal context As Runtime.Serialization.StreamingContext)
         MyBase.New(info, context)
     End Sub
+#End If
 End Class
 
 Public Module _exceptions

@@ -80,7 +80,9 @@ Public Module _thread
             r = _current_process_thread_id
             If r = INVALID_THREAD_ID Then
                 Thread.BeginThreadAffinity()
+#Disable Warning BC40000
                 r = AppDomain.GetCurrentThreadId()
+#Enable Warning BC40000
                 _current_process_thread_id = r
             End If
 

@@ -43,7 +43,9 @@ Public NotInheritable Class int32_bytes_perf_test
         Dim t As Int32 = 0
         t = rnd_int()
         For i As UInt32 = 0 To size - 1
+#Disable Warning BC40000
             Marshal.WriteInt32(d, 0, t)
+#Enable Warning BC40000
         Next
     End Sub
 End Class

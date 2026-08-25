@@ -41,7 +41,7 @@ Public NotInheritable Class connectivity
 
         ServicePointManager.Expect100Continue() = True
         For Each i As SecurityProtocolType In {SecurityProtocolType.Tls,
-                                               SecurityProtocolType.Ssl3,
+                                               direct_cast(Of SecurityProtocolType)(48),      ' ssl3
                                                direct_cast(Of SecurityProtocolType)(768),     ' tls11
                                                direct_cast(Of SecurityProtocolType)(3072),    ' tls12
                                                direct_cast(Of SecurityProtocolType)(12288)}   ' tls13
