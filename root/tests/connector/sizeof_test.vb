@@ -1,10 +1,14 @@
 
+Option Explicit On
+Option Infer Off
+Option Strict On
+
 Imports osi.root.constants
 Imports osi.root.envs
 Imports osi.root.connector
 Imports osi.root.utt
 
-Public Class sizeof_test
+Public NotInheritable Class sizeof_test
     Inherits [case]
 
     Private Structure s1
@@ -14,6 +18,11 @@ Public Class sizeof_test
         Public a As Int32
         Public b As String
         Public c As Object
+    End Structure
+
+    Private Structure s3
+        Public a As Int32
+        Public b As Double
     End Structure
 
     Private Class c1
@@ -39,6 +48,8 @@ Public Class sizeof_test
         assertion.equal(sizeof(Of s2)(), npos)
         assertion.equal(sizeof(New s2()), npos)
 #End If
+        assertion.equal(sizeof(Of s3)(), 16)
+        assertion.equal(sizeof(New s3()), 16)
         assertion.equal(sizeof(Of c1)(), npos)
         assertion.equal(sizeof(New c1()), npos)
         assertion.equal(sizeof(Of c2)(), npos)
