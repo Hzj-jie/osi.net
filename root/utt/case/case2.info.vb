@@ -130,8 +130,10 @@ Partial Public NotInheritable Class case2
             Return New function_info(Function(ByVal obj As Object) As Boolean
                                          Try
                                              Return _object_extensions.is_null_or_true(method.Invoke(obj, Nothing))
-                                         Catch ex As TargetInvocationException When Not ex.InnerException Is Nothing AndAlso
-                                                                                    TypeOf ex.InnerException Is utt_test_disabled
+                                         Catch ex As TargetInvocationException
+                                             assert(Not ex.InnerException Is Nothing)
+                                             ' Unwrap and rethrow the inner exception so tests throwing exceptions (such as
+                                             ' utt_test_disabled) can forward directly to the UTT framework itself.
                                              Throw ex.InnerException
                                          End Try
                                      End Function,
