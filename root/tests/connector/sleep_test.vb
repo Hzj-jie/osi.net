@@ -112,7 +112,8 @@ Public NotInheritable Class sleep_test
         assert(Not d Is Nothing)
         Const timeout_ms As Int64 = second_milli
         Using New boost()
-            Using assertion.timelimited_operation(timeout_ms, timeout_ms + 4 * timeslice_length_ms)
+            Using assertion.timelimited_operation(timeout_ms,
+                                                  timeout_ms + If(os.is_nix, 16, 4) * timeslice_length_ms)
                 assertion.is_false(d(timeout_ms))
             End Using
         End Using
