@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.procedure
 Imports osi.root.utt
 Imports osi.service.transmitter
@@ -56,7 +57,11 @@ Public MustInherit Class complete_io_test2(Of T As flow)
 
     Public Overrides Function run() As Boolean
         Dim b1() As Byte = Nothing
-        b1 = next_bytes(rnd_uint(8192 * 256, 8192 * 512))
+        ' Linux net.core.rmem_max caps non-root UDP receive buffers (defaults to ~208KB).
+        ' Reduce data size to <= 128KB on *nix to prevent kernel socket buffer drops during concurrent test execution.
+        b1 = next_bytes(If(os.is_nix,
+                           rnd_uint(8192 * 8, 8192 * 16),
+                           rnd_uint(8192 * 256, 8192 * 512)))
         Dim b2() As Byte = Nothing
         ReDim b2(array_size_i(b1) - 1)
         Dim finished As ManualResetEvent = Nothing
