@@ -5,6 +5,7 @@ Option Strict On
 
 Imports System.IO
 Imports osi.root.connector
+Imports osi.root.envs
 Imports osi.root.procedure
 Imports osi.root.utils
 Imports osi.service.storage
@@ -14,26 +15,31 @@ Public MustInherit Class temp_drive_istrkeyvt_case
     Inherits istrkeyvt_case
 
     Private Shared ReadOnly data_dir_base As String =
-        If(Directory.Exists("T:\"), "T:\", Path.Combine(Path.GetTempPath(), "osi_temp"))
-    Private Shared ReadOnly temp_dir As String = Path.Combine(data_dir_base, "temp")
+        If(os.is_windows, "T:\", If(os.is_nix, "/dev/shm", Nothing))
+    Private Shared ReadOnly temp_dir As String
+    Private Shared ReadOnly valid As Boolean
     Protected ReadOnly data_dir As String
-    Private ReadOnly valid As Boolean
 
     Shared Sub New()
-        void_(Sub()
-                  If Directory.Exists(temp_dir) Then
-                      Directory.Delete(temp_dir, True)
-                  End If
-              End Sub)
-        void_(Sub()
-                  Directory.CreateDirectory(temp_dir)
-              End Sub)
+        If Not data_dir_base Is Nothing AndAlso Directory.Exists(data_dir_base) Then
+            temp_dir = Path.Combine(data_dir_base, "temp")
+            void_(Sub()
+                      If Directory.Exists(temp_dir) Then
+                          Directory.Delete(temp_dir, True)
+                      End If
+                  End Sub)
+            void_(Sub()
+                      Directory.CreateDirectory(temp_dir)
+                  End Sub)
+            valid = Directory.Exists(temp_dir)
+        End If
     End Sub
 
     Protected Sub New(ByVal i As iistrkeyvt_case)
         MyBase.New(i)
-        data_dir = Path.Combine(temp_dir, guid_str())
-        valid = Directory.Exists(temp_dir)
+        If valid Then
+            data_dir = Path.Combine(temp_dir, guid_str())
+        End If
     End Sub
 
     Protected Sub New()
