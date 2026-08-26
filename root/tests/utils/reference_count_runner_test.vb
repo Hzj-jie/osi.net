@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.constants
 Imports osi.root.template
@@ -63,12 +64,29 @@ Public NotInheritable Class reference_count_runner_test
             End Sub
         End Class
 
+#If NET8_0_OR_GREATER Then
+        ' In modern .NET (.NET 8+), Tiered Compilation compiles single-invocation methods
+        ' at Tier 0 (Quick JIT), which keeps local variables and expression stack spill slots
+        ' alive across the entire stack frame. Instantiating the object in a non-inlined helper
+        ' method ensures its stack frame is popped so GC.Collect can collect the instance.
+        <MethodImpl(MethodImplOptions.NoInlining)>
+        Private Shared Sub create_and_bind()
+            Dim r As RC = New RC()
+            assertion.is_true(r.bind())
+            assertion.is_true(RC.v)
+        End Sub
+#End If
+
         Public Overrides Function run() As Boolean
+#If NET8_0_OR_GREATER Then
+            create_and_bind()
+#Else
             Dim r As RC = Nothing
             r = New RC()
             assertion.is_true(r.bind())
             assertion.is_true(RC.v)
             r = Nothing
+#End If
             assertion.is_true(garbage_collector.waitfor_collect_when(Function() As Boolean
                                                                          Return RC.v
                                                                      End Function))
