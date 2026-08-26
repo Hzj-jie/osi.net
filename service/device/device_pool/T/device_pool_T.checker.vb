@@ -19,8 +19,7 @@ Partial Public Class device_pool(Of T)
     End Function
 
     Public Function attach_checker(Optional ByVal wait_ms As Int64 = constants.default_checker_interval_ms) As Boolean
-        Dim c As checker = Nothing
-        c = New checker(Me, wait_ms)
+        Dim c As New checker(Me, wait_ms)
         If attach_checker(c) Then
             Return True
         Else
@@ -51,8 +50,7 @@ Partial Public Class device_pool(Of T)
             Me.p = p
             begin_lifetime_event_comb(expiration_controller.[New](AddressOf expired),
                                       Function() As Boolean
-                                          Dim i As UInt32 = 0
-                                          i = p.free_count()
+                                          Dim i As UInt32 = p.free_count()
                                           Dim c As idevice(Of T) = Nothing
                                           While i > 0 AndAlso p.[get](c)
                                               i -= uint32_1

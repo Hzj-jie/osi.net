@@ -257,8 +257,7 @@ Namespace primitive
             If s.null_or_empty() OrElse s.size() <= p Then
                 Return False
             End If
-            Dim raw As String = Nothing
-            raw = strmid(s(p), uint32_1)
+            Dim raw As String = strmid(s(p), uint32_1)
             Select Case s(p)(0)
                 Case prefix.array
                     buff = raw.hex_bytes_buff()
@@ -306,8 +305,7 @@ Namespace primitive
         End Function
 
         Public Function CompareTo(ByVal other As data_block) As Int32 Implements IComparable(Of data_block).CompareTo
-            Dim c As Int32 = 0
-            c = object_compare(Me, other)
+            Dim c As Int32 = object_compare(Me, other)
             If c = object_compare_undetermined Then
                 assert(Not other Is Nothing)
                 Return memcmp(buff, other.buff)

@@ -34,11 +34,9 @@ Public NotInheritable Class big_int_input_perf
 
         Public Overrides Function run() As Boolean
             Using New boost()
-                Dim start As Date = Nothing
-                start = Date.Now()
+                Dim start As Date = Date.Now()
                 Console.WriteLine(start)
-                Dim r As String = Nothing
-                r = Console.ReadLine()
+                Dim r As String = Console.ReadLine()
                 While Not r Is Nothing
                     Try
                         run_case(r)
@@ -47,8 +45,7 @@ Public NotInheritable Class big_int_input_perf
                     End Try
                     r = Console.ReadLine()
                 End While
-                Dim [end] As Date = Nothing
-                [end] = Date.Now()
+                Dim [end] As Date = Date.Now()
                 Console.WriteLine([end])
                 Console.WriteLine("total ticks " + Convert.ToString([end].Ticks() - start.Ticks()))
                 Return True

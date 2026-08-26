@@ -129,11 +129,9 @@ Public Class connection_state
         ElseIf local Is Nothing OrElse remote Is Nothing Then
             Return TcpState.Closed
         Else
-            Dim id As String = Nothing
-            id = _socket.identity(local, remote)
+            Dim id As String = _socket.identity(local, remote)
             assert(Not id.null_or_empty())
-            Dim it As map(Of String, TcpState).iterator = Nothing
-            it = m.find(id)
+            Dim it As map(Of String, TcpState).iterator = m.find(id)
             If it = m.end() Then
                 Return TcpState.Unknown
             Else

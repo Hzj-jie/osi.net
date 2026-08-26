@@ -18,8 +18,7 @@ Namespace primitive
         End Function
 
         Public Shared Function big_udec_to_str(ByVal i() As Byte) As Byte()
-            Dim u As big_udec = Nothing
-            u = New big_udec()
+            Dim u As New big_udec()
             If Not u.replace_by(i) Then
                 raise_error(error_type.user, "Failed to parse ", i, " into big_udec.")
                 executor_stop_error.throw(executor.error_type.interrupt_implementation_failure)
@@ -28,11 +27,9 @@ Namespace primitive
         End Function
 
         Public Shared Function big_uint_to_big_udec(ByVal i() As Byte) As Byte()
-            Dim u As big_uint = Nothing
-            u = New big_uint()
+            Dim u As New big_uint()
             u.replace_by(i)
-            Dim d As big_udec = Nothing
-            d = big_udec.fraction(u, big_uint.one())
+            Dim d As big_udec = big_udec.fraction(u, big_uint.one())
             Return d.as_bytes()
         End Function
 

@@ -22,11 +22,9 @@ Partial Public NotInheritable Class rlexer
         If o Is Nothing Then
             o = New vector(Of typed_word)()
         End If
-        Dim j As UInt32 = 0
-        j = start
+        Dim j As UInt32 = start
         While j < [end]
-            Dim matches As vector(Of pair(Of UInt32, UInt32)) = Nothing
-            matches = New vector(Of pair(Of UInt32, UInt32))()
+            Dim matches As New vector(Of pair(Of UInt32, UInt32))()
             For k As UInt32 = 0 To rs.size() - uint32_1
                 assert(Not rs(k) Is Nothing)
                 If word_choice = match_choice.greedy Then

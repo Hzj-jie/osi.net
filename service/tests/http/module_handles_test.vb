@@ -42,8 +42,7 @@ Public NotInheritable Class module_handles_test
             value += 1
             assertion.is_not_null(ctx)
             assertion.equal(ctx.parse_method(), constants.request_method.POST)
-            Dim path As vector(Of String) = Nothing
-            path = ctx.parse_path()
+            Dim path As vector(Of String) = ctx.parse_path()
             assertion.is_false(path.empty())
             assertion.is_true(strsame(path(0), async_question_path, False))
             Return ctx.respond(create_answer(async_question_path))
@@ -55,8 +54,7 @@ Public NotInheritable Class module_handles_test
     Private Shared Function filtered_sync_exec_question(ByVal ctx As server.context) As event_comb
         assertion.is_not_null(ctx)
         assertion.equal(ctx.parse_method(), constants.request_method.GET)
-        Dim path As vector(Of String) = Nothing
-        path = ctx.parse_path()
+        Dim path As vector(Of String) = ctx.parse_path()
         assertion.is_false(path.empty())
         assertion.is_true(strsame(path(0), question_path, False))
         ctx.set_status(Net.HttpStatusCode.OK, create_answer(question_path))
@@ -70,8 +68,7 @@ Public NotInheritable Class module_handles_test
             Return False
         End If
 
-        Dim path As vector(Of String) = Nothing
-        path = ctx.parse_path()
+        Dim path As vector(Of String) = ctx.parse_path()
         If Not path.empty() AndAlso strsame(path(0), question_path, False) Then
             ctx.set_status(Net.HttpStatusCode.OK, create_answer(question_path))
             Return True
@@ -87,8 +84,7 @@ Public NotInheritable Class module_handles_test
             Return False
         End If
 
-        Dim path As vector(Of String) = Nothing
-        path = ctx.parse_path()
+        Dim path As vector(Of String) = ctx.parse_path()
         If Not path.empty() AndAlso strsame(path(0), async_question_path, False) Then
             ec = ctx.respond(create_answer(async_question_path))
             Return True
@@ -100,8 +96,7 @@ Public NotInheritable Class module_handles_test
     Private Shared Function sync_exec_ask(ByVal ctx As server.context, ByRef ec As event_comb) As Boolean
         assertion.is_not_null(ctx)
         assertion.is_null(ec)
-        Dim path As vector(Of String) = Nothing
-        path = ctx.parse_path()
+        Dim path As vector(Of String) = ctx.parse_path()
         If Not path.empty() AndAlso strsame(path(0), ask_path, False) Then
             ctx.set_status(Net.HttpStatusCode.OK, create_answer(ask_path))
             Return True
@@ -113,8 +108,7 @@ Public NotInheritable Class module_handles_test
     Private Shared Function async_exec_ask(ByVal ctx As server.context, ByRef ec As event_comb) As Boolean
         assertion.is_not_null(ctx)
         assertion.is_null(ec)
-        Dim path As vector(Of String) = Nothing
-        path = ctx.parse_path()
+        Dim path As vector(Of String) = ctx.parse_path()
         If Not path.empty() AndAlso strsame(path(0), async_ask_path, False) Then
             ec = ctx.respond(create_answer(async_ask_path))
             Return True
@@ -151,8 +145,7 @@ Public NotInheritable Class module_handles_test
                                   End If
                                   i += 1
 
-                                  Dim rnd As Int32 = 0
-                                  rnd = rnd_int(0, 5)
+                                  Dim rnd As Int32 = rnd_int(0, 5)
                                   Select Case rnd
                                       Case 0
                                           path = question_path
@@ -168,8 +161,7 @@ Public NotInheritable Class module_handles_test
 
                                   request_count.increment()
                                   r = New client.string_response()
-                                  Dim request As request_builder = Nothing
-                                  request = request_builder.
+                                  Dim request As request_builder = request_builder.
                                                   [New]().
                                                   with_url(generate_url("localhost", port, path)).
                                                   with_method(If(rnd_bool(),
@@ -210,10 +202,8 @@ Public NotInheritable Class module_handles_test
 
     <test>
     Private Sub run()
-        Dim s As server = Nothing
-        s = New server(New server.configuration() With {.ls = New link_status(seconds_to_milliseconds(15))})
-        Dim m As module_handle = Nothing
-        m = New module_handle(s)
+        Dim s As New server(New server.configuration() With {.ls = New link_status(seconds_to_milliseconds(15))})
+        Dim m As New module_handle(s)
 
         assertion.is_true(m.add("osi.tests.service.http.module_handles_test",
                           default_str,
@@ -257,8 +247,7 @@ Public NotInheritable Class module_handles_test
             Return
         End If
 
-        Dim ecs As vector(Of event_comb) = Nothing
-        ecs = New vector(Of event_comb)()
+        Dim ecs As New vector(Of event_comb)()
         For i As UInt32 = 0 To concurrent_connection_count - uint32_1
             ecs.emplace_back(send_requests())
         Next
@@ -270,8 +259,7 @@ Public NotInheritable Class module_handles_test
         assertion.equal(s.connection_count(), 0)
         assertion.more_or_equal_and_less_or_equal(+response_count, (+request_count) * 0.999, (+request_count))
         For i As UInt32 = 0 To m.module_count() - uint32_1
-            Dim snapshot As counter.snapshot = Nothing
-            snapshot = m.module_counter_snapshot(i)
+            Dim snapshot As counter.snapshot = m.module_counter_snapshot(i)
             assertion.is_not_null(snapshot)
             assertion.is_not_null(snapshot.count)
             If strcontains(snapshot.name, "should_not_be_called") Then

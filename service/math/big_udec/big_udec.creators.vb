@@ -9,8 +9,7 @@ Partial Public NotInheritable Class big_udec
     Public Shared Function fraction(ByVal numerator As big_uint,
                                     ByVal denominator As big_uint,
                                     ByRef o As big_udec) As Boolean
-        Dim r As big_udec = Nothing
-        r = big_udec.zero()
+        Dim r As big_udec = big_udec.zero()
         If r.replace_by(numerator, denominator) Then
             o = r
             Return True

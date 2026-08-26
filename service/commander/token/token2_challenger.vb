@@ -62,8 +62,7 @@ Public NotInheritable Class token2_challenger(Of COLLECTION, CONNECTION)
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() AndAlso Not r.empty() Then
-                                      Dim b As piece = Nothing
-                                      b = (+r).action()
+                                      Dim b As piece = (+r).action()
                                       If b.start_with(constants.token2_prefix) AndAlso
                                          info.sign(p, b.consume(constants.token2_prefix_len), code) Then
                                           ec = h.send(command.[New]().attach(code.export()))

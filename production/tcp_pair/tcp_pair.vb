@@ -33,13 +33,11 @@ Public Module tcp_pair
     Public Sub main(ByVal args() As String)
         debugpause()
         Dim v As New argument.var(args)
-        Dim p As idevice_pool(Of herald) = Nothing
-        p = powerpoint.create(v).herald_device_pool()
+        Dim p As idevice_pool(Of herald) = powerpoint.create(v).herald_device_pool()
         Dim c As Int64 = 0
         If v.switch("question") Then
             For i As Int32 = 0 To min(max(1, p.max_count()), td.max_connected) - 1
-                Dim r As ref(Of Byte()) = Nothing
-                r = New ref(Of Byte())
+                Dim r As New ref(Of Byte())
                 Dim ec As event_comb = Nothing
                 Dim s As String = Nothing
                 begin_application_lifetime_event_comb(Function() As Boolean
@@ -68,8 +66,7 @@ Public Module tcp_pair
                                    New execution_wrapper(
                                        Function(i() As Byte, o As ref(Of Byte())) As event_comb
                                            Return New event_comb(Function() As Boolean
-                                                                     Dim s As String = Nothing
-                                                                     s = guid_str()
+                                                                     Dim s As String = guid_str()
                                                                      raise_error("input ",
                                                                                  bytes_str(i),
                                                                                  ", output ",
@@ -80,8 +77,7 @@ Public Module tcp_pair
                                                                  End Function)
                                        End Function))))
         End If
-        Dim start_ms As Int64 = 0
-        start_ms = Now().milliseconds()
+        Dim start_ms As Int64 = Now().milliseconds()
         begin_application_lifetime_event_comb(Function() As Boolean
                                                   Return waitfor(1000) AndAlso
                                                          goto_next()

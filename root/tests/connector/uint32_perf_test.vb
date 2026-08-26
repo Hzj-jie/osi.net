@@ -79,8 +79,7 @@ Public Class uint32_perf_test
 
     Private Shared Sub uint32_eva()
         Dim x As UInt32 = 0
-        Dim y As UInt32 = 0
-        y = rnd_uint()
+        Dim y As UInt32 = rnd_uint()
         For i As UInt32 = 0 To size - uint32_1
             x = y
             assertion.equal(x, y)
@@ -91,8 +90,7 @@ Public Class uint32_perf_test
 
     Private Shared Sub uint32_int32_eva()
         Dim x As Int32 = 0
-        Dim y As UInt32 = 0
-        y = rnd_uint(0, max_int32)
+        Dim y As UInt32 = rnd_uint(0, max_int32)
         For i As UInt32 = 0 To size - uint32_1
             x = CInt(y)
             assertion.equal(x, CInt(y))
@@ -103,8 +101,7 @@ Public Class uint32_perf_test
 
     Private Shared Sub int32_eva()
         Dim x As Int32 = 0
-        Dim y As Int32 = 0
-        y = rnd_int()
+        Dim y As Int32 = rnd_int()
         For i As UInt32 = 0 To size - uint32_1
             x = y
             assertion.equal(x, y)
@@ -115,8 +112,7 @@ Public Class uint32_perf_test
 
     Private Shared Sub int32_uint32_eva()
         Dim x As UInt32 = 0
-        Dim y As Int32 = 0
-        y = rnd_int(0, max_int32)
+        Dim y As Int32 = rnd_int(0, max_int32)
         For i As UInt32 = 0 To size - uint32_1
             x = CUInt(y)
             assertion.equal(x, CUInt(y))
@@ -175,8 +171,7 @@ Public Class uint32_perf_test
         Loop While y = 0
         r = x * y
         For i As UInt32 = 0 To size - uint32_1
-            Dim c As UInt32 = 0
-            c = x * y
+            Dim c As UInt32 = x * y
             assertion.equal(c, r)
             c \= y
             assertion.equal(c, x)
@@ -193,8 +188,7 @@ Public Class uint32_perf_test
         Loop While y = 0
         r = x * y
         For i As UInt32 = 0 To size - uint32_1
-            Dim c As Int32 = 0
-            c = x * y
+            Dim c As Int32 = x * y
             assertion.equal(c, r)
             c \= y
             assertion.equal(c, x)

@@ -11,16 +11,14 @@ Public Class pipe_test
 
     Private Shared Function basic_case() As Boolean
         Const default_value As Int32 = 100
-        Dim q As pipe(Of Int32) = Nothing
-        q = New pipe(Of Int32)(1, 1000, False)
+        Dim q As New pipe(Of Int32)(1, 1000, False)
         assertion.is_true(async_sync(q.push(default_value)))
         assertion.equal(q.size(), uint32_1)
         assertion.is_false(async_sync(q.push(default_value)))
         assertion.equal(q.size(), uint32_1)
         assertion.is_false(async_sync(q.push(default_value)))
         assertion.equal(q.size(), uint32_1)
-        Dim p As ref(Of Int32) = Nothing
-        p = New ref(Of Int32)()
+        Dim p As New ref(Of Int32)()
         assertion.is_true(async_sync(q.pop(p)))
         assertion.equal(+p, default_value)
         assertion.equal(q.size(), uint32_0)
@@ -34,8 +32,7 @@ Public Class pipe_test
     Private Shared Function basic_case2() As Boolean
         Dim v() As Int32 = Nothing
         v = rnd_ints(rnd_int(1024, 2048))
-        Dim q As pipe(Of Int32) = Nothing
-        q = New pipe(Of Int32)(array_size(v), 0, False)
+        Dim q As New pipe(Of Int32)(array_size(v), 0, False)
         For i As Int32 = 0 To array_size(v) - 1
             assertion.is_true(q.sync_push(v(i)))
         Next
@@ -50,8 +47,7 @@ Public Class pipe_test
     Private Shared Function multi_procedure_case() As Boolean
         Const default_timeout_ms As Int64 = 1000
         Const default_value As Int32 = 100
-        Dim q As pipe(Of Int32) = Nothing
-        q = New pipe(Of Int32)(1, npos, True)
+        Dim q As New pipe(Of Int32)(1, npos, True)
         assertion.is_true(async_sync(q.push(default_value)))
         assert_begin(New event_comb(Function() As Boolean
                                         Return waitfor(default_timeout_ms) AndAlso
@@ -65,8 +61,7 @@ Public Class pipe_test
             assertion.is_true(async_sync(q.push(default_value)))
         End Using
         assertion.equal(q.size(), uint32_1)
-        Dim p As ref(Of Int32) = Nothing
-        p = New ref(Of Int32)()
+        Dim p As New ref(Of Int32)()
         assertion.is_true(async_sync(q.pop(p)))
         assertion.equal(+p, default_value)
         assert_begin(New event_comb(Function() As Boolean

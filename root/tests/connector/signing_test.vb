@@ -7,8 +7,7 @@ Public Class signing_perf
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        Dim g As Guid = Nothing
-        g = Guid.NewGuid()
+        Dim g As Guid = Guid.NewGuid()
         For i As Int32 = 1024 * 1024 * 1024 - 1 To 0 Step -1
             signing(g, i)
         Next
@@ -20,8 +19,7 @@ Public Class signing_test
     Inherits [case]
 
     Private Shared Function strong_consistant() As Boolean
-        Dim g As Guid = Nothing
-        g = Guid.NewGuid()
+        Dim g As Guid = Guid.NewGuid()
         Dim r As Int32 = 0
         For i As Int32 = 0 To 15
             r = rnd_int(min_int32, max_int32)
@@ -32,8 +30,7 @@ Public Class signing_test
     End Function
 
     Private Shared Function unique() As Boolean
-        Dim b As UInt32 = 0
-        b = signing(guid_str())
+        Dim b As UInt32 = signing(guid_str())
         For i As Int32 = 0 To 1
             If b <> signing(guid_str()) Then
                 Return True

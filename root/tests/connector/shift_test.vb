@@ -14,8 +14,7 @@ Public Class shift_test
         Const b_l_4 As UInt32 = &H1FF11FF1  '0001 1111 1111 0001 0001 1111 1111 0001
         Const b_l_5 As UInt32 = &H3FE23FE2  '0011 1111 1110 0010 0011 1111 1110 0010
         Const b_l_6 As UInt32 = &H7FC47FC4  '0111 1111 1100 0100 0111 1111 1100 0100
-        Dim i As UInt32 = 0
-        i = b
+        Dim i As UInt32 = b
         i.left_shift(16)
         assertion.equal(i, b)
         i.right_shift(16)
@@ -51,8 +50,7 @@ Public Class shift_test
         Const b_l_5 As UInt64 = &H3FE23FE23FE23FE2
         '0111 1111 1100 0100 0111 1111 1100 0100 0111 1111 1100 0100 0111 1111 1100 0100
         Const b_l_6 As UInt64 = &H7FC47FC47FC47FC4
-        Dim i As UInt64 = 0
-        i = b
+        Dim i As UInt64 = b
         i.left_shift(16)
         assertion.equal(i, b)
         i.right_shift(16)

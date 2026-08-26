@@ -26,8 +26,7 @@ Friend NotInheritable Class map_cache(Of KEY_T As IComparable(Of KEY_T), VALUE_T
 
     Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean _
                          Implements islimcache2(Of KEY_T, VALUE_T).get
-        Dim it As map(Of KEY_T, VALUE_T).iterator = Nothing
-        it = m.find(key)
+        Dim it As map(Of KEY_T, VALUE_T).iterator = m.find(key)
         If it = m.end() Then
             Return False
         End If

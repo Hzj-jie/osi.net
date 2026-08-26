@@ -42,8 +42,7 @@ Public Class qless(Of T, lock_t As islimlock)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub emplace(ByVal d As T)
-        Dim n As ref_node(Of T) = Nothing
-        n = New ref_node(Of T)(1)
+        Dim n As New ref_node(Of T)(1)
         n.emplace(d)
         l.wait()
         If e Is Nothing Then

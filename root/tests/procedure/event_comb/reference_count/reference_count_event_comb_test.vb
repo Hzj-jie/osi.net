@@ -84,8 +84,7 @@ Public NotInheritable Class reference_count_event_comb_test
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim r As reference_count_event_comb_1 = Nothing
-            r = reference_count_event_comb_1.ctor(Function() As event_comb
+            Dim r As reference_count_event_comb_1 = reference_count_event_comb_1.ctor(Function() As event_comb
                                                       Return Nothing
                                                   End Function)
             For i As Int32 = 0 To 1000
@@ -113,15 +112,12 @@ Public NotInheritable Class reference_count_event_comb_test
     End Function
 
     Private Function run_case() As Boolean
-        Dim rc As case1 = Nothing
-        rc = New case1()
-        Dim c As [case] = Nothing
-        c = multithreading(repeat(rc, 1024), Environment.ProcessorCount() << 2)
+        Dim rc As New case1()
+        Dim c As [case] = multithreading(repeat(rc, 1024), Environment.ProcessorCount() << 2)
         If Not run(rc, c) Then
             Return False
         End If
-        Dim last As Int32 = 0
-        last = +(rc.c1)
+        Dim last As Int32 = +(rc.c1)
         assertion.not_happening(Function() As Boolean
                                     Return (+(rc.c1) <> last)
                                 End Function)
@@ -140,15 +136,12 @@ Public NotInheritable Class reference_count_event_comb_test
 
     Private Function run_case2() As Boolean
         Const repeat_count As Int32 = 8192
-        Dim rc As case2 = Nothing
-        rc = New case2()
-        Dim c As [case] = Nothing
-        c = repeat(rc, repeat_count)
+        Dim rc As New case2()
+        Dim c As [case] = repeat(rc, repeat_count)
         If Not run(rc, c) Then
             Return False
         End If
-        Dim last As Int32 = 0
-        last = +(rc.c1)
+        Dim last As Int32 = +(rc.c1)
         sleep()
         assertion.equal(+(rc.c1), last)
         assertion.equal(+(rc.c2.p), last)
@@ -165,8 +158,7 @@ Public NotInheritable Class reference_count_event_comb_test
     End Function
 
     Private Function run_case3() As Boolean
-        Dim c As [case] = Nothing
-        c = New case3()
+        Dim c As [case] = New case3()
         Return c.run()
     End Function
 

@@ -130,8 +130,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                 If array_size(ss) < 3 OrElse array_size(ss) > 4 Then
                     Return False
                 End If
-                Dim action As String = Nothing
-                action = If(array_size(ss) = 3, Nothing, ss(3))
+                Dim action As String = If(array_size(ss) = 3, Nothing, ss(3))
                 statuses(ss(0))(ss(1)) = pair.of(ss(2), action)
             Next
             Return True

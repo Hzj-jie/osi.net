@@ -14,8 +14,7 @@ Public Class event_disposer_test
 
     Private Shared Function create(ByVal disposing As atomic_int) As event_disposer(Of cd_object(Of test_class))
         assert(Not disposing Is Nothing)
-        Dim p As event_disposer(Of cd_object(Of test_class)) = Nothing
-        p = New event_disposer(Of cd_object(Of test_class))(New cd_object(Of test_class)())
+        Dim p As New event_disposer(Of cd_object(Of test_class))(New cd_object(Of test_class)())
         'also assert finalizers are running in a single thread
         AddHandler p.disposing, Sub() disposing.increment()
         Return p
@@ -24,8 +23,7 @@ Public Class event_disposer_test
     Private Shared Function event_case() As Boolean
         cd_object(Of test_class).reset()
         Const size As UInt32 = 1024 * 128
-        Dim disposing As atomic_int = Nothing
-        disposing = New atomic_int()
+        Dim disposing As New atomic_int()
         Dim p As event_disposer(Of cd_object(Of test_class)) = Nothing
         For i As UInt32 = 0 To size - uint32_1
             If Not p Is Nothing Then
@@ -49,8 +47,7 @@ Public Class event_disposer_test
     Private Shared Function binding_case() As Boolean
         Const size As UInt32 = 1024
         cd_object(Of test_class).reset()
-        Dim disposing As atomic_int = Nothing
-        disposing = New atomic_int()
+        Dim disposing As New atomic_int()
         Dim p() As event_disposer(Of cd_object(Of test_class)) = Nothing
         ReDim p(size - uint32_1)
         For i As UInt32 = 0 To size - uint32_1

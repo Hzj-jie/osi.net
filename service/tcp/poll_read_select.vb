@@ -59,8 +59,7 @@ Public NotInheritable Class poll_read_select
     Protected Overrides Function [select]() As event_comb
         Return sync_async(Sub()
                               Dim wc As Int64 = constants.interval_ms.connection_check_interval
-                              Dim mc As Int64 = 0
-                              mc = nowadays.milliseconds()
+                              Dim mc As Int64 = nowadays.milliseconds()
                               If mc - last_poll_ms >= wc Then
                                   sync_select()
                                   last_poll_ms = mc

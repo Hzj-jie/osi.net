@@ -33,8 +33,7 @@ Public Class divide_perf_test
 
     Private Shared Sub divide()
         For i As UInt32 = 0 To size - uint32_1
-            Dim c As Int32 = 0
-            c = a Mod b
+            Dim c As Int32 = a Mod b
             do_nothing(c = 0)
             c = a \ b
             do_nothing(c = 0)
@@ -43,8 +42,7 @@ Public Class divide_perf_test
 
     Private Shared Sub minus()
         For i As UInt32 = 0 To size - uint32_1
-            Dim d As Int32 = 0
-            d = a - c
+            Dim d As Int32 = a - c
             do_nothing(d = 0)
             d = c - a
             do_nothing(d = 0)

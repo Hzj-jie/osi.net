@@ -13,8 +13,7 @@ Public Class arrayless_next_test
         Dim v As Object = Nothing
         Using code_block
             Dim current As Object = Nothing
-            Dim a As arrayless(Of Object) = Nothing
-            a = arrayless.[New](Function() As Object
+            Dim a As arrayless(Of Object) = arrayless.[New](Function() As Object
                                     Return current
                                 End Function,
                                 size)
@@ -22,8 +21,7 @@ Public Class arrayless_next_test
             assertion.is_false(a.next(p, v))
         End Using
         Using code_block
-            Dim a As arrayless(Of Object) = Nothing
-            a = arrayless.[New](Function(ByVal i As UInt32) As Object
+            Dim a As arrayless(Of Object) = arrayless.[New](Function(ByVal i As UInt32) As Object
                                     If (i And 1) = 0 Then
                                         Return Nothing
                                     Else
@@ -43,8 +41,7 @@ Public Class arrayless_next_test
 
     Private Shared Function value_type_never_fail_case(Of T)() As Boolean
         Const size As UInt32 = 100
-        Dim a As arrayless(Of T) = Nothing
-        a = arrayless.[New](Function() As T
+        Dim a As arrayless(Of T) = arrayless.[New](Function() As T
                                 Return Nothing
                             End Function,
                             size)

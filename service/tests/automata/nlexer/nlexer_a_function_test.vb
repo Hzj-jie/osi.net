@@ -42,13 +42,11 @@ Namespace nlexer
 
         <test>
         Private Shared Sub original_result()
-            Dim r As [optional](Of nl) = Nothing
-            r = nl.of(rules)
+            Dim r As [optional](Of nl) = nl.of(rules)
             If Not assertions.of(r).has_value() Then
                 Return
             End If
-            Dim v As [optional](Of vector(Of nl.result)) = Nothing
-            v = (+r).match(program)
+            Dim v As [optional](Of vector(Of nl.result)) = (+r).match(program)
             assertions.of(v).has_value(vector.of(
                 (+r).result_of(0, 4, "name"),
                 (+r).result_of(4, 5, "space"),
@@ -111,13 +109,11 @@ Namespace nlexer
 
         <test>
         Private Shared Sub filtered_result()
-            Dim r As [optional](Of nl) = Nothing
-            r = nl.of(rules)
+            Dim r As [optional](Of nl) = nl.of(rules)
             If Not assertions.of(r).has_value() Then
                 Return
             End If
-            Dim v As [optional](Of vector(Of nl.result)) = Nothing
-            v = (+r).match(program, "space")
+            Dim v As [optional](Of vector(Of nl.result)) = (+r).match(program, "space")
             assertions.of(v).has_value(vector.of(
                 (+r).result_of(0, 4, "name"),
                 (+r).result_of(5, 15, "name"),
@@ -156,13 +152,11 @@ Namespace nlexer
 
         <test>
         Private Shared Sub str_results()
-            Dim r As [optional](Of nl) = Nothing
-            r = nl.of(rules)
+            Dim r As [optional](Of nl) = nl.of(rules)
             If Not assertions.of(r).has_value() Then
                 Return
             End If
-            Dim v As [optional](Of vector(Of nl.str_result)) = Nothing
-            v = (+r).match(program, "space").map(nl.str_result.map_from_str(program))
+            Dim v As [optional](Of vector(Of nl.str_result)) = (+r).match(program, "space").map(nl.str_result.map_from_str(program))
             assertions.of(v).has_value(vector.of(
                 New nl.str_result("void", "name"),
                 New nl.str_result("function_a", "name"),
@@ -203,8 +197,7 @@ Namespace nlexer
         Private Shared Function shuffled_rules() As String()
             Dim r() As String = Nothing
             r = rules.shuffle()
-            Dim i As Int32 = 0
-            i = r.index_of(rules(0))
+            Dim i As Int32 = r.index_of(rules(0))
             assert(i <> npos)
             If i <> 0 Then
                 swap(r(0), r(i))
@@ -215,13 +208,11 @@ Namespace nlexer
         <repeat(100)>
         <test>
         Private Shared Sub longest_match_str_results()
-            Dim r As [optional](Of nl) = Nothing
-            r = nl.of(shuffled_rules())
+            Dim r As [optional](Of nl) = nl.of(shuffled_rules())
             If Not assertions.of(r).has_value() Then
                 Return
             End If
-            Dim v As [optional](Of vector(Of nl.str_result)) = Nothing
-            v = (+r).match(program, "space").map(nl.str_result.map_from_str(program))
+            Dim v As [optional](Of vector(Of nl.str_result)) = (+r).match(program, "space").map(nl.str_result.map_from_str(program))
             assertions.of(v).has_value(vector.of(
                 New nl.str_result("void", "name"),
                 New nl.str_result("function_a", "name"),

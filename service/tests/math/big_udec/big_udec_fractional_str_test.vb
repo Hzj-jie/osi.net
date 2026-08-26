@@ -13,10 +13,8 @@ Public NotInheritable Class big_udec_fractional_str_test
     <test>
     <repeat(100)>
     Private Shared Sub run()
-        Dim d As big_udec = Nothing
-        d = big_udec.random()
-        Dim i As Byte = 0
-        i = 2
+        Dim d As big_udec = big_udec.random()
+        Dim i As Byte = 2
         While big_udec.support_base(i)
             Dim o As big_udec = Nothing
             assertion.is_true(big_udec.parse_fraction(d.fractional_str(i), o, i))

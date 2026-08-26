@@ -50,8 +50,7 @@ Public NotInheritable Class waitable_slimqless2_test
         Public Overrides Function run() As Boolean
             If multithreading_case_wrapper.thread_id() < push_threads Then
                 For i As Int32 = 0 To test_size - 1
-                    Dim c As Int32 = 0
-                    c = +passed
+                    Dim c As Int32 = +passed
                     q.emplace(i)
                     assertion.buzy_happening(Function() As Boolean
                                                  Return +passed > c

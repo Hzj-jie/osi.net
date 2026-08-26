@@ -49,11 +49,9 @@ Partial Public NotInheritable Class nlexer
 
     Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of result)
         Dim j As UInt32 = 0
-        Dim max As [optional](Of result) = Nothing
-        max = [optional].empty(Of result)()
+        Dim max As [optional](Of result) = [optional].empty(Of result)()
         While j < rs.size()
-            Dim r As [optional](Of UInt32) = Nothing
-            r = rs(j).second.match(i, pos)
+            Dim r As [optional](Of UInt32) = rs(j).second.match(i, pos)
             If debug_log AndAlso (Not Not r) Then
                 raise_error(error_type.user,
                             "nlexer rule matches from ",
@@ -158,8 +156,7 @@ Partial Public NotInheritable Class nlexer
 
     Public Shared Function [of](ByVal parse As Func(Of rule_file, Boolean), ByRef o As nlexer) As Boolean
         assert(Not parse Is Nothing)
-        Dim p As rule_file = Nothing
-        p = New rule_file()
+        Dim p As New rule_file()
         If parse(p) Then
             o = p.export()
             Return True

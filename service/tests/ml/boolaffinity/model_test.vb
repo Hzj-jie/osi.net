@@ -16,11 +16,9 @@ Namespace boolaffinity
         <repeat(100)>
         Private Shared Sub load_and_dump()
             Using ms As MemoryStream = New MemoryStream()
-                Dim m As model = Nothing
-                m = New model()
+                Dim m As New model()
                 For i As Int32 = 0 To 100
-                    Dim k As String = Nothing
-                    k = guid_str()
+                    Dim k As String = guid_str()
                     If m.has(k) Then
                         Continue For
                     End If
@@ -36,8 +34,7 @@ Namespace boolaffinity
                 Next
                 assertion.is_true(m.dump(ms))
                 ms.Position() = 0
-                Dim m2 As model = Nothing
-                m2 = New model()
+                Dim m2 As New model()
                 assertion.is_true(m2.load(ms))
                 assertion.equal(m, m2)
             End Using

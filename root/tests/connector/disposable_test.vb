@@ -62,20 +62,16 @@ Public Class disposable_test
     End Class
 
     Private Shared Function register_type_case() As Boolean
-        Dim disposed As vector(Of test_interface) = Nothing
-        disposed = New vector(Of test_interface)()
+        Dim disposed As New vector(Of test_interface)()
         disposable.register(GetType(test_interface),
                             Sub(ByVal i As Object)
                                 Dim t As test_interface = Nothing
                                 assertion.is_true(direct_cast(i, t))
                                 disposed.emplace_back(t)
                             End Sub)
-        Dim a As test_class(Of Int32) = Nothing
-        a = New test_class(Of Int32)()
-        Dim b As test_class(Of Int64) = Nothing
-        b = New test_class(Of Int64)()
-        Dim c As test_class(Of Boolean) = Nothing
-        c = New test_class(Of Boolean)()
+        Dim a As New test_class(Of Int32)()
+        Dim b As New test_class(Of Int64)()
+        Dim c As New test_class(Of Boolean)()
         disposable.dispose(a)
         disposable.dispose(b)
         disposable.dispose(c)

@@ -144,8 +144,7 @@ Partial Public NotInheritable Class big_uint
             Return False
         End If
         Dim r As UInt64 = 0
-        Dim i As UInt32 = 0
-        i = v.size() - uint32_1
+        Dim i As UInt32 = v.size() - uint32_1
         While True
             r += v.get(i)._1count()
             If r > 1 Then
@@ -232,8 +231,7 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     Public Function remove_trailing_binary_zeros() As UInt32
-        Dim r As UInt32 = 0
-        r = trailing_binary_zero_count()
+        Dim r As UInt32 = trailing_binary_zero_count()
         assert_right_shift(r)
         Return r
     End Function

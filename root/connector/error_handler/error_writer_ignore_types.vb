@@ -9,8 +9,7 @@ Public NotInheritable Class error_writer_ignore_types(Of T)
     Private Shared ReadOnly s(255) As Boolean
 
     Private Shared Function to_int32(ByVal e As Char) As Int32
-        Dim x As Int32 = 0
-        x = Convert.ToInt32(e)
+        Dim x As Int32 = Convert.ToInt32(e)
         assert(x >= 0 AndAlso x < array_size(s))
         Return x
     End Function

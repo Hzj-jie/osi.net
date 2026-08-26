@@ -12,8 +12,7 @@ Imports osi.root.utt.attributes
 Public NotInheritable Class cancellation_controller_test
     <test>
     Private Shared Sub should_cancel_others()
-        Dim c As cancellation_controller = Nothing
-        c = New cancellation_controller()
+        Dim c As New cancellation_controller()
         Dim manual As UInt32 = 0
         Dim ref_counted As UInt32 = 0
         Dim timeout As UInt32 = 0
@@ -42,12 +41,10 @@ Public NotInheritable Class cancellation_controller_test
 
     <test>
     Private Shared Sub should_cancel_previous()
-        Dim c As cancellation_controller = Nothing
-        c = New cancellation_controller()
+        Dim c As New cancellation_controller()
         Dim c1 As UInt32 = 0
         Dim c2 As UInt32 = 0
-        Dim m As flip_events.manual_flip_event = Nothing
-        m = c.manual(Sub()
+        Dim m As flip_events.manual_flip_event = c.manual(Sub()
                          c1 += uint32_1
                      End Sub)
         c.manual(Sub()
@@ -62,8 +59,7 @@ Public NotInheritable Class cancellation_controller_test
 
     <test>
     Private Shared Sub cancel_should_cancel_all()
-        Dim c As cancellation_controller = Nothing
-        c = New cancellation_controller()
+        Dim c As New cancellation_controller()
         Dim manual As UInt32 = 0
         Dim ref_counted As UInt32 = 0
         Dim timeout As UInt32 = 0
@@ -92,13 +88,10 @@ Public NotInheritable Class cancellation_controller_test
 
     <test>
     Private Shared Sub bind_weak_ref_delegate()
-        Dim c As cancellation_controller = Nothing
-        c = New cancellation_controller()
-        Dim o As Object = Nothing
-        o = New Object()
+        Dim c As New cancellation_controller()
+        Dim o As New Object()
         Dim r As Boolean = False
-        Dim m As flip_events.manual_flip_event = Nothing
-        m = c.manual(o,
+        Dim m As flip_events.manual_flip_event = c.manual(o,
                      Sub(ByVal i As Object)
                          assertion.reference_equal(i, o)
                          r = True

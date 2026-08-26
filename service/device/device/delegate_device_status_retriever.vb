@@ -70,23 +70,19 @@ Public Class delegate_device_status_retriever(Of T,
     Private Shared ReadOnly checker As Action(Of T)
 
     Shared Sub New()
-        Dim a As _VALIDATOR = Nothing
-        a = alloc(Of _VALIDATOR)()
+        Dim a As _VALIDATOR = alloc(Of _VALIDATOR)()
         validator = Function(x As T) As Boolean
                         Return a(x)
                     End Function
-        Dim b As _CLOSER = Nothing
-        b = alloc(Of _CLOSER)()
+        Dim b As _CLOSER = alloc(Of _CLOSER)()
         closer = Sub(x As T)
                      b.invoke(x)
                  End Sub
-        Dim c As _IDENTIFIER = Nothing
-        c = alloc(Of _IDENTIFIER)()
+        Dim c As _IDENTIFIER = alloc(Of _IDENTIFIER)()
         identifier = Function(x As T) As String
                          Return c(x)
                      End Function
-        Dim d As _CHECKER = Nothing
-        d = alloc(Of _CHECKER)()
+        Dim d As _CHECKER = alloc(Of _CHECKER)()
         checker = Sub(x As T)
                       d.invoke(x)
                   End Sub

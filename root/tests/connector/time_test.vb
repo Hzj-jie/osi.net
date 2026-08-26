@@ -26,8 +26,7 @@ Public Class time_test
         Const second As Int32 = 6
         Const milliseconds As Int32 = 7
 
-        Dim d As Date = Nothing
-        d = New Date(year, month, day, hour, minute, second, milliseconds)
+        Dim d As New Date(year, month, day, hour, minute, second, milliseconds)
         Return equal(d,
                      New Date(year, month, day, hour, minute, second, milliseconds),
                      AddressOf thismillisecond,

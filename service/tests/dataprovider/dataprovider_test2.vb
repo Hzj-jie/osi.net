@@ -13,8 +13,7 @@ Imports osi.service.dataprovider
 Public NotInheritable Class dataprovider_test2
     <test>
     Private Shared Sub name_test()
-        Dim n As String = Nothing
-        n = test_dataprovider.name("a-file-name",
+        Dim n As String = test_dataprovider.name("a-file-name",
                                    test_dataprovider.parameter("key1", 1),
                                    test_dataprovider.parameter("key2", "value2"),
                                    test_dataprovider.parameter("key3", False),

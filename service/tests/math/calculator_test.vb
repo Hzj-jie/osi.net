@@ -16,8 +16,7 @@ Public Class calculator_test
         assert(Not isemptyarray(cases))
         For i As Int32 = 0 To array_size(cases) - 1
             assert(Not cases(i) Is Nothing)
-            Dim r As expression_result(Of Int32) = Nothing
-            r = e.execute(cases(i).first)
+            Dim r As expression_result(Of Int32) = e.execute(cases(i).first)
             assertion.equal(r.has_error(), has_error, strcat(cases(i).first))
             assertion.equal(r.has_result(), has_result, strcat(cases(i).first))
             assertion.equal(r.str(), cases(i).second, strcat(cases(i).first))
@@ -32,8 +31,7 @@ Public Class calculator_test
         assert(Not e Is Nothing)
         assert(Not isemptyarray(cases))
         For i As Int32 = 0 To array_size(cases) - 1
-            Dim r As expression_result(Of Int32) = Nothing
-            r = e.execute(cases(i, 0))
+            Dim r As expression_result(Of Int32) = e.execute(cases(i, 0))
             assertion.equal(r.has_error(), has_error, cases(i, 0))
             assertion.equal(r.has_result(), has_result, cases(i, 0))
             assertion.equal(r.str(), cases(i, 1), cases(i, 0))
@@ -64,8 +62,7 @@ Public Class calculator_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Dim e As int_basic_expression = Nothing
-        e = New int_basic_expression()
+        Dim e As New int_basic_expression()
         Return predefined_case(e) AndAlso
                failure_case(e)
     End Function

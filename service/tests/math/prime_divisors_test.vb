@@ -14,10 +14,8 @@ Public NotInheritable Class prime_divisors_test
 
     Public Overrides Function run() As Boolean
         For i As Int32 = 0 To 1024 * 256 - 1
-            Dim x As Int32 = 0
-            x = rnd_int(CInt(primes.precalculated(0)), max_int32)
-            Dim r As vector(Of pair(Of UInt32, Int32)) = Nothing
-            r = prime_factorization(x)
+            Dim x As Int32 = rnd_int(CInt(primes.precalculated(0)), max_int32)
+            Dim r As vector(Of pair(Of UInt32, Int32)) = prime_factorization(x)
             If assertion.is_false(r.null_or_empty()) Then
                 Dim v As Int32 = 1
                 For j As UInt32 = 0 To r.size() - uint32_1

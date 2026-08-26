@@ -11,8 +11,7 @@ Public Module _choose
             If count > (from >> 1) Then
                 count = from - count
             End If
-            Dim r As Int32 = 0
-            r = 1
+            Dim r As Int32 = 1
             For i As Int32 = 0 To count - 1
                 r *= from - i
             Next

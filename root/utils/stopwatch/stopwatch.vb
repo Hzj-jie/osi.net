@@ -35,8 +35,7 @@ Partial Public NotInheritable Class stopwatch
         If d Is Nothing Then
             Return Nothing
         End If
-        Dim rtn As [event] = Nothing
-        rtn = New [event](waitms, d)
+        Dim rtn As New [event](waitms, d)
         assert(p(rtn))
         Return rtn
     End Function

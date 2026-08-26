@@ -223,8 +223,7 @@ Partial Public NotInheritable Class server
                    p_prefixes,
                    p_max_connection_count,
                    p_encoder)
-            Dim c As configuration = Nothing
-            c = New configuration()
+            Dim c As New configuration()
             c.max_connection_count = v(p_max_connection_count).to(Of Int32)(c.max_connection_count)
             c.ls = link_status.create_server_link_status(v)
             If Not try_get_encoding(v(p_encoder), c.encoder) Then

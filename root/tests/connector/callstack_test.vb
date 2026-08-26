@@ -24,8 +24,7 @@ Public Class callstack_test
     Private Structure test_structure1
         <Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)> _
         Public Shared Function func4(ByVal ignores() As String) As String
-            Dim c As test_class2 = Nothing
-            c = New test_class2()
+            Dim c As New test_class2()
             Return c.func5(ignores)
         End Function
     End Structure
@@ -48,8 +47,7 @@ Public Class callstack_test
     End Function
 
     Private Shared Function [case](ByVal ParamArray ignores() As String) As Boolean
-        Dim s As String = Nothing
-        s = func1(ignores)
+        Dim s As String = func1(ignores)
         assertion.equal(strindexof(s, "func2"), npos)
         assertion.equal(strindexof(s, "func3"), npos)
         assertion.equal(strindexof(s, "func4"), npos)

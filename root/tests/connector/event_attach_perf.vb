@@ -105,8 +105,7 @@ Public Class event_attach_perf
         End Function
 
         Public Overrides Function run() As Boolean
-            Dim x As UInt32 = 0
-            x = attached_delegate_count(eEvent)
+            Dim x As UInt32 = attached_delegate_count(eEvent)
             Return True
         End Function
 

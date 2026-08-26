@@ -58,8 +58,7 @@ Partial Public Class struct(Of T)
             Public Shared Function value_type_set_to(ByVal vs() As Object,
                                                      ByVal definitions() As definition,
                                                      ByRef o As T) As Boolean
-                Dim x As ValueType = Nothing
-                x = direct_cast(Of ValueType)(o)
+                Dim x As ValueType = direct_cast(Of ValueType)(o)
                 If Not set_to(Of ValueType)(vs, definitions, x) Then
                     Return False
                 End If

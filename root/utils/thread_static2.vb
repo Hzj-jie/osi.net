@@ -16,8 +16,7 @@ Public Class thread_static2(Of T)
     End Sub
 
     Private Function current_id() As UInt32
-        Dim r As Int32 = 0
-        r = current_thread_id() - 1
+        Dim r As Int32 = current_thread_id() - 1
         assert(r >= 0)
         Return CUInt(r)
     End Function

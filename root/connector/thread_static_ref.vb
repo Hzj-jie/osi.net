@@ -86,8 +86,7 @@ Public NotInheritable Class thread_static_ref(Of T As Class)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shared Operator +(ByVal this As thread_static_ref(Of T)) As T
-        Dim that As thread_static(Of T) = Nothing
-        that = If(this Is Nothing, Nothing, this.v)
+        Dim that As thread_static(Of T) = If(this Is Nothing, Nothing, this.v)
         Return +that
     End Operator
 End Class

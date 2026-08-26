@@ -10,8 +10,7 @@ Public NotInheritable Class array_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        Dim a As array(Of Int32) = Nothing
-        a = New array(Of Int32)(100)
+        Dim a As New array(Of Int32)(100)
         assertion.equal(a.size(), CUInt(100))
         For i As Int32 = 0 To 100 - 1
             a(CUInt(i)) = i

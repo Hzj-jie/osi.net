@@ -106,8 +106,7 @@ Public MustInherit Class iquestioner(Of _ENABLE_AUTO_PING As _boolean)
         assert(enable_auto_ping)
         Dim ec As event_comb = Nothing
         assert_begin(New event_comb(Function() As Boolean
-                                        Dim q As iquestioner(Of _ENABLE_AUTO_PING) = Nothing
-                                        q = (+p)
+                                        Dim q As iquestioner(Of _ENABLE_AUTO_PING) = (+p)
                                         If q Is Nothing Then
                                             Return goto_end()
                                         Else
@@ -117,8 +116,7 @@ Public MustInherit Class iquestioner(Of _ENABLE_AUTO_PING As _boolean)
                                         End If
                                     End Function,
                                     Function() As Boolean
-                                        Dim q As iquestioner(Of _ENABLE_AUTO_PING) = Nothing
-                                        q = (+p)
+                                        Dim q As iquestioner(Of _ENABLE_AUTO_PING) = (+p)
                                         If q Is Nothing Then
                                             Return goto_end()
                                         Else

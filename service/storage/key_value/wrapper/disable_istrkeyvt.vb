@@ -259,8 +259,7 @@ Public Class disable_istrkeyvt
                                     If v Is Nothing Then
                                         Return False
                                     Else
-                                        Dim c As disable_istrkeyvt = Nothing
-                                        c = New disable_istrkeyvt(v, i)
+                                        Dim c As New disable_istrkeyvt(v, i)
                                         If c.take_effect() Then
                                             o = c
                                         Else

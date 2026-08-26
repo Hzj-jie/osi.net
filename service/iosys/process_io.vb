@@ -93,8 +93,7 @@ Public MustInherit Class process_io(Of INPUT_T, OUTPUT_T)
     Protected MustOverride Function input_to_string(ByVal input As INPUT_T) As String
 
     Public Function input_received(ByVal input As INPUT_T) As Boolean
-        Dim s As String = Nothing
-        s = input_to_string(input)
+        Dim s As String = input_to_string(input)
         process.stdin().Write(s)
         Return True
     End Function
@@ -122,8 +121,7 @@ Public MustInherit Class process_io(Of INPUT_T, OUTPUT_T)
     End Function
 
     Protected Overridable Sub receive_output(ByVal s As String, ByVal from_err As Boolean)
-        Dim o As OUTPUT_T = Nothing
-        o = string_to_output(s, from_err)
+        Dim o As OUTPUT_T = string_to_output(s, from_err)
         RaiseEvent output(o)
     End Sub
 

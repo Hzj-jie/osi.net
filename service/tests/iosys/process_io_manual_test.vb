@@ -27,8 +27,7 @@ Public Class process_io_manual_test
                     io.start_info().Arguments() += guid_str()
                 End If
                 If assertion.is_true(io.start()) Then
-                    Dim s As String = Nothing
-                    s = Console.ReadLine()
+                    Dim s As String = Console.ReadLine()
                     While Not s Is Nothing
                         assertion.is_true(io.input_received(s))
                         s = Console.ReadLine()

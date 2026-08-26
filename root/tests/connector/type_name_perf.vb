@@ -21,8 +21,7 @@ Public Class type_name_perf
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim s As String = Nothing
-            s = GetType(T).FullName()
+            Dim s As String = GetType(T).FullName()
             Return True
         End Function
     End Class
@@ -40,8 +39,7 @@ Public Class type_name_perf
         End Class
 
         Public Overrides Function run() As Boolean
-            Dim s As String = Nothing
-            s = cache.fullname
+            Dim s As String = cache.fullname
             Return True
         End Function
     End Class

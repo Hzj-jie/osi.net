@@ -12,10 +12,8 @@ Public NotInheritable Class reference_count_runner_test2
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        Dim are As AutoResetEvent = Nothing
-        are = New AutoResetEvent(False)
-        Dim r As reference_count_runner = Nothing
-        r = New reference_count_runner(Sub(ByVal this As reference_count_runner)
+        Dim are As New AutoResetEvent(False)
+        Dim r As reference_count_runner = New reference_count_runner(Sub(ByVal this As reference_count_runner)
                                            assert(are.force_set())
                                            this.mark_started()
                                            sleep(10)
@@ -25,8 +23,7 @@ Public NotInheritable Class reference_count_runner_test2
         ' PlatformNotSupportedException. Terminate the background thread cooperatively.
         Dim stop_thread As Boolean = False
 #End If
-        Dim t As Thread = Nothing
-        t = New Thread(Sub()
+        Dim t As Thread = New Thread(Sub()
 #If NET8_0_OR_GREATER Then
                            While Not stop_thread
                                If are.wait(50) Then

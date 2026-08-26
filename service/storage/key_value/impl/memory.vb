@@ -41,15 +41,12 @@ Public NotInheritable Class memory
                            ByVal value() As Byte,
                            ByRef result As Boolean) As Boolean Implements isynckeyvalue.append
         If enough_storage(array_size(value)) Then
-            Dim k As array_ref(Of Byte) = Nothing
-            k = New array_ref(Of Byte)(key)
-            Dim it As store_t.iterator = Nothing
-            it = m.find(k)
+            Dim k As New array_ref(Of Byte)(key)
+            Dim it As store_t.iterator = m.find(k)
             If it = m.end() Then
                 m(k) = value
             Else
-                Dim original_size As UInt32 = 0
-                original_size = array_size((+it).second)
+                Dim original_size As UInt32 = array_size((+it).second)
                 ReDim Preserve (+it).second(CInt(original_size) + array_size_i(value) - 1)
                 arrays.copy((+it).second, original_size, value)
             End If
@@ -68,8 +65,7 @@ Public NotInheritable Class memory
 
     Public Function delete(ByVal key() As Byte,
                            ByRef result As Boolean) As Boolean Implements isynckeyvalue.delete
-        Dim it As store_t.iterator = Nothing
-        it = m.find(array_ref.of(key))
+        Dim it As store_t.iterator = m.find(array_ref.of(key))
         If it = m.end() Then
             result = False
         Else
@@ -105,8 +101,7 @@ Public NotInheritable Class memory
         Else
             result.clear()
         End If
-        Dim it As store_t.iterator = Nothing
-        it = m.begin()
+        Dim it As store_t.iterator = m.begin()
         While it <> m.end()
             result.push_back(+((+it).first))
             it += 1
@@ -137,8 +132,7 @@ Public NotInheritable Class memory
 
     Public Function read(ByVal key() As Byte,
                          ByRef value() As Byte) As Boolean Implements isynckeyvalue.read
-        Dim it As store_t.iterator = Nothing
-        it = m.find(New array_ref(Of Byte)(key))
+        Dim it As store_t.iterator = m.find(New array_ref(Of Byte)(key))
         If it = m.end() Then
             value = Nothing
         Else
@@ -161,8 +155,7 @@ Public NotInheritable Class memory
 
     Public Function sizeof(ByVal key() As Byte,
                            ByRef result As Int64) As Boolean Implements isynckeyvalue.sizeof
-        Dim it As store_t.iterator = Nothing
-        it = m.find(New array_ref(Of Byte)(key))
+        Dim it As store_t.iterator = m.find(New array_ref(Of Byte)(key))
         If it = m.end() Then
             result = npos
         Else

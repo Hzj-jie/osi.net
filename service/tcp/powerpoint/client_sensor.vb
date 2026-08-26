@@ -21,8 +21,7 @@ Public Class client_sensor
 
         Public Function indicate(ByRef pending As Boolean) As Boolean Implements sync_indicator.indicate
             If checker.check() Then
-                Dim b As Int32 = 0
-                b = c.buffered_bytes()
+                Dim b As Int32 = c.buffered_bytes()
                 If b < 0 Then
                     Return False
                 Else

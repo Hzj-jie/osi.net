@@ -31,8 +31,7 @@ Public Class shared_ctor_callstack_behavior_test
     End Class
 
     Public Overrides Function run() As Boolean
-        Dim x As B = Nothing
-        x = New B()
+        Dim x As New B()
         assertion.is_true(strcontains(A_stack, ".B..cctor()"))
         assertion.is_true(in_shared_constructor_of(A_stack, GetType(B)))
 

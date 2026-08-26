@@ -65,8 +65,7 @@ Public Module _file_system
         ls = this.full_path(this)
         rs = that.full_path(that)
         If ls AndAlso rs Then
-            Dim c As Int32 = 0
-            c = strcmp(this, that, file_system_case_sensitive)
+            Dim c As Int32 = strcmp(this, that, file_system_case_sensitive)
             o = If(c < 0,
                    path_compare_result.left_small,
                    If(c > 0,

@@ -56,8 +56,7 @@ Namespace syntaxer
 
         Private Function build_syntax() As syntax
             c.clear()
-            Dim [function] As syntax = Nothing
-            [function] = New syntax(c,
+            Dim [function] As syntax = New syntax(c,
                                     types.function,
                                     matching_creator.create(c, types.name),
                                     matching_creator.create(c, types.name),

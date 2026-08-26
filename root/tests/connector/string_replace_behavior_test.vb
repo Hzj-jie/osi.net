@@ -6,19 +6,15 @@ Public Class string_replace_behavior_test
     Inherits [case]
 
     Private Shared Function case1() As Boolean
-        Dim l As String = Nothing
-        l = "abc"
-        Dim r As String = Nothing
-        r = l.Replace("a", "b")
+        Dim l As String = "abc"
+        Dim r As String = l.Replace("a", "b")
         assertion.equal(object_compare(l, r), object_compare_undetermined)
         Return True
     End Function
 
     Private Shared Function case2() As Boolean
-        Dim l As String = Nothing
-        l = "abc"
-        Dim r As String = Nothing
-        r = l.Replace("d", "e")
+        Dim l As String = "abc"
+        Dim r As String = l.Replace("d", "e")
         assertion.equal(object_compare(l, r), 0)
         Return True
     End Function

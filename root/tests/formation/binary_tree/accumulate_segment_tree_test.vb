@@ -19,8 +19,7 @@ Friend NotInheritable Class accumulate_segment_tree_case
                                       ByVal s As vector(Of pair(Of Int64, pair(Of Int64, Int64)))) As Boolean
         assert(Not t Is Nothing)
         For i As Int32 = 0 To 4096 * If(isreleasebuild(), 10, 1) - 1
-            Dim p As Int64 = 0
-            p = rnd_position()
+            Dim p As Int64 = rnd_position()
             Dim has_value As Boolean = False
             Dim value As Int64 = 0
             stupid_find(s, p, has_value, value)
@@ -34,11 +33,9 @@ Friend NotInheritable Class accumulate_segment_tree_case
     Public Overrides Function run() As Boolean
         Dim min As Int64 = 0
         Dim max As Int64 = 0
-        Dim s As vector(Of pair(Of Int64, pair(Of Int64, Int64))) = Nothing
-        s = prepare_segments(min, max)
+        Dim s As vector(Of pair(Of Int64, pair(Of Int64, Int64))) = prepare_segments(min, max)
         assert(Not s.empty())
-        Dim t As accumulate_segment_tree(Of Int64) = Nothing
-        t = New accumulate_segment_tree(Of Int64)(min, max)
+        Dim t As New accumulate_segment_tree(Of Int64)(min, max)
         For i As UInt32 = 0 To s.size() - uint32_1
             assertion.is_true(t.emplace(s(i).second.first, s(i).second.second, s(i).first))
         Next

@@ -18,8 +18,7 @@ Public Class event_comb_async_operation
     Private end_suc As Boolean = False
 
     Private Shared Shadows Function current() As event_comb_async_operation
-        Dim o As event_comb_async_operation = Nothing
-        o = DirectCast(event_comb.current(), event_comb_async_operation)
+        Dim o As event_comb_async_operation = DirectCast(event_comb.current(), event_comb_async_operation)
         assert(Not o Is Nothing)
         Return o
     End Function
@@ -30,14 +29,12 @@ Public Class event_comb_async_operation
                     ByVal original_end As [Delegate])
         MyBase.New(New Func(Of Boolean)() _
                    {Function() As Boolean
-                        Dim w As Action = Nothing
-                        w = wait()
+                        Dim w As Action = wait()
                         'if the void from wait()'s return has been called before goto_next(),
                         'the goto_next() will not take effect
                         'but the new change in event_comb.private_waitfor makes it safe
                         assert(Not begin Is Nothing)
-                        Dim c As event_comb_async_operation = Nothing
-                        c = current()
+                        Dim c As event_comb_async_operation = current()
                         Try
                             begin(Sub(a As IAsyncResult)
                                       Try

@@ -12,8 +12,7 @@ Imports osi.root.utt.attributes
 Public NotInheritable Class stream_flat_map_test
     <test>
     Private Shared Sub case1()
-        Dim v As vector(Of String) = Nothing
-        v = New vector(Of String)()
+        Dim v As New vector(Of String)()
         For i As Int32 = 0 To 100
             v.emplace_back(guid_str())
         Next

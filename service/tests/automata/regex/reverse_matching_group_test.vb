@@ -10,19 +10,15 @@ Namespace rlexer
         Inherits [case]
 
         Private Shared Function case1() As Boolean
-            Dim g As reverse_matching_group = Nothing
-            g = New reverse_matching_group(New any_character_matching_group())
-            Dim v As vector(Of UInt32) = Nothing
-            v = g.match("abc")
+            Dim g As New reverse_matching_group(New any_character_matching_group())
+            Dim v As vector(Of UInt32) = g.match("abc")
             assertion.is_true(v.null_or_empty())
             Return True
         End Function
 
         Private Shared Function case2() As Boolean
-            Dim g As reverse_matching_group = Nothing
-            g = New reverse_matching_group(New string_matching_group("a", "b", "c"))
-            Dim v As vector(Of UInt32) = Nothing
-            v = g.match("d")
+            Dim g As New reverse_matching_group(New string_matching_group("a", "b", "c"))
+            Dim v As vector(Of UInt32) = g.match("d")
             If assertion.is_false(v.null_or_empty()) AndAlso
                assertion.equal(v.size(), uint32_1) Then
                 assertion.equal(v(0), uint32_1)

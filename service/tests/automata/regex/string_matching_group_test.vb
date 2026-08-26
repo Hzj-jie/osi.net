@@ -20,10 +20,8 @@ Namespace rlexer
         End Function
 
         Private Shared Function all_matching_case() As Boolean
-            Dim s As String = Nothing
-            s = english_characters
-            Dim g As string_matching_group = Nothing
-            g = New string_matching_group(s.ToCharArray())
+            Dim s As String = english_characters
+            Dim g As New string_matching_group(s.ToCharArray())
             Dim v As vector(Of UInt32) = Nothing
             For i As UInt32 = 0 To strlen(s) - uint32_1
                 v = g.match(s, i)
@@ -36,10 +34,8 @@ Namespace rlexer
         End Function
 
         Private Shared Function multi_matching_case() As Boolean
-            Dim g As string_matching_group = Nothing
-            g = New string_matching_group("a", "aa", "aaa", "aaab", "aaabc")
-            Dim v As vector(Of UInt32) = Nothing
-            v = g.match("aaabb", uint32_0)
+            Dim g As New string_matching_group("a", "aa", "aaa", "aaab", "aaabc")
+            Dim v As vector(Of UInt32) = g.match("aaabb", uint32_0)
             If assertion.is_true(Not v.null_or_empty()) AndAlso
                assertion.equal(v.size(), CUInt(4)) Then
                 For i As UInt32 = 0 To v.size() - uint32_1
@@ -50,10 +46,8 @@ Namespace rlexer
         End Function
 
         Private Shared Function empty_matching_case() As Boolean
-            Dim g As string_matching_group = Nothing
-            g = New string_matching_group("a", "")
-            Dim v As vector(Of UInt32) = Nothing
-            v = g.match("a", uint32_0)
+            Dim g As New string_matching_group("a", "")
+            Dim v As vector(Of UInt32) = g.match("a", uint32_0)
             If assertion.is_true(Not v.null_or_empty()) AndAlso
                assertion.equal(v.size(), CUInt(2)) Then
                 assertion.equal(v(0), uint32_1)
@@ -65,13 +59,10 @@ Namespace rlexer
         Private Shared Function unescape_matching_case() As Boolean
             Dim ss() As String = Nothing
             ss = {"\x2C", "\x5D", "\x2A", "\x5C", "\r", "\f", "\t", "\n"}
-            Dim g As string_matching_group = Nothing
-            g = New string_matching_group(ss)
-            Dim s As String = Nothing
-            s = c_unescape(strcat(ss))
+            Dim g As New string_matching_group(ss)
+            Dim s As String = c_unescape(strcat(ss))
             For i As UInt32 = 0 To strlen(s) - uint32_1
-                Dim v As vector(Of UInt32) = Nothing
-                v = g.match(s, i)
+                Dim v As vector(Of UInt32) = g.match(s, i)
                 If assertion.is_true(Not v.null_or_empty()) AndAlso
                    assertion.equal(v.size(), uint32_1) Then
                     assertion.equal(v(0), i + uint32_1)
@@ -81,10 +72,8 @@ Namespace rlexer
         End Function
 
         Private Shared Function not_matching_case() As Boolean
-            Dim g As string_matching_group = Nothing
-            g = New string_matching_group("a")
-            Dim v As vector(Of UInt32) = Nothing
-            v = g.match("b", uint32_0)
+            Dim g As New string_matching_group("a")
+            Dim v As vector(Of UInt32) = g.match("b", uint32_0)
             assertion.is_true(v.null_or_empty())
             v = g.match("ab", uint32_1)
             assertion.is_true(v.null_or_empty())

@@ -11,8 +11,7 @@ Imports osi.root.utt.attributes
 Public NotInheritable Class atomic_ref_T_test
     <test>
     Private Shared Sub can_exchange()
-        Dim r As atomic_ref(Of String) = Nothing
-        r = New atomic_ref(Of String)()
+        Dim r As New atomic_ref(Of String)()
         assertion.is_null(r.exchange("abc"))
         assertion.reference_equal(r.exchange("def"), "abc")
         assertion.reference_equal(r.get(), "def")
@@ -20,8 +19,7 @@ Public NotInheritable Class atomic_ref_T_test
 
     <test>
     Private Shared Sub can_compare_exchange()
-        Dim r As atomic_ref(Of String) = Nothing
-        r = New atomic_ref(Of String)()
+        Dim r As New atomic_ref(Of String)()
         assertion.is_null(r.compare_exchange("abc", Nothing))
         assertion.reference_equal(r.compare_exchange("def", "abc"), "abc")
         assertion.reference_equal(r.get(), "def")

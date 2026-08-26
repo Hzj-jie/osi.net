@@ -179,8 +179,7 @@ Public Module _headers_extension
             Return Nothing
         End If
 
-        Dim rs As vector(Of pair(Of Int64, Int64)) = Nothing
-        rs = New vector(Of pair(Of Int64, Int64))()
+        Dim rs As New vector(Of pair(Of Int64, Int64))()
         For j As Int32 = 0 To vs.Length() - 1
             Dim f As String = Nothing
             Dim s As String = Nothing

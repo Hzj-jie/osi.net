@@ -65,8 +65,7 @@ Public Class valuer_test
     Private Shared Function run_static_readonly_case(Of T)(ByVal name As String,
                                                            ByVal value As T,
                                                            ByVal bindingflags As BindingFlags) As Boolean
-        Dim v As valuer(Of T) = Nothing
-        v = new_valuer(Of T)(name, bindingflags)
+        Dim v As valuer(Of T) = new_valuer(Of T)(name, bindingflags)
         If assertion.is_true(v.valid()) Then
             assertion.is_true(assertion.thrown(Of FieldAccessException)(Sub()
                                                                             v.set(value)
@@ -116,8 +115,7 @@ Public Class valuer_test
     Private Shared Function run_case(Of T)(ByVal name As String,
                                            ByVal value As T,
                                            ByVal bindingflags As BindingFlags) As Boolean
-        Dim v As valuer(Of T) = Nothing
-        v = new_valuer(Of T)(name, bindingflags)
+        Dim v As valuer(Of T) = new_valuer(Of T)(name, bindingflags)
         If assertion.is_true(v.valid()) Then
             assertion.is_true(v.try_set(value))
             Dim w As T = Nothing
@@ -128,8 +126,7 @@ Public Class valuer_test
         If (bindingflags And BindingFlags.Instance) <> 0 Then
             v = new_valuer(Of T)(Nothing, name, bindingflags)
             If assertion.is_true(v.valid()) Then
-                Dim c As test_class = Nothing
-                c = New test_class()
+                Dim c As New test_class()
                 assertion.is_true(v.try_set(c, value))
                 Dim w As T = Nothing
                 assertion.is_true(v.try_get(c, w))
@@ -142,10 +139,8 @@ Public Class valuer_test
 
     Private Shared Function set_only_case(Of T As New, T2 As {T, New}) _
                                          (ByVal name As String, ByVal bindingflags As BindingFlags) As Boolean
-        Dim c As test_class = Nothing
-        c = New test_class()
-        Dim v As valuer(Of T2) = Nothing
-        v = new_valuer(Of T2)(c, name, bindingflags)
+        Dim c As New test_class()
+        Dim v As valuer(Of T2) = new_valuer(Of T2)(c, name, bindingflags)
         If assertion.is_true(v.valid()) Then
             assertion.is_true(v.try_set(New T2()))
             assertion.is_true(new_valuer(Of T)(c, name, bindingflags).try_set(New T()))
@@ -159,13 +154,11 @@ Public Class valuer_test
     Private Shared Function get_only_case(Of T As New, T2 As {T, New}) _
                                          (ByVal name As String,
                                           ByVal bindingflags As BindingFlags) As Boolean
-        Dim v As valuer(Of T2) = Nothing
-        v = new_valuer(Of T2)(name, bindingflags)
+        Dim v As valuer(Of T2) = new_valuer(Of T2)(name, bindingflags)
         If assertion.is_true(v.valid()) Then
             assertion.is_false(new_valuer(Of T)(name, bindingflags).try_set(New T()))
             assertion.is_true(v.try_set(New T2()))
-            Dim w As T = Nothing
-            w = v.get_or_null()
+            Dim w As T = v.get_or_null()
             assertion.is_not_null(w)
             assertion.is_true(implicit_conversions.valuer_test_get_only_case_try_get(Of T, T2)(v, w))
         End If
@@ -173,8 +166,7 @@ Public Class valuer_test
     End Function
 
     Private Shared Function fail_case(Of T)(ByVal name As String, ByVal bindingflags As BindingFlags) As Boolean
-        Dim v As valuer(Of T) = Nothing
-        v = new_valuer(Of T)(name, bindingflags)
+        Dim v As valuer(Of T) = new_valuer(Of T)(name, bindingflags)
         assertion.is_false(v.valid())
         Return True
     End Function

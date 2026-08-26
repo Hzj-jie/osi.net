@@ -110,8 +110,7 @@ Public Module _constructor
     End Function
 
     <Extension()> Public Function alloc_with_parameters_constructor(ByVal t As Type) As Object
-        Dim c As ConstructorInfo = Nothing
-        c = t.first_constructor()
+        Dim c As ConstructorInfo = t.first_constructor()
         Return c.execute()
     End Function
 
@@ -177,8 +176,7 @@ Public Module _constructor
     End Function
 
     <Extension()> Public Function parameters_constructor(ByVal t As Type) As Func(Of Object(), Object)
-        Dim c As ConstructorInfo = Nothing
-        c = t.first_constructor()
+        Dim c As ConstructorInfo = t.first_constructor()
         If c Is Nothing Then
             Return Nothing
         End If
@@ -186,8 +184,7 @@ Public Module _constructor
     End Function
 
     <Extension()> Public Function default_parameters_constructor(ByVal t As Type) As Func(Of Object)
-        Dim c As ConstructorInfo = Nothing
-        c = t.first_constructor()
+        Dim c As ConstructorInfo = t.first_constructor()
         If c Is Nothing Then
             Return Nothing
         End If

@@ -62,10 +62,8 @@ Public NotInheritable Class [bset](Of T)
             Return CloneT()
         End If
 
-        Dim r As [bset](Of T) = Nothing
-        r = New [bset](Of T)()
-        Dim it As [bset](Of T).iterator = Nothing
-        it = begin()
+        Dim r As New [bset](Of T)()
+        Dim it As [bset](Of T).iterator = begin()
         While it <> [end]()
             If that.find(+it) = that.end() Then
                 assert(r.insert(+it).second)
@@ -109,16 +107,14 @@ Public NotInheritable Class [bset](Of T)
         If v Is Nothing Then
             Return Nothing
         End If
-        Dim r As [bset](Of T) = Nothing
-        r = New [bset](Of T)()
+        Dim r As New [bset](Of T)()
         move_to(v, r)
         Return r
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function clone() As [bset](Of T)
-        Dim r As [bset](Of T) = Nothing
-        r = New [bset](Of T)()
+        Dim r As New [bset](Of T)()
         clone_to(Me, r)
         Return r
     End Function

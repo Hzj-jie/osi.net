@@ -28,8 +28,7 @@ Partial Public NotInheritable Class nlexer
         End Sub
 
         Private Shared Function [new](ByVal i As String) As matcher
-            Dim it As map(Of String, Func(Of matcher)).iterator = Nothing
-            it = m.find(i)
+            Dim it As map(Of String, Func(Of matcher)).iterator = m.find(i)
             If it = m.end() Then
                 Return New string_matcher(i)
             End If
@@ -37,8 +36,7 @@ Partial Public NotInheritable Class nlexer
         End Function
 
         Private Shared Function new_all(ByVal vs As vector(Of String)) As vector(Of matcher)
-            Dim r As vector(Of matcher) = Nothing
-            r = New vector(Of matcher)(vs.size())
+            Dim r As New vector(Of matcher)(vs.size())
             Dim i As UInt32 = 0
             While i < vs.size()
                 r.emplace_back([new](vs(i)))
@@ -50,8 +48,7 @@ Partial Public NotInheritable Class nlexer
         ' Process a,b,c
         Public Shared Function [of](ByVal i As String) As matcher
             assert(Not i Is Nothing)
-            Dim vs As vector(Of String) = Nothing
-            vs = vector.emplace_of(i.Split(characters.matcher_separator))
+            Dim vs As vector(Of String) = vector.emplace_of(i.Split(characters.matcher_separator))
             If vs.empty() Then
                 Return never_matcher.instance
             End If

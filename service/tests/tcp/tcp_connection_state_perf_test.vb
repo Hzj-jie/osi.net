@@ -20,8 +20,7 @@ Public Class tcp_connection_state_perf_test
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim m As map(Of String, TcpState) = Nothing
-            m = connection_state.states()
+            Dim m As map(Of String, TcpState) = connection_state.states()
             Return True
         End Function
     End Class
@@ -70,8 +69,7 @@ Public Class tcp_connection_state_perf_test
 
             a = connection_state.active_connections()
             If assertion.is_true(Not isemptyarray(a)) Then
-                Dim m As map(Of String, TcpState) = Nothing
-                m = connection_state.states(a)
+                Dim m As map(Of String, TcpState) = connection_state.states(a)
                 If assertion.is_not_null(m) Then
                     For i As Int32 = 0 To array_size(a) - 1
                         If assertion.is_not_null(a(i)) AndAlso
@@ -146,8 +144,7 @@ Public Class tcp_connection_state_perf_test
                                                          End Function,
                                                    seconds_to_milliseconds(1000)))
             Dim c As [case] = Nothing
-            Dim r As Boolean = False
-            r = True
+            Dim r As Boolean = True
 
             If commandline_specified() Then
                 c = performance(multithreading(repeat(New get_tcp_connection_states(),

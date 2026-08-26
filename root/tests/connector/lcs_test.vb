@@ -17,8 +17,7 @@ Public Class lcs_test
             Dim r As String = Nothing
             For i As UInt32 = 0 To strlen(this) - 1
                 For j As UInt32 = 1 To strlen(this) - i
-                    Dim s As String = Nothing
-                    s = strmid(this, i, j)
+                    Dim s As String = strmid(this, i, j)
                     If strcontains(that, s) AndAlso j > strlen(r) Then
                         r = s
                     End If
@@ -32,10 +31,8 @@ Public Class lcs_test
             Dim b As String = Nothing
             a = rnd_chars(rnd_int(max_uint8, CInt(max_uint8) << 1))
             b = rnd_chars(rnd_int(max_uint8, CInt(max_uint8) << 1))
-            Dim s1 As String = Nothing
-            s1 = lcs(a, b)
-            Dim s2 As String = Nothing
-            s2 = stupid_lcs(a, b)
+            Dim s1 As String = lcs(a, b)
+            Dim s2 As String = stupid_lcs(a, b)
             assertion.equal(s1, s2)
             Return True
         End Function

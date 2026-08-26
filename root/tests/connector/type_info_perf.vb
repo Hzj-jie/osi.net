@@ -24,8 +24,7 @@ Public NotInheritable Class type_info_equal_perf
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim b As Boolean = False
-            b = type_info(Of String, type_info_operators.equal, String).v
+            Dim b As Boolean = type_info(Of String, type_info_operators.equal, String).v
             b = type_info(Of Int32, type_info_operators.equal, Int32).v
             b = type_info(Of Int32, type_info_operators.equal, String).v
             b = type_info(Of type_info_equal_perf, type_info_operators.equal, String).v
@@ -41,8 +40,7 @@ Public NotInheritable Class type_info_equal_perf
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim b As Boolean = False
-            b = GetType(String).Equals(GetType(String))
+            Dim b As Boolean = GetType(String).Equals(GetType(String))
             b = GetType(Int32).Equals(GetType(Int32))
             b = GetType(Int32).Equals(GetType(String))
             b = GetType(type_info_equal_perf).Equals(GetType(String))

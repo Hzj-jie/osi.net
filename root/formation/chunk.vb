@@ -265,8 +265,7 @@ Public NotInheritable Class chunks
     End Function
 
     Public Function CompareTo(ByVal other As chunks) As Int32 Implements IComparable(Of chunks).CompareTo
-        Dim cmp As Int32 = 0
-        cmp = object_compare(Me, other)
+        Dim cmp As Int32 = object_compare(Me, other)
         If cmp <> object_compare_undetermined Then
             Return cmp
         End If

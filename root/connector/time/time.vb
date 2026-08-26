@@ -68,8 +68,7 @@ Public Module _time
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function milliseconds_to_ticks(ByVal ms As UInt64) As UInt64
         assert(ms <= max_int64)
-        Dim r As Int64 = 0
-        r = milliseconds_to_ticks(CLng(ms))
+        Dim r As Int64 = milliseconds_to_ticks(CLng(ms))
         assert(r >= 0)
         Return CULng(r)
     End Function
@@ -118,8 +117,7 @@ Public Module _time
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function seconds_to_milliseconds(ByVal s As UInt64) As UInt64
         assert(s <= max_int64)
-        Dim r As Int64 = 0
-        r = seconds_to_milliseconds(CLng(s))
+        Dim r As Int64 = seconds_to_milliseconds(CLng(s))
         assert(r >= 0)
         Return CULng(r)
     End Function

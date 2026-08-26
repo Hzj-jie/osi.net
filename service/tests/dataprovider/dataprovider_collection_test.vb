@@ -98,8 +98,7 @@ Public NotInheritable Class dataprovider_collection_test
             timeslice_sleep_wait_until(Function() collection.dataprovider_count() = 0, lifetime_ms << 1)
             assertion.equal(collection.dataprovider_count(), uint32_0)
 
-            Dim i As idataprovider = Nothing
-            i = fake_dataprovider.generate()
+            Dim i As idataprovider = fake_dataprovider.generate()
             assertion.equal(collection.dataprovider_count(), uint32_1)
             timeslice_sleep_wait_until(Function() i.valid(), lifetime_ms >> 2)
             assertion.is_true(i.valid())

@@ -24,8 +24,7 @@ Public Class slim_constructor(Of KEY_TYPE, PARAMETER, RETURN_TYPE)
         If it = cs.end() Then
             Return False
         End If
-        Dim v As vector(Of _do_val_ref(Of PARAMETER, RETURN_TYPE, Boolean)) = Nothing
-        v = (+it).second
+        Dim v As vector(Of _do_val_ref(Of PARAMETER, RETURN_TYPE, Boolean)) = (+it).second
         assert(Not v Is Nothing)
         Dim i As UInt32 = 0
         While i < v.size()

@@ -129,8 +129,7 @@ Public Module _signing
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function signing3(ByVal v As Int32) As UInt32
-        Dim v2 As String = Nothing
-        v2 = Convert.ToString(v)
+        Dim v2 As String = Convert.ToString(v)
         Return int32_uint32((v2 + v2).reverse().GetHashCode())
     End Function
 
@@ -141,8 +140,7 @@ Public Module _signing
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function signing5(ByVal v As Int32) As UInt32
-        Dim v2 As UInt32 = 0
-        v2 = signing8(v)
+        Dim v2 As UInt32 = signing8(v)
         Return int32_uint32(Convert.ToString(v2).GetHashCode())
     End Function
 
@@ -159,8 +157,7 @@ Public Module _signing
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function signing8(ByVal v As Int32, Optional ByVal move_bits As Int32 = 16) As UInt32
-        Dim v2 As UInt32 = 0
-        v2 = CUInt(CLng(v) - min_int32)
+        Dim v2 As UInt32 = CUInt(CLng(v) - min_int32)
         While move_bits < 0
             move_bits += signing8_max_move_bits
         End While

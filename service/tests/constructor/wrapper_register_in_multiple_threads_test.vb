@@ -33,8 +33,7 @@ Partial Public Class wrapper_test
         <repeat(repeat_count)>
         <multi_threading(thread_count)>
         Private Shared Sub run()
-            Dim type As String = Nothing
-            type = strcat(type_base, rnd_uint(0, thread_count))
+            Dim type As String = strcat(type_base, rnd_uint(0, thread_count))
             Dim index As UInt32 = 0
             assertion.is_true(wrapper.register(Function(ByVal v As var, ByVal i As test_class) As test_class
                                                    Return New test_class(i)

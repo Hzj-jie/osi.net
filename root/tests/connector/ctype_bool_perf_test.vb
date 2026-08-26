@@ -40,8 +40,7 @@ Public Class ctype_bool_perf_test
 
         Public Overrides Function run() As Boolean
             Dim b As Boolean = False
-            Dim v As test_class = Nothing
-            v = New test_class(rnd_int())
+            Dim v As New test_class(rnd_int())
             b = v
             Return True
         End Function
@@ -52,8 +51,7 @@ Public Class ctype_bool_perf_test
 
         Public Overrides Function run() As Boolean
             Dim b As Boolean = False
-            Dim v As test_class = Nothing
-            v = New test_class(rnd_int())
+            Dim v As New test_class(rnd_int())
             b = CType(v, Boolean)
             Return True
         End Function
@@ -64,8 +62,7 @@ Public Class ctype_bool_perf_test
 
         Public Overrides Function run() As Boolean
             Dim b As Boolean = False
-            Dim v As test_class = Nothing
-            v = New test_class(rnd_int())
+            Dim v As New test_class(rnd_int())
             If v Is Nothing Then
                 b = False
             Else

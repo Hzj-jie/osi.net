@@ -47,8 +47,7 @@ Public NotInheritable Class struct_compare_test
 
         Public Function compare_to(ByVal r As c) As Int32
             assert(Not r Is Nothing)
-            Dim c As Int32 = 0
-            c = compare(a, r.a)
+            Dim c As Int32 = compare(a, r.a)
             If c <> 0 Then
                 Return c
             End If
@@ -75,10 +74,8 @@ Public NotInheritable Class struct_compare_test
     <test>
     <repeat(100000)>
     Private Shared Sub run()
-        Dim a As c = Nothing
-        a = New c()
-        Dim b As c = Nothing
-        b = New c()
+        Dim a As New c()
+        Dim b As New c()
         assertion.equal(compare(a, b), a.compare_to(b))
         assertion.equal(equal(a, b), a.compare_to(b) = 0)
         assertion.equal(compare(a, a.clone()), 0)

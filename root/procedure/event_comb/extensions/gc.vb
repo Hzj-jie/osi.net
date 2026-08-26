@@ -39,8 +39,7 @@ Public Module _gc
     End Function
 
     Public Function stop_garbage_collector.trigger() As Boolean
-        Dim e As event_comb = Nothing
-        e = (+ec)
+        Dim e As event_comb = (+ec)
         If Not e Is Nothing Then
             e.cancel()
             ec.set(Nothing)

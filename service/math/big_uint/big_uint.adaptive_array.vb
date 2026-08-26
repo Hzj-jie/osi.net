@@ -47,8 +47,7 @@ Partial Public Class big_uint
                 Return Nothing
             End If
 
-            Dim r As adaptive_array_uint32 = Nothing
-            r = New adaptive_array_uint32()
+            Dim r As New adaptive_array_uint32()
             r.d = that.d
             r.s = that.s
             that.d = Nothing
@@ -162,8 +161,7 @@ Partial Public Class big_uint
             If capacity() >= n Then
                 Return
             End If
-            Dim ec As UInt32 = 0
-            ec = expected_capacity(n)
+            Dim ec As UInt32 = expected_capacity(n)
             assert(ec >= uint32_1)
             If empty() Then
                 ReDim d(CInt(ec - uint32_1))
@@ -223,8 +221,7 @@ Partial Public Class big_uint
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function compare(ByVal this As adaptive_array_uint32, ByVal that As adaptive_array_uint32) As Int32
-            Dim c As Int32 = 0
-            c = object_compare(this, that)
+            Dim c As Int32 = object_compare(this, that)
             If c <> object_compare_undetermined Then
                 Return c
             End If

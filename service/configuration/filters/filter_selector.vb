@@ -78,8 +78,7 @@ Public NotInheritable Class filter_selector
 
     Public Sub [set](ByVal name As String, ByVal [type] As String)
         Dim c As Func(Of String, ifilter) = Nothing
-        Dim i As map(Of String, Func(Of String, ifilter)).iterator = Nothing
-        i = types.find([type])
+        Dim i As map(Of String, Func(Of String, ifilter)).iterator = types.find([type])
         If i = types.end() Then
             raise_error(error_type.warning,
                         "filter type ",
@@ -94,8 +93,7 @@ Public NotInheritable Class filter_selector
 
     Friend Function create(ByVal name As String, ByVal value As String) As ifilter
         Dim c As Func(Of String, ifilter) = Nothing
-        Dim i As map(Of String, Func(Of String, ifilter)).iterator = Nothing
-        i = m.find(name)
+        Dim i As map(Of String, Func(Of String, ifilter)).iterator = m.find(name)
         If i = m.end() Then
             Return [default](value)
         End If

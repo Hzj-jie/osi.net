@@ -103,11 +103,9 @@ Public Class async_device_device_converter(Of T)
 
     Public Function adapt(ByVal d As idevice(Of async_getter(Of T)), ByRef o As idevice(Of T)) As Boolean
         assert(Not d Is Nothing)
-        Dim ad As async_getter_device(Of T) = Nothing
-        ad = TryCast(d, async_getter_device(Of T))
+        Dim ad As async_getter_device(Of T) = TryCast(d, async_getter_device(Of T))
         If ad Is Nothing OrElse Not ad.get().initialized() Then
-            Dim ag As async_getter(Of T) = Nothing
-            ag = d.get()
+            Dim ag As async_getter(Of T) = d.get()
             If ag Is Nothing Then
                 Return False
             Else

@@ -16,8 +16,7 @@ Public Module _double_keys
     End Function
 
     Public Function is_merged_key(ByVal key() As Byte, ByVal prefix As Byte, ByRef original() As Byte) As Boolean
-        Dim l As Int32 = 0
-        l = array_size(key)
+        Dim l As Int32 = array_size(key)
         If l <= 1 Then
             Return False
         ElseIf key(0) = prefix Then
@@ -75,8 +74,7 @@ Public Module _double_keys
                                       If +result Is Nothing Then
                                           Return False
                                       Else
-                                          Dim l As vector(Of Byte()) = Nothing
-                                          l = New vector(Of Byte())
+                                          Dim l As New vector(Of Byte())
                                           For i As Int32 = 0 To (+result).size() - 1
                                               Dim b() As Byte = Nothing
                                               'the timestamp key is modified at the last

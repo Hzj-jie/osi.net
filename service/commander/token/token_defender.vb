@@ -53,8 +53,7 @@ Public NotInheritable Class token_defender(Of COLLECTION As Class, CONNECTION)
         Return New executor_wrapper(Function(i() As Byte, o As ref(Of Byte())) As event_comb
                                         Return sync_async(
                                             Sub()
-                                                Dim p As piece = Nothing
-                                                p = New piece(i)
+                                                Dim p As New piece(i)
                                                 If p.start_with(constants.token1_prefix) Then
                                                     If search_for_token(p.consume(constants.token1_prefix_len), r) Then
                                                         eva(o, i)

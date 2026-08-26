@@ -29,10 +29,8 @@ Public NotInheritable Class hasharray_case(Of T)
 
     Private Function random_select_key_from_s() As T
         assertion.is_false(h.empty())
-        Dim it As [set](Of T).iterator = Nothing
-        it = s.begin()
-        Dim c As UInt32 = 0
-        c = rnd_uint(uint32_0, s.size())
+        Dim it As [set](Of T).iterator = s.begin()
+        Dim c As UInt32 = rnd_uint(uint32_0, s.size())
         While c > uint32_0
             it += 1
             c -= uint32_1
@@ -42,10 +40,8 @@ Public NotInheritable Class hasharray_case(Of T)
     End Function
 
     Private Sub insert_or_emplace(ByVal insert As Boolean)
-        Dim n As T = Nothing
-        n = rnd(Of T)()
-        Dim p As tuple(Of hasharray(Of T).iterator, Boolean) = Nothing
-        p = If(insert, h.insert(n), h.emplace(n))
+        Dim n As T = rnd(Of T)()
+        Dim p As tuple(Of hasharray(Of T).iterator, Boolean) = If(insert, h.insert(n), h.emplace(n))
         assertion.is_not_null(p)
         If p.second Then
             assertion.equal(s.find(n), s.end())
@@ -68,13 +64,11 @@ Public NotInheritable Class hasharray_case(Of T)
 
     Private Sub [erase]()
         If rnd_bool() AndAlso Not s.empty() Then
-            Dim k As T = Nothing
-            k = random_select_key_from_s()
+            Dim k As T = random_select_key_from_s()
             assertion.is_true(s.erase(k))
             assertion.equal(h.erase(k), uint32_1)
         Else
-            Dim k As T = Nothing
-            k = rnd(Of T)()
+            Dim k As T = rnd(Of T)()
             If s.erase(k) Then
                 assertion.equal(h.erase(k), uint32_1)
             Else
@@ -89,14 +83,12 @@ Public NotInheritable Class hasharray_case(Of T)
                 assertion.is_true(h.empty())
                 assertion.equal(h.find(rnd(Of T)()), h.end())
             Else
-                Dim k As T = Nothing
-                k = random_select_key_from_s()
+                Dim k As T = random_select_key_from_s()
                 assertion.not_equal(h.find(k), h.end())
                 assertion.not_equal(s.find(k), s.end())
             End If
         Else
-            Dim k As T = Nothing
-            k = rnd(Of T)()
+            Dim k As T = rnd(Of T)()
             If s.find(k) = s.end() Then
                 assertion.equal(h.find(k), h.end())
             Else
@@ -116,8 +108,7 @@ Public NotInheritable Class hasharray_case(Of T)
         copy(h2, h)
 
         assertion.equal(h2.size(), s.size())
-        Dim it As [set](Of T).iterator = Nothing
-        it = s.begin()
+        Dim it As [set](Of T).iterator = s.begin()
         While it <> s.end()
             assertion.not_equal(h.find(+it), h.end())
             assertion.not_equal(h2.find(+it), h2.end())
@@ -126,8 +117,7 @@ Public NotInheritable Class hasharray_case(Of T)
     End Sub
 
     Private Sub traversal()
-        Dim it As hasharray(Of T).iterator = Nothing
-        it = h.begin()
+        Dim it As hasharray(Of T).iterator = h.begin()
         Dim c As UInt32 = 0
         While it <> h.end()
             c += uint32_1

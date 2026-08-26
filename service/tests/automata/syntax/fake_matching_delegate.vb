@@ -51,8 +51,7 @@ Namespace syntaxer
 
         Public Overloads Function CompareTo(ByVal other As matching_delegate) As Int32 _
                                            Implements IComparable(Of matching_delegate).CompareTo
-            Dim c As Int32 = 0
-            c = object_compare(Me, other)
+            Dim c As Int32 = object_compare(Me, other)
             If c <> object_compare_undetermined Then
                 Return c
             End If

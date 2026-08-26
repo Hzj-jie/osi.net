@@ -12,8 +12,7 @@ Namespace normal_distribution
     Public NotInheritable Class possibility_test
         <test>
         Private Shared Sub case1()
-            Dim n As nd = Nothing
-            n = New nd(0, 1)
+            Dim n As New nd(0, 1)
             assertions.of(n.cumulative_distribute(0)).in_range(0.5, 0.001)
             assertions.of(n.cumulative_distribute(1)).in_range(0.841, 0.001)
             assertions.of(n.cumulative_distribute(-1)).in_range(0.159, 0.001)

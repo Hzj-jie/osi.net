@@ -36,8 +36,7 @@ Partial Public NotInheritable Class boolaffinity(Of K)
                 tp = 1
                 fp = 1
                 For i As UInt32 = 0 To v.size() - uint32_1
-                    Dim p As [optional](Of model.affinity) = Nothing
-                    p = m(v(i).first)
+                    Dim p As [optional](Of model.affinity) = m(v(i).first)
                     If p.empty() Then
                         Continue For
                     End If
@@ -62,8 +61,7 @@ Partial Public NotInheritable Class boolaffinity(Of K)
 
         Public Function significant(ByVal v As vector(Of const_pair(Of K, Boolean)),
                                     ByVal threshold As Double) As ternary
-            Dim r As result = Nothing
-            r = e(v)
+            Dim r As result = e(v)
             If r.true_possibility / r.false_possibility >= threshold Then
                 Return ternary.true
             End If

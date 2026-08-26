@@ -62,8 +62,7 @@ Public Class int_binary_calculator
             Return calculator_error.imaginary_number_error
         End If
         Try
-            Dim r As Int32 = 0
-            r = (1 \ that)  'trigger divide by zero exception
+            Dim r As Int32 = (1 \ that)  'trigger divide by zero exception
             r = this ^ (1 / that)
             remainder = this - (r ^ that)
             this = r

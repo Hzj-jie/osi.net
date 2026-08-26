@@ -30,11 +30,9 @@ Partial Public Class rlexer
             assert(index >= 0 AndAlso index < gs.size())
             assert(Not poses.null_or_empty())
             assert(Not gs(index) Is Nothing)
-            Dim o As [set](Of UInt32) = Nothing
-            o = New [set](Of UInt32)()
+            Dim o As New [set](Of UInt32)()
             For j As UInt32 = 0 To poses.size() - uint32_1
-                Dim c As vector(Of UInt32) = Nothing
-                c = gs(index).match(i, poses(j))
+                Dim c As vector(Of UInt32) = gs(index).match(i, poses(j))
                 assert(c Is Nothing OrElse o.emplace(c))
             Next
             Return o.stream().collect_to(Of vector(Of UInt32))()
@@ -45,8 +43,7 @@ Partial Public Class rlexer
             If gs.empty() Then
                 Return Nothing
             Else
-                Dim v As vector(Of UInt32) = Nothing
-                v = New vector(Of UInt32)()
+                Dim v As New vector(Of UInt32)()
                 v.emplace_back(pos)
                 For j As UInt32 = 0 To gs.size() - uint32_1
                     v = match(i, v, j)
@@ -62,8 +59,7 @@ Partial Public Class rlexer
             If i.null_or_empty() Then
                 Return False
             Else
-                Dim gs As vector(Of matching_group) = Nothing
-                gs = New vector(Of matching_group)()
+                Dim gs As New vector(Of matching_group)()
                 Dim p As UInt32 = 0
                 While p < strlen(i)
                     Dim g As matching_group = Nothing

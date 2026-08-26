@@ -14,10 +14,8 @@ Namespace primitive
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim io As console_io = Nothing
-            io = New console_io()
-            Dim f As interrupts = Nothing
-            f = New interrupts(io)
+            Dim io As New console_io()
+            Dim f As New interrupts(io)
             Dim s As String = Nothing
             Using out As TextWriter = New StringWriter()
                 io.redirect_output(out)

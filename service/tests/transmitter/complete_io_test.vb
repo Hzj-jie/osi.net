@@ -44,8 +44,7 @@ Public MustInherit Class complete_io_test(Of T As flow)
 
     Private Function send_case() As Boolean
         Const send_size As Int32 = 65536 * 128
-        Dim f As T = Nothing
-        f = create_send_flow(send_size)
+        Dim f As T = create_send_flow(send_size)
         Dim buff() As Byte = Nothing
         buff = next_bytes(send_size)
         assertion.is_true(async_sync(cast(Of flow)(f).send(buff)))
@@ -57,8 +56,7 @@ Public MustInherit Class complete_io_test(Of T As flow)
         Const receive_size As Int32 = 65536 * 128
         Dim buff() As Byte = Nothing
         buff = next_bytes(receive_size)
-        Dim f As T = Nothing
-        f = create_receive_flow(buff)
+        Dim f As T = create_receive_flow(buff)
         Dim buff2() As Byte = Nothing
         ReDim buff2(receive_size - 1)
         assertion.is_true(async_sync(cast(Of flow)(f).receive(buff2)))

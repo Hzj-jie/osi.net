@@ -172,8 +172,7 @@ Public Module _rr
                                                                        send_rate_sec,
                                                                        result:=result)
                                       Else
-                                          Dim content_length As Int64 = 0
-                                          content_length = get_content_length(i)
+                                          Dim content_length As Int64 = get_content_length(i)
                                           If content_length < 0 Then
                                               Return False
                                           ElseIf content_length = 0 Then

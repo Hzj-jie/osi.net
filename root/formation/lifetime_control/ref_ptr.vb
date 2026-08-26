@@ -51,16 +51,14 @@ Public NotInheritable Class ref_ptr(Of T)
     End Sub
 
     Public Function ref() As UInt32
-        Dim r As Int32 = 0
-        r = i.increment()
+        Dim r As Int32 = i.increment()
         ' If i has reached 0 already, using this object is unsafe.
         assert(r > 1)
         Return CUInt(r)
     End Function
 
     Public Function unref() As UInt32
-        Dim r As Int32 = 0
-        r = i.decrement()
+        Dim r As Int32 = i.decrement()
         assert(r >= 0)
         If r = 0 Then
             dispose()
@@ -73,8 +71,7 @@ Public NotInheritable Class ref_ptr(Of T)
     End Function
 
     Public Function ref_count() As UInt32
-        Dim r As Int32 = 0
-        r = i.get()
+        Dim r As Int32 = i.get()
         assert(r >= 0)
         Return CUInt(r)
     End Function

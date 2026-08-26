@@ -19,12 +19,9 @@ Friend NotInheritable Class big_uint_bytes_case
     End Sub
 
     Public Overrides Function run() As Boolean
-        Dim r As UInt64 = 0
-        r = rnd_uint64()
-        Dim b1 As big_uint = Nothing
-        b1 = New big_uint(uint64_bytes(r))
-        Dim b2 As big_uint = Nothing
-        b2 = New big_uint(r)
+        Dim r As UInt64 = rnd_uint64()
+        Dim b1 As New big_uint(uint64_bytes(r))
+        Dim b2 As New big_uint(r)
         assertion.equal(b1, b2)
 
         b1 = big_uint.random()

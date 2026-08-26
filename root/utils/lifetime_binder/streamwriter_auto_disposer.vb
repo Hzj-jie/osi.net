@@ -12,8 +12,7 @@ Public Class streamwriter_auto_disposer
     Private Shared Function create_stream_writer(ByVal file As String) As StreamWriter
         file = Path.GetFullPath(file)
         Directory.CreateDirectory(Path.GetDirectoryName(file))
-        Dim s As StreamWriter = Nothing
-        s = New StreamWriter(file)
+        Dim s As New StreamWriter(file)
         s.AutoFlush() = True
         Return s
     End Function

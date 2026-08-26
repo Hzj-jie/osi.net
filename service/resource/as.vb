@@ -18,8 +18,7 @@ Public Module _as
     <Extension()> Public Function as_text_reader(ByVal b() As Byte,
                                                  ByVal e As Encoding,
                                                  ByVal detect_bom As ternary) As TextReader
-        Dim s As Stream = Nothing
-        s = as_stream(b)
+        Dim s As Stream = as_stream(b)
         If s Is Nothing Then
             Return Nothing
         Else

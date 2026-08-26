@@ -27,8 +27,7 @@ Partial Public Class device_pool
     End Function
 
     Public Function total_count() As UInt32 Implements idevice_pool.total_count
-        Dim r As Int32 = 0
-        r = (+count)
+        Dim r As Int32 = (+count)
         Return If(r < 0, uint32_0, CUInt(r))
     End Function
 
@@ -36,8 +35,7 @@ Partial Public Class device_pool
         If expired() Then
             Return uint32_0
         Else
-            Dim r As Int32 = 0
-            r = get_free_count()
+            Dim r As Int32 = get_free_count()
             counter.increase(FREE_COUNT_COUNTER, r)
             Return r
         End If

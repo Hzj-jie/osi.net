@@ -42,8 +42,7 @@ Partial Public Class client_flow_adapter
                                   ElseIf count = 0 Then
                                       Return True
                                   ElseIf c.poll_write() Then
-                                      Dim size As UInt32 = 0
-                                      size = min(count, single_send_size)
+                                      Dim size As UInt32 = min(count, single_send_size)
                                       assert(size > 0)
                                       Try
                                           assert(c.Client().Send(buff,
@@ -73,13 +72,11 @@ Partial Public Class client_flow_adapter
                                   ElseIf count = 0 Then
                                       Return True
                                   Else
-                                      Dim b As Int32 = 0
-                                      b = c.buffered_bytes()
+                                      Dim b As Int32 = c.buffered_bytes()
                                       If b < 0 Then
                                           Return False
                                       ElseIf b > 0 Then
-                                          Dim size As UInt32 = 0
-                                          size = min(count, CUInt(b))
+                                          Dim size As UInt32 = min(count, CUInt(b))
                                           assert(size > 0)
                                           Try
                                               assert(c.Client().Receive(buff,

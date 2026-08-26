@@ -11,10 +11,8 @@ Public Class manual_pre_generated_device_pool_test
 
     Public Overrides Function run() As Boolean
         Const max_count As UInt32 = 1024
-        Dim e As mock_dev_manual_device_exporter(Of manual_pre_generated_device_pool_test) = Nothing
-        e = New mock_dev_manual_device_exporter(Of manual_pre_generated_device_pool_test)()
-        Dim p As manual_pre_generated_device_pool(Of mock_dev(Of manual_pre_generated_device_pool_test)) = Nothing
-        p = manual_pre_generated_device_pool.[New](e, max_count)
+        Dim e As New mock_dev_manual_device_exporter(Of manual_pre_generated_device_pool_test)()
+        Dim p As manual_pre_generated_device_pool(Of mock_dev(Of manual_pre_generated_device_pool_test)) = manual_pre_generated_device_pool.[New](e, max_count)
         assertion.equal(p.free_count(), uint32_0)
         assertion.is_false(p.get(Nothing))
         assertion.is_true(p.limited_max_count())

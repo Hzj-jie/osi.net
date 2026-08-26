@@ -35,10 +35,8 @@ Public NotInheritable Class weak_ref_test
 
         Private Shared Function not_pinning_case() As Boolean
             Const s As String = "this is a test string only"
-            Dim c As test_class = Nothing
-            c = New test_class(s)
-            Dim p As weak_ref(Of test_class) = Nothing
-            p = weak_ref.of(c)
+            Dim c As New test_class(s)
+            Dim p As weak_ref(Of test_class) = weak_ref.of(c)
             assertion.is_true(p.alive())
             Dim c2 As test_class = Nothing
             assertion.is_true(p.get(c2))
@@ -57,8 +55,7 @@ Public NotInheritable Class weak_ref_test
 
         Private Shared Function not_pinning_multiple_instance_case() As Boolean
             Const s As String = "this is a test string only"
-            Dim size As Int32 = 0
-            size = 1024 * rnd_int(2, 8)
+            Dim size As Int32 = 1024 * rnd_int(2, 8)
             Dim cs() As test_class = Nothing
             ReDim cs(size - 1)
             Dim ps() As weak_ref(Of test_class) = Nothing

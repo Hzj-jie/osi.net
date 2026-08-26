@@ -26,8 +26,7 @@ Public Class socket_overlapped_peek_behavior_test
     End Function
 
     Private Sub client_thread(ByVal ready As AutoResetEvent)
-        Dim c As TcpClient = Nothing
-        c = New TcpClient()
+        Dim c As New TcpClient()
         Try
             c.Connect(IPAddress.Loopback, port)
         Catch ex As Exception

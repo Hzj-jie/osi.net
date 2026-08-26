@@ -120,8 +120,7 @@ Partial Public NotInheritable Class wordtracer
                                   Return True
                               End Function
                     Else
-                        Dim last As unordered_map(Of String, UInt32) = Nothing
-                        last = r.back()
+                        Dim last As unordered_map(Of String, UInt32) = r.back()
                         sel = Function(ByVal x As String, ByVal y As Char) As Boolean
                                   Return last.find(x) <> last.end()
                               End Function

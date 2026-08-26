@@ -19,8 +19,7 @@ Public Class reference_count_runner
             Return Nothing
         End If
         Return Sub(x As reference_count_runner(Of _false, _false))
-                   Dim y As reference_count_runner = Nothing
-                   y = DirectCast(x, reference_count_runner)
+                   Dim y As reference_count_runner = DirectCast(x, reference_count_runner)
                    assert(Not y Is Nothing)
                    v(y)
                End Sub
@@ -74,8 +73,7 @@ Public Class reference_count_runner(Of AUTO_MARK_STARTED As _boolean, AUTO_MARK_
     End Sub
 
     Public Function binding_count() As UInt32
-        Dim r As Int32 = 0
-        r = atomic.read(b)
+        Dim r As Int32 = atomic.read(b)
         assert(r >= 0)
         Return CUInt(r)
     End Function

@@ -17,8 +17,7 @@ Public Class int_outputter
 
     Public Function output(ByVal i As Int32,
                            ByVal base As Byte) As String Implements ioutputter(Of Int32).output
-        Dim r As big_int = Nothing
-        r = New big_int(i)
+        Dim r As New big_int(i)
         Return r.str(base)
     End Function
 End Class
@@ -37,8 +36,7 @@ Public Class uint_outputter
 
     Public Function output(ByVal i As UInt32,
                            ByVal base As Byte) As String Implements ioutputter(Of UInt32).output
-        Dim r As big_uint = Nothing
-        r = New big_uint(i)
+        Dim r As New big_uint(i)
         Return r.str(base)
     End Function
 End Class

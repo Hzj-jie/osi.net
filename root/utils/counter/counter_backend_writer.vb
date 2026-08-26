@@ -31,8 +31,7 @@ Namespace counter
             End If
             Dim snapshot As snapshot = Nothing
             snapshot = cr.snapshot()
-            Dim msg As StringBuilder = Nothing
-            msg = New StringBuilder()
+            Dim msg As New StringBuilder()
             With cr
                 If snapshot.count Then
                     msg.Append(patchup_counter_msg(.count_name, +snapshot.count))
@@ -66,8 +65,7 @@ Namespace counter
                 If envs.counter_selfhealth Then
                     startticks = Now().Ticks()
                 End If
-                Dim msg As StringBuilder = Nothing
-                msg = New StringBuilder()
+                Dim msg As New StringBuilder()
                 For i As Int32 = 0 To internal_counters.Length() - 1
                     msg.Append(patchup_counter_msg(internal_counters(i).name, internal_counters(i).value()))
                 Next

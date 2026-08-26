@@ -25,16 +25,13 @@ Public NotInheritable Class lexer_test
         Private Shared ReadOnly unknown_words() As String
 
         Shared Sub New()
-            Dim cc As Int32 = 0
-            cc = Convert.ToInt32(character.z) - Convert.ToInt32(character.a) + 1
+            Dim cc As Int32 = Convert.ToInt32(character.z) - Convert.ToInt32(character.a) + 1
             ReDim words(cc * cc - 1)
             ReDim unknown_words(cc * cc - 1)
             For i As Int32 = Convert.ToInt32(character.a) To Convert.ToInt32(character.z)
                 For j As Int32 = Convert.ToInt32(character.a) To Convert.ToInt32(character.z)
-                    Dim p As Int32 = 0
-                    p = (i - Convert.ToInt32(character.a)) * cc + j - Convert.ToInt32(character.a)
-                    Dim s As String = Nothing
-                    s = Convert.ToChar(i) + Convert.ToChar(j)
+                    Dim p As Int32 = (i - Convert.ToInt32(character.a)) * cc + j - Convert.ToInt32(character.a)
+                    Dim s As String = Convert.ToChar(i) + Convert.ToChar(j)
                     words(p) = strtolower(s)
                     unknown_words(p) = strtoupper(s)
                 Next
@@ -42,14 +39,11 @@ Public NotInheritable Class lexer_test
         End Sub
 
         Private Shared Function generate_sentense(ByRef o As String) As vector(Of lexer.word)
-            Dim s As StringBuilder = Nothing
-            s = New StringBuilder()
-            Dim r As vector(Of lexer.word) = Nothing
-            r = New vector(Of lexer.word)()
+            Dim s As New StringBuilder()
+            Dim r As New vector(Of lexer.word)()
             Dim last_is_unknown As Boolean = False
             For i As Int32 = 0 To rnd_int(1000, 10000) - 1
-                Dim j As UInt32 = 0
-                j = CUInt(rnd_int(0, array_size_i(words) + If(last_is_unknown, 0, array_size_i(unknown_words))))
+                Dim j As UInt32 = CUInt(rnd_int(0, array_size_i(words) + If(last_is_unknown, 0, array_size_i(unknown_words))))
                 If j < array_size(words) Then
                     s.Append(words(CInt(j)))
                     r.emplace_back(New lexer.word(words(CInt(j)), j + lexer.first_user_type))
@@ -83,8 +77,7 @@ Public NotInheritable Class lexer_test
         End Function
 
         Public Overrides Function run() As Boolean
-            Dim l As lexer = Nothing
-            l = New lexer(False, False)
+            Dim l As New lexer(False, False)
             For i As Int32 = 0 To array_size_i(words) - 1
                 assertion.is_true(l.define(words(i), CUInt(i) + lexer.first_user_type))
             Next
@@ -138,21 +131,17 @@ Public NotInheritable Class lexer_test
         Private Shared Function generate_sentense(ByVal ws() As pair(Of String, UInt32),
                                                   ByRef o As String) As vector(Of lexer.word)
             assert(Not isemptyarray(ws))
-            Dim s As StringBuilder = Nothing
-            s = New StringBuilder()
-            Dim r As vector(Of lexer.word) = Nothing
-            r = New vector(Of lexer.word)()
+            Dim s As New StringBuilder()
+            Dim r As New vector(Of lexer.word)()
             Dim last_is_unknown As Boolean = False
             For i As Int32 = 0 To rnd_int(1000, 10000) - 1
-                Dim j As UInt32 = 0
-                j = CUInt(rnd_int(0, CInt(array_size(ws) * If(last_is_unknown, 1, 1.25))))
+                Dim j As UInt32 = CUInt(rnd_int(0, CInt(array_size(ws) * If(last_is_unknown, 1, 1.25))))
                 If j < array_size(ws) Then
                     s.Append(ws(CInt(j)).first)
                     r.emplace_back(New lexer.word(ws(CInt(j)).first, ws(CInt(j)).second))
                     last_is_unknown = False
                 Else
-                    Dim u As String = Nothing
-                    u = generate_unknown_word(ws)
+                    Dim u As String = generate_unknown_word(ws)
                     s.Append(u)
                     r.emplace_back(lexer.word.unknown_word(u))
                     last_is_unknown = True
@@ -190,8 +179,7 @@ Public NotInheritable Class lexer_test
         End Function
 
         Public Overrides Function run() As Boolean
-            Dim l As lexer = Nothing
-            l = New lexer(False, False)
+            Dim l As New lexer(False, False)
             Dim ws() As pair(Of String, UInt32) = Nothing
             ws = words()
             assert(Not isemptyarray(ws))

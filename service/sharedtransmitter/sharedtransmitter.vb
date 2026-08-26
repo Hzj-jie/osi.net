@@ -79,8 +79,7 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
         If is_valid() Then
             assert(Not component_ref Is Nothing)
             assert(component_ref.referred())
-            Dim r As COMPONENT_T = Nothing
-            r = component_ref.get()
+            Dim r As COMPONENT_T = component_ref.get()
             Return r
         Else
             Return Nothing

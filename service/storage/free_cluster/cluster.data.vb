@@ -105,8 +105,7 @@ Partial Public Class cluster
                                   ReDim ecs(array_size_i(others))
                                   h.mark_free_as_empty()
                                   For i As Int32 = 0 To array_size_i(others) - 1
-                                      Dim l As cluster = Nothing
-                                      l = If(i = 0, h, others(i - 1))
+                                      Dim l As cluster = If(i = 0, h, others(i - 1))
                                       others(i)._prev_id = l.id()
                                       l._next_id = others(i).id()
                                       others(i).mark_free_as_empty()

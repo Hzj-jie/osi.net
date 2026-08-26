@@ -155,8 +155,7 @@ Public NotInheritable Class disposable(Of T)
     End Function
 
     Public Shared Sub dispose(ByVal v As T)
-        Dim a As Action(Of T) = Nothing
-        a = D()
+        Dim a As Action(Of T) = D()
         If Not a Is Nothing Then
             a(v)
         End If

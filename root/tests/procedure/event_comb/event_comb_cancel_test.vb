@@ -59,8 +59,7 @@ Public NotInheritable Class event_comb_cancel_test
         Public Overrides Function create() As event_comb
             Dim cec As event_comb = Nothing
             Return New event_comb(Function() As Boolean
-                                      Dim ec As event_comb = Nothing
-                                      ec = dummy_event_comb()
+                                      Dim ec As event_comb = dummy_event_comb()
                                       assert_begin(ec)
                                       cec = cancel_event_comb(ec)
                                       Return waitfor(cec) AndAlso

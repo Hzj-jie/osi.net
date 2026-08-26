@@ -81,8 +81,7 @@ Public Module _component_generation
         Dim v As vector(Of pair(Of String, String)) = Nothing
         If Not attributes Is Nothing AndAlso Not attributes.empty() Then
             v = New vector(Of pair(Of String, String))()
-            Dim it As map(Of String, String).iterator = Nothing
-            it = attributes.begin()
+            Dim it As map(Of String, String).iterator = attributes.begin()
             While it <> attributes.end()
                 v.emplace_back(pair.of((+it).first, (+it).second))
                 it += 1

@@ -87,8 +87,7 @@ Namespace syntaxer
             For i As Int32 = 0 To array_size_i(cases) - 1
                 assert(Not cases(i) Is Nothing)
                 If cases(i).result Then
-                    Dim collection As syntax_collection = Nothing
-                    collection = New syntax_collection(cases(i).tokens, cases(i).syntaxes)
+                    Dim collection As New syntax_collection(cases(i).tokens, cases(i).syntaxes)
                     Dim o As syntax = Nothing
                     assertion.is_true(syntax.create(cases(i).str, collection, o))
                     If assertion.is_not_null(o) AndAlso

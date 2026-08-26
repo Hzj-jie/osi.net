@@ -44,8 +44,7 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
             Dim ad As idevice(Of async_getter(Of T)) = Nothing
             Return New event_comb(Function() As Boolean
                                       If c.create(ad) AndAlso Not ad Is Nothing Then
-                                          Dim ag As async_getter(Of T) = Nothing
-                                          ag = ad.get()
+                                          Dim ag As async_getter(Of T) = ad.get()
                                           If Not ag Is Nothing Then
                                               Return waitfor(ag.get(DirectCast(Nothing, ref(Of T)))) AndAlso
                                                      goto_next()

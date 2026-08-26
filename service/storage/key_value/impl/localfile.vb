@@ -282,8 +282,7 @@ Public Module _localfile
                                                      Dim fs() As String = Nothing
                                                      fs = list_files(path)
                                                      For i As Int32 = 0 To array_size_i(fs) - 1
-                                                         Dim s As Int64 = 0
-                                                         s = file_size(fs(i))
+                                                         Dim s As Int64 = file_size(fs(i))
                                                          If s > 0 Then
                                                              r += s
                                                          End If

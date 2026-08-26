@@ -30,8 +30,7 @@ Partial Public NotInheritable Class big_uint
 
     Private Shared Function compare(ByVal this As big_uint, ByVal that As big_uint, ByVal offset As UInt32) As Int32
         If offset = 0 Then
-            Dim c As Int32 = 0
-            c = object_compare(this, that)
+            Dim c As Int32 = object_compare(this, that)
             If c <> object_compare_undetermined Then
                 Return c
             End If
@@ -57,8 +56,7 @@ Partial Public NotInheritable Class big_uint
             Return If(this.v.size() > that.v.size() + offset, 1, -1)
         End If
         assert(this.v.size() > 0)
-        Dim i As UInt32 = 0
-        i = that.v.size() - uint32_1
+        Dim i As UInt32 = that.v.size() - uint32_1
         While True
             If this.v.get(i + offset) <> that.v.get(i) Then
                 Return If(this.v.get(i) > that.v.get(i), 1, -1)

@@ -22,8 +22,7 @@ Partial Public Class bt(Of T)
         If v Is Nothing Then
             Return Nothing
         End If
-        Dim r As bt(Of T) = Nothing
-        r = New bt(Of T)()
+        Dim r As New bt(Of T)()
         move_to(v, r)
         Return r
     End Function

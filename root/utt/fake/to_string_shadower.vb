@@ -32,8 +32,7 @@ Public Class to_string_shadower(Of T)
 
     Public Function CompareTo(ByVal other As to_string_shadower(Of T)) As Int32 _
                              Implements IComparable(Of to_string_shadower(Of T)).CompareTo
-        Dim cmp As Int32 = 0
-        cmp = object_compare(Me, other)
+        Dim cmp As Int32 = object_compare(Me, other)
         If cmp <> object_compare_undetermined Then
             Return cmp
         End If

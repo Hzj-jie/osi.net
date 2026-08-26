@@ -108,22 +108,19 @@ Partial Public NotInheritable Class big_uint
         If v.empty() Then
             Return uint32_0
         End If
-        Dim i As UInt32 = 0
-        i = v.size() - uint32_1
+        Dim i As UInt32 = v.size() - uint32_1
         While True
             If v.get(i) <> 0 Then
                 If i = v.size() - uint32_1 Then
                     Return uint32_0
                 End If
-                Dim r As UInt32 = 0
-                r = v.size()
+                Dim r As UInt32 = v.size()
                 i += uint32_1
                 v.resize(i)
                 Return r - v.size()
             End If
             If i = 0 Then
-                Dim r As UInt32 = 0
-                r = v.size()
+                Dim r As UInt32 = v.size()
                 v.clear()
                 Return r
             End If
@@ -153,8 +150,7 @@ Partial Public NotInheritable Class big_uint
         this = this.CloneT()
         that = that.CloneT()
         While Not that.is_zero()
-            Dim m As UInt32 = 0
-            m = that.remove_trailing_binary_zeros()
+            Dim m As UInt32 = that.remove_trailing_binary_zeros()
             assert(that.odd())
             this.left_shift(m)
             add(this)
@@ -171,8 +167,7 @@ Partial Public NotInheritable Class big_uint
             End If
             Dim c As UInt32 = 0
             For j As UInt32 = 0 To that.v.size() - uint32_1
-                Dim t As UInt64 = 0
-                t = this.v.get(i)
+                Dim t As UInt64 = this.v.get(i)
                 t *= that.v.get(j)
                 c = add(CUInt(t And max_uint32), c, i + j)
                 c += CUInt(t >> bit_count_in_uint32)
@@ -244,8 +239,7 @@ Partial Public NotInheritable Class big_uint
             remainder = zero()
             Return
         End If
-        Dim r As big_uint = Nothing
-        r = New big_uint(bit_count())
+        Dim r As New big_uint(bit_count())
         r.divide(that, remainder)
         Dim l As UInt64 = 0
         If remainder.is_zero() Then
@@ -305,8 +299,7 @@ Partial Public NotInheritable Class big_uint
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Function as_uint32() As UInt32
         Dim o As Boolean = False
-        Dim r As UInt32 = 0
-        r = as_uint32(o)
+        Dim r As UInt32 = as_uint32(o)
         assert(Not o)
         Return r
     End Function
@@ -314,8 +307,7 @@ Partial Public NotInheritable Class big_uint
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Function as_uint64() As UInt64
         Dim o As Boolean = False
-        Dim r As UInt64 = 0
-        r = as_uint64(o)
+        Dim r As UInt64 = as_uint64(o)
         assert(Not o)
         Return r
     End Function

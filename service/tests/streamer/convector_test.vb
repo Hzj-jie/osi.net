@@ -38,10 +38,8 @@ Public MustInherit Class convector_test
         Dim dev2 As mock_dev_int = Nothing
         dev1 = New mock_dev_int()
         dev2 = New mock_dev_int()
-        Dim c As convector(Of Int32) = Nothing
-        c = create_convector(dev1, dev2)
-        Dim ended As ref(Of Boolean) = Nothing
-        ended = New ref(Of Boolean)()
+        Dim c As convector(Of Int32) = create_convector(dev1, dev2)
+        Dim ended As New ref(Of Boolean)()
         execute(c, ended)
         Dim v1() As Int32 = Nothing
         v1 = rnd_ints(rnd_int(16384, 32768))

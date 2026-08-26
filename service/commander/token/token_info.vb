@@ -81,8 +81,7 @@ Public MustInherit Class token_info(Of COLLECTION, CONNECTION)
     Public Function sign(ByVal p As COLLECTION,
                          ByVal code As piece,
                          ByRef o As piece) As Boolean
-        Dim s As signer = Nothing
-        s = signer(p)
+        Dim s As signer = signer(p)
         assert(Not s Is Nothing)
         Dim b() As Byte = Nothing
         If code.size() > uint32_0 AndAlso

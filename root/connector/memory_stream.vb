@@ -86,8 +86,7 @@ Public Module _memory_stream
         If isemptyarray(o) Then
             Return True
         End If
-        Dim p As Int64 = 0
-        p = this.Position()
+        Dim p As Int64 = this.Position()
         If this.Read(o, 0, array_size_i(o)) = array_size_i(o) Then
             Return True
         End If
@@ -185,8 +184,7 @@ Public Module _memory_stream
         If this.Position() = 0 Then
             Return this
         End If
-        Dim r As MemoryStream = Nothing
-        r = New MemoryStream()
+        Dim r As New MemoryStream()
         this.CopyTo(r)
         r.Position() = 0
         this = r
@@ -210,8 +208,7 @@ Public Module _memory_stream
 
     <Extension()> Public Function clone(ByVal this As MemoryStream) As MemoryStream
         this.assert_valid()
-        Dim r As MemoryStream = Nothing
-        r = New MemoryStream(this.ToArray())
+        Dim r As New MemoryStream(this.ToArray())
         r.Position() = this.Position()
         Return r
     End Function

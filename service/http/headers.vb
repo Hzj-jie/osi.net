@@ -91,8 +91,7 @@ Public Module _headers
         If i Is Nothing OrElse o Is Nothing Then
             Return False
         End If
-        Dim s As pair(Of String, vector(Of pair(Of Int64, Int64))) = Nothing
-        s = i.range_series()
+        Dim s As pair(Of String, vector(Of pair(Of Int64, Int64))) = i.range_series()
         If s Is Nothing OrElse s.second.null_or_empty() Then
             Return True
         End If

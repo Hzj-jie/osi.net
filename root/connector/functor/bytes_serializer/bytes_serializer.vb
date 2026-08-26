@@ -26,8 +26,7 @@ Partial Public Class bytes_serializer(Of T)
             Return f(i, o)
         End If
 
-        Dim s As String = Nothing
-        s = json_serializer.to_str(i)
+        Dim s As String = json_serializer.to_str(i)
         If append Then
             Return bytes_serializer.append_to(s, o)
         End If

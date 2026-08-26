@@ -12,8 +12,7 @@ Imports osi.service.interpreter.primitive
 Public Module primitive
     Public Sub main(ByVal args() As String)
         global_init.execute(global_init_level.functor)
-        Dim s As simulator = Nothing
-        s = New simulator()
+        Dim s As New simulator()
         If isemptyarray(args) Then
             assert(s.import(Console.In().ReadToEnd()))
         Else

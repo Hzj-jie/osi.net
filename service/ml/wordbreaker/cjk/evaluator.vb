@@ -21,8 +21,7 @@ Partial Public NotInheritable Class wordbreaker
 
             Default Public ReadOnly Property eva(ByVal i As String) As vector(Of String)
                 Get
-                    Dim r As vector(Of String) = Nothing
-                    r = New vector(Of String)()
+                    Dim r As New vector(Of String)()
                     break(i,
                       Sub(ByVal s As String)
                           assert(Not s.null_or_whitespace())
@@ -59,8 +58,7 @@ Partial Public NotInheritable Class wordbreaker
                 If [end] = start Then
                     Return
                 End If
-                Dim r As vector(Of vector(Of Char)) = Nothing
-                r = e(vector.of(s.Substring(CInt(start), CInt([end] - start)).c_str()))
+                Dim r As vector(Of vector(Of Char)) = e(vector.of(s.Substring(CInt(start), CInt([end] - start)).c_str()))
                 Dim i As UInt32 = 0
                 While i < r.size()
                     o(New String(+r(i)))

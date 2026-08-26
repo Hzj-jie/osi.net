@@ -82,8 +82,7 @@ Partial Public Structure tuple(Of T1, T2)
 
     Public Shared ReadOnly second_first_comparer As Func(Of tuple(Of T1, T2), tuple(Of T1, T2), Int32) =
         Function(ByVal l As tuple(Of T1, T2), ByVal r As tuple(Of T1, T2)) As Int32
-            Dim cmp As Int32 = 0
-            cmp = compare(l.second(), r.second())
+            Dim cmp As Int32 = compare(l.second(), r.second())
             If cmp <> 0 Then
                 Return cmp
             End If

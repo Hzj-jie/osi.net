@@ -11,8 +11,7 @@ Public Module text_writer
         If i Is Nothing Then
             Return False
         End If
-        Dim r As Boolean = False
-        r = True
+        Dim r As Boolean = True
         Try
             i.Flush()
         Catch

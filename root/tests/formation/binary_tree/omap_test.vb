@@ -62,8 +62,7 @@ Friend Class omap_case
     End Function
 
     Private Sub insert()
-        Dim k As String = Nothing
-        k = rnd_key()
+        Dim k As String = rnd_key()
         assertion.equal(m.emplace(k, value(k)).first, m.find(k))
         If validate() Then
             v.emplace(k)
@@ -73,8 +72,7 @@ Friend Class omap_case
     Private Function rnd_it() As [set](Of String).iterator
         assert(validate())
         assert(Not v.empty())
-        Dim it As [set](Of String).iterator = Nothing
-        it = v.begin()
+        Dim it As [set](Of String).iterator = v.begin()
         For i As Int32 = 0 To rnd_int(0, CInt(v.size())) - 1
             it += 1
         Next
@@ -93,11 +91,9 @@ Friend Class omap_case
     Private Sub [set]()
         If validate() Then
             confirm_not_empty()
-            Dim it As [set](Of String).iterator = Nothing
-            it = rnd_it()
+            Dim it As [set](Of String).iterator = rnd_it()
             assertion.equal(m(+it), value(+it))
-            Dim nv As UInt32 = 0
-            nv = value(rnd_key())
+            Dim nv As UInt32 = value(rnd_key())
             m(+it) = nv
             assertion.equal(m(+it), nv)
             m(+it) = value(+it)
@@ -110,12 +106,10 @@ Friend Class omap_case
     Private Sub [get]()
         If validate() Then
             confirm_not_empty()
-            Dim it As [set](Of String).iterator = Nothing
-            it = rnd_it()
+            Dim it As [set](Of String).iterator = rnd_it()
             assertion.equal(m(+it), value(+it))
         Else
-            Dim v As UInt32 = 0
-            v = m(rnd_key())
+            Dim v As UInt32 = m(rnd_key())
         End If
     End Sub
 
@@ -123,8 +117,7 @@ Friend Class omap_case
         If validate() Then
             If rnd_int(0, 2) = 0 Then
                 confirm_not_empty()
-                Dim it As [set](Of String).iterator = Nothing
-                it = rnd_it()
+                Dim it As [set](Of String).iterator = rnd_it()
                 assertion.equal(m(+it), value(+it))
                 assertion.is_true(m.erase(+it))
                 assert(v.erase(+it))
@@ -140,8 +133,7 @@ Friend Class omap_case
         If validate() Then
             If rnd_int(0, 2) = 0 Then
                 confirm_not_empty()
-                Dim it As [set](Of String).iterator = Nothing
-                it = rnd_it()
+                Dim it As [set](Of String).iterator = rnd_it()
                 assertion.equal(m(+it), value(+it))
                 assertion.not_equal(m.find(+it), m.end())
             Else
@@ -193,8 +185,7 @@ Friend Class omap_case
             Return
         End If
         assertion.equal(m.size(), m2.size())
-        Dim sz As Int64 = 0
-        sz = m.size()
+        Dim sz As Int64 = m.size()
         Dim c As Int64 = 0
         Dim it As omap(Of String, UInt32).iterator = Nothing
 

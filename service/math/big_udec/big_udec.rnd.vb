@@ -22,8 +22,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Shared Function rnd_support_str(ByVal length As UInt32,
                                            Optional ByVal base As Byte = constants.str_base) As String
-        Dim s As String = Nothing
-        s = big_uint.rnd_support_str(length, base)
+        Dim s As String = big_uint.rnd_support_str(length, base)
         Return s.strrplc(rnd_uint(0, length), character.dot)
     End Function
 

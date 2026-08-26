@@ -51,8 +51,7 @@ Partial Public NotInheritable Class type_info(Of T)
             Public ReadOnly dominated As typed_constructor
 
             Private Sub New()
-                Dim type As Type = Nothing
-                type = GetType(T)
+                Dim type As Type = GetType(T)
                 If type.allocatable() Then
                     parameterless_public = New typed_constructor(type.public_parameterless_constructor())
                     parameterless = New typed_constructor(type.parameterless_constructor())

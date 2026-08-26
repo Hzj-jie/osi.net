@@ -10,8 +10,7 @@ Public NotInheritable Class optional_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        Dim p As [optional](Of Object) = Nothing
-        p = [optional].of(New Object())
+        Dim p As [optional](Of Object) = [optional].of(New Object())
         assertion.is_true(p)
         assertion.is_not_null(+p)
         assertion.is_not_null(-p)

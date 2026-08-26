@@ -48,8 +48,7 @@ Public Class remote_istrkeyvt_test
     End Function
 
     Private Function register_local_istrkeyvt() As Boolean
-        Dim l As istrkeyvt = Nothing
-        l = memory.ctor()
+        Dim l As istrkeyvt = memory.ctor()
         Return assertion.is_not_null(l) AndAlso
                assertion.is_true(manager.register(istrkeyvt_name, l))
     End Function

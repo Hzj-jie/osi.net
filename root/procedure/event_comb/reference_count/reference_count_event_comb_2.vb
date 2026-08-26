@@ -62,8 +62,7 @@ Public Class reference_count_event_comb_2
     End Function
 
     Public Function binding_count() As UInt32
-        Dim c As Int32 = 0
-        c = (+b)
+        Dim c As Int32 = (+b)
         assert(c >= 0)
         Return CUInt(c)
     End Function

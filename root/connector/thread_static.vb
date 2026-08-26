@@ -22,8 +22,7 @@ Public NotInheritable Class thread_static(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function current_slot_id(ByRef o As UInt32) As Boolean
-        Dim i As Int32 = 0
-        i = Thread.CurrentThread().ManagedThreadId() - 1
+        Dim i As Int32 = Thread.CurrentThread().ManagedThreadId() - 1
         assert(i >= 0)
         o = CUInt(i)
         Return o < array_size(slot)

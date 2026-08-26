@@ -140,8 +140,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
                                               with_remote_endpoint(New IPEndPoint(IPAddress.Loopback, udp_port)).
                                               create().herald_device_pool())
         End If
-        Dim r As Boolean = False
-        r = MyBase.run()
+        Dim r As Boolean = MyBase.run()
         If enable_tcp Then
             commander_case.opp.get().close()
             pp.close()
@@ -243,8 +242,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
             Dim ec As event_comb = Nothing
             Dim choice As Int32 = 0
             Return New event_comb(Function() As Boolean
-                                      Dim c As command = Nothing
-                                      c = New command()
+                                      Dim c As New command()
                                       para = rnd_int(min_int32, max_int32)
                                       c.attach(ask_command) _
                                        .attach(ask_para, para)
@@ -315,8 +313,7 @@ Public Class commander_case(Of _ENABLE_TCP As _boolean,
 
         Public Overrides Function finish() As Boolean
             assertion.more_or_equal_and_less_or_equal(trigger_times(), 0.9999 * run_times(), run_times())
-            Dim div As Int32 = 0
-            div = enabled_choices
+            Dim div As Int32 = enabled_choices
             assert(div > 0)
             If enable_tcp Then
                 assertion.more_or_equal_and_less_or_equal(+tcp_suc, run_times() / div * 0.9, run_times() / div * 1.1)

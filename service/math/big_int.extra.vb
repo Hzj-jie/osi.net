@@ -13,8 +13,7 @@ Partial Public NotInheritable Class big_int
     End Sub
 
     Public Shared Widening Operator CType(ByVal this As Boolean) As big_int
-        Dim r As big_int = Nothing
-        r = New big_int()
+        Dim r As New big_int()
         r.replace_by(this)
         Return r
     End Operator
@@ -40,8 +39,7 @@ Partial Public NotInheritable Class big_int
     End Function
 
     Public Function as_int32(ByRef overflow As Boolean) As Int32
-        Dim v As Int32 = 0
-        v = d.as_int32(overflow)
+        Dim v As Int32 = d.as_int32(overflow)
         Return If(negative(), -v, v)
     End Function
 
@@ -50,8 +48,7 @@ Partial Public NotInheritable Class big_int
             divide_by_zero = True
             Return
         End If
-        Dim n As Boolean = False
-        n = negative()
+        Dim n As Boolean = negative()
         Dim r As big_uint = Nothing
         d.divide(that.d, divide_by_zero, r)
         assert(Not divide_by_zero)
@@ -242,8 +239,7 @@ Partial Public NotInheritable Class big_int
     End Operator
 
     Public Shared Operator Mod(ByVal this As big_int, ByVal that As big_int) As big_int
-        Dim q As big_int = Nothing
-        q = New big_int(this)
+        Dim q As New big_int(this)
         q.modulus(that)
         Return q
     End Operator

@@ -77,8 +77,7 @@ Public Class chained_case_wrapper
 
     Public NotOverridable Overrides Function finish() As Boolean
         If MyBase.finish() Then
-            Dim r As Boolean = False
-            r = True
+            Dim r As Boolean = True
             For i As Int32 = 0 To array_size_i(cs) - 1
                 r = r And cs(i).finish()
             Next

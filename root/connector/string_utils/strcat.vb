@@ -15,8 +15,7 @@ Public Module _strcat
                              ByVal src As String,
                              ByVal count As Int64,
                              ByVal impl As _do_ref_val(Of String, String, String)) As String
-        Dim len As Int64 = 0
-        len = strlen(src)
+        Dim len As Int64 = strlen(src)
         If len > 1 Then
             While count > 0
                 impl(dest, src)
@@ -55,11 +54,9 @@ Public Module _strcat
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function strfillImpl(ByRef dest As String, ByVal src As String, ByVal length As Int64,
                                  ByVal impl As _do_ref_val_val(Of String, String, Int64, String)) As String
-        Dim required_times As Int64 = 0
-        required_times = length - strlen(dest)
+        Dim required_times As Int64 = length - strlen(dest)
         If required_times <> 0 Then
-            Dim srclen As Int64 = 0
-            srclen = strlen(src)
+            Dim srclen As Int64 = strlen(src)
             assert(srclen > 0, "src is nothing or emptystring, cannot fill to required length.")
             assert(required_times >= 0, "dest length is already over length.")
             assert(required_times / srclen = required_times \ srclen, "requiredTimes is not an integer.")
@@ -179,8 +176,7 @@ Public Module _strcat
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     <Extension()> Public Function append(ByRef this As String, ByVal ParamArray p() As Object) As String
-        Dim s As String = Nothing
-        s = strcat(p)
+        Dim s As String = strcat(p)
         Return strcat(this, s)
     End Function
 
@@ -262,8 +258,7 @@ Public Module _strcat
         If s.null_or_empty() Then
             Return s
         End If
-        Dim r As StringBuilder = Nothing
-        r = New StringBuilder(s.strlen_i() * CInt(c))
+        Dim r As New StringBuilder(s.strlen_i() * CInt(c))
         While c > 0
             r.Append(s)
             c -= uint32_1

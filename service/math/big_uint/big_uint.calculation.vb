@@ -113,8 +113,7 @@ Partial Public NotInheritable Class big_uint
 
         Dim c As UInt32 = 0
         For i As UInt32 = 0 To v.size() - uint32_1
-            Dim t As UInt64 = 0
-            t = v.get(i)
+            Dim t As UInt64 = v.get(i)
             t *= that
             t += c
             v.set(i, CUInt(t And max_uint32))
@@ -237,12 +236,10 @@ Partial Public NotInheritable Class big_uint
             End If
         End If
         Dim r As UInt32 = 0
-        Dim i As UInt32 = 0
-        i = uint32_size() - uint32_1
+        Dim i As UInt32 = uint32_size() - uint32_1
         While True
             If r > 0 OrElse v.get(i) > 0 Then
-                Dim t As UInt64 = 0
-                t = r
+                Dim t As UInt64 = r
                 t <<= bit_count_in_uint32
                 t = t Or v.get(i)
                 r = CUInt(t Mod that)
@@ -297,8 +294,7 @@ Partial Public NotInheritable Class big_uint
         End If
 
 #If DEBUG Then
-        Dim original_that As big_uint = Nothing
-        original_that = that.CloneT()
+        Dim original_that As big_uint = that.CloneT()
 #End If
 
 #If USE_MODULUS_BIT Then
@@ -334,8 +330,7 @@ Partial Public NotInheritable Class big_uint
 
     <MethodImpl(math_debug.aggressive_inlining)>
     Public Function power_2() As big_uint
-        Dim s As big_uint = Nothing
-        s = move(Me)
+        Dim s As big_uint = move(Me)
         multiply(s, s)
         Return Me
     End Function
@@ -353,8 +348,7 @@ Partial Public NotInheritable Class big_uint
         For i As UInt32 = 1 To that.remove_trailing_binary_zeros()
             power_2()
         Next
-        Dim c As big_uint = Nothing
-        c = Me.CloneT()
+        Dim c As big_uint = Me.CloneT()
         assert(that.bit_count() > 0)
         Dim last As UInt64 = 0
         For i As UInt64 = 1 To that.bit_count() - uint64_1
@@ -400,8 +394,7 @@ Partial Public NotInheritable Class big_uint
         If is_zero_or_one() Then
             set_one()
         Else
-            Dim i As big_uint = Nothing
-            i = move(Me)
+            Dim i As big_uint = move(Me)
             set_one()
             While Not i.is_one()
                 Me.multiply(i)

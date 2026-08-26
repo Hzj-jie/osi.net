@@ -17,8 +17,7 @@ Friend Class big_uint_power_extract_case
 
     Private Shared Function power_extract_case(ByVal i As UInt64, ByVal j As UInt64) As Boolean
         assert(i > 0)
-        Dim b As big_uint = Nothing
-        b = New big_uint(i)
+        Dim b As New big_uint(i)
         b.power(j)
         Dim r As big_uint = Nothing
         b.extract(j, r)
@@ -26,8 +25,7 @@ Friend Class big_uint_power_extract_case
         assertion.is_true(r.is_zero())
         assertion.is_true(b.equal(New big_uint(i)))
 
-        Dim t As UInt64 = 0
-        t = rnd_uint64(2, i)
+        Dim t As UInt64 = rnd_uint64(2, i)
         b.power(j)
         b.add(t)
         b.extract(j, r)

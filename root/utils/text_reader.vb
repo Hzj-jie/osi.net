@@ -8,10 +8,8 @@ Public Module _text_reader
         If r Is Nothing Then
             Return Nothing
         Else
-            Dim v As vector(Of String) = Nothing
-            v = New vector(Of String)()
-            Dim l As String = Nothing
-            l = r.ReadLine()
+            Dim v As New vector(Of String)()
+            Dim l As String = r.ReadLine()
             While Not l Is Nothing
                 v.emplace_back(l)
                 l = r.ReadLine()

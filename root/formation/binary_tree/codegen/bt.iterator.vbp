@@ -9,8 +9,7 @@ Partial Public Class bt(OF T)
     Partial Public Structure iterator
         Private Function move_next(ByVal that As UInt32) As iterator
             assert(that > 0)
-            Dim n As node = Nothing
-            n = p
+            Dim n As node = p
             For i As UInt32 = 0 To that - uint32_1
                 assert(Not n Is Nothing)
                 If n.has_right_child() Then
@@ -35,8 +34,7 @@ Partial Public Class bt(OF T)
 
         Private Function move_prev(ByVal that As UInt32) As iterator
             assert(that > 0)
-            Dim n As node = Nothing
-            n = p
+            Dim n As node = p
             For i As UInt32 = 0 To that - uint32_1
                 assert(Not n Is Nothing)
                 If n.has_left_child() Then

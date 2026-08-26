@@ -66,11 +66,9 @@ Partial Public NotInheritable Class big_uint
     Private Sub left_shift(ByVal slot_count As UInt32, ByVal bit_count As Byte)
         assert(bit_count > 0)
         v.resize(v.size() + slot_count + uint32_1)
-        Dim i As UInt32 = 0
-        i = v.size() - slot_count - uint32_2
+        Dim i As UInt32 = v.size() - slot_count - uint32_2
         While True
-            Dim t As UInt64 = 0
-            t = shift.left(v.get(i), bit_count)
+            Dim t As UInt64 = shift.left(v.get(i), bit_count)
             uint32_or(i + slot_count + uint32_1, t.high_uint32())
             v.set(i + slot_count, t.low_uint32())
 
@@ -96,14 +94,12 @@ Partial Public NotInheritable Class big_uint
         assert(bit_count > 0)
         assert(v.size() >= slot_count + uint32_1)
         bit_count = bit_count_in_uint32 - bit_count
-        Dim i As UInt32 = 0
-        i = slot_count
+        Dim i As UInt32 = slot_count
         v.set(uint32_0, shift.left(v.get(i), bit_count).high_uint32())
         If i < v.size() - uint32_1 Then
             i += uint32_1
             While True
-                Dim t As UInt64 = 0
-                t = shift.left(v.get(i), bit_count)
+                Dim t As UInt64 = shift.left(v.get(i), bit_count)
                 v.set(i - slot_count, t.high_uint32())
                 uint32_or(i - slot_count - uint32_1, t.low_uint32())
 
@@ -130,8 +126,7 @@ Partial Public NotInheritable Class big_uint
         If size Is Nothing OrElse size.is_zero() Then
             Return Me
         End If
-        Dim u As UInt64 = 0
-        u = size.as_uint64(overflow)
+        Dim u As UInt64 = size.as_uint64(overflow)
         If Not overflow Then
             left_shift(u)
         End If
@@ -169,8 +164,7 @@ Partial Public NotInheritable Class big_uint
         If size Is Nothing OrElse size.is_zero() Then
             Return Me
         End If
-        Dim u As UInt64 = 0
-        u = size.as_uint64(overflow)
+        Dim u As UInt64 = size.as_uint64(overflow)
         If Not overflow Then
             right_shift(u)
         End If

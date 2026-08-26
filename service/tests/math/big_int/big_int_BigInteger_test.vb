@@ -94,8 +94,7 @@ Public NotInheritable Class big_int_BigInteger_test
     <repeat(100000)>
     <test>
     Private Shared Sub cast()
-        Dim a As big_int = Nothing
-        a = big_int.random()
+        Dim a As big_int = big_int.random()
         assertion.equal(a, big_int.from_BigInteger(a.as_BigInteger()))
     End Sub
 
@@ -107,8 +106,7 @@ Public NotInheritable Class big_int_BigInteger_test
         a = big_int.random(20)
         b = big_int.random(20)
         For i As Int32 = 0 To 20
-            Dim c As big_int = Nothing
-            c = big_int.random(20)
+            Dim c As big_int = big_int.random(20)
             If rnd_bool() Then
                 a.multiply(c)
             End If
@@ -136,8 +134,7 @@ Public NotInheritable Class big_int_BigInteger_test
     End Sub
 
     Private Shared Sub cast_predefined_case(ByVal i As Int32)
-        Dim a As big_int = Nothing
-        a = New big_int(i)
+        Dim a As New big_int(i)
         assertion.equal(a, big_int.from_BigInteger(a.as_BigInteger()))
     End Sub
 

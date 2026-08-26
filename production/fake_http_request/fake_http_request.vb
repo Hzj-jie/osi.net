@@ -29,8 +29,7 @@ Public Module fake_http_request
 
     Private Function rnd_request_headers() As map(Of String, vector(Of String))
         If add_rnd_request_headers Then
-            Dim s As Int32 = 0
-            s = rnd_int(1, 5)
+            Dim s As Int32 = rnd_int(1, 5)
             Dim r(,) As String = Nothing
             ReDim r(s, 1)
             For i As Int32 = 0 To s - 1
@@ -52,8 +51,7 @@ Public Module fake_http_request
     Public Sub main(ByVal args() As String)
         If array_size(args) > 0 Then
             Using r As StreamReader = New StreamReader(args(0))
-                Dim s As String = Nothing
-                s = r.ReadLine()
+                Dim s As String = r.ReadLine()
                 While Not s Is Nothing
                     If Not s.null_or_empty() Then
                         urls.push_back(s)
@@ -68,8 +66,7 @@ Public Module fake_http_request
                 End If
 
                 Dim req_times As Int64 = 0
-                Dim start_ms As Int64 = 0
-                start_ms = Now().milliseconds()
+                Dim start_ms As Int64 = Now().milliseconds()
                 Dim req_time_ms As Int64 = 0
                 Dim run_time_s As Func(Of Int64) = Function() As Int64
                                                        Return milliseconds_to_seconds(Now().milliseconds() - start_ms)

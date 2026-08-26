@@ -11,12 +11,9 @@ Public Class async_getter_device_test
     Inherits [case]
 
     Private Shared Function eventually_closed() As Boolean
-        Dim w As signal_event = Nothing
-        w = New signal_event()
-        Dim d As idevice(Of async_getter(Of mock_dev(Of async_getter_device_test))) = Nothing
-        d = New async_getter_mock_dev_device(Of async_getter_device_test)(w)
-        Dim r As mock_dev(Of async_getter_device_test) = Nothing
-        r = New mock_dev(Of async_getter_device_test)()
+        Dim w As New signal_event()
+        Dim d As idevice(Of async_getter(Of mock_dev(Of async_getter_device_test))) = New async_getter_mock_dev_device(Of async_getter_device_test)(w)
+        Dim r As New mock_dev(Of async_getter_device_test)()
         assert(d.get().not_initialized())
         d.close()
         assertion.is_true(d.closed())
@@ -31,10 +28,8 @@ Public Class async_getter_device_test
     End Function
 
     Private Shared Function valid_before_initialized() As Boolean
-        Dim w As signal_event = Nothing
-        w = New signal_event()
-        Dim d As idevice(Of async_getter(Of mock_dev(Of async_getter_device_test))) = Nothing
-        d = New async_getter_mock_dev_device(Of async_getter_device_test)(w)
+        Dim w As New signal_event()
+        Dim d As idevice(Of async_getter(Of mock_dev(Of async_getter_device_test))) = New async_getter_mock_dev_device(Of async_getter_device_test)(w)
         Dim r As mock_dev(Of async_getter_device_test) = Nothing
         assert(d.get().not_initialized())
         assertion.is_true(d.is_valid())

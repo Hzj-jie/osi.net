@@ -13,8 +13,7 @@ Partial Public NotInheritable Class valuer
                                                         ByVal name As String,
                                                         ByRef o As valuer(Of VT)) As Boolean
         Using scoped.atomic_bool(suppress.valuer_error)
-            Dim type As Type = Nothing
-            type = get_type(Of T)(obj)
+            Dim type As Type = get_type(Of T)(obj)
             While Not type Is GetType(Object)
                 o = New valuer(Of VT)(type, bindingflags, obj, name)
                 If o.valid() Then

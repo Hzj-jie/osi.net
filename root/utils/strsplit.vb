@@ -270,10 +270,8 @@ Public NotInheritable Class strsplitter
             Return assert(result.emplace_back(ss))
         End If
 
-        Dim surrounded As Int32 = 0
-        surrounded = npos
-        Dim l As StringBuilder = Nothing
-        l = New StringBuilder()
+        Dim surrounded As Int32 = npos
+        Dim l As New StringBuilder()
         Dim i As UInt32 = 0
         While i < strlen(s)
             Dim len As UInt32 = 0

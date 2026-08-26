@@ -16,8 +16,7 @@ Public Module _lifetime_event_comb
         Dim d2() As Func(Of Boolean) = Nothing
         ReDim d2(array_size_i(d) - 1)
         For i As Int32 = 0 To array_size_i(d) - 1
-            Dim j As Int32 = 0
-            j = i
+            Dim j As Int32 = i
             d2(i) = Function() As Boolean
                         If control.expired() Then
                             Return stop_result AndAlso

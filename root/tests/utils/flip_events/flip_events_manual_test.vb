@@ -15,8 +15,7 @@ Public NotInheritable Class flip_events_manual_test
     Private Shared Sub run()
         Dim to_high As UInt32 = 0
         Dim to_low As UInt32 = 0
-        Dim f As flip_events.manual_flip_event = Nothing
-        f = flip_events.manual()(flip_event.events.of(Sub()
+        Dim f As flip_events.manual_flip_event = flip_events.manual()(flip_event.events.of(Sub()
                                                           to_high += uint32_1
                                                       End Sub,
                                                       Sub()

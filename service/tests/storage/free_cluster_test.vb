@@ -42,8 +42,7 @@ Public Class free_cluster_test
                               End Function,
                               Function() As Boolean
                                   assertion.is_true(ec.end_result())
-                                  Dim it As map(Of Int64, Byte()).iterator = Nothing
-                                  it = d.find(id)
+                                  Dim it As map(Of Int64, Byte()).iterator = d.find(id)
                                   If it = d.end() Then
                                       assertion.is_null(+p)
                                   Else
@@ -109,8 +108,7 @@ Public Class free_cluster_test
     End Function
 
     Private Shared Function append_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
-        Dim id As Int64 = 0
-        id = rand_id()
+        Dim id As Int64 = rand_id()
         If d.find(id) = d.end() Then
             If rnd_bool() Then
                 Return apply_alloc_append(fc, d)
@@ -129,8 +127,7 @@ Public Class free_cluster_test
         Return New event_comb(Function() As Boolean
                                   If rnd_bool() AndAlso Not d.empty() Then
                                       Dim max As Int32 = 0
-                                      Dim it As map(Of Int64, Byte()).iterator = Nothing
-                                      it = d.begin()
+                                      Dim it As map(Of Int64, Byte()).iterator = d.begin()
                                       While it <> d.end()
                                           If array_size((+it).second) > max Then
                                               max = array_size_i((+it).second)
@@ -194,8 +191,7 @@ Public Class free_cluster_test
     End Function
 
     Private Shared Function rnd_case(ByVal fc As free_cluster, ByVal d As map(Of Int64, Byte())) As event_comb
-        Dim r As Int32 = 0
-        r = rnd_int(0, 5)
+        Dim r As Int32 = rnd_int(0, 5)
         Select Case r
             Case 0
                 Return read_case(fc, d)

@@ -39,10 +39,8 @@ Public Module _c_escape
                                            ByVal str_start As UInt32,
                                            ByVal str_len As UInt32,
                                            ByRef o As String) As Boolean
-        Dim buff_size As UInt32 = 0
-        buff_size = (str_len << 1)
-        Dim b As StringBuilder = Nothing
-        b = New StringBuilder(CInt(buff_size))
+        Dim buff_size As UInt32 = (str_len << 1)
+        Dim b As New StringBuilder(CInt(buff_size))
         b.Length() = b.Capacity()
         Dim buff_start As UInt32 = 0
         If c_escape(s, str_start, str_len, b, buff_start, buff_size) Then
@@ -79,8 +77,7 @@ Public Module _c_escape
                strlen(buff) < buff_start + buff_len Then
             Return False
         End If
-        Dim buff_end As UInt32 = 0
-        buff_end = buff_start + buff_len
+        Dim buff_end As UInt32 = buff_start + buff_len
         For i As UInt32 = str_start To str_start + str_len - uint32_1
             Dim c As Char = Nothing
             Select Case s(CInt(i))
@@ -203,10 +200,8 @@ Public Module _c_escape
                                              ByVal str_start As UInt32,
                                              ByVal str_len As UInt32,
                                              ByRef o As String) As Boolean
-        Dim buff_size As UInt32 = 0
-        buff_size = str_len
-        Dim b As StringBuilder = Nothing
-        b = New StringBuilder(CInt(buff_size))
+        Dim buff_size As UInt32 = str_len
+        Dim b As New StringBuilder(CInt(buff_size))
         b.Length() = b.Capacity()
         Dim buff_start As UInt32 = 0
         If c_unescape(s, str_start, str_len, b, buff_start, buff_size) Then
@@ -261,8 +256,7 @@ Public Module _c_escape
                strlen(buff) < buff_start + buff_len Then
             Return False
         End If
-        Dim buff_end As UInt32 = 0
-        buff_end = buff_start + buff_len
+        Dim buff_end As UInt32 = buff_start + buff_len
         Dim b() As Byte = Nothing
         ReDim b(4 - 1)
         For i As UInt32 = str_start To str_start + str_len - uint32_1

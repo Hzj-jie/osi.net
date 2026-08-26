@@ -53,8 +53,7 @@ Public NotInheritable Class bit_array_thread_safe_test
             If i <= write_thread_count Then
                 Return True
             End If
-            Dim current As Int32 = 0
-            current = i
+            Dim current As Int32 = i
             Dim fc As Int32 = 0
             For j As Int32 = all_true_before To current - 1
                 If Not b(CUInt(j)) Then

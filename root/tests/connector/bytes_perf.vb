@@ -13,8 +13,7 @@ Public Class bytes_perf
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim x As Int64 = 0
-            x = rnd_int64()
+            Dim x As Int64 = rnd_int64()
             x.big_endian_bytes().as_big_endian_int64()
             x.little_endian_bytes().as_little_endian_int64()
             x.bytes().as_int64()

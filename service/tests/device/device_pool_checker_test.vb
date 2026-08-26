@@ -20,17 +20,12 @@ Public Class device_pool_checker_test
         Const ms As Int64 = 2000
         Const size As UInt32 = 1024
         Using New process_realtime()
-            Dim e As imanual_device_exporter(Of Int32) = Nothing
-            e = New manual_device_exporter(Of Int32)()
-            Dim p As manual_pre_generated_device_pool(Of Int32) = Nothing
-            p = manual_pre_generated_device_pool.[New](e)
-            Dim called As atomic_uint = Nothing
-            called = New atomic_uint()
-            Dim valid As Boolean = False
-            valid = True
+            Dim e As imanual_device_exporter(Of Int32) = New manual_device_exporter(Of Int32)()
+            Dim p As manual_pre_generated_device_pool(Of Int32) = manual_pre_generated_device_pool.[New](e)
+            Dim called As New atomic_uint()
+            Dim valid As Boolean = True
             For i As Int32 = 0 To CInt(size) - 1
-                Dim j As Int32 = 0
-                j = i
+                Dim j As Int32 = i
                 e.inject(i.make_device(validator:=Function(x As Int32) As Boolean
                                                       Return valid
                                                   End Function,

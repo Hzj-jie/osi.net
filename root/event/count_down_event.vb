@@ -45,8 +45,7 @@ Public Class count_down_event(Of COUNT As _int64)
 
     ' Returns true if this {#set} call takes effect.
     Public Function [set]() As Boolean
-        Dim r As Int32 = 0
-        r = c.decrement()
+        Dim r As Int32 = c.decrement()
         If r < 0 Then
             c.increment()
             Return False

@@ -104,8 +104,7 @@ Public NotInheritable Class ref_instance(Of T)
     End Function
 
     Public Function ref_count() As UInt32
-        Dim x As Int32 = 0
-        x = atomic.read(r)
+        Dim x As Int32 = atomic.read(r)
         assert(x >= 0)
         Return CUInt(x)
     End Function

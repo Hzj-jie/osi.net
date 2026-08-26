@@ -35,8 +35,7 @@ Public NotInheritable Class icache2_icache_adapter(Of KEY_T As IComparable(Of KE
     End Function
 
     Public Function [get](ByVal key As KEY_T) As VALUE_T Implements icache(Of KEY_T, VALUE_T).get
-        Dim r As ref(Of VALUE_T) = Nothing
-        r = New ref(Of VALUE_T)()
+        Dim r As New ref(Of VALUE_T)()
         If async_sync(i.get(key, r)) Then
             Return +r
         End If
@@ -45,8 +44,7 @@ Public NotInheritable Class icache2_icache_adapter(Of KEY_T As IComparable(Of KE
 
     Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean _
         Implements islimcache(Of KEY_T, VALUE_T).get
-        Dim r As ref(Of VALUE_T) = Nothing
-        r = New ref(Of VALUE_T)()
+        Dim r As New ref(Of VALUE_T)()
         If async_sync(i.get(key, r)) Then
             value = (+r)
             Return True
@@ -59,8 +57,7 @@ Public NotInheritable Class icache2_icache_adapter(Of KEY_T As IComparable(Of KE
     End Function
 
     Public Function size() As Int64 Implements islimcache(Of KEY_T, VALUE_T).size
-        Dim r As ref(Of Int64) = Nothing
-        r = New ref(Of Int64)()
+        Dim r As New ref(Of Int64)()
         If async_sync(i.size(r)) Then
             Return +r
         End If

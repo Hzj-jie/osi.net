@@ -75,8 +75,7 @@ Public Structure duallock
     End Sub
 
     Public Sub release()
-        Dim r As Int32 = 0
-        r = Interlocked.Decrement(sl)
+        Dim r As Int32 = Interlocked.Decrement(sl)
         assert(r >= 0)
 #If USE_CROSS_THREAD_LOCK Then
         If r = 0 Then

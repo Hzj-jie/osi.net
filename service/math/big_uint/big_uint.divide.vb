@@ -26,8 +26,7 @@ Public NotInheritable Class big_uint
             Return Me
         End If
         If that.power_of_2() Then
-            Dim l As UInt64 = 0
-            l = that.bit_count() - uint64_1
+            Dim l As UInt64 = that.bit_count() - uint64_1
             remainder = Me.CloneT().[and](that - uint32_1)
             right_shift(l)
             Return Me
@@ -52,8 +51,7 @@ Public NotInheritable Class big_uint
 
         'make sure the that will not be impacted during the calculation
 #If DEBUG Then
-        Dim original_that As big_uint = Nothing
-        original_that = that.CloneT()
+        Dim original_that As big_uint = that.CloneT()
 #End If
 
 #If USE_DIVIDE_BIT Then
@@ -93,12 +91,10 @@ Public NotInheritable Class big_uint
             Return Me
         End If
         assert(v.size() > 0)
-        Dim i As UInt32 = 0
-        i = v.size() - uint32_1
+        Dim i As UInt32 = v.size() - uint32_1
         While True
             If remainder > 0 OrElse v.get(i) > 0 Then
-                Dim t As UInt64 = 0
-                t = remainder
+                Dim t As UInt64 = remainder
                 t <<= bit_count_in_uint32
                 t = t Or v.get(i)
                 t = t.div_rem(that, remainder)
@@ -124,16 +120,14 @@ Public NotInheritable Class big_uint
     Private Shared Sub divide_bit(ByVal that As big_uint,
                                   ByVal remainder As big_uint,
                                   ByVal result As big_uint)
-        Dim i As UInt64 = 0
-        i = remainder.bit_count() - that.bit_count()
+        Dim i As UInt64 = remainder.bit_count() - that.bit_count()
         If Not result Is Nothing Then
             result.set_bit_count(remainder.bit_count() - that.bit_count() + uint64_1)
         End If
         that = that.CloneT()
         that.left_shift(remainder.bit_count() - that.bit_count())
         While True
-            Dim cmp As Int32 = 0
-            cmp = that.compare(remainder)
+            Dim cmp As Int32 = that.compare(remainder)
             If cmp = 0 Then
                 If Not result Is Nothing Then
                     result.setrbit(i, True)
@@ -152,8 +146,7 @@ Public NotInheritable Class big_uint
             'do not care about that after the operation, since the data has been copied already
             cmp = that.bit_count().CompareTo(remainder.bit_count())
             If cmp > 0 Then
-                Dim s As UInt64 = 0
-                s = that.bit_count() - remainder.bit_count()
+                Dim s As UInt64 = that.bit_count() - remainder.bit_count()
                 If s > i Then
                     Exit While
                 End If
@@ -176,8 +169,7 @@ Public NotInheritable Class big_uint
     Private Shared Sub divide_uint(ByVal that As big_uint,
                                    ByVal remainder As big_uint,
                                    ByVal result As big_uint)
-        Dim i As UInt32 = 0
-        i = remainder.uint32_size() - that.uint32_size()
+        Dim i As UInt32 = remainder.uint32_size() - that.uint32_size()
         If Not result Is Nothing Then
             result.v.resize(i + uint32_1)
         End If
@@ -193,8 +185,7 @@ Public NotInheritable Class big_uint
                     Exit While
                 End If
                 If n = d Then
-                    Dim cmp As Int32 = 0
-                    cmp = compare(remainder, that, i)
+                    Dim cmp As Int32 = compare(remainder, that, i)
                     If cmp >= 0 Then
                         remainder.assert_sub(that, i)
                         If Not result Is Nothing Then

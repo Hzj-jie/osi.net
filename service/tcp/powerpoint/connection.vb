@@ -49,8 +49,7 @@ Public NotInheritable Class connection
         '2014 Apr. 15th
         '? to make sure the connection is alive, sometime we need to shutdown and regenerate the connection
         If p.max_lifetime_ms >= 0 AndAlso Not p.is_outgoing Then
-            Dim exp As Boolean = False
-            exp = (nowadays.milliseconds() - c.last_refer_ms() >= p.max_lifetime_ms)
+            Dim exp As Boolean = (nowadays.milliseconds() - c.last_refer_ms() >= p.max_lifetime_ms)
             If exp Then
                 If envs.tcp_trace Then
                     raise_error("shutdown a connection ",

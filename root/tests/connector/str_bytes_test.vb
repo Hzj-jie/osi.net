@@ -38,8 +38,7 @@ Public Class str_bytes_test
                 assertion.equal(bytes_str(b), s)
             End If
 
-            Dim i As Int32 = 0
-            i = rnd_int(1, strlen(s) + 1)
+            Dim i As Int32 = rnd_int(1, strlen(s) + 1)
             If i = strlen(s) Then
                 assertion.is_not_null(bytes_str(str_bytes(s, i)))
                 assertion.is_true(bytes_str(str_bytes(s, i)).null_or_empty())
@@ -49,8 +48,7 @@ Public Class str_bytes_test
                 assertion.equal(bytes_str(str_bytes(s), str_byte_count(strleft(s, i))), strmid(s, i))
             End If
 
-            Dim j As Int32 = 0
-            j = rnd_int(i, strlen(s) + 1)
+            Dim j As Int32 = rnd_int(i, strlen(s) + 1)
             If i = j Then
                 assertion.is_not_null(bytes_str(str_bytes(s, i, uint32_0)))
                 assertion.is_true(bytes_str(str_bytes(s, i, uint32_0)).null_or_empty())

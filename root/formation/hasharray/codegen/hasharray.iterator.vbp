@@ -28,8 +28,7 @@ Partial Public Class hasharray(Of T,
             j = p.row + uint32_1
             While i < p.column_count()
                 While j < p.row_count(i)
-                    Dim r As ref = Nothing
-                    r = p.ref_at(i, j)
+                    Dim r As ref = p.ref_at(i, j)
                     If Not r.empty() Then
                         Return New iterator(r)
                     End If
@@ -49,8 +48,7 @@ Partial Public Class hasharray(Of T,
             While True
                 While j > uint32_0
                     j -= uint32_1
-                    Dim r As ref = Nothing
-                    r = p.ref_at(i, j)
+                    Dim r As ref = p.ref_at(i, j)
                     If Not r.empty() Then
                         Return New iterator(r)
                     End If

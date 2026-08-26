@@ -21,8 +21,7 @@ Friend Class big_uint_left_shift_multiply_case
         sr = New big_uint(x)
         mr = New big_uint(x)
         For i As Int32 = 0 To 32 - 1
-            Dim t As Int32 = 0
-            t = rnd_int(1, bit_count_in_byte * sizeof_int32)
+            Dim t As Int32 = rnd_int(1, bit_count_in_byte * sizeof_int32)
             sr.left_shift(t)
             mr.multiply(uint32_1 << t)
             assertion.is_true(sr.equal(mr))

@@ -114,8 +114,7 @@ Public NotInheritable Class configuration_test2
         End Function
 
         Public Function build() As vector(Of pair(Of String, String))
-            Dim r As vector(Of pair(Of String, String)) = Nothing
-            r = New vector(Of pair(Of String, String))()
+            Dim r As New vector(Of pair(Of String, String))()
             If Not lang Is Nothing Then
                 assert(append_variant(r, "lang", lang))
             End If
@@ -157,8 +156,7 @@ Public NotInheritable Class configuration_test2
         ' Test [build] section
         assertion.is_true(config()("build")(envs.build).to(Of Boolean)())
         For i As UInt32 = 0 To config()("build").keys().size() - uint32_1
-            Dim key As String = Nothing
-            key = config()("build").keys()(i)
+            Dim key As String = config()("build").keys()(i)
             assertion.equal(config()("build")(key).to(Of Boolean)(), strsame(envs.build, key))
         Next
 
@@ -177,8 +175,7 @@ Public NotInheritable Class configuration_test2
         End If
 
         ' Test [section] section
-        Dim variants As variants_builder = Nothing
-        variants = variants_builder.[New]().
+        Dim variants As variants_builder = variants_builder.[New]().
                                     with_lang("en").
                                     with_brand("lave").
                                     with_time(0).
@@ -190,8 +187,7 @@ Public NotInheritable Class configuration_test2
                                     with_path("search?q=blabla").
                                     with_password("thisisapassword").
                                     with_processor_usage(20)
-        Dim v As vector(Of pair(Of String, String)) = Nothing
-        v = variants.build()
+        Dim v As vector(Of pair(Of String, String)) = variants.build()
         assertion.equal(config()("section", v)("welcome", v), "welcome")
         v = variants.with_lang("zh").build()
         assertion.equal(config()("section", v)("welcome", v), "欢迎")

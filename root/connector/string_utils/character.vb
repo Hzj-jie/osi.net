@@ -85,8 +85,7 @@ Public Module _character
         If Not c.utf8_supported() Then
             Return False
         End If
-        Dim v As UInt16 = 0
-        v = char_uint16(c)
+        Dim v As UInt16 = char_uint16(c)
         Return v >= &H4E00 AndAlso v <= &H9FFF
     End Function
 

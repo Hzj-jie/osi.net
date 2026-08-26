@@ -173,13 +173,10 @@ Public NotInheritable Class omap(Of KEY_T, VALUE_T)
             Return CloneT()
         End If
 
-        Dim r As omap(Of KEY_T, VALUE_T) = Nothing
-        r = New omap(Of KEY_T, VALUE_T)()
-        Dim it As omap(Of KEY_T, VALUE_T).iterator = Nothing
-        it = begin()
+        Dim r As New omap(Of KEY_T, VALUE_T)()
+        Dim it As omap(Of KEY_T, VALUE_T).iterator = begin()
         While it <> [end]()
-            Dim tit As omap(Of KEY_T, VALUE_T).iterator = Nothing
-            tit = that.find((+it).first)
+            Dim tit As omap(Of KEY_T, VALUE_T).iterator = that.find((+it).first)
             If tit = that.end() OrElse Not equal((+it).second, (+tit).second) Then
                 assert(r.insert((+it).first, (+it).second).second)
             End If
@@ -264,16 +261,14 @@ Public NotInheritable Class omap(Of KEY_T, VALUE_T)
         If v Is Nothing Then
             Return Nothing
         End If
-        Dim r As omap(Of KEY_T, VALUE_T) = Nothing
-        r = New omap(Of KEY_T, VALUE_T)()
+        Dim r As New omap(Of KEY_T, VALUE_T)()
         move_to(v, r)
         Return r
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function clone() As omap(Of KEY_T, VALUE_T)
-        Dim r As omap(Of KEY_T, VALUE_T) = Nothing
-        r = New omap(Of KEY_T, VALUE_T)()
+        Dim r As New omap(Of KEY_T, VALUE_T)()
         clone_to(Me, r)
         Return r
     End Function
@@ -323,8 +318,7 @@ Public NotInheritable Class omap(Of KEY_T, VALUE_T)
     Default Public Property at(ByVal key As KEY_T) As VALUE_T
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
-            Dim r As iterator = Nothing
-            r = find(key)
+            Dim r As iterator = find(key)
             If r = [end]() Then
                 r = emplace(copy_no_error(key), alloc(Of VALUE_T)()).first
             End If
@@ -332,8 +326,7 @@ Public NotInheritable Class omap(Of KEY_T, VALUE_T)
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As VALUE_T)
-            Dim r As tuple(Of iterator, Boolean) = Nothing
-            r = insert(key, value)
+            Dim r As tuple(Of iterator, Boolean) = insert(key, value)
             If Not r.second Then
                 copy(r.first.value().second, value)
             End If

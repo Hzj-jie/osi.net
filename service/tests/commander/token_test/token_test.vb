@@ -132,14 +132,10 @@ Partial Public Class token_test
                               End Function,
                               Function() As Boolean
                                   forward_questioner_responder.reset(id)
-                                  Dim ppt As mock_ppt = Nothing
-                                  ppt = ppts(rnd_int(0, array_size(ppts)))
-                                  Dim exp_accepted As Boolean = False
-                                  exp_accepted = rnd_bool()
-                                  Dim conn As mock_conn = Nothing
-                                  conn = If(exp_accepted, mock_conn.create_good(ppt), mock_conn.create_bad(ppts))
-                                  Dim c As itoken_challenger = Nothing
-                                  c = challenger_creator(token_info_creator(forward_questioner_responder, id, conn),
+                                  Dim ppt As mock_ppt = ppts(rnd_int(0, array_size(ppts)))
+                                  Dim exp_accepted As Boolean = rnd_bool()
+                                  Dim conn As mock_conn = If(exp_accepted, mock_conn.create_good(ppt), mock_conn.create_bad(ppts))
+                                  Dim c As itoken_challenger = challenger_creator(token_info_creator(forward_questioner_responder, id, conn),
                                                          ppt,
                                                          conn)
                                   aec = defend_event_comb(d, ppts, exp_accepted, with_empty_ppt, ppt, conn)
@@ -159,8 +155,7 @@ Partial Public Class token_test
                              ByVal finish_count As count_event) As event_comb
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  Dim d As itoken_defender(Of mock_ppt, mock_conn) = Nothing
-                                  d = defender_creator(token_info_creator(forward_questioner_responder, id, Nothing))
+                                  Dim d As itoken_defender(Of mock_ppt, mock_conn) = defender_creator(token_info_creator(forward_questioner_responder, id, Nothing))
                                   Dim ppts() As mock_ppt = Nothing
                                   ppts = mock_ppt.create(rnd_uint(mock_ppt_count_lower_bound,
                                                                   mock_ppt_count_upper_bound),
@@ -180,8 +175,7 @@ Partial Public Class token_test
     End Function
 
     Private Function run_case(ByVal with_empty_token As Boolean) As Boolean
-        Dim c As count_event = Nothing
-        c = New count_event(concurrency_connection)
+        Dim c As New count_event(concurrency_connection)
         For i As UInt32 = uint32_0 To concurrency_connection - uint32_1
             assert_begin(execute(i, with_empty_token, c))
         Next

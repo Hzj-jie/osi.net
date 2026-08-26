@@ -37,8 +37,7 @@ Public Class lang_parser_test
         End Property
 
         Public Overrides Function ToString() As String
-            Dim r As StringBuilder = Nothing
-            r = New StringBuilder()
+            Dim r As New StringBuilder()
             r.Append(this)
             If Not isemptyarray(subnodes) Then
                 r.Append("{")

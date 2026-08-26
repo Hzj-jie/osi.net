@@ -20,8 +20,7 @@ Public NotInheritable Class strong_high_res_ticks_retriever
     Public Shared Function ticks() As Int64
         SyncLock my_type
             While True
-                Dim v As Int64 = 0
-                v = high_res_ticks_retriever.ticks()
+                Dim v As Int64 = high_res_ticks_retriever.ticks()
                 If v >= last Then
                     last = v
                     Return v

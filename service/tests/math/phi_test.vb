@@ -29,18 +29,15 @@ Public NotInheritable Class phi_test
             assertion.equal(stupid_phi(i), phi(i), i)
         Next
         For i As Int32 = 0 To 32 - 1
-            Dim x As Int32 = 0
-            x = rnd_int(0, max_int16)
+            Dim x As Int32 = rnd_int(0, max_int16)
             assertion.equal(stupid_phi(x), phi(x), x)
         Next
         For i As Int32 = 0 To 2 - 1
-            Dim x As Int32 = 0
-            x = rnd_int(0, max_int32)
+            Dim x As Int32 = rnd_int(0, max_int32)
             assertion.equal(stupid_phi(x), phi(x), x)
         Next
         For i As Int32 = 0 To 2 - 1
-            Dim x As Int32 = 0
-            x = rnd_int(min_int32, 0)
+            Dim x As Int32 = rnd_int(min_int32, 0)
             assertion.equal(stupid_phi(x), phi(x), x)
         Next
         Return True

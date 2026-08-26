@@ -45,8 +45,7 @@ Partial Public NotInheritable Class big_udec
             Return True
         End If
 
-        Dim m As UInt32 = 0
-        m = min(n.trailing_binary_zero_count(), d.trailing_binary_zero_count())
+        Dim m As UInt32 = min(n.trailing_binary_zero_count(), d.trailing_binary_zero_count())
         n.right_shift(m)
         d.right_shift(m)
 
@@ -63,8 +62,7 @@ Partial Public NotInheritable Class big_udec
             assert(Not n.is_zero())
             assert(Not d.is_zero())
 
-            Dim cmp As Int32 = 0
-            cmp = n.compare(d)
+            Dim cmp As Int32 = n.compare(d)
             assert(cmp <> 0)
             Dim l As big_uint = Nothing
             Dim r As big_uint = Nothing
@@ -93,8 +91,7 @@ Partial Public NotInheritable Class big_udec
 #If REDUCE_FRACTION_OF_PREDEFINED_PRIMES Then
         Using code_block
             For j As Int32 = 0 To reduce_fraction_primes.selected_prime_count - 1
-                Dim i As UInt32 = 0
-                i = reduce_fraction_primes.selected_prime(j)
+                Dim i As UInt32 = reduce_fraction_primes.selected_prime(j)
                 While True
                     Dim nn As big_uint = Nothing
                     Dim nd As big_uint = Nothing
@@ -117,8 +114,7 @@ Partial Public NotInheritable Class big_udec
 #End If
 
         Using code_block
-            Dim b As big_uint = Nothing
-            b = big_uint.gcd(n, d)
+            Dim b As big_uint = big_uint.gcd(n, d)
             Dim c As big_uint = Nothing
             n.assert_divide(b, c)
             assert(c.is_zero())

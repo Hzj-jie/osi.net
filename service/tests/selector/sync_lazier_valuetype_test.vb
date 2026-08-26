@@ -12,12 +12,10 @@ Public Class sync_lazier_valuetype_test
 
     Private Shared Function run_case(Of T As _boolean)() As Boolean
         Const value As Int32 = 100
-        Dim p As sync_lazier(Of Int32, T) = Nothing
-        p = New sync_lazier(Of Int32, T)(Function() As Int32
+        Dim p As sync_lazier(Of Int32, T) = New sync_lazier(Of Int32, T)(Function() As Int32
                                              Return value
                                          End Function)
-        Dim r As Int32 = 0
-        r = p.get()
+        Dim r As Int32 = p.get()
         assertion.equal(r, value)
         Return True
     End Function

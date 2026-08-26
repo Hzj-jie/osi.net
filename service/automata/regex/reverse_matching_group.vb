@@ -26,8 +26,7 @@ Partial Public Class rlexer
         End Sub
 
         Public Overrides Function match(ByVal i As String, ByVal pos As UInt32) As vector(Of UInt32)
-            Dim r As vector(Of UInt32) = Nothing
-            r = MyBase.match(i, pos)
+            Dim r As vector(Of UInt32) = MyBase.match(i, pos)
             If Not r.null_or_empty() Then
                 Return Nothing
             End If

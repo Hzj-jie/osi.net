@@ -146,12 +146,9 @@ Partial Public Class sharedtransmitter_test
             ReDim ecs(connection_count - uint8_1)
             ' Remove two invalid ports
             For i As Int32 = 0 To connection_count - 1
-                Dim j As Int32 = 0
-                j = i
-                Dim first As Int32 = 0
-                first = iteration_count * i
-                Dim sc As sharedtransmitter(Of Byte, Byte, component, Int32, parameter) = Nothing
-                sc = sharedtransmitter(Of Byte, Byte, component, Int32, parameter).creator.
+                Dim j As Int32 = i
+                Dim first As Int32 = iteration_count * i
+                Dim sc As sharedtransmitter(Of Byte, Byte, component, Int32, parameter) = sharedtransmitter(Of Byte, Byte, component, Int32, parameter).creator.
                          [New]().
                          with_parameter(outp).
                          with_remote(const_pair.of((+inc).address, inp.local_port)).

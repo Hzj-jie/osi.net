@@ -68,8 +68,7 @@ Public NotInheritable Class command_test
     End Function
 
     Private Shared Function run_case() As Boolean
-        Dim c As command = Nothing
-        c = New command()
+        Dim c As New command()
         Dim constants As constants = Nothing
         constants = New constants()
         c.attach(constants.action) _
@@ -90,8 +89,7 @@ Public NotInheritable Class command_test
             Return False
         End If
 
-        Dim s As String = Nothing
-        s = uri_serializer.to_str(c)
+        Dim s As String = uri_serializer.to_str(c)
         assertion.is_false(s.null_or_empty())
         assertion.is_true(uri_serializer.from_str(s, r))
         If Not command_validation(r, constants) Then

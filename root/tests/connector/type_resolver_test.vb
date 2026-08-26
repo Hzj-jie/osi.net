@@ -11,8 +11,7 @@ Imports osi.root.utt.attributes
 Public NotInheritable Class type_resolver_test
     <test>
     Private Shared Sub register_and_resolve()
-        Dim r As type_resolver(Of Int32) = Nothing
-        r = New type_resolver(Of Int32)()
+        Dim r As New type_resolver(Of Int32)()
         r.assert_first_register(GetType(Int32), 1)
         r.assert_first_register(GetType(Boolean), 2)
         r.assert_first_register(GetType(String), 3)
@@ -37,8 +36,7 @@ Public NotInheritable Class type_resolver_test
 
     <test>
     Private Shared Sub resolve_from_base()
-        Dim r As type_resolver(Of Int32) = Nothing
-        r = New type_resolver(Of Int32)()
+        Dim r As New type_resolver(Of Int32)()
         r.assert_first_register(GetType(base), 1)
 
         Dim o As Int32 = 0
@@ -48,8 +46,7 @@ Public NotInheritable Class type_resolver_test
 
     <test>
     Private Shared Sub resolve_from_object()
-        Dim r As type_resolver(Of Int32) = Nothing
-        r = New type_resolver(Of Int32)()
+        Dim r As New type_resolver(Of Int32)()
 
         assertion.is_false(r.from_type_or_base(GetType(Object), 0))
 
@@ -61,8 +58,7 @@ Public NotInheritable Class type_resolver_test
 
     <test>
     Private Shared Sub resolve_from_interfaces()
-        Dim r As type_resolver(Of Int32) = Nothing
-        r = New type_resolver(Of Int32)()
+        Dim r As New type_resolver(Of Int32)()
         r.assert_first_register(GetType(int), 1)
         r.assert_first_register(GetType(base), 2)
 
@@ -82,8 +78,7 @@ Public NotInheritable Class type_resolver_test
 
     <test>
     Private Shared Sub resolve_without_interfaces()
-        Dim r As type_resolver(Of Int32) = Nothing
-        r = New type_resolver(Of Int32)()
+        Dim r As New type_resolver(Of Int32)()
         r.assert_first_register(GetType(Int32), 1)
 
         assertion.is_false(r.from_interfaces(GetType(Int32), 0))

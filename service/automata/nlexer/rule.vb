@@ -36,8 +36,7 @@ Partial Public NotInheritable Class nlexer
 
         Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32) Implements matcher.match
             For j As UInt32 = 0 To ms.size() - uint32_1
-                Dim r As [optional](Of UInt32) = Nothing
-                r = ms(j).match(i, pos)
+                Dim r As [optional](Of UInt32) = ms(j).match(i, pos)
                 If Not r Then
                     Return [optional].empty(Of UInt32)()
                 End If
@@ -52,12 +51,10 @@ Partial Public NotInheritable Class nlexer
 
         ' Process abc[d,e|f]+
         Public Shared Function [of](ByVal s As String, ByRef o As rule) As Boolean
-            Dim ms As vector(Of matcher) = Nothing
-            ms = New vector(Of matcher)()
+            Dim ms As New vector(Of matcher)()
             Dim i As UInt32 = 0
             While i < strlen(s)
-                Dim j As UInt32 = 0
-                j = i
+                Dim j As UInt32 = i
                 Dim m As matcher = Nothing
                 If Not groups.of(s, i, m) Then
                     Return False

@@ -107,8 +107,7 @@ Partial Public Class stream(Of T)
         If e.end() Then
             Return [optional].empty(Of T)()
         End If
-        Dim r As [optional](Of T) = Nothing
-        r = [optional].of(e.current())
+        Dim r As [optional](Of T) = [optional].of(e.current())
         e.next()
         Return r
     End Function

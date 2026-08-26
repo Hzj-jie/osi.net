@@ -19,8 +19,7 @@ Public Module _substring
     End Function
 
     <Extension()> Public Function strright(ByVal str As String, ByVal length As UInt32) As String
-        Dim len As UInt32 = 0
-        len = strlen(str)
+        Dim len As UInt32 = strlen(str)
         If length = 0 Then
             Return Nothing
         End If

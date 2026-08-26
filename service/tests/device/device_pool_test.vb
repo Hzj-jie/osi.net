@@ -41,8 +41,7 @@ Public Class device_pool_test
             Public Overrides Function run() As Boolean
                 If multithreading_case_wrapper.thread_id = 0 Then
                     d = device_pool.new_for_test()
-                    Dim i As atomic_int = Nothing
-                    i = New atomic_int()
+                    Dim i As New atomic_int()
                     AddHandler d.closing, Sub()
                                               assertion.equal(i.increment(), 1)
                                           End Sub

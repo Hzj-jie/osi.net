@@ -14,8 +14,7 @@ Public NotInheritable Class chunk_test
     <test>
     <repeat(1000, 40000)>
     Private Shared Sub random_case()
-        Dim c As chunks = Nothing
-        c = New chunks()
+        Dim c As New chunks()
         For i As Int32 = 0 To rnd_int(20, 100) - 1
             c.emplace(next_bytes(rnd_uint(0, 256)))
         Next
@@ -28,8 +27,7 @@ Public NotInheritable Class chunk_test
 
     <test>
     Private Shared Sub predefined_case()
-        Dim c As chunks = Nothing
-        c = New chunks()
+        Dim c As New chunks()
         c.insert(1)
         c.insert(1.0)
         c.insert("abc")

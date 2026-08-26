@@ -12,8 +12,7 @@ Namespace primitive
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim f As interrupts = Nothing
-            f = New interrupts()
+            Dim f As New interrupts()
             Dim p As UInt32 = 0
             assertion.is_true(f.of("stdout", p))
             assertion.equal(p, uint32_0)

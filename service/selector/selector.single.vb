@@ -94,8 +94,7 @@ Public Class selector(Of T,
     End Function
 
     Public Function [select](ByVal p As PARA_T, ByRef o As T) As Boolean
-        Dim s As CONTAINER_T = Nothing
-        s = m.generate(p, Function() container_allocator(alloc, p))
+        Dim s As CONTAINER_T = m.generate(p, Function() container_allocator(alloc, p))
         assert(Not s Is Nothing)
         Return container_invoker.at(s, o)
     End Function

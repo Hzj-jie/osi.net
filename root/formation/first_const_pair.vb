@@ -226,8 +226,7 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
                  ByVal r As first_const_pair(Of FT, ST)) As Int32
             assert(Not l Is Nothing)
             assert(Not r Is Nothing)
-            Dim cmp As Int32 = 0
-            cmp = compare(l.second, r.second)
+            Dim cmp As Int32 = compare(l.second, r.second)
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -290,8 +289,7 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
         If that Is Nothing Then
             Return Nothing
         End If
-        Dim r As first_const_pair(Of FT, ST) = Nothing
-        r = New first_const_pair(Of FT, ST)()
+        Dim r As New first_const_pair(Of FT, ST)()
         r.first = that.first
         r.second = that.second
         that.first = Nothing
@@ -306,8 +304,7 @@ Public NotInheritable Class first_const_pair(Of FT, ST)
         If other Is Nothing Then
             Return 1
         End If
-        Dim c As Int32 = 0
-        c = compare(first, other.first)
+        Dim c As Int32 = compare(first, other.first)
         If c = 0 Then
             Return compare(second, other.second)
         End If

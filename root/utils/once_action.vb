@@ -37,8 +37,7 @@ Public NotInheritable Class once_action
     End Function
 
     Public Function run() As Boolean
-        Dim a As Action = Nothing
-        a = +v
+        Dim a As Action = +v
         If a Is Nothing Then
             Return False
         End If
@@ -68,8 +67,7 @@ Public NotInheritable Class once_action(Of T)
     End Function
 
     Public Function run(ByRef p As T) As Boolean
-        Dim a As void(Of T) = Nothing
-        a = +v
+        Dim a As void(Of T) = +v
         If a Is Nothing Then
             Return False
         End If

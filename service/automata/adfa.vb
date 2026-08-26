@@ -73,8 +73,7 @@ Public Class adfa(Of KEY_T,
             Return False
         Else
             Dim i As Int32 = 0
-            Dim l As Int32 = 0
-            l = array_size(s)
+            Dim l As Int32 = array_size(s)
             While i < l
                 Dim it As trie(Of KEY_T,
                                   Func(Of KEY_T(), UInt32, RESULT_T, Boolean),

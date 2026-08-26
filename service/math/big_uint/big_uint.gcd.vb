@@ -40,8 +40,7 @@ Partial Public NotInheritable Class big_uint
 
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Shared Function gcd_successive_sub(ByVal a As big_uint, ByVal b As big_uint) As big_uint
-        Dim shift As UInt32 = 0
-        shift = shifting(a, b)
+        Dim shift As UInt32 = shifting(a, b)
 
         While True
             assert(Not a.is_zero())
@@ -76,8 +75,7 @@ Partial Public NotInheritable Class big_uint
                 Return c
             End If
 
-            Dim cmp As Int32 = 0
-            cmp = a.compare(b)
+            Dim cmp As Int32 = a.compare(b)
 
             If cmp < 0 Then
                 root.connector.swap(a, b)
@@ -113,8 +111,7 @@ Partial Public NotInheritable Class big_uint
 
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Shared Function gcd_hybrid(ByVal a As big_uint, ByVal b As big_uint) As big_uint
-        Dim shift As UInt32 = 0
-        shift = shifting(a, b)
+        Dim shift As UInt32 = shifting(a, b)
         a.remove_trailing_binary_zeros()
         b.remove_trailing_binary_zeros()
         Return gcd_hybrid_loop(a, b).left_shift(shift)

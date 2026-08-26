@@ -11,8 +11,7 @@ Imports osi.root.utt.attributes
 Public NotInheritable Class set_test2
     <test>
     Private Shared Sub set_can_store_null()
-        Dim s As [set](Of String) = Nothing
-        s = [set].of("abc", "bcd", Nothing, Nothing, Nothing, "DEF")
+        Dim s As [set](Of String) = [set].of("abc", "bcd", Nothing, Nothing, Nothing, "DEF")
         assertion.equal(s.size(), CUInt(4))
         assertion.not_equal(s.find(Nothing), s.end())
         assertion.not_equal(s.find("abc"), s.end())
@@ -23,8 +22,7 @@ Public NotInheritable Class set_test2
 
     <test>
     Private Shared Sub set_can_find_null()
-        Dim s As [set](Of String) = Nothing
-        s = [set].of("a", "b", "c")
+        Dim s As [set](Of String) = [set].of("a", "b", "c")
         assertion.equal(s.find(Nothing), s.end())
         assertion.not_equal(s.find("a"), s.end())
     End Sub

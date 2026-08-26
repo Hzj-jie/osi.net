@@ -86,8 +86,7 @@ Public Class atomic_test
         Public Overrides Function run() As Boolean
             b = Not b
             write(If(b, first(), second()))
-            Dim v As T = Nothing
-            v = read()
+            Dim v As T = read()
             If same(v, first()) OrElse same(v, second()) Then
                 sc.increment()
             Else

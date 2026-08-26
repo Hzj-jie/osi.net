@@ -19,8 +19,7 @@ Partial Public NotInheritable Class module_binder
         End If
 
         Using scoped.atomic_bool(suppress.invoker_error)
-            Dim m As module_handle.named_module = Nothing
-            m = create_module(Of Func(Of server.context, Boolean)) _
+            Dim m As module_handle.named_module = create_module(Of Func(Of server.context, Boolean)) _
                              (type,
                               assembly,
                               binding_flags,
@@ -89,8 +88,7 @@ Partial Public NotInheritable Class module_binder
             Return Nothing
         End If
 
-        Dim filter As context_filter = Nothing
-        filter = context_filter.[New](invoker.method_info())
+        Dim filter As context_filter = context_filter.[New](invoker.method_info())
         Dim action As delegate_type = Nothing
         If Not pre_or_post_alloc_bind(invoker, action) Then
             Return Nothing

@@ -131,8 +131,7 @@ Public Class calculator(Of T)
     End Sub
 
     Public Sub emplace(ByVal op As [operator], ByRef e As calculator_error)
-        Dim p As UInt32 = 0
-        p = priority(op)
+        Dim p As UInt32 = priority(op)
         'though the expression error can be checked here
         While Not os.empty() AndAlso os.back().priority >= p AndAlso ts.size() >= 2
             calculate(e)
@@ -164,8 +163,7 @@ Public Class calculator(Of T)
 
     Public Function execute(ByRef e As calculator_error) As T
         e = execute()
-        Dim r As T = Nothing
-        r = ts.back()
+        Dim r As T = ts.back()
         ts.pop()
         reset()
         Return r

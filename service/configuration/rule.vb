@@ -61,8 +61,7 @@ Public MustInherit Class rule
                 x = AddressOf include
             Else
                 assert(Not command_mapping() Is Nothing)
-                Dim it As map(Of String, Func(Of String, Boolean)).iterator = Nothing
-                it = command_mapping().find(f)
+                Dim it As map(Of String, Func(Of String, Boolean)).iterator = command_mapping().find(f)
                 If it = command_mapping().end() Then
                     x = Function(y As String) As Boolean
                             Return [default](y, f)

@@ -20,8 +20,7 @@ Public Class send_input_test
         Public Overrides Function run() As Boolean
             While True
                 Dim code As UInt16 = 0
-                Dim s As String = Nothing
-                s = Console.ReadLine()
+                Dim s As String = Console.ReadLine()
                 If Not UInt16.TryParse(s, code) Then
                     Return True
                 End If

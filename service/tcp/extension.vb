@@ -147,8 +147,7 @@ Public Module _extension
                         Dim r As Boolean = False
                         Try
                             Dim rst As Int32 = 0
-                            Dim buffered_bytes As Int32 = 0
-                            buffered_bytes = client.Available()
+                            Dim buffered_bytes As Int32 = client.Available()
                             rst = client.Client().Receive(empty_buff, empty_buff_size, SocketFlags.Peek)
                             If buffered_bytes = 0 Then
                                 'the data is coming right after client.Available() called
@@ -183,8 +182,7 @@ Public Module _extension
                     If client.Client().poll_write() Then
                         Dim r As Boolean = False
                         Dim ob As Boolean = False
-                        Dim c As Socket = Nothing
-                        c = client.Client()
+                        Dim c As Socket = client.Client()
                         ob = c.Blocking()
                         Try
                             c.Blocking() = False
@@ -217,8 +215,7 @@ Public Module _extension
                     End If
                 End If
                 If client.alive() Then
-                    Dim state As TcpState = Nothing
-                    state = connection_state.query(client.Client())
+                    Dim state As TcpState = connection_state.query(client.Client())
                     If state = TcpState.Closed OrElse
                        state = TcpState.CloseWait OrElse
                        state = TcpState.DeleteTcb Then

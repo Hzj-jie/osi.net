@@ -52,8 +52,7 @@ Public NotInheritable Class inlinable_perf
 
     Private Shared Sub internal_instructions()
         For i As UInt64 = 0 To size - uint64_1
-            Dim j As Int32 = 0
-            j = r1 + r2
+            Dim j As Int32 = r1 + r2
             j = r1 - r2
         Next
     End Sub

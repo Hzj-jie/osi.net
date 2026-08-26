@@ -69,14 +69,12 @@ Partial Public Class atom_ref(Of LOCK_T As {islimlock, Structure})
     Public Function exchange(ByVal value As Object) As Object
 #If GENERIC_TYPE Then
         Return l.locked(Function() As Object
-                            Dim r As Object = Nothing
-                            r = p
+                            Dim r As Object = p
                             p = value
                             Return r
                         End Function)
 #Else
-        Dim r As Object = Nothing
-        r = Interlocked.Exchange(p, value)
+        Dim r As Object = Interlocked.Exchange(p, value)
         Thread.MemoryBarrier()
         Return r
 #End If
@@ -85,16 +83,14 @@ Partial Public Class atom_ref(Of LOCK_T As {islimlock, Structure})
     Public Function compare_exchange(ByVal value As Object, ByVal comparand As Object) As Object
 #If GENERIC_TYPE Then
         Return l.locked(Function() As Object
-                            Dim r As Object = Nothing
-                            r = p
+                            Dim r As Object = p
                             If equal(p, comparand) Then
                                 p = value
                             End If
                             Return r
                         End Function)
 #Else
-        Dim r As Object = Nothing
-        r = Interlocked.CompareExchange(p, value, comparand)
+        Dim r As Object = Interlocked.CompareExchange(p, value, comparand)
         Thread.MemoryBarrier()
         Return r
 #End If

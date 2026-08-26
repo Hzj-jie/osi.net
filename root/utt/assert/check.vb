@@ -211,8 +211,7 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
                                              ByVal u As Int64,
                                              ByVal ParamArray msg() As Object) As Boolean
         assert(l <= u)
-        Dim n As Int64 = 0
-        n = DateTime.Now().milliseconds()
+        Dim n As Int64 = DateTime.Now().milliseconds()
         Return more_or_equal_and_less_or_equal(n, l, u, msg)
     End Function
 
@@ -221,8 +220,7 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
                                      ByVal low As Int64,
                                      ByVal high As Int64)
         assert(low <= high)
-        Dim n As Int64 = 0
-        n = DateTime.Now().milliseconds()
+        Dim n As Int64 = DateTime.Now().milliseconds()
         exp_l = n + low
         exp_h = n + high
     End Sub

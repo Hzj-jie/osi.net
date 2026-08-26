@@ -25,8 +25,7 @@ Partial Public NotInheritable Class big_udec
 #End If
         Else
 #If REDUCE_FRACTION_WHEN_CALCULATING Then
-            Dim g As big_uint = Nothing
-            g = big_uint.gcd(Me.d, that.d)
+            Dim g As big_uint = big_uint.gcd(Me.d, that.d)
             Dim c As big_uint = Nothing
             Me.d.assert_divide(g, c)
             assert(c.is_zero())
@@ -82,8 +81,7 @@ Partial Public NotInheritable Class big_udec
 #End If
         Else
 #If REDUCE_FRACTION_WHEN_CALCULATING Then
-            Dim g As big_uint = Nothing
-            g = big_uint.gcd(Me.d, that.d)
+            Dim g As big_uint = big_uint.gcd(Me.d, that.d)
             Dim c As big_uint = Nothing
             Me.d.assert_divide(g, c)
             assert(c.is_zero())
@@ -101,8 +99,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function [sub](ByVal that As big_udec) As big_udec
         Dim overflow As Boolean = False
-        Dim r As big_udec = Nothing
-        r = [sub](that, overflow)
+        Dim r As big_udec = [sub](that, overflow)
         If overflow Then
             throws.overflow()
         End If
@@ -111,8 +108,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function assert_sub(ByVal that As big_udec) As big_udec
         Dim overflow As Boolean = False
-        Dim r As big_udec = Nothing
-        r = [sub](that, overflow)
+        Dim r As big_udec = [sub](that, overflow)
         assert(Not overflow)
         Return r
     End Function
@@ -184,8 +180,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function divide(ByVal that As big_udec) As big_udec
         Dim divide_by_zero As Boolean = False
-        Dim r As big_udec = Nothing
-        r = divide(that, divide_by_zero)
+        Dim r As big_udec = divide(that, divide_by_zero)
         If divide_by_zero Then
             throws.divide_by_zero()
         End If
@@ -194,8 +189,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function assert_divide(ByVal that As big_udec) As big_udec
         Dim divide_by_zero As Boolean = False
-        Dim r As big_udec = Nothing
-        r = divide(that, divide_by_zero)
+        Dim r As big_udec = divide(that, divide_by_zero)
         assert(Not divide_by_zero)
         Return r
     End Function
@@ -230,8 +224,7 @@ Partial Public NotInheritable Class big_udec
         If is_zero() OrElse is_one() OrElse that.is_one() Then
             Return Me
         End If
-        Dim p As big_uint = Nothing
-        p = Me.n * extract_power_base \ Me.d \ that
+        Dim p As big_uint = Me.n * extract_power_base \ Me.d \ that
         If p.is_zero_or_one() Then
             p = New big_uint(CUInt(2))
         End If
@@ -246,8 +239,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function extract(ByVal that As big_uint, ByVal extract_power_base As UInt32) As big_udec
         Dim divide_by_zero As Boolean = False
-        Dim r As big_udec = Nothing
-        r = extract(that, extract_power_base, divide_by_zero)
+        Dim r As big_udec = extract(that, extract_power_base, divide_by_zero)
         If divide_by_zero Then
             throws.divide_by_zero()
         End If
@@ -260,8 +252,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function assert_extract(ByVal that As big_uint, ByVal extract_power_base As UInt32) As big_udec
         Dim divide_by_zero As Boolean = False
-        Dim r As big_udec = Nothing
-        r = extract(that, extract_power_base, divide_by_zero)
+        Dim r As big_udec = extract(that, extract_power_base, divide_by_zero)
         assert(Not divide_by_zero)
         Return r
     End Function
@@ -291,8 +282,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function extract(ByVal that As big_udec) As big_udec
         Dim divide_by_zero As Boolean = False
-        Dim r As big_udec = Nothing
-        r = extract(that, divide_by_zero)
+        Dim r As big_udec = extract(that, divide_by_zero)
         If divide_by_zero Then
             throws.divide_by_zero()
         End If
@@ -301,8 +291,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function assert_extract(ByVal that As big_udec) As big_udec
         Dim divide_by_zero As Boolean = False
-        Dim r As big_udec = Nothing
-        r = extract(that, divide_by_zero)
+        Dim r As big_udec = extract(that, divide_by_zero)
         assert(Not divide_by_zero)
         Return r
     End Function
@@ -318,8 +307,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function reciprocal() As big_udec
         Dim d As Boolean = False
-        Dim r As big_udec = Nothing
-        r = reciprocal(d)
+        Dim r As big_udec = reciprocal(d)
         If d Then
             throws.divide_by_zero()
         End If
@@ -328,8 +316,7 @@ Partial Public NotInheritable Class big_udec
 
     Public Function assert_reciprocal() As big_udec
         Dim d As Boolean = False
-        Dim r As big_udec = Nothing
-        r = reciprocal(d)
+        Dim r As big_udec = reciprocal(d)
         assert(Not d)
         Return r
     End Function

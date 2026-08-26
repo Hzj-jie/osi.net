@@ -42,14 +42,12 @@ Public NotInheritable Class int_divide_perf
             While r2 = 0
                 r2 = rnd_int()
             End While
-            Dim r As Int32 = 0
-            r = r1 \ r2
+            Dim r As Int32 = r1 \ r2
         End Sub
 
         Public Overrides Function run() As Boolean
             For i As Int64 = 0 To 1073741824L - 1
-                Dim r As Int32 = 0
-                r = r1 \ r2
+                Dim r As Int32 = r1 \ r2
             Next
             Return True
         End Function

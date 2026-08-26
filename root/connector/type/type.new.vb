@@ -10,8 +10,7 @@ Imports osi.root.constants
 Public Module _type
     Private Function pure_assembly_name(ByVal name As String) As String
         assert(Not name.null_or_empty())
-        Dim index As Int32 = 0
-        index = name.IndexOf(character.comma)
+        Dim index As Int32 = name.IndexOf(character.comma)
         If index = npos Then
             Return name
         Else
@@ -45,11 +44,9 @@ Public Module _type
         End If
 
         If Not strcontains(type_name, character.comma) Then
-            Dim index As Int32 = 0
-            index = type_name.LastIndexOf(character.dot)
+            Dim index As Int32 = type_name.LastIndexOf(character.dot)
             If index <> npos Then
-                Dim assembly_name As String = Nothing
-                assembly_name = strleft(type_name, CUInt(index))
+                Dim assembly_name As String = strleft(type_name, CUInt(index))
                 type_name = merge_type_name_with_assembly(type_name, assembly_name)
             End If
         End If

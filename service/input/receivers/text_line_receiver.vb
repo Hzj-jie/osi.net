@@ -22,8 +22,7 @@ Public Class text_line_receiver
     End Sub
 
     Private Function to_line() As String
-        Dim r As StringBuilder = Nothing
-        r = New StringBuilder()
+        Dim r As New StringBuilder()
         For i As Int32 = 0 To q.size() - 1
             r.Append(q(i))
         Next

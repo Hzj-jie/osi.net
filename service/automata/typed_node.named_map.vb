@@ -22,8 +22,7 @@ Partial Public NotInheritable Class typed_node
         End Sub
 
         Public Function nodes(ByVal name As String, ByRef o As vector(Of typed_node)) As Boolean
-            Dim it As map(Of String, vector(Of typed_node)).iterator = Nothing
-            it = m.find(name)
+            Dim it As map(Of String, vector(Of typed_node)).iterator = m.find(name)
             If it = m.end() Then
                 Return False
             End If

@@ -23,8 +23,7 @@ Partial Public NotInheritable Class big_uint
 
     Private Shared Function char_to_number(ByVal c As Char, ByRef b As Byte, ByVal base As Byte) As Boolean
         assert_support_base(base)
-        Dim r As Int16 = 0
-        r = chars(Convert.ToInt32(c))
+        Dim r As Int16 = chars(Convert.ToInt32(c))
         If r = npos OrElse r >= base Then
             Return False
         End If
@@ -36,8 +35,7 @@ Partial Public NotInheritable Class big_uint
         assert_support_base(base)
         assert(base._1count() = 1)
         Dim s As Byte = 0
-        Dim b As Byte = 0
-        b = base
+        Dim b As Byte = base
         While b > 1
             b >>= 1
             s += uint8_1
@@ -46,15 +44,13 @@ Partial Public NotInheritable Class big_uint
     End Function
 
     Private Shared Function shift_base(ByVal base As Byte, ByVal digit_count As Byte) As UInt64
-        Dim r As UInt64 = 0
-        r = base_to_shift(base)
+        Dim r As UInt64 = base_to_shift(base)
         r *= digit_count
         Return r
     End Function
 
     Private Shared Function multiply_base(ByVal base As Byte, ByVal digit_count As Byte) As big_uint
-        Dim d As Double = 0
-        d = base
+        Dim d As Double = base
         d ^= digit_count
         assert(d <= max_uint64)
         Return New big_uint(CULng(d))
@@ -70,21 +66,16 @@ Partial Public NotInheritable Class big_uint
         If is_one() Then
             Return number_to_char(1)
         End If
-        Dim r As StringBuilder = Nothing
-        r = New StringBuilder()
-        Dim t As big_uint = Nothing
-        t = New big_uint(Me)
-        Dim dc As Byte = 0
-        dc = digit_count_per_parse(base)
+        Dim r As New StringBuilder()
+        Dim t As New big_uint(Me)
+        Dim dc As Byte = digit_count_per_parse(base)
         assert(dc > 0)
-        Dim bu As big_uint = Nothing
-        bu = assert_which.of(base ^ dc).can_cast_to_uint64()
+        Dim bu As big_uint = assert_which.of(base ^ dc).can_cast_to_uint64()
         assert(bu.less_or_equal(CULng(max_uint32_plus_1)))
         While Not t.is_zero()
             Dim rmb As big_uint = Nothing
             t.assert_divide(bu, rmb)
-            Dim rm As UInt32 = 0
-            rm = rmb.as_uint32()
+            Dim rm As UInt32 = rmb.as_uint32()
             For i As UInt32 = 0 To dc - uint32_1
                 Dim c As UInt32 = 0
                 rm = rm.div_rem(base, c)
@@ -119,11 +110,9 @@ Partial Public NotInheritable Class big_uint
             r = big_uint.one()
             Return True
         End If
-        Dim dc As Byte = 0
-        dc = digit_count_per_parse(base)
+        Dim dc As Byte = digit_count_per_parse(base)
         assert(dc > 0)
-        Dim multiply_t As big_uint = Nothing
-        multiply_t = multiply_base(base, dc)
+        Dim multiply_t As big_uint = multiply_base(base, dc)
         r = New big_uint()
         For i As Int32 = 0 To strlen_i(s) - 1 Step dc
             Dim u As UInt32 = 0

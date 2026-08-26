@@ -57,10 +57,8 @@ Friend NotInheritable Class mapheap_case
     End Function
 
     Private Shared Function is_key_value(ByVal k As String, ByVal v As Int64) As Boolean
-        Dim i As Int64 = 0
-        i = key_value(k)
-        Dim b As Int64 = 0
-        b = i
+        Dim i As Int64 = key_value(k)
+        Dim b As Int64 = i
         Do
             If i = v Then
                 Return True
@@ -90,8 +88,7 @@ Friend NotInheritable Class mapheap_case
         If Not validation() Then
             Return
         End If
-        Dim it As map(Of String, Int64).iterator = Nothing
-        it = m.find(k)
+        Dim it As map(Of String, Int64).iterator = m.find(k)
         If it <> m.end() Then
             dec((+it).second)
         End If
@@ -100,13 +97,11 @@ Friend NotInheritable Class mapheap_case
     End Sub
 
     Private Sub accumulate()
-        Dim k As String = Nothing
-        k = rnd_key()
+        Dim k As String = rnd_key()
         If Not validation() Then
             mh.accumulate(k, 1)
         End If
-        Dim it As mapheap(Of String, Int64).iterator = Nothing
-        it = mh.find(k)
+        Dim it As mapheap(Of String, Int64).iterator = mh.find(k)
         Dim v As Int64 = 0
         If it = mh.end() Then
             assertion.is_true(m.find(k) = m.end())
@@ -115,8 +110,7 @@ Friend NotInheritable Class mapheap_case
             m(k) = v
             c(v) += 1
         Else
-            Dim ov As Int64 = 0
-            ov = (+it).first
+            Dim ov As Int64 = (+it).first
             v = next_value(ov)
             assertion.is_true(mh.accumulate(k, v - ov))
             m(k) = v
@@ -144,8 +138,7 @@ Friend NotInheritable Class mapheap_case
         End If
         assertion.is_true(is_key_value(k, v))
         assertion.is_true(c.find(v) <> c.end())
-        Dim it As map(Of Int64, Int64).iterator = Nothing
-        it = c.begin()
+        Dim it As map(Of Int64, Int64).iterator = c.begin()
         Dim max As Int64 = min_int64
         While it <> c.end()
             If (+it).first > max Then
@@ -159,20 +152,16 @@ Friend NotInheritable Class mapheap_case
     End Sub
 
     Private Sub find()
-        Dim k As String = Nothing
-        k = rnd_key()
-        Dim it As mapheap(Of String, Int64).iterator = Nothing
-        it = mh.find(k)
+        Dim k As String = rnd_key()
+        Dim it As mapheap(Of String, Int64).iterator = mh.find(k)
         If validation() Then
             assertion.equal(it = mh.end(), m.find(k) = m.end())
         End If
     End Sub
 
     Private Sub [erase]()
-        Dim k As String = Nothing
-        k = rnd_key()
-        Dim r As Boolean = False
-        r = mh.erase(k)
+        Dim k As String = rnd_key()
+        Dim r As Boolean = mh.erase(k)
         If Not validation() Then
             Return
         End If
@@ -191,11 +180,9 @@ Friend NotInheritable Class mapheap_case
         End If
         assert(Not i Is Nothing)
         assertion.equal(m.size(), i.size())
-        Dim it As map(Of String, Int64).iterator = Nothing
-        it = m.begin()
+        Dim it As map(Of String, Int64).iterator = m.begin()
         While it <> m.end()
-            Dim it2 As mapheap(Of String, Int64).iterator = Nothing
-            it2 = mh.find((+it).first)
+            Dim it2 As mapheap(Of String, Int64).iterator = mh.find((+it).first)
             assertion.not_equal(it2, mh.end())
             assertion.equal((+it2).first, (+it).second)
             it += 1

@@ -66,8 +66,7 @@ Public Module _delegate2
     <Extension()> Public Function method_identity(ByVal d As [Delegate]) As String
         If Not d Is Nothing Then
             Try
-                Dim rtn As StringBuilder = Nothing
-                rtn = New StringBuilder()
+                Dim rtn As New StringBuilder()
                 If Not d.Target() Is Nothing Then
                     rtn.Append(d.Target().GetType().FullName()) _
                        .Append(character.colon)

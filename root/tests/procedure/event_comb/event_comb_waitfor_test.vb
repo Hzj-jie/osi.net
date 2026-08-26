@@ -20,8 +20,7 @@ Public NotInheritable Class event_comb_waitfor_test
         Const target As Int32 = -1
         Const wait_ms As Int64 = 10000
         assert(i <> target)
-        Dim start_ms As Int64 = 0
-        start_ms = nowadays.milliseconds()
+        Dim start_ms As Int64 = nowadays.milliseconds()
         assertion.is_true(async_sync(New event_comb(Function() As Boolean
                                                         Return w(start_ms, wait_ms) AndAlso
                                                          goto_next()
@@ -69,8 +68,7 @@ Public NotInheritable Class event_comb_waitfor_test
 
     Private Shared Function waitfor_do1() As Boolean
         Const v As Int32 = 1000
-        Dim r As ref(Of Int32) = Nothing
-        r = New ref(Of Int32)()
+        Dim r As New ref(Of Int32)()
         assert(+r <> v)
         If waitfor_test(Function(x, y) waitfor(Function() As Int32
                                                    sleep(y)
@@ -86,8 +84,7 @@ Public NotInheritable Class event_comb_waitfor_test
 
     Private Shared Function waitfor_do2() As Boolean
         Const v As Int32 = 1000
-        Dim r As ref(Of Int32) = Nothing
-        r = New ref(Of Int32)()
+        Dim r As New ref(Of Int32)()
         assert(+r <> v)
         If waitfor_test(Function(x, y) waitfor(Function() As Int32
                                                    sleep(max_int32)
@@ -115,15 +112,11 @@ Public NotInheritable Class event_comb_waitfor_test
     End Function
 
     Private Shared Function waitfor_signal_event() As Boolean
-        Dim se As signal_event = Nothing
-        se = New signal_event()
-        Dim se2 As signal_event = Nothing
-        se2 = New signal_event()
-        Dim se3 As signal_event = Nothing
-        se3 = New signal_event()
+        Dim se As New signal_event()
+        Dim se2 As New signal_event()
+        Dim se3 As New signal_event()
         Dim [step] As Int32 = 0
-        Dim ec As event_comb = Nothing
-        ec = New event_comb(Function() As Boolean
+        Dim ec As event_comb = New event_comb(Function() As Boolean
                                 [step] = 0
                                 Return waitfor(se) AndAlso
                                        goto_next()

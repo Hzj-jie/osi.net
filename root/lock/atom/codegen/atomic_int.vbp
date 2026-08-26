@@ -7,22 +7,19 @@
 
 Partial Public Class ##BASE_TYPE##
     Public Function increment() As ##TYPE##
-        Dim r As ##TYPE## = 0
-        r = Interlocked.Increment(p)
+        Dim r As ##TYPE## = Interlocked.Increment(p)
         Thread.MemoryBarrier()
         Return r
     End Function
 
     Public Function decrement() As ##TYPE##
-        Dim r As ##TYPE## = 0
-        r = Interlocked.Decrement(p)
+        Dim r As ##TYPE## = Interlocked.Decrement(p)
         Thread.MemoryBarrier()
         Return r
     End Function
 
     Public Function add(ByVal i As ##TYPE##) As ##TYPE##
-        Dim r As ##TYPE## = 0
-        r = Interlocked.Add(p, i)
+        Dim r As ##TYPE## = Interlocked.Add(p, i)
         Thread.MemoryBarrier()
         Return r
     End Function

@@ -14,8 +14,7 @@ Public Class guid_strs_test
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim c As UInt32 = 0
-            c = rnd_uint(uint32_1, max_uint8)
+            Dim c As UInt32 = rnd_uint(uint32_1, max_uint8)
             Dim s() As String = Nothing
             s = guid_strs(c)
             If assertion.equal(array_size(s), c) Then

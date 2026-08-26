@@ -98,13 +98,10 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
     End Function
 
     Public Function [get](ByVal k As KEY_T, ByRef o As VALUE_T) As Boolean
-        Dim index As UInt32 = 0
-        index = index_of_key(k)
-        Dim d As unordered_map(Of KEY_T, VALUE_T) = Nothing
-        d = data(CInt(index))
+        Dim index As UInt32 = index_of_key(k)
+        Dim d As unordered_map(Of KEY_T, VALUE_T) = data(CInt(index))
         Using scoped_lock(index)
-            Dim work As unordered_map(Of KEY_T, VALUE_T).iterator = Nothing
-            work = d.find(k)
+            Dim work As unordered_map(Of KEY_T, VALUE_T).iterator = d.find(k)
             If work <> d.end() Then
                 o = (+work).second
                 Return True
@@ -118,8 +115,7 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
             Return insert(k, AddressOf alloc(Of VALUE_T)).first
         End Get
         Set(ByVal value As VALUE_T)
-            Dim index As UInt32 = 0
-            index = index_of_key(k)
+            Dim index As UInt32 = index_of_key(k)
             Using scoped_lock(index)
                 data(CInt(index))(k) = value
             End Using
@@ -129,19 +125,15 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
     ' Returning iterator is not reasonable, as it may be invalidated by operations in other threads.
     Public Function insert(ByVal k As KEY_T, ByVal f As Func(Of VALUE_T)) As pair(Of VALUE_T, Boolean)
         assert(Not f Is Nothing)
-        Dim index As UInt32 = 0
-        index = index_of_key(k)
-        Dim d As unordered_map(Of KEY_T, VALUE_T) = Nothing
-        d = data(CInt(index))
+        Dim index As UInt32 = index_of_key(k)
+        Dim d As unordered_map(Of KEY_T, VALUE_T) = data(CInt(index))
         While False
             Using scoped_lock(index)
-                Dim work As unordered_map(Of KEY_T, VALUE_T).iterator = Nothing
-                work = d.find(k)
+                Dim work As unordered_map(Of KEY_T, VALUE_T).iterator = d.find(k)
                 If work = d.end() Then
                     Exit While
                 End If
-                Dim r As pair(Of VALUE_T, Boolean) = Nothing
-                r = pair.emplace_of((+work).second, False)
+                Dim r As pair(Of VALUE_T, Boolean) = pair.emplace_of((+work).second, False)
                 Return r
             End Using
         End While
@@ -154,11 +146,9 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
     End Function
 
     Public Function emplace(ByVal k As KEY_T, ByVal v As VALUE_T) As pair(Of VALUE_T, Boolean)
-        Dim index As UInt32 = 0
-        index = index_of_key(k)
+        Dim index As UInt32 = index_of_key(k)
         Using scoped_lock(index)
-            Dim w As tuple(Of unordered_map(Of KEY_T, VALUE_T).iterator, Boolean) = Nothing
-            w = data(CInt(index)).emplace(k, v)
+            Dim w As tuple(Of unordered_map(Of KEY_T, VALUE_T).iterator, Boolean) = data(CInt(index)).emplace(k, v)
             Return pair.emplace_of((+w.first).second, w.second)
         End Using
     End Function
@@ -182,8 +172,7 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
         Else
             For i As UInt32 = 0 To other.hash_size - uint32_1
                 Using other.scoped_lock(i)
-                    Dim it As unordered_map(Of KEY_T, VALUE_T).iterator = Nothing
-                    it = other.data(CInt(i)).begin()
+                    Dim it As unordered_map(Of KEY_T, VALUE_T).iterator = other.data(CInt(i)).begin()
                     While it <> other.data(CInt(i)).end()
                         insert((+it).first, (+it).second)
                         it += 1
@@ -204,8 +193,7 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
     End Function
 
     Public Function [erase](ByVal k As KEY_T) As Boolean
-        Dim index As UInt32 = 0
-        index = index_of_key(k)
+        Dim index As UInt32 = index_of_key(k)
         Using scoped_lock(index)
             Return data(CInt(index)).erase(k)
         End Using
@@ -217,11 +205,9 @@ Public Class hashmapless(Of KEY_T As IComparable(Of KEY_T),
         End If
         Dim r As Int32 = 0
         For i As UInt32 = 0 To hash_size - uint32_1
-            Dim d As unordered_map(Of KEY_T, VALUE_T) = Nothing
-            d = data(CInt(i))
+            Dim d As unordered_map(Of KEY_T, VALUE_T) = data(CInt(i))
             Using scoped_lock(i)
-                Dim it As unordered_map(Of KEY_T, VALUE_T).iterator = Nothing
-                it = d.begin()
+                Dim it As unordered_map(Of KEY_T, VALUE_T).iterator = d.begin()
                 While it <> d.end()
                     If Not f((+it).first, (+it).second) Then
                         Return r

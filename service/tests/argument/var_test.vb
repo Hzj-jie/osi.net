@@ -12,8 +12,7 @@ Imports osi.service.argument
 Public Class var_test
     <test>
     Private Shared Sub cloneable()
-        Dim v As var = Nothing
-        v = New var("--f=second ~t -case some other values")
+        Dim v As New var("--f=second ~t -case some other values")
         assertion.equal(v("f"), "second")
         assertion.is_true(v.switch("t"))
         v.bind("first", "third")

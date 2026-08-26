@@ -61,8 +61,7 @@ Public Module _string_reader
 
     <Extension()> Public Function length(ByVal this As StringReader) As UInt32
         assert(Not this Is Nothing)
-        Dim r As Int32 = 0
-        r = direct_cast(Of Int32)(_length.GetValue(this))
+        Dim r As Int32 = direct_cast(Of Int32)(_length.GetValue(this))
         assert(r >= 0)
         Return CUInt(r)
     End Function
@@ -70,8 +69,7 @@ Public Module _string_reader
 
     <Extension()> Public Function position(ByVal this As StringReader) As UInt32
         assert(Not this Is Nothing)
-        Dim r As Int32 = 0
-        r = direct_cast(Of Int32)(_pos.GetValue(this))
+        Dim r As Int32 = direct_cast(Of Int32)(_pos.GetValue(this))
         assert(r >= 0)
         Return CUInt(r)
     End Function

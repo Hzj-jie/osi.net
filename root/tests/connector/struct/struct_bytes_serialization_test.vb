@@ -33,8 +33,7 @@ Public NotInheritable Class struct_bytes_serialization_test
     <test>
     <repeat(100000)>
     Private Shared Sub run()
-        Dim a As c = Nothing
-        a = New c()
+        Dim a As New c()
         Dim b() As Byte = Nothing
         b = bytes_serializer.to_bytes(a)
         assertion.is_not_null(b)

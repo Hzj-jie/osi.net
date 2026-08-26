@@ -82,8 +82,7 @@ Public NotInheritable Class shell_less_process
             v()
             Return
         End If
-        Dim si As synchronize_invoke = Nothing
-        si = direct_cast(Of synchronize_invoke)(proc().SynchronizingObject(), False)
+        Dim si As synchronize_invoke = direct_cast(Of synchronize_invoke)(proc().SynchronizingObject(), False)
         ' This is definitely not the correct behavior, but Process.Exited() may be raised on a random ThreadPool thread.
         ' TODO: Why Process.Exited() won't respect SynchronizingObject().
         If si Is Nothing Then

@@ -211,8 +211,7 @@ Public Class lexer
         Dim b() As Byte = Nothing
         b = str_bytes(s)
         Dim uw As unknown_word = Nothing
-        Dim result As vector(Of word) = Nothing
-        result = o
+        Dim result As vector(Of word) = o
         If adfa.parse(b,
                       result,
                       Function(NIU() As Byte, pos As UInt32) As Boolean

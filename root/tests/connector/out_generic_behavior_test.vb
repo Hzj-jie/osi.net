@@ -41,8 +41,7 @@ Public Class out_generic_behavior_test
     Private Delegate Function G(Of K)(ByRef o As K) As Boolean
 
     Private Shared Function case1() As Boolean
-        Dim x As TI(Of I) = Nothing
-        x = New T(Of C)()
+        Dim x As TI(Of I) = New T(Of C)()
         assertion.is_true(TypeOf x Is TI(Of C))
         assertion.is_true(TypeOf x Is TI(Of I))
         assertion.is_true(TypeOf x Is T(Of C))
@@ -61,16 +60,14 @@ Public Class out_generic_behavior_test
     End Function
 
     Private Shared Function case2() As Boolean
-        Dim y As TI(Of I2) = Nothing
-        y = New T(Of C2)()
+        Dim y As TI(Of I2) = New T(Of C2)()
         y = New T(Of C3)()
 
         Return True
     End Function
 
     Private Shared Function case3() As Boolean
-        Dim f As F(Of I) = Nothing
-        f = Function() As C
+        Dim f As F(Of I) = Function() As C
                 Return New C()
             End Function
         assertion.is_true(TypeOf f Is F(Of I))
@@ -100,8 +97,7 @@ Public Class out_generic_behavior_test
     End Function
 
     Private Shared Function case4() As Boolean
-        Dim f As F(Of TI(Of I)) = Nothing
-        f = Function() As T(Of C)
+        Dim f As F(Of TI(Of I)) = Function() As T(Of C)
                 Return New T(Of C)()
             End Function
         assertion.is_true(TypeOf f Is F(Of TI(Of I)))
@@ -129,8 +125,7 @@ Public Class out_generic_behavior_test
     End Function
 
     Private Shared Function case5() As Boolean
-        Dim f As G(Of TI(Of I)) = Nothing
-        f = Function(ByRef r As TI(Of I)) As Boolean
+        Dim f As G(Of TI(Of I)) = Function(ByRef r As TI(Of I)) As Boolean
                 r = New T(Of C)()
                 Return True
             End Function
@@ -142,8 +137,7 @@ Public Class out_generic_behavior_test
     End Function
 
     Private Shared Function case6() As Boolean
-        Dim x As TI(Of TI(Of I)) = Nothing
-        x = New T(Of TI(Of I))()
+        Dim x As TI(Of TI(Of I)) = New T(Of TI(Of I))()
         x = New T(Of T(Of I))()
         assertion.is_true(TypeOf x Is TI(Of TI(Of I)))
         assertion.is_false(TypeOf x Is T(Of TI(Of I)))
@@ -164,8 +158,7 @@ Public Class out_generic_behavior_test
     End Function
 
     Private Shared Function case7() As Boolean
-        Dim x As T(Of TI(Of I)) = Nothing
-        x = New T(Of TI(Of I))()
+        Dim x As New T(Of TI(Of I))()
         assertion.is_true(TypeOf x Is TI(Of TI(Of I)))
         assertion.is_true(TypeOf x Is T(Of TI(Of I)))
         assertion.is_false(TypeOf x Is TI(Of T(Of I)))

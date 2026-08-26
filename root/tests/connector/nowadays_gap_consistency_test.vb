@@ -35,8 +35,7 @@ Public Class nowadays_gap_consistency_test
             l2 -= l
             n2 -= n
             h2 -= h
-            Dim diff As Int64 = 0
-            diff = Abs(l2 - n2) + Abs(n2 - h2) + Abs(l2 - h2)
+            Dim diff As Int64 = Abs(l2 - n2) + Abs(n2 - h2) + Abs(l2 - h2)
             failed += If(diff >= timeslice_length_ms * 3, 1, 0)
             'assertion.more_or_equal_and_less_or_equal(l2, n2 - timeslice_length_ms, n2 + timeslice_length_ms)
             'assertion.more_or_equal_and_less_or_equal(l2, h2 - timeslice_length_ms, h2 + timeslice_length_ms)

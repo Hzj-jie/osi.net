@@ -4,8 +4,7 @@ Imports fis = osi.service.configuration.constants.filter_selector
 
 Friend Module _default_filter_selector
     Public Function default_filter_selector() As filter_selector
-        Dim fs As filter_selector = Nothing
-        fs = New filter_selector()
+        Dim fs As New filter_selector()
         fs.set(sf.version, fis.string_compare)
         fs.set(sf.short_version, fis.string_compare)
         fs.set(sf.machine_name, fis.string)

@@ -34,8 +34,7 @@ Public NotInheritable Class type_bytes_serializer
 
     Public Shared Function append_to(ByVal type As Type, ByVal i As Object, ByVal o As MemoryStream) As Boolean
         Dim implemented As Boolean = False
-        Dim r As Boolean = False
-        r = append_to(type, implemented, i, o)
+        Dim r As Boolean = append_to(type, implemented, i, o)
         assert(implemented)
         Return r
     End Function
@@ -55,8 +54,7 @@ Public NotInheritable Class type_bytes_serializer
 
     Public Shared Function write_to(ByVal type As Type, ByVal i As Object, ByVal o As MemoryStream) As Boolean
         Dim implemented As Boolean = False
-        Dim r As Boolean = False
-        r = write_to(type, implemented, i, o)
+        Dim r As Boolean = write_to(type, implemented, i, o)
         assert(implemented)
         Return r
     End Function
@@ -76,8 +74,7 @@ Public NotInheritable Class type_bytes_serializer
 
     Public Shared Function consume_from(ByVal type As Type, ByVal i As MemoryStream, ByRef o As Object) As Boolean
         Dim implemented As Boolean = False
-        Dim r As Boolean = False
-        r = consume_from(type, implemented, i, o)
+        Dim r As Boolean = consume_from(type, implemented, i, o)
         assert(implemented)
         Return r
     End Function
@@ -97,8 +94,7 @@ Public NotInheritable Class type_bytes_serializer
 
     Public Shared Function read_from(ByVal type As Type, ByVal i As MemoryStream, ByRef o As Object) As Boolean
         Dim implemented As Boolean = False
-        Dim r As Boolean = False
-        r = read_from(type, implemented, i, o)
+        Dim r As Boolean = read_from(type, implemented, i, o)
         assert(implemented)
         Return r
     End Function

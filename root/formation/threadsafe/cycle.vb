@@ -70,8 +70,7 @@ Public Class cycle(Of T)
             Return False
         Else
             If rnd_once Then
-                Dim p As Int64 = 0
-                p = rnd_int64(0, array_size(a))
+                Dim p As Int64 = rnd_int64(0, array_size(a))
                 For i As Int64 = 0 To try_times - 1
                     If a(CInt(p)).set(v) Then
                         Return True
@@ -102,8 +101,7 @@ Public Class cycle(Of T)
         If empty() Then
             Return False
         Else
-            Dim p As Int64 = 0
-            p = rnd_int64(0, array_size(a))
+            Dim p As Int64 = rnd_int64(0, array_size(a))
             For i As Int64 = 0 To array_size(a) - 1
                 If a(CInt(p)).get(o) Then
                     Return True
@@ -119,8 +117,7 @@ Public Class cycle(Of T)
     End Function
 
     Public Function size() As Int64
-        Dim v As Int64 = 0
-        v = s.get()
+        Dim v As Int64 = s.get()
         Return If(v < 0, 0, v)
     End Function
 
@@ -201,8 +198,7 @@ Public Class cycle(Of T)
                           Return x.not_in_use()
                       End Function,
                       hv)
-            Dim o As T = Nothing
-            o = v
+            Dim o As T = v
             v = Nothing
             hv.release()
             r.release()
@@ -225,8 +221,7 @@ Public Class cycle(Of T)
     End Function
 
     Public Function emplace(ByVal v As T) As Boolean
-        Dim p As UInt64 = 0
-        p = l.increment() - 1
+        Dim p As UInt64 = l.increment() - 1
         If p >= f.get() + array_size(a) Then
             l.decrement()
             Return False
@@ -241,8 +236,7 @@ Public Class cycle(Of T)
     End Function
 
     Public Function pop(ByRef o As T) As Boolean
-        Dim p As UInt64 = 0
-        p = f.increment() - 1
+        Dim p As UInt64 = f.increment() - 1
         If p >= l.get() Then
             f.decrement()
             Return False

@@ -27,8 +27,7 @@ Public NotInheritable Class event_comb_timeout_test
     End Sub
 
     Public Overrides Function run() As Boolean
-        Dim r As Boolean = False
-        r = MyBase.run()
+        Dim r As Boolean = MyBase.run()
         event_comb_timeout_case.wait_to_finish()
         Return r
     End Function
@@ -71,10 +70,8 @@ Public NotInheritable Class event_comb_timeout_test
         End Function
 
         Private Function async_sync_test() As Boolean
-            Dim this As Int32 = 0
-            this = +counter
-            Dim ec As event_comb = Nothing
-            ec = create_event_comb()
+            Dim this As Int32 = +counter
+            Dim ec As event_comb = create_event_comb()
             assert(Not ec Is Nothing)
             Using assertion.timelimited_operation(timeout_ms, acceptable_latency_ms())
                 assertion.is_false(async_sync(ec, timeout_ms))
@@ -88,10 +85,8 @@ Public NotInheritable Class event_comb_timeout_test
         End Function
 
         Private Function waitfor_test() As Boolean
-            Dim this As Int32 = 0
-            this = +counter
-            Dim ec As event_comb = Nothing
-            ec = New event_comb(Function() As Boolean
+            Dim this As Int32 = +counter
+            Dim ec As event_comb = New event_comb(Function() As Boolean
                                     Return waitfor(create_event_comb(), timeout_ms) AndAlso
                                            goto_next()
                                 End Function,

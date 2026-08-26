@@ -27,8 +27,7 @@ Friend Class big_uint_factorial_divide_case
                 l = Nothing
             End If
         End While
-        Dim r As big_uint = Nothing
-        r = l.CloneT()
+        Dim r As big_uint = l.CloneT()
         r.factorial()
         While Not l.is_one()
             Dim remainder As big_uint = Nothing

@@ -26,8 +26,7 @@ Public NotInheritable Class async_result_destructor
                                           Dim v As Action = Nothing
                                           While q.pop(v) OrElse are.WaitOne()
                                               If Not v Is Nothing Then
-                                                  Dim n As Int64 = 0
-                                                  n = Now().milliseconds()
+                                                  Dim n As Int64 = Now().milliseconds()
                                                   Try
 #If Not NET8_0_OR_GREATER Then
                                                       ready_to_abort.mark_not_in_use()

@@ -36,8 +36,7 @@ Partial Public NotInheritable Class syntaxer
 
         Public Overloads Function CompareTo(ByVal other As single_matching) As Int32 _
                                            Implements IComparable(Of single_matching).CompareTo
-            Dim c As Int32 = 0
-            c = object_compare(Me, other)
+            Dim c As Int32 = object_compare(Me, other)
             If c <> object_compare_undetermined Then
                 Return c
             End If

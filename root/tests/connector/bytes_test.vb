@@ -7,8 +7,7 @@ Public Class bytes_test
 
     Public Overrides Function run() As Boolean
         For i As Int32 = 0 To 10000
-            Dim v As Int64 = 0
-            v = rnd_int64()
+            Dim v As Int64 = rnd_int64()
             Dim be() As Byte = Nothing
             Dim le() As Byte = Nothing
             Dim a() As Byte = Nothing

@@ -51,8 +51,7 @@ Public Class dataprovider(Of T)
         Dim w As event_comb = Nothing
         Dim f As event_comb = Nothing
         Dim l As event_comb = Nothing
-        Dim r As ref(Of T) = Nothing
-        r = New ref(Of T)()
+        Dim r As New ref(Of T)()
         begin_lifetime_event_comb(exp,
                                   Function() As Boolean
                                       w = watcher.watch(exp)
@@ -139,8 +138,7 @@ Public Class dataprovider(Of T)
     End Function
 
     Private Shared Function merge(ByVal p() As pair(Of String, Object)) As String
-        Dim r As StringBuilder = Nothing
-        r = New StringBuilder()
+        Dim r As New StringBuilder()
         For i As Int32 = 0 To array_size_i(p) - 1
             assert(Not p(i) Is Nothing)
             r.Append("&").

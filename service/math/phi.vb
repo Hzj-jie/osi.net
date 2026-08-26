@@ -10,8 +10,7 @@ Imports osi.root.formation
 
 Public Module _phi
     <Extension()> Public Function phi(ByVal x As Int32) As Int32
-        Dim pd As vector(Of UInt32) = Nothing
-        pd = prime_divisors(x)
+        Dim pd As vector(Of UInt32) = prime_divisors(x)
         If pd Is Nothing Then
             Return npos
         End If
@@ -20,8 +19,7 @@ Public Module _phi
             'phi(1) = 1
             Return x
         End If
-        Dim r As Int32 = 0
-        r = x
+        Dim r As Int32 = x
         For i As Int32 = 1 To CInt(pd.size())
             assert(choose(Sub(ByVal a() As UInt32)
                               Dim t As Int32 = 1

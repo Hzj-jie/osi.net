@@ -74,8 +74,7 @@ Partial Public Class rlexer
             If strlen(i) <= pos Then
                 Return Nothing
             Else
-                Dim r As vector(Of UInt32) = Nothing
-                r = New vector(Of UInt32)()
+                Dim r As New vector(Of UInt32)()
                 For j As Int32 = 0 To array_size(s) - 1
                     If strsame(i, pos, s(j), uint32_0, l(j)) Then
                         r.emplace_back(l(j) + pos)

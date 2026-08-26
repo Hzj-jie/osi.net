@@ -15,8 +15,7 @@ Public NotInheritable Class ref_instance_test2
     <test>
     Private Shared Sub should_release_object_in_finalize()
         For i As Int32 = 0 To 10000
-            Dim r As ref_instance(Of cd_object(Of joint_type(Of ref_instance_test2, _0))) = Nothing
-            r = ref_instance.[New](Function() As cd_object(Of joint_type(Of ref_instance_test2, _0))
+            Dim r As ref_instance(Of cd_object(Of joint_type(Of ref_instance_test2, _0))) = ref_instance.[New](Function() As cd_object(Of joint_type(Of ref_instance_test2, _0))
                                        Return New cd_object(Of joint_type(Of ref_instance_test2, _0))()
                                    End Function)
             r.ref()

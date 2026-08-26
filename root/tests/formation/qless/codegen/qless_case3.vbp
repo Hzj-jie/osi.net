@@ -42,8 +42,7 @@ Friend Class ##NAME##_case3
                     sleep(rnd_int(0, 100))
                 End If
             Else
-                Dim j As Int32 = 0
-                j = i.increment() Mod (range << 1)
+                Dim j As Int32 = i.increment() Mod (range << 1)
                 Dim pop As Boolean = False
                 If j >= range Then
                     pop = rnd_int64(int64_0, range) <= ((range << 1) - j - 1)

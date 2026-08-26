@@ -64,11 +64,9 @@ Public MustInherit Class complete_io_test2(Of T As flow)
                            rnd_uint(8192 * 256, 8192 * 512)))
         Dim b2() As Byte = Nothing
         ReDim b2(array_size_i(b1) - 1)
-        Dim finished As ManualResetEvent = Nothing
-        finished = New ManualResetEvent(False)
+        Dim finished As New ManualResetEvent(False)
         assertion.is_true(start_receive(create_receive_flow(), b2, finished))
-        Dim s As flow = Nothing
-        s = create_send_flow()
+        Dim s As flow = create_send_flow()
         assert(Not s Is Nothing)
         assertion.is_true(async_sync(s.send(b1), minutes_to_milliseconds(1)))
         assertion.is_true(finished.WaitOne(CInt(minutes_to_milliseconds(1))))

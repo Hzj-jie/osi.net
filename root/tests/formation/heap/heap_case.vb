@@ -16,13 +16,11 @@ Friend Class heap_case
     End Function
 
     Private Sub push()
-        Dim i As Int64 = 0
-        i = rnd_int(0, size)
+        Dim i As Int64 = rnd_int(0, size)
         If validate() Then
             If Not s(i) Then
                 s(i) = True
-                Dim j As Int64 = 0
-                j = h.push(i)
+                Dim j As Int64 = h.push(i)
                 assertion.less(j, h.size())
                 assertion.more_or_equal(j, 0)
             End If

@@ -21,10 +21,8 @@ Partial Public Class var
     Private Shared Function filtered(ByVal m As map(Of String, vector(Of String)),
                                      ByVal filter As String) As map(Of String, vector(Of String))
         assert(Not m Is Nothing)
-        Dim r As map(Of String, vector(Of String)) = Nothing
-        r = New map(Of String, vector(Of String))()
-        Dim it As map(Of String, vector(Of String)).iterator = Nothing
-        it = m.begin()
+        Dim r As New map(Of String, vector(Of String))()
+        Dim it As map(Of String, vector(Of String)).iterator = m.begin()
         While it <> m.end()
             If strstartwith((+it).first, filter) Then
                 r.insert(strmid((+it).first, strlen(filter)), (+it).second)

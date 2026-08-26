@@ -72,10 +72,8 @@ Public NotInheritable Class bit_array
             devide(i, p, index)
 #If False Then
             While True
-                Dim d As Int32 = 0
-                d = b(index)
-                Dim n As Int32 = 0
-                n = d
+                Dim d As Int32 = b(index)
+                Dim n As Int32 = d
                 setbit(n, p, value)
                 If Interlocked.CompareExchange(b(index), n, d) = d Then
                     Exit While

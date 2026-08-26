@@ -57,10 +57,8 @@ Public Module _client_rr
         If e Is Nothing Then
             e = default_encoding
         End If
-        Dim it As map(Of String, String).iterator = Nothing
-        it = i.begin()
-        Dim r As StringBuilder = Nothing
-        r = New StringBuilder()
+        Dim it As map(Of String, String).iterator = i.begin()
+        Dim r As New StringBuilder()
         While it <> i.end()
             If r.Length() > 0 Then
                 r.Append(constants.uri.argument_separator)
@@ -79,8 +77,7 @@ Public Module _client_rr
         If i.null_or_empty() Then
             Return constants.uri.path_separator
         End If
-        Dim o As StringWriter = Nothing
-        o = New StringWriter()
+        Dim o As New StringWriter()
         For j As UInt32 = 0 To i.size() - uint32_1
             o.Write(constants.uri.path_separator)
             uri.path_encoder.encode(i(j), o, e)

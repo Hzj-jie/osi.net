@@ -36,8 +36,7 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
     Private ReadOnly m As map(Of String, Int64)
 
     Shared Sub New()
-        Dim rc As Int64 = 0
-        rc = +(alloc(Of _ROUND_BASE)()) * If(isdebugbuild(), 1, 8)
+        Dim rc As Int64 = +(alloc(Of _ROUND_BASE)()) * If(isdebugbuild(), 1, 8)
         assert(rc >= 0 AndAlso rc <= max_uint32)
         round_count = CUInt(rc)
     End Sub
@@ -150,15 +149,13 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
                                   assertion.is_true(ec.end_result())
                                   If assertion.is_not_null(+r) Then
                                       assertion.more_or_equal((+r).size(), m.size())
-                                      Dim m2 As [set](Of String) = Nothing
-                                      m2 = New [set](Of String)()
+                                      Dim m2 As New [set](Of String)()
                                       Dim i As UInt32 = 0
                                       While i < (+r).size()
                                           m2.insert((+r)(i))
                                           i += uint32_1
                                       End While
-                                      Dim it As map(Of String, Int64).iterator = Nothing
-                                      it = m.begin()
+                                      Dim it As map(Of String, Int64).iterator = m.begin()
                                       While it <> m.end()
                                           assertion.is_true(m2.find((+it).first) <> m2.end())
                                           it += 1
@@ -375,8 +372,7 @@ Public Class istrkeyvt_case3(Of _KEY_LENGTH_LOW As _int64,
     End Function
 
     Private Function random_case(ByVal keyvt As istrkeyvt) As event_comb
-        Dim r As Int32 = 0
-        r = rnd_int(0, 16)
+        Dim r As Int32 = rnd_int(0, 16)
         'average_key_rate = average_key_count / all_key_count
         'all_key_count = key_char_sample ^ key_average_length
         Select Case r

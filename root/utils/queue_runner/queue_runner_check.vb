@@ -30,8 +30,7 @@ Partial Public NotInheritable Class queue_runner
         ElseIf c Is Nothing Then
             Return False
         Else
-            Dim till As Int64 = 0
-            till = nowadays.milliseconds() + timeout_ms
+            Dim till As Int64 = nowadays.milliseconds() + timeout_ms
             Return check(Function() As Boolean
                              Return c() OrElse
                                     (nowadays.milliseconds() >= till)

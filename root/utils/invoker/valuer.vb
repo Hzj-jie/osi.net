@@ -21,8 +21,7 @@ Partial Public NotInheritable Class valuer
                                              ByVal bindingflags As BindingFlags,
                                              ByVal name As String,
                                              ByRef o As VT) As Boolean
-        Dim v As valuer(Of VT) = Nothing
-        v = New valuer(Of VT)(get_type(obj), bindingflags, obj, name)
+        Dim v As New valuer(Of VT)(get_type(obj), bindingflags, obj, name)
         Return v.try_get(o)
     End Function
 
@@ -71,8 +70,7 @@ Partial Public NotInheritable Class valuer
     Public Shared Function [get](Of VT)(ByVal obj As Object,
                                         ByVal bindingflags As BindingFlags,
                                         ByVal name As String) As VT
-        Dim v As valuer(Of VT) = Nothing
-        v = New valuer(Of VT)(obj, bindingflags, name)
+        Dim v As New valuer(Of VT)(obj, bindingflags, name)
         Return v.get()
     End Function
 
@@ -84,8 +82,7 @@ Partial Public NotInheritable Class valuer
                                              ByVal bindingflags As BindingFlags,
                                              ByVal name As String,
                                              ByVal i As VT) As Boolean
-        Dim v As valuer(Of VT) = Nothing
-        v = New valuer(Of VT)(get_type(obj), bindingflags, obj, name)
+        Dim v As New valuer(Of VT)(get_type(obj), bindingflags, obj, name)
         Return v.try_set(i)
     End Function
 

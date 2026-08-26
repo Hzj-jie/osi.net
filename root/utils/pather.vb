@@ -132,8 +132,7 @@ Public Class pather(Of _PATH_SEPARATORS As _strings,
         End If
         Dim ss() As String = Nothing
         ss = split_path(path)
-        Dim v As vector(Of String) = Nothing
-        v = New vector(Of String)()
+        Dim v As New vector(Of String)()
         assert(v.emplace_back(ss))
         v.emplace_back(parent_level_paths(0))
         Return combine(normalize(v), o)

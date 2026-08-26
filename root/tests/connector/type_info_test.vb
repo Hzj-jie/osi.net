@@ -32,8 +32,7 @@ Public NotInheritable Class type_info_test
         assertion.is_true(type_info(Of finalizer_class).has_finalizer())
         assertion.is_false(type_info(Of no_finalizer_class).has_finalizer())
         finalizer_class.finalizer_called.set(0)
-        Dim f As finalizer_class = Nothing
-        f = New finalizer_class()
+        Dim f As New finalizer_class()
         assertion.is_not_null(type_info(Of finalizer_class).finalizer())
         type_info(Of finalizer_class).finalizer()(f)
         assertion.equal(+finalizer_class.finalizer_called, 1)
@@ -56,8 +55,7 @@ Public NotInheritable Class type_info_test
 
     <test>
     Private Shared Sub annotated_constructor_case()
-        Dim info As ConstructorInfo = Nothing
-        info = type_info(Of annotated_constructor_test_class) _
+        Dim info As ConstructorInfo = type_info(Of annotated_constructor_test_class) _
                        .annotated_constructor_info(Of annotated_constructor_test_attribute)()
         assertion.is_not_null(info)
         assertion.equal(array_size_i(info.GetParameters()), 4)

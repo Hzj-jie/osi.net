@@ -77,8 +77,7 @@ Public Class ref_node(Of T)
     End Function
 
     Public Function CloneT() As ref_node(Of T) Implements ICloneable(Of ref_node(Of T)).Clone
-        Dim rtn As ref_node(Of T) = Nothing
-        rtn = allocate_instance_of(Me)
+        Dim rtn As ref_node(Of T) = allocate_instance_of(Me)
         rtn.data = _data
 
         rtn.initial_refs(ref_count())

@@ -12,8 +12,7 @@ Partial Public Class bytes_serializer(Of T)
                                         As Func(Of T, MemoryStream, Boolean)
             assert(Not f Is Nothing)
             Return Function(ByVal i As T, ByVal o As MemoryStream) As Boolean
-                       Dim r As OT = Nothing
-                       r = cast(Of OT)().from(i)
+                       Dim r As OT = cast(Of OT)().from(i)
                        Return f(r, o)
                    End Function
         End Function

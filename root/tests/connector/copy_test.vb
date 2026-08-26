@@ -32,8 +32,7 @@ Public Class copy_test
     End Function
 
     Private Shared Function copy_no_clone_case() As Boolean
-        Dim a As Int32 = 0
-        a = rnd_int(min_int32, max_int32)
+        Dim a As Int32 = rnd_int(min_int32, max_int32)
         Dim b As Int32 = 0
         assertion.is_true(copy(b, a))
         assertion.equal(a, b)
@@ -61,8 +60,7 @@ Public Class copy_test
     End Function
 
     Private Shared Function copy_non_clone_object_case() As Boolean
-        Dim a As Int32 = 0
-        a = rnd_int(min_int32, max_int32)
+        Dim a As Int32 = rnd_int(min_int32, max_int32)
         Dim b As Int32 = 0
         Dim c As Int32 = 0
         Do

@@ -82,8 +82,7 @@ Public Class internal_thread_static_valuetype_perf
         <ThreadStatic()> Private Shared value As Int32
 
         Protected Overrides Function [get]() As Boolean
-            Dim i As Int32 = 0
-            i = value
+            Dim i As Int32 = value
             Return True
         End Function
 
@@ -111,8 +110,7 @@ Public Class utils_thread_static2_valuetype_perf
         End Sub
 
         Protected Overrides Function [get]() As Boolean
-            Dim i As Int32 = 0
-            i = ts.get()
+            Dim i As Int32 = ts.get()
             Return True
         End Function
 
@@ -163,8 +161,7 @@ Public Class internal_thread_static_reference_type_perf
         <ThreadStatic()> Private Shared value As test_class
 
         Protected Overrides Function [get]() As Boolean
-            Dim i As test_class = Nothing
-            i = value
+            Dim i As test_class = value
             Return True
         End Function
 
@@ -192,8 +189,7 @@ Public Class utils_thread_static2_reference_type_perf
         End Sub
 
         Protected Overrides Function [get]() As Boolean
-            Dim i As test_class = Nothing
-            i = ts.get()
+            Dim i As test_class = ts.get()
             Return True
         End Function
 

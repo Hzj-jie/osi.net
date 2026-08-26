@@ -30,8 +30,7 @@ Namespace encrypt
         Private Shared Function length(ByVal key() As Byte) As Byte
             Dim r As Byte = 0
             For i As Int32 = 0 To min(8, array_size(key)) - 1
-                Dim v As UInt16 = 0
-                v = r
+                Dim v As UInt16 = r
                 v += If(key(i) > max_uint8_m_1, key(i) - max_uint8_m_1, key(i))
                 If v > max_uint8_m_1 Then
                     v -= max_uint8_m_1
@@ -45,8 +44,7 @@ Namespace encrypt
         Private Shared Function encrypt(ByVal key As Byte,
                                         ByVal i As Byte,
                                         ByRef o As Byte) As Boolean
-            Dim v As UInt16 = 0
-            v = i
+            Dim v As UInt16 = i
             v += key
             If v > max_uint8 Then
                 v -= max_uint8_p_1
@@ -59,8 +57,7 @@ Namespace encrypt
         Private Shared Function decrypt(ByVal key As Byte,
                                         ByVal i As Byte,
                                         ByRef o As Byte) As Boolean
-            Dim v As Int16 = 0
-            v = i
+            Dim v As Int16 = i
             v -= key
             If v < 0 Then
                 v += max_uint8_p_1
@@ -81,8 +78,7 @@ Namespace encrypt
                isemptyarray(key) Then
                 Return False
             Else
-                Dim k As Byte = 0
-                k = length(key)
+                Dim k As Byte = length(key)
                 ReDim o(count - 1)
                 For j As UInt32 = 0 To count - 1
                     If Not r(k, i(j + offset), o(j)) Then

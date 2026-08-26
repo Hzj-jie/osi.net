@@ -61,8 +61,7 @@ Public Class alloc_test
     End Class
 
     Private Shared Function case1() As Boolean
-        Dim o As Object = Nothing
-        o = allocate(Nothing)
+        Dim o As Object = allocate(Nothing)
         assertion.is_true(o Is Nothing)
         Return True
     End Function
@@ -79,8 +78,7 @@ Public Class alloc_test
     End Function
 
     Private Shared Function case3() As Boolean
-        Dim i As Int32 = 0
-        i = allocate(GetType(SByte))
+        Dim i As Int32 = allocate(GetType(SByte))
         assertion.is_true(i = 0)
         i = allocate(GetType(Byte))
         assertion.is_true(i = 0)
@@ -118,20 +116,17 @@ Public Class alloc_test
     End Function
 
     Private Shared Function case4() As Boolean
-        Dim o1 As simple_class = Nothing
-        o1 = allocate(GetType(simple_class))
+        Dim o1 As simple_class = allocate(GetType(simple_class))
         assertion.is_true(Not o1 Is Nothing)
         assertion.is_true(TypeOf o1 Is simple_class)
-        Dim o2 As simple_class = Nothing
-        o2 = alloc(Of simple_class)()
+        Dim o2 As simple_class = alloc(Of simple_class)()
         assertion.is_true(Not o2 Is Nothing)
         assertion.is_true(TypeOf o2 Is simple_class)
         Dim o3 As simple_class = Nothing
         o3 = allocate_instance_of(o3)
         assertion.is_true(Not o3 Is Nothing)
         assertion.is_true(TypeOf o3 Is simple_class)
-        Dim o4 As simple_class = Nothing
-        o4 = allocate(Of simple_class)(GetType(simple_class))
+        Dim o4 As simple_class = allocate(Of simple_class)(GetType(simple_class))
         assertion.is_true(Not o4 Is Nothing)
         assertion.is_true(TypeOf o4 Is simple_class)
 
@@ -146,20 +141,17 @@ Public Class alloc_test
     End Function
 
     Private Shared Function case5() As Boolean
-        Dim o1 As base_class = Nothing
-        o1 = allocate(GetType(base_class))
+        Dim o1 As base_class = allocate(GetType(base_class))
         assertion.is_true(Not o1 Is Nothing)
         assertion.is_true(TypeOf o1 Is base_class)
-        Dim o2 As base_class = Nothing
-        o2 = alloc(Of base_class)()
+        Dim o2 As base_class = alloc(Of base_class)()
         assertion.is_true(Not o2 Is Nothing)
         assertion.is_true(TypeOf o2 Is base_class)
         Dim o3 As base_class = Nothing
         o3 = allocate_instance_of(o3)
         assertion.is_true(Not o3 Is Nothing)
         assertion.is_true(TypeOf o3 Is base_class)
-        Dim o4 As base_class = Nothing
-        o4 = allocate(Of base_class)(GetType(base_class))
+        Dim o4 As base_class = allocate(Of base_class)(GetType(base_class))
         assertion.is_true(Not o4 Is Nothing)
         assertion.is_true(TypeOf o4 Is base_class)
 
@@ -174,20 +166,17 @@ Public Class alloc_test
     End Function
 
     Private Shared Function case6() As Boolean
-        Dim o1 As inherit_class = Nothing
-        o1 = allocate(GetType(inherit_class))
+        Dim o1 As inherit_class = allocate(GetType(inherit_class))
         assertion.is_true(Not o1 Is Nothing)
         assertion.is_true(TypeOf o1 Is inherit_class)
-        Dim o2 As inherit_class = Nothing
-        o2 = alloc(Of inherit_class)()
+        Dim o2 As inherit_class = alloc(Of inherit_class)()
         assertion.is_true(Not o2 Is Nothing)
         assertion.is_true(TypeOf o2 Is inherit_class)
         Dim o3 As inherit_class = Nothing
         o3 = allocate_instance_of(o3)
         assertion.is_true(Not o3 Is Nothing)
         assertion.is_true(TypeOf o3 Is inherit_class)
-        Dim o4 As inherit_class = Nothing
-        o4 = allocate(Of inherit_class)(GetType(inherit_class))
+        Dim o4 As inherit_class = allocate(Of inherit_class)(GetType(inherit_class))
         assertion.is_true(Not o4 Is Nothing)
         assertion.is_true(TypeOf o4 Is inherit_class)
 
@@ -198,8 +187,7 @@ Public Class alloc_test
         assertion.not_equal(object_compare(o2, o4), 0)
         assertion.not_equal(object_compare(o3, o4), 0)
 
-        Dim o5 As inherit_class = Nothing
-        o5 = allocate_instance_of(New inherit_class())
+        Dim o5 As inherit_class = allocate_instance_of(New inherit_class())
         assertion.is_true(Not o5 Is Nothing)
         assertion.is_true(TypeOf o5 Is inherit_class)
 
@@ -207,20 +195,17 @@ Public Class alloc_test
     End Function
 
     Private Shared Function case7() As Boolean
-        Dim o1 As private_constructor_class = Nothing
-        o1 = allocate(GetType(private_constructor_class))
+        Dim o1 As private_constructor_class = allocate(GetType(private_constructor_class))
         assertion.is_true(Not o1 Is Nothing)
         assertion.is_true(TypeOf o1 Is private_constructor_class)
-        Dim o2 As private_constructor_class = Nothing
-        o2 = alloc(Of private_constructor_class)()
+        Dim o2 As private_constructor_class = alloc(Of private_constructor_class)()
         assertion.is_true(Not o2 Is Nothing)
         assertion.is_true(TypeOf o2 Is private_constructor_class)
         Dim o3 As private_constructor_class = Nothing
         o3 = allocate_instance_of(o3)
         assertion.is_true(Not o3 Is Nothing)
         assertion.is_true(TypeOf o3 Is private_constructor_class)
-        Dim o4 As private_constructor_class = Nothing
-        o4 = allocate(Of private_constructor_class)(GetType(private_constructor_class))
+        Dim o4 As private_constructor_class = allocate(Of private_constructor_class)(GetType(private_constructor_class))
         assertion.is_true(Not o4 Is Nothing)
         assertion.is_true(TypeOf o4 Is private_constructor_class)
 
@@ -231,8 +216,7 @@ Public Class alloc_test
         assertion.not_equal(object_compare(o2, o4), 0)
         assertion.not_equal(object_compare(o3, o4), 0)
 
-        Dim o5 As private_constructor_class = Nothing
-        o5 = allocate_instance_of(o1)
+        Dim o5 As private_constructor_class = allocate_instance_of(o1)
         assertion.is_true(Not o5 Is Nothing)
         assertion.is_true(TypeOf o5 Is private_constructor_class)
 
@@ -241,17 +225,14 @@ Public Class alloc_test
 
     Private Shared Function case8() As Boolean
         exception_constructor_class.throwed.set(0)
-        Dim o1 As exception_constructor_class = Nothing
-        o1 = allocate(GetType(exception_constructor_class))
+        Dim o1 As exception_constructor_class = allocate(GetType(exception_constructor_class))
         assertion.is_true(o1 Is Nothing)
-        Dim o2 As exception_constructor_class = Nothing
-        o2 = alloc(Of exception_constructor_class)()
+        Dim o2 As exception_constructor_class = alloc(Of exception_constructor_class)()
         assertion.is_true(o2 Is Nothing)
         Dim o3 As exception_constructor_class = Nothing
         o3 = allocate_instance_of(o3)
         assertion.is_true(o3 Is Nothing)
-        Dim o4 As exception_constructor_class = Nothing
-        o4 = allocate(Of exception_constructor_class)(GetType(exception_constructor_class))
+        Dim o4 As exception_constructor_class = allocate(Of exception_constructor_class)(GetType(exception_constructor_class))
         assertion.is_true(o4 Is Nothing)
 
         'each alloc will call it twice at least, except for alloc(Of exception_constructor_class) in cache mode
@@ -263,8 +244,7 @@ Public Class alloc_test
     End Function
 
     Private Shared Function case9() As Boolean
-        Dim o As Action = Nothing
-        o = allocate(GetType(Action))
+        Dim o As Action = allocate(GetType(Action))
         assertion.is_null(o)
         o = alloc(Of Action)()
         assertion.is_null(o)

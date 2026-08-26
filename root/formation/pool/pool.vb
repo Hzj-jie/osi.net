@@ -65,8 +65,7 @@ Public Class pool(Of T As Class)
 
     Public Function [get](ByRef o As T, ByRef index As Int32) As Boolean
         l.wait()
-        Dim b As Boolean = False
-        b = unlocked_get(o, index)
+        Dim b As Boolean = unlocked_get(o, index)
         l.release()
         Return b
     End Function

@@ -128,16 +128,14 @@ Public Module _cast
             If isemptyarray(ms) Then
                 Return False
             End If
-            Dim ott As Type = Nothing
-            ott = GetType(T)
+            Dim ott As Type = GetType(T)
             For j As Int32 = 0 To array_size_i(ms) - 1
                 If Not ms(j) Is Nothing AndAlso
                        ms(j).Name() = n AndAlso
                        array_size(ms(j).GetParameters()) = 1 AndAlso
                        itt.is(ms(j).GetParameters()(0).ParameterType()) AndAlso
                        ms(j).ReturnType().is(ott) Then
-                    Dim m As MethodInfo = Nothing
-                    m = ms(j)
+                    Dim m As MethodInfo = ms(j)
                     'closure
                     c = Function(i As IT, ByRef o As T) As Boolean
                             o = DirectCast(m.Invoke(Nothing, New Object() {i}), T)
@@ -188,8 +186,7 @@ Public Module _cast
         Private Shared Function select_casting(ByRef c As _do_val_ref(Of IT, T, Boolean)) As Boolean
             c = Function(i As IT, ByRef o As T) As Boolean
                     assert(Not i Is Nothing)
-                    Dim it As Type = Nothing
-                    it = i.GetType()
+                    Dim it As Type = i.GetType()
                     Dim v As _do_val_ref(Of IT, T, Boolean) = Nothing
                     'for object
                     If select_casting(it, it, v) OrElse select_casting(Of T)(it, v) Then

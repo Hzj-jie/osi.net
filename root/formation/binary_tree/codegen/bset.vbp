@@ -16,16 +16,14 @@ Public NotInheritable Class [##FILENAME##](Of T)
         If v Is Nothing Then
             Return Nothing
         End If
-        Dim r As [##FILENAME##](Of T) = Nothing
-        r = New [##FILENAME##](Of T)()
+        Dim r As New [##FILENAME##](Of T)()
         move_to(v, r)
         Return r
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function clone() As [##FILENAME##](Of T)
-        Dim r As [##FILENAME##](Of T) = Nothing
-        r = New [##FILENAME##](Of T)()
+        Dim r As New [##FILENAME##](Of T)()
         clone_to(Me, r)
         Return r
     End Function

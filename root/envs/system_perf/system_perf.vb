@@ -19,8 +19,7 @@ Public Module _system_perf
     Public ReadOnly loops_per_ms As Int64 = ratio \ perf_run_ms
 
     Private Function perf_run_single() As Int64
-        Dim startticks As Int64 = 0
-        startticks = nowadays.high_res_ticks()
+        Dim startticks As Int64 = nowadays.high_res_ticks()
         fibonacci.run()
         atomic_operator.run()
 #If 0 Then
@@ -37,8 +36,7 @@ Public Module _system_perf
         perf_run_single()
         Dim min As Int64 = max_int64
         For i As Int32 = 1 To 16
-            Dim c As Int64 = 0
-            c = perf_run_single()
+            Dim c As Int64 = perf_run_single()
             If c < min Then
                 min = c
             End If

@@ -90,8 +90,7 @@ Public Class performance_comparison_case_wrapper
                 If i = j Then
                     Continue For
                 End If
-                Dim v As Double = 0
-                v = max_rate_upper_bound(i, j)
+                Dim v As Double = max_rate_upper_bound(i, j)
                 If v >= 0 Then
                     expectation.less(perf_case(i).max_used_loops() / perf_case(j).max_used_loops(),
                                      v,

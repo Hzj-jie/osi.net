@@ -28,8 +28,7 @@ Public NotInheritable Class int32_bytes_perf_test
     Private Shared Sub bitconverter_getbytes()
         Dim d() As Byte = Nothing
         ReDim d(CInt(sizeof_int32 - uint32_1))
-        Dim t As Int32 = 0
-        t = rnd_int()
+        Dim t As Int32 = rnd_int()
         For i As UInt32 = 0 To size - 1
             Dim x() As Byte = Nothing
             x = BitConverter.GetBytes(t)
@@ -40,8 +39,7 @@ Public NotInheritable Class int32_bytes_perf_test
     Private Shared Sub marshal_write()
         Dim d() As Byte = Nothing
         ReDim d(CInt(sizeof_int32 - uint32_1))
-        Dim t As Int32 = 0
-        t = rnd_int()
+        Dim t As Int32 = rnd_int()
         For i As UInt32 = 0 To size - 1
 #Disable Warning BC40000
             Marshal.WriteInt32(d, 0, t)

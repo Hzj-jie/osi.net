@@ -36,8 +36,7 @@ Public Class sider_test
         Protected Overrides Function create_istrkeyvt(ByVal p As ref(Of istrkeyvt)) As event_comb
             Return sync_async(Function() As Boolean
                                   Dim r As istrkeyvt_questioner = Nothing
-                                  Dim v As var = Nothing
-                                  v = New var(Console.ReadLine())
+                                  Dim v As New var(Console.ReadLine())
                                   Return constructor.resolve(v, r) AndAlso
                                          assertion.is_not_null(r) AndAlso
                                          eva(p, r) AndAlso

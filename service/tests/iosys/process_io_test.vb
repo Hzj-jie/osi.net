@@ -22,8 +22,7 @@ Public NotInheritable Class process_io_test
     Private Const output_times As Int32 = 1024 * 8
 
     Shared Sub New()
-        Dim filename As String = Nothing
-        filename = guid_str()
+        Dim filename As String = guid_str()
         process_io_exe_full_path = Path.Combine(deploys.temp_folder,
                                                 strcat(filename,
                                                        filesystem.extension_prefix,

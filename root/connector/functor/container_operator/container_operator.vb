@@ -31,8 +31,7 @@ Partial Public NotInheritable Class container_operator(Of CONTAINER, T)
             Return False
         End If
 
-        Dim f As Func(Of CONTAINER, T, Boolean) = Nothing
-        f = global_resolver(Of Func(Of CONTAINER, T, Boolean), container_operator(Of CONTAINER, T)).resolve_or_null()
+        Dim f As Func(Of CONTAINER, T, Boolean) = global_resolver(Of Func(Of CONTAINER, T, Boolean), container_operator(Of CONTAINER, T)).resolve_or_null()
         assert(Not f Is Nothing)
         Return f(i, j)
     End Function
@@ -55,14 +54,12 @@ Partial Public NotInheritable Class container_operator(Of CONTAINER, T)
             Return 0
         End If
 
-        Dim f As Func(Of CONTAINER, UInt32) = Nothing
-        f = global_resolver(Of Func(Of CONTAINER, UInt32), container_operator(Of CONTAINER, T)).resolve_or_null()
+        Dim f As Func(Of CONTAINER, UInt32) = global_resolver(Of Func(Of CONTAINER, UInt32), container_operator(Of CONTAINER, T)).resolve_or_null()
         If Not f Is Nothing Then
             Return f(i)
         End If
 
-        Dim it As container_operator(Of T).enumerator = Nothing
-        it = enumerate(i)
+        Dim it As container_operator(Of T).enumerator = enumerate(i)
         Dim r As UInt32 = 0
         While Not it Is Nothing AndAlso Not it.end()
             r += uint32_1
@@ -81,8 +78,7 @@ Partial Public NotInheritable Class container_operator(Of CONTAINER, T)
             Return
         End If
 
-        Dim f As Action(Of CONTAINER) = Nothing
-        f = global_resolver(Of Action(Of CONTAINER), container_operator(Of CONTAINER, T)).resolve_or_null()
+        Dim f As Action(Of CONTAINER) = global_resolver(Of Action(Of CONTAINER), container_operator(Of CONTAINER, T)).resolve_or_null()
         assert(Not f Is Nothing)
         f(i)
     End Sub

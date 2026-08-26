@@ -13,10 +13,8 @@ Public NotInheritable Class big_udec_parse_str_test
     <test>
     <repeat(100)>
     Private Shared Sub run()
-        Dim u As big_udec = Nothing
-        u = big_udec.random()
-        Dim i As Byte = 0
-        i = 2
+        Dim u As big_udec = big_udec.random()
+        Dim i As Byte = 2
         While big_udec.support_base(i)
             Dim o As big_udec = Nothing
             assertion.is_true(big_udec.parse(u.as_str().with_str_base(i).increase_upure_length(CUInt(5)), o, i))

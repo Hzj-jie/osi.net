@@ -67,8 +67,7 @@ Friend NotInheritable Class bset_case
             If rnd_int(0, 2) = 0 Then
                 confirm_not_empty()
                 assertion.equal(keys.size(), s.size())
-                Dim i As UInt32 = 0
-                i = rnd_uint(uint32_0, keys.size())
+                Dim i As UInt32 = rnd_uint(uint32_0, keys.size())
                 assertion.is_true(s.erase(keys(i)), "s.erase(", keys(i), ") returns false.")
                 assertion.equal(s.find(keys(i)), s.end(), "s.find(", keys(i), ") <> s.end()")
                 keys.erase(i)
@@ -97,11 +96,9 @@ Friend NotInheritable Class bset_case
     End Sub
 
     Private Sub insert()
-        Dim k As String = Nothing
-        k = rnd_key()
+        Dim k As String = rnd_key()
 #If True Then
-        Dim r As tuple(Of [bset](Of String).iterator, Boolean) = Nothing
-        r = s.insert(k)
+        Dim r As tuple(Of [bset](Of String).iterator, Boolean) = s.insert(k)
         If assertion.is_not_null(r) Then
             assertion.equal(r.second, s.find(k) <> s.end(), "s.insert(", k, ") <> s.find")
         End If
@@ -121,8 +118,7 @@ Friend NotInheritable Class bset_case
             Return
         End If
         assertion.equal(s.size(), s2.size())
-        Dim sz As Int64 = 0
-        sz = s.size()
+        Dim sz As Int64 = s.size()
         Dim c As Int64 = 0
         Dim it As [bset](Of String).iterator = Nothing
 

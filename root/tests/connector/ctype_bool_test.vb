@@ -21,8 +21,7 @@ Public Class ctype_bool_test
     End Class
 
     Public Overrides Function run() As Boolean
-        Dim i As test_class = Nothing
-        i = New test_class(1)
+        Dim i As New test_class(1)
         assertion.is_true(i)
         i = New test_class(2)
         assertion.is_false(i)

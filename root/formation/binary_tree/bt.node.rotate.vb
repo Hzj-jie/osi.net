@@ -15,10 +15,8 @@ Partial Public Class bt(Of T)
             assert(Not a Is Nothing)
             assert(a.has_right_child())
 #End If
-            Dim c As node = Nothing
-            c = a.right_child()
-            Dim d As node = Nothing
-            d = c.left_child()
+            Dim c As node = a.right_child()
+            Dim d As node = c.left_child()
             a.replace_parent_subtree(c)
             a.clear_parent()
             c.replace_left(a)
@@ -41,10 +39,8 @@ Partial Public Class bt(Of T)
             assert(Not a Is Nothing)
             assert(a.has_left_child())
 #End If
-            Dim b As node = Nothing
-            b = a.left_child()
-            Dim e As node = Nothing
-            e = b.right_child()
+            Dim b As node = a.left_child()
+            Dim e As node = b.right_child()
             a.replace_parent_subtree(b)
             a.clear_parent()
             b.replace_right(a)

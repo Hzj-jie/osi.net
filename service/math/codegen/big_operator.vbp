@@ -1,8 +1,7 @@
 
 Partial Public NotInheritable Class ##CLASS_NAME##
     Public Shared Operator +(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
-        Dim r As ##CLASS_NAME## = Nothing
-        r = New ##CLASS_NAME##(this)
+        Dim r As New ##CLASS_NAME##(this)
         Return r.add(that)
     End Operator
 
@@ -11,27 +10,23 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     End Operator
 
     Public Shared Operator -(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
-        Dim r As ##CLASS_NAME## = Nothing
-        r = New ##CLASS_NAME##(this)
+        Dim r As New ##CLASS_NAME##(this)
         Return r.sub(that)
     End Operator
 
     Public Shared Operator -(ByVal this As ##CLASS_NAME##) As ##CLASS_NAME##
-        Dim r As ##CLASS_NAME## = Nothing
-        r = New ##CLASS_NAME##(this)
+        Dim r As New ##CLASS_NAME##(this)
         r.reverse_signal()
         Return r
     End Operator
 
     Public Shared Operator *(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
-        Dim r As ##CLASS_NAME## = Nothing
-        r = New ##CLASS_NAME##(this)
+        Dim r As New ##CLASS_NAME##(this)
         Return r.multiply(that)
     End Operator
 
     Public Shared Operator \(ByVal this As ##CLASS_NAME##, ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
-        Dim r As ##CLASS_NAME## = Nothing
-        r = New ##CLASS_NAME##(this)
+        Dim r As New ##CLASS_NAME##(this)
         Return r.divide(that)
     End Operator
 

@@ -121,8 +121,7 @@ Partial Public Class hasharray(Of T,
 #If Not Performance Then
         assert(Not empty())
 #End If
-        Dim i As UInt32 = 0
-        i = v.size()
+        Dim i As UInt32 = v.size()
         While i > uint32_0
             i -= uint32_1
             If Not v(i).empty() Then

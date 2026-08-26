@@ -123,14 +123,12 @@ Public Class count_event(Of EVENT_TYPE As {action_event(Of _true), New})
         Else
             ms32 = CInt(ms)
         End If
-        Dim are As ref_ptr(Of AutoResetEvent) = Nothing
-        are = New ref_ptr(Of AutoResetEvent)(New AutoResetEvent(False), ref:=2)
+        Dim are As New ref_ptr(Of AutoResetEvent)(New AutoResetEvent(False), ref:=2)
         assert(attach(Sub()
                           assert((+are).Set())
                           are.unref()
                       End Sub))
-        Dim r As Boolean = False
-        r = (+are).WaitOne(ms32)
+        Dim r As Boolean = (+are).WaitOne(ms32)
         are.unref()
         Return r
     End Function

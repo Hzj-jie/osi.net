@@ -21,8 +21,7 @@ Friend Class big_uint_shift_case
         l = New big_uint(i)
         r = New big_uint(i)
         For k As Int32 = 0 To 32 - 1
-            Dim t As UInt64 = 0
-            t = rnd_uint64(1, j)
+            Dim t As UInt64 = rnd_uint64(1, j)
             l.left_shift(t)
             r.left_shift(j).right_shift(j - t)
             assertion.is_true(l.equal(r))

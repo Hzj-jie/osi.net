@@ -50,8 +50,7 @@ Partial Public Class type_attribute
         End Function
 
         Public Function [get](Of T)(ByVal init_mode As init_mode, ByVal forward_mode As forward_mode) As T
-            Dim o As Object = Nothing
-            o = [get](init_mode, forward_mode)
+            Dim o As Object = [get](init_mode, forward_mode)
             Return cast(Of T)(o)
         End Function
 

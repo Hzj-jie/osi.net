@@ -10,8 +10,7 @@ Public NotInheritable Class argument_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        Dim v As var = Nothing
-        v = New var()
+        Dim v As New var()
         v.parse("--a=bcd -ijk ~op --b=def --de=efg ghghgh --hi")
         assertion.is_true(v.bind("abc", "bcd", "def", "opq"))
         assertion.is_true(v.switch("i"))

@@ -75,15 +75,13 @@ Public Class unique_strong_map_test
         End Function
 
         Private Function [set]() As Boolean
-            Dim k As Int64 = 0
-            k = rnd_key()
+            Dim k As Int64 = rnd_key()
             m.set(k, value(k))
             Return True
         End Function
 
         Private Function [get]() As Boolean
-            Dim k As Int64 = 0
-            k = rnd_key()
+            Dim k As Int64 = rnd_key()
             Dim v As Int64 = 0
             If m.get(k, v) Then
                 assertion.equal(v, value(k))
@@ -92,8 +90,7 @@ Public Class unique_strong_map_test
         End Function
 
         Private Function replace() As Boolean
-            Dim k As Int64 = 0
-            k = rnd_key()
+            Dim k As Int64 = rnd_key()
             m.replace(k, value(k))
             Return True
         End Function
@@ -104,10 +101,8 @@ Public Class unique_strong_map_test
         End Function
 
         Private Function generate() As Boolean
-            Dim k As Int64 = 0
-            k = rnd_key()
-            Dim v As Int64 = 0
-            v = value(k)
+            Dim k As Int64 = rnd_key()
+            Dim v As Int64 = value(k)
             assertion.equal(m.generate(k, Function() As Int64
                                               Return v
                                           End Function), v)

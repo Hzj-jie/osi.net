@@ -28,8 +28,7 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
 
         Public Overrides Function [erase](ByVal index As Int64) As Boolean
             assert(Not at(index) Is Nothing, "index " + Convert.ToString(index) + " is not in heap.")
-            Dim k As MAP_KEY = Nothing
-            k = at(index).second
+            Dim k As MAP_KEY = at(index).second
             assert(MyBase.erase(index), "mybase.erase(" + Convert.ToString(index) + ") returns false.")
             If index = size() Then
                 'mybase will not call update here, if the removed index is the last one
@@ -46,8 +45,7 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
                 assert(m.erase(at(index).second) _
                             , "_map.erase(" + Convert.ToString(at(index).second) + ") returns false.")
             End If
-            Dim rtn As Int64 = 0
-            rtn = MyBase.update(index, value)
+            Dim rtn As Int64 = MyBase.update(index, value)
             assert(rtn <> npos, "cannot update index " + Convert.ToString(index))
             m(value.second) = rtn
             assert(size() = m.size(), "heap.size() <> _map.size()")
@@ -107,8 +105,7 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
     End Sub
 
     Public Function [erase](ByVal key As MAP_KEY) As Boolean
-        Dim heapPos As map(Of MAP_KEY, Int64).iterator = Nothing
-        heapPos = m.find(key)
+        Dim heapPos As map(Of MAP_KEY, Int64).iterator = m.find(key)
         If heapPos = m.end() Then
             Return False
         End If
@@ -119,13 +116,11 @@ Partial Public NotInheritable Class mapheap(Of MAP_KEY As IComparable(Of MAP_KEY
     Private Function update(ByVal key As MAP_KEY,
                             ByVal value As HEAP_KEY,
                             ByVal accumulate As Boolean) As Boolean
-        Dim heap_pos As map(Of MAP_KEY, Int64).iterator = Nothing
-        heap_pos = m.find(key)
+        Dim heap_pos As map(Of MAP_KEY, Int64).iterator = m.find(key)
         If heap_pos = m.end() Then
             Return h.insert(pair.emplace_of(value, key)) <> npos
         End If
-        Dim heap_node As pair(Of HEAP_KEY, MAP_KEY) = Nothing
-        heap_node = h((+heap_pos).second)
+        Dim heap_node As pair(Of HEAP_KEY, MAP_KEY) = h((+heap_pos).second)
         assert(Not heap_node Is Nothing, "heapNode is nothing, _map is not concur with _heap.")
         If accumulate Then
             heap_node.first = binary_operator.add(heap_node.first, value)

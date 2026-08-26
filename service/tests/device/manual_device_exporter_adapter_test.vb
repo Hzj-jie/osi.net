@@ -10,10 +10,8 @@ Public Class manual_device_exporter_adapter_test
         Dim started As Boolean = False
         Dim stopped As Boolean = False
         Dim exported As Int32 = 0
-        Dim i As imanual_device_exporter(Of Int32) = Nothing
-        i = New manual_device_exporter(Of Int32)()
-        Dim j As imanual_device_exporter(Of Double) = Nothing
-        j = manual_device_exporter_adapter.[New](i, Function(k As Int32) As Double
+        Dim i As imanual_device_exporter(Of Int32) = New manual_device_exporter(Of Int32)()
+        Dim j As imanual_device_exporter(Of Double) = manual_device_exporter_adapter.[New](i, Function(k As Int32) As Double
                                                         Return CDbl(k)
                                                     End Function)
         AddHandler j.new_device_exported, Sub(k As idevice(Of Double), ByRef export_result As Boolean)

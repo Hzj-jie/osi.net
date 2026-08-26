@@ -19,8 +19,7 @@ Namespace primitive
     Public NotInheritable Class loaded_method_test
         <test>
         Private Shared Sub in_module()
-            Dim l As loaded_method = Nothing
-            l = New loaded_method()
+            Dim l As New loaded_method()
             l.load(str_bytes(strcat("osi.tests.service.interpreter.primitive._loaded_method_test, ",
                                     "osi.tests.service.interpreter",
                                     ":action")))
@@ -29,8 +28,7 @@ Namespace primitive
 
         <test>
         Private Shared Sub exception_when_executing_before_load()
-            Dim l As loaded_method = Nothing
-            l = New loaded_method()
+            Dim l As New loaded_method()
             assertion.thrown(Sub()
                                  l.execute(str_bytes("abc"))
                              End Sub)
@@ -42,8 +40,7 @@ Namespace primitive
 
         <test>
         Private Shared Sub in_static_class()
-            Dim l As loaded_method = Nothing
-            l = New loaded_method()
+            Dim l As New loaded_method()
             l.load(str_bytes(strcat("osi.tests.service.interpreter.primitive.loaded_method_test, ",
                                     "osi.tests.service.interpreter",
                                     ":another_action")))
@@ -56,8 +53,7 @@ Namespace primitive
 
         <test>
         Private Shared Sub disallow_instance_method()
-            Dim l As loaded_method = Nothing
-            l = New loaded_method()
+            Dim l As New loaded_method()
             assertion.thrown(Sub()
                                  l.load(str_bytes(strcat("osi.tests.service.interpreter.primitive.loaded_method_test, ",
                                                          "osi.tests.service.interpreter",
@@ -72,8 +68,7 @@ Namespace primitive
 
         <test>
         Private Shared Sub catch_exception()
-            Dim l As loaded_method = Nothing
-            l = New loaded_method()
+            Dim l As New loaded_method()
             l.load(str_bytes(strcat("osi.tests.service.interpreter.primitive.loaded_method_test, ",
                                     "osi.tests.service.interpreter",
                                     ":thrown_action")))
@@ -96,8 +91,7 @@ Namespace primitive
 
         <test>
         Private Shared Sub disallow_unsatisfied_signature()
-            Dim l As loaded_method = Nothing
-            l = New loaded_method()
+            Dim l As New loaded_method()
             assertion.thrown(Sub()
                                  l.load(str_bytes(strcat("osi.tests.service.interpreter.primitive.loaded_method_test, ",
                                                          "osi.tests.service.interpreter",

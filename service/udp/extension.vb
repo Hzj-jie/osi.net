@@ -154,14 +154,12 @@ Public Module _extension
             ep = CUShort(expected.Port())
             If rp = ep OrElse ep = socket_invalid_port Then
                 ' If port has not been set, treat them as equal.
-                Dim ea As IPAddress = Nothing
-                ea = expected.Address()
+                Dim ea As IPAddress = expected.Address()
                 If ea.Equals(IPAddress.Any) OrElse ea.Equals(IPAddress.IPv6Any) Then
                     Return True
                 End If
 
-                Dim ra As IPAddress = Nothing
-                ra = received_from.Address()
+                Dim ra As IPAddress = received_from.Address()
                 If ra.Equals(ea) Then
                     Return True
                 Else

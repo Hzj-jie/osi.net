@@ -11,10 +11,8 @@ Public Class singleton_device_pool_test
 
     Private Shared Function run_case(ByVal attach As Boolean) As Boolean
         mock_dev(Of singleton_device_pool_test).reset()
-        Dim d As idevice(Of mock_dev(Of singleton_device_pool_test)) = Nothing
-        d = mock_dev(Of singleton_device_pool_test).create(attach)
-        Dim p As singleton_device_pool(Of mock_dev(Of singleton_device_pool_test)) = Nothing
-        p = New singleton_device_pool(Of mock_dev(Of singleton_device_pool_test))(d)
+        Dim d As idevice(Of mock_dev(Of singleton_device_pool_test)) = mock_dev(Of singleton_device_pool_test).create(attach)
+        Dim p As New singleton_device_pool(Of mock_dev(Of singleton_device_pool_test))(d)
         assertion.equal(p.free_count(), uint32_1)
         assertion.equal(p.total_count(), uint32_1)
         assertion.equal(p.limited_max_count(), False)

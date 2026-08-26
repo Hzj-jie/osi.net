@@ -63,8 +63,7 @@ Partial Public NotInheritable Class syntaxer
 
         Private Function ignore_types(ByVal s As String) As Boolean
             ignores.clear()
-            Dim v As vector(Of String) = Nothing
-            v = split_types(s)
+            Dim v As vector(Of String) = split_types(s)
             If v Is Nothing Then
                 Return True
             End If
@@ -86,8 +85,7 @@ Partial Public NotInheritable Class syntaxer
 
         Private Function root_types(ByVal s As String) As Boolean
             roots.clear()
-            Dim v As vector(Of String) = Nothing
-            v = split_types(s)
+            Dim v As vector(Of String) = split_types(s)
             If v Is Nothing Then
                 Return True
             End If

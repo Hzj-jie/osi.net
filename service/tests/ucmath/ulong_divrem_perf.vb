@@ -36,14 +36,12 @@ Public NotInheritable Class ulong_divrem_perf
             While r2 = 0
                 r2 = rnd_uint64()
             End While
-            Dim r As UInt64 = 0
-            r = r1 \ r2 : Dim f As UInt64 : f = r1 Mod r2
+            Dim r As UInt64 = r1 \ r2 : Dim f As UInt64 : f = r1 Mod r2
         End Sub
 
         Public Overrides Function run() As Boolean
             For i As Int64 = 0 To 1073741824L - 1
-                Dim r As UInt64 = 0
-                r = r1 \ r2 : Dim f As UInt64 : f = r1 Mod r2
+                Dim r As UInt64 = r1 \ r2 : Dim f As UInt64 : f = r1 Mod r2
             Next
             Return True
         End Function

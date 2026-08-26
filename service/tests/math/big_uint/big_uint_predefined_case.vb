@@ -11,13 +11,11 @@ Friend NotInheritable Class big_uint_predefined_case
     Inherits [case]
 
     Private Shared Function case1() As Boolean
-        Dim r As big_uint = Nothing
-        r = New big_uint()
+        Dim r As New big_uint()
         Dim exp As UInt64 = 0
         For i As Int32 = 1 To 5000001
             exp += CUInt(i)
-            Dim x As big_uint = Nothing
-            x = New big_uint(CUInt(i))
+            Dim x As New big_uint(CUInt(i))
             r.add(x)
             Dim overflow As Boolean = False
             If Not assertion.equal(x.as_int32(overflow), i) Then
@@ -32,8 +30,7 @@ Friend NotInheritable Class big_uint_predefined_case
     End Function
 
     Private Shared Function case2() As Boolean
-        Dim l As big_uint = Nothing
-        l = New big_uint(10)
+        Dim l As New big_uint(10)
         l.factorial()
         assertion.equal(l, New big_uint(3628800))
         l = New big_uint(11)
@@ -43,10 +40,8 @@ Friend NotInheritable Class big_uint_predefined_case
     End Function
 
     Private Shared Function case3() As Boolean
-        Dim l As big_uint = Nothing
-        l = New big_uint(10)
-        Dim r As big_uint = Nothing
-        r = New big_uint(13)
+        Dim l As New big_uint(10)
+        Dim r As New big_uint(13)
         Dim overflow As Boolean = False
         l.sub(r, overflow)
         assertion.is_true(overflow)
@@ -56,11 +51,9 @@ Friend NotInheritable Class big_uint_predefined_case
     End Function
 
     Private Shared Function case4() As Boolean
-        Dim l As big_uint = Nothing
-        l = New big_uint(10)
+        Dim l As New big_uint(10)
         l *= (max_uint32 + 1UL)
-        Dim r As big_uint = Nothing
-        r = New big_uint(13)
+        Dim r As New big_uint(13)
         r *= (max_uint32 + 1UL)
         Dim overflow As Boolean = False
         l.sub(r, overflow)
@@ -71,8 +64,7 @@ Friend NotInheritable Class big_uint_predefined_case
     End Function
 
     Private Shared Function case5() As Boolean
-        Dim x As big_uint = Nothing
-        x = big_uint.random()
+        Dim x As big_uint = big_uint.random()
         assertion.equal(x ^ uint32_1, x)
         Return True
     End Function

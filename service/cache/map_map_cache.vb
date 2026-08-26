@@ -63,16 +63,14 @@ Friend NotInheritable Class map_map_cache(Of KEY_T As IComparable(Of KEY_T), VAL
 
     Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean _
                          Implements islimcache(Of KEY_T, VALUE_T).get
-        Dim i As map(Of KEY_T, VALUE_T).iterator = Nothing
-        i = kv.find(key)
+        Dim i As map(Of KEY_T, VALUE_T).iterator = kv.find(key)
         If i = kv.end() Then
             If isdebugmode() Then
                 assert(kt.find(key) = kt.end())
             End If
             Return False
         End If
-        Dim j As map(Of KEY_T, Int64).iterator = Nothing
-        j = kt.find(key)
+        Dim j As map(Of KEY_T, Int64).iterator = kt.find(key)
         assert(j <> kt.end())
         If retired(j) Then
             assert([erase](key))

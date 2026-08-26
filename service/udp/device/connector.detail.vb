@@ -82,8 +82,7 @@ Partial Public NotInheritable Class connector
         Return New event_comb(Function() As Boolean
                                   result.clear()
                                   If p.host_or_ip.null_or_empty() Then
-                                      Dim r As vector(Of IPEndPoint) = Nothing
-                                      r = New vector(Of IPEndPoint)()
+                                      Dim r As New vector(Of IPEndPoint)()
                                       r.emplace_back({New IPEndPoint(IPAddress.Any, p.remote_port),
                                                       New IPEndPoint(IPAddress.IPv6Any, p.remote_port)})
                                       Return eva(result, r) AndAlso

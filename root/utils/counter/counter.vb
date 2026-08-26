@@ -10,8 +10,7 @@ Imports osi.root.formation
 Namespace counter
     Public Module _counter
         Public Function increase(ByVal id As Int64, ByVal dc As lazier(Of Int64)) As Boolean
-            Dim cr As counter_record = Nothing
-            cr = counter(id)
+            Dim cr As counter_record = counter(id)
             Return Not cr Is Nothing AndAlso cr.increase(dc)
         End Function
 
@@ -20,8 +19,7 @@ Namespace counter
         End Function
 
         Public Function increase(ByVal id As Int64, Optional ByVal c As Int64 = 1) As Boolean
-            Dim cr As counter_record = Nothing
-            cr = counter(id)
+            Dim cr As counter_record = counter(id)
             Return Not cr Is Nothing AndAlso cr.increase(c)
         End Function
 

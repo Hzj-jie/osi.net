@@ -54,8 +54,7 @@ Public NotInheritable Class ref_test
         Private Shared Function hosting_and_release() As Boolean
             test_class.clear_finalized()
 
-            Dim count As Int32 = 0
-            count = rnd_int(100, 1000)
+            Dim count As Int32 = rnd_int(100, 1000)
             Dim ps() As ref(Of test_class) = Nothing
             ReDim ps(count - 1)
             For i As Int32 = 0 To count - 1
@@ -65,8 +64,7 @@ Public NotInheritable Class ref_test
             garbage_collector.repeat_collect()
             assertion.equal(test_class.finalized_count(), 0)
 
-            Dim released As Int32 = 0
-            released = rnd_int(0, count)
+            Dim released As Int32 = rnd_int(0, count)
             For i As Int32 = 0 To released - 1
                 ps(i) = Nothing
             Next
@@ -88,8 +86,7 @@ Public NotInheritable Class ref_test
             Using garbage_collector.force_aggressive_collecting()
                 'a single character uses two bytes
                 Const string_size_lowerbound As Int64 = (large_memory_object_size_lowerbound >> 1)
-                Dim count As Int32 = 0
-                count = rnd_int(large_memory_object_count_lowerbound, large_memory_object_count_lowerbound * 3)
+                Dim count As Int32 = rnd_int(large_memory_object_count_lowerbound, large_memory_object_count_lowerbound * 3)
                 Dim ps() As ref(Of String) = Nothing
                 ReDim ps(count - 1)
                 For i As Int32 = 0 To count - 1
@@ -135,8 +132,7 @@ Public NotInheritable Class ref_test
         Private Shared Function compares() As Boolean
             Const s1 As String = "ABC"
             Const s2 As String = "abc"
-            Dim p As ref(Of test_class2) = Nothing
-            p = New ref(Of test_class2)(New test_class2(s1))
+            Dim p As New ref(Of test_class2)(New test_class2(s1))
             Return compares(p, s1, strcmp(s1, s1)) AndAlso
                    compares(p, s2, strcmp(s1, s2))
         End Function
@@ -166,8 +162,7 @@ Public NotInheritable Class ref_test
         End Function
 
         Private Shared Function [overrides]() As Boolean
-            Dim p1 As ref(Of test_class) = Nothing
-            p1 = New ref(Of test_class)(New test_class())
+            Dim p1 As New ref(Of test_class)(New test_class())
             assertion.is_true(p1.Equals(p1))
             assertion.is_true(p1.Equals(+p1))
             assertion.is_true(p1.Equals(New ref(Of test_class)(p1)))
@@ -176,8 +171,7 @@ Public NotInheritable Class ref_test
             assertion.is_false(p1.Equals(New ref(Of test_class)(New test_class())))
 
             Const s As String = "ABCDEF"
-            Dim p2 As ref(Of String) = Nothing
-            p2 = New ref(Of String)(s)
+            Dim p2 As New ref(Of String)(s)
             assertion.equal(p2.GetHashCode(), s.GetHashCode())
             assertion.equal(p2.ToString(), s.ToString())
 
@@ -185,8 +179,7 @@ Public NotInheritable Class ref_test
         End Function
 
         Private Shared Function clone() As Boolean
-            Dim p As ref(Of test_class2) = Nothing
-            p = New ref(Of test_class2)(New test_class2("abc"))
+            Dim p As New ref(Of test_class2)(New test_class2("abc"))
             Dim q As ref(Of test_class2) = Nothing
             copy(q, p)
             assertion.equal(object_compare(p.get(), q.get()), 0)
@@ -195,16 +188,14 @@ Public NotInheritable Class ref_test
         End Function
 
         Private Shared Function empty() As Boolean
-            Dim p As ref(Of UInt32) = Nothing
-            p = New ref(Of UInt32)()
+            Dim p As New ref(Of UInt32)()
             assertion.is_false(p.empty())
             p.set(100)
             assertion.is_false(p.empty())
             p.set(Nothing)
             assertion.is_false(p.empty())
 
-            Dim p2 As ref(Of String) = Nothing
-            p2 = New ref(Of String)()
+            Dim p2 As New ref(Of String)()
             assertion.is_true(p2.empty())
             p2.set("abc")
             assertion.is_false(p2.empty())
@@ -217,17 +208,13 @@ Public NotInheritable Class ref_test
         End Function
 
         Private Shared Function operator_less_or_great() As Boolean
-            Dim p As ref(Of String) = Nothing
-            p = New ref(Of String)()
-            Dim str As String = Nothing
-            str = guid_str()
+            Dim p As New ref(Of String)()
+            Dim str As String = guid_str()
             assertion.is_true(p < str)
             assertion.equal(+p, str)
 
-            Dim p2 As ref(Of Int32) = Nothing
-            p2 = New ref(Of Int32)()
-            Dim i As Int32 = 0
-            i = rnd_int()
+            Dim p2 As New ref(Of Int32)()
+            Dim i As Int32 = rnd_int()
             assertion.is_true(p2 < i)
             assertion.equal(+p2, i)
 

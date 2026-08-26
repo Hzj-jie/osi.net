@@ -34,10 +34,8 @@ Public NotInheritable Class shell_less_process_test
     End Sub
 
     Private Shared Function raise_on_invoke_case() As Boolean
-        Dim t As slimqless2_runner = Nothing
-        t = New slimqless2_runner()
-        Dim p As shell_less_process = Nothing
-        p = New shell_less_process(
+        Dim t As New slimqless2_runner()
+        Dim p As shell_less_process = New shell_less_process(
                     True,
                     implementation_of(Of ISynchronizeInvoke).from_instance(New slimqless2_runner_synchronize_invoke(t)))
         p.start_info().FileName() = shell_less_process_test_exe_full_path

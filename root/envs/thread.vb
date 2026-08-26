@@ -23,8 +23,7 @@ Public Module _thread
         End Sub
 
         Public Shared Function current_thread() As Thread
-            Dim rtn As Thread = Nothing
-            rtn = _current_thread
+            Dim rtn As Thread = _current_thread
             If rtn Is Nothing Then
                 rtn = Thread.CurrentThread()
                 _current_thread = rtn
@@ -34,8 +33,7 @@ Public Module _thread
         End Function
 
         Public Shared Function current_thread_id() As Int32
-            Dim rtn As Int32 = 0
-            rtn = _current_thread_id
+            Dim rtn As Int32 = _current_thread_id
             If rtn = INVALID_THREAD_ID Then
                 rtn = current_thread().ManagedThreadId()
                 _current_thread_id = rtn
@@ -45,12 +43,10 @@ Public Module _thread
         End Function
 
         Public Shared Function current_process_thread() As ProcessThread
-            Dim r As ProcessThread = Nothing
-            r = _current_process_thread
+            Dim r As ProcessThread = _current_process_thread
             If r Is Nothing Then
                 Thread.BeginThreadAffinity()
-                Dim tps As ProcessThreadCollection = Nothing
-                tps = this_process.ref.Threads()
+                Dim tps As ProcessThreadCollection = this_process.ref.Threads()
                 Assert(Not tps.null_or_empty())
                 For i As Int32 = 0 To tps.Count() - 1
                     Assert(Not tps(i) Is Nothing)
@@ -62,8 +58,7 @@ Public Module _thread
                 Assert(Not r Is Nothing)
                 _current_process_thread = r
                 For i As Int32 = 0 To tps.Count() - 1
-                    Dim c As Int32 = 0
-                    c = object_compare(r, tps(i))
+                    Dim c As Int32 = object_compare(r, tps(i))
                     If c = object_compare_undetermined Then
                         tps(i).Dispose()
                     Else
@@ -76,8 +71,7 @@ Public Module _thread
         End Function
 
         Public Shared Function current_process_thread_id() As Int32
-            Dim r As Int32 = 0
-            r = _current_process_thread_id
+            Dim r As Int32 = _current_process_thread_id
             If r = INVALID_THREAD_ID Then
                 Thread.BeginThreadAffinity()
 #Disable Warning BC40000

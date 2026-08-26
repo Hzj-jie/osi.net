@@ -38,10 +38,8 @@ Public NotInheritable Class weak_event_test
         Const count_per_round As Int32 = 100
 
         event_receiver.clear()
-        Dim e As weak_event = Nothing
-        e = New weak_event()
-        Dim r As event_receiver = Nothing
-        r = New event_receiver()
+        Dim e As New weak_event()
+        Dim r As New event_receiver()
         e.attach(r, AddressOf event_receiver.receive)
         garbage_collector.repeat_collect()
         For i As Int32 = 0 To count_per_round - 1
@@ -70,8 +68,7 @@ Public NotInheritable Class weak_event_test
         Const count_per_round As Int32 = 100
 
         event_receiver.clear()
-        Dim e As weak_event = Nothing
-        e = New weak_event()
+        Dim e As New weak_event()
         Dim rs() As event_receiver = Nothing
         ReDim rs(CInt(c) - 1)
         For i As Int32 = 0 To CInt(c) - 1
@@ -127,12 +124,9 @@ Public NotInheritable Class weak_event_test
         Const c As UInt32 = 2
 
         event_receiver.clear()
-        Dim e As weak_event = Nothing
-        e = New weak_event()
-        Dim r1 As event_receiver = Nothing
-        r1 = New event_receiver()
-        Dim r2 As event_receiver = Nothing
-        r2 = New event_receiver()
+        Dim e As New weak_event()
+        Dim r1 As New event_receiver()
+        Dim r2 As New event_receiver()
         e.attach(r1, AddressOf event_receiver.receive)
         e.attach(r2, AddressOf event_receiver.receive)
         garbage_collector.repeat_collect()

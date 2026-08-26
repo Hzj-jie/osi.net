@@ -9,8 +9,7 @@ Public Class bit_test
     Private Shared Function bytes_str(ByVal buff() As Byte) As String
         Dim r As String = Nothing
         For i As Int32 = 0 To array_size(buff) - 1
-            Dim b As Byte = 0
-            b = buff(i)
+            Dim b As Byte = buff(i)
             For j As Int32 = 0 To bit_count_in_byte - 1
                 r += If(b > max_int8, character._1, character._0)
                 b <<= 1
@@ -153,8 +152,7 @@ Public Class bit_test
                 Dim c As Byte = 0
                 For k As Int32 = 0 To i - 1
                     For l As Int32 = 0 To bit_count_in_byte - 1
-                        Dim v As Boolean = False
-                        v = rnd_bool()
+                        Dim v As Boolean = rnd_bool()
                         s += If(v, character._0, character._1)
                         c += If(v, 0, 1)
                     Next

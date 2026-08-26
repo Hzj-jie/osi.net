@@ -13,136 +13,119 @@ Public Module _swap
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As Decimal, ByRef y As Decimal)
-        Dim i As Decimal = Nothing
-        i = x
+        Dim i As Decimal = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As Int64, ByRef y As Int64)
-        Dim i As Int64 = Nothing
-        i = x
+        Dim i As Int64 = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As Int32, ByRef y As Int32)
-        Dim i As Int32 = Nothing
-        i = x
+        Dim i As Int32 = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As Int16, ByRef y As Int16)
-        Dim i As Int16 = Nothing
-        i = x
+        Dim i As Int16 = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As SByte, ByRef y As SByte)
-        Dim i As SByte = Nothing
-        i = x
+        Dim i As SByte = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As UInt64, ByRef y As UInt64)
-        Dim i As UInt64 = Nothing
-        i = x
+        Dim i As UInt64 = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As UInt32, ByRef y As UInt32)
-        Dim i As UInt32 = Nothing
-        i = x
+        Dim i As UInt32 = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As UInt16, ByRef y As UInt16)
-        Dim i As UInt16 = Nothing
-        i = x
+        Dim i As UInt16 = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As Byte, ByRef y As Byte)
-        Dim i As Byte = Nothing
-        i = x
+        Dim i As Byte = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As Single, ByRef y As Single)
-        Dim i As Single = Nothing
-        i = x
+        Dim i As Single = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As Double, ByRef y As Double)
-        Dim i As Double = Nothing
-        i = x
+        Dim i As Double = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As String, ByRef y As String)
-        Dim i As String = Nothing
-        i = x
+        Dim i As String = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As Char, ByRef y As Char)
-        Dim i As Char = Nothing
-        i = x
+        Dim i As Char = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As Boolean, ByRef y As Boolean)
-        Dim i As Boolean = Nothing
-        i = x
+        Dim i As Boolean = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As DateTime, ByRef y As DateTime)
-        Dim i As DateTime = Nothing
-        i = x
+        Dim i As DateTime = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(ByRef x As Type, ByRef y As Type)
-        Dim i As Type = Nothing
-        i = x
+        Dim i As Type = x
         x = y
         y = i
     End Sub
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Sub swap(Of T)(ByRef x As T, ByRef y As T)
-        Dim i As T = Nothing
-        i = x
+        Dim i As T = x
         x = y
         y = i
     End Sub

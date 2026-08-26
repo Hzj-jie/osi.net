@@ -42,8 +42,7 @@ Public Structure fixed_queue(Of T, _MAX_SIZE As _int64)
     End Sub
 
     Public Function size() As Int64
-        Dim rtn As Int32 = 0
-        rtn = last - start
+        Dim rtn As Int32 = last - start
         If rtn < 0 Then
             rtn += MAX_SIZE
         End If

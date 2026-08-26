@@ -214,13 +214,10 @@ Partial Public NotInheritable Class unordered_map(Of KEY_T, VALUE_T)
             Return CloneT()
         End If
 
-        Dim r As unordered_map(Of KEY_T, VALUE_T) = Nothing
-        r = New unordered_map(Of KEY_T, VALUE_T)()
-        Dim it As unordered_map(Of KEY_T, VALUE_T).iterator = Nothing
-        it = begin()
+        Dim r As New unordered_map(Of KEY_T, VALUE_T)()
+        Dim it As unordered_map(Of KEY_T, VALUE_T).iterator = begin()
         While it <> [end]()
-            Dim tit As unordered_map(Of KEY_T, VALUE_T).iterator = Nothing
-            tit = that.find((+it).first)
+            Dim tit As unordered_map(Of KEY_T, VALUE_T).iterator = that.find((+it).first)
             If tit = that.end() OrElse Not equal((+it).second, (+tit).second) Then
                 assert(r.insert((+it).first, (+it).second).second)
             End If

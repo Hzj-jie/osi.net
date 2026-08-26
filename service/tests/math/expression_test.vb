@@ -15,8 +15,7 @@ Public Class expression_test
         assert(Not e Is Nothing)
         assert(Not isemptyarray(cases))
         For i As Int32 = 0 To array_size(cases) - 1
-            Dim r As expression_result(Of Int32) = Nothing
-            r = e.execute(cases(i, 0))
+            Dim r As expression_result(Of Int32) = e.execute(cases(i, 0))
             assertion.equal(r.has_error(), has_error, cases(i, 0))
             assertion.equal(r.has_result(), has_result, cases(i, 0))
             assertion.equal(r.str(), cases(i, 1), cases(i, 0))
@@ -42,8 +41,7 @@ Public Class expression_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Dim e As int_expression = Nothing
-        e = New int_expression()
+        Dim e As New int_expression()
         Return predefined_case(e) AndAlso
                failure_case(e)
     End Function

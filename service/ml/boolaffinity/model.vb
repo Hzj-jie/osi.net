@@ -94,8 +94,7 @@ Partial Public NotInheritable Class boolaffinity(Of K)
         End Property
 
         Public Overloads Function Equals(ByVal other As model) As Boolean Implements IEquatable(Of model).Equals
-            Dim cmp As Int32 = 0
-            cmp = object_compare(Me, other)
+            Dim cmp As Int32 = object_compare(Me, other)
             If cmp <> object_compare_undetermined Then
                 Return cmp = 0
             End If

@@ -8,8 +8,7 @@ Imports osi.root.formation
 
 Partial Public Class callback_action
     Private Shared Function finished_action(ByVal end_result As Boolean) As callback_action
-        Dim action As callback_action = Nothing
-        action = New callback_action()
+        Dim action As New callback_action()
         action.begin_ticks() = nowadays.ticks()
         action.check_ticks() = nowadays.ticks()
         action.end_ticks() = nowadays.ticks()

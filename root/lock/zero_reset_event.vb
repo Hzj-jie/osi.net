@@ -24,8 +24,7 @@ Public NotInheritable Class zero_reset_event
     End Sub
 
     Public Function increase() As UInt32
-        Dim r As Int32 = 0
-        r = Interlocked.Increment(c)
+        Dim r As Int32 = Interlocked.Increment(c)
         assert(r >= 1)
         If r = 1 Then
             mre.force_reset()
@@ -34,8 +33,7 @@ Public NotInheritable Class zero_reset_event
     End Function
 
     Public Function decrease() As UInt32
-        Dim r As Int32 = 0
-        r = Interlocked.Decrement(c)
+        Dim r As Int32 = Interlocked.Decrement(c)
         assert(r >= 0)
         If r = 0 Then
             mre.force_set()

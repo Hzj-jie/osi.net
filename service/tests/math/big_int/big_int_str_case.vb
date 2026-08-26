@@ -17,8 +17,7 @@ Friend Class big_int_str_case
     End Sub
 
     Private Shared Function run_case(ByVal u As Int32, ByVal b As Byte) As Boolean
-        Dim s As String = Nothing
-        s = big_int.rnd_support_str(rnd_int(1, u), b)
+        Dim s As String = big_int.rnd_support_str(rnd_int(1, u), b)
         Dim r As big_int = Nothing
         assertion.is_true(big_int.parse(s, r, b))
         assertion.equal(r.str(b), s)
@@ -41,12 +40,9 @@ Friend Class big_int_str_case
     End Function
 
     Private Shared Function failure_case() As Boolean
-        Dim b As Byte = 0
-        b = big_int.rnd_support_base()
-        Dim s As StringBuilder = Nothing
-        s = New StringBuilder()
-        Dim l As Int32 = 0
-        l = rnd_int(1, 1000)
+        Dim b As Byte = big_int.rnd_support_base()
+        Dim s As New StringBuilder()
+        Dim l As Int32 = rnd_int(1, 1000)
         For i As Int32 = 0 To l - 1
             s.Append(rnd_ascii_display_char())
         Next

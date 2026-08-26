@@ -28,16 +28,14 @@ Public NotInheritable Class atomic_ref(Of T)
 
     Public Sub modify(ByVal d As void(Of T))
         r.modify(Sub(ByRef i As Object)
-                     Dim v As T = Nothing
-                     v = direct_cast(Of T)(i)
+                     Dim v As T = direct_cast(Of T)(i)
                      d(v)
                      i = v
                  End Sub)
     End Sub
 
     Public Function exchange(ByVal value As T) As T
-        Dim v As Object = Nothing
-        v = r.exchange(value)
+        Dim v As Object = r.exchange(value)
         Return direct_cast(Of T)(v)
     End Function
 

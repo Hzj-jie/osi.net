@@ -66,8 +66,7 @@ Partial Public Class struct(Of T)
         assert(Not early_return Is Nothing)
         assert(Not obj_compare_result Is Nothing)
 
-        Dim cmp As Int32 = 0
-        cmp = object_compare(l, r)
+        Dim cmp As Int32 = object_compare(l, r)
         If cmp <> object_compare_undetermined Then
             Return obj_compare_result(cmp)
         End If
@@ -80,8 +79,7 @@ Partial Public Class struct(Of T)
         assert(array_size(vsl) = array_size(vsr))
         assert(array_size(vsl) = array_size((+op).definitions()))
         For i As Int32 = 0 To array_size_i(vsl) - 1
-            Dim result As RT = Nothing
-            result = typed_cmp((+op).definitions()(i).type, vsl(i).value, vsr(i).value)
+            Dim result As RT = typed_cmp((+op).definitions()(i).type, vsl(i).value, vsr(i).value)
             If early_return(result) Then
                 Return result
             End If

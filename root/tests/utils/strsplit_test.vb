@@ -132,8 +132,7 @@ Public NotInheritable Class strsplit_test
     Private Shared Function generate_independed_piece(ByVal separators() As String,
                                                       ByVal surround_strs() As pair(Of String, String)) As String
         While True
-            Dim s As String = Nothing
-            s = rnd_en_chars(rnd_int(0, 30))
+            Dim s As String = rnd_en_chars(rnd_int(0, 30))
             If Not contains(s, separators) AndAlso
                Not contains(s, surround_strs) Then
                 Return s
@@ -156,8 +155,7 @@ Public NotInheritable Class strsplit_test
                 r += rnd_in(separators)
             End If
             If rnd_bool() Then
-                Dim t As Int32 = 0
-                t = id
+                Dim t As Int32 = id
                 While t = id
                     t = rnd_int(0, array_size_i(surround_strs))
                 End While

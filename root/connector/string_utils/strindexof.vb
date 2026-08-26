@@ -15,8 +15,7 @@ Public Module _strindexof
 
     'will fail when s contains some invalid characters
     Private Function _strindexof(ByVal s As String, ByVal search As String, ByRef start As UInt32) As Int32
-        Dim rtn As Int32 = 0
-        rtn = s.IndexOf(search, CInt(start))
+        Dim rtn As Int32 = s.IndexOf(search, CInt(start))
         If rtn <> npos Then
             start = CUInt(rtn) + strlen(search)
         End If
@@ -25,8 +24,7 @@ Public Module _strindexof
     End Function
 
     Private Function _strlastindexof(ByVal s As String, ByVal search As String, ByRef start As UInt32) As Int32
-        Dim rtn As Int32 = 0
-        rtn = s.LastIndexOf(search, CInt(start))
+        Dim rtn As Int32 = s.LastIndexOf(search, CInt(start))
         If rtn <> npos Then
             If rtn < strlen(search) Then
                 start = max_uint32
@@ -60,11 +58,9 @@ Public Module _strindexof
             s = s.ToLower()
             search = search.ToLower()
         End If
-        Dim searchlen As UInt32 = 0
-        searchlen = strlen(search)
+        Dim searchlen As UInt32 = strlen(search)
         Dim rtn As Int32 = 0
-        Dim next_search As UInt32 = 0
-        next_search = start
+        Dim next_search As UInt32 = start
         For i As UInt32 = 0 To index_of_index - uint32_1
             rtn = indexcall(s, search, next_search)
             If rtn = npos Then

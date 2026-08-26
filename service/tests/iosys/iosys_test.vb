@@ -79,8 +79,7 @@ Public Class iosys_test
                                                         End Function,
                                                   Function() As Boolean
                                                       assertion.less_or_equal(q.size(), flower_size)
-                                                      Dim c As iosys_test_case = Nothing
-                                                      c = New iosys_test_case()
+                                                      Dim c As New iosys_test_case()
                                                       Dim f As Boolean = False
                                                       RaiseEvent deliver(c, f)
                                                       assertion.is_false(f)
@@ -130,8 +129,7 @@ Public Class iosys_test
         Dim f As iosys(Of iosys_test_case) = Nothing
         Dim l As iosys(Of iosys_test_case) = Nothing
         If assertion.is_true(create_iosys(f, l)) Then
-            Dim ar As iosys_test_ar = Nothing
-            ar = New iosys_test_ar()
+            Dim ar As New iosys_test_ar()
             If assertion.is_true(f.listen(ar)) AndAlso
                assertion.is_true(l.notice(ar)) Then
                 ar.start(round, interval_ms)

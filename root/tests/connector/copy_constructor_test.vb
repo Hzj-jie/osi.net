@@ -29,8 +29,7 @@ Public Class copy_constructor_test
     End Class
 
     Private Shared Function test_class_case() As Boolean
-        Dim x As test_class = Nothing
-        x = copy_constructor(Of test_class).invoke()
+        Dim x As test_class = copy_constructor(Of test_class).invoke()
         assertion.is_not_null(x)
         Return True
     End Function
@@ -43,8 +42,7 @@ Public Class copy_constructor_test
             s = guid_str()
             i = rnd_uint()
             o = New Object()
-            Dim x As test_class2 = Nothing
-            x = copy_constructor(Of test_class2).invoke(s, i, o)
+            Dim x As test_class2 = copy_constructor(Of test_class2).invoke(s, i, o)
             assertion.is_not_null(x)
             assertion.equal(s, x.s)
             assertion.equal(i, x.i)

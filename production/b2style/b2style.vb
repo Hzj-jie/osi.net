@@ -12,8 +12,7 @@ Imports executor = osi.service.interpreter.primitive.executor
 Public Module b2style
     Public Sub main(ByVal args() As String)
         global_init.execute(global_init_level.functor)
-        Dim c As compiler.compile_wrapper = Nothing
-        c = compiler.with_default_functions()
+        Dim c As compiler.compile_wrapper = compiler.with_default_functions()
         Dim e As executor = Nothing
         If isemptyarray(args) Then
             assert(c.compile(Console.In().ReadToEnd(), e))

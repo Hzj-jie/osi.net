@@ -102,10 +102,8 @@ Partial Public NotInheritable Class unordered_set(Of T)
             Return CloneT()
         End If
 
-        Dim r As [unordered_set](Of T) = Nothing
-        r = New [unordered_set](Of T)()
-        Dim it As [unordered_set](Of T).iterator = Nothing
-        it = begin()
+        Dim r As New [unordered_set](Of T)()
+        Dim it As [unordered_set](Of T).iterator = begin()
         While it <> [end]()
             If that.find(+it) = that.end() Then
                 assert(r.insert(+it).second)

@@ -84,8 +84,7 @@ Public NotInheritable Class c_escape_test
                                                                  character.null}
 
         Public Overrides Function run() As Boolean
-            Dim s As String = Nothing
-            s = rnd_chars(rnd_int(max_uint8, max_uint16))
+            Dim s As String = rnd_chars(rnd_int(max_uint8, max_uint16))
             Dim escaped As String = Nothing
             assertion.is_true(s.c_escape(escaped))
             assertion.is_not_null(escaped)
@@ -111,8 +110,7 @@ Public NotInheritable Class c_escape_test
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim c As Char = Nothing
-            c = rnd_char()
+            Dim c As Char = rnd_char()
             assertion.equal(c.c_hex_escape().c_unescape(), c)
             If c.extended_ascii() Then
                 assertion.equal(c.c_hex_escape().Length(), 4)

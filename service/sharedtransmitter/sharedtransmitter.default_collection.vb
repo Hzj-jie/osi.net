@@ -54,8 +54,7 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
                               ByRef local_port As PORT_T,
                               ByRef o As ref_instance(Of COMPONENT_T)) As Boolean Implements collection.New
             If functor.is_valid_port(local_port) Then
-                Dim lp As PORT_T = Nothing
-                lp = local_port
+                Dim lp As PORT_T = local_port
                 If Not devs.[New](port_to_uint32(local_port),
                                   Function() new_component(p, lp),
                                   o) Then
@@ -64,8 +63,7 @@ Partial Public Class sharedtransmitter(Of PORT_T, ADDRESS_T, COMPONENT_T, DATA_T
             Else
                 Dim id As UInteger = 0
                 If Not devs.next(Function(ByVal current_id As UInteger) As ref_instance(Of COMPONENT_T)
-                                     Dim port As PORT_T = Nothing
-                                     port = port_to_uint32.reverse(current_id)
+                                     Dim port As PORT_T = port_to_uint32.reverse(current_id)
                                      If functor.is_valid_port(port) Then
                                          Return new_component(p, port)
                                      Else

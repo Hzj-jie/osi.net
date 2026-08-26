@@ -140,15 +140,13 @@ Public Module _compare
                 Return False
             End If
 #If DEBUG Then
-            Dim msg As String = Nothing
-            msg = strcat("Comparing ",
+            Dim msg As String = strcat("Comparing ",
                          type_info(Of T).fullname,
                          " with ",
                          type_info(Of T2).fullname,
                          " needs to be specifically handled.")
             Dim o2 As Int32 = 0
-            Dim r As Boolean = False
-            r = c(this, that, o)
+            Dim r As Boolean = c(this, that, o)
             If Not r Then
                 assert(r = runtime_compare(this, that, o2), msg)
                 assert(o = o2, msg)
@@ -167,8 +165,7 @@ Public Module _compare
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Private Function use_restricted_compare_to_object(Of T)() As Boolean
-        Dim result As Boolean = False
-        result = type_info(Of T).is_primitive OrElse type_info(Of T, type_info_operators.is, String).v
+        Dim result As Boolean = type_info(Of T).is_primitive OrElse type_info(Of T, type_info_operators.is, String).v
         If result Then
             assert(type_info(Of T, type_info_operators.is, IComparable).v)
         End If

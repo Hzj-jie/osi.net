@@ -58,8 +58,7 @@ Public Structure monitorlock
         If Not Monitor.TryEnter(obj) Then
             Return False
         End If
-        Dim rtn As Boolean = False
-        rtn = held()
+        Dim rtn As Boolean = held()
         Monitor.Exit(obj)
         Return rtn
     End Function

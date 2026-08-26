@@ -15,10 +15,8 @@ Namespace nlexer
         <test>
         <repeat(50000, 500000)>
         Private Shared Sub run()
-            Dim s As String = Nothing
-            s = nl.unescape(rnd_ascii_display_chars(1000))
-            Dim unescaped As String = Nothing
-            unescaped = s
+            Dim s As String = nl.unescape(rnd_ascii_display_chars(1000))
+            Dim unescaped As String = s
             For Each c As Char In nl.characters.all
                 s = s.Replace(c, nl.characters.escape_char + c)
             Next

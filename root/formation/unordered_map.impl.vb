@@ -91,8 +91,7 @@ Partial Public Class unordered_map( _
     Default Public Property at(ByVal key As KEY_T) As VALUE_T
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Get
-            Dim r As iterator = Nothing
-            r = find(key)
+            Dim r As iterator = find(key)
             If r = [end]() Then
                 r = emplace(copy_no_error(key), alloc(Of VALUE_T)()).first
             End If
@@ -100,8 +99,7 @@ Partial Public Class unordered_map( _
         End Get
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Set(ByVal value As VALUE_T)
-            Dim r As tuple(Of iterator, Boolean) = Nothing
-            r = insert(key, value)
+            Dim r As tuple(Of iterator, Boolean) = insert(key, value)
             If Not r.second Then
                 copy(r.first.value().second, value)
             End If

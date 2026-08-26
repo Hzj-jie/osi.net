@@ -31,8 +31,7 @@ Public Module _enum_def_extension
                       End Function)
         Public Shared ReadOnly string_T As lazier(Of unordered_map(Of String, T)) =
             lazier.of(Function() As unordered_map(Of String, T)
-                          Dim r As unordered_map(Of String, T) = Nothing
-                          r = New unordered_map(Of String, T)()
+                          Dim r As New unordered_map(Of String, T)()
                           For i As Int32 = 0 To array_size_i(+string_pairs) - 1
                               assert(r.emplace(strtolower((+string_pairs)(i).second),
                                                           (+string_pairs)(i).first).second)

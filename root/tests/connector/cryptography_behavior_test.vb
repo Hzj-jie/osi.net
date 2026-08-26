@@ -47,8 +47,7 @@ Public Class cryptography_behavior_test
         End Function
 
         Public Overrides Function run() As Boolean
-            Dim id As Int32 = 0
-            id = multithreading_case_wrapper.thread_id()
+            Dim id As Int32 = multithreading_case_wrapper.thread_id()
             assert(id >= 0)
             Dim t As UInt32 = uint32_0
             If id = thread_count - uint32_1 Then
@@ -101,8 +100,7 @@ Public Class cryptography_behavior_test
         End Sub
 
         Public Overrides Function run() As Boolean
-            Dim h As HashAlgorithm = Nothing
-            h = f()
+            Dim h As HashAlgorithm = f()
             Return True
         End Function
 

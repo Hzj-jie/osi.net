@@ -20,8 +20,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
 
     Private Function execute(ByVal input As String, ByVal ctor As Func(Of RESULT_T)) As result
         assert(Not ctor Is Nothing)
-        Dim r As RESULT_T = Nothing
-        r = ctor()
+        Dim r As RESULT_T = ctor()
         assert(Not r Is Nothing)
         Return execute(input, r)
     End Function

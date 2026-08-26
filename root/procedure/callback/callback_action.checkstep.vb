@@ -23,8 +23,7 @@ Partial Public Class callback_action
         Else
             Dim i As Int32 = 0
             Return Function() As ternary
-                       Dim rtn As ternary = Nothing
-                       rtn = do_(d(i), step_check_finish)
+                       Dim rtn As ternary = do_(d(i), step_check_finish)
                        Dim rtn2 As ternary = Nothing
                        Select Case rtn
                            Case step_check_pass
@@ -196,8 +195,7 @@ Partial Public Class callback_action
         End If
         Dim i As Int32 = 0
         Return Function() As Boolean
-                   Dim rtn As ternary = Nothing
-                   rtn = do_(d(i), step_check_finish)
+                   Dim rtn As ternary = do_(d(i), step_check_finish)
                    Select Case rtn
                        Case step_check_pass
                            Return step_check_pass_action(i)

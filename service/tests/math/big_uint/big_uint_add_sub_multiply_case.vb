@@ -16,8 +16,7 @@ Friend Class big_uint_add_sub_multiply_case
     End Sub
 
     Private Shared Function add_result(ByVal i As UInt64, ByVal j As UInt64) As big_uint
-        Dim r As big_uint = Nothing
-        r = New big_uint()
+        Dim r As New big_uint()
         For k As UInt64 = 0 To j - 1
             r.add(i)
         Next
@@ -25,8 +24,7 @@ Friend Class big_uint_add_sub_multiply_case
     End Function
 
     Private Shared Function multiply_result(ByVal i As UInt64, ByVal j As UInt64) As big_uint
-        Dim r As big_uint = Nothing
-        r = New big_uint(i)
+        Dim r As New big_uint(i)
         r.multiply(j)
         Return r
     End Function
@@ -36,10 +34,8 @@ Friend Class big_uint_add_sub_multiply_case
         Dim j As UInt64 = 0
         i = rnd_uint64(max_uint32, max_uint64)
         j = rnd_uint64(max_int8, max_uint16)
-        Dim ar As big_uint = Nothing
-        ar = add_result(i, j)
-        Dim mr As big_uint = Nothing
-        mr = multiply_result(i, j)
+        Dim ar As big_uint = add_result(i, j)
+        Dim mr As big_uint = multiply_result(i, j)
         assertion.is_true(ar.equal(mr))
         For k As UInt64 = 0 To j - 1
             ar.sub(i)

@@ -8,8 +8,7 @@ Public Class device_test
 
     Private Shared Function attach_case(ByVal attach_by_function As Boolean) As Boolean
         mock_dev(Of device_test).reset()
-        Dim d As idevice(Of mock_dev(Of device_test)) = Nothing
-        d = mock_dev(Of device_test).create(True, attach_by_function)
+        Dim d As idevice(Of mock_dev(Of device_test)) = mock_dev(Of device_test).create(True, attach_by_function)
         assertion.is_false(d.closed())
         assertion.is_true(d.is_valid())
         mock_dev(Of device_test).close(d.get())
@@ -32,8 +31,7 @@ Public Class device_test
 
     Private Shared Function attach_case2(ByVal attach_by_function As Boolean) As Boolean
         mock_dev(Of device_test).reset()
-        Dim d As idevice(Of mock_dev(Of device_test)) = Nothing
-        d = mock_dev(Of device_test).create(True, attach_by_function)
+        Dim d As idevice(Of mock_dev(Of device_test)) = mock_dev(Of device_test).create(True, attach_by_function)
         assertion.is_false(d.closed())
         assertion.is_true(d.is_valid())
         d.close()
@@ -56,8 +54,7 @@ Public Class device_test
 
     Private Shared Function unattach_case() As Boolean
         mock_dev(Of device_test).reset()
-        Dim d As idevice(Of mock_dev(Of device_test)) = Nothing
-        d = mock_dev(Of device_test).create(False)
+        Dim d As idevice(Of mock_dev(Of device_test)) = mock_dev(Of device_test).create(False)
         assertion.is_false(d.closed())
         assertion.is_true(d.is_valid())
         mock_dev(Of device_test).close(d.get())
@@ -80,8 +77,7 @@ Public Class device_test
 
     Private Shared Function unattach_case2() As Boolean
         mock_dev(Of device_test).reset()
-        Dim d As idevice(Of mock_dev(Of device_test)) = Nothing
-        d = mock_dev(Of device_test).create(False)
+        Dim d As idevice(Of mock_dev(Of device_test)) = mock_dev(Of device_test).create(False)
         assertion.is_false(d.closed())
         assertion.is_true(d.is_valid())
         d.close()

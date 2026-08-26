@@ -67,14 +67,10 @@ Public Class generic_perf
     End Sub
 
     Public Overrides Function run() As Boolean
-        Dim alloc_count As Int64 = 0
-        alloc_count = test_size_scale * 1024 * 1024 * 128
-        Dim read_count As Int64 = 0
-        read_count = test_size_scale * 1024 * 1024 * 1024
-        Dim write_count As Int64 = 0
-        write_count = test_size_scale * 1024 * 1024 * 1024
-        Dim p As ref(Of Int64) = Nothing
-        p = New ref(Of Int64)()
+        Dim alloc_count As Int64 = test_size_scale * 1024 * 1024 * 128
+        Dim read_count As Int64 = test_size_scale * 1024 * 1024 * 1024
+        Dim write_count As Int64 = test_size_scale * 1024 * 1024 * 1024
+        Dim p As New ref(Of Int64)()
 
         Using New boost()
             Using New processor_loops_timing_counter(p)
@@ -110,8 +106,7 @@ Public Class generic_perf
             report_performance(p, strcat("allocate int_struct * ", alloc_count))
 
             Using New processor_loops_timing_counter(p)
-                Dim t As generic_class(Of Int32) = Nothing
-                t = New generic_class(Of Int32)()
+                Dim t As New generic_class(Of Int32)()
                 For i As Int64 = 0 To read_count - 1
                     Dim v As Int32 = 0
                     v = t.v
@@ -120,8 +115,7 @@ Public Class generic_perf
             report_performance(p, strcat("read value from generic_class(Of Int32) * ", read_count))
 
             Using New processor_loops_timing_counter(p)
-                Dim t As generic_struct(Of Int32) = Nothing
-                t = New generic_struct(Of Int32)()
+                Dim t As New generic_struct(Of Int32)()
                 For i As Int64 = 0 To read_count - 1
                     Dim v As Int32 = 0
                     v = t.v
@@ -146,8 +140,7 @@ Public Class generic_perf
             report_performance(p, strcat("read value from generic_static_struct(Of Int32) * ", read_count))
 
             Using New processor_loops_timing_counter(p)
-                Dim t As int_class = Nothing
-                t = New int_class()
+                Dim t As New int_class()
                 For i As Int64 = 0 To read_count - 1
                     Dim v As Int32 = 0
                     v = t.v
@@ -164,8 +157,7 @@ Public Class generic_perf
             report_performance(p, strcat("read value from int_static_class * ", read_count))
 
             Using New processor_loops_timing_counter(p)
-                Dim t As int_struct = Nothing
-                t = New int_struct()
+                Dim t As New int_struct()
                 For i As Int64 = 0 To read_count - 1
                     Dim v As Int32 = 0
                     v = t.v
@@ -182,8 +174,7 @@ Public Class generic_perf
             report_performance(p, strcat("read value from int_static_struct * ", read_count))
 
             Using New processor_loops_timing_counter(p)
-                Dim t As generic_class(Of Int32) = Nothing
-                t = New generic_class(Of Int32)()
+                Dim t As New generic_class(Of Int32)()
                 For i As Int64 = 0 To write_count - 1
                     t.v = max_int32
                 Next
@@ -191,8 +182,7 @@ Public Class generic_perf
             report_performance(p, strcat("write value to generic_class(Of Int32) * ", write_count))
 
             Using New processor_loops_timing_counter(p)
-                Dim t As generic_struct(Of Int32) = Nothing
-                t = New generic_struct(Of Int32)()
+                Dim t As New generic_struct(Of Int32)()
                 For i As Int64 = 0 To write_count - 1
                     t.v = max_int32
                 Next
@@ -214,8 +204,7 @@ Public Class generic_perf
             report_performance(p, strcat("write value to generic_static_struct(Of Int32) * ", write_count))
 
             Using New processor_loops_timing_counter(p)
-                Dim t As int_class = Nothing
-                t = New int_class()
+                Dim t As New int_class()
                 For i As Int64 = 0 To write_count - 1
                     t.v = max_int32
                 Next
@@ -230,8 +219,7 @@ Public Class generic_perf
             report_performance(p, strcat("write value to int_static_class * ", write_count))
 
             Using New processor_loops_timing_counter(p)
-                Dim t As int_struct = Nothing
-                t = New int_struct()
+                Dim t As New int_struct()
                 For i As Int64 = 0 To write_count - 1
                     t.v = max_int32
                 Next

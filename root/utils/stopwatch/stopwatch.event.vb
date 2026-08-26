@@ -50,8 +50,7 @@ Partial Public NotInheritable Class stopwatch
                 Return False
             End If
 
-            Dim diff As Int64 = 0
-            diff = nowadays.milliseconds() - ms
+            Dim diff As Int64 = nowadays.milliseconds() - ms
             If diff <= 0 Then
                 Return True
             End If

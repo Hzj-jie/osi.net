@@ -35,25 +35,21 @@ Public NotInheritable Class fake_rnd_test
     End Sub
 
     Private Shared Function fake_rnd_uint_case() As Boolean
-        Dim j As UInt32 = 0
-        j = fake_rnd_uint()
+        Dim j As UInt32 = fake_rnd_uint()
         assertion.is_true(is_fake_rnd_uint(j))
         Return True
     End Function
 
     Private Shared Function fake_rnd_en_chars_case() As Boolean
-        Dim l As UInt32 = 0
-        l = rnd_uint(0, 128 + 1)
-        Dim s As String = Nothing
-        s = fake_rnd_en_chars(l)
+        Dim l As UInt32 = rnd_uint(0, 128 + 1)
+        Dim s As String = fake_rnd_en_chars(l)
         assertion.equal(strlen(s), l)
         assertion.is_true(is_fake_rnd_en_chars(s))
         Return True
     End Function
 
     Private Shared Function fake_next_bytes_case() As Boolean
-        Dim l As UInt32 = 0
-        l = rnd_uint(0, 128 + 1)
+        Dim l As UInt32 = rnd_uint(0, 128 + 1)
         Dim b() As Byte = Nothing
         b = fake_next_bytes(l)
         assertion.equal(array_size(b), l)
@@ -65,10 +61,8 @@ Public NotInheritable Class fake_rnd_test
         Dim min As UInt32 = 0
         Dim max As UInt32 = 0
         rnd_min_max(min, max)
-        Dim seed As UInt32 = 0
-        seed = rnd_uint(min_uint32, max_uint32)
-        Dim r As UInt32 = 0
-        r = fake_rnd_uint(min, max, seed)
+        Dim seed As UInt32 = rnd_uint(min_uint32, max_uint32)
+        Dim r As UInt32 = fake_rnd_uint(min, max, seed)
         If min < max Then
             assertion.less(r, max)
             assertion.more_or_equal(r, min)
@@ -83,8 +77,7 @@ Public NotInheritable Class fake_rnd_test
         Dim min As UInt32 = 0
         Dim max As UInt32 = 0
         rnd_min_max(min, max, 1024)
-        Dim seed As String = Nothing
-        seed = guid_str()
+        Dim seed As String = guid_str()
         Dim r() As Byte = Nothing
         r = fake_next_bytes(seed, min, max)
         If min < max Then
@@ -105,8 +98,7 @@ Public NotInheritable Class fake_rnd_test
             min = 1
             max += uint32_1
         End If
-        Dim seed As String = Nothing
-        seed = guid_str()
+        Dim seed As String = guid_str()
         Dim r() As Byte = Nothing
         For i As Int32 = rnd_int(2, 16 + 1) - 1 To 0 Step -1
             Dim t() As Byte = Nothing

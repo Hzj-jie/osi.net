@@ -19,8 +19,7 @@ Public Class accumulate_segment_tree(Of T As IComparable(Of T))
     End Sub
 
     Public Shared Shadows Function move(ByVal v As accumulate_segment_tree(Of T)) As accumulate_segment_tree(Of T)
-        Dim r As accumulate_segment_tree(Of T) = Nothing
-        r = New accumulate_segment_tree(Of T)()
+        Dim r As New accumulate_segment_tree(Of T)()
         move_to(v, r)
         Return r
     End Function
@@ -47,8 +46,7 @@ Public Class segment_tree(Of T As IComparable(Of T))
     End Sub
 
     Public Shared Shadows Function move(ByVal v As segment_tree(Of T)) As segment_tree(Of T)
-        Dim r As segment_tree(Of T) = Nothing
-        r = New segment_tree(Of T)()
+        Dim r As New segment_tree(Of T)()
         move_to(v, r)
         Return r
     End Function
@@ -71,8 +69,7 @@ Public Class segment_tree(Of T As IComparable(Of T))
             If max > root_range_max Then
                 max = root_range_max
             End If
-            Dim r As vector(Of pair(Of iterator, pair(Of Int64, Int64))) = Nothing
-            r = New vector(Of pair(Of iterator, pair(Of Int64, Int64)))()
+            Dim r As New vector(Of pair(Of iterator, pair(Of Int64, Int64)))()
             segment_tree(Of T, _false).find(root, min, max, r)
             Return r
         End If
@@ -152,8 +149,7 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
         End Function
 
         Public Function CompareTo(ByVal other As segment) As Int32 Implements IComparable(Of segment).CompareTo
-            Dim c As Int32 = 0
-            c = object_compare(Me, other)
+            Dim c As Int32 = object_compare(Me, other)
             If c = object_compare_undetermined Then
                 assert(Not other Is Nothing)
                 If Me.has_value() = other.has_value() Then
@@ -176,8 +172,7 @@ Public Class segment_tree(Of T As IComparable(Of T), is_acc As _boolean)
     End Class
 
     Public Shared Shadows Function move(ByVal v As segment_tree(Of T, is_acc)) As segment_tree(Of T, is_acc)
-        Dim r As segment_tree(Of T, is_acc) = Nothing
-        r = New segment_tree(Of T, is_acc)()
+        Dim r As New segment_tree(Of T, is_acc)()
         move_to(v, r)
         Return r
     End Function

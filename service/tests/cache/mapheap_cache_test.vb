@@ -45,8 +45,7 @@ Public Class mapheap_cache_test
 
     Private Shared Function create_data(ByVal count As Int32) As vector(Of pair(Of String, Byte()))
         assert(count > 0)
-        Dim r As vector(Of pair(Of String, Byte())) = Nothing
-        r = New vector(Of pair(Of String, Byte()))()
+        Dim r As New vector(Of pair(Of String, Byte()))()
         For i As Int32 = 0 To count - 1
             Dim k As String = Nothing
             Dim v() As Byte = Nothing
@@ -61,8 +60,7 @@ Public Class mapheap_cache_test
                                                     clock.advance_ticks(CULng(retire_ticks * 4 / 7))
                                                 End Sub
         assert(c.empty())
-        Dim v As vector(Of pair(Of String, Byte())) = Nothing
-        v = create_data(max_size)
+        Dim v As vector(Of pair(Of String, Byte())) = create_data(max_size)
         For i As UInt32 = 0 To v.size() - uint32_1
             c.set(v(i).first, v(i).second)
         Next
@@ -93,12 +91,10 @@ Public Class mapheap_cache_test
 
     Private Function oversize_test() As Boolean
         assert(c.empty())
-        Dim v As vector(Of pair(Of String, Byte())) = Nothing
-        v = create_data(max_size << 1)
+        Dim v As vector(Of pair(Of String, Byte())) = create_data(max_size << 1)
         For i As Int32 = 0 To 1
             For j As UInt32 = 0 To max_size - uint32_1
-                Dim k As UInt32 = 0
-                k = CUInt(i * max_size) + j
+                Dim k As UInt32 = CUInt(i * max_size) + j
                 c.set(v(k).first, v(k).second)
                 assertion.is_true(c.size() <= max_size)
                 assertion.is_true(c.have(v(k).first))

@@ -10,8 +10,7 @@ Public Module _bit
     Private ReadOnly jump_size As Byte = CByte(bit_count_in_byte * sizeof_uint64)
     Private ReadOnly jump1() As UInt64 = Function() As UInt64()
                                              Dim jump1(jump_size - 1) As UInt64
-                                             Dim t As UInt64 = 0
-                                             t = int64_uint64(min_int64)
+                                             Dim t As UInt64 = int64_uint64(min_int64)
                                              For i As Int32 = 0 To jump_size - 1
                                                  jump1(i) = t
                                                  t >>= 1
@@ -90,8 +89,7 @@ Public Module _bit
     <Extension()> Public Function setbit(ByRef b As SByte,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As SByte
-        Dim c As Byte = 0
-        c = int8_uint8(b)
+        Dim c As Byte = int8_uint8(b)
         setbit(c, index, value)
         b = uint8_int8(c)
         Return b
@@ -106,8 +104,7 @@ Public Module _bit
     <Extension()> Public Function setrbit(ByRef b As SByte,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As SByte
-        Dim c As Byte = 0
-        c = int8_uint8(b)
+        Dim c As Byte = int8_uint8(b)
         setrbit(c, index, value)
         b = uint8_int8(c)
         Return b
@@ -165,8 +162,7 @@ Public Module _bit
     <Extension()> Public Function setbit(ByRef b As Int16,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As Int16
-        Dim c As UInt16 = 0
-        c = int16_uint16(b)
+        Dim c As UInt16 = int16_uint16(b)
         setbit(c, index, value)
         b = uint16_int16(c)
         Return b
@@ -181,8 +177,7 @@ Public Module _bit
     <Extension()> Public Function setrbit(ByRef b As Int16,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As Int16
-        Dim c As UInt16 = 0
-        c = int16_uint16(b)
+        Dim c As UInt16 = int16_uint16(b)
         setrbit(c, index, value)
         b = uint16_int16(c)
         Return b
@@ -240,8 +235,7 @@ Public Module _bit
     <Extension()> Public Function setbit(ByRef b As Int32,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As Int32
-        Dim c As UInt32 = 0
-        c = int32_uint32(b)
+        Dim c As UInt32 = int32_uint32(b)
         setbit(c, index, value)
         b = uint32_int32(c)
         Return b
@@ -256,8 +250,7 @@ Public Module _bit
     <Extension()> Public Function setrbit(ByRef b As Int32,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As Int32
-        Dim c As UInt32 = 0
-        c = int32_uint32(b)
+        Dim c As UInt32 = int32_uint32(b)
         setrbit(c, index, value)
         b = uint32_int32(c)
         Return b
@@ -315,8 +308,7 @@ Public Module _bit
     <Extension()> Public Function setbit(ByRef b As Int64,
                                          ByVal index As Byte,
                                          Optional ByVal value As Boolean = True) As Int64
-        Dim c As UInt64 = 0
-        c = int64_uint64(b)
+        Dim c As UInt64 = int64_uint64(b)
         setbit(c, index, value)
         b = uint64_int64(c)
         Return b
@@ -331,8 +323,7 @@ Public Module _bit
     <Extension()> Public Function setrbit(ByRef b As Int64,
                                           ByVal index As Byte,
                                           Optional ByVal value As Boolean = True) As Int64
-        Dim c As UInt64 = 0
-        c = int64_uint64(b)
+        Dim c As UInt64 = int64_uint64(b)
         setrbit(c, index, value)
         b = uint64_int64(c)
         Return b
@@ -375,8 +366,7 @@ Public Module _bit
            array_size(buff) < start + strlen(s) \ bit_count_in_byte Then
             Return False
         Else
-            Dim j As Int32 = 0
-            j = start
+            Dim j As Int32 = start
             For i As Int32 = 0 To strlen_i(s) - 1 Step bit_count_in_byte
                 If bit_byte(s, i, buff(j)) Then
                     j += 1

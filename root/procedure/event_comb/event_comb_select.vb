@@ -46,10 +46,8 @@ Public Class event_comb_select(Of T)
     Public Function queue(ByVal i As T) As event_comb
         Return sync_async(Sub()
                               rcec.bind()
-                              Dim v As Action = Nothing
-                              v = event_comb.wait()
-                              Dim v2 As Action = Nothing
-                              v2 = Sub()
+                              Dim v As Action = event_comb.wait()
+                              Dim v2 As Action = Sub()
                                        v()
                                        rcec.release()
                                    End Sub
@@ -72,8 +70,7 @@ Public Class event_comb_select(Of T)
     Protected Sub foreach(ByVal d As Func(Of pair(Of T, Action), Boolean))
         assert(Not d Is Nothing)
         assert(Not q.empty())
-        Dim s As Int64 = 0
-        s = q.size()
+        Dim s As Int64 = q.size()
         While s > 0
             Dim p As pair(Of T, Action) = Nothing
             assert(q.pop(p))

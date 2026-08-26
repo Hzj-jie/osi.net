@@ -13,8 +13,7 @@ Public Class forward_questioner_responder
         ReDim send_herald(count - uint32_1)
         ReDim receive_herald(count - uint32_1)
         For i As UInt32 = uint32_0 To count - uint32_1
-            Dim mh As mock_herald = Nothing
-            mh = New mock_herald()
+            Dim mh As New mock_herald()
             send_herald(i) = mh
             receive_herald(i) = mh.the_other_end()
         Next

@@ -24,8 +24,7 @@ Friend Class big_uint_divide_multiply_case
         assertion.is_true(u.equal(i))
         assertion.is_true(r.is_zero())
 
-        Dim exp_remainder As UInt64 = 0
-        exp_remainder = rnd_uint64(1, j)
+        Dim exp_remainder As UInt64 = rnd_uint64(1, j)
         u.multiply(j)
         u.add(exp_remainder)
         u.divide(j, r)

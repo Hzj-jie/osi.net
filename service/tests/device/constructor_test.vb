@@ -57,8 +57,7 @@ Public Class constructor_test
         assertion.equal(mock_dev(Of protector1).closed_instance_count(), uint32_0)
         assertion.equal(mock_dev(Of protector1).destructed(), uint32_0)
 
-        Dim name As String = Nothing
-        name = strcat("mock_dev_interface + ", guid_str())
+        Dim name As String = strcat("mock_dev_interface + ", guid_str())
         r = Nothing
         assertion.is_true(constructor(Of mock_dev_interface).resolve(
                         New var({strcat("--type=", t2), strcat("--name=", name)}),

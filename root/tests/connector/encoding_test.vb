@@ -19,8 +19,7 @@ Public NotInheritable Class encoding_test
             If Not assertion.is_not_null(encs(i)) Then
                 Continue For
             End If
-            Dim n As String = Nothing
-            n = strcat(encs(i).Name(), " [", encs(i).DisplayName(), "] - ", encs(i).CodePage())
+            Dim n As String = strcat(encs(i).Name(), " [", encs(i).DisplayName(), "] - ", encs(i).CodePage())
             Dim e As Encoding = Nothing
             If assertion.is_true(try_get_encoding(encs(i).Name(), e),
                                  "failed to get encoding from name, ",

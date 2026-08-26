@@ -27,8 +27,7 @@ Partial Public Class tick_clock
     End Function
 
     Public Function milliseconds_l() As Int64
-        Dim r As UInt64 = 0
-        r = milliseconds()
+        Dim r As UInt64 = milliseconds()
         assert(r <= max_int64)
         Return CLng(r)
     End Function

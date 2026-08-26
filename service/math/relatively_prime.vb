@@ -39,8 +39,7 @@ Public NotInheritable Class relatively_prime
             Return 1
         End If
 
-        Dim c As UInt32 = 0
-        c = a Mod b
+        Dim c As UInt32 = a Mod b
         While c > 0
             a = b
             b = c
@@ -80,8 +79,7 @@ Public NotInheritable Class relatively_prime
             Return b
         End If
 
-        Dim c As UInt64 = 0
-        c = a Mod b
+        Dim c As UInt64 = a Mod b
         While c > 0
             a = b
             b = c

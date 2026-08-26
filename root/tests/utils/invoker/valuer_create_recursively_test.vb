@@ -31,8 +31,7 @@ Public Class valuer_create_recursively_test
         assertion.equal(v.get(), "def")
         assertion.equal(inherit_class.y, "def")
 
-        Dim i As inherit_class = Nothing
-        i = New inherit_class()
+        Dim i As New inherit_class()
         assertion.is_true(valuer.create_recursively(i, "s", v))
         assertion.is_true(v.valid())
         v.set("abc")

@@ -48,8 +48,7 @@ Partial Public Class vector(Of T)
                 Return Nothing
             End If
 
-            Dim r As adaptive_array_t = Nothing
-            r = New adaptive_array_t()
+            Dim r As New adaptive_array_t()
             r.d = that.d
             r.s = that.s
             that.d = Nothing
@@ -163,8 +162,7 @@ Partial Public Class vector(Of T)
             If capacity() >= n Then
                 Return
             End If
-            Dim ec As UInt32 = 0
-            ec = expected_capacity(n)
+            Dim ec As UInt32 = expected_capacity(n)
             assert(ec >= uint32_1)
             If empty() Then
                 ReDim d(CInt(ec - uint32_1))
@@ -224,8 +222,7 @@ Partial Public Class vector(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Shared Function compare(ByVal this As adaptive_array_t, ByVal that As adaptive_array_t) As Int32
-            Dim c As Int32 = 0
-            c = object_compare(this, that)
+            Dim c As Int32 = object_compare(this, that)
             If c <> object_compare_undetermined Then
                 Return c
             End If

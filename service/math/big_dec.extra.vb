@@ -17,8 +17,7 @@ Partial Public NotInheritable Class big_dec
             divide_by_zero = True
             Return Me
         End If
-        Dim n As Boolean = False
-        n = negative()
+        Dim n As Boolean = negative()
         d.divide(that.d, divide_by_zero)
         confirm_signal()
         If n = that.negative() Then

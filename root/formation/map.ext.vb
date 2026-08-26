@@ -16,8 +16,7 @@ Public Module _map
         If this Is Nothing Then
             Return False
         End If
-        Dim it As map(Of KT, VT).iterator = Nothing
-        it = this.find(key)
+        Dim it As map(Of KT, VT).iterator = this.find(key)
         If it = this.end() Then
             Return False
         End If

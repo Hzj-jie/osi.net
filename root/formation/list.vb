@@ -16,8 +16,7 @@ End Module
 
 Public NotInheritable Class list
     Private Shared Function create(Of T)(ByVal vs() As T, ByVal require_copy As Boolean) As list(Of T)
-        Dim r As list(Of T) = Nothing
-        r = New list(Of T)()
+        Dim r As New list(Of T)()
         If require_copy Then
             For i As Int32 = 0 To array_size_i(vs) - 1
                 r.push_back(vs(i))
@@ -82,8 +81,7 @@ Partial Public NotInheritable Class list(Of T)
         End Sub
 
         Public Shared Function [of](ByVal new_data As T) As node
-            Dim r As node = Nothing
-            r = New node()
+            Dim r As New node()
             r.emplace(new_data)
             Return r
         End Function
@@ -168,8 +166,7 @@ Partial Public NotInheritable Class list(Of T)
     End Function
 
     Public Function find(ByVal v As T) As iterator
-        Dim it As iterator = Nothing
-        it = begin()
+        Dim it As iterator = begin()
         While it <> [end]()
             If compare(v, +it) = 0 Then
                 Return it
@@ -182,8 +179,7 @@ Partial Public NotInheritable Class list(Of T)
     End Function
 
     Public Function rfind(ByVal v As T) As iterator
-        Dim it As iterator = Nothing
-        it = rbegin()
+        Dim it As iterator = rbegin()
         While it <> rend()
             If compare(v, +it) = 0 Then
                 Return it
@@ -205,13 +201,11 @@ Partial Public NotInheritable Class list(Of T)
 
     Default Public Property at(ByVal index As UInt32) As T
         Get
-            Dim rtn As node = Nothing
-            rtn = find(index)
+            Dim rtn As node = find(index)
             Return +rtn
         End Get
         Set(ByVal value As T)
-            Dim rtn As node = Nothing
-            rtn = find(index)
+            Dim rtn As node = find(index)
             If Not rtn Is Nothing Then
                 rtn.data = value
             End If
@@ -223,8 +217,7 @@ Partial Public NotInheritable Class list(Of T)
     End Function
 
     Public Function emplace_back(ByVal new_data As T) As Boolean
-        Dim add As node = Nothing
-        add = node.of(new_data)
+        Dim add As node = node.of(new_data)
         If Not _back Is Nothing Then
             _back.appendnext(add)
         Else
@@ -241,8 +234,7 @@ Partial Public NotInheritable Class list(Of T)
     End Function
 
     Public Function emplace_front(ByVal new_data As T) As Boolean
-        Dim add As node = Nothing
-        add = node.of(new_data)
+        Dim add As node = node.of(new_data)
         If Not _front Is Nothing Then
             _front.appendlast(add)
         Else
@@ -395,8 +387,7 @@ Partial Public NotInheritable Class list(Of T)
         j = that.begin()
         While i <> [end]() AndAlso j <> that.end()
             assert(Not i.is_null() AndAlso Not j.is_null())
-            Dim cmp As Int32 = 0
-            cmp = i.node().CompareTo(j.node())
+            Dim cmp As Int32 = i.node().CompareTo(j.node())
             If cmp <> 0 Then
                 Return cmp
             End If
@@ -436,8 +427,7 @@ Partial Public NotInheritable Class list(Of T)
 
     Public Overloads Function ToString(ByVal seperator As String) As String
         Dim it As iterator = Nothing
-        Dim r As StringBuilder = Nothing
-        r = New StringBuilder()
+        Dim r As New StringBuilder()
         it = begin()
         While it <> [end]()
             r.Append(+it)

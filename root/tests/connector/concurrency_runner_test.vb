@@ -10,15 +10,13 @@ Public Class concurrency_runner_test
     Private Shared Function concurrency_case() As Boolean
         If Environment.ProcessorCount() > 2 Then
             Const size As Int32 = 10240
-            Dim r As atomic_int = Nothing
-            r = New atomic_int()
+            Dim r As New atomic_int()
             Dim max As Int32 = 0
             Dim a() As Action = Nothing
             ReDim a(size - 1)
             For i As Int32 = 0 To size - 1
                 a(i) = Sub()
-                           Dim v As Int32 = 0
-                           v = r.increment()
+                           Dim v As Int32 = r.increment()
                            If v > max Then
                                max = v
                            End If
@@ -35,14 +33,12 @@ Public Class concurrency_runner_test
 
     Private Shared Function all_executed_case() As Boolean
         Const size As Int32 = 1024
-        Dim b As vector(Of Boolean) = Nothing
-        b = New vector(Of Boolean)(size)
+        Dim b As New vector(Of Boolean)(size)
         b.resize(size)
         Dim a() As Action = Nothing
         ReDim a(size - 1)
         For i As Int32 = 0 To size - 1
-            Dim j As Int32 = 0
-            j = i
+            Dim j As Int32 = i
             a(i) = Sub()
                        assertion.is_false(b(j))
                        b(j) = True

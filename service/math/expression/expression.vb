@@ -40,8 +40,7 @@ Partial Public Class expression(Of T)
         base = default_base
         err = Nothing
         c.reset()
-        Dim r As lp(Of expression(Of T)).result = Nothing
-        r = l.execute(input, Me)
+        Dim r As lp(Of expression(Of T)).result = l.execute(input, Me)
         'the calculator error during the parsing stage will stop the following parsing behavior
         'by return false and cause parse error
         If err.has_error() Then
@@ -51,8 +50,7 @@ Partial Public Class expression(Of T)
         ElseIf r.parse_error Then
             Return expression_result(Of T).parse_error_result
         Else
-            Dim v As T = Nothing
-            v = c.execute(err)
+            Dim v As T = c.execute(err)
             If err.has_error() Then
                 Return expression_result(Of T).calculator_error_result(err)
             Else

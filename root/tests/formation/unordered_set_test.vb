@@ -27,10 +27,8 @@ Public NotInheritable Class unordered_set_case(Of T)
 
     Private Function random_select_key_from_h() As T
         assertion.is_false(h.empty())
-        Dim it As unordered_set(Of T).iterator = Nothing
-        it = h.begin()
-        Dim c As UInt32 = 0
-        c = rnd_uint(uint32_0, h.size())
+        Dim it As unordered_set(Of T).iterator = h.begin()
+        Dim c As UInt32 = rnd_uint(uint32_0, h.size())
         While c > uint32_0
             it += 1
             c -= uint32_1
@@ -40,8 +38,7 @@ Public NotInheritable Class unordered_set_case(Of T)
     End Function
 
     Private Sub insert_or_emplace(ByVal insert As Boolean)
-        Dim n As T = Nothing
-        n = rnd(Of T)()
+        Dim n As T = rnd(Of T)()
         If If(insert, h.insert(n).second, h.emplace(n).second) Then
             assertion.equal(s.find(n), s.end())
             s.insert(n)
@@ -62,13 +59,11 @@ Public NotInheritable Class unordered_set_case(Of T)
 
     Private Sub [erase]()
         If rnd_bool() AndAlso Not s.empty() Then
-            Dim k As T = Nothing
-            k = random_select_key_from_h()
+            Dim k As T = random_select_key_from_h()
             assertion.is_true(s.erase(k))
             assertion.is_true(h.erase(k))
         Else
-            Dim k As T = Nothing
-            k = rnd(Of T)()
+            Dim k As T = rnd(Of T)()
             assertion.equal(s.erase(k), h.erase(k))
         End If
     End Sub
@@ -79,14 +74,12 @@ Public NotInheritable Class unordered_set_case(Of T)
                 assertion.is_true(h.empty())
                 assertion.equal(h.find(rnd(Of T)()), h.end())
             Else
-                Dim k As T = Nothing
-                k = random_select_key_from_h()
+                Dim k As T = random_select_key_from_h()
                 assertion.not_equal(h.find(k), h.end())
                 assertion.not_equal(s.find(k), s.end())
             End If
         Else
-            Dim k As T = Nothing
-            k = rnd(Of T)()
+            Dim k As T = rnd(Of T)()
             If s.find(k) = s.end() Then
                 assertion.equal(h.find(k), h.end())
             Else
@@ -106,8 +99,7 @@ Public NotInheritable Class unordered_set_case(Of T)
         copy(h2, h)
 
         assertion.equal(h2.size(), s.size())
-        Dim it As unordered_set(Of T).iterator = Nothing
-        it = h2.begin()
+        Dim it As unordered_set(Of T).iterator = h2.begin()
         While it <> h2.end()
             assertion.not_equal(s.find(+it), s.end())
             it += 1

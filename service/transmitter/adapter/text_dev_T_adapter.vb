@@ -25,8 +25,7 @@ Public Class text_dev_T_adapter(Of T)
     Public Function send(ByVal i As T) As event_comb Implements dev_T(Of T).send
         Dim ec As event_comb = Nothing
         Return New event_comb(Function() As Boolean
-                                  Dim s As String = Nothing
-                                  s = string_serializer.to_str(i)
+                                  Dim s As String = string_serializer.to_str(i)
                                   ec = underlying_device.send(s)
                                   Return waitfor(ec) AndAlso
                                          goto_next()

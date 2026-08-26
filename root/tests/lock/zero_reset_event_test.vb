@@ -28,8 +28,7 @@ Public NotInheritable Class zero_reset_event_test
 
     <test>
     Private Shared Sub should_block()
-        Dim e As zero_reset_event = Nothing
-        e = New zero_reset_event(0)
+        Dim e As New zero_reset_event(0)
         assertion.equal(e.increase(), uint32_1)
         assertion.is_false(e.wait(1000))
         e.Dispose()

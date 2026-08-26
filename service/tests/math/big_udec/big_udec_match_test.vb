@@ -22,10 +22,8 @@ Public NotInheritable Class big_udec_match_test
 
     <test>
     Private Shared Sub pi_fractional_str()
-        Dim pi As String = Nothing
-        pi = constants.pi_10m()
-        Dim r As UInt32 = 0
-        r = big_udec.parse_fraction(IO.File.ReadAllText("pi.txt")).str_match(pi)
+        Dim pi As String = constants.pi_10m()
+        Dim r As UInt32 = big_udec.parse_fraction(IO.File.ReadAllText("pi.txt")).str_match(pi)
         If r < pi.strlen() Then
             match_digits(r)
         Else
@@ -35,10 +33,8 @@ Public NotInheritable Class big_udec_match_test
 
     <test>
     Private Shared Sub e_fractional_str()
-        Dim e As String = Nothing
-        e = constants.e_2m()
-        Dim r As UInt32 = 0
-        r = big_udec.parse_fraction(IO.File.ReadAllText("e.txt")).str_match(e)
+        Dim e As String = constants.e_2m()
+        Dim r As UInt32 = big_udec.parse_fraction(IO.File.ReadAllText("e.txt")).str_match(e)
         If r < e.strlen() Then
             match_digits(r)
         Else

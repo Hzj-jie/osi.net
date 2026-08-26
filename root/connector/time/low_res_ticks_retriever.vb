@@ -22,18 +22,15 @@ Public Class low_res_ticks_retriever
     End Function
 
     Public Shared Function milliseconds() As Int64
-        Dim lrs As UInt32 = 0
-        lrs = last_revise_ms
-        Dim c As UInt32 = 0
-        c = environment_milliseconds_uint32()
+        Dim lrs As UInt32 = last_revise_ms
+        Dim c As UInt32 = environment_milliseconds_uint32()
         If offset = 0 OrElse
            c < last_ms OrElse
            c < lrs OrElse
            c - lrs >= revise_interval_ms Then
             'lrs will be larger than c when the environment_milliseconds_uint32 returns to 0
             For i As Int32 = 0 To 1
-                Dim this As Int64 = 0
-                this = (((Now().milliseconds() - environment_milliseconds_uint32()) -
+                Dim this As Int64 = (((Now().milliseconds() - environment_milliseconds_uint32()) -
                          (environment_milliseconds_uint32() - Now().milliseconds())) >> 1)
                 assert(this > 0)
                 If i = 0 OrElse
@@ -50,8 +47,7 @@ Public Class low_res_ticks_retriever
     End Function
 
     Public Shared Function to_date(ByVal environment_milliseconds As UInt32) As Date
-        Dim n As Int64 = 0
-        n = environment_milliseconds_uint32()
+        Dim n As Int64 = environment_milliseconds_uint32()
         n -= environment_milliseconds
         Return New Date(milliseconds_to_ticks(Now().milliseconds() - n))
     End Function

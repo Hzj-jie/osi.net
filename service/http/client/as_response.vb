@@ -112,8 +112,7 @@ Partial Public NotInheritable Class client
                                       If try_create_http_web_request(url, r) Then
                                           r.Method() = request_method.str()
                                           If Not request_headers.null_or_empty Then
-                                              Dim it As map(Of String, vector(Of String)).iterator = Nothing
-                                              it = request_headers.begin()
+                                              Dim it As map(Of String, vector(Of String)).iterator = request_headers.begin()
                                               While it <> request_headers.end()
                                                   If Not (+it).second Is Nothing AndAlso Not (+it).second.empty() Then
                                                       For i As UInt32 = 0 To CUInt((+it).second.size() - 1)

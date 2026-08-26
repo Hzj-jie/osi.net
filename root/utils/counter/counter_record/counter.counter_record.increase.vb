@@ -19,8 +19,7 @@ Namespace counter
             If envs.counter_selfhealth Then
                 startticks = Now().Ticks()
             End If
-            Dim index As Int64 = 0
-            index = Interlocked.Increment(calltimes) - 1
+            Dim index As Int64 = Interlocked.Increment(calltimes) - 1
             If count_selected() OrElse
                average_selected() OrElse
                rate_selected() Then

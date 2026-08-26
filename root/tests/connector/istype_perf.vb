@@ -63,43 +63,37 @@ Public MustInherit Class type_check_perf
     End Structure
 
     Protected Shared Function object_is_nothing(ByVal i As Object) As Boolean
-        Dim b As Boolean = False
-        b = i Is Nothing
+        Dim b As Boolean = i Is Nothing
         b = Not i Is Nothing
         Return True
     End Function
 
     Protected Shared Function generic_is_nothing(Of T)(ByVal i As T) As Boolean
-        Dim b As Boolean = False
-        b = i Is Nothing
+        Dim b As Boolean = i Is Nothing
         b = Not i Is Nothing
         Return True
     End Function
 
     Protected Shared Function is_nothing_func(Of T)(ByVal i As T) As Boolean
-        Dim b As Boolean = False
-        b = i.is_nothing()
+        Dim b As Boolean = i.is_nothing()
         b = i.is_not_nothing()
         Return True
     End Function
 
     Protected Shared Function object_is_nothing_logic(ByVal i As Object) As Boolean
-        Dim b As Boolean = False
-        b = Not TypeOf i Is ValueType AndAlso i Is Nothing
+        Dim b As Boolean = Not TypeOf i Is ValueType AndAlso i Is Nothing
         b = TypeOf i Is ValueType OrElse Not i Is Nothing
         Return True
     End Function
 
     Protected Shared Function generic_is_nothing_logic(Of T)(ByVal i As T) As Boolean
-        Dim b As Boolean = False
-        b = Not TypeOf i Is ValueType AndAlso i Is Nothing
+        Dim b As Boolean = Not TypeOf i Is ValueType AndAlso i Is Nothing
         b = TypeOf i Is ValueType OrElse Not i Is Nothing
         Return True
     End Function
 
     Protected Shared Function object_typeof_is(ByVal i As Object) As Boolean
-        Dim b As Boolean = False
-        b = TypeOf i Is SByte
+        Dim b As Boolean = TypeOf i Is SByte
         b = TypeOf i Is Byte
         b = TypeOf i Is Int16
         b = TypeOf i Is UInt16
@@ -123,8 +117,7 @@ Public MustInherit Class type_check_perf
     End Function
 
     Protected Shared Function T_typeof_is(Of T)(ByVal i As T) As Boolean
-        Dim b As Boolean = False
-        b = TypeOf i Is SByte
+        Dim b As Boolean = TypeOf i Is SByte
         b = TypeOf i Is Byte
         b = TypeOf i Is Int16
         b = TypeOf i Is UInt16
@@ -148,8 +141,7 @@ Public MustInherit Class type_check_perf
     End Function
 
     Protected Shared Function is_type_of(Of T)(ByVal i As T) As Boolean
-        Dim b As Boolean = False
-        b = i.istype(Of SByte)()
+        Dim b As Boolean = i.istype(Of SByte)()
         b = i.istype(Of Byte)()
         b = i.istype(Of Int16)()
         b = i.istype(Of UInt16)()
@@ -173,8 +165,7 @@ Public MustInherit Class type_check_perf
     End Function
 
     Protected Shared Function is_type_of(Of T)() As Boolean
-        Dim b As Boolean = False
-        b = type_info(Of T, type_info_operators.is, SByte).v
+        Dim b As Boolean = type_info(Of T, type_info_operators.is, SByte).v
         b = type_info(Of T, type_info_operators.is, Byte).v
         b = type_info(Of T, type_info_operators.is, Int16).v
         b = type_info(Of T, type_info_operators.is, UInt16).v

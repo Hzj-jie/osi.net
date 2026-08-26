@@ -35,8 +35,7 @@ Partial Public NotInheritable Class nlexer
             o = group.of(s.strmid(i + uint32_1, CUInt(group_end) - i - uint32_1))
             group_end += 1
             If (group_end < s.Length()) Then
-                Dim it As map(Of Char, Func(Of matcher, matcher)).iterator = Nothing
-                it = m.find(s(group_end))
+                Dim it As map(Of Char, Func(Of matcher, matcher)).iterator = m.find(s(group_end))
                 If it <> m.end() Then
                     o = (+it).second(o)
                     group_end += 1
@@ -50,10 +49,8 @@ Partial Public NotInheritable Class nlexer
         ' Process abc
         Private Shared Function of_raw_string(ByVal s As String, ByRef i As UInt32) As matcher
             assert(s.char_at(i) <> characters.group_start)
-            Dim start As UInt32 = 0
-            start = i
-            Dim next_group_start As Int32 = 0
-            next_group_start = s.next_index_of(characters.group_start, i)
+            Dim start As UInt32 = i
+            Dim next_group_start As Int32 = s.next_index_of(characters.group_start, i)
             If next_group_start = npos Then
                 i = strlen(s)
                 Return group.of(s.strmid(start))

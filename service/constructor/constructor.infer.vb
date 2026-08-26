@@ -72,24 +72,21 @@ Public NotInheritable Class constructor
 
     ' For test purpose: this function should not be used explicitly.
     Public Shared Function sync_resolve(Of T)(ByVal v As var, ByRef o As T) As Boolean
-        Dim r As ref(Of T) = Nothing
-        r = New ref(Of T)()
+        Dim r As New ref(Of T)()
         Return async_sync(resolve(v, r)) AndAlso
                eva(o, +r)
     End Function
 
     ' For test purpose: this function should not be used explicitly.
     Public Shared Function sync_resolve(Of T, DT As T)(ByVal v As var, ByRef o As T) As Boolean
-        Dim r As ref(Of T) = Nothing
-        r = New ref(Of T)()
+        Dim r As New ref(Of T)()
         Return async_sync(resolve(Of T, DT)(v, r)) AndAlso
                eva(o, +r)
     End Function
 
     ' For test purpose: this function should not be used explicitly.
     Public Shared Function sync_resolve(Of T, RT As T)(ByVal v As var, ByRef o As RT) As Boolean
-        Dim r As ref(Of RT) = Nothing
-        r = New ref(Of RT)()
+        Dim r As New ref(Of RT)()
         Return async_sync(resolve(Of T, RT)(v, r)) AndAlso
                eva(o, +r)
     End Function

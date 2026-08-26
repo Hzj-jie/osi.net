@@ -63,8 +63,7 @@ Public NotInheritable Class concurrency_runner(Of _SIZE As _int64)
         Using w As New AutoResetEvent(False)
             Dim r As Int32 = 0
             For i As Int32 = 0 To array_size_i(v) - 1
-                Dim a As Action = Nothing
-                a = v(i)
+                Dim a As Action = v(i)
                 If Interlocked.Increment(r) <= size Then
                     managed_thread_pool.push(Sub()
                                                  e(a)

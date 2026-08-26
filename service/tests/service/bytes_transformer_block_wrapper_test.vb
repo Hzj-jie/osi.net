@@ -20,8 +20,7 @@ Public Class bytes_transformer_block_wrapper_test
     Private Shared Function create_cases() As vector(Of [case])
         Dim zippers() As String = {"gzip", "deflate", "bypass"}
         Dim encryptors() As String = {"xor", "ring", "bypass"}
-        Dim r As vector(Of [case]) = Nothing
-        r = New vector(Of [case])()
+        Dim r As New vector(Of [case])()
         For i As Int32 = 0 To array_size_i(zippers) - 1
             For j As Int32 = 0 To array_size_i(encryptors) - 1
                 r.emplace_back(New bytes_transformer_block_wrapper_case(guid_str(), zippers(i), encryptors(j)))

@@ -21,8 +21,7 @@ Public NotInheritable Class dataprovider_test
     Private Overloads Shared Function run(ByVal ctor As Func(Of idataprovider)) As Boolean
         assert(Not ctor Is Nothing)
         File.Delete(filename)
-        Dim sz As Int64 = 0
-        sz = collection.dataprovider_count()
+        Dim sz As Int64 = collection.dataprovider_count()
         Dim dp As dataprovider(Of String) = cast(Of dataprovider(Of String))(ctor())
         assertion.equal(collection.dataprovider_count(), sz + 1)
         assertion.is_false(dp.valid())

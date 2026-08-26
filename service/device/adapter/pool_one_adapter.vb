@@ -36,8 +36,7 @@ Public Class pool_one_adapter(Of T)
     End Sub
 
     Public Function drop(ByVal instance As idevice(Of T)) As Boolean
-        Dim r As Boolean = False
-        r = p.release(instance)
+        Dim r As Boolean = p.release(instance)
         [set]()
         Return r
     End Function

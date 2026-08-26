@@ -25,8 +25,7 @@ Friend NotInheritable Class unordered_map_cache(Of KEY_T As IComparable(Of KEY_T
 
     Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean _
                          Implements islimcache2(Of KEY_T, VALUE_T).get
-        Dim i As unordered_map(Of KEY_T, VALUE_T).iterator = Nothing
-        i = m.find(key)
+        Dim i As unordered_map(Of KEY_T, VALUE_T).iterator = m.find(key)
         If i = m.end() Then
             Return False
         End If

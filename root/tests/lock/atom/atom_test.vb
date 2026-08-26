@@ -21,10 +21,8 @@ Public MustInherit Class atom_test
     Protected MustOverride Sub validate(ByVal ac As atom_case)
 
     Public NotOverridable Overrides Function run() As Boolean
-        Dim ac As atom_case = Nothing
-        ac = create_case()
-        Dim c As [case] = Nothing
-        c = multithreading(repeat(ac, round), thread_count)
+        Dim ac As atom_case = create_case()
+        Dim c As [case] = multithreading(repeat(ac, round), thread_count)
         If c.run() Then
             validate(ac)
             Return True

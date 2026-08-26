@@ -25,8 +25,7 @@ Public Class herald_questioner(Of _ENABLE_AUTO_PING As _boolean)
     Inherits iexecutable_questioner(Of _ENABLE_AUTO_PING)
 
     Private Shared Sub assert_transmit_mode(ByVal h As herald)
-        Dim t As trait.mode_t = Nothing
-        t = h.transmit_mode()
+        Dim t As trait.mode_t = h.transmit_mode()
         assert(t = trait.mode_t.duplex OrElse
                t = trait.mode_t.send_receive)
     End Sub

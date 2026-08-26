@@ -24,13 +24,10 @@ Public Class delegate_pinning_test
 
     Public Overrides Function run() As Boolean
         assertion.disable_on_nix("GC root retention in stack frame under Linux System V ABI")
-        Dim c As test_class = Nothing
-        c = New test_class()
-        Dim p As weak_ref(Of test_class) = Nothing
-        p = weak_ref.of(c)
+        Dim c As New test_class()
+        Dim p As weak_ref(Of test_class) = weak_ref.of(c)
 
-        Dim d As Action = Nothing
-        d = AddressOf c.run
+        Dim d As Action = AddressOf c.run
 
         garbage_collector.repeat_collect()
 

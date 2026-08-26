@@ -44,8 +44,7 @@ Public Module _console_key_info_mapping
         console_key_max_char = character.a
         For i As Int32 = 0 To console_key_info_mapping_height - 1
             For j As Int32 = 0 To console_key_info_mapping_width - 1
-                Dim c As Int32 = 0
-                c = Convert.ToInt32(console_key_info_mapping(i, j))
+                Dim c As Int32 = Convert.ToInt32(console_key_info_mapping(i, j))
                 If c < Convert.ToInt32(console_key_min_char) Then
                     console_key_min_char = console_key_info_mapping(i, j)
                 End If

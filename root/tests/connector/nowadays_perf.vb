@@ -11,15 +11,12 @@ Public Class nowadays_perf
     Private Const size As Int64 = 16 * 1024 * 1024
 
     Private Shared Sub now_perf(ByRef ms As Int64, ByRef pms As Int64)
-        Dim m As ref(Of Int64) = Nothing
-        m = New ref(Of Int64)()
-        Dim pm As ref(Of Int64) = Nothing
-        pm = New ref(Of Int64)()
+        Dim m As New ref(Of Int64)()
+        Dim pm As New ref(Of Int64)()
         Using New ms_timing_counter(m)
             Using New processor_ms_timing_counter(pm)
                 For i As Int64 = 0 To size - 1
-                    Dim t As Int64 = 0
-                    t = Now().milliseconds()
+                    Dim t As Int64 = Now().milliseconds()
                 Next
             End Using
         End Using
@@ -28,15 +25,12 @@ Public Class nowadays_perf
     End Sub
 
     Private Shared Sub nowadays_perf(ByRef ms As Int64, ByRef pms As Int64)
-        Dim m As ref(Of Int64) = Nothing
-        m = New ref(Of Int64)()
-        Dim pm As ref(Of Int64) = Nothing
-        pm = New ref(Of Int64)()
+        Dim m As New ref(Of Int64)()
+        Dim pm As New ref(Of Int64)()
         Using New ms_timing_counter(m)
             Using New processor_ms_timing_counter(pm)
                 For i As Int64 = 0 To size - 1
-                    Dim t As Int64 = 0
-                    t = nowadays.milliseconds()
+                    Dim t As Int64 = nowadays.milliseconds()
                 Next
             End Using
         End Using

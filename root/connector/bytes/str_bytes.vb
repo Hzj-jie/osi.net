@@ -109,8 +109,7 @@ Public Module _str_bytes
         If Not valid_input_parameters(s, start, len) Then
             Return False
         End If
-        Dim r As Int32 = 0
-        r = default_encoding.GetByteCount(s, CInt(start), CInt(len))
+        Dim r As Int32 = default_encoding.GetByteCount(s, CInt(start), CInt(len))
         If r < 0 Then
             Return False
         End If
@@ -141,8 +140,7 @@ Public Module _str_bytes
         If Not valid_input_parameters(b, start, len) Then
             Return uint32_0
         End If
-        Dim r As Int32 = 0
-        r = default_encoding.GetCharCount(b, CInt(start), CInt(len))
+        Dim r As Int32 = default_encoding.GetCharCount(b, CInt(start), CInt(len))
         If r >= 0 Then
             Return CUInt(r)
         End If

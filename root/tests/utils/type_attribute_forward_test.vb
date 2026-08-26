@@ -29,10 +29,8 @@ Public Class type_attribute_forward_test
     End Class
 
     Shared Sub New()
-        Dim x As a = Nothing
-        x = New a()
-        Dim y As b = Nothing
-        y = New b()
+        Dim x As New a()
+        Dim y As New b()
     End Sub
 
     Private Shared Function run_case() As Boolean

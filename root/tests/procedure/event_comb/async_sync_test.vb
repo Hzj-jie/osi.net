@@ -20,10 +20,8 @@ Public NotInheritable Class async_sync_test
         ' A very large count may trigger stack overflow, as the following event_comb instances will only execute an
         ' async_sync.
         count = CInt(thread_pool.thread_count() << 1)
-        Dim c As atomic_int = Nothing
-        c = New atomic_int()
-        Dim w As AutoResetEvent = Nothing
-        w = New AutoResetEvent(False)
+        Dim c As New atomic_int()
+        Dim w As New AutoResetEvent(False)
         For i As Int32 = 0 To count - 1
             assert_begin(New event_comb(Function() As Boolean
                                             Return async_sync(New event_comb(

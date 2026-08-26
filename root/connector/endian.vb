@@ -150,8 +150,7 @@ Public NotInheritable Class endian
     End Function
 
     Public Shared Function reverse(ByVal i As Single) As Single
-        Dim j As Int32 = 0
-        j = reverse(BitConverter.ToInt32(BitConverter.GetBytes(i), 0))
+        Dim j As Int32 = reverse(BitConverter.ToInt32(BitConverter.GetBytes(i), 0))
         Return BitConverter.ToSingle(BitConverter.GetBytes(j), 0)
     End Function
 

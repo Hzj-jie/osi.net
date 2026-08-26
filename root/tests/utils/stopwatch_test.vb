@@ -31,8 +31,7 @@ Public NotInheritable Class stopwatch_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Dim count As Int32 = 0
-        count = rnd_int(100, 1000)
+        Dim count As Int32 = rnd_int(100, 1000)
         Dim finished As Int64 = 0
         Dim wait_until_ms As Int64 = 0
         Dim sws() As stopwatch.[event] = Nothing

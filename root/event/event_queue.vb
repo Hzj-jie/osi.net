@@ -31,8 +31,7 @@ Friend Class event_queue(Of PARA_T, _ONCE As _boolean)
     End Function
 
     Public Sub raise(ByVal p As PARA_T)
-        Dim s As Int64 = 0
-        s = q.size()
+        Dim s As Int64 = q.size()
         While s > 0
             assert(raise_one(p))
             s -= 1

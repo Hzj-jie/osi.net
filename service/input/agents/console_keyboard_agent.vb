@@ -21,10 +21,8 @@ Public Class console_keyboard_agent
             status = New agent_status(mode.keyboard)
             rec = rcec.ctor(Function() As Boolean
                                 If Console.KeyAvailable() Then
-                                    Dim ki As ConsoleKeyInfo = Nothing
-                                    ki = Console.ReadKey(True)
-                                    Dim ks As vector(Of Int32) = Nothing
-                                    ks = New vector(Of Int32)()
+                                    Dim ki As ConsoleKeyInfo = Console.ReadKey(True)
+                                    Dim ks As New vector(Of Int32)()
 #Disable Warning CA1416
                                     If os.is_windows AndAlso Console.CapsLock() Then
                                         ks.emplace_back(constants.keyboard.caps_lock)

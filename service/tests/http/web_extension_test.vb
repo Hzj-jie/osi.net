@@ -47,8 +47,7 @@ Public Class web_extension_test
     End Function
 
     Private Shared Function some_dumy_data() As String
-        Dim o As StringBuilder = Nothing
-        o = New StringBuilder()
+        Dim o As New StringBuilder()
         o.Append("<DATA>")
         For i As Int32 = 0 To 512 - 1
             If rnd_bool() Then

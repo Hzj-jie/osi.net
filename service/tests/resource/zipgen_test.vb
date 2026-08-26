@@ -26,8 +26,7 @@ Public Class zipgen_test
 
 #If Not NET8_0_OR_GREATER Then
     Protected Overrides Sub Finalize()
-        Dim v As valuer(Of Byte()) = Nothing
-        v = New valuer(Of Byte())(GetType(_data), binding_flags.static_public, "data")
+        Dim v As New valuer(Of Byte())(GetType(_data), binding_flags.static_public, "data")
         v.set(Nothing)
         v = New valuer(Of Byte())(GetType(_zipdata), binding_flags.static_public, "zipdata")
         v.set(Nothing)

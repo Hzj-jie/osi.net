@@ -15,8 +15,7 @@ Public Class auto_device_exporter_idevice_test
     Private Shared Function no_concurrent_generation_case() As Boolean
         mock_dev(Of auto_device_exporter_idevice_test).reset()
         Const count As UInt32 = 100
-        Dim d As auto_device_exporter(Of mock_dev(Of auto_device_exporter_idevice_test)) = Nothing
-        d = auto_device_exporter.[New](New mock_device_creator(Of auto_device_exporter_idevice_test)(),
+        Dim d As auto_device_exporter(Of mock_dev(Of auto_device_exporter_idevice_test)) = auto_device_exporter.[New](New mock_device_creator(Of auto_device_exporter_idevice_test)(),
                                        max_concurrent_generations:=1)
         Dim c As UInt32 = 0
         AddHandler d.new_device_exported, Sub(i As idevice(Of mock_dev(Of auto_device_exporter_idevice_test)),
@@ -70,10 +69,8 @@ Public Class auto_device_exporter_idevice_test
     Private Shared Function concurrent_generation_case() As Boolean
         mock_dev(Of auto_device_exporter_idevice_test).reset()
         Const count As UInt32 = 100
-        Dim d As auto_device_exporter(Of mock_dev(Of auto_device_exporter_idevice_test)) = Nothing
-        d = auto_device_exporter.[New](New mock_device_creator(Of auto_device_exporter_idevice_test))
-        Dim c As atomic_uint = Nothing
-        c = New atomic_uint()
+        Dim d As auto_device_exporter(Of mock_dev(Of auto_device_exporter_idevice_test)) = auto_device_exporter.[New](New mock_device_creator(Of auto_device_exporter_idevice_test))
+        Dim c As New atomic_uint()
         AddHandler d.new_device_exported, Sub(i As idevice(Of mock_dev(Of auto_device_exporter_idevice_test)),
                                               ByRef export_result As Boolean)
                                               c.increment()

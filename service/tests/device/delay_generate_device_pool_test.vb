@@ -16,15 +16,13 @@ Public Class delay_generate_device_pool_test
 
     Public Overrides Function run() As Boolean
         Const max_count As UInt32 = 128
-        Dim p As delay_generate_device_pool(Of mock_dev(Of delay_generate_device_pool_test)) = Nothing
-        p = delay_generate_device_pool.[New](New mock_device_creator(Of delay_generate_device_pool_test)(), max_count)
+        Dim p As delay_generate_device_pool(Of mock_dev(Of delay_generate_device_pool_test)) = delay_generate_device_pool.[New](New mock_device_creator(Of delay_generate_device_pool_test)(), max_count)
         assertion.equal(p.limited_max_count(), True)
         assertion.equal(p.total_count(), uint32_0)
         assertion.equal(p.free_count(), uint32_0)
         Dim ds() As idevice(Of mock_dev(Of delay_generate_device_pool_test)) = Nothing
         ReDim ds(max_count - 1)
-        Dim last_round_closed_count As Int32 = 0
-        last_round_closed_count = max_count
+        Dim last_round_closed_count As Int32 = max_count
         For round As Int32 = 0 To 1
             For i As Int32 = 0 To max_count - 1
                 assertion.is_true(p.get(ds(i)))
@@ -59,8 +57,7 @@ Public Class delay_generate_device_pool_test
             Next
         Next
 
-        Dim expected_closed As UInt32 = 0
-        expected_closed = mock_dev(Of delay_generate_device_pool_test).closed_instance_count() + p.free_count()
+        Dim expected_closed As UInt32 = mock_dev(Of delay_generate_device_pool_test).closed_instance_count() + p.free_count()
         p.close()
         assertion.equal(mock_dev(Of delay_generate_device_pool_test).closed_instance_count(),
                      expected_closed)

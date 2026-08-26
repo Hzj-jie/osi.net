@@ -252,8 +252,7 @@ Public NotInheritable Class registry(Of T)
 
                            Const pool_type As String = "pool-type"
                            v.bind(pool_type)
-                           Dim pt As String = Nothing
-                           pt = v(pool_type)
+                           Dim pt As String = v(pool_type)
 
                            If strsame(pt, "auto-pre-generated", False) Then
                                Return constructor(Of idevice_pool(Of T)) _

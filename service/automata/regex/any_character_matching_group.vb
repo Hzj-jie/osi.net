@@ -12,8 +12,7 @@ Partial Public Class rlexer
             If strlen(i) <= pos Then
                 Return Nothing
             Else
-                Dim r As vector(Of UInt32) = Nothing
-                r = New vector(Of UInt32)()
+                Dim r As New vector(Of UInt32)()
                 r.emplace_back(pos + 1)
                 Return r
             End If

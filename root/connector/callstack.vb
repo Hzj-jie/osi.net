@@ -40,8 +40,7 @@ Public Module _callstack
         If s.GetMethod() Is Nothing Then
             Return "##NO_MANAGED_METHOD##"
         End If
-        Dim r As StringBuilder = Nothing
-        r = New StringBuilder()
+        Dim r As New StringBuilder()
         If isdebugmode() Then
             If s.GetFileName().null_or_empty() Then
                 r.Append("##MISSING_PDB##")
@@ -65,8 +64,7 @@ Public Module _callstack
     Public Function backtrace(Optional ByVal additional_jump As Int32 = 1) As String
 #If Not (PocketPC OrElse Smartphone) Then
         Dim callstack As StackFrame = Nothing
-        Dim jump As Int32 = 0
-        jump = additional_jump + 1
+        Dim jump As Int32 = additional_jump + 1
         If isdebugmode() Then
             callstack = New StackFrame(jump, True)
         Else
@@ -105,8 +103,7 @@ Public Module _callstack
             Else
                 s = New StackFrame(i, False)
             End If
-            Dim m As MethodBase = Nothing
-            m = s.GetMethod()
+            Dim m As MethodBase = s.GetMethod()
             If m Is Nothing Then
                 Exit While
             End If

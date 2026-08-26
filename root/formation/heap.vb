@@ -212,8 +212,7 @@ Public Class heap(Of T As IComparable(Of T))
 
     Public Function CompareTo(ByVal other As heap(Of T)) As Int32 _
                              Implements IComparable(Of heap(Of T)).CompareTo
-        Dim cmp As Int32 = 0
-        cmp = object_compare(Me, other)
+        Dim cmp As Int32 = object_compare(Me, other)
         If cmp <> object_compare_undetermined Then
             Return cmp
         End If

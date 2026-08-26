@@ -66,8 +66,7 @@ Public Module _byte
         If len = 0 Then
             Return ""
         End If
-        Dim r As StringBuilder = Nothing
-        r = New StringBuilder(len * expected_hex_byte_length - 1)
+        Dim r As New StringBuilder(len * expected_hex_byte_length - 1)
         For j As Int32 = start To start + len - 1
             r.Append(i(j).hex())
         Next
@@ -220,8 +219,7 @@ Public Module _byte
     <Extension()> Public Function hex_bytes_buff(ByVal s As String,
                                                  ByVal start As Int32,
                                                  ByVal len As Int32) As Byte()
-        Dim l As Int32 = 0
-        l = hex_bytes_len(s, start, len)
+        Dim l As Int32 = hex_bytes_len(s, start, len)
         If l < 0 Then
             Return Nothing
         End If

@@ -46,8 +46,7 @@ Public Class reference_count_event_comb_1
                                               this.mark_started()
                                           End Sub,
                                           Sub(this As reference_count_runner)
-                                              Dim c As event_comb = Nothing
-                                              c = ec
+                                              Dim c As event_comb = ec
                                               If Not c Is Nothing Then
                                                   c.cancel()
                                               End If

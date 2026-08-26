@@ -48,15 +48,13 @@ Public Class compare_predefined_test
     End Function
 
     Private Shared Function value_with_reference_compare() As Boolean
-        Dim obj As Object = Nothing
-        obj = 1
+        Dim obj As Object = 1
         assertion.is_false(object_compare(1, obj, 0))
         Return True
     End Function
 
     Private Shared Function nullable_compare() As Boolean
-        Dim i As Int32? = Nothing
-        i = 100
+        Dim i As Int32? = 100
         assertion.equal(compare(i, 100), 0)
         assertion.is_false(compare(i, 100.0, 0))
         i = Nothing

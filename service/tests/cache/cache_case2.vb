@@ -54,8 +54,7 @@ Public Class cache_case2
     End Sub
 
     Private Sub [get]()
-        Dim key As Int32 = 0
-        key = random_key()
+        Dim key As Int32 = random_key()
         Dim value As Int32 = 0
         If c.get(key, value) Then
             assert_key_value(key, value)
@@ -74,14 +73,12 @@ Public Class cache_case2
     End Sub
 
     Private Sub [erase]()
-        Dim key As Int32 = 0
-        key = random_key()
+        Dim key As Int32 = random_key()
         assertion.equal(c.erase(key), m.erase(key))
     End Sub
 
     Private Sub have()
-        Dim key As Int32 = 0
-        key = random_key()
+        Dim key As Int32 = random_key()
         If c.have(key) Then
             assertion.not_equal(m.find(key), m.end())
         End If

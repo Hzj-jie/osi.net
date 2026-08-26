@@ -10,8 +10,7 @@ Namespace rlexer
         Inherits [case]
 
         Private Shared Function case1() As Boolean
-            Dim g As any_character_matching_group = Nothing
-            g = New any_character_matching_group()
+            Dim g As New any_character_matching_group()
             Dim v As vector(Of UInt32) = Nothing
             If assertion.is_true(g.match("abc", v)) AndAlso
                assertion.is_true(Not v.null_or_empty()) AndAlso
@@ -22,8 +21,7 @@ Namespace rlexer
         End Function
 
         Private Shared Function case2() As Boolean
-            Dim g As any_character_matching_group = Nothing
-            g = New any_character_matching_group()
+            Dim g As New any_character_matching_group()
             assertion.is_false(g.match("", New vector(Of UInt32)()))
             Return True
         End Function

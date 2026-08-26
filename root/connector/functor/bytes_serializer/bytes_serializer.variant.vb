@@ -56,8 +56,7 @@ Partial Public Class bytes_serializer(Of T)
     Public NotInheritable Class container(Of ELEMENT)
         Private Shared Function write_to(ByVal i As T, ByVal o As MemoryStream) As Boolean
             assert(Not o Is Nothing)
-            Dim it As container_operator(Of ELEMENT).enumerator = Nothing
-            it = container_operator(Of T, ELEMENT).r.enumerate(i)
+            Dim it As container_operator(Of ELEMENT).enumerator = container_operator(Of T, ELEMENT).r.enumerate(i)
             If it Is Nothing Then
                 Return True
             End If
@@ -75,8 +74,7 @@ Partial Public Class bytes_serializer(Of T)
         Public Shared Sub register(ByVal op As container_operator(Of T, ELEMENT))
             [variant].register(Function(ByVal i As T, ByVal o As MemoryStream) As Boolean
                                    assert(Not o Is Nothing)
-                                   Dim l As UInt32 = 0
-                                   l = container_operator(Of T, ELEMENT).r.size(i)
+                                   Dim l As UInt32 = container_operator(Of T, ELEMENT).r.size(i)
                                    If Not bytes_serializer.append_to(l, o) Then
                                        Return False
                                    End If

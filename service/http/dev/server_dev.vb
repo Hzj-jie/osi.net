@@ -116,8 +116,7 @@ Public Class server_dev
                                           Return waitfor(ec) AndAlso
                                                  goto_next()
                                       Else
-                                          Dim s As String = Nothing
-                                          s = strmid(ctx.Request().Url().PathAndQuery(), uint32_2)
+                                          Dim s As String = strmid(ctx.Request().Url().PathAndQuery(), uint32_2)
                                           Return eva(r,
                                                      If(s.null_or_empty(),
                                                         s,
@@ -171,8 +170,7 @@ Public Class server_dev
                                            Optional ByVal ls As link_status = Nothing) _
                                           As imanual_device_exporter(Of text)
         assert(Not s Is Nothing)
-        Dim o As imanual_device_exporter(Of text) = Nothing
-        o = New manual_device_exporter(Of text)(s.identity())
+        Dim o As imanual_device_exporter(Of text) = New manual_device_exporter(Of text)(s.identity())
         AddHandler http_listener_context_handle.[New](s).handle_context_offline,
             Sub(ctx As HttpListenerContext, response_timeout_ms As Int64, after_respond As Action)
                 ' TODO: the response_timeout_ms cannot be sent to responder

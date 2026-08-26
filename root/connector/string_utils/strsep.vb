@@ -14,8 +14,7 @@ Public Module _strsep
                              ByVal indexof As Func(Of String, String, Boolean, Int64),
                              ByVal case_sensitive As Boolean) As Boolean
         assert(Not indexof Is Nothing)
-        Dim i As Int64 = 0
-        i = indexof(input, sep, case_sensitive)
+        Dim i As Int64 = indexof(input, sep, case_sensitive)
         If i = npos Then
             Return False
         End If

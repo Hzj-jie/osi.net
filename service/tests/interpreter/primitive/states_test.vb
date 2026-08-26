@@ -21,8 +21,7 @@ Namespace primitive
             Inherits [case]
 
             Public Overrides Function run() As Boolean
-                Dim s As simulator = Nothing
-                s = New simulator()
+                Dim s As New simulator()
                 assertion.is_true(s.import(sim6.as_text()))
                 s.execute()
                 assertion.is_true(s.halt())
@@ -35,8 +34,7 @@ Namespace primitive
             Inherits [case]
 
             Public Overrides Function run() As Boolean
-                Dim s As simulator = Nothing
-                s = New simulator()
+                Dim s As New simulator()
                 assertion.is_true(s.import(sim7.as_text()))
                 s.execute()
                 assertion.equal(s.stack_size(), uint32_1)

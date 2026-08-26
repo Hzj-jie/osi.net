@@ -19,8 +19,7 @@ Partial Public NotInheritable Class big_uint
 
     <MethodImpl(math_debug.aggressive_inlining)>
     Public Shared Operator *(ByVal this As big_uint, ByVal that As big_uint) As big_uint
-        Dim r As big_uint = Nothing
-        r = New big_uint()
+        Dim r As New big_uint()
         'avoid an extra copy
         r.multiply(this, that)
         Return r

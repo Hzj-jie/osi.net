@@ -31,8 +31,7 @@ Public NotInheritable Class slimheapless(Of T)
 
     Public Sub emplace(ByVal d As T)
         Dim i As Int32 = 0
-        Dim n As node = Nothing
-        n = New node(d)
+        Dim n As New node(d)
         While True
             n.next = f.next
             If Interlocked.CompareExchange(f.next, n, n.next) Is n.next Then
@@ -65,8 +64,7 @@ Public NotInheritable Class slimheapless(Of T)
     Public Function pop(ByRef d As T) As Boolean
         Dim i As Int32 = 0
         While True
-            Dim n As node = Nothing
-            n = f.next
+            Dim n As node = f.next
             If n Is Nothing Then
                 Return False
             End If
@@ -100,8 +98,7 @@ Public NotInheritable Class slimheapless(Of T)
     End Function
 
     Public Function pick(ByRef d As T) As Boolean
-        Dim n As node = Nothing
-        n = f.next
+        Dim n As node = f.next
         If n Is Nothing Then
             Return False
         Else

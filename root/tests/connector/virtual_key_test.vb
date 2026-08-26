@@ -20,8 +20,7 @@ Public Class virtual_key_test
             While True
                 Dim type As virtual_key.map_type = Nothing
                 Dim code As UInt32 = 0
-                Dim s As String = Nothing
-                s = Console.ReadLine()
+                Dim s As String = Console.ReadLine()
                 If Not enum_def.from(s, type) Then
                     Return True
                 End If

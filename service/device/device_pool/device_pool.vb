@@ -42,16 +42,14 @@ Public Class device_pool
     End Function
 
     Private Function assert_decrease_total_count() As UInt32
-        Dim r As Int32 = 0
-        r = count.decrement()
+        Dim r As Int32 = count.decrement()
         assert(r >= 0)
         Return r
     End Function
 
     Protected Function increase_total_count() As Boolean
         If limited_max_count() Then
-            Dim r As Int32 = 0
-            r = count.increment()
+            Dim r As Int32 = count.increment()
             If r > mc Then
                 assert_decrease_total_count()
                 Return False
@@ -71,8 +69,7 @@ Public Class device_pool
     End Sub
 
     Protected Sub decrease_total_count()
-        Dim r As Int32 = 0
-        r = assert_decrease_total_count()
+        Dim r As Int32 = assert_decrease_total_count()
         counter.increase(TOTAL_COUNT_COUNTER, r)
     End Sub
 

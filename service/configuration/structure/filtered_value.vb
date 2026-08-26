@@ -50,8 +50,7 @@ Public Class filtered_value(Of T)
     Private Function [get](ByVal vs As vector(Of pair(Of T, filter_set)),
                            ByVal variants As vector(Of pair(Of String, String))) As vector(Of T)
         assert(Not vs Is Nothing)
-        Dim r As vector(Of T) = Nothing
-        r = New vector(Of T)()
+        Dim r As New vector(Of T)()
         Dim i As UInt32 = 0
         While i < vs.size()
             If vs(i).second.match(variants) Then
@@ -80,8 +79,7 @@ Public Class filtered_value(Of T)
     Public Function [get](ByVal key As String,
                           ByRef v As T,
                           Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) As Boolean
-        Dim it As map(Of String, vector(Of pair(Of T, filter_set))).iterator = Nothing
-        it = m.find(key)
+        Dim it As map(Of String, vector(Of pair(Of T, filter_set))).iterator = m.find(key)
         If it = m.end() Then
             Return False
         End If
@@ -90,8 +88,7 @@ Public Class filtered_value(Of T)
 
     Public Function [get](ByVal key As String,
                           Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) As vector(Of T)
-        Dim it As map(Of String, vector(Of pair(Of T, filter_set))).iterator = Nothing
-        it = m.find(key)
+        Dim it As map(Of String, vector(Of pair(Of T, filter_set))).iterator = m.find(key)
         If it = m.end() Then
             Return Nothing
         End If
@@ -104,8 +101,7 @@ Public Class filtered_value(Of T)
     End Function
 
     Public Function keys(Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) As vector(Of String)
-        Dim r As vector(Of String) = Nothing
-        r = New vector(Of String)()
+        Dim r As New vector(Of String)()
         m.stream().foreach(m.on_pair(Sub(ByVal k As String, ByVal v As vector(Of pair(Of T, filter_set)))
                                          If [get](v, Nothing, variants) Then
                                              r.emplace_back(k)
@@ -116,8 +112,7 @@ Public Class filtered_value(Of T)
 
     Public Function values(Optional ByVal variants As vector(Of pair(Of String, String)) = Nothing) _
                           As vector(Of pair(Of String, T))
-        Dim r As vector(Of pair(Of String, T)) = Nothing
-        r = New vector(Of pair(Of String, T))()
+        Dim r As New vector(Of pair(Of String, T))()
         m.stream().foreach(m.on_pair(Sub(ByVal k As String, ByVal v As vector(Of pair(Of T, filter_set)))
                                          Dim t As T = Nothing
                                          If [get](v, t, variants) Then

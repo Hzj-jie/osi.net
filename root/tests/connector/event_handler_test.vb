@@ -16,10 +16,8 @@ Public Class event_handler_test
 
     Public Overrides Function run() As Boolean
         Const trigger_size As Int32 = 100
-        Dim v As with_event = Nothing
-        v = New with_event()
-        Dim h As with_event.some_eventEventHandler = Nothing
-        h = Sub(arg1 As with_event, ByRef arg2 As Int32)
+        Dim v As New with_event()
+        Dim h As with_event.some_eventEventHandler = Sub(arg1 As with_event, ByRef arg2 As Int32)
                 assertion.reference_equal(arg1, v)
                 arg2 += 1
             End Sub

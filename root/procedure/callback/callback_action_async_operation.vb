@@ -139,8 +139,7 @@ Public NotInheritable Class callback_action_async_operation
             Return todo(True)
         End If
         Return Function() As Boolean
-                   Dim this As callback_action_async_operation = Nothing
-                   this = current()
+                   Dim this As callback_action_async_operation = current()
                    this._assert()
                    this._ao = async_operation.ctor(
                                       begin,
@@ -176,8 +175,7 @@ Public NotInheritable Class callback_action_async_operation
 
     Private Shared Function end_async_operation(ByVal rtn As Func(Of Boolean)) As Func(Of Boolean)
         Return Function() As Boolean
-                   Dim this As callback_action_async_operation = Nothing
-                   this = current()
+                   Dim this As callback_action_async_operation = current()
                    Dim r As Boolean = False
                    If Not this.ao().begin_succeeded() OrElse Not this.ao().finished() Then
                        this.ao().force_finish()

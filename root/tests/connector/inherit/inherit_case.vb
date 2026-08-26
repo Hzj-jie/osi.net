@@ -79,38 +79,32 @@ Friend Class inherit_case
 
     Public Overrides Function run() As Boolean
         If base Then
-            Dim c As base_class = Nothing
-            c = New base_class()
+            Dim c As New base_class()
             For i As Int32 = 0 To size - 1
                 c.work()
             Next
         ElseIf base2 Then
-            Dim c As base_class2 = Nothing
-            c = New base_class2()
+            Dim c As New base_class2()
             For i As Int32 = 0 To size - 1
                 c.work()
             Next
         ElseIf inherit Then
-            Dim c As inherit_class = Nothing
-            c = New inherit_class()
+            Dim c As New inherit_class()
             For i As Int32 = 0 To size - 1
                 c.work2()
             Next
         ElseIf override Then
-            Dim c As base_class2 = Nothing
-            c = New override_class()
+            Dim c As base_class2 = New override_class()
             For i As Int32 = 0 To size - 1
                 c.work()
             Next
         ElseIf inter Then
-            Dim c As inter_interface = Nothing
-            c = New impl_class()
+            Dim c As inter_interface = New impl_class()
             For i As Int32 = 0 To size - 1
                 c.work()
             Next
         ElseIf impl Then
-            Dim c As impl_class = Nothing
-            c = New impl_class()
+            Dim c As New impl_class()
             For i As Int32 = 0 To size - 1
                 c.work()
             Next

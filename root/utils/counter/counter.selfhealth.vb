@@ -43,8 +43,7 @@ Namespace counter
 
             Private Shared Function return_clear(ByRef i As Int32) As Int64
                 If envs.counter_selfhealth Then
-                    Dim j As Int64 = 0
-                    j = atomic.read(i)
+                    Dim j As Int64 = atomic.read(i)
                     atomic.eva(i, 0)
                     Return j
                 Else
@@ -54,8 +53,7 @@ Namespace counter
 
             Private Shared Function return_clear(ByRef i As Int64) As Int64
                 If envs.counter_selfhealth Then
-                    Dim j As Int64 = 0
-                    j = atomic.read(i)
+                    Dim j As Int64 = atomic.read(i)
                     atomic.eva(i, 0)
                     Return j
                 Else

@@ -67,8 +67,7 @@ Public Class sections
         If v.null_or_empty() Then
             Return Nothing
         Else
-            Dim r As vector(Of String) = Nothing
-            r = New vector(Of String)()
+            Dim r As New vector(Of String)()
             Dim i As UInt32 = 0
             While i < v.size()
                 r.emplace_back(v(i).keys(variants))
@@ -83,8 +82,7 @@ Public Class sections
         If v.null_or_empty() Then
             Return Nothing
         Else
-            Dim r As vector(Of pair(Of String, String)) = Nothing
-            r = New vector(Of pair(Of String, String))()
+            Dim r As New vector(Of pair(Of String, String))()
             Dim i As UInt32 = 0
             While i < v.size()
                 r.emplace_back(v(i).values(variants))

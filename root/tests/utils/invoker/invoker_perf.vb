@@ -174,8 +174,7 @@ Public Class invoker_perf
         Protected ReadOnly l As invoker(Of Action(Of Int32))
 
         Public Sub New()
-            Dim o As test_class = Nothing
-            o = New test_class()
+            Dim o As New test_class()
             i = invoker.of(i).
                     with_object(o).
                     with_binding_flags(binding_flags.instance_public_method).

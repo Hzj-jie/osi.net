@@ -69,8 +69,7 @@ Partial Public NotInheritable Class big_dec
                 d.add(that.d)
             Else
                 If d.less(that.d) Then
-                    Dim t As big_udec = Nothing
-                    t = New big_udec(that.d)
+                    Dim t As New big_udec(that.d)
                     t.assert_sub(d)
                     assert(big_udec.swap(d, t))
                     set_signal(that.signal())
@@ -88,8 +87,7 @@ Partial Public NotInheritable Class big_dec
     End Function
 
     Public Function [sub](ByVal that As big_dec) As big_dec
-        Dim t As big_dec = Nothing
-        t = share(that)
+        Dim t As big_dec = share(that)
         If t Is Nothing Then
             Return Me
         Else
@@ -229,16 +227,14 @@ Partial Public NotInheritable Class big_dec
     End Function
 
     Public Shared Function compare(ByVal this As big_dec, ByVal that As big_dec) As Int32
-        Dim c As Int32 = 0
-        c = object_compare(this, that)
+        Dim c As Int32 = object_compare(this, that)
         If c = object_compare_undetermined Then
             assert(Not this Is Nothing)
             assert(Not that Is Nothing)
             If this.positive() <> that.positive() Then
                 Return If(this.positive(), 1, -1)
             Else
-                Dim r As Int32 = 0
-                r = this.d.compare(that.d)
+                Dim r As Int32 = this.d.compare(that.d)
                 assert(r <> min_int32)
                 Return If(this.positive(), r, -r)
             End If
@@ -323,8 +319,7 @@ End Class
 
 Partial Public NotInheritable Class big_dec
     Public Shared Operator +(ByVal this As big_dec, ByVal that As big_dec) As big_dec
-        Dim r As big_dec = Nothing
-        r = New big_dec(this)
+        Dim r As New big_dec(this)
         Return r.add(that)
     End Operator
 
@@ -333,27 +328,23 @@ Partial Public NotInheritable Class big_dec
     End Operator
 
     Public Shared Operator -(ByVal this As big_dec, ByVal that As big_dec) As big_dec
-        Dim r As big_dec = Nothing
-        r = New big_dec(this)
+        Dim r As New big_dec(this)
         Return r.sub(that)
     End Operator
 
     Public Shared Operator -(ByVal this As big_dec) As big_dec
-        Dim r As big_dec = Nothing
-        r = New big_dec(this)
+        Dim r As New big_dec(this)
         r.reverse_signal()
         Return r
     End Operator
 
     Public Shared Operator *(ByVal this As big_dec, ByVal that As big_dec) As big_dec
-        Dim r As big_dec = Nothing
-        r = New big_dec(this)
+        Dim r As New big_dec(this)
         Return r.multiply(that)
     End Operator
 
     Public Shared Operator \(ByVal this As big_dec, ByVal that As big_dec) As big_dec
-        Dim r As big_dec = Nothing
-        r = New big_dec(this)
+        Dim r As New big_dec(this)
         Return r.divide(that)
     End Operator
 
@@ -517,8 +508,7 @@ Partial Public NotInheritable Class big_dec
     End Function
 
     Public Shared Function random(Optional ByVal length As UInt32 = 0) As big_dec
-        Dim r As big_dec = Nothing
-        r = share(big_udec.random(length))
+        Dim r As big_dec = share(big_udec.random(length))
         If rnd_bool() Then
             r.set_negative()
         End If
@@ -536,8 +526,7 @@ End Class
 Partial Public NotInheritable Class big_dec
     Public Function str(Optional ByVal base As Byte = default_str_base,
                         Optional ByVal require_positive_signal_mask As Boolean = False) As String
-        Dim r As String = Nothing
-        r = d.str(base)
+        Dim r As String = d.str(base)
         If negative() Then
             Return negative_signal_mask + r
         End If
@@ -550,8 +539,7 @@ Partial Public NotInheritable Class big_dec
     Public Shared Function parse(ByVal s As String,
                                  ByRef r As big_dec,
                                  Optional ByVal base As Byte = default_str_base) As Boolean
-        Dim signal As Boolean = False
-        signal = True
+        Dim signal As Boolean = True
         If Not s.null_or_empty() Then
             If s(0) = negative_signal_mask Then
                 signal = False
@@ -638,10 +626,8 @@ Partial Public NotInheritable Class big_dec
         If i Is Nothing Then
             Return Nothing
         End If
-        Dim s As Boolean = False
-        s = i.signal()
-        Dim r As big_dec = Nothing
-        r = New big_dec(big_udec.move(i.d), s)
+        Dim s As Boolean = i.signal()
+        Dim r As New big_dec(big_udec.move(i.d), s)
         i.confirm_signal()
         Return r
     End Function
@@ -714,8 +700,7 @@ Partial Public NotInheritable Class big_dec
         If isemptyarray(a) Then
             Return False
         End If
-        Dim p As piece = Nothing
-        p = New piece(a)
+        Dim p As New piece(a)
         If Not p.consume(uint32_1, p) Then
             Return False
         End If

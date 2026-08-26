@@ -28,8 +28,7 @@ Namespace counter
         End Function
 
         Public Function snapshot(ByVal index As Int64) As snapshot
-            Dim cr As counter_record = Nothing
-            cr = counter(index)
+            Dim cr As counter_record = counter(index)
             If cr Is Nothing Then
                 Return Nothing
             Else
@@ -44,8 +43,7 @@ Namespace counter
         Friend Function insert(ByVal cr As counter_record) As Int64
             assert(Not cr Is Nothing)
             Return l.writer_locked(Function() As Int64
-                                       Dim rtn As Int64 = 0
-                                       rtn = v.size()
+                                       Dim rtn As Int64 = v.size()
                                        v.push_back(cr)
                                        Return rtn
                                    End Function)

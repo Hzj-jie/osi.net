@@ -12,8 +12,7 @@ Friend Class filter_set
         Else
             filters = New map(Of String, vector(Of ifilter))()
             For i As Int32 = 0 To raw_filters.size() - 1
-                Dim f As ifilter = Nothing
-                f = fs.create(raw_filters(i).first, raw_filters(i).second)
+                Dim f As ifilter = fs.create(raw_filters(i).first, raw_filters(i).second)
                 assert(Not f Is Nothing)
                 filters(raw_filters(i).first).push_back(f)
             Next
@@ -37,8 +36,7 @@ Friend Class filter_set
         Else
             For i As Int32 = 0 To variants.size() - 1
                 If Not variants(i).first.null_or_empty() Then
-                    Dim j As map(Of String, vector(Of ifilter)).iterator = Nothing
-                    j = filters.find(variants(i).first)
+                    Dim j As map(Of String, vector(Of ifilter)).iterator = filters.find(variants(i).first)
                     If j <> filters.end() AndAlso
                        assert(Not (+j).second Is Nothing) AndAlso
                        Not match((+j).second, variants(i).second) Then

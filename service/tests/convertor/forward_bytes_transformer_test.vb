@@ -8,8 +8,7 @@ Public Class forward_bytes_transformer_test
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        Dim t As bytes_transformer = Nothing
-        t = New forward_bytes_transformer()
+        Dim t As bytes_transformer = New forward_bytes_transformer()
         Dim i() As Byte = Nothing
         Dim o() As Byte = Nothing
         i = rnd_bytes()

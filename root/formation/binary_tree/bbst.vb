@@ -110,8 +110,7 @@ Public Class bbst(Of T)
 #If Not Performance Then
                 assert(p.has_left_child())
 #End If
-                Dim l As node = Nothing
-                l = p.left_child()
+                Dim l As node = p.left_child()
                 If l.balance_factor() = -1 Then
                     left_rotate(l)
                 End If
@@ -121,8 +120,7 @@ Public Class bbst(Of T)
 #If Not Performance Then
                 assert(p.has_right_child())
 #End If
-                Dim r As node = Nothing
-                r = p.right_child()
+                Dim r As node = p.right_child()
                 If r.balance_factor() = 1 Then
                     right_rotate(r)
                 End If

@@ -12,8 +12,7 @@ Imports osi.root.utt.attributes
 Public NotInheritable Class bytes_serializer_container_test
     <test>
     Private Shared Sub from_vector()
-        Dim v As vector(Of String) = Nothing
-        v = vector.emplace_of("abc", "bcd", "def")
+        Dim v As vector(Of String) = vector.emplace_of("abc", "bcd", "def")
         Dim r As vector(Of Byte()) = Nothing
         assertion.is_true(bytes_serializer.from_container(Of String)().of(v).to(r))
         assertion.equal(v.size(), r.size())
@@ -27,8 +26,7 @@ Public NotInheritable Class bytes_serializer_container_test
 
     <test>
     Private Shared Sub from_vector_vector()
-        Dim v As vector(Of vector(Of String)) = Nothing
-        v = vector.emplace_of(vector.emplace_of("abc", "bcd"), vector.emplace_of("cde", "def", "efg"))
+        Dim v As vector(Of vector(Of String)) = vector.emplace_of(vector.emplace_of("abc", "bcd"), vector.emplace_of("cde", "def", "efg"))
         Dim r As vector(Of Byte()) = Nothing
         assertion.is_true(bytes_serializer.from_container(Of vector(Of String))().of(v).to(r))
         assertion.equal(v.size(), r.size())
@@ -42,8 +40,7 @@ Public NotInheritable Class bytes_serializer_container_test
 
     <test>
     Private Shared Sub from_map()
-        Dim m As map(Of String, Int32) = Nothing
-        m = map.emplace_of(pair.emplace_of("abc", 1), pair.emplace_of("bcd", 2), pair.emplace_of("cde", 3))
+        Dim m As map(Of String, Int32) = map.emplace_of(pair.emplace_of("abc", 1), pair.emplace_of("bcd", 2), pair.emplace_of("cde", 3))
         Dim r As vector(Of Byte()) = Nothing
         assertion.is_true(bytes_serializer.from_container(Of first_const_pair(Of String, Int32))().of(m).to(r))
         assertion.equal(m.size(), r.size())
@@ -57,8 +54,7 @@ Public NotInheritable Class bytes_serializer_container_test
 
     <test>
     Private Shared Sub from_map_map()
-        Dim m As map(Of String, map(Of String, Int32)) = Nothing
-        m = map.emplace_of(pair.emplace_of("a", map.emplace_of(pair.emplace_of("ab", 1), pair.emplace_of("bc", 2))),
+        Dim m As map(Of String, map(Of String, Int32)) = map.emplace_of(pair.emplace_of("a", map.emplace_of(pair.emplace_of("ab", 1), pair.emplace_of("bc", 2))),
                            pair.emplace_of("b", map.emplace_of(pair.emplace_of("cd", 3), pair.emplace_of("de", 4))),
                            pair.emplace_of("c", map.emplace_of(pair.emplace_of("ef", 5), pair.emplace_of("fg", 5))))
         Dim r As vector(Of Byte()) = Nothing
@@ -76,8 +72,7 @@ Public NotInheritable Class bytes_serializer_container_test
 
     <test>
     Private Shared Sub from_map_vector()
-        Dim m As map(Of String, vector(Of Int32)) = Nothing
-        m = map.emplace_of(
+        Dim m As map(Of String, vector(Of Int32)) = map.emplace_of(
                 pair.emplace_of("abc", vector.of(1, 2, 3)),
                 pair.emplace_of("bcd", vector.of(2, 3, 4, 5)),
                 pair.emplace_of("cde", vector.of(3, 3)))

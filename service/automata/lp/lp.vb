@@ -86,8 +86,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
             If Not allocate_status_name_id(status_name_id, (+it).first, id) Then
                 Return False
             End If
-            Dim it2 As map(Of String, pair(Of String, String)).iterator = Nothing
-            it2 = (+it).second.begin()
+            Dim it2 As map(Of String, pair(Of String, String)).iterator = (+it).second.begin()
             While it2 <> (+it).second.end()
                 If Not allocate_status_name_id(status_name_id, (+it2).second.first, id) Then
                     Return False
@@ -104,8 +103,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                                                ByRef o As T) As Boolean
         assert(Not m Is Nothing)
         assert(Not name.null_or_empty())
-        Dim it As map(Of String, T).iterator = Nothing
-        it = m.find(name)
+        Dim it As map(Of String, T).iterator = m.find(name)
         If it = m.end() Then
             Return False
         Else
@@ -166,15 +164,13 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
                                    ByVal method_type As Type) As Boolean
         assert(Not type_name_id Is Nothing)
         assert(Not status_name_id Is Nothing)
-        Dim it As map(Of String, map(Of String, pair(Of String, String))).iterator = Nothing
-        it = i.statuses.begin()
+        Dim it As map(Of String, map(Of String, pair(Of String, String))).iterator = i.statuses.begin()
         While it <> i.statuses.end()
             Dim f As UInt32 = 0
             If Not retrieve_status_id(status_name_id, (+it).first, f) Then
                 Return False
             End If
-            Dim it2 As map(Of String, pair(Of String, String)).iterator = Nothing
-            it2 = (+it).second.begin()
+            Dim it2 As map(Of String, pair(Of String, String)).iterator = (+it).second.begin()
             While it2 <> (+it).second.end()
                 Dim v As Int32 = 0
                 Dim t As UInt32 = 0
@@ -224,8 +220,7 @@ Partial Public Class lp(Of MAX_TYPE As _int64, RESULT_T)
             Return Nothing
         Else
             assert(Not c Is Nothing)
-            Dim r As T = Nothing
-            r = c()
+            Dim r As T = c()
             assert(Not r Is Nothing)
             If r.parse(inputs) Then
                 Return r

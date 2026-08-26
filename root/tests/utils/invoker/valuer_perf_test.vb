@@ -66,14 +66,11 @@ Public Class valuer_perf_test
         End Sub
 
         Public Overrides Function run() As Boolean
-            Dim bb As Boolean = False
-            bb = i.b
+            Dim bb As Boolean = i.b
             i.b = False
-            Dim ii As Int32 = 0
-            ii = i.i
+            Dim ii As Int32 = i.i
             i.i = 100
-            Dim ss As String = Nothing
-            ss = i.s
+            Dim ss As String = i.s
             i.s = "abc"
             Return True
         End Function

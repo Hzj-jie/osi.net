@@ -64,8 +64,7 @@ Public Module _console_key_info_mapping
 
     <Extension()> Public Function keycode(ByVal c As Char,
                                           ByRef o As vector(Of keyinfo)) As Boolean
-        Dim ci As Int32 = 0
-        ci = Convert.ToInt32(c)
+        Dim ci As Int32 = Convert.ToInt32(c)
         If ci >= console_key_min_char_int AndAlso
            ci <= console_key_max_char_int Then
             o = m(ci)

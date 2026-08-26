@@ -26,8 +26,7 @@ Public NotInheritable Class type_string_serializer_test
 
     <test>
     Private Shared Sub unimplemented_test()
-        Dim implemented As Boolean = False
-        implemented = True
+        Dim implemented As Boolean = True
         assertion.is_false(type_string_serializer.r.from_str(GetType(test_interface), implemented, "abc", Nothing))
         assertion.is_false(implemented)
     End Sub

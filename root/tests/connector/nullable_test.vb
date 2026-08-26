@@ -20,8 +20,7 @@ Public Class nullable_test
         assertion.is_true(i Is Nothing)
         assertion.is_false(i.HasValue())
         Try
-            Dim tmp As Int32 = 0
-            tmp = i
+            Dim tmp As Int32 = i
             assertion.is_true(False)
         Catch
         End Try

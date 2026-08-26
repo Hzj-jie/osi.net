@@ -170,10 +170,8 @@ Public Module spinwait
 
 #If USE_MEASURE_YIELD_WAIT Then
     Private Function measure_yield_wait(ByVal e As WaitHandle, ByVal wait_ms As Int32) As Boolean
-        Dim left As Int32 = 0
-        left = Math.Ceiling(wait_ms * measure_sleep_percentage)
-        Dim till As Int64 = 0
-        till = Now().milliseconds() + left
+        Dim left As Int32 = Math.Ceiling(wait_ms * measure_sleep_percentage)
+        Dim till As Int64 = Now().milliseconds() + left
         While left > 0
             not_force_yield()
             If e.WaitOne(left) Then

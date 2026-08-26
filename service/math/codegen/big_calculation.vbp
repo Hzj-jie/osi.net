@@ -12,8 +12,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
                 d.add(that.d)
             Else
                 If d.less(that.d) Then
-                    Dim t As ##IMPL_CLASS## = Nothing
-                    t = New ##IMPL_CLASS##(that.d)
+                    Dim t As New ##IMPL_CLASS##(that.d)
                     t.assert_sub(d)
                     assert(##IMPL_CLASS##.swap(d, t))
                     set_signal(that.signal())
@@ -31,8 +30,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     End Function
 
     Public Function [sub](ByVal that As ##CLASS_NAME##) As ##CLASS_NAME##
-        Dim t As ##CLASS_NAME## = Nothing
-        t = share(that)
+        Dim t As ##CLASS_NAME## = share(that)
         If t Is Nothing Then
             Return Me
         Else

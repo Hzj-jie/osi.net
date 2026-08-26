@@ -63,8 +63,7 @@ Public NotInheritable Class stack(Of T)
     End Function
 
     Public Function CompareTo(ByVal other As stack(Of T)) As Int32 Implements IComparable(Of stack(Of T)).CompareTo
-        Dim cmp As Int32 = 0
-        cmp = object_compare(Me, other)
+        Dim cmp As Int32 = object_compare(Me, other)
         If cmp <> 0 Then
             Return cmp
         End If

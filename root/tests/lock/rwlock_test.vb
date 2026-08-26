@@ -30,8 +30,7 @@ Public NotInheritable Class rwlock_test
         End Sub
 
         Public Sub read()
-            Dim c As Int32 = 0
-            c = rac.increment()
+            Dim c As Int32 = rac.increment()
             assert(c > 0)
             If c > max_rac Then
                 max_rac = c
@@ -43,8 +42,7 @@ Public NotInheritable Class rwlock_test
         End Sub
 
         Public Sub write()
-            Dim c As Int32 = 0
-            c = wac.increment()
+            Dim c As Int32 = wac.increment()
             assert(c > 0)
             If c > max_wac Then
                 max_wac = c

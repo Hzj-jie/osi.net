@@ -60,11 +60,9 @@ Friend Class qless_case2
         managed_thread_pool.push(Sub() pop_thread(finished))
         While Not finished.in_use()
             Const max_checked As Int32 = 2000
-            Dim s As Int64 = 0
-            s = q.size()
+            Dim s As Int64 = q.size()
             s = If(s > max_checked, max_checked, s)
-            Dim m As [set](Of Int64) = Nothing
-            m = New [set](Of Int64)()
+            Dim m As New [set](Of Int64)()
             While s > 0
                 Dim v As Int64 = 0
                 If q.pop(v) Then

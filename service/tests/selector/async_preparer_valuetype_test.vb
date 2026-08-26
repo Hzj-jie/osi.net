@@ -12,8 +12,7 @@ Public Class async_preparer_valuetype_test
 
     Public Overrides Function run() As Boolean
         Const value As Int32 = 100
-        Dim p As async_preparer(Of Int32) = Nothing
-        p = New async_preparer(Of Int32)(Function(v As ref(Of Int32)) As event_comb
+        Dim p As async_preparer(Of Int32) = New async_preparer(Of Int32)(Function(v As ref(Of Int32)) As event_comb
                                              Return sync_async(Sub()
                                                                    eva(v, value)
                                                                End Sub)

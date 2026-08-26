@@ -45,8 +45,7 @@ Public Class cache_case
     End Sub
 
     Private Sub [get]()
-        Dim k As String = Nothing
-        k = rnd_key()
+        Dim k As String = rnd_key()
         If validate() Then
             Dim v() As Byte = Nothing
             If s1.get(k, v) Then
@@ -62,8 +61,7 @@ Public Class cache_case
     End Sub
 
     Private Sub size()
-        Dim v As Int64 = 0
-        v = s1.size()
+        Dim v As Int64 = s1.size()
         If validate() Then
             assertion.equal(v, s2.size())
         End If
@@ -77,8 +75,7 @@ Public Class cache_case
     End Sub
 
     Private Sub [erase]()
-        Dim k As String = Nothing
-        k = rnd_key()
+        Dim k As String = rnd_key()
         If validate() Then
             assertion.equal(s1.erase(k), s2.erase(k))
         Else
@@ -87,8 +84,7 @@ Public Class cache_case
     End Sub
 
     Private Sub have()
-        Dim k As String = Nothing
-        k = rnd_key()
+        Dim k As String = rnd_key()
         If validate() Then
             assertion.equal(s1.have(k), s2.have(k))
         Else
@@ -111,8 +107,7 @@ Public Class cache_case
     'return true if the content of value is already the same as expected
     Private Shared Function key_value(ByVal key As String, ByRef value() As Byte) As Boolean
         Const mult As Int32 = 4
-        Dim l As Int32 = 0
-        l = enc.GetByteCount(key)
+        Dim l As Int32 = enc.GetByteCount(key)
         Dim r As Boolean = False
         If value Is Nothing OrElse array_size(value) <> mult * l Then
             r = False
@@ -125,8 +120,7 @@ Public Class cache_case
         assert(array_size(b) = l)
         For i As Int32 = 0 To mult - 1
             For j As Int32 = 0 To l - 1
-                Dim ind As Int32 = 0
-                ind = i * l + j
+                Dim ind As Int32 = i * l + j
                 If value(ind) <> b(j) Then
                     r = False
                     value(ind) = b(j)

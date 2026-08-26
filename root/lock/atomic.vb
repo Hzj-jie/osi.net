@@ -219,8 +219,7 @@ Public NotInheritable Class atomic
         If Not i Is Nothing Then
             Return False
         End If
-        Dim v As T = Nothing
-        v = ctor()
+        Dim v As T = ctor()
         Thread.MemoryBarrier()
         If Interlocked.CompareExchange(i, v, Nothing) Is Nothing Then
             Return True

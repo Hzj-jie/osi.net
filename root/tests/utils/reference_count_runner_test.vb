@@ -24,8 +24,7 @@ Public NotInheritable Class reference_count_runner_test
 
         Public Overrides Function run() As Boolean
             Const size As Int32 = 1000
-            Dim r As reference_count_runner(Of _true, _true) = Nothing
-            r = New reference_count_runner(Of _true, _true)()
+            Dim r As New reference_count_runner(Of _true, _true)()
             Dim started As Int32 = 0
             Dim stopped As Int32 = 0
             Dim i As Int32 = 0
@@ -81,8 +80,7 @@ Public NotInheritable Class reference_count_runner_test
 #If NET8_0_OR_GREATER Then
             create_and_bind()
 #Else
-            Dim r As RC = Nothing
-            r = New RC()
+            Dim r As New RC()
             assertion.is_true(r.bind())
             assertion.is_true(RC.v)
             r = Nothing

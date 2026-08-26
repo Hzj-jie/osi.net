@@ -138,8 +138,7 @@ Public NotInheritable Class gettype_perf
         End Sub
 
         Public Overrides Function run() As Boolean
-            Dim t As Type = Nothing
-            t = v.GetType()
+            Dim t As Type = v.GetType()
             Return True
         End Function
     End Class
@@ -155,8 +154,7 @@ Public NotInheritable Class gettype_perf
         End Sub
 
         Public Overrides Function run() As Boolean
-            Dim x As Type = Nothing
-            x = i
+            Dim x As Type = i
             Return True
         End Function
     End Class
@@ -174,8 +172,7 @@ Public NotInheritable Class gettype_perf
         End Class
 
         Public Overrides Function run() As Boolean
-            Dim x As Type = Nothing
-            x = cache.type
+            Dim x As Type = cache.type
             Return True
         End Function
     End Class

@@ -13,12 +13,10 @@ Public Class type_attribute_test
     End Class
 
     Private Shared Function run_case(Of T)() As Boolean
-        Dim x As C1(Of T) = Nothing
-        x = New C1(Of T)()
+        Dim x As New C1(Of T)()
         assertion.is_true(type_attribute.has(Of C1(Of T))())
         assertion.equal(type_attribute.of(Of C1(Of T)).get(Of String)(), GetType(T).FullName())
-        Dim y As Object = Nothing
-        y = x
+        Dim y As Object = x
         assertion.is_true(type_attribute.has(y))
         assertion.equal(type_attribute.of(y).get(Of String)(), GetType(T).FullName())
         Return True

@@ -17,8 +17,7 @@ Public Module _hasharray_ext
         If this Is Nothing OrElse that Is Nothing Then
             Return False
         End If
-        Dim it As hasharray(Of T, UNIQUE).iterator = Nothing
-        it = that.begin()
+        Dim it As hasharray(Of T, UNIQUE).iterator = that.begin()
         While it <> that.end()
             assert(f(+it).first <> this.end())
             it += 1

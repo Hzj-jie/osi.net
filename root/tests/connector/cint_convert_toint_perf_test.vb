@@ -31,8 +31,7 @@ Public NotInheritable Class cint_convert_toint_perf_test
     End Function
 
     Private Shared Sub cint_run()
-        Dim i As UInt32 = 0
-        i = rnd_uint(0, max_int32)
+        Dim i As UInt32 = rnd_uint(0, max_int32)
         Dim k As Int32 = 0
         For j As UInt64 = 0 To CULng(size - 1)
             k = CInt(i)
@@ -40,8 +39,7 @@ Public NotInheritable Class cint_convert_toint_perf_test
     End Sub
 
     Private Shared Sub convert_toint_run()
-        Dim i As UInt32 = 0
-        i = rnd_uint(0, max_int32)
+        Dim i As UInt32 = rnd_uint(0, max_int32)
         Dim k As Int32 = 0
         For j As UInt64 = 0 To CULng(size - 1)
             k = Convert.ToInt32(i)
@@ -49,8 +47,7 @@ Public NotInheritable Class cint_convert_toint_perf_test
     End Sub
 
     Private Shared Sub implicit_convert_run()
-        Dim i As UInt32 = 0
-        i = rnd_uint(0, max_int32)
+        Dim i As UInt32 = rnd_uint(0, max_int32)
         Dim k As Int32 = 0
         For j As UInt64 = 0 To CULng(size - 1)
             implicit_conversions.cint_convert_toint_perf_test_implicit_convert_run(k, i)
@@ -58,8 +55,7 @@ Public NotInheritable Class cint_convert_toint_perf_test
     End Sub
 
     Private Shared Sub uint_int_run()
-        Dim i As UInt32 = 0
-        i = rnd_uint(0, max_int32)
+        Dim i As UInt32 = rnd_uint(0, max_int32)
         Dim k As Int32 = 0
         For j As UInt64 = 0 To CULng(size - 1)
             k = uint32_int32(i)

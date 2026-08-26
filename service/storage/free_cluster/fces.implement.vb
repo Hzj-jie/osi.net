@@ -39,8 +39,7 @@ Partial Public NotInheritable Class fces
     Public Function capacity(ByVal result As ref(Of Int64)) As event_comb _
                             Implements ikeyvalue2(Of store_t.iterator).capacity
         Return sync_async(Function() As Int64
-                              Dim r As UInt64 = 0
-                              r = content.capacity()
+                              Dim r As UInt64 = content.capacity()
                               If r > max_int64 Then
                                   Return max_int64
                               Else
@@ -118,10 +117,8 @@ Partial Public NotInheritable Class fces
     Public Function list(ByVal result As ref(Of vector(Of Byte()))) As event_comb _
                         Implements ikeyvalue2(Of store_t.iterator).list
         Return sync_async(Function() As vector(Of Byte())
-                              Dim r As vector(Of Byte()) = Nothing
-                              r = New vector(Of Byte())()
-                              Dim it As store_t.iterator = Nothing
-                              it = m.begin()
+                              Dim r As New vector(Of Byte())()
+                              Dim it As store_t.iterator = m.begin()
                               While it <> m.end()
                                   r.push_back(+((+it).first))
                                   it += 1

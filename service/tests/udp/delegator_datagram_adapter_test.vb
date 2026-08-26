@@ -58,8 +58,7 @@ Public Class delegator_datagram_adapter_test
     End Function
 
     Protected Overrides Function create_receive_flow() As datagram_flow_adapter
-        Dim c As UdpClient = Nothing
-        c = New UdpClient(r.Port())
+        Dim c As New UdpClient(r.Port())
         c.set_receive_buffer_size(8192 * 512)
         Return New datagram_flow_adapter(New delegator_datagram_adapter(c,
                                                                         If(fixed_source, {l}, Nothing),
@@ -68,8 +67,7 @@ Public Class delegator_datagram_adapter_test
     End Function
 
     Protected Overrides Function create_send_flow() As datagram_flow_adapter
-        Dim c As UdpClient = Nothing
-        c = New UdpClient(l.Port())
+        Dim c As New UdpClient(l.Port())
         c.set_send_buffer_size(8192 * 512)
         Return New datagram_flow_adapter(New delegator_datagram_adapter(c,
                                                                      If(fixed_source, {r}, Nothing),

@@ -29,8 +29,7 @@ Friend Class big_int_right_shift_divide_case
             mr.add(x)
         Next
         For i As Int32 = 0 To round - 1
-            Dim t As Int32 = 0
-            t = rnd_int(1, bit_count_in_byte * sizeof_int32)
+            Dim t As Int32 = rnd_int(1, bit_count_in_byte * sizeof_int32)
             sr.right_shift(t)
             mr.divide(uint32_1 << t)
             assertion.is_true(sr.equal(mr))

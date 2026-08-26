@@ -49,13 +49,11 @@ Public NotInheritable Class remote_iosys_test
                                               ByRef last As iosys(Of iosys_test_case)) As Boolean
             first = New iosys(Of iosys_test_case)(uint32_0)
             last = New iosys(Of iosys_test_case)(uint32_0)
-            Dim rr As rreceiver(Of iosys_test_case) = Nothing
-            rr = New rreceiver(Of iosys_test_case)(ra_name, q)
+            Dim rr As New rreceiver(Of iosys_test_case)(ra_name, q)
             If Not assertion.is_true(first.notice(rr)) Then
                 Return False
             End If
-            Dim cra As command_ragent(Of iosys_test_case) = Nothing
-            cra = New command_ragent(Of iosys_test_case)()
+            Dim cra As New command_ragent(Of iosys_test_case)()
             If Not assertion.is_true(device_pool_manager.register(
                                ra_name,
                                singleton_device_pool.[New](cra.make_device()))) OrElse

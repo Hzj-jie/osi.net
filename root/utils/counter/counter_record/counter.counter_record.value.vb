@@ -55,8 +55,7 @@ Namespace counter
             assert(Not last_times_ticks Is Nothing AndAlso last_times_ticks.Length() > 0,
                    "last_times_ticks is not initialized, the counter may not enabled last_rate.")
             Dim c As Int64 = 0
-            Dim oldest As Int64 = 0
-            oldest = max_int64
+            Dim oldest As Int64 = max_int64
             For i As Int32 = 0 To CInt(min(calltimes, last_times_ticks.Length())) - 1
                 c = last_times_ticks(i)
                 If c > 0 Then

@@ -10,15 +10,13 @@ Imports osi.service.storage.constants.remote
 
 Partial Public Class istrkeyvt_questioner
     Private Function request(ByVal action As SByte) As command
-        Dim r As command = Nothing
-        r = New command()
+        Dim r As New command()
         r.attach(action)
         Return r
     End Function
 
     Private Function request(ByVal action As SByte, ByVal key As String) As command
-        Dim r As command = Nothing
-        r = request(action)
+        Dim r As command = request(action)
         r.attach(parameter.key, key)
         Return r
     End Function
@@ -27,8 +25,7 @@ Partial Public Class istrkeyvt_questioner
                              ByVal key As String,
                              ByVal buff() As Byte,
                              ByVal ts As Int64) As command
-        Dim r As command = Nothing
-        r = request(action, key)
+        Dim r As command = request(action, key)
         r.attach(parameter.buff, buff)
         If ts >= 0 Then
             r.attach(parameter.timestamp, ts)

@@ -78,11 +78,9 @@ Public NotInheritable Class gc_behavior_test
 
     Public Overrides Function run() As Boolean
         Const r As UInt32 = 10000
-        Dim a As atomic_int = Nothing
-        a = New atomic_int()
+        Dim a As New atomic_int()
         For i As UInt32 = 0 To r - uint32_1
-            Dim x As tc = Nothing
-            x = New tc(a)
+            Dim x As New tc(a)
             x = Nothing
         Next
         garbage_collector.repeat_collect()

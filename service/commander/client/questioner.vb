@@ -31,8 +31,7 @@ Public NotInheritable Class questioner
     End Sub
 
     Public Shared Function create(ByVal v As var, ByRef o As questioner) As Boolean
-        Dim timeout_ms As Int64 = 0
-        timeout_ms = v("timeout-ms").to(Of Int64)(npos)
+        Dim timeout_ms As Int64 = v("timeout-ms").to(Of Int64)(npos)
         Dim name As String = Nothing
         If v.value("name", name) Then
             o = New questioner(name, timeout_ms)

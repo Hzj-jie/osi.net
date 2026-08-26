@@ -65,8 +65,7 @@ Public MustInherit Class duallock_perf_test
                 dl.writer_release()
             Else
                 dl.reader_wait()
-                Dim y As Int32 = 0
-                y = x
+                Dim y As Int32 = x
                 dl.reader_release()
             End If
             Return True

@@ -37,8 +37,7 @@ Partial Public NotInheritable Class free_cluster
 
     Private Function cluster(ByVal id As Int64, ByRef c As cluster, ByVal m As clusters_t) As Boolean
         assert(Not m Is Nothing)
-        Dim it As clusters_t.iterator = Nothing
-        it = m.find(id)
+        Dim it As clusters_t.iterator = m.find(id)
         If it = m.end() Then
             Return False
         Else

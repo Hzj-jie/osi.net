@@ -42,8 +42,7 @@ Public NotInheritable Class dns_cache_test
 
     Public Overrides Function run() As Boolean
         For i As UInt32 = 0 To connectivity.golden_hosts.size() - uint32_1
-            Dim host As String = Nothing
-            host = connectivity.golden_hosts(i)
+            Dim host As String = connectivity.golden_hosts(i)
             Dim he As ref(Of IPHostEntry) = Nothing
             he.renew()
             If Not async_sync(dns_cache.resolve(host, he)) Then
@@ -52,13 +51,11 @@ Public NotInheritable Class dns_cache_test
 
             assertion.is_true(check_cache(Function(c) dns_cache.query_host_to_ip_cache(host, c), +he))
             For j As Int32 = 0 To array_size_i((+he).Aliases()) - 1
-                Dim a As String = Nothing
-                a = (+he).Aliases()(j)
+                Dim a As String = (+he).Aliases()(j)
                 assertion.is_true(check_cache(Function(c) dns_cache.query_host_to_ip_cache(a, c), +he))
             Next
             For j As Int32 = 0 To array_size_i((+he).AddressList()) - 1
-                Dim ip As String = Nothing
-                ip = Convert.ToString((+he).AddressList()(j))
+                Dim ip As String = Convert.ToString((+he).AddressList()(j))
                 assertion.is_true(check_cache(Function(c) dns_cache.query_ip_to_host_cache(ip, c), +he))
             Next
         Next

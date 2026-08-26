@@ -120,8 +120,7 @@ Public Class http_server_test
             started = True
 
             Dim p As UInt32 = 0
-            Dim s As server = Nothing
-            s = New server(New server.configuration() With {.ls = New link_status(seconds_to_milliseconds(15))})
+            Dim s As New server(New server.configuration() With {.ls = New link_status(seconds_to_milliseconds(15))})
             AddHandler http_listener_context_handle.[New](s).handle_context, AddressOf handle_context
             For j As Int32 = 0 To repeat - 1
                 If assertion.is_true(s.add_port(port)) AndAlso
@@ -153,8 +152,7 @@ Public Class http_server_test
 
         Private Function success_rate(ByVal i As atomic_int) As Double
             assert(Not i Is Nothing)
-            Dim r As Double = 0
-            r = (+i) / parallel / iteration / repeat
+            Dim r As Double = (+i) / parallel / iteration / repeat
             Return r
         End Function
 

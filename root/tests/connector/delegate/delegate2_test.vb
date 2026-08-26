@@ -17,8 +17,7 @@ End Module
 Public NotInheritable Class delegate2_test
     <test>
     Private Shared Sub module_method_identity()
-        Dim v As Action = Nothing
-        v = AddressOf _delegate2_test.action
+        Dim v As Action = AddressOf _delegate2_test.action
         assertion.equal(v.method_identity(), "osi.tests.root.connector._delegate2_test:action")
 
         Dim o As invoker(Of Action) = Nothing

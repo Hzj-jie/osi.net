@@ -12,16 +12,14 @@ Namespace onebound
     Public NotInheritable Class trainer_test
         <test>
         Private Shared Sub case1()
-            Dim m As model = Nothing
-            m = New trainer().accumulate("a", "b").dump()
+            Dim m As model = New trainer().accumulate("a", "b").dump()
             assertion.equal(m.affinity("a", "b"), 1.0)
             assertion.equal(m.affinity("b", "a"), 0.0)
         End Sub
 
         <test>
         Private Shared Sub case2()
-            Dim m As model = Nothing
-            m = New trainer().
+            Dim m As model = New trainer().
                         accumulate("a", "b").
                         accumulate("a", "c").
                         accumulate("b", "c").

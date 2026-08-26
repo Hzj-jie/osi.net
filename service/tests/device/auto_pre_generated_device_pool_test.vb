@@ -12,8 +12,7 @@ Public Class auto_pre_generated_device_pool_test
 
     Public Overrides Function run() As Boolean
         Const max_count As UInt32 = 128
-        Dim p As auto_pre_generated_device_pool(Of mock_dev(Of auto_pre_generated_device_pool_test)) = Nothing
-        p = auto_pre_generated_device_pool.[New](mock_device_creator(Of auto_pre_generated_device_pool_test).exporter(),
+        Dim p As auto_pre_generated_device_pool(Of mock_dev(Of auto_pre_generated_device_pool_test)) = auto_pre_generated_device_pool.[New](mock_device_creator(Of auto_pre_generated_device_pool_test).exporter(),
                                                  max_count)
         assertion.is_true(timeslice_sleep_wait_when(Function() p.free_count() < max_count, seconds_to_milliseconds(10)))
         Dim ds() As idevice(Of mock_dev(Of auto_pre_generated_device_pool_test)) = Nothing
@@ -41,8 +40,7 @@ Public Class auto_pre_generated_device_pool_test
         Next
         assertion.is_true(timeslice_sleep_wait_when(Function() p.free_count() < max_count, seconds_to_milliseconds(10)))
 
-        Dim before_closed As Int32 = 0
-        before_closed = mock_dev(Of auto_pre_generated_device_pool_test).closed_instance_count()
+        Dim before_closed As Int32 = mock_dev(Of auto_pre_generated_device_pool_test).closed_instance_count()
         p.close()
         assertion.is_true(timeslice_sleep_wait_until(Function() p.stopped(), seconds_to_milliseconds(1)))
         assertion.equal(mock_dev(Of auto_pre_generated_device_pool_test).closed_instance_count(),

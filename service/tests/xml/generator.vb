@@ -47,8 +47,7 @@ Friend Module _generator
         For i As Int32 = 0 To rnd_int(0, 5) - 1
             attrs.emplace_back(pair.emplace_of(rnd.key(), rnd.value()))
         Next
-        Dim r As String = Nothing
-        r = create_start_tag(tag, self_close, attrs)
+        Dim r As String = create_start_tag(tag, self_close, attrs)
         tag = HttpUtility.HtmlEncode(tag)
         For i As Int32 = 0 To attrs.size() - 1
             attrs(i).first = HttpUtility.HtmlEncode(attrs(i).first)
@@ -67,8 +66,7 @@ Friend Module _generator
 
     Public Function rnd_end_tag(ByRef tag As String) As String
         tag = rnd.tag()
-        Dim r As String = Nothing
-        r = create_end_tag(tag)
+        Dim r As String = create_end_tag(tag)
         tag = HttpUtility.HtmlEncode(tag)
         Return r
     End Function

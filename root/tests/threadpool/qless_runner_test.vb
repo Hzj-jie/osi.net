@@ -26,17 +26,13 @@ Public Class qless_runner_test
 
     Private Shared Function single_thread_case() As Boolean
         Const size As Int32 = 1024 * 1024
-        Dim b As bit_array_thread_safe = Nothing
-        b = New bit_array_thread_safe(size)
-        Dim c As atomic_int32 = Nothing
-        c = New atomic_int32()
-        Dim r As qless_runner = Nothing
-        r = New qless_runner()
+        Dim b As New bit_array_thread_safe(size)
+        Dim c As New atomic_int32()
+        Dim r As New qless_runner()
         assertion.is_false(r.running_in_current_thread())
         assertion.is_false(qless_runner.current_thread_is_managed())
         For i As Int32 = 0 To size - 1
-            Dim j As UInt32 = 0
-            j = CUInt(i)
+            Dim j As UInt32 = CUInt(i)
             r.push(Sub()
                        assertion.is_true(r.running_in_current_thread())
                        assertion.is_true(qless_runner.current_thread_is_managed())
@@ -60,21 +56,15 @@ Public Class qless_runner_test
 
     Private Shared Function execute_case() As Boolean
         Const size As Int32 = 128 * 1024
-        Dim b As bit_array_thread_safe = Nothing
-        b = New bit_array_thread_safe(size)
-        Dim c As atomic_int32 = Nothing
-        c = New atomic_int32()
-        Dim executed As atomic_int32 = Nothing
-        executed = New atomic_int32()
-        Dim mre As ManualResetEvent = Nothing
-        mre = New ManualResetEvent(False)
-        Dim r As qless_runner = Nothing
-        r = New qless_runner()
+        Dim b As New bit_array_thread_safe(size)
+        Dim c As New atomic_int32()
+        Dim executed As New atomic_int32()
+        Dim mre As New ManualResetEvent(False)
+        Dim r As New qless_runner()
         assertion.is_false(r.running_in_current_thread())
         assertion.is_false(qless_runner.current_thread_is_managed())
         For i As Int32 = 0 To size - 1
-            Dim j As UInt32 = 0
-            j = CUInt(i)
+            Dim j As UInt32 = CUInt(i)
             r.push(Sub()
                        assert(mre.wait())
                        If Not r.running_in_current_thread() Then

@@ -136,8 +136,7 @@ Partial Public NotInheritable Class big_udec
         If Not bytes_uint32(b, l, i) Then
             Return False
         End If
-        Dim p As piece = Nothing
-        p = New piece(b)
+        Dim p As New piece(b)
         If Not p.consume(i, p) Then
             Return False
         End If

@@ -6,13 +6,10 @@
             Return CloneT()
         End If
   
-        Dim r As ##FILENAME##(Of KEY_T, VALUE_T) = Nothing
-        r = New ##FILENAME##(Of KEY_T, VALUE_T)()
-        Dim it As ##FILENAME##(Of KEY_T, VALUE_T).iterator = Nothing
-        it = begin()
+        Dim r As New ##FILENAME##(Of KEY_T, VALUE_T)()
+        Dim it As ##FILENAME##(Of KEY_T, VALUE_T).iterator = begin()
         While it <> [end]()
-            Dim tit As ##FILENAME##(Of KEY_T, VALUE_T).iterator = Nothing
-            tit = that.find((+it).first)
+            Dim tit As ##FILENAME##(Of KEY_T, VALUE_T).iterator = that.find((+it).first)
             If tit = that.end() OrElse Not equal((+it).second, (+tit).second) Then
                 assert(r.insert((+it).first, (+it).second).second)
             End If

@@ -32,8 +32,7 @@ Public Class redundance_distributor_test
     End Sub
 
     Private Function register_istrkeyvt(ByVal n As String, ByVal broken As Boolean) As Boolean
-        Dim i As istrkeyvt = Nothing
-        i = memory.ctor()
+        Dim i As istrkeyvt = memory.ctor()
         Return assertion.is_not_null(i) AndAlso
                assertion.is_true(manager.register(n, If(broken, New broken_istrkeyvt(i), i)))
     End Function

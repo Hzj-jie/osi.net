@@ -8,8 +8,7 @@ Public Class block_flow_adapter_test
     Inherits complete_io_test(Of block_flow_adapter)
 
     Protected Overrides Function create_receive_flow(ByVal buff() As Byte) As block_flow_adapter
-        Dim b As mock_block = Nothing
-        b = New mock_block()
+        Dim b As New mock_block()
         b.push_receive_pump(buff)
         Return New block_flow_adapter(b)
     End Function

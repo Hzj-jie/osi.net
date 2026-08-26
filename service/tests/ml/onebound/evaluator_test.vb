@@ -14,8 +14,7 @@ Namespace onebound
     Public NotInheritable Class evaluator_test
         <test>
         Private Shared Sub evaluate()
-            Dim e As evaluator = Nothing
-            e = New evaluator(New trainer().
+            Dim e As evaluator = New evaluator(New trainer().
                                    accumulate("a"c, "n"c).
                                    accumulate("a"c, "p"c).
                                    accumulate("p"c, "p"c).
@@ -28,8 +27,7 @@ Namespace onebound
 
         <test>
         Private Shared Sub evaluate2()
-            Dim e As evaluator = Nothing
-            e = New evaluator(New trainer().
+            Dim e As evaluator = New evaluator(New trainer().
                                    accumulate("a"c, "n"c).
                                    accumulate("a"c, "p"c).
                                    accumulate("p"c, "p"c).
@@ -58,8 +56,7 @@ Namespace onebound
 
         <test>
         Private Shared Sub evaluate3()
-            Dim e As evaluator = Nothing
-            e = New evaluator(New trainer().
+            Dim e As evaluator = New evaluator(New trainer().
                                    accumulate("a"c, "n"c).
                                    accumulate("a"c, "n"c).
                                    accumulate("n"c, "d"c).

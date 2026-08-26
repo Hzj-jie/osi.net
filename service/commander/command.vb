@@ -75,8 +75,7 @@ Partial Public NotInheritable Class command
         If v Is Nothing Then
             Return False
         End If
-        Dim it As map(Of array_ref(Of Byte), Byte()).iterator = Nothing
-        it = ps.begin()
+        Dim it As map(Of array_ref(Of Byte), Byte()).iterator = ps.begin()
         While it <> ps.end()
             v(+((+it).first), (+it).second)
             it += 1
@@ -88,8 +87,7 @@ Partial Public NotInheritable Class command
         If isemptyarray(key) Then
             Return False
         End If
-        Dim it As map(Of array_ref(Of Byte), Byte()).iterator = Nothing
-        it = ps.find(array_ref.of(key))
+        Dim it As map(Of array_ref(Of Byte), Byte()).iterator = ps.find(array_ref.of(key))
         If it = ps.end() Then
             Return False
         End If

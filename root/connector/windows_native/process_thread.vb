@@ -123,8 +123,7 @@ Public Module _process_thread
     <Extension()> Public Function suspend_thread(ByVal t As ProcessThread) As Boolean
         Dim handle As IntPtr = Nothing
         If t.open_thread(ThreadAccess.SUSPEND_RESUME, handle) Then
-            Dim r As Boolean = False
-            r = (SuspendThread(handle) <> max_uint32)
+            Dim r As Boolean = (SuspendThread(handle) <> max_uint32)
             Return handle.close_as_handle() AndAlso r
         End If
         Return False
@@ -133,8 +132,7 @@ Public Module _process_thread
     <Extension()> Public Function resume_thread(ByVal t As ProcessThread) As Boolean
         Dim handle As IntPtr = Nothing
         If t.open_thread(ThreadAccess.SUSPEND_RESUME, handle) Then
-            Dim r As Boolean = False
-            r = (resume_thread(handle) <> max_uint32)
+            Dim r As Boolean = (resume_thread(handle) <> max_uint32)
             Return handle.close_as_handle() AndAlso r
         End If
         Return False

@@ -23,8 +23,7 @@ Partial Public NotInheritable Class big_udec
     End Function
 
     Public Shared Function compare(ByVal this As big_udec, ByVal that As big_udec) As Int32
-        Dim c As Int32 = 0
-        c = object_compare(this, that)
+        Dim c As Int32 = object_compare(this, that)
         If c <> object_compare_undetermined Then
             Return c
         End If

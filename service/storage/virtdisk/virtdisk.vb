@@ -133,8 +133,7 @@ Partial Public Class virtdisk
         If Not valid() Then
             Return 0
         End If
-        Dim r As Int64 = 0
-        r = stream().Length()
+        Dim r As Int64 = stream().Length()
         If r < 0 Then
             Return 0
         Else

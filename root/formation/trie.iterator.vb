@@ -178,8 +178,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
     Partial Public Structure iterator
         Private Function move_next(ByVal i As UInt32) As iterator
             assert(i > uint32_0)
-            Dim n As iterator = Nothing
-            n = Me
+            Dim n As iterator = Me
             While Not n.is_end() AndAlso i > uint32_0
                 n = n.move_next()
                 i -= uint32_1
@@ -189,8 +188,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
 
         Private Function move_prev(ByVal i As UInt32) As iterator
             assert(i > uint32_0)
-            Dim n As iterator = Nothing
-            n = Me
+            Dim n As iterator = Me
             While Not n.is_end() AndAlso i > uint32_0
                 n = n.move_prev()
                 i -= uint32_1
@@ -231,8 +229,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
             If find_father_index(p, this_index) Then
                 If this_index > 0 Then
                     Dim i As Int32
-                    Dim this_node As node = Nothing
-                    this_node = p
+                    Dim this_node As node = p
                     For i = CInt(this_index - uint32_1) To 0 Step -1
                         p = this_node.father.child(i)
                         If max(p) Then

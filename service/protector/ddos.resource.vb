@@ -56,8 +56,7 @@ Public NotInheritable Class ddos
                                   End Function,
                                   Function() As Boolean
                                       q.push(s)
-                                      Dim it As map(Of String, UInt64).iterator = Nothing
-                                      it = m.find(s)
+                                      Dim it As map(Of String, UInt64).iterator = m.find(s)
                                       If it = m.end() Then
                                           it = m.insert(s, 1).first
                                       Else
@@ -110,8 +109,7 @@ Public NotInheritable Class ddos
                                       End If
                                   End Function,
                                   Function() As Boolean
-                                      Dim it As map(Of String, UInt64).iterator = Nothing
-                                      it = m.find(s)
+                                      Dim it As map(Of String, UInt64).iterator = m.find(s)
                                       If it = m.end() Then
                                           it = m.insert(s, 1).first
                                       Else
@@ -135,8 +133,7 @@ Public NotInheritable Class ddos
                                       End If
                                   End Function,
                                   Function() As Boolean
-                                      Dim it As map(Of String, UInt64).iterator = Nothing
-                                      it = m.find(s)
+                                      Dim it As map(Of String, UInt64).iterator = m.find(s)
                                       If it = m.end() Then
                                           Return False
                                       Else

@@ -14,8 +14,7 @@ Public Class npos_uint_test
         assert(y <= max_uint32)
         assert(y >= min_int32)
         If y < 0 Then
-            Dim z As npos_uint = Nothing
-            z = New npos_uint(CInt(y))
+            Dim z As New npos_uint(CInt(y))
             assertion.is_true(x = z)
             assertion.is_false(x <> z)
             assertion.is_true(x <= z)
@@ -25,8 +24,7 @@ Public Class npos_uint_test
 
             assertion.is_true(x.npos())
             assertion.is_true(x.infinite())
-            Dim d As Int32 = 0
-            d = x
+            Dim d As Int32 = x
             assertion.equal(d, npos)
 
             assertion.is_true(x > max_uint32)
@@ -38,8 +36,7 @@ Public Class npos_uint_test
             assertion.is_false(min_int32 < x)
             assertion.is_true(min_int32 <= x)
         Else
-            Dim z As npos_uint = Nothing
-            z = New npos_uint(CUInt(y))
+            Dim z As New npos_uint(CUInt(y))
             assertion.is_true(x = z)
             assertion.is_false(x <> z)
             assertion.is_true(x <= z)
@@ -49,12 +46,10 @@ Public Class npos_uint_test
 
             assertion.is_false(x.npos())
             assertion.is_false(x.infinite())
-            Dim u As UInt32 = 0
-            u = x
+            Dim u As UInt32 = x
             assertion.equal(u, CUInt(y))
             If y <= max_int32 Then
-                Dim d As Int32 = 0
-                d = x
+                Dim d As Int32 = x
                 assertion.equal(d, CInt(y))
             End If
 

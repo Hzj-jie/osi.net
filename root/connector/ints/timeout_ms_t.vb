@@ -822,8 +822,7 @@ End Structure
 Partial Public Structure timeout_ms_t
     Public Function [until]() As Int64
         'value() will call assert(Not npos())
-        Dim n As Int64 = 0
-        n = nowadays.milliseconds()
+        Dim n As Int64 = nowadays.milliseconds()
         If value() > max_int64 - n Then
             Return max_int64
         Else

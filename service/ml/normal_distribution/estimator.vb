@@ -15,19 +15,16 @@ Partial Public NotInheritable Class normal_distribution
 
         Public Shared Function estimate(ByVal ParamArray samples() As tuple(Of Double, UInt32)) As normal_distribution
             assert(samples.array_size() > 1)
-            Dim count As UInt32 = 0
-            count = streams.of(samples).
+            Dim count As UInt32 = streams.of(samples).
                             map(tuple(Of Double, UInt32).second_selector).
                             aggregate(stream(Of UInt32).aggregators.sum)
-            Dim mean As Double = 0
-            mean = streams.of(samples).
+            Dim mean As Double = streams.of(samples).
                            map(Function(ByVal i As tuple(Of Double, UInt32)) As Double
                                    Return i.first() * i.second()
                                End Function).
                            aggregate(stream(Of Double).aggregators.sum) /
                    count
-            Dim variance As Double = 0
-            variance = streams.of(samples).
+            Dim variance As Double = streams.of(samples).
                                map(Function(ByVal i As tuple(Of Double, UInt32)) As Double
                                        Return ((i.first() - mean) ^ 2) * i.second()
                                    End Function).

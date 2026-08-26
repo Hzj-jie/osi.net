@@ -46,13 +46,11 @@ Friend Class qless2_stream_case
 
     Private Function push() As Boolean
         If pushed < max_size Then
-            Dim c As Int32 = 0
-            c = rnd_int(0, 8) + 1
+            Dim c As Int32 = rnd_int(0, 8) + 1
             Dim b() As Byte = Nothing
             ReDim b(c * sizeof_int32 - 1)
             For i As Int32 = 0 To c - 1
-                Dim r As Int32 = 0
-                r = Interlocked.Increment(pushed) - 1
+                Dim r As Int32 = Interlocked.Increment(pushed) - 1
                 If r < max_size Then
                     assert(int32_bytes(r, b, i * sizeof_int32))
                 Else
@@ -89,8 +87,7 @@ Friend Class qless2_stream_case
     Private Sub pop()
         Dim b() As Byte = Nothing
         ReDim b((rnd_int(7, 16) + 1) * sizeof_int32 - 1)
-        Dim p As Int64 = 0
-        p = s.pop(b)
+        Dim p As Int64 = s.pop(b)
         assertion.equal(p Mod sizeof_int32, 0)
         If verify() AndAlso p < array_size(b) AndAlso p > 0 Then
             ReDim Preserve b(p - 1)

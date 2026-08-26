@@ -25,11 +25,9 @@ Public NotInheritable Class resolver_test
 
     <test>
     Private Shared Sub single_thread_case()
-        Dim r As resolver(Of Object) = Nothing
-        r = New resolver(Of Object)()
+        Dim r As New resolver(Of Object)()
 
-        Dim i As Object = Nothing
-        i = New Object()
+        Dim i As New Object()
         r.register(i)
 
         Dim o As Object = Nothing
@@ -54,19 +52,16 @@ Public NotInheritable Class resolver_test
 
     <test>
     Private Shared Sub unregistered_case()
-        Dim r As resolver(Of Object) = Nothing
-        r = New resolver(Of Object)()
+        Dim r As New resolver(Of Object)()
 
         assertion.is_false(r.resolve(Nothing))
     End Sub
 
     <test>
     Private Shared Sub should_cache_result()
-        Dim r As resolver(Of Object) = Nothing
-        r = New resolver(Of Object)()
+        Dim r As New resolver(Of Object)()
 
-        Dim i As Object = Nothing
-        i = New Object()
+        Dim i As New Object()
         Dim resolved As Boolean = False
         r.register(Function() As Object
                        assertion.is_false(resolved)

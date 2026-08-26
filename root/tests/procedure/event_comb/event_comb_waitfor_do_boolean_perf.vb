@@ -18,8 +18,7 @@ Public Class event_comb_waitfor_do_boolean_perf
 
         Public Overrides Function create() As event_comb
             Return New event_comb(Function() As Boolean
-                                      Dim start_ms As Int64 = 0
-                                      start_ms = Now().milliseconds()
+                                      Dim start_ms As Int64 = Now().milliseconds()
                                       Return waitfor(Function() As Boolean
                                                          Return Now().milliseconds() - start_ms >= _
                                                                 seconds_to_milliseconds(10)

@@ -60,8 +60,7 @@ Public NotInheritable Class unique_ptr(Of T As Class)
     End Function
 
     Public Function release() As T
-        Dim r As T = Nothing
-        r = p
+        Dim r As T = p
         p = Nothing
         Return r
     End Function

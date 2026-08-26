@@ -22,11 +22,9 @@ Public NotInheritable Class ordered_sset_perf
         Private Const max As Int32 = max_int16 + 1
 
         Public Overrides Function run() As Boolean
-            Dim s As sset(Of Int32) = Nothing
-            s = New sset(Of Int32)()
+            Dim s As New sset(Of Int32)()
             For i As Int32 = min To max - 1
-                Dim r As tuple(Of sset(Of Int32).iterator, Boolean) = Nothing
-                r = s.insert(i)
+                Dim r As tuple(Of sset(Of Int32).iterator, Boolean) = s.insert(i)
                 If assertion.is_not_null(r) Then
                     assertion.is_true(r.second)
                 End If

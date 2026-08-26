@@ -43,8 +43,7 @@ Public Class obst(Of T)
         If v Is Nothing Then
             Return Nothing
         End If
-        Dim r As obst(Of T) = Nothing
-        r = New obst(Of T)()
+        Dim r As New obst(Of T)()
         move_to(v, r)
         Return r
     End Function
@@ -60,8 +59,7 @@ Public Class obst(Of T)
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function clone() As obst(Of T)
-        Dim r As obst(Of T) = Nothing
-        r = New obst(Of T)()
+        Dim r As New obst(Of T)()
         clone_to(Me, r)
         Return r
     End Function
@@ -114,12 +112,10 @@ Public Class obst(Of T)
             s = 1
             Return tuple.emplace_of(New iterator(root), True)
         End If
-        Dim n As node = Nothing
-        n = If(it.is_end(), root, it.node())
+        Dim n As node = If(it.is_end(), root, it.node())
         While True
             assert(Not n Is Nothing)
-            Dim c As Int32 = 0
-            c = n.compare(v)
+            Dim c As Int32 = n.compare(v)
             If c = 0 Then
                 Return tuple.emplace_of(New iterator(n), False)
             End If
@@ -128,8 +124,7 @@ Public Class obst(Of T)
                     n = n.right_child()
                 Else
                     s += uint32_1
-                    Dim r As node = Nothing
-                    r = create_node(v)
+                    Dim r As node = create_node(v)
                     n.replace_right(r)
                     Return tuple.emplace_of(New iterator(r), True)
                 End If
@@ -138,8 +133,7 @@ Public Class obst(Of T)
                     n = n.left_child()
                 Else
                     s += uint32_1
-                    Dim r As node = Nothing
-                    r = create_node(v)
+                    Dim r As node = create_node(v)
                     n.replace_left(r)
                     Return tuple.emplace_of(New iterator(r), True)
                 End If

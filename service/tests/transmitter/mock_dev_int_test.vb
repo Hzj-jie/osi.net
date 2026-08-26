@@ -8,8 +8,7 @@ Public Class mock_dev_int_test
     Inherits [case]
 
     Private Shared Function one_way_case() As Boolean
-        Dim d As mock_dev_int = Nothing
-        d = New mock_dev_int()
+        Dim d As New mock_dev_int()
         Dim v1() As Int32 = Nothing
         Dim v2() As Int32 = Nothing
         v1 = rnd_ints(rnd_int(1024, 4096))

@@ -27,8 +27,7 @@ Public Class constructor_register_in_multiple_threads_test
     <repeat(repeat_count)>
     <multi_threading(thread_count)>
     Private Shared Sub run()
-        Dim type As String = Nothing
-        type = Convert.ToString(rnd_uint(0, thread_count))
+        Dim type As String = Convert.ToString(rnd_uint(0, thread_count))
         Dim index As UInt32 = 0
         c.constructor.register(Function(ByVal v As var) As test_class
                                    Return New test_class(rnd_uint(thread_count, max_uint32))
@@ -41,8 +40,7 @@ Public Class constructor_register_in_multiple_threads_test
         c.constructor(Of test_class).erase(type)
         If repeat_case_wrapper.current_round() = repeat_count - 1 Then
             For i As UInt32 = 0 To thread_count - uint32_1
-                Dim thread_id As UInt32 = 0
-                thread_id = i
+                Dim thread_id As UInt32 = i
                 type = Convert.ToString(thread_id)
                 c.constructor.register(Function(ByVal v As var) As test_class
                                            Return New test_class(thread_id)

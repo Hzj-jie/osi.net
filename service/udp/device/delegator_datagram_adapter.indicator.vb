@@ -15,8 +15,7 @@ Partial Public Class delegator_datagram_adapter
         End Sub
 
         Public Function indicate(ByRef pending As Boolean) As Boolean Implements sync_indicator.indicate
-            Dim r As Int32 = 0
-            r = u.buffered_bytes()
+            Dim r As Int32 = u.buffered_bytes()
             If r < 0 Then
                 Return False
             Else

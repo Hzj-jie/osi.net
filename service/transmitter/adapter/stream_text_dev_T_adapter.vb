@@ -31,8 +31,7 @@ Public Class stream_text_dev_T_adapter(Of T)
         Dim ec As event_comb = Nothing
         Dim ms As MemoryStream = Nothing
         Return New event_comb(Function() As Boolean
-                                  Dim s As String = Nothing
-                                  s = string_serializer.to_str(i)
+                                  Dim s As String = string_serializer.to_str(i)
                                   If memory_stream.[New](s, enc, ms) Then
                                       assert(Not ms Is Nothing)
                                       ec = underlying_device.send(ms)

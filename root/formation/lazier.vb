@@ -54,8 +54,7 @@ Public NotInheritable Class lazier(Of T)
 
     ' Using structure will cause this.d to be copied.
     Public Shared Operator +(ByVal this As lazier(Of T)) As T
-        Dim x As Func(Of T) = Nothing
-        x = this.d
+        Dim x As Func(Of T) = this.d
         If Not x Is Nothing Then
             this.v = x()
             this.d = Nothing

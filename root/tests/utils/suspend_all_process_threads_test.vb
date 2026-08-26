@@ -51,8 +51,7 @@ Public Class suspend_all_process_threads_test
                                                             End Function,
                                                       seconds_to_milliseconds(1)))
                 assertion.is_true(all_process_threads.suspend())
-                Dim c As UInt32 = 0
-                c = (+p)
+                Dim c As UInt32 = (+p)
                 assertion.is_false(timeslice_sleep_wait_when(Function()
                                                                  Return (+p) = c
                                                              End Function,

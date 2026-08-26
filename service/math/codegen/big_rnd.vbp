@@ -17,8 +17,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     End Function
 
     Public Shared Function random(Optional ByVal length As UInt32 = 0) As ##CLASS_NAME##
-        Dim r As ##CLASS_NAME## = Nothing
-        r = share(##IMPL_CLASS##.random(length))
+        Dim r As ##CLASS_NAME## = share(##IMPL_CLASS##.random(length))
         If rnd_bool() Then
             r.set_negative()
         End If

@@ -38,8 +38,7 @@ int main(int argc, char* argv[]) {
         fprintf(fo,
                 "    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
                 "    Public Sub swap(ByRef x As %s, ByRef y As %s)\n"
-                "        Dim i As %s = Nothing\n"
-                "        i = x\n"
+                "        Dim i As %s = x\n"
                 "        x = y\n"
                 "        y = i\n"
                 "    End Sub\n\n",
@@ -48,8 +47,7 @@ int main(int argc, char* argv[]) {
 
     fputs("    <MethodImpl(method_impl_options.aggressive_inlining)>\n"
           "    Public Sub swap(Of T)(ByRef x As T, ByRef y As T)\n"
-          "        Dim i As T = Nothing\n"
-          "        i = x\n"
+          "        Dim i As T = x\n"
           "        x = y\n"
           "        y = i\n"
           "    End Sub\n\n",

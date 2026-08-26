@@ -29,10 +29,8 @@ Partial Public Class sharedtransmitter_test
         End Function
 
         Public Overrides Function run() As Boolean
-            Dim param As parameter = Nothing
-            param = New parameter(False)
-            Dim s As sharedtransmitter(Of Byte, Byte, component, Int32, parameter) = Nothing
-            s = sharedtransmitter(Of Byte, Byte, component, Int32, parameter).creator.[New]().
+            Dim param As New parameter(False)
+            Dim s As sharedtransmitter(Of Byte, Byte, component, Int32, parameter) = sharedtransmitter(Of Byte, Byte, component, Int32, parameter).creator.[New]().
                         with_parameter(param).
                         with_local_port(param.local_port).
                         with_remote(const_pair.emplace_of(Of Byte, Byte)(100, 100)).
@@ -40,8 +38,7 @@ Partial Public Class sharedtransmitter_test
                         with_collection(c).
                         with_functor(Of functor)().
                         create()
-            Dim p As ref(Of Int32) = Nothing
-            p = New ref(Of Int32)()
+            Dim p As New ref(Of Int32)()
             assertion.is_true(async_sync(s.receiver.receive(p)))
             assertion.equal(+p, 200)  ' The initial data
             For i As Int32 = 0 To 1000

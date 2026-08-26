@@ -30,8 +30,7 @@ Public NotInheritable Class struct_reflector_test
 
     <test>
     Private Shared Sub class_with_value_case()
-        Dim e As c = Nothing
-        e = New c()
+        Dim e As New c()
         e.a = guid_str()
         e.b = vector.emplace_of(rnd_int(), rnd_int(), rnd_int())
         e.c = rnd_bool()
@@ -56,8 +55,7 @@ Public NotInheritable Class struct_reflector_test
 
     <test>
     Private Shared Sub struct_case()
-        Dim e As s = Nothing
-        e = New s()
+        Dim e As New s()
         e.a = guid_str()
         e.b = vector.emplace_of(rnd_int(), rnd_int(), rnd_int())
         e.c = rnd_bool()
@@ -84,8 +82,7 @@ Public NotInheritable Class struct_reflector_test
 
     <test>
     Private Shared Sub readonly_variables_case()
-        Dim a As c2 = Nothing
-        a = New c2()
+        Dim a As New c2()
         Dim vs() As struct.variable = Nothing
         assertion.is_true(struct.disassemble(a, vs))
         assertion.equal(array_size_i(vs), 1)
@@ -109,8 +106,7 @@ Public NotInheritable Class struct_reflector_test
 
     <test>
     Private Shared Sub should_ignore_non_public_variables()
-        Dim a As c3 = Nothing
-        a = New c3()
+        Dim a As New c3()
         Dim vs() As struct.variable = Nothing
         assertion.is_true(struct.disassemble(a, vs))
         assertion.equal(array_size_i(vs), 0)

@@ -18,11 +18,9 @@ Partial Public NotInheritable Class nlexer
         End Sub
 
         Public Function match(ByVal i As String, ByVal pos As UInt32) As [optional](Of UInt32) Implements matcher.match
-            Dim r As [optional](Of UInt32) = Nothing
-            r = [optional].empty(Of UInt32)()
+            Dim r As [optional](Of UInt32) = [optional].empty(Of UInt32)()
             While True
-                Dim n As [optional](Of UInt32) = Nothing
-                n = g.match(i, If(r, +r, pos))
+                Dim n As [optional](Of UInt32) = g.match(i, If(r, +r, pos))
                 If n Then
                     r = n
                 Else

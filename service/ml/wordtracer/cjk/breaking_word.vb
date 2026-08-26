@@ -62,8 +62,7 @@ Partial Public NotInheritable Class wordtracer
                                             End Function).
                                         collect_to(Of unordered_map(Of Char, Double))()
                            End If
-                           Dim e As exponential_distribution = Nothing
-                           e = exponential_distribution.
+                           Dim e As exponential_distribution = exponential_distribution.
                                estimator.
                                estimate(v.stream().
                                           map(const_pair(Of Char, Double).second_getter).

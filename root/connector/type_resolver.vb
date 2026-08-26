@@ -61,8 +61,7 @@ Public NotInheritable Class type_resolver(Of T)
     End Function
 
     Public Function from_type_or_base(ByVal type As Type, ByRef o As T) As Boolean
-        Dim types As List(Of Type) = Nothing
-        types = New List(Of Type)()
+        Dim types As New List(Of Type)()
         While Not type Is Nothing
             types.Add(type)
             type = type.BaseType()
@@ -77,8 +76,7 @@ Public NotInheritable Class type_resolver(Of T)
     End Function
 
     Public Function from_type_or_interfaces(ByVal type As Type, ByRef o As T) As Boolean
-        Dim types As List(Of Type) = Nothing
-        types = New List(Of Type)()
+        Dim types As New List(Of Type)()
         types.Add(type)
         types.AddRange(type.GetInterfaces())
         Return from_types(types, o)

@@ -66,8 +66,7 @@ Public Class signal_event_test
         End Function
 
         Private Function callee() As Boolean
-            Dim a As signal_event_test_action = Nothing
-            a = New signal_event_test_action()
+            Dim a As New signal_event_test_action()
             SyncLock e
                 e.emplace_back(a)
             End SyncLock

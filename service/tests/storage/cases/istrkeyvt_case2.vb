@@ -354,8 +354,7 @@ Public Class istrkeyvt_case2(Of _KEY_LENGTH_LOW As _int64,
     End Function
 
     Private Shared Function rnd_case(ByVal keyvt As istrkeyvt) As event_comb
-        Dim r As Int32 = 0
-        r = rnd_int(0, 16)
+        Dim r As Int32 = rnd_int(0, 16)
         'average_key_rate = average_key_count / all_key_count
         'all_key_count = 16 ^ 3
         Select Case r

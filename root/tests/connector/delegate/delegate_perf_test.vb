@@ -24,8 +24,7 @@ Public Class delegate_perf_test
                    New delegate_case(Sub()
                                          run_case("delegate <Action>",
                                                   Sub()
-                                                      Dim v As Action = Nothing
-                                                      v = AddressOf increment
+                                                      Dim v As Action = AddressOf increment
                                                       For i As Int64 = 0 To size - 1
                                                           v()
                                                       Next
@@ -34,8 +33,7 @@ Public Class delegate_perf_test
                    New delegate_case(Sub()
                                          run_case("void2 delegate <Action>",
                                                   Sub()
-                                                      Dim v As Action = Nothing
-                                                      v = AddressOf increment
+                                                      Dim v As Action = AddressOf increment
                                                       For i As Int64 = 0 To size - 1
                                                           void2(v)
                                                       Next
@@ -44,8 +42,7 @@ Public Class delegate_perf_test
                    New delegate_case(Sub()
                                          run_case("void_ delegate <Action>",
                                                   Sub()
-                                                      Dim v As Action = Nothing
-                                                      v = AddressOf increment
+                                                      Dim v As Action = AddressOf increment
                                                       For i As Int64 = 0 To size - 1
                                                           void_(v)
                                                       Next
@@ -63,8 +60,7 @@ Public Class delegate_perf_test
                    New delegate_case(Sub()
                                          run_case("delegate with parameter",
                                                   Sub()
-                                                      Dim v As void(Of Int64) = Nothing
-                                                      v = AddressOf increment
+                                                      Dim v As void(Of Int64) = AddressOf increment
                                                       Dim j As Int64 = 0
                                                       For i As Int64 = 0 To size - 1
                                                           v(j)

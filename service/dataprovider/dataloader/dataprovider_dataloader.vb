@@ -35,8 +35,7 @@ Public Class dataprovider_dataloader(Of T)
                                   Dim v() As idataprovider = Nothing
                                   ReDim v(array_size_i(dps) - 1)
                                   For i As Int32 = 0 To array_size_i(dps) - 1
-                                      Dim p As idataprovider = Nothing
-                                      p = (+(dps(i)))
+                                      Dim p As idataprovider = (+(dps(i)))
                                       If p Is Nothing OrElse
                                          Not p.valid() Then
                                           Return False

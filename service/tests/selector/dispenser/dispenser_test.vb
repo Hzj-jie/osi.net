@@ -36,8 +36,7 @@ Partial Public NotInheritable Class dispenser_test
 
         Dim timeout_ms As UInt32 = CUInt(seconds_to_milliseconds(If(os.is_nix, 30, 10)))
         For i As Int32 = 0 To accepter_count - 1
-            Dim j As Int32 = 0
-            j = i
+            Dim j As Int32 = i
             If Not assertion.happening_in(Function() accepters(j).q.size() = data_size,
                                           timeout_ms) Then
                 Return False

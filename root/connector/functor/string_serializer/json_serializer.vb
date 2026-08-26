@@ -44,8 +44,7 @@ Partial Public NotInheritable Class json_serializer(Of T)
     Protected Overrides Function to_str() As Func(Of T, StringWriter, Boolean)
         If type_info(Of T).can_cast_to_array_type Then
             Return Function(ByVal i As T, ByVal o As StringWriter) As Boolean
-                       Dim a As Array = Nothing
-                       a = direct_cast(Of Array)(i)
+                       Dim a As Array = direct_cast(Of Array)(i)
                        If a Is Nothing Then
                            o.Write("[]")
                        End If

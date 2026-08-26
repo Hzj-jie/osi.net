@@ -25,14 +25,12 @@ Friend Class agent_status
         For i As Int32 = 0 To array_size(inputs) - 1
             If is_down.find(inputs(i)) = is_down.end() Then
                 assert(is_down.insert(inputs(i)) <> is_down.end())
-                Dim c2 As [case] = Nothing
-                c2 = New [case](mode, action.down, int32_bytes(inputs(i)))
+                Dim c2 As New [case](mode, action.down, int32_bytes(inputs(i)))
                 RaiseEvent issue(c2)
                 RaiseEvent down_action(c2)
             End If
 
-            Dim c As [case] = Nothing
-            c = New [case](mode, action.press, int32_bytes(inputs(i)))
+            Dim c As New [case](mode, action.press, int32_bytes(inputs(i)))
             RaiseEvent issue(c)
             RaiseEvent press_action(c)
         Next
@@ -40,13 +38,11 @@ Friend Class agent_status
 
     Public Sub up_to(ByVal ParamArray inputs() As Int32)
         Dim it As [set](Of Int32).iterator = Nothing
-        Dim es As vector(Of Int32) = Nothing
-        es = New vector(Of Int32)()
+        Dim es As New vector(Of Int32)()
         it = is_down.begin()
         While it <> is_down.end()
             If Not inputs.has(+it) Then
-                Dim c As [case] = Nothing
-                c = New [case](mode, action.up, int32_bytes(+it))
+                Dim c As New [case](mode, action.up, int32_bytes(+it))
                 RaiseEvent issue(c)
                 RaiseEvent up_action(c)
                 es.emplace_back(+it)

@@ -32,12 +32,10 @@ Public Module utt_diff
             ReDim m(array_size(args) - 1)
             ReDim t(array_size(args) - 1)
             ReDim f(array_size(args) - 1)
-            Dim a As [set](Of String) = Nothing
-            a = New [set](Of String)()
+            Dim a As New [set](Of String)()
             For i As Int32 = 0 To array_size(args) - 1
                 If parse(args(i), m(i), f(i)) Then
-                    Dim it As map(Of String, case_info).iterator = Nothing
-                    it = m(i).begin()
+                    Dim it As map(Of String, case_info).iterator = m(i).begin()
                     While it <> m(i).end()
                         assert(a.insert((+it).first) <> a.end())
                         t(i) += (+it).second.time
@@ -49,14 +47,12 @@ Public Module utt_diff
             Next
 
             Do
-                Dim it As [set](Of String).iterator = Nothing
-                it = a.begin()
+                Dim it As [set](Of String).iterator = a.begin()
                 While it <> a.end()
                     Console.Write(strcat(+it, character.tab))
                     Dim i As Int32 = 0
                     For i = i To array_size(m) - 1
-                        Dim add_tab As Boolean = False
-                        add_tab = (i < array_size(m) - 1)
+                        Dim add_tab As Boolean = (i < array_size(m) - 1)
                         If m(i).find(+it) <> m(i).end() Then
                             output(m(i)(+it).time, m(i)(+it).time, add_tab)
                             Exit For
@@ -65,8 +61,7 @@ Public Module utt_diff
                         End If
                     Next
                     For j As Int32 = i + 1 To array_size(m) - 1
-                        Dim add_tab As Boolean = False
-                        add_tab = (j < array_size(m) - 1)
+                        Dim add_tab As Boolean = (j < array_size(m) - 1)
                         If m(j).find(+it) <> m(j).end() Then
                             output(m(j)(+it).time, m(i)(+it).time, add_tab)
                         Else
@@ -96,8 +91,7 @@ Public Module utt_diff
     End Sub
 
     Private Sub output(ByVal nv As Int64, ByVal base As Int64, ByVal add_tab As Boolean)
-        Dim orc As ConsoleColor = Nothing
-        orc = Console.ForegroundColor()
+        Dim orc As ConsoleColor = Console.ForegroundColor()
         Dim perc As Double = 0
         Console.ForegroundColor() = choose_color(nv, base, perc)
         Console.Write(strcat(nv, "(", strleft(perc, 6), "%)", If(add_tab, character.tab, "")))
@@ -122,8 +116,7 @@ Public Module utt_diff
                        ByVal nv As Int64,
                        Optional ByVal base_usage? As Double = Nothing,
                        Optional ByVal nv_usage? As Double = Nothing)
-        Dim orc As ConsoleColor = Nothing
-        orc = Console.ForegroundColor()
+        Dim orc As ConsoleColor = Console.ForegroundColor()
         Dim perc As Double = 0
         Console.ForegroundColor() = choose_color(nv, base, perc)
         Console.WriteLine(strcat(name,
@@ -154,8 +147,7 @@ Public Module utt_diff
                         ByVal left_first As Boolean)
         assert(Not left Is Nothing)
         assert(Not right Is Nothing)
-        Dim it As map(Of String, case_info).iterator = Nothing
-        it = left.begin()
+        Dim it As map(Of String, case_info).iterator = left.begin()
         Dim lt As Int64 = 0
         Dim rt As Int64 = 0
         Dim lu As Double = 0
@@ -165,8 +157,7 @@ Public Module utt_diff
                 lt += (+it).second.time
                 lu += (+it).second.usage
             End If
-            Dim it2 As map(Of String, case_info).iterator = Nothing
-            it2 = right.find((+it).first)
+            Dim it2 As map(Of String, case_info).iterator = right.find((+it).first)
             If it2 = right.end() OrElse Not miss_only Then
                 If Not miss_only AndAlso it2 <> right.end() Then
                     rt += (+it2).second.time
@@ -261,8 +252,7 @@ Public Module utt_diff
         Try
             Using s As Stream = New FileStream(f, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
                 Using r As StreamReader = New StreamReader(s)
-                    Dim l As String = Nothing
-                    l = r.ReadLine()
+                    Dim l As String = r.ReadLine()
                     While Not l Is Nothing
                         Dim c As String = Nothing
                         Dim t As Int64 = 0

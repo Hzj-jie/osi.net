@@ -131,8 +131,7 @@ Public NotInheritable Class cancellation_controller
 
     Private Shared Sub cancel_if_not(Of T As flip_event, T2 As flip_event) _
                                     (ByVal ref As atomic_ref(Of T), ByVal cmp As atomic_ref(Of T2))
-        Dim f As flip_event = Nothing
-        f = ref.exchange(Nothing)
+        Dim f As flip_event = ref.exchange(Nothing)
         If Not f Is Nothing AndAlso object_compare(ref, cmp) <> 0 Then
             f.cancel()
         End If

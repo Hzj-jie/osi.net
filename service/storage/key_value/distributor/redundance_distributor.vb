@@ -93,8 +93,7 @@ Partial Public Class redundance_distributor
                           d,
                           result,
                           Function(ecs() As event_comb, rs() As ref(Of Int64), ByRef r As Int64) As Boolean
-                              Dim m As Int64 = 0
-                              m = init_value
+                              Dim m As Int64 = init_value
                               For i As Int32 = 0 To container.size() - 1
                                   If ecs(i).end_result() Then
                                       If m = init_value OrElse
@@ -233,11 +232,9 @@ Partial Public Class redundance_distributor
     End Function
 
     Private Shared Function list_merge(ByVal ss As vector(Of stringtrie(Of Boolean))) As stringtrie(Of Boolean)
-        Dim all As stringtrie(Of Boolean) = Nothing
-        all = New stringtrie(Of Boolean)()
+        Dim all As New stringtrie(Of Boolean)()
         For i As Int32 = 0 To ss.size() - 1
-            Dim it As stringtrie(Of Boolean).iterator = Nothing
-            it = ss(i).begin()
+            Dim it As stringtrie(Of Boolean).iterator = ss(i).begin()
             While it <> ss(i).end()
                 If list_has_value(it, ss(i)) Then
                     assert(all.insert(stringtrie(Of Boolean).first(it), True) <> all.end())
@@ -249,10 +246,8 @@ Partial Public Class redundance_distributor
     End Function
 
     Private Shared Function list_to_vector(ByVal all As stringtrie(Of Boolean)) As vector(Of String)
-        Dim r As vector(Of String) = Nothing
-        r = New vector(Of String)()
-        Dim it As stringtrie(Of Boolean).iterator = Nothing
-        it = all.begin()
+        Dim r As New vector(Of String)()
+        Dim it As stringtrie(Of Boolean).iterator = all.begin()
         While it <> all.end()
             If list_has_value(it, all) Then
                 r.emplace_back(stringtrie(Of Boolean).first(it))
@@ -268,13 +263,11 @@ Partial Public Class redundance_distributor
         assert(array_size(ecs) = array_size(nr))
         Dim ss As vector(Of stringtrie(Of Boolean)) = Nothing
         Return New event_comb(Function() As Boolean
-                                  Dim tecs As vector(Of event_comb) = Nothing
-                                  tecs = New vector(Of event_comb)()
+                                  Dim tecs As New vector(Of event_comb)()
                                   ss = New vector(Of stringtrie(Of Boolean))()
                                   For i As Int32 = 0 To array_size(ecs) - 1
                                       If ecs(i).end_result() AndAlso Not (+(nr(i))) Is Nothing Then
-                                          Dim j As Int32 = 0
-                                          j = i
+                                          Dim j As Int32 = i
                                           ss.emplace_back(New stringtrie(Of Boolean)())
                                           tecs.emplace_back(sync_async(
                                                 Sub()
@@ -292,11 +285,9 @@ Partial Public Class redundance_distributor
                                   End If
                               End Function,
                               Function() As Boolean
-                                  Dim all As stringtrie(Of Boolean) = Nothing
-                                  all = list_merge(ss)
+                                  Dim all As stringtrie(Of Boolean) = list_merge(ss)
 
-                                  Dim r As vector(Of String) = Nothing
-                                  r = list_to_vector(all)
+                                  Dim r As vector(Of String) = list_to_vector(all)
                                   assert(eva(result, r))
 
                                   For i As Int32 = 0 To array_size(ecs) - 1
@@ -311,10 +302,8 @@ Partial Public Class redundance_distributor
                                   all.clear()
                                   For i As Int32 = 0 To ss.size() - 1
                                       For j As Int32 = 0 To r.size() - 1
-                                          Dim sit As stringtrie(Of Boolean).iterator = Nothing
-                                          sit = ss(i).find(r(j))
-                                          Dim ait As stringtrie(Of Boolean).iterator = Nothing
-                                          ait = all.find(r(j))
+                                          Dim sit As stringtrie(Of Boolean).iterator = ss(i).find(r(j))
+                                          Dim ait As stringtrie(Of Boolean).iterator = all.find(r(j))
                                           If Not list_has_value(sit, ss(i)) AndAlso Not list_has_value(ait, all) Then
                                               sq.push_to_prepare_sync_queue(r(j))
                                               assert(all.insert(r(j), True) <> all.end())

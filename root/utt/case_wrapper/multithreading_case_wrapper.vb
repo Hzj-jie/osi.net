@@ -74,15 +74,13 @@ Public Class multithreading_case_wrapper
     End Function
 
     Public Shared Function running_thread_count() As UInt32
-        Dim r As Int32 = 0
-        r = current().running_thread
+        Dim r As Int32 = current().running_thread
         assert(r >= 0)
         Return CUInt(r)
     End Function
 
     Public Shared Function thread_id() As UInt32
-        Dim r As Int32 = 0
-        r = id
+        Dim r As Int32 = id
         assert(r >= 0)
         Return CUInt(r)
     End Function

@@ -44,10 +44,8 @@ Public MustInherit Class flower_test
         Dim last As mock_dev_int = Nothing
         first = New mock_dev_int()
         last = New mock_dev_int()
-        Dim f As flower(Of Int32) = Nothing
-        f = create_flower(first, last)
-        Dim ended As ref(Of Boolean) = Nothing
-        ended = New ref(Of Boolean)()
+        Dim f As flower(Of Int32) = create_flower(first, last)
+        Dim ended As New ref(Of Boolean)()
         execute(f, ended)
         Dim v() As Int32 = Nothing
         v = rnd_ints(rnd_int(16384, 32768))

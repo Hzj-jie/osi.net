@@ -29,8 +29,7 @@ Public Class gettype_test
     End Sub
 
     Public Overrides Function run() As Boolean
-        Dim x As A(Of String) = Nothing
-        x = New A(Of String)()
+        Dim x As New A(Of String)()
         assertion.is_true(TypeOf x Is A(Of String))
         assertion.is_false(TypeOf DirectCast(x, Object) Is A(Of Int32))
         assertion.is_true(GetType(A(Of String)).GetGenericTypeDefinition() Is GetType(A(Of )))

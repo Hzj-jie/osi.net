@@ -107,8 +107,7 @@ Partial Public Class constructor_test
     <test>
     Private Shared Sub return_value_is_wrapped()
         Const type As String = "return_type_is_wrapped_type"
-        Dim instance As test_class = Nothing
-        instance = New test_class()
+        Dim instance As New test_class()
         assertion.is_true(c.constructor.register(type,
                                            Function(ByVal v As var) As test_class
                                                Return instance

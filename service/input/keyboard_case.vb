@@ -140,8 +140,7 @@ Public Module _keyboard_case
     End Function
 
     Public Function keyboard_case(ByVal action As action, ByVal meta() As Byte) As [case]
-        Dim r As [case] = Nothing
-        r = New [case](mode.keyboard, action, meta)
+        Dim r As New [case](mode.keyboard, action, meta)
         assert(valid_keyboard_case(r))
         Return r
     End Function

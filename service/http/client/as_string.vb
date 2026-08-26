@@ -29,8 +29,7 @@ Partial Public NotInheritable Class client
 
         Private Function parse_response_body(ByVal that As memory_stream_response) As Boolean
             assert(Not that Is Nothing)
-            Dim r As Boolean = False
-            r = _client_rr.parse_response_body(that.headers, that.ms, _result)
+            Dim r As Boolean = _client_rr.parse_response_body(that.headers, that.ms, _result)
             that.close()
             Return r
         End Function

@@ -68,8 +68,7 @@ Partial Public Class lp_test
     End Class
 
     Private Shared Function case1(ByVal p As lp(Of vector(Of transition))) As Boolean
-        Dim r As lp(Of vector(Of transition)).result = Nothing
-        r = p.execute("")
+        Dim r As lp(Of vector(Of transition)).result = p.execute("")
         assertion.is_true(r.has_error())
         assertion.is_true(r.lex_error)
         Return True
@@ -79,8 +78,7 @@ Partial Public Class lp_test
         Const subject As String = "i"
         Const predicate As String = "like"
         Const [object] As String = "orange"
-        Dim r As lp(Of vector(Of transition)).result = Nothing
-        r = p.execute(strcat(subject, character.blank, predicate, character.blank, [object]))
+        Dim r As lp(Of vector(Of transition)).result = p.execute(strcat(subject, character.blank, predicate, character.blank, [object]))
         assertion.is_false(r.has_error())
         Return (assertion.is_not_null(r.result) AndAlso
                 assertion.equal(r.result.size(), CUInt(4)) AndAlso
@@ -102,8 +100,7 @@ Partial Public Class lp_test
 
     Public Overrides Function run() As Boolean
         If write_syntax_file() Then
-            Dim p As lp(Of vector(Of transition)) = Nothing
-            p = lp(Of vector(Of transition)).ctor(Of lp_test)(syntax_file_name)
+            Dim p As lp(Of vector(Of transition)) = lp(Of vector(Of transition)).ctor(Of lp_test)(syntax_file_name)
             Return assertion.is_not_null(p) AndAlso
                    (case1(p) AndAlso
                     case2(p))

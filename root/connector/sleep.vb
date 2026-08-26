@@ -11,10 +11,8 @@ Imports osi.root.delegates
 Public Module _sleep
     Public Sub measure_sleep(ByVal ms As Int32)
         If ms > 0 Then
-            Dim left As Int32 = 0
-            left = CInt(Math.Ceiling(ms * measure_sleep_percentage))
-            Dim till As Int64 = 0
-            till = Now().milliseconds() + left
+            Dim left As Int32 = CInt(Math.Ceiling(ms * measure_sleep_percentage))
+            Dim till As Int64 = Now().milliseconds() + left
             While left > 0
                 Thread.Sleep(left)
                 left = CInt(till - Now().milliseconds())
@@ -55,8 +53,7 @@ Public Module _sleep
     End Sub
 
     Public Sub sleep_seconds(Optional ByVal s As Int32 = 1)
-        Dim i As Int64 = 0
-        i = seconds_to_milliseconds(s)
+        Dim i As Int64 = seconds_to_milliseconds(s)
         If i > max_int32 Then
             sleep(max_int32)
         ElseIf i < min_int32 Then
@@ -98,8 +95,7 @@ Public Module _sleep
                                           ByVal ms As Int64,
                                           ByVal timeout_ms As Int64) As Boolean
         assert(Not d Is Nothing)
-        Dim start_ms As Int64 = 0
-        start_ms = Now().milliseconds()
+        Dim start_ms As Int64 = Now().milliseconds()
         Dim timeouted As Boolean = False
         sleep_wait_when(Function(ByRef x) As Boolean
                             If Not d(x) Then

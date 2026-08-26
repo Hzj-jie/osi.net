@@ -28,14 +28,12 @@ Public NotInheritable Class confidence
     Public Shared Function [of](ByVal ratio As Double,
                                 ByVal d As distribution,
                                 ByVal ParamArray samples() As tuple(Of Double, UInt32)) As Double
-        Dim count As UInt32 = 0
-        count = streams.of(samples).
+        Dim count As UInt32 = streams.of(samples).
                         map(tuple(Of Double, UInt32).second_selector).
                         aggregate(stream(Of UInt32).aggregators.sum)
         Dim result As Double = 0
         Using code_block
-            Dim v As vector(Of tuple(Of Double, UInt32)) = Nothing
-            v = streams.of(samples).
+            Dim v As vector(Of tuple(Of Double, UInt32)) = streams.of(samples).
                         sort(tuple(Of Double, UInt32).first_comparer).
                         collect_to(Of vector(Of tuple(Of Double, UInt32)))()
             Dim i As UInt32 = 0

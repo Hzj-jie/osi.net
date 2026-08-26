@@ -20,8 +20,7 @@ Public Module _prime_divisors
         If i < primes.precalculated(0) Then
             Return New vector(Of pair(Of UInt32, Int32))()
         End If
-        Dim r As vector(Of pair(Of UInt32, Int32)) = Nothing
-        r = New vector(Of pair(Of UInt32, Int32))()
+        Dim r As New vector(Of pair(Of UInt32, Int32))()
         For j As UInt32 = 0 To primes.precalculated_count - uint32_1
 #If DEBUG Then
             assert(primes.precalculated(j) <= i)
@@ -30,8 +29,7 @@ Public Module _prime_divisors
                 r.emplace_back(pair.of(i, 1))
                 i = 1
             ElseIf i Mod primes.precalculated(j) = 0 Then
-                Dim p As pair(Of UInt32, Int32) = Nothing
-                p = pair.of(primes.precalculated(j), 0)
+                Dim p As pair(Of UInt32, Int32) = pair.of(primes.precalculated(j), 0)
                 While i Mod primes.precalculated(j) = 0
                     p.second += 1
                     i \= primes.precalculated(j)
@@ -59,8 +57,7 @@ Public Module _prime_divisors
     End Function
 
     <Extension()> Public Function prime_divisors(ByVal i As UInt32) As vector(Of UInt32)
-        Dim t As vector(Of pair(Of UInt32, Int32)) = Nothing
-        t = prime_factorization(i)
+        Dim t As vector(Of pair(Of UInt32, Int32)) = prime_factorization(i)
         If t Is Nothing Then
             Return Nothing
         End If

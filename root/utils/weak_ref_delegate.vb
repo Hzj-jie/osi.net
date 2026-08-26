@@ -12,11 +12,9 @@ Public NotInheritable Class weak_ref_delegate
                                          Optional ByVal default_value As R = Nothing) As Func(Of R)
         assert(Not i Is Nothing)
         assert(Not f Is Nothing)
-        Dim o As weak_ref(Of T) = Nothing
-        o = weak_ref.of(i)
+        Dim o As weak_ref(Of T) = weak_ref.of(i)
         Return Function() As R
-                   Dim x As T = Nothing
-                   x = o.get()
+                   Dim x As T = o.get()
                    If Not x Is Nothing Then
                        Return f(x)
                    End If
@@ -29,8 +27,7 @@ Public NotInheritable Class weak_ref_delegate
         assert(Not f Is Nothing)
         Dim o As weak_ref(Of T) = weak_ref.of(i)
         Return Sub()
-                   Dim x As T = Nothing
-                   x = o.get()
+                   Dim x As T = o.get()
                    If Not x Is Nothing Then
                        f(x)
                    End If

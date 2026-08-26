@@ -91,8 +91,7 @@ Public Class hash_cache2(Of KEY_T As IComparable(Of KEY_T), VALUE_T, HASH_SIZE A
                                   ec = foreach(Function(ByRef x As icache2(Of KEY_T, VALUE_T)) As event_comb
                                                    Dim ec2 As event_comb = Nothing
                                                    Dim p As ref(Of Int64) = Nothing
-                                                   Dim i As icache2(Of KEY_T, VALUE_T) = Nothing
-                                                   i = x
+                                                   Dim i As icache2(Of KEY_T, VALUE_T) = x
                                                    Return New event_comb(Function() As Boolean
                                                                              p = New ref(Of Int64)()
                                                                              ec2 = i.size(p)

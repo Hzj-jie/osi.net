@@ -14,11 +14,9 @@ Imports constants = osi.service.resources.math
 Public NotInheritable Class big_udec_pi_test
     <test>
     Private Shared Sub calculate_pi_sequence_of_numbers_257()
-        Dim s As big_udec = Nothing
-        s = big_udec.zero()
+        Dim s As big_udec = big_udec.zero()
         For i As UInt32 = 1 To 257 Step 2
-            Dim c As big_udec = Nothing
-            c = big_udec.fraction(CUInt(4), i)
+            Dim c As big_udec = big_udec.fraction(CUInt(4), i)
             If (i >> 1).even() Then
                 s.add(c)
             Else
@@ -32,11 +30,9 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_sequence_of_numbers_65537()
-        Dim s As big_udec = Nothing
-        s = big_udec.zero()
+        Dim s As big_udec = big_udec.zero()
         For i As UInt32 = 1 To 65537 Step 2
-            Dim c As big_udec = Nothing
-            c = big_udec.fraction(CUInt(4), i)
+            Dim c As big_udec = big_udec.fraction(CUInt(4), i)
             If (i >> 1).even() Then
                 s.add(c)
             Else
@@ -50,11 +46,9 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_sequence_of_numbers_262145()
-        Dim s As big_udec = Nothing
-        s = big_udec.zero()
+        Dim s As big_udec = big_udec.zero()
         For i As UInt32 = 1 To 262145 Step 2
-            Dim c As big_udec = Nothing
-            c = big_udec.fraction(CUInt(4), i)
+            Dim c As big_udec = big_udec.fraction(CUInt(4), i)
             If (i >> 1).even() Then
                 s.add(c)
             Else
@@ -68,11 +62,9 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_sequence_of_numbers_1048577()
-        Dim s As big_udec = Nothing
-        s = big_udec.zero()
+        Dim s As big_udec = big_udec.zero()
         For i As UInt32 = 1 To 1048577 Step 2
-            Dim c As big_udec = Nothing
-            c = big_udec.fraction(CUInt(4), i)
+            Dim c As big_udec = big_udec.fraction(CUInt(4), i)
             If (i >> 1).even() Then
                 s.add(c)
             Else
@@ -92,11 +84,9 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_sequence_of_numbers_4194305()
-        Dim s As big_udec = Nothing
-        s = big_udec.zero()
+        Dim s As big_udec = big_udec.zero()
         For i As UInt32 = 1 To 4194305 Step 2
-            Dim c As big_udec = Nothing
-            c = big_udec.fraction(CUInt(4), i)
+            Dim c As big_udec = big_udec.fraction(CUInt(4), i)
             If (i >> 1).even() Then
                 s.add(c)
             Else
@@ -109,11 +99,9 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_sequence_of_numbers_16777217()
-        Dim s As big_udec = Nothing
-        s = big_udec.zero()
+        Dim s As big_udec = big_udec.zero()
         For i As UInt32 = 1 To 16777217 Step 2
-            Dim c As big_udec = Nothing
-            c = big_udec.fraction(CUInt(4), i)
+            Dim c As big_udec = big_udec.fraction(CUInt(4), i)
             If (i >> 1).even() Then
                 s.add(c)
             Else
@@ -126,11 +114,9 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_sequence_of_numbers_67108865()
-        Dim s As big_udec = Nothing
-        s = big_udec.zero()
+        Dim s As big_udec = big_udec.zero()
         For i As UInt32 = 1 To 67108865 Step 2
-            Dim c As big_udec = Nothing
-            c = big_udec.fraction(CUInt(4), i)
+            Dim c As big_udec = big_udec.fraction(CUInt(4), i)
             If (i >> 1).even() Then
                 s.add(c)
             Else
@@ -143,11 +129,9 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_sequence_of_numbers_max_uint32_minus_3_progressively()
-        Dim s As big_udec = Nothing
-        s = big_udec.zero()
+        Dim s As big_udec = big_udec.zero()
         For i As UInt32 = 1 To max_uint32 - CUInt(3) Step 2
-            Dim c As big_udec = Nothing
-            c = big_udec.fraction(CUInt(4), i)
+            Dim c As big_udec = big_udec.fraction(CUInt(4), i)
             If (i >> 1).even() Then
                 s.add(c)
             Else
@@ -164,15 +148,12 @@ Public NotInheritable Class big_udec_pi_test
 
     <test>
     Private Shared Sub calculate_pi_nilakantha_20002()
-        Dim s As big_udec = Nothing
-        s = New big_udec(uint32_3, uint32_1)
+        Dim s As New big_udec(uint32_3, uint32_1)
         For i As UInt32 = 2 To 20002 Step 2
-            Dim d As big_uint = Nothing
-            d = New big_uint(i).
+            Dim d As big_uint = New big_uint(i).
                     multiply(i + uint32_1).
                     multiply(i + uint32_2)
-            Dim c As big_udec = Nothing
-            c = big_udec.fraction(CUInt(4), d)
+            Dim c As big_udec = big_udec.fraction(CUInt(4), d)
             If (i >> 1).odd() Then
                 s.add(c)
             Else
@@ -186,15 +167,12 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_nilakantha_max_uint32_minus_3_progressively()
-        Dim s As big_udec = Nothing
-        s = New big_udec(uint32_3, uint32_1)
+        Dim s As New big_udec(uint32_3, uint32_1)
         For i As UInt32 = 2 To max_uint32 - CUInt(3) Step 2
-            Dim d As big_uint = Nothing
-            d = New big_uint(i).
+            Dim d As big_uint = New big_uint(i).
                     multiply(i + uint32_1).
                     multiply(i + uint32_2)
-            Dim c As big_udec = Nothing
-            c = big_udec.fraction(CUInt(4), d)
+            Dim c As big_udec = big_udec.fraction(CUInt(4), d)
             If (i >> 1).odd() Then
                 s.add(c)
             Else
@@ -212,8 +190,7 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_wallis_product_max_uint32_progressively()
-        Dim s As big_udec = Nothing
-        s = big_udec.one()
+        Dim s As big_udec = big_udec.one()
         s.multiply(big_udec.fraction(CUInt(2), CUInt(1)))
         For i As UInt32 = 2 To max_uint32 - CUInt(2) Step 2
             s.multiply(big_udec.fraction(i, i - uint32_1))
@@ -228,10 +205,8 @@ Public NotInheritable Class big_udec_pi_test
 
     <test>
     Private Shared Sub calculate_pi_arctangent_500()
-        Dim s As big_udec = Nothing
-        s = big_udec.fraction(2, 1)
-        Dim c As big_udec = Nothing
-        c = big_udec.fraction(2, 3)
+        Dim s As big_udec = big_udec.fraction(2, 1)
+        Dim c As big_udec = big_udec.fraction(2, 3)
         For i As UInt32 = 2 To 500
             s.add(c)
             c.multiply(big_udec.fraction(i, (i << 1) + uint32_1))
@@ -242,10 +217,8 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_arctangent_700()
-        Dim s As big_udec = Nothing
-        s = big_udec.fraction(2, 1)
-        Dim c As big_udec = Nothing
-        c = big_udec.fraction(2, 3)
+        Dim s As big_udec = big_udec.fraction(2, 1)
+        Dim c As big_udec = big_udec.fraction(2, 3)
         For i As UInt32 = 2 To 700
             s.add(c)
             c.multiply(big_udec.fraction(i, (i << 1) + uint32_1))
@@ -256,10 +229,8 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_arctangent_20000()
-        Dim s As big_udec = Nothing
-        s = big_udec.fraction(2, 1)
-        Dim c As big_udec = Nothing
-        c = big_udec.fraction(2, 3)
+        Dim s As big_udec = big_udec.fraction(2, 1)
+        Dim c As big_udec = big_udec.fraction(2, 3)
         For i As UInt32 = 2 To 20000
             s.add(c)
             c.multiply(big_udec.fraction(i, (i << 1) + uint32_1))
@@ -275,10 +246,8 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_arctangent()
-        Dim s As big_udec = Nothing
-        s = big_udec.fraction(2, 1)
-        Dim c As big_udec = Nothing
-        c = big_udec.fraction(2, 3)
+        Dim s As big_udec = big_udec.fraction(2, 1)
+        Dim c As big_udec = big_udec.fraction(2, 3)
         For i As UInt32 = 2 To max_uint32 - uint32_1
             s.add(c)
             c.multiply(big_udec.fraction(New big_uint(i), New big_uint(i).left_shift(1).add(uint32_1)))
@@ -296,11 +265,9 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub bbp()
-        Dim s As big_udec = Nothing
-        s = big_udec.zero()
+        Dim s As big_udec = big_udec.zero()
         For i As UInt32 = 0 To max_uint32 - uint32_1
-            Dim c As big_udec = Nothing
-            c = big_udec.fraction(4, 8 * i + 1)
+            Dim c As big_udec = big_udec.fraction(4, 8 * i + 1)
             c.assert_sub(big_udec.fraction(2, 8 * i + 4))
             c.assert_sub(big_udec.fraction(1, 8 * i + 5))
             c.assert_sub(big_udec.fraction(1, 8 * i + 6))

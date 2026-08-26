@@ -14,8 +14,7 @@ Partial Public NotInheritable Class big_udec
         While True
             Dim r As big_uint = Nothing
             n.assert_divide(d, r)
-            Dim c As String = Nothing
-            c = n.str(str_base)
+            Dim c As String = n.str(str_base)
             If Not s.strsame(i, c, 0, c.strlen()) Then
                 Return i
             End If

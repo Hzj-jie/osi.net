@@ -37,8 +37,7 @@ Public NotInheritable Class domain_unhandled_exception_test
                            called = True
                        End Sub
             'make sure the following logic is running in another not delegate wrapped thread
-            Dim th As Thread = Nothing
-            th = New Thread(Sub()
+            Dim th As Thread = New Thread(Sub()
                                 thrown = True
                                 throw_id = current_thread_id()
                                 Throw New an_exception()

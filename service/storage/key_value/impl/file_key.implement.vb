@@ -106,8 +106,7 @@ Partial Public Class file_key
                                   If Not ec.end_result() Then
                                       Return False
                                   End If
-                                  Dim v As vector(Of Byte()) = Nothing
-                                  v = New vector(Of Byte())()
+                                  Dim v As New vector(Of Byte())()
                                   For i As Int32 = 0 To array_size_i(+r) - 1
                                       Dim k() As Byte = Nothing
                                       If key((+r)(i), k) Then

@@ -31,8 +31,7 @@ Public Class dataprovider_datawatcher
             trigger()
         Else
             For i As Int32 = 0 To dps.Length() - 1
-                Dim p As idataprovider = Nothing
-                p = (+(dps(i)))
+                Dim p As idataprovider = (+(dps(i)))
                 If p Is Nothing OrElse
                    Not p.valid() OrElse
                    p.last_updated_ticks() < last_trigger_time_ticks Then
@@ -40,8 +39,7 @@ Public Class dataprovider_datawatcher
                 End If
             Next
             For i As Int32 = 0 To dps.Length() - 1
-                Dim p As idataprovider = Nothing
-                p = (+(dps(i)))
+                Dim p As idataprovider = (+(dps(i)))
                 If Not p Is Nothing AndAlso
                    p.valid() AndAlso
                    p.last_updated_ticks() > last_trigger_time_ticks Then

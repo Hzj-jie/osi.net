@@ -12,8 +12,7 @@ Imports osi.root.utt.attributes
 Public NotInheritable Class map_test3
     <test>
     Private Shared Sub map_can_store_null()
-        Dim m As map(Of String, String) = Nothing
-        m = map.of(pair.of(default_str, "ABC"),
+        Dim m As map(Of String, String) = map.of(pair.of(default_str, "ABC"),
                    pair.of("bcd", default_str),
                    pair.of("abc", "def"),
                    pair.of(default_str, default_str))
@@ -27,8 +26,7 @@ Public NotInheritable Class map_test3
 
     <test>
     Private Shared Sub map_can_find_null()
-        Dim m As map(Of String, String) = Nothing
-        m = map.of(pair.of("bcd", "def"), pair.of("abc", "def"))
+        Dim m As map(Of String, String) = map.of(pair.of("bcd", "def"), pair.of("abc", "def"))
         assertion.equal(m.size(), CUInt(2))
         assertion.equal(m.find(default_str), m.end())
     End Sub

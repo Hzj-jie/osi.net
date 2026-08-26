@@ -29,8 +29,7 @@ Namespace wordbreaker.cjk
         Private Shared Sub search()
             Dim m As model = model.load(input Or "cjk.model.bin")
             While True
-                Dim s As String = Nothing
-                s = Console.ReadLine()
+                Dim s As String = Console.ReadLine()
                 If s Is Nothing Then
                     Return
                 End If

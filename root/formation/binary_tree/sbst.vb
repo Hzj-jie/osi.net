@@ -25,16 +25,14 @@ Public Class sbst(Of T)
         If v Is Nothing Then
             Return Nothing
         End If
-        Dim r As sbst(Of T) = Nothing
-        r = New sbst(Of T)()
+        Dim r As New sbst(Of T)()
         move_to(v, r)
         Return r
     End Function
 
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Shadows Function clone() As sbst(Of T)
-        Dim r As sbst(Of T) = Nothing
-        r = New sbst(Of T)()
+        Dim r As New sbst(Of T)()
         clone_to(Me, r)
         Return r
     End Function

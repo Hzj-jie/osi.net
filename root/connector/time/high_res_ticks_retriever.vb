@@ -35,13 +35,11 @@ Public NotInheritable Class high_res_ticks_retriever
         If Not Stopwatch.IsHighResolution Then
             Return Now().Ticks()
         End If
-        Dim c As Int64 = 0
-        c = qpc()
+        Dim c As Int64 = qpc()
         'looks like the QueryPerformanceCounter is not consistent with Now().Ticks()
         If distance = 0 OrElse c - last_revise_ticks >= revise_interval_ticks Then
             For i As Int32 = 0 To 1
-                Dim this As Int64 = 0
-                this = (((Now().Ticks() - qpc()) -
+                Dim this As Int64 = (((Now().Ticks() - qpc()) -
                              (qpc() - Now().Ticks())) >> 1)
                 assert(this > 0)
                 If i = 0 OrElse this < distance Then

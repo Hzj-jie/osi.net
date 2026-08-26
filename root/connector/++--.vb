@@ -17,15 +17,13 @@ Public Module ____
     End Function
 
     Public Function inc_(ByRef i As Decimal, Optional ByVal j As Decimal = 1) As Decimal
-        Dim o As Decimal = 0
-        o = i
+        Dim o As Decimal = i
         i += j
         Return o
     End Function
 
     Public Function dec_(ByRef i As Decimal, Optional ByVal j As Decimal = 1) As Decimal
-        Dim o As Decimal = 0
-        o = i
+        Dim o As Decimal = i
         i -= j
         Return o
     End Function
@@ -49,15 +47,13 @@ Public Module ____
     End Function
 
     Public Function inc_(ByRef i As Int64, Optional ByVal j As Int64 = 1) As Int64
-        Dim o As Int64 = 0
-        o = i
+        Dim o As Int64 = i
         i += j
         Return o
     End Function
 
     Public Function dec_(ByRef i As Int64, Optional ByVal j As Int64 = 1) As Int64
-        Dim o As Int64 = 0
-        o = i
+        Dim o As Int64 = i
         i -= j
         Return o
     End Function
@@ -81,15 +77,13 @@ Public Module ____
     End Function
 
     Public Function inc_(ByRef i As Int32, Optional ByVal j As Int32 = 1) As Int32
-        Dim o As Int32 = 0
-        o = i
+        Dim o As Int32 = i
         i += j
         Return o
     End Function
 
     Public Function dec_(ByRef i As Int32, Optional ByVal j As Int32 = 1) As Int32
-        Dim o As Int32 = 0
-        o = i
+        Dim o As Int32 = i
         i -= j
         Return o
     End Function
@@ -113,15 +107,13 @@ Public Module ____
     End Function
 
     Public Function inc_(ByRef i As Int16, Optional ByVal j As Int16 = 1) As Int16
-        Dim o As Int16 = 0
-        o = i
+        Dim o As Int16 = i
         i += j
         Return o
     End Function
 
     Public Function dec_(ByRef i As Int16, Optional ByVal j As Int16 = 1) As Int16
-        Dim o As Int16 = 0
-        o = i
+        Dim o As Int16 = i
         i -= j
         Return o
     End Function
@@ -145,15 +137,13 @@ Public Module ____
     End Function
 
     Public Function inc_(ByRef i As SByte, Optional ByVal j As SByte = 1) As SByte
-        Dim o As SByte = 0
-        o = i
+        Dim o As SByte = i
         i += j
         Return o
     End Function
 
     Public Function dec_(ByRef i As SByte, Optional ByVal j As SByte = 1) As SByte
-        Dim o As SByte = 0
-        o = i
+        Dim o As SByte = i
         i -= j
         Return o
     End Function
@@ -177,15 +167,13 @@ Public Module ____
     End Function
 
     Public Function inc_(ByRef i As UInt64, Optional ByVal j As UInt64 = 1) As UInt64
-        Dim o As UInt64 = 0
-        o = i
+        Dim o As UInt64 = i
         i += j
         Return o
     End Function
 
     Public Function dec_(ByRef i As UInt64, Optional ByVal j As UInt64 = 1) As UInt64
-        Dim o As UInt64 = 0
-        o = i
+        Dim o As UInt64 = i
         i -= j
         Return o
     End Function
@@ -209,15 +197,13 @@ Public Module ____
     End Function
 
     Public Function inc_(ByRef i As UInt32, Optional ByVal j As UInt32 = 1) As UInt32
-        Dim o As UInt32 = 0
-        o = i
+        Dim o As UInt32 = i
         i += j
         Return o
     End Function
 
     Public Function dec_(ByRef i As UInt32, Optional ByVal j As UInt32 = 1) As UInt32
-        Dim o As UInt32 = 0
-        o = i
+        Dim o As UInt32 = i
         i -= j
         Return o
     End Function
@@ -241,15 +227,13 @@ Public Module ____
     End Function
 
     Public Function inc_(ByRef i As UInt16, Optional ByVal j As UInt16 = 1) As UInt16
-        Dim o As UInt16 = 0
-        o = i
+        Dim o As UInt16 = i
         i += j
         Return o
     End Function
 
     Public Function dec_(ByRef i As UInt16, Optional ByVal j As UInt16 = 1) As UInt16
-        Dim o As UInt16 = 0
-        o = i
+        Dim o As UInt16 = i
         i -= j
         Return o
     End Function
@@ -273,15 +257,13 @@ Public Module ____
     End Function
 
     Public Function inc_(ByRef i As Byte, Optional ByVal j As Byte = 1) As Byte
-        Dim o As Byte = 0
-        o = i
+        Dim o As Byte = i
         i += j
         Return o
     End Function
 
     Public Function dec_(ByRef i As Byte, Optional ByVal j As Byte = 1) As Byte
-        Dim o As Byte = 0
-        o = i
+        Dim o As Byte = i
         i -= j
         Return o
     End Function
@@ -305,15 +287,13 @@ Public Module ____
     End Function
 
     Public Function inc_(ByRef i As Single, Optional ByVal j As Single = 1) As Single
-        Dim o As Single = 0
-        o = i
+        Dim o As Single = i
         i += j
         Return o
     End Function
 
     Public Function dec_(ByRef i As Single, Optional ByVal j As Single = 1) As Single
-        Dim o As Single = 0
-        o = i
+        Dim o As Single = i
         i -= j
         Return o
     End Function
@@ -337,15 +317,13 @@ Public Module ____
     End Function
 
     Public Function inc_(ByRef i As Double, Optional ByVal j As Double = 1) As Double
-        Dim o As Double = 0
-        o = i
+        Dim o As Double = i
         i += j
         Return o
     End Function
 
     Public Function dec_(ByRef i As Double, Optional ByVal j As Double = 1) As Double
-        Dim o As Double = 0
-        o = i
+        Dim o As Double = i
         i -= j
         Return o
     End Function

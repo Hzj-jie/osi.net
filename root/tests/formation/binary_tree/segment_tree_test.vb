@@ -22,8 +22,7 @@ Friend NotInheritable Class segment_tree_case
     End Function
 
     Private Shared Function prepare_segments() As vector(Of pair(Of Int64, pair(Of Int64, Int64)))
-        Dim s As [set](Of Int64) = Nothing
-        s = New [set](Of Int64)()
+        Dim s As New [set](Of Int64)()
         For i As Int32 = 0 To rnd_int(100 * If(isreleasebuild(), 100, 1),
                                       200 * If(isreleasebuild(), 100, 1)) - 1
             s.emplace(rnd_position())
@@ -32,18 +31,15 @@ Friend NotInheritable Class segment_tree_case
             s.emplace(rnd_position())
         End While
 
-        Dim v As vector(Of Int64) = Nothing
-        v = New vector(Of Int64)()
-        Dim it As [set](Of Int64).iterator = Nothing
-        it = s.begin()
+        Dim v As New vector(Of Int64)()
+        Dim it As [set](Of Int64).iterator = s.begin()
         While it <> s.end()
             v.emplace_back(+it)
             it += 1
         End While
 
         assert(Not v.empty())
-        Dim v2 As vector(Of pair(Of Int64, pair(Of Int64, Int64))) = Nothing
-        v2 = New vector(Of pair(Of Int64, pair(Of Int64, Int64)))()
+        Dim v2 As New vector(Of pair(Of Int64, pair(Of Int64, Int64)))()
         For i As UInt32 = 0 To v.size() - uint32_1 Step 2
             v2.emplace_back(pair.emplace_of(rnd_int64(), pair.emplace_of(v(i), v(i + uint32_1))))
         Next
@@ -51,19 +47,16 @@ Friend NotInheritable Class segment_tree_case
     End Function
 
     Public Overrides Function run() As Boolean
-        Dim v As vector(Of pair(Of Int64, pair(Of Int64, Int64))) = Nothing
-        v = prepare_segments()
+        Dim v As vector(Of pair(Of Int64, pair(Of Int64, Int64))) = prepare_segments()
         assert(Not v.empty())
-        Dim t As segment_tree(Of Int64) = Nothing
-        t = New segment_tree(Of Int64)(v.front().second.first, v.back().second.second)
+        Dim t As New segment_tree(Of Int64)(v.front().second.first, v.back().second.second)
         For i As UInt32 = 0 To v.size() - uint32_1
             If Not verify OrElse
                (v(i).second.second - v(i).second.first <= 1) OrElse
                rnd_bool() Then
                 assertion.is_true(t.emplace(v(i).second.first, v(i).second.second, v(i).first))
             Else
-                Dim tmp As Int64 = 0
-                tmp = rnd_int64(v(i).second.first, v(i).second.second)
+                Dim tmp As Int64 = rnd_int64(v(i).second.first, v(i).second.second)
                 assertion.is_true(t.emplace(v(i).second.first,
                                       If(rnd_bool(), tmp, rnd_int64(tmp, v(i).second.second)),
                                       v(i).first))
@@ -73,8 +66,7 @@ Friend NotInheritable Class segment_tree_case
             End If
             If verify Then
                 For j As Int64 = v(i).second.first To v(i).second.second
-                    Dim it As segment_tree(Of Int64).iterator = Nothing
-                    it = t.find(j)
+                    Dim it As segment_tree(Of Int64).iterator = t.find(j)
                     If assertion.is_not_null(it) Then
                         assertion.is_false(it.is_end())
                         assertion.is_true((+it).has_value())
@@ -85,11 +77,9 @@ Friend NotInheritable Class segment_tree_case
         Next
         If verify Then
             Dim vi As UInt32 = 0
-            vi = 0
             For i As Int64 = v.front().second.first To v.back().second.second
                 assert(i >= v(vi).second.first)
-                Dim it As segment_tree(Of Int64).iterator = Nothing
-                it = t.find(i)
+                Dim it As segment_tree(Of Int64).iterator = t.find(i)
                 If assertion.is_not_null(it) Then
                     assertion.is_false(it.is_end())
                     If i <= v(vi).second.second Then
@@ -109,14 +99,12 @@ Friend NotInheritable Class segment_tree_case
             Next
             assert(v.front().second.first >= min_int64 + 100)
             For i As Int64 = v.front().second.first - 100 To v.front().second.first - 1
-                Dim it As segment_tree(Of Int64).iterator = Nothing
-                it = t.find(i)
+                Dim it As segment_tree(Of Int64).iterator = t.find(i)
                 assertion.is_true(it.is_end() OrElse Not (+it).has_value())
             Next
             assert(v.back().second.second <= max_int64 - 100)
             For i As Int64 = v.back().second.second + 1 To v.back().second.second + 100
-                Dim it As segment_tree(Of Int64).iterator = Nothing
-                it = t.find(i)
+                Dim it As segment_tree(Of Int64).iterator = t.find(i)
                 assertion.is_true(it.is_end() OrElse Not (+it).has_value())
             Next
         End If

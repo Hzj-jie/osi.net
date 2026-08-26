@@ -48,8 +48,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
 
         Public Function first() As KEY_T()
             Dim rtn(CInt(length() - uint32_1)) As KEY_T
-            Dim w As node = Nothing
-            w = Me
+            Dim w As node = Me
             For i As Int64 = length() - 1 To 0 Step -1
                 rtn(CInt(i)) = key_to_index.reverse(CUInt(w.father_index()))
                 w = w.father
@@ -78,8 +77,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
         End Operator
 
         Public Function Clone() As Object Implements System.ICloneable.Clone
-            Dim rtn As node = Nothing
-            rtn = allocate_instance_of(Me)
+            Dim rtn As node = allocate_instance_of(Me)
             rtn.initial(CUInt(child.Length()))
             copy(rtn.value, value)
             copy(rtn.has_value, has_value)
@@ -158,8 +156,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
             Return (++find(k, True, False))
         End Get
         Set(ByVal value As VALUE_T)
-            Dim w As iterator = Nothing
-            w = find(k, True, False)
+            Dim w As iterator = find(k, True, False)
             w.get().has_value = True
             copy(w.get().value, value)
         End Set
@@ -244,8 +241,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
     End Function
 
     Public Function insert(ByVal k() As KEY_T) As pair(Of iterator, Boolean)
-        Dim w As iterator = Nothing
-        w = find(k, True, False)
+        Dim w As iterator = find(k, True, False)
         Return pair.emplace_of(w, Not w.get().has_value)
     End Function
 
@@ -254,8 +250,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
     End Function
 
     Public Function emplace(ByVal k() As KEY_T, ByVal v As VALUE_T) As pair(Of iterator, Boolean)
-        Dim r As pair(Of iterator, Boolean) = Nothing
-        r = insert(k)
+        Dim r As pair(Of iterator, Boolean) = insert(k)
         If r.second Then
             With +(r.first)
                 .has_value = True
@@ -295,8 +290,7 @@ Partial Public Class trie(Of KEY_T, VALUE_T, _CHILD_COUNT As _int64, _KEY_TO_IND
     End Sub
 
     Public Function Clone() As Object Implements ICloneable.Clone
-        Dim rtn As trie(Of KEY_T, VALUE_T, _CHILD_COUNT, _KEY_TO_INDEX) = Nothing
-        rtn = allocate_instance_of(Me)
+        Dim rtn As trie(Of KEY_T, VALUE_T, _CHILD_COUNT, _KEY_TO_INDEX) = allocate_instance_of(Me)
         copy_node(rtn.root, root)
         Return rtn
     End Function

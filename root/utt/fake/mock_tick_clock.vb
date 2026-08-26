@@ -53,8 +53,7 @@ Public NotInheritable Class mock_tick_clock
     End Sub
 
     Public Sub advance(ByVal ts As TimeSpan)
-        Dim t As Int64 = 0
-        t = ts.Ticks()
+        Dim t As Int64 = ts.Ticks()
         ' Negative ticks (clock goes backward) is not allowed.
         assert(t >= 0)
         advance_milliseconds(CULng(t))

@@ -28,8 +28,7 @@ Public NotInheritable Class tuple_test
             _6 = rnd_uint()
             _7 = rnd_uint64()
             _8 = rnd_uint16()
-            Dim t As tuple(Of Int32, Int64, Boolean, String, Int16, UInt32, UInt64, UInt16) = Nothing
-            t = tuple.of(_1, _2, _3, _4, _5, _6, _7, _8)
+            Dim t As tuple(Of Int32, Int64, Boolean, String, Int16, UInt32, UInt64, UInt16) = tuple.of(_1, _2, _3, _4, _5, _6, _7, _8)
             assertion.equal(t._1(), _1)
             assertion.equal(t._2(), _2)
             assertion.equal(t._3(), _3)
@@ -60,13 +59,11 @@ Public NotInheritable Class tuple_test
             _6 = rnd_uint()
             _7 = rnd_uint64()
             _8 = rnd_uint16()
-            Dim t As tuple(Of Int32, Int64, Boolean, String, Int16, UInt32, UInt64, UInt16) = Nothing
-            t = tuple.of(_1, _2, _3, _4, _5, _6, _7, _8)
+            Dim t As tuple(Of Int32, Int64, Boolean, String, Int16, UInt32, UInt64, UInt16) = tuple.of(_1, _2, _3, _4, _5, _6, _7, _8)
             assertion.equal(t, t)
             assertion.is_true(t = t)
             assertion.is_false(t <> t)
-            Dim t2 As tuple(Of Int32, Int64, Boolean, String, Int16, UInt32, UInt64, UInt16) = Nothing
-            t2 = tuple.of(_1, _2, _3, _4, _5, _6, _7, _8)
+            Dim t2 As tuple(Of Int32, Int64, Boolean, String, Int16, UInt32, UInt64, UInt16) = tuple.of(_1, _2, _3, _4, _5, _6, _7, _8)
             assertion.equal(t, t2)
             assertion.is_true(t = t2)
             assertion.is_false(t <> t2)
@@ -75,10 +72,8 @@ Public NotInheritable Class tuple_test
     End Function
 
     Private Shared Function predefined_compare_case() As Boolean
-        Dim t As tuple(Of Int32, Int32, Int32) = Nothing
-        t = tuple.of(1, 1, 1)
-        Dim t2 As tuple(Of Int32, Int32, Int32) = Nothing
-        t2 = tuple.of(2, 1, 1)
+        Dim t As tuple(Of Int32, Int32, Int32) = tuple.of(1, 1, 1)
+        Dim t2 As tuple(Of Int32, Int32, Int32) = tuple.of(2, 1, 1)
         assertion.equal(compare(t, t2), compare(1, 2))
         t2 = tuple.of(1, 3, 1)
         assertion.equal(compare(t, t2), compare(1, 3))

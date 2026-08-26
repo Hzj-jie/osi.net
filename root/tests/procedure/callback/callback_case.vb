@@ -32,18 +32,15 @@ Friend NotInheritable Class callback_case
     End Sub
 
     Private Sub wait()
-        Dim start_ms As Int64 = 0
-        start_ms = Now().milliseconds()
+        Dim start_ms As Int64 = Now().milliseconds()
         strict_wait_when(Function() Now().milliseconds() - start_ms < busy_wait_ms)
         sleep(sleep_wait_ms)
     End Sub
 
     Private Function create_callback_action() As callback_action
-        Dim i As Int32 = 0
-        i = rnd_int(0, 2)
+        Dim i As Int32 = rnd_int(0, 2)
         Dim start_ms As Int64 = 0
-        Dim rtn As callback_action = Nothing
-        rtn = New callback_action(Function() As Boolean
+        Dim rtn As callback_action = New callback_action(Function() As Boolean
                                       If i = 0 Then
                                           wait()
                                       End If
@@ -119,8 +116,7 @@ Friend NotInheritable Class callback_case
     End Function
 
     Protected Overrides Function run_case() As Boolean
-        Dim this As Int32 = 0
-        this = trigger_times()
+        Dim this As Int32 = trigger_times()
         assertion.is_true(async_sync(create_callback_action(), timeout_ms()))
         assertion.more(trigger_times(), this)
         Return True

@@ -21,8 +21,7 @@ Partial Public Class rlexer
             Else
                 If i(pos) = characters.matching_group_start Then
                     pos += uint32_1
-                    Dim e As Int32 = 0
-                    e = strindexof(i, characters.matching_group_end, pos, uint32_1)
+                    Dim e As Int32 = strindexof(i, characters.matching_group_end, pos, uint32_1)
                     If e = npos Then
                         Return False
                     Else
@@ -60,8 +59,7 @@ Partial Public Class rlexer
                         End If
                     End If
                 Else
-                    Dim e As Int32 = 0
-                    e = strindexof(i, characters.matching_group_start, pos, uint32_1)
+                    Dim e As Int32 = strindexof(i, characters.matching_group_start, pos, uint32_1)
                     If e = npos Then
                         e = strlen(i)
                     End If

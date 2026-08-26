@@ -68,8 +68,7 @@ Public NotInheritable Class pattern_match_test
 
     Private Shared Function run_fit_pattern_case() As Boolean
         For i As UInt32 = 0 To fit_pattern_cases.size() - uint32_1
-            Dim result As Byte = 0
-            result = fit_pattern_cases(i).first.second.fit_pattern(fit_pattern_cases(i).first.first)
+            Dim result As Byte = fit_pattern_cases(i).first.second.fit_pattern(fit_pattern_cases(i).first.first)
             assertion.equal(result,
                          fit_pattern_cases(i).second,
                          "pattern == ",
@@ -86,8 +85,7 @@ Public NotInheritable Class pattern_match_test
 
     Private Shared Function run_match_pattern_case() As Boolean
         For i As UInt32 = 0 To match_pattern_cases.size() - uint32_1
-            Dim result As Boolean = False
-            result = match_pattern_cases(i).first.second.match_pattern(match_pattern_cases(i).first.first)
+            Dim result As Boolean = match_pattern_cases(i).first.second.match_pattern(match_pattern_cases(i).first.first)
             assertion.equal(result,
                          match_pattern_cases(i).second,
                          "pattern == ",

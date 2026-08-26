@@ -47,10 +47,8 @@ Public NotInheritable Class dispatcher
         Return Not isemptyarray(action) AndAlso
                Not act Is Nothing AndAlso
                l.writer_locked(Function() As Boolean
-                                   Dim ap As array_ref(Of Byte) = Nothing
-                                   ap = array_ref.of(action)
-                                   Dim it As action_map.iterator = Nothing
-                                   it = m.find(ap)
+                                   Dim ap As array_ref(Of Byte) = array_ref.of(action)
+                                   Dim it As action_map.iterator = m.find(ap)
                                    If it = m.end() OrElse replace Then
                                        m(ap) = act
                                        Return True
@@ -74,8 +72,7 @@ Public NotInheritable Class dispatcher
                                      Not l.reader_locked(Function() As Boolean
                                                              Dim action As array_ref(Of Byte) = Nothing
                                                              action = array_ref.of(i.action())
-                                                             Dim it As action_map.iterator = Nothing
-                                                             it = m.find(action)
+                                                             Dim it As action_map.iterator = m.find(action)
                                                              If it = m.end() Then
                                                                  Return False
                                                              End If

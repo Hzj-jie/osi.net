@@ -37,8 +37,7 @@ Public NotInheritable Class pather_test
                                 ByVal parent As String,
                                 ByVal name As String,
                                 ByVal v() As String)
-        Dim r As vector(Of String) = Nothing
-        r = New vector(Of String)()
+        Dim r As New vector(Of String)()
         r.emplace_back(v)
         cases.emplace_back(pair.emplace_of(path, New case_result(r, normalized, parent, name)))
     End Sub
@@ -171,8 +170,7 @@ Public NotInheritable Class pather_test
     End Function
 
     Private Shared Function relative_path_cases() As Boolean
-        Dim r As Action(Of String, String, String) = Nothing
-        r = Sub(ByVal root As String, ByVal path As String, ByVal exp As String)
+        Dim r As Action(Of String, String, String) = Sub(ByVal root As String, ByVal path As String, ByVal exp As String)
                 Dim o As String = Nothing
                 assertion.is_true(p.relative_path(root, path, o))
                 assertion.equal(o, exp)

@@ -41,8 +41,7 @@ Public Class idevice_disposable_test
     End Class
 
     Public Overrides Function run() As Boolean
-        Dim d As test_class = Nothing
-        d = New test_class()
+        Dim d As New test_class()
         For i As Int32 = 1 To 100
             disposable.dispose(d)
             assertion.equal(d.close_count(), i)

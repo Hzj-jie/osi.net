@@ -188,8 +188,7 @@ Public Class stream_flow_adapter
             ElseIf ns Is Nothing Then
                 Return eva(pending, Not s.CanSeek() OrElse s.Length() > s.Position())
             Else
-                Dim t As ternary = Nothing
-                t = ns.data_available()
+                Dim t As ternary = ns.data_available()
                 Return Not t.unknown_() AndAlso
                        eva(pending, t.true_())
             End If

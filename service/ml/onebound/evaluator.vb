@@ -58,15 +58,13 @@ Partial Public NotInheritable Class onebound(Of K)
             End If
 
             Dim l As result = Nothing
-            Dim d As Double = 0
-            d = m.affinity(v(i), v(i + uint32_1))
+            Dim d As Double = m.affinity(v(i), v(i + uint32_1))
             d = 1 - d
             If d > 0 Then
                 If Not cache(i) Is Nothing Then
                     l = cache(i)
                 Else
-                    Dim s As vector(Of UInt32) = Nothing
-                    s = New vector(Of UInt32)()
+                    Dim s As New vector(Of UInt32)()
                     s.emplace_back(i)
                     l = evaluate(v, i + uint32_1, s, 1, cache)
                     assert(cache(i) Is Nothing)
@@ -97,8 +95,7 @@ Partial Public NotInheritable Class onebound(Of K)
 
         Default Public ReadOnly Property eva(ByVal v As vector(Of K)) As vector(Of vector(Of K))
             Get
-                Dim er As result = Nothing
-                er = evaluate(v,
+                Dim er As result = evaluate(v,
                               uint32_0,
                               New vector(Of UInt32)(),
                               1,
@@ -107,11 +104,9 @@ Partial Public NotInheritable Class onebound(Of K)
                     Return vector.of(v.CloneT())
                 End If
 
-                Dim r As vector(Of vector(Of K)) = Nothing
-                r = New vector(Of vector(Of K))()
+                Dim r As New vector(Of vector(Of K))()
                 For i As UInt32 = 0 To er.splitters.size()
-                    Dim skip As UInt32 = 0
-                    skip = If(i = 0, uint32_0, er.splitters(i - uint32_1) + uint32_1)
+                    Dim skip As UInt32 = If(i = 0, uint32_0, er.splitters(i - uint32_1) + uint32_1)
                     r.emplace_back(v.stream().
                                      skip(skip).
                                      limit(If(i = er.splitters.size(), v.size(), er.splitters(i) + uint32_1) - skip).

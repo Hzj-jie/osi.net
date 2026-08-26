@@ -130,10 +130,8 @@ Public Class wrapper_test
     End Function
 
     Private Function global_wrap_case() As Boolean
-        Dim v As var = Nothing
-        v = New var(strcat("--", magic_key, "=", magic_value))
-        Dim i As int = Nothing
-        i = New impl()
+        Dim v As New var(strcat("--", magic_key, "=", magic_value))
+        Dim i As int = New impl()
         Dim o As int = Nothing
         If assertion.is_true(wrapper.wrap(v, i, o)) Then
             Dim w1 As wrap1 = Nothing
@@ -147,10 +145,8 @@ Public Class wrapper_test
     End Function
 
     Private Function typed_wrap_case() As Boolean
-        Dim v As var = Nothing
-        v = New var(strcat("--", magic_key, "=", magic_value, " ", "--type=", type_def))
-        Dim i As int = Nothing
-        i = New impl()
+        Dim v As New var(strcat("--", magic_key, "=", magic_value, " ", "--type=", type_def))
+        Dim i As int = New impl()
         Dim o As int = Nothing
         If assertion.is_true(wrapper.wrap(v, i, o)) Then
             Dim w1 As wrap1 = Nothing

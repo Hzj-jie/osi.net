@@ -25,8 +25,7 @@ Public Class generic_object_perf(Of T)
 
         Public Overrides Function run() As Boolean
             Dim x As T = Nothing
-            Dim y As Boolean = False
-            y = is_null(x)
+            Dim y As Boolean = is_null(x)
             Return True
         End Function
     End Class
@@ -40,8 +39,7 @@ Public Class generic_object_perf(Of T)
 
         Public Overrides Function run() As Boolean
             Dim x As T = Nothing
-            Dim y As Boolean = False
-            y = is_null(x)
+            Dim y As Boolean = is_null(x)
             Return True
         End Function
     End Class

@@ -40,8 +40,7 @@ Public Module test_http_server
         If isemptyarray(args) OrElse Not UInt16.TryParse(args(0), port) OrElse port = 0 Then
             port = CUShort(rnd_int(10000, 60001))
         End If
-        Dim s As server = Nothing
-        s = New server(New server.configuration() With {.max_connection_count = max_int32})
+        Dim s As New server(New server.configuration() With {.max_connection_count = max_int32})
         AddHandler http_listener_context_handle.[New](s).handle_context, AddressOf handle_context
         assert(s.add_port(port))
         assert(s.start())

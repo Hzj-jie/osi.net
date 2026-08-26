@@ -26,8 +26,7 @@ Partial Public Class redundance_distributor
                                   For i As Int32 = 0 To container.size() - 1
                                       If Not excluded_nodes(i) Then
                                           Dim ec As event_comb = Nothing
-                                          Dim r As ref(Of Boolean) = Nothing
-                                          r = New ref(Of Boolean)()
+                                          Dim r As New ref(Of Boolean)()
                                           ec = container(i).modify(key, value, ts, r)
                                           ecs.emplace_back(ec)
                                           rs.emplace_back(r)

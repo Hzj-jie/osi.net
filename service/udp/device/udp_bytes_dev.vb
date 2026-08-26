@@ -29,8 +29,7 @@ Public Class udp_bytes_dev
             Dim u As UdpClient = Nothing
             If d.get(u) Then
                 assert(Not u Is Nothing)
-                Dim b As Int32 = 0
-                b = u.buffered_bytes()
+                Dim b As Int32 = u.buffered_bytes()
                 If b < 0 Then
                     Return False
                 Else

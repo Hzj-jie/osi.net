@@ -66,8 +66,7 @@ Namespace rlexer
         End Function
 
         Public Overrides Function run() As Boolean
-            Dim r As rule = Nothing
-            r = New rule()
+            Dim r As New rule()
             assertion.is_true(r.parse_file(rlexer_test_rule_files.rule1))
             If Not run_case(r) Then
                 Return False

@@ -29,8 +29,7 @@ Public Class lambda_test
 
     Public Overrides Function run() As Boolean
         For i As Int32 = 0 To 10
-            Dim x As Int32 = 0
-            x = rnd_int()
+            Dim x As Int32 = rnd_int()
             Dim c As C = Nothing
             c = New C()
             If rnd_bool() Then

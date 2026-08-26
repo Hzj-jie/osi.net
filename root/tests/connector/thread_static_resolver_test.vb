@@ -13,8 +13,7 @@ Public NotInheritable Class thread_static_resolver_test
     <multi_threading(10)>
     <repeat(100)>
     Private Shared Sub run()
-        Dim i As Object = Nothing
-        i = New Object()
+        Dim i As New Object()
         If rnd_bool() Then
             thread_static_resolver(Of Object).register(i)
         Else
@@ -31,8 +30,7 @@ Public NotInheritable Class thread_static_resolver_test
     <test>
     <repeat(100)>
     Private Shared Sub single_thread_case()
-        Dim i As Object = Nothing
-        i = New Object()
+        Dim i As New Object()
         If rnd_bool() Then
             thread_static_resolver(Of Object).register(i)
         Else
@@ -48,8 +46,7 @@ Public NotInheritable Class thread_static_resolver_test
 
     <test>
     Private Shared Sub scoped_register_case()
-        Dim i As Object = Nothing
-        i = New Object()
+        Dim i As New Object()
         Using thread_static_resolver(Of Object).scoped_register(i)
             Dim o As Object = Nothing
             assertion.is_true(thread_static_resolver(Of Object).resolve(o))
@@ -69,8 +66,7 @@ Public NotInheritable Class thread_static_resolver_test
 
     <test>
     Private Shared Sub resolve_rt_case()
-        Dim i As Int32 = 0
-        i = rnd_int()
+        Dim i As Int32 = rnd_int()
         Dim o As Int32 = 0
         Using thread_static_resolver(Of Object).scoped_register(i)
             assertion.is_true(thread_static_resolver(Of Object).resolve(o))
@@ -85,8 +81,7 @@ Public NotInheritable Class thread_static_resolver_test
 
     <test>
     Private Shared Sub resolve_shortcuts_case()
-        Dim i As Object = Nothing
-        i = New Object()
+        Dim i As New Object()
         assertion.is_null(thread_static_resolver(Of Object).resolve_or_null())
         assertion.reference_equal(thread_static_resolver(Of Object).resolve_or_default(i), i)
         Using thread_static_resolver(Of Object).scoped_register(i)

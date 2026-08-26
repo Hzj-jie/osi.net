@@ -15,8 +15,7 @@ Namespace counter
                                  Optional ByVal last_rate_length As Int64 = default_last_rate_length,
                                  Optional ByVal interval_scale As Int64 = default_interval_scale,
                                  Optional ByVal sample_rate As Double = default_sample_rate) As Int64
-            Dim cr As counter_record = Nothing
-            cr = New counter_record(name,
+            Dim cr As counter_record = New counter_record(name,
                                     write_count,
                                     write_average,
                                     write_last_average,
@@ -26,8 +25,7 @@ Namespace counter
                                     last_rate_length,
                                     interval_scale,
                                     sample_rate)
-            Dim rtn As Int64 = 0
-            rtn = _counter_collection.insert(cr)
+            Dim rtn As Int64 = _counter_collection.insert(cr)
             raise_error("register counter ",
                         name,
                         " with interval_scale ",

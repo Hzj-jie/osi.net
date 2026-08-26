@@ -86,8 +86,7 @@ Public Module _environment_transform
         If i.null_or_empty() Then
             Return i
         End If
-        Dim r As vector(Of pair(Of String, String)) = Nothing
-        r = New vector(Of pair(Of String, String))(i.size())
+        Dim r As New vector(Of pair(Of String, String))(i.size())
         For j As UInt32 = 0 To i.size() - uint32_1
             If Not i(j) Is Nothing Then
                 r.emplace_back(pair.emplace_of(i(j).first.env_transform(start_str, end_str),

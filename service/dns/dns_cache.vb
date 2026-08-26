@@ -51,8 +51,7 @@ Partial Public NotInheritable Class dns_cache
                                   Dim add As IPAddress = Nothing
                                   If Not force_resolve AndAlso
                                      IPAddress.TryParse(s, add) Then
-                                      Dim he As IPHostEntry = Nothing
-                                      he = New IPHostEntry()
+                                      Dim he As New IPHostEntry()
                                       he.AddressList() = {add}
                                       Return eva(result, he) AndAlso
                                              goto_end()

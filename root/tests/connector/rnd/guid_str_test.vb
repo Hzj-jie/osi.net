@@ -6,8 +6,7 @@ Friend Class guid_str_case
     Inherits [case]
 
     Public Overrides Function run() As Boolean
-        Dim s As String = Nothing
-        s = guid_str()
+        Dim s As String = guid_str()
         If assertion.equal(strlen(s), CUInt(32)) Then
             For i As UInt32 = 0 To strlen(s) - 1
                 assertion.is_true(s(i).hex())

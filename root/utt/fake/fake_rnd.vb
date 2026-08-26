@@ -21,8 +21,7 @@ Public Module _fake_rnd
         str_prefix_len = strlen(str_prefix)
         int_bit = 0
         For i As Int32 = rnd_int(2, 4 + 1) - 1 To 0 Step -1
-            Dim t As UInt32 = 0
-            t = (uint32_1 << rnd_int(0, 31 + 1))
+            Dim t As UInt32 = (uint32_1 << rnd_int(0, 31 + 1))
             If (int_bit And t) = 0 Then
                 int_bit += t
             Else
@@ -57,8 +56,7 @@ Public Module _fake_rnd
     End Function
 
     Public Function is_fake_rnd_en_chars(ByVal s As String) As Boolean
-        Dim l As UInt32 = 0
-        l = strlen(s)
+        Dim l As UInt32 = strlen(s)
         Return l = 0 OrElse
                strsame(s, str_prefix, min(l, str_prefix_len))
     End Function
@@ -174,10 +172,8 @@ Public Module _fake_rnd
                                                      ByVal b() As Byte,
                                                      ByVal len_low As UInt32,
                                                      ByVal len_up As UInt32) As Boolean
-        Dim l As UInt32 = 0
-        l = array_size(b)
-        Dim sl As UInt32 = 0
-        sl = fake_rnd_uint(len_low, len_up, signing(seed))
+        Dim l As UInt32 = array_size(b)
+        Dim sl As UInt32 = fake_rnd_uint(len_low, len_up, signing(seed))
         If l = 0 Then
             Return sl = 0
         End If

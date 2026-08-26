@@ -44,8 +44,7 @@ Public NotInheritable Class configuration
         Me.sv = combine_static_variants(static_variants)
 
         If loader_ctor2 Is Nothing Then
-            Dim csd As config_streamreader_dataloader = Nothing
-            csd = New config_streamreader_dataloader(Me.c, Me.fs, Me.sv)
+            Dim csd As New config_streamreader_dataloader(Me.c, Me.fs, Me.sv)
             If loader_ctor Is Nothing Then
                 Me.loader = New filestream_dataloader(Of config)(csd)
             Else
@@ -66,8 +65,7 @@ Public NotInheritable Class configuration
     End Sub
 
     Private Function provider(ByVal file As String) As dataprovider(Of config)
-        Dim r As dataprovider(Of config) = Nothing
-        r = provider_ctor(file, loader, loader_name)
+        Dim r As dataprovider(Of config) = provider_ctor(file, loader, loader_name)
         assert(Not r Is Nothing)
         Return r
     End Function
@@ -86,8 +84,7 @@ Public NotInheritable Class configuration
     End Sub
 
     Public Sub unload(ByVal file As String)
-        Dim r As dataprovider(Of config) = Nothing
-        r = provider_ctor(file, loader, loader_name)
+        Dim r As dataprovider(Of config) = provider_ctor(file, loader, loader_name)
         assert(Not r Is Nothing)
         r.expire()
     End Sub
@@ -101,8 +98,7 @@ Public NotInheritable Class configuration
     End Property
 
     Public Function [get](ByVal file As String, ByRef config As config) As Boolean
-        Dim p As dataprovider(Of config) = Nothing
-        p = provider(file)
+        Dim p As dataprovider(Of config) = provider(file)
         If p.valid() Then
             config = p.get()
             Return True

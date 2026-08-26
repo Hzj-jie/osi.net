@@ -30,8 +30,7 @@ Public Module _unhandled_exception
         If ex Is Nothing Then
             Return "null"
         Else
-            Dim r As StringBuilder = Nothing
-            r = New StringBuilder()
+            Dim r As New StringBuilder()
             export(ex, r)
             Return Convert.ToString(r)
         End If

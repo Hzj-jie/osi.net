@@ -97,8 +97,7 @@ Public MustInherit Class synchronize_invoke
         If synchronously() Then
             Return New async_result(method, args, True)
         End If
-        Dim r As async_result = Nothing
-        r = New async_result(method, args, False)
+        Dim r As New async_result(method, args, False)
         push(AddressOf r.execute)
         Return r
     End Function
@@ -107,8 +106,7 @@ Public MustInherit Class synchronize_invoke
         If result Is Nothing Then
             Return Nothing
         End If
-        Dim r As async_result = Nothing
-        r = direct_cast(Of async_result)(result)
+        Dim r As async_result = direct_cast(Of async_result)(result)
         assert(Not r Is Nothing)
         assert(r.AsyncWaitHandle().wait())
         r.AsyncWaitHandle().Dispose()

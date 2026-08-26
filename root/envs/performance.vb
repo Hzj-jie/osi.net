@@ -43,8 +43,7 @@ Public Module _performance
         If impl.last_ticks = 0 Then
             impl.last_ticks = this_process.ref.StartTime().Ticks()
         End If
-        Dim rtn As Double = 0
-        rtn = processor_usage(usage, impl.last_usage_ticks, ticks, impl.last_ticks)
+        Dim rtn As Double = processor_usage(usage, impl.last_usage_ticks, ticks, impl.last_ticks)
         impl.last_usage_ticks = usage
         impl.last_ticks = ticks
         Return rtn

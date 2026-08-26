@@ -58,8 +58,7 @@ Friend Class ikeyvt_true_istrkeyvt
                               End Function,
                               Function() As Boolean
                                   If ec.end_result() Then
-                                      Dim rs As vector(Of String) = Nothing
-                                      rs = New vector(Of String)()
+                                      Dim rs As New vector(Of String)()
                                       For i As Int64 = 0 To (+r).size() - 1
                                           rs.emplace_back(bytes_str((+r)(i)))
                                       Next

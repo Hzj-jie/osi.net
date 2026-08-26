@@ -65,8 +65,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
                                                   goto_next()
                                        End Function,
                                        Function() As Boolean
-                                           Dim sec As Int64 = 0
-                                           sec = milliseconds_to_seconds(Now().milliseconds() - start_ms)
+                                           Dim sec As Int64 = milliseconds_to_seconds(Now().milliseconds() - start_ms)
                                            If sec = 0 Then
                                                sec = 1
                                            End If
@@ -383,8 +382,7 @@ Public Class istrkeyvt_perf_case(Of _PARALLEL As _int64,
     End Function
 
     Private Shared Function rnd_case(ByVal keyvt As istrkeyvt) As event_comb
-        Dim r As Int32 = 0
-        r = rnd_int(0, 16)
+        Dim r As Int32 = rnd_int(0, 16)
         'average_key_rate = average_key_count / all_key_count
         'all_key_count = 16 ^ 3
         Select Case r

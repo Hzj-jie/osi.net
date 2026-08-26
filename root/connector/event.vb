@@ -15,8 +15,7 @@ Public Module _event
             If Not strendwith(name, event_magic_suffix) Then
                 name += event_magic_suffix
             End If
-            Dim fi As FieldInfo = Nothing
-            fi = T.GetField(name,
+            Dim fi As FieldInfo = T.GetField(name,
                             BindingFlags.NonPublic Or
                             If(i Is Nothing, BindingFlags.Static, BindingFlags.Instance))
             If fi Is Nothing Then

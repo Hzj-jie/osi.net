@@ -18,20 +18,16 @@ Public NotInheritable Class chmod_test
         assertion.disable_not_on_windows("embedded test binary is Windows PE .exe")
         ' TODO: Enable chmod execution test on Linux when native Unix file permissions are integrated in modern .NET.
         If os.is_nix Then
-            Dim file_name As String = Nothing
-            file_name = Path.Combine(osi.root.utils.deploys.temp_folder,
+            Dim file_name As String = Path.Combine(osi.root.utils.deploys.temp_folder,
                                      strcat(guid_str(),
                                             filesystem.extension_prefix,
                                             filesystem.extensions.executable_file))
             If assertion.is_true(chmod_test_exe.sync_export(file_name)) AndAlso
                assertion.is_true(File.Exists(file_name)) AndAlso
                assertion.is_true(chmod_exe(file_name)) Then
-                Dim p As shell_less_process = Nothing
-                p = New shell_less_process()
-                Dim s1 As String = Nothing
-                s1 = guid_str()
-                Dim s2 As String = Nothing
-                s2 = guid_str()
+                Dim p As New shell_less_process()
+                Dim s1 As String = guid_str()
+                Dim s2 As String = guid_str()
                 p.start_info().FileName() = file_name
                 p.start_info().Arguments() = strcat(s1, character.blank, s2)
                 Dim ex As Exception = Nothing

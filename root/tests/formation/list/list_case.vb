@@ -49,8 +49,7 @@ Friend Class list_case
 
         Dim it As list(Of String).iterator = Nothing
         If validate() Then
-            Dim s As String = Nothing
-            s = v(rnd_int(0, v.size()))
+            Dim s As String = v(rnd_int(0, v.size()))
             If rnd_int(0, 2) = 0 Then
                 it = l.find(s)
                 assertion.is_true(it <> l.end(), "cannot find " + s + " in list.")
@@ -68,8 +67,7 @@ Friend Class list_case
     End Sub
 
     Private Sub push_back()
-        Dim s As String = Nothing
-        s = guid_str()
+        Dim s As String = guid_str()
         l.push_back(s)
         assertion.equal(l.back(), s, "l.push_back(" + s + ") <> l.back()")
         If validate() Then
@@ -78,8 +76,7 @@ Friend Class list_case
     End Sub
 
     Private Sub push_front()
-        Dim s As String = Nothing
-        s = guid_str()
+        Dim s As String = guid_str()
         l.push_front(s)
         assertion.equal(l.front(), s, "l.push_front(" + s + ") <> l.front()")
         If validate() Then
@@ -110,8 +107,7 @@ Friend Class list_case
     Private Sub size()
         If validate() Then
             assertion.equal(l.size(), v.size(), "l.size() <> v.size()")
-            Dim it As list(Of String).iterator = Nothing
-            it = l.begin()
+            Dim it As list(Of String).iterator = l.begin()
             Dim count As Int64
             count = 0
             While it <> l.end()
@@ -137,8 +133,7 @@ Friend Class list_case
         l.push_back(guid_str())
         If validate() Then
             v.push_back(l.back())
-            Dim s As String = Nothing
-            s = v(rnd_int(0, v.size()))
+            Dim s As String = v(rnd_int(0, v.size()))
             assertion.not_equal(l.find(s), l.end(), "l.find(" + s + ") = l.end()")
         Else
             l.find(l(rnd_int(0, l.size())))
@@ -150,8 +145,7 @@ Friend Class list_case
         l.push_front(guid_str())
         If validate() Then
             v.push_back(l.front())
-            Dim s As String = Nothing
-            s = v(rnd_int(0, v.size()))
+            Dim s As String = v(rnd_int(0, v.size()))
             assertion.not_equal(l.rfind(s), l.rend(), "l.rfind(" + s + ") = l.rend()")
         Else
             l.rfind(l(rnd_int(0, l.size())))
@@ -161,8 +155,7 @@ Friend Class list_case
     Private Sub at()
         'confirm at least one element.
         l.push_back(guid_str())
-        Dim i As Int64 = Nothing
-        i = rnd_int(0, l.size())
+        Dim i As Int64 = rnd_int(0, l.size())
         If validate() Then
             v.push_back(l.back())
             assertion.is_true(v.erase(l(i)), "v.erase(" + l(i) + ") returns false.")
@@ -180,15 +173,12 @@ Friend Class list_case
             v.push_back(l.back())
         End If
         If rnd_bool() AndAlso validate() Then
-            Dim i As Int64 = Nothing
-            i = rnd_int(0, v.size())
+            Dim i As Int64 = rnd_int(0, v.size())
             l.erase(v(i))
             assert(v.erase(v(i)))
         Else
-            Dim i As UInt32 = Nothing
-            i = rnd_uint(0, l.size())
-            Dim s As String = Nothing
-            s = l(i)
+            Dim i As UInt32 = rnd_uint(0, l.size())
+            Dim s As String = l(i)
             l.erase(i)
             If validate() Then
                 assertion.is_true(v.erase(s), "cannot find " + s + " in vector.")

@@ -59,8 +59,7 @@ Public Class sleep_case_wrapper
         If before Then
             s()
         End If
-        Dim r As Boolean = False
-        r = MyBase.run()
+        Dim r As Boolean = MyBase.run()
         If after Then
             s()
         End If

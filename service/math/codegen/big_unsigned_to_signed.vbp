@@ -75,10 +75,8 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         If i Is Nothing Then
             Return Nothing
         End If
-        Dim s As Boolean = False
-        s = i.signal()
-        Dim r As ##CLASS_NAME## = Nothing
-        r = New ##CLASS_NAME##(##IMPL_CLASS##.move(i.d), s)
+        Dim s As Boolean = i.signal()
+        Dim r As New ##CLASS_NAME##(##IMPL_CLASS##.move(i.d), s)
         i.confirm_signal()
         Return r
     End Function
@@ -151,8 +149,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
         If isemptyarray(a) Then
             Return False
         End If
-        Dim p As piece = Nothing
-        p = New piece(a)
+        Dim p As New piece(a)
         If Not p.consume(uint32_1, p) Then
             Return False
         End If

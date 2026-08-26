@@ -83,8 +83,7 @@ Public Class parser(Of _MAX_TYPE As _int64, RESULT_T)
 
     Public Function parse(ByVal words() As lexer.word, ByRef start As UInt32, ByVal o As RESULT_T) As Boolean
         Dim r As Boolean = False
-        Dim l As UInt32 = 0
-        l = dfa.parse(words, start, o, r)
+        Dim l As UInt32 = dfa.parse(words, start, o, r)
         If r Then
             start += l
             Return True

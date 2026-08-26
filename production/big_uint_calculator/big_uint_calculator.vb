@@ -11,14 +11,12 @@ Public Module big_uint_calculator
     End Sub
 
     Private Sub calculate(ByVal arg As String, ByVal o As TextWriter)
-        Dim r As expression_result(Of big_uint) = Nothing
-        r = e.execute(arg)
+        Dim r As expression_result(Of big_uint) = e.execute(arg)
         o.WriteLine(r.str())
     End Sub
 
     Private Sub calculate(ByVal args() As String, ByVal o As TextWriter)
-        Dim r As expression_result(Of big_uint) = Nothing
-        r = e.execute(args)
+        Dim r As expression_result(Of big_uint) = e.execute(args)
         o.WriteLine(r.str())
     End Sub
 

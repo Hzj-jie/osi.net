@@ -6,8 +6,7 @@ Public Class weakreference_behavior_test
 
     Public Overrides Function run() As Boolean
         Dim i As Int32 = 0
-        Dim p As WeakReference = Nothing
-        p = New WeakReference(i)
+        Dim p As New WeakReference(i)
         i = 100
         assertion.equal(DirectCast(p.Target(), Int32), 0)
         p.Target() = 200

@@ -23,8 +23,7 @@ Public Class lowlevel_keyboard_hook_test
         End Sub
 
         Public Overrides Function run() As Boolean
-            Dim are As AutoResetEvent = Nothing
-            are = New AutoResetEvent(False)
+            Dim are As New AutoResetEvent(False)
             Using lowlevel_keyboard_hook.[New](Function(ByVal e As lowlevel_keyboard_hook.event) As Boolean
                                                    log(e)
                                                    If e.virtual_keycode = windows_virtual_key.VK_ESCAPE Then

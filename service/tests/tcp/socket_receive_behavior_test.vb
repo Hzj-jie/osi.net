@@ -37,8 +37,7 @@ Public MustInherit Class socket_receive_behavior_test(Of IMPL)
     End Function
 
     Private Sub client_thread(ByVal received As atomic_int, ByVal ready As AutoResetEvent)
-        Dim c As TcpClient = Nothing
-        c = New TcpClient()
+        Dim c As New TcpClient()
         Try
             c.Connect(IPAddress.Loopback, port)
         Catch ex As Exception
@@ -46,8 +45,7 @@ Public MustInherit Class socket_receive_behavior_test(Of IMPL)
             Return
         End Try
         For i As Int32 = 0 To repeat_size - 1
-            Dim last_received As Int32 = 0
-            last_received = (+received)
+            Dim last_received As Int32 = (+received)
             assertion.is_true(ready.WaitOne())
             If receive_before_send Then
                 assertion.is_false(try_wait_when(Function() last_received = (+received), 4096))

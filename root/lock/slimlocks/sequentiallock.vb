@@ -18,8 +18,7 @@ Namespace slimlock
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Sub wait() Implements islimlock.wait
             atomic.create_if_nothing(are, False)
-            Dim tokengot As Int32 = 0
-            tokengot = Interlocked.Increment(assign_token) - 1
+            Dim tokengot As Int32 = Interlocked.Increment(assign_token) - 1
             While token < tokengot
                 are.WaitOne()
                 If token < tokengot Then

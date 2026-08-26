@@ -17,8 +17,7 @@ Public Class weak_ref_ref_test
     End Function
 
     Private Shared Function wont_pin_objects() As Boolean
-        Dim p As weak_ref_ref(Of cd_object(Of weak_ref_ref_test)) = Nothing
-        p = weak_ref_ref.of(New cd_object(Of weak_ref_ref_test)())
+        Dim p As weak_ref_ref(Of cd_object(Of weak_ref_ref_test)) = weak_ref_ref.of(New cd_object(Of weak_ref_ref_test)())
         For i As Int32 = 0 To 1000
             p.set(New cd_object(Of weak_ref_ref_test)())
             garbage_collector.repeat_collect()

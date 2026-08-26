@@ -64,16 +64,14 @@ Friend NotInheritable Class mapheap_cache(Of KEY_T As IComparable(Of KEY_T), VAL
 
     Public Function [get](ByVal key As KEY_T, ByRef value As VALUE_T) As Boolean _
                          Implements islimcache2(Of KEY_T, VALUE_T).get
-        Dim i As map(Of KEY_T, VALUE_T).iterator = Nothing
-        i = m.find(key)
+        Dim i As map(Of KEY_T, VALUE_T).iterator = m.find(key)
         If i = m.end() Then
             If isdebugmode() Then
                 assert(mh.find(key) = mh.end())
             End If
             Return False
         End If
-        Dim j As mapheap(Of KEY_T, reverse(Of UInt64)).iterator = Nothing
-        j = mh.find(key)
+        Dim j As mapheap(Of KEY_T, reverse(Of UInt64)).iterator = mh.find(key)
         assert(j <> mh.end())
         If retired(j) Then
             assert([erase](key))

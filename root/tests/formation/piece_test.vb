@@ -17,10 +17,8 @@ Public NotInheritable Class piece_test
         Else
             Dim b() As Byte = Nothing
             b = next_bytes(rnd_uint(1024, 4096))
-            Dim s As UInt32 = 0
-            s = rnd_uint(0, array_size(b))
-            Dim l As UInt32 = 0
-            l = rnd_uint(0, array_size(b) - s)
+            Dim s As UInt32 = rnd_uint(0, array_size(b))
+            Dim l As UInt32 = rnd_uint(0, array_size(b) - s)
             Return New piece(b, s, l)
         End If
     End Function
@@ -48,8 +46,7 @@ Public NotInheritable Class piece_test
     <repeat(500, 50000)>
     Private Shared Sub serializable()
         Dim original As vector(Of piece) = Nothing
-        Dim p As piece = Nothing
-        p = random_serialized_piece(original)
+        Dim p As piece = random_serialized_piece(original)
 
         Dim v As vector(Of piece) = Nothing
         assertion.is_true(bytes_serializer(Of vector(Of piece)).r.from_piece(p, v))

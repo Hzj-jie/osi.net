@@ -34,8 +34,7 @@ Namespace dotnet
             End Function
 
             Private Function compiler_parameters() As CompilerParameters
-                Dim param As CompilerParameters = Nothing
-                param = New CompilerParameters()
+                Dim param As New CompilerParameters()
                 param.GenerateExecutable() = False
                 param.GenerateInMemory() = True
                 param.ReferencedAssemblies().AddRange(+references)

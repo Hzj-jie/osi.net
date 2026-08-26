@@ -25,8 +25,7 @@ Public Module _config
         If c Is Nothing Then
             Return Nothing
         End If
-        Dim r As vector(Of section) = Nothing
-        r = New vector(Of section)()
+        Dim r As New vector(Of section)()
         Dim s As section = Nothing
         While gs(c, strcat(base_section, base_index), s, variants)
             r.push_back(s)
@@ -56,8 +55,7 @@ Public Module _config
             Return Nothing
         End If
         assert(Not ss.null_or_empty())
-        Dim r As vector(Of section) = Nothing
-        r = New vector(Of section)()
+        Dim r As New vector(Of section)()
         For i As UInt32 = 0 To ss.size() - uint32_1
             Dim t As section = Nothing
             If gs(c, ss(i), t, variants) Then

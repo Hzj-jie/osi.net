@@ -20,16 +20,14 @@ Friend Class big_int_bytes_case
     End Sub
 
     Public Overrides Function run() As Boolean
-        Dim r As Int64 = 0
-        r = rnd_int64(min_int64 + int64_1, max_int64)
+        Dim r As Int64 = rnd_int64(min_int64 + int64_1, max_int64)
         Dim b1 As big_int = Nothing
         If r >= 0 Then
             b1 = New big_int(array_concat({byte_0}, int64_bytes(r)))
         Else
             b1 = New big_int(array_concat({byte_1}, int64_bytes(-r)))
         End If
-        Dim b2 As big_int = Nothing
-        b2 = New big_int(r)
+        Dim b2 As New big_int(r)
         assertion.equal(b1, b2)
 
         b1 = big_int.random()

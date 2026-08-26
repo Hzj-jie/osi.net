@@ -19,8 +19,7 @@ Public Class istrkeyvt_container
         If isemptyarray(names) Then
             Return False
         Else
-            Dim ts As vector(Of pair(Of istrkeyvt, String)) = Nothing
-            ts = New vector(Of pair(Of istrkeyvt, String))()
+            Dim ts As New vector(Of pair(Of istrkeyvt, String))()
             For i As UInt32 = 0 To array_size(names) - uint32_1
                 Dim c As container(Of istrkeyvt) = Nothing
                 If container(Of istrkeyvt).create(names(i), c) Then

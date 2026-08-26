@@ -25,14 +25,12 @@ Partial Public Class vector_test
                 assertion.equal(v.size() - oldsize, till,
                              "cannot update size property after ", till, " push_back operations.")
             Else
-                Dim t As UInt32 = 0
-                t = v.size()
+                Dim t As UInt32 = v.size()
             End If
         End Sub
 
         Private Sub clear()
-            Dim old_size As UInt32 = 0
-            old_size = v.size()
+            Dim old_size As UInt32 = v.size()
             v.clear()
             assertion.equal(v.size(), uint32_0, "v.size() <> 0 after clear.")
             If validation Then
@@ -47,8 +45,7 @@ Partial Public Class vector_test
                 Dim a() As String = Nothing
                 rndarray(a)
 
-                Dim oldsize As UInt32 = 0
-                oldsize = v.size()
+                Dim oldsize As UInt32 = v.size()
                 assertion.is_true(v.push_back(a))
 
                 assertion.equal(oldsize + array_size(a), v.size())
@@ -59,11 +56,9 @@ Partial Public Class vector_test
         End Sub
 
         Private Sub push_back()
-            Dim s As String = Nothing
-            s = guid_str()
+            Dim s As String = guid_str()
 
-            Dim oldsize As Int64 = 0
-            oldsize = v.size()
+            Dim oldsize As Int64 = v.size()
             v.push_back(s)
 
             assertion.equal(v.size(), oldsize + 1, "v.size() - oldsize <> 1 after one push_back operation.")
@@ -71,11 +66,9 @@ Partial Public Class vector_test
         End Sub
 
         Private Sub pop_back()
-            Dim oldsize As Int64 = 0
-            oldsize = v.size()
+            Dim oldsize As Int64 = v.size()
 
-            Dim s As String = Nothing
-            s = guid_str()
+            Dim s As String = guid_str()
             v.push_back(s)
 
             v.pop_back()
@@ -88,13 +81,10 @@ Partial Public Class vector_test
         Private Sub insert()
             'make sure there is at least one element, to avoid breaking v.back()
             v.push_back(guid_str())
-            Dim oldsize As UInt32 = 0
-            oldsize = v.size()
-            Dim last_back As String = Nothing
-            last_back = v.back()
+            Dim oldsize As UInt32 = v.size()
+            Dim last_back As String = v.back()
 
-            Dim s As String = Nothing
-            s = guid_str()
+            Dim s As String = guid_str()
             Dim p As UInt32 = 0
             If rnd_bool() Then
                 p = oldsize
@@ -123,8 +113,7 @@ Partial Public Class vector_test
                 Dim a() As String = Nothing
                 rndarray(a)
 
-                Dim oldsize As Int32 = 0
-                oldsize = CInt(v.size())
+                Dim oldsize As Int32 = CInt(v.size())
                 assertion.is_true(v.push_back(a))
 
                 For i As Int32 = 0 To a.Length() - 1
@@ -156,15 +145,13 @@ Partial Public Class vector_test
 
         Private Sub front()
             v.clear()
-            Dim s As String = Nothing
-            s = guid_str()
+            Dim s As String = guid_str()
             v.push_back(s)
             assertion.equal(v.front(), s, "v.front <> s.")
         End Sub
 
         Private Sub back()
-            Dim s As String = Nothing
-            s = guid_str()
+            Dim s As String = guid_str()
             v.push_back(s)
             assertion.equal(v.back(), s, "v.back <> s.")
         End Sub

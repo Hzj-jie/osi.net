@@ -20,8 +20,7 @@ Public NotInheritable Class primes
         is_pr(1) = False
         For i As Int32 = 0 To CInt(max_precalculated_prime).sqrt()
             If is_pr(i) Then
-                Dim j As Int32 = 0
-                j = i + i
+                Dim j As Int32 = i + i
                 While j < max_precalculated_prime
                     is_pr(j) = False
                     j += i
@@ -59,8 +58,7 @@ Public NotInheritable Class primes
             Return True
         End If
 
-        Dim r As UInt32 = 0
-        r = i.sqrt()
+        Dim r As UInt32 = i.sqrt()
         assert(r < max_precalculated_prime)
         If r * r = i Then
             Return False

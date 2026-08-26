@@ -225,8 +225,7 @@ Public Class registry_test
         If assertion.is_not_null(i) Then
             Dim j As auto_device_exporter(Of mock_dev) = Nothing
             If assertion.is_true(cast(i, j)) AndAlso assert(Not j Is Nothing) Then
-                Dim k As idevice_creator(Of mock_dev) = Nothing
-                k = (New valuer(Of idevice_creator(Of mock_dev))(j, binding_flags.instance_private, "c")).get()
+                Dim k As idevice_creator(Of mock_dev) = (New valuer(Of idevice_creator(Of mock_dev))(j, binding_flags.instance_private, "c")).get()
                 If Not assert_mock_dev_wrapper(k, v) Then
                     Return False
                 End If
@@ -299,8 +298,7 @@ Public Class registry_test
     End Function
 
     Private Shared Function mock_dev_case() As Boolean
-        Dim v As var = Nothing
-        v = New var()
+        Dim v As New var()
         Dim i As mock_dev = Nothing
         assertion.is_true(constructor.resolve(v, i))
         If Not assert_mock_dev_impl(i, v) Then
@@ -313,8 +311,7 @@ Public Class registry_test
     End Function
 
     Private Shared Function idevice_case() As Boolean
-        Dim v As var = Nothing
-        v = New var()
+        Dim v As New var()
         Dim i As idevice(Of mock_dev) = Nothing
         assertion.is_true(constructor.resolve(v, i))
         If Not assert_mock_dev_impl(i, v) Then
@@ -327,8 +324,7 @@ Public Class registry_test
     End Function
 
     Private Shared Function idevice_creator_case() As Boolean
-        Dim v As var = Nothing
-        v = New var()
+        Dim v As New var()
         Dim i As idevice_creator(Of mock_dev) = Nothing
         assertion.is_true(constructor.resolve(v, i))
         ' Always wrappered by wrappered_device_creator
@@ -342,8 +338,7 @@ Public Class registry_test
     End Function
 
     Private Shared Function idevice_exportor_case() As Boolean
-        Dim v As var = Nothing
-        v = New var()
+        Dim v As New var()
         Dim i As iauto_device_exporter(Of mock_dev) = Nothing
         assertion.is_true(constructor.resolve(v, i))
         ' Always wrappered by wrappered_device_creator
@@ -357,8 +352,7 @@ Public Class registry_test
     End Function
 
     Private Shared Function auto_pre_generated_device_pool_case() As Boolean
-        Dim v As var = Nothing
-        v = New var("--max-count=10")
+        Dim v As New var("--max-count=10")
         Dim i As auto_pre_generated_device_pool(Of mock_dev) = Nothing
         assertion.is_true(constructor.resolve(v, i))
         Try
@@ -383,8 +377,7 @@ Public Class registry_test
     End Function
 
     Private Shared Function delay_generate_device_pool_case() As Boolean
-        Dim v As var = Nothing
-        v = New var()
+        Dim v As New var()
         Dim i As delay_generate_device_pool(Of mock_dev) = Nothing
         assertion.is_true(constructor.resolve(v, i))
         If Not assert_mock_dev_wrapper(i, v) Then
@@ -397,8 +390,7 @@ Public Class registry_test
     End Function
 
     Private Shared Function manual_pre_generated_device_pool_case() As Boolean
-        Dim v As var = Nothing
-        v = New var()
+        Dim v As New var()
         Dim i As manual_pre_generated_device_pool(Of mock_dev) = Nothing
         assertion.is_true(constructor.resolve(v, i))
         Try
@@ -423,8 +415,7 @@ Public Class registry_test
     End Function
 
     Private Shared Function one_off_device_pool_case() As Boolean
-        Dim v As var = Nothing
-        v = New var()
+        Dim v As New var()
         Dim i As one_off_device_pool(Of mock_dev) = Nothing
         assertion.is_true(constructor.resolve(v, i))
         If Not assert_mock_dev_wrapper(i, v) Then
@@ -437,8 +428,7 @@ Public Class registry_test
     End Function
 
     Private Shared Function singleton_device_pool_case() As Boolean
-        Dim v As var = Nothing
-        v = New var()
+        Dim v As New var()
         Dim i As singleton_device_pool(Of mock_dev) = Nothing
         assertion.is_true(constructor.resolve(v, i))
         If Not assert_mock_dev_impl(i, v) Then

@@ -56,14 +56,12 @@ Partial Public Class ##BASE_TYPE##
     Public Function exchange(ByVal value As ##TYPE##) As ##TYPE##
 #If GENERIC_TYPE Then
         Return l.locked(Function() As ##TYPE##
-                            Dim r As ##TYPE## = Nothing
-                            r = p
+                            Dim r As ##TYPE## = p
                             p = value
                             Return r
                         End Function)
 #Else
-        Dim r As ##TYPE## = Nothing
-        r = Interlocked.Exchange(p, value)
+        Dim r As ##TYPE## = Interlocked.Exchange(p, value)
         Thread.MemoryBarrier()
         Return r
 #End If
@@ -72,16 +70,14 @@ Partial Public Class ##BASE_TYPE##
     Public Function compare_exchange(ByVal value As ##TYPE##, ByVal comparand As ##TYPE##) As ##TYPE##
 #If GENERIC_TYPE Then
         Return l.locked(Function() As ##TYPE##
-                            Dim r As ##TYPE## = Nothing
-                            r = p
+                            Dim r As ##TYPE## = p
                             If equal(p, comparand) Then
                                 p = value
                             End If
                             Return r
                         End Function)
 #Else
-        Dim r As ##TYPE## = Nothing
-        r = Interlocked.CompareExchange(p, value, comparand)
+        Dim r As ##TYPE## = Interlocked.CompareExchange(p, value, comparand)
         Thread.MemoryBarrier()
         Return r
 #End If

@@ -29,8 +29,7 @@ Partial Public NotInheritable Class big_int
         End If
         assert(bi.Sign() < 0)
         bi = -bi
-        Dim r As big_int = Nothing
-        r = New big_int(New big_uint(bi.ToByteArray()))
+        Dim r As New big_int(New big_uint(bi.ToByteArray()))
         r.set_negative()
         Return r
     End Function

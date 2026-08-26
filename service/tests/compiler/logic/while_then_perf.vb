@@ -88,8 +88,7 @@ Namespace logic
                 Inherits [case]
 
                 Public Overrides Function run() As Boolean
-                    Dim r As big_uint = Nothing
-                    r = New big_uint()
+                    Dim r As New big_uint()
                     Dim i As Int32 = 0
                     While i <= upper_bound
                         i += 1

@@ -15,8 +15,7 @@ Public Class bst(Of T)
         If v Is Nothing Then
             Return Nothing
         End If
-        Dim r As bst(Of T) = Nothing
-        r = New bst(Of T)()
+        Dim r As New bst(Of T)()
         move_to(v, r)
         Return r
     End Function
@@ -26,11 +25,9 @@ Public Class bst(Of T)
         If empty() Then
             Return [end]()
         End If
-        Dim n As node = Nothing
-        n = root
+        Dim n As node = root
         While True
-            Dim c As Int32 = 0
-            c = n.compare(v)
+            Dim c As Int32 = n.compare(v)
             If c = 0 Then
                 Return New iterator(n)
             End If
@@ -60,15 +57,13 @@ Public Class bst(Of T)
         If empty() Then
             Return [end]()
         End If
-        Dim n As node = Nothing
-        n = root
+        Dim n As node = root
         Dim l As node = Nothing
         While True
 #If Not Performance Then
             assert(Not n Is Nothing)
 #End If
-            Dim c As Int32 = 0
-            c = n.compare(v)
+            Dim c As Int32 = n.compare(v)
             If c = 0 Then
                 Return New iterator(n)
             End If
@@ -104,8 +99,7 @@ Public Class bst(Of T)
         If empty() Then
             Return [end]()
         End If
-        Dim n As node = Nothing
-        n = root
+        Dim n As node = root
         Dim l As node = Nothing
         While True
 #If Not Performance Then

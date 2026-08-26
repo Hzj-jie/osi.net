@@ -28,8 +28,7 @@ Public Class environment_transform_test
         Dim e As String = Nothing
         For i As Int32 = 0 To 128 - 1
             If rnd_bool() Then
-                Dim r As Int32 = 0
-                r = rnd_int(0, array_size_i(kv))
+                Dim r As Int32 = rnd_int(0, array_size_i(kv))
                 p += start_str + kv(r).first + end_str
                 e += kv(r).second
             ElseIf rnd_bool() Then
@@ -46,8 +45,7 @@ Public Class environment_transform_test
                 e += r
             End If
         Next
-        Dim o As String = Nothing
-        o = p.env_transform()
+        Dim o As String = p.env_transform()
         assertion.equal(o, e, p, " -> ", o, ", exp ", e)
         Return True
     End Function

@@ -18,8 +18,7 @@ Friend Class big_uint_power_divide_case
 
     Private Shared Function power_divide_case(ByVal i As UInt64, ByVal j As UInt64) As Boolean
         assert(i > 0)
-        Dim b As big_uint = Nothing
-        b = New big_uint(i)
+        Dim b As New big_uint(i)
         b.power(j)
         For k As UInt64 = 0 To j - 1
             Dim r As big_uint = Nothing

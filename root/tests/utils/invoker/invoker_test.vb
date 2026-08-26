@@ -31,8 +31,7 @@ Public Class invoker_test
     End Function
 
     Private Function pre_bind() As Boolean
-        Dim c As atomic_int = Nothing
-        c = New atomic_int()
+        Dim c As New atomic_int()
         Dim ds As invoker(Of Action(Of atomic_int)) = Nothing
         assertion.is_true(invoker.of(ds).
                         with_type(Of invoker_test).
@@ -100,8 +99,7 @@ Public Class invoker_test
     End Function
 
     Private Function post_bind() As Boolean
-        Dim c As atomic_int = Nothing
-        c = New atomic_int()
+        Dim c As New atomic_int()
         Dim ds As invoker(Of Action(Of atomic_int)) = Nothing
         assertion.is_true(invoker.of(ds).
                         with_type(Me.GetType()).

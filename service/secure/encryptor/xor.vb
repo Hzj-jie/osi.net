@@ -34,8 +34,7 @@ Namespace encrypt
                 Return False
             Else
                 Dim ki As Int32 = 0
-                Dim kl As Int32 = 0
-                kl = array_size(key)
+                Dim kl As Int32 = array_size(key)
                 ReDim o(count - 1)
                 For j As UInt32 = 0 To count - 1
                     o(j) = i(j + offset) Xor key(ki)

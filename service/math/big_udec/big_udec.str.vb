@@ -58,8 +58,7 @@ Partial Public NotInheritable Class big_udec
                 Return character._1
             End If
 
-            Dim o As StringBuilder = Nothing
-            o = New StringBuilder()
+            Dim o As New StringBuilder()
             Dim n As big_uint = Nothing
             n = this.n.CloneT()
             For i As UInt32 = 0 To upure_len
@@ -113,8 +112,7 @@ Partial Public NotInheritable Class big_udec
             Return True
         End If
         s = s.Trim()
-        Dim i As Int32 = 0
-        i = s.IndexOf(character.dot)
+        Dim i As Int32 = s.IndexOf(character.dot)
         If i = strlen(s) - uint32_1 Then
             Return False
         End If
@@ -126,8 +124,7 @@ Partial Public NotInheritable Class big_udec
             End If
             d = big_uint.one()
         Else
-            Dim zero_count As UInt32 = 0
-            zero_count = strlen(s) - CUInt(i) - uint32_1
+            Dim zero_count As UInt32 = strlen(s) - CUInt(i) - uint32_1
             assert(zero_count > 0)
             s = s.Remove(i, 1)
             If Not big_uint.parse(s, n, base) Then
@@ -159,8 +156,7 @@ Partial Public NotInheritable Class big_udec
         If s.StartsWith(character.left_slash) OrElse s.EndsWith(character.left_slash) Then
             Return False
         End If
-        Dim i As Int32 = 0
-        i = s.IndexOf(character.left_slash)
+        Dim i As Int32 = s.IndexOf(character.left_slash)
         assert(i > 0 OrElse i < s.Length() - 1 OrElse i = npos)
         Dim n As big_uint = Nothing
         Dim d As big_uint = Nothing

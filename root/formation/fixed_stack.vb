@@ -67,8 +67,7 @@ Public Structure fixed_stack(Of T, _MAX_SIZE As _int64)
 
     Public Function back() As T
         assert(Not empty())
-        Dim r As T = Nothing
-        r = q(CInt(index) - 1)
+        Dim r As T = q(CInt(index) - 1)
         Return r
     End Function
 

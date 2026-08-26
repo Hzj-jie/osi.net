@@ -76,16 +76,14 @@ Public Class type_string_serializer(Of PROTECTOR)
 
     Public Function to_str(ByVal type As Type, ByVal i As Object, ByVal o As StringWriter) As Boolean
         Dim implemented As Boolean = False
-        Dim r As Boolean = False
-        r = to_str(type, implemented, i, o)
+        Dim r As Boolean = to_str(type, implemented, i, o)
         assert(implemented)
         Return r
     End Function
 
     Public Function to_str(ByVal type As Type, ByVal i As Object, ByRef o As String) As Boolean
         Dim implemented As Boolean = False
-        Dim r As Boolean = False
-        r = to_str(type, implemented, i, o)
+        Dim r As Boolean = to_str(type, implemented, i, o)
         assert(implemented)
         Return r
     End Function
@@ -163,16 +161,14 @@ Public Class type_string_serializer(Of PROTECTOR)
 
     Public Function from_str(ByVal type As Type, ByVal s As StringReader, ByRef o As Object) As Boolean
         Dim implemented As Boolean = False
-        Dim r As Boolean = False
-        r = from_str(type, implemented, s, o)
+        Dim r As Boolean = from_str(type, implemented, s, o)
         assert(implemented)
         Return r
     End Function
 
     Public Function from_str(ByVal type As Type, ByVal s As String, ByRef o As Object) As Boolean
         Dim implemented As Boolean = False
-        Dim r As Boolean = False
-        r = from_str(type, implemented, s, o)
+        Dim r As Boolean = from_str(type, implemented, s, o)
         assert(implemented)
         Return r
     End Function

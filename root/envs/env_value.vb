@@ -12,8 +12,7 @@ Public Module _env_value
         If isemptyarray(str) Then
             Return False
         Else
-            Dim envs As IDictionary = Nothing
-            envs = Environment.GetEnvironmentVariables()
+            Dim envs As IDictionary = Environment.GetEnvironmentVariables()
             If Not envs.null_or_empty() Then
                 For i As Int32 = 0 To array_size_i(str) - 1
                     If envs.Contains(str(i)) Then

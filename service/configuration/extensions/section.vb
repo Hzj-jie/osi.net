@@ -31,8 +31,7 @@ Public Module _section
             Return Nothing
         End If
         assert(Not ss.null_or_empty())
-        Dim r As vector(Of T) = Nothing
-        r = New vector(Of T)()
+        Dim r As New vector(Of T)()
         For i As UInt32 = 0 To ss.size() - uint32_1
             Dim v As T = Nothing
             If convert(s(ss(i), variants), v) Then
@@ -50,8 +49,7 @@ Public Module _section
         If s Is Nothing Then
             Return Nothing
         End If
-        Dim r As vector(Of T) = Nothing
-        r = New vector(Of T)()
+        Dim r As New vector(Of T)()
         Dim v As String = Nothing
         While s.get(strcat(base_key, base_index), v, variants)
             Dim o As T = Nothing

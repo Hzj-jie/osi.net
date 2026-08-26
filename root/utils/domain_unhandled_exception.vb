@@ -50,8 +50,7 @@ Public Module _domain_unhandled_exception
     End Function
 
     Private Sub raise_exception(ByVal arg As UnhandledExceptionEventArgs)
-        Dim ex As Exception = Nothing
-        ex = cast(Of Exception)(arg.ExceptionObject())
+        Dim ex As Exception = cast(Of Exception)(arg.ExceptionObject())
         log_unhandled_exception("unhandled domain exception occured: ", ex)
         RaiseEvent domain_unhandled_exception(ex)
     End Sub

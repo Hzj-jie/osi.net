@@ -341,8 +341,7 @@ Partial Public Class powerpoint
 
     'the longest time in milliseconds to let all the related event_combs stop
     Public Shared Function stop_milliseconds(ByVal ParamArray this() As powerpoint) As Int64
-        Dim m As Int64 = 0
-        m = max(constants.interval_ms.connection_check_interval,
+        Dim m As Int64 = max(constants.interval_ms.connection_check_interval,
                 constants.interval_ms.connector_check)
         m = max(m, constants.interval_ms.connector_fail)
         For i As Int32 = 0 To array_size_i(this) - 1

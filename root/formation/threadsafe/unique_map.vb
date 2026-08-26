@@ -186,8 +186,7 @@ Public MustInherit Class unique_map(Of KEY_T As IComparable(Of KEY_T), STORE_T, 
             Return False
         End If
         Dim o As VALUE_T = v
-        Dim result As Boolean = False
-        result = writer_locked(Function() As Boolean
+        Dim result As Boolean = writer_locked(Function() As Boolean
                                    Dim r As VALUE_T = Nothing
                                    Dim it As unordered_map(Of KEY_T, STORE_T).iterator = m.find(k)
                                    If it = m.end() OrElse Not store_value((+it).second, r) Then

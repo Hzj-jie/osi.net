@@ -52,8 +52,7 @@ Public NotInheritable Class pattern_match
         End If
         Dim fitted As Byte = fit_undertermined
         For i As UInt32 = 0 To filters.size() - uint32_1
-            Dim r As Byte = 0
-            r = fit_filter(filters(i), str, case_sensitive)
+            Dim r As Byte = fit_filter(filters(i), str, case_sensitive)
             If r = fit_true Then
                 fitted = fit_true
             ElseIf r = fit_false Then
@@ -87,14 +86,10 @@ Public NotInheritable Class pattern_match
                                                         ByVal name As String,
                                                         ByVal name_start As Int32,
                                                         Optional ByVal case_sensitive As Boolean = False) As Boolean
-        Dim i As Int32 = 0
-        i = definition_start
-        Dim j As Int32 = 0
-        j = name_start
-        Dim definition_len As UInt32 = 0
-        definition_len = strlen(definition)
-        Dim name_len As UInt32 = 0
-        name_len = strlen(name)
+        Dim i As Int32 = definition_start
+        Dim j As Int32 = name_start
+        Dim definition_len As UInt32 = strlen(definition)
+        Dim name_len As UInt32 = strlen(name)
 
         While (i < +definition_len AndAlso j < +name_len)
             If definition(i) = multi_char_sign Then

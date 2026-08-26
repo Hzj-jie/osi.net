@@ -66,8 +66,7 @@ Public NotInheritable Class failure_case
                 18,
                 "assertion.now_in_time_range(Now().milliseconds() - 1001, Now().milliseconds() - 1000)")
             Using assertion.timelimited_operation(0, 1)
-                Dim ma As IDisposable = Nothing
-                ma = assertion.timelimited_operation(0, 1)
+                Dim ma As IDisposable = assertion.timelimited_operation(0, 1)
                 measure_sleep(CInt(2 * timeslice_length_ms))
                 ma.Dispose()
                 report_self_health_failure(19, "manually assertion.timelimited_operation.Dispose()")
@@ -113,8 +112,7 @@ Public NotInheritable Class failure_case
         assertion.now_in_time_range(Now().milliseconds(), Now().milliseconds() + 1000)
         assertion.now_in_time_range(Now().milliseconds() - 1000, Now().milliseconds() + 2 * timeslice_length_ms)
         Using assertion.timelimited_operation(0, 2 * timeslice_length_ms)
-            Dim ma As IDisposable = Nothing
-            ma = assertion.timelimited_operation(0, 2 * timeslice_length_ms)
+            Dim ma As IDisposable = assertion.timelimited_operation(0, 2 * timeslice_length_ms)
             ma.Dispose()
         End Using
         assertion.happening_in(Function() True, 1)

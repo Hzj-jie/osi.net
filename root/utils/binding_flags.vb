@@ -46,8 +46,7 @@ Public Module _binding_flags
         End If
 
         For i As UInt32 = 0 To v.size() - uint32_1
-            Dim it As map(Of String, BindingFlags).iterator = Nothing
-            it = m.find(strtolower(v(i)))
+            Dim it As map(Of String, BindingFlags).iterator = m.find(strtolower(v(i)))
             If it = m.end() Then
                 Return False
             End If

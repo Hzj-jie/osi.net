@@ -19,10 +19,8 @@ Public Class choose_test
     Private Shared Function success_case() As Boolean
         Dim v() As Int32 = Nothing
         v = init_array()
-        Dim s As [set](Of String) = Nothing
-        s = New [set](Of String)()
-        Dim cl As Int32 = 0
-        cl = rnd_int(0, 5 + 1)
+        Dim s As New [set](Of String)()
+        Dim cl As Int32 = rnd_int(0, 5 + 1)
         assertion.is_true(choose(Sub(a() As Int32)
                                      assertion.equal(CUInt(cl), array_size(a))
                                      If cl > 1 Then
@@ -30,8 +28,7 @@ Public Class choose_test
                                              assertion.less(a(i), a(i + 1))
                                          Next
                                      End If
-                                     Dim t As String = Nothing
-                                     t = strcat(a)
+                                     Dim t As String = strcat(a)
                                      assertion.is_true(s.find(t) = s.end())
                                      s.insert(t)
                                  End Sub,

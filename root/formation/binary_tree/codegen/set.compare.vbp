@@ -5,10 +5,8 @@
             Return CloneT()
         End If
   
-        Dim r As [##FILENAME##](Of T) = Nothing
-        r = New [##FILENAME##](Of T)()
-        Dim it As [##FILENAME##](Of T).iterator = Nothing
-        it = begin()
+        Dim r As New [##FILENAME##](Of T)()
+        Dim it As [##FILENAME##](Of T).iterator = begin()
         While it <> [end]()
             If that.find(+it) = that.end() Then
                 assert(r.insert(+it).second)

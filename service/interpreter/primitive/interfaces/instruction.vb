@@ -18,8 +18,7 @@ Namespace primitive
 
     Public NotInheritable Class instruction_builder
         Public Shared Function str(ByVal command As command, ParamArray ByVal args() As Object) As String
-            Dim s As StringBuilder = Nothing
-            s = New StringBuilder()
+            Dim s As New StringBuilder()
             s.Append(command_str(command))
             For i As Int32 = 0 To array_size_i(args) - 1
                 s.Append(character.blank).Append(args(i))
@@ -35,14 +34,12 @@ Namespace primitive
         Private Shared ReadOnly comment_start As String
 
         Shared Sub New()
-            Dim v As valuer(Of String) = Nothing
-            v = New valuer(Of String)(GetType(_exportable), binding_flags.private, "comment_start")
+            Dim v As New valuer(Of String)(GetType(_exportable), binding_flags.private, "comment_start")
             comment_start = +v
         End Sub
 
         Public Shared Function str(ParamArray ByVal args() As Object) As String
-            Dim s As StringBuilder = Nothing
-            s = New StringBuilder()
+            Dim s As New StringBuilder()
             s.Append(comment_start)
             For i As Int32 = 0 To array_size_i(args) - 1
                 s.Append(character.blank).Append(args(i))

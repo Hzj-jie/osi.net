@@ -6,8 +6,7 @@ Public Class rate_timeout_test
     Inherits [case]
 
     Private Shared Function case1() As Boolean
-        Dim t As rate_timeout = Nothing
-        t = New rate_timeout(0)
+        Dim t As New rate_timeout(0)
         t.update(0)
         sleep()
         assertion.is_false(t.timeout())
@@ -18,8 +17,7 @@ Public Class rate_timeout_test
     End Function
 
     Private Shared Function case2() As Boolean
-        Dim t As rate_timeout = Nothing
-        t = New rate_timeout(1)
+        Dim t As New rate_timeout(1)
         t.update(0)
         sleep_seconds()
         assertion.is_true(t.timeout())

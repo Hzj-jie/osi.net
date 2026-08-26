@@ -11,8 +11,7 @@ Public Module big_int_calculator
     End Sub
 
     Private Sub calculate(ByVal arg As String, ByVal o As TextWriter)
-        Dim r As expression_result(Of big_int) = Nothing
-        r = e.execute(arg)
+        Dim r As expression_result(Of big_int) = e.execute(arg)
         o.WriteLine(r.str())
     End Sub
 

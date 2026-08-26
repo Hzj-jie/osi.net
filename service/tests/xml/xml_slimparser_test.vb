@@ -18,8 +18,7 @@ Public Class xml_slimparser_test
 
     Private Shared Sub create(ByVal r As vector(Of pair(Of String, node_type)))
         assert(Not r Is Nothing)
-        Dim selector As Int32 = 0
-        selector = rnd_int(0, 5)
+        Dim selector As Int32 = rnd_int(0, 5)
         Dim s As String = Nothing
         Dim t As node_type = Nothing
         Select Case selector
@@ -56,8 +55,7 @@ Public Class xml_slimparser_test
         For i As Int32 = 0 To (rnd(500, 1000) * If(isdebugbuild(), 1, 10)) - 1
             create(v1)
         Next
-        Dim s As Text.StringBuilder = Nothing
-        s = New Text.StringBuilder()
+        Dim s As New Text.StringBuilder()
         For i As Int32 = 0 To v1.size() - 1
             s.Append(v1(i).first)
         Next

@@ -105,8 +105,7 @@ Public Class case2_test
     End Class
 
     Public Overrides Function run() As Boolean
-        Dim cases As vector(Of [case]) = Nothing
-        cases = case2.create(GetType(case2_case))
+        Dim cases As vector(Of [case]) = case2.create(GetType(case2_case))
         assertion.equal(cases.size(), CUInt(3))
 
         assertion.is_true(cases(0).prepare())

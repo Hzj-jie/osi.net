@@ -47,8 +47,7 @@ Public NotInheritable Class comparable_type
     End Sub
 
     Public Shared Function compare_type(ByVal i As Type, ByVal j As Type) As Int32
-        Dim r As Int32 = 0
-        r = object_compare(i, j)
+        Dim r As Int32 = object_compare(i, j)
         If r <> object_compare_undetermined Then
             Return r
         End If

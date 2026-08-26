@@ -10,10 +10,8 @@ Namespace rlexer
         Inherits [case]
 
         Private Shared Function case1() As Boolean
-            Dim g As multi_matching_group = Nothing
-            g = New multi_matching_group(New string_matching_group("a", "b", "c"))
-            Dim v As vector(Of UInt32) = Nothing
-            v = g.match("abc")
+            Dim g As New multi_matching_group(New string_matching_group("a", "b", "c"))
+            Dim v As vector(Of UInt32) = g.match("abc")
             If assertion.is_true(Not v.null_or_empty()) Then
                 assertion.equal(v.size(), CUInt(3))
                 For i As UInt32 = 0 To v.size() - uint32_1
@@ -24,10 +22,8 @@ Namespace rlexer
         End Function
 
         Private Shared Function case2() As Boolean
-            Dim g As multi_matching_group = Nothing
-            g = New multi_matching_group(New string_matching_group("", "a", "b"))
-            Dim v As vector(Of UInt32) = Nothing
-            v = g.match("abc")
+            Dim g As New multi_matching_group(New string_matching_group("", "a", "b"))
+            Dim v As vector(Of UInt32) = g.match("abc")
             If assertion.is_true(Not v.null_or_empty()) Then
                 assertion.equal(v.size(), CUInt(3))
                 For i As UInt32 = 0 To v.size() - uint32_1
@@ -38,10 +34,8 @@ Namespace rlexer
         End Function
 
         Private Shared Function case3() As Boolean
-            Dim g As multi_matching_group = Nothing
-            g = New multi_matching_group(New string_matching_group("", "a", "b"))
-            Dim v As vector(Of UInt32) = Nothing
-            v = g.match("c")
+            Dim g As New multi_matching_group(New string_matching_group("", "a", "b"))
+            Dim v As vector(Of UInt32) = g.match("c")
             If assertion.is_true(Not v.null_or_empty()) Then
                 assertion.equal(v.size(), uint32_1)
                 For i As UInt32 = 0 To v.size() - uint32_1
@@ -52,10 +46,8 @@ Namespace rlexer
         End Function
 
         Private Shared Function case4() As Boolean
-            Dim g As multi_matching_group = Nothing
-            g = New multi_matching_group(New any_character_matching_group())
-            Dim v As vector(Of UInt32) = Nothing
-            v = g.match("abc")
+            Dim g As New multi_matching_group(New any_character_matching_group())
+            Dim v As vector(Of UInt32) = g.match("abc")
             If assertion.is_true(Not v.null_or_empty()) AndAlso
                assertion.equal(v.size(), CUInt(3)) Then
                 For i As UInt32 = 0 To v.size() - uint32_1
@@ -66,10 +58,8 @@ Namespace rlexer
         End Function
 
         Private Shared Function case5() As Boolean
-            Dim g As multi_matching_group = Nothing
-            g = New multi_matching_group(New any_character_matching_group())
-            Dim v As vector(Of UInt32) = Nothing
-            v = g.match("")
+            Dim g As New multi_matching_group(New any_character_matching_group())
+            Dim v As vector(Of UInt32) = g.match("")
             assertion.is_true(v.null_or_empty())
             Return True
         End Function

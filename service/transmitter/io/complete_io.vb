@@ -112,8 +112,7 @@ Public Module _complete_io
                                      ByRef count As UInt32,
                                      ByVal p As ref(Of UInt32),
                                      ByVal pending_counter As pending_io_punishment) As Boolean
-        Dim x As UInt64 = 0
-        x = count
+        Dim x As UInt64 = count
         If count_condition(last_ec, break_error, x, p, pending_counter) Then
             assert(x <= max_uint32)
             count = CUInt(x)
@@ -166,10 +165,8 @@ Public Module _complete_io
                                       Return goto_end()
                                   Else
                                       buff = prepare_buff(buff_size, count)
-                                      Dim p As ref(Of UInt32) = Nothing
-                                      p = New ref(Of UInt32)()
-                                      Dim pending_counter As pending_io_punishment = Nothing
-                                      pending_counter = New pending_io_punishment()
+                                      Dim p As New ref(Of UInt32)()
+                                      Dim pending_counter As New pending_io_punishment()
                                       ec = event_comb.while(
                                                Function(last_ec As event_comb,
                                                         ByRef break_error As Boolean) As Boolean
@@ -250,10 +247,8 @@ Public Module _complete_io
                                   ElseIf count = 0 Then
                                       Return goto_end()
                                   Else
-                                      Dim p As ref(Of UInt32) = Nothing
-                                      p = New ref(Of UInt32)()
-                                      Dim pending_counter As pending_io_punishment = Nothing
-                                      pending_counter = New pending_io_punishment()
+                                      Dim p As New ref(Of UInt32)()
+                                      Dim pending_counter As New pending_io_punishment()
                                       ec = event_comb.while(
                                                Function(last_ec As event_comb,
                                                         ByRef break_error As Boolean) As Boolean

@@ -34,8 +34,7 @@ Public Class file_datawatcher
         Return New event_comb(Function() As Boolean
                                   Return waitfor(Sub()
                                                      If File.Exists(filename) Then
-                                                         Dim fi As FileInfo = Nothing
-                                                         fi = New FileInfo(filename)
+                                                         Dim fi As New FileInfo(filename)
                                                          suc = eva(sz, CULng(fi.Length())) AndAlso
                                                                eva(tm, CULng(fi.LastWriteTime().Ticks()))
                                                      Else

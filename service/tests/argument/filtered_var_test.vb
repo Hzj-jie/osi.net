@@ -12,8 +12,7 @@ Imports osi.service.argument
 Public NotInheritable Class filtered_var_test
     <test>
     Private Shared Sub get_filtered_values()
-        Dim v As var = Nothing
-        v = New var("--a=b -cde ~def --filtered.a=d ~filtered.efg hij klm")
+        Dim v As New var("--a=b -cde ~def --filtered.a=d ~filtered.efg hij klm")
         assertion.is_true(v.switch("c"))
         assertion.is_true(v.switch("d"))
         assertion.is_true(v.switch("e"))
@@ -23,8 +22,7 @@ Public NotInheritable Class filtered_var_test
         assertion.equal(v("filtered.a"), "d")
         assertion.array_equal(+(v.other_values()), {"hij", "klm"})
 
-        Dim f As var = Nothing
-        f = filtered_var.[New](v, "filtered.")
+        Dim f As var = filtered_var.[New](v, "filtered.")
         assertion.is_false(f.switch("c"))
         assertion.is_false(f.switch("d"))
         assertion.is_false(f.switch("e"))
@@ -38,11 +36,9 @@ Public NotInheritable Class filtered_var_test
 
     <test>
     Private Shared Sub cloneable()
-        Dim v As var = Nothing
-        v = New var("--name.f=second ~name.t -case some other values")
+        Dim v As New var("--name.f=second ~name.t -case some other values")
 
-        Dim f As var = Nothing
-        f = filtered_var.[New](v, "name.")
+        Dim f As var = filtered_var.[New](v, "name.")
 
         Dim f2 As var = Nothing
         Dim f3 As var = Nothing
@@ -58,16 +54,12 @@ Public NotInheritable Class filtered_var_test
 
     <test>
     Private Shared Sub comparable()
-        Dim v As var = Nothing
-        v = New var("--name.a=1 --name.b=2 ~name.c ~name.d some other values")
+        Dim v As New var("--name.a=1 --name.b=2 ~name.c ~name.d some other values")
 
-        Dim f As var = Nothing
-        f = filtered_var.[new](v, "name.")
-        Dim v2 As var = Nothing
-        v2 = f.CloneT()
+        Dim f As var = filtered_var.[new](v, "name.")
+        Dim v2 As var = f.CloneT()
 
-        Dim expected As var = Nothing
-        expected = New var("--a=1 --b=2 ~c ~d some other values")
+        Dim expected As New var("--a=1 --b=2 ~c ~d some other values")
 
         assertion.equal(f, expected)
         assertion.equal(f, v2)

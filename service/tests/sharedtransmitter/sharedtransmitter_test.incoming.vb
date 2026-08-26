@@ -99,8 +99,7 @@ Partial Public Class sharedtransmitter_test
             assertion.is_true(_sharedtransmitter_collection.[New](Of Byte, Byte, component, Int32, parameter) _
                                                           (c, p, component, dispenser))
 
-            Dim r As Boolean = False
-            r = run_case()
+            Dim r As Boolean = run_case()
 
             assertion.is_true(dispenser.release())
             assertion.equal(dispenser.binding_count(), uint32_0)

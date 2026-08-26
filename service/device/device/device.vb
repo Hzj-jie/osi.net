@@ -69,8 +69,7 @@ Public MustInherit Class device
     End Function
 
     Public NotOverridable Overrides Function GetHashCode() As Int32
-        Dim s As String = Nothing
-        s = identity()
+        Dim s As String = identity()
         Return If(s Is Nothing, 0, s.GetHashCode())
     End Function
 

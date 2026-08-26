@@ -26,8 +26,7 @@ Namespace rlexer
             assertion.is_true(macros.defined("vowel"))
             assertion.is_true(macros.defined("consonant"))
             assertion.is_false(macros.defined("ABC"))
-            Dim default_macros As vector(Of pair(Of String, String)) = Nothing
-            default_macros = macros.default.export()
+            Dim default_macros As vector(Of pair(Of String, String)) = macros.default.export()
             assert(Not default_macros.null_or_empty())
             For i As UInt32 = 0 To default_macros.size() - uint32_1
                 assertion.is_true(macros.defined(default_macros(i).first))

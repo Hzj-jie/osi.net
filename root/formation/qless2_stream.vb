@@ -38,8 +38,7 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
     End Sub
 
     Public Function size() As UInt64
-        Dim r As Int64 = 0
-        r = len
+        Dim r As Int64 = len
         Return If(r < 0, uint64_0, CULng(r))
     End Function
 
@@ -62,8 +61,7 @@ Public Class qless2_stream(Of T, MAX_COUNT As _int64)
         End If
 
         assert(last_index < array_size(last))
-        Dim l As Int64 = 0
-        l = min(array_size(last) - last_index, count - offset)
+        Dim l As Int64 = min(array_size(last) - last_index, count - offset)
         arrays.copy(r, CUInt(offset), last, CUInt(last_index), CUInt(l))
         last_index += l
         If array_size(last) = last_index Then

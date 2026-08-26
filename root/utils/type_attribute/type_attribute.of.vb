@@ -53,8 +53,7 @@ Partial Public Class type_attribute
         If obj Is Nothing Then
             Return False
         Else
-            Dim s As signal = Nothing
-            s = TryCast(obj, signal)
+            Dim s As signal = TryCast(obj, signal)
             If s Is Nothing Then
                 Return [of](check_only, obj.GetType(), o)
             Else

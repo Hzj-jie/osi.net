@@ -16,8 +16,7 @@ Partial Public NotInheritable Class big_uint
     End Operator
 
     Public Shared Widening Operator CType(ByVal this As Boolean) As big_uint
-        Dim r As big_uint = Nothing
-        r = New big_uint()
+        Dim r As New big_uint()
         r.replace_by(this)
         Return r
     End Operator

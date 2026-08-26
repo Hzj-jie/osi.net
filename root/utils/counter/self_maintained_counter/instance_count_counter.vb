@@ -18,8 +18,7 @@ Namespace counter
         End Sub
 
         Public Shared Function count() As Int64
-            Dim s As snapshot = Nothing
-            s = snapshot.[New](instance_count_counter(Of T).c)
+            Dim s As snapshot = snapshot.[New](instance_count_counter(Of T).c)
             assert(Not s Is Nothing)
             Return +s.count
         End Function

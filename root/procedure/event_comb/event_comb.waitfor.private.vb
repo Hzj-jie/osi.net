@@ -129,8 +129,7 @@ Partial Public Class event_comb
     Private Function _multiple_resume_wait() As Action
         assert_in_lock()
         inc_pends()
-        Dim se As ref(Of singleentry) = Nothing
-        se = New ref(Of singleentry)()
+        Dim se As New ref(Of singleentry)()
         Return Sub()
                    If se.mark_in_use() Then
                        '1, put it back to selected threadpool
@@ -184,8 +183,7 @@ Partial Public Class event_comb
         If timeout_ms < 0 Then
             Return _waitfor(d)
         End If
-        Dim cb As Action = Nothing
-        cb = _multiple_resume_wait()
+        Dim cb As Action = _multiple_resume_wait()
         assert(Not stopwatch.push(timeout_ms, cb.as_weak_action()) Is Nothing)
         _waitfor(d, cb)
         Return True
@@ -326,10 +324,8 @@ Partial Public Class event_comb
         If i.marked() Then
             Return True
         End If
-        Dim e As ref(Of stopwatch.event) = Nothing
-        e = New ref(Of stopwatch.event)()
-        Dim cb As Action = Nothing
-        cb = _multiple_resume_wait()
+        Dim e As New ref(Of stopwatch.event)()
+        Dim cb As Action = _multiple_resume_wait()
         e.set(stopwatch.push(timeout_ms, cb))
         assert(Not e.empty())
         assert(i.attach(Sub()

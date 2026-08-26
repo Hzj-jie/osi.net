@@ -10,11 +10,9 @@ Public Module _weak_action
         If a Is Nothing Then
             Return Nothing
         End If
-        Dim p As WeakReference = Nothing
-        p = New WeakReference(a)
+        Dim p As New WeakReference(a)
         Return Sub()
-                   Dim v As Action = Nothing
-                   v = direct_cast(Of Action)(p.Target())
+                   Dim v As Action = direct_cast(Of Action)(p.Target())
                    If Not v Is Nothing Then
                        v()
                    End If

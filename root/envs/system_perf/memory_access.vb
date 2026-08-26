@@ -12,8 +12,7 @@ Public NotInheritable Class memory_access
     Public Shared Sub run()
         r += 1
         For i As Int32 = 0 To memory_access_size - 1
-            Dim s As Int32 = 0
-            s = memory_access_memory_size + (i << 10) + (r << 10)
+            Dim s As Int32 = memory_access_memory_size + (i << 10) + (r << 10)
             Dim a() As Byte = Nothing
             ReDim a(s - 1)
             For j As Int32 = 1 To 16
@@ -22,8 +21,7 @@ Public NotInheritable Class memory_access
             Erase a
         Next
         For i As Int32 = 0 To memory_access_size - 1
-            Dim x As memory_access = Nothing
-            x = New memory_access()
+            Dim x As New memory_access()
         Next
     End Sub
 

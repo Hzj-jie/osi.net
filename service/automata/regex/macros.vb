@@ -74,8 +74,7 @@ Partial Public Class rlexer
                 matched = npos
                 Dim id As UInt32 = 0
                 For i As UInt32 = 0 To vs.size() - uint32_1
-                    Dim x As Int32 = 0
-                    x = strindexof(s, vs(i).first)
+                    Dim x As Int32 = strindexof(s, vs(i).first)
                     If x <> npos AndAlso (matched = npos OrElse x < matched) Then
                         matched = x
                         id = i

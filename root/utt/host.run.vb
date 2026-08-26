@@ -173,8 +173,7 @@ Partial Friend NotInheritable Class host
     End Sub
 
     Private Shared Function expected_running_time_ms() As Int64
-        Dim base_ms As Double = 0
-        base_ms = minutes_to_milliseconds(36 * 60)
+        Dim base_ms As Double = minutes_to_milliseconds(36 * 60)
         base_ms *= envs.perf_run_ms
         base_ms *= 4
         base_ms *= env_vars.repeat_per_case

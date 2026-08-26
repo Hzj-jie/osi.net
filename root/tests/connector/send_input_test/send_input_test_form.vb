@@ -20,8 +20,7 @@ Public Class send_input_test_form
     End Sub
 
     Private Sub textbox_Click(ByVal sender As Object, ByVal e As EventArgs) Handles textbox.Click
-        Dim s As String = Nothing
-        s = Microsoft.VisualBasic.Interaction.InputBox("Input a scan code")
+        Dim s As String = Microsoft.VisualBasic.Interaction.InputBox("Input a scan code")
         Dim code As UInt16 = 0
         If UInt16.TryParse(s, code) Then
             assertion.equal(send_input.keyboard(send_input.keyboard_input.from_scan_code(code)), uint32_2)

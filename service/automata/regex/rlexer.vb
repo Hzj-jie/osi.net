@@ -38,8 +38,7 @@ Partial Public NotInheritable Class rlexer
     End Function
 
     Public Shared Function create(ByVal rule_file As String, ByRef o As rlexer) As Boolean
-        Dim r As rule = Nothing
-        r = New rule()
+        Dim r As New rule()
         Dim e As rule.exporter = Nothing
         If r.parse(rule_file) AndAlso r.export(e) Then
             assert(Not e Is Nothing)

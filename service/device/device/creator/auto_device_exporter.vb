@@ -58,8 +58,7 @@ Partial Public MustInherit Class auto_device_exporter(Of T)
                                             rcr.mark_stopped()
                                             Return goto_end()
                                         Else
-                                            Dim this_round As Int32 = 0
-                                            this_round = (+count) - CInt(exported())
+                                            Dim this_round As Int32 = (+count) - CInt(exported())
                                             assert(this_round >= 0)
                                             If this_round = 0 Then
                                                 Return waitfor(check_interval_ms)

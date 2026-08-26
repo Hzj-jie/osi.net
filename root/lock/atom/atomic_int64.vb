@@ -75,14 +75,12 @@ Partial Public Class atomic_int64(Of LOCK_T As {islimlock, Structure})
     Public Function exchange(ByVal value As Int64) As Int64
 #If GENERIC_TYPE Then
         Return l.locked(Function() As Int64
-                            Dim r As Int64 = Nothing
-                            r = p
+                            Dim r As Int64 = p
                             p = value
                             Return r
                         End Function)
 #Else
-        Dim r As Int64 = Nothing
-        r = Interlocked.Exchange(p, value)
+        Dim r As Int64 = Interlocked.Exchange(p, value)
         Thread.MemoryBarrier()
         Return r
 #End If
@@ -91,16 +89,14 @@ Partial Public Class atomic_int64(Of LOCK_T As {islimlock, Structure})
     Public Function compare_exchange(ByVal value As Int64, ByVal comparand As Int64) As Int64
 #If GENERIC_TYPE Then
         Return l.locked(Function() As Int64
-                            Dim r As Int64 = Nothing
-                            r = p
+                            Dim r As Int64 = p
                             If equal(p, comparand) Then
                                 p = value
                             End If
                             Return r
                         End Function)
 #Else
-        Dim r As Int64 = Nothing
-        r = Interlocked.CompareExchange(p, value, comparand)
+        Dim r As Int64 = Interlocked.CompareExchange(p, value, comparand)
         Thread.MemoryBarrier()
         Return r
 #End If
@@ -128,22 +124,19 @@ End Class
 
 Partial Public Class atomic_int64(Of LOCK_T As {islimlock, Structure})
     Public Function increment() As Int64
-        Dim r As Int64 = 0
-        r = Interlocked.Increment(p)
+        Dim r As Int64 = Interlocked.Increment(p)
         Thread.MemoryBarrier()
         Return r
     End Function
 
     Public Function decrement() As Int64
-        Dim r As Int64 = 0
-        r = Interlocked.Decrement(p)
+        Dim r As Int64 = Interlocked.Decrement(p)
         Thread.MemoryBarrier()
         Return r
     End Function
 
     Public Function add(ByVal i As Int64) As Int64
-        Dim r As Int64 = 0
-        r = Interlocked.Add(p, i)
+        Dim r As Int64 = Interlocked.Add(p, i)
         Thread.MemoryBarrier()
         Return r
     End Function

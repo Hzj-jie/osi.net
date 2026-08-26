@@ -37,8 +37,7 @@ Namespace uri
                     End If
 
                     For i As Int32 = 0 To array_size_i(b) - 1
-                        Dim c As Char = Nothing
-                        c = Convert.ToChar(b(i))
+                        Dim c As Char = Convert.ToChar(b(i))
                         If c.unreserved() AndAlso
                        c <> separator AndAlso
                        c <> escape Then
@@ -75,8 +74,7 @@ Namespace uri
                                 Return False
                             End If
                         ElseIf s(i).unreserved() Then
-                            Dim t As Int32 = 0
-                            t = Convert.ToInt32(s(i))
+                            Dim t As Int32 = Convert.ToInt32(s(i))
                             assert(t >= 0 AndAlso t <= max_uint8)
                             If Not o.write_byte(CByte(t)) Then
                                 Return False

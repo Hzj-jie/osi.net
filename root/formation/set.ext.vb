@@ -52,8 +52,7 @@ End Module
 
 Public NotInheritable Class [set]
     Private Shared Function create(Of T)(ByVal vs() As T, ByVal require_copy As Boolean) As [set](Of T)
-        Dim r As [set](Of T) = Nothing
-        r = New [set](Of T)()
+        Dim r As New [set](Of T)()
         For i As Int32 = 0 To array_size_i(vs) - 1
             If require_copy Then
                 r.insert(vs(i))

@@ -218,8 +218,7 @@ Partial Public NotInheritable Class server
                                           Dim m As map(Of String, vector(Of String)) = Nothing
                                           Dim charset As String = Nothing
                                           Dim encoder As Encoding = Nothing
-                                          Dim is_www_form_urlencoded As Boolean = False
-                                          is_www_form_urlencoded = url_query.parse_www_form_urlencoded_request_body(
+                                          Dim is_www_form_urlencoded As Boolean = url_query.parse_www_form_urlencoded_request_body(
                                                                        context.Request(), +b, m, charset, encoder)
                                           If Not is_www_form_urlencoded Then
                                               raise_error(error_type.user,
@@ -266,10 +265,8 @@ Partial Public NotInheritable Class server
                                   Function() As Boolean
                                       If ec.end_result() Then
                                           assert(Not p.empty())
-                                          Dim m As map(Of String, vector(Of String)) = Nothing
-                                          m = url_query.clone()
-                                          Dim it As map(Of String, vector(Of String)).iterator = Nothing
-                                          it = (+p).query.begin()
+                                          Dim m As map(Of String, vector(Of String)) = url_query.clone()
+                                          Dim it As map(Of String, vector(Of String)).iterator = (+p).query.begin()
                                           While it <> (+p).query.end()
                                               assert(m((+it).first).emplace_back((+it).second))
                                           End While
@@ -316,10 +313,8 @@ Partial Public NotInheritable Class server
 
         Public Function parse_method() As constants.request_method
             If Not method Then
-                Dim m As constants.request_method = Nothing
-                m = constants.request_method.GET
-                Dim s As String = Nothing
-                s = context.Request().HttpMethod()
+                Dim m As constants.request_method = constants.request_method.GET
+                Dim s As String = context.Request().HttpMethod()
                 For i As Int32 = 0 To array_size_i(constants.request_method_str) - 1
                     If strsame(constants.request_method_str(i), s, False) Then
                         m = enum_def(Of constants.request_method).from(i)

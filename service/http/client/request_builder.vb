@@ -93,8 +93,7 @@ Public NotInheritable Class request_builder
         If ms Is Nothing Then
             Return without_body()
         Else
-            Dim r As Int64 = 0
-            r = ms.Length()
+            Dim r As Int64 = ms.Length()
             If r < 0 Then
                 ' Odd, this should not happen.
                 Return without_body()

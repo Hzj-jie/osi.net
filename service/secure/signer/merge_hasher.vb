@@ -21,8 +21,7 @@ Namespace sign
         End Enum
 
         Shared Sub New()
-            Dim [New] As _do(Of merge_method, merge_hasher(Of _New)) = Nothing
-            [New] = -alloc(Of _New)()
+            Dim [New] As _do(Of merge_method, merge_hasher(Of _New)) = -alloc(Of _New)()
             concat = [New](merge_method.concat)
             ring = [New](merge_method.ring)
             [xor] = [New](merge_method.xor)
@@ -75,8 +74,7 @@ Namespace sign
             Else
                 Const merger As String = "merger"
                 v.bind(merger)
-                Dim m As String = Nothing
-                m = v(merger)
+                Dim m As String = v(merger)
                 If strsame(m, "ring", False) Then
                     o = merge_hasher(Of _New).ring
                 ElseIf strsame(m, "xor", False) Then

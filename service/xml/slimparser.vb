@@ -92,12 +92,10 @@ Public Module _slimparser
             Return False
         Else
             Dim i As UInt32 = 0
-            Dim l As UInt32 = 0
-            l = strlen(text)
+            Dim l As UInt32 = strlen(text)
             Dim r As Boolean = True
             While i < l
-                Dim j As Int32 = 0
-                j = strindexof(text, tag_leading_str, i, uint32_1)
+                Dim j As Int32 = strindexof(text, tag_leading_str, i, uint32_1)
                 If j = npos Then
                     j = l
                 End If

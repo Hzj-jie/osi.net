@@ -131,8 +131,7 @@ Partial Public Class channel
                                                    goto_next()
                                         End Function,
                                         Function() As Boolean
-                                            Dim n As Int64 = 0
-                                            n = nowadays.milliseconds()
+                                            Dim n As Int64 = nowadays.milliseconds()
                                             For i As UInt32 = 0 To array_size(m) - uint32_1
                                                 If Not m(CInt(i)) Is Nothing AndAlso
                                                    n - m(CInt(i)).last_active_ms() >= idle_timeout_ms Then

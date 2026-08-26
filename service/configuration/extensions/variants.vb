@@ -27,8 +27,7 @@ Public Module _variants
             Return False
         Else
             r.renew()
-            Dim i As map(Of String, String).iterator = Nothing
-            i = m.begin()
+            Dim i As map(Of String, String).iterator = m.begin()
             While i <> m.end()
                 If Not append_variant(r, (+i).first, (+i).second) Then
                     Return False

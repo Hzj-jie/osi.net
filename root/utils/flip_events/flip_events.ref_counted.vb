@@ -32,8 +32,7 @@ Partial Public NotInheritable Class flip_events
         End Sub
 
         Public Sub ref()
-            Dim v As Int32 = 0
-            v = r.increment()
+            Dim v As Int32 = r.increment()
             assert(v > 0)
             If v = 1 Then
                 raise_to_high()
@@ -41,8 +40,7 @@ Partial Public NotInheritable Class flip_events
         End Sub
 
         Public Sub unref()
-            Dim v As Int32 = 0
-            v = r.decrement()
+            Dim v As Int32 = r.decrement()
             assert(v >= 0)
             If v = 0 Then
                 raise_to_low()

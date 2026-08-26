@@ -12,8 +12,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
 
     Public Function left_shift(ByVal size As ##CLASS_NAME##, ByRef overflow As Boolean) As ##CLASS_NAME##
         If Not size Is Nothing Then
-            Dim u As UInt64 = 0
-            u = size.as_uint64(overflow)
+            Dim u As UInt64 = size.as_uint64(overflow)
             If Not overflow Then
                 assert(object_compare(left_shift(u), Me) = 0)
             End If
@@ -23,8 +22,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
 
     Public Function left_shift(ByVal size As ##IMPL_CLASS##, ByRef overflow As Boolean) As ##CLASS_NAME##
         If Not size Is Nothing Then
-            Dim u As UInt64 = 0
-            u = size.as_uint64(overflow)
+            Dim u As UInt64 = size.as_uint64(overflow)
             If Not overflow Then
                 assert(object_compare(left_shift(u), Me) = 0)
             End If
@@ -76,8 +74,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
 
     Public Function right_shift(ByVal size As ##CLASS_NAME##, ByRef overflow As Boolean) As ##CLASS_NAME##
         If Not size Is Nothing Then
-            Dim u As UInt64 = 0
-            u = size.as_uint64(overflow)
+            Dim u As UInt64 = size.as_uint64(overflow)
             If Not overflow Then
                 assert(object_compare(right_shift(u), Me) = 0)
             End If
@@ -87,8 +84,7 @@ Partial Public NotInheritable Class ##CLASS_NAME##
 
     Public Function right_shift(ByVal size As ##IMPL_CLASS##, ByRef overflow As Boolean) As ##CLASS_NAME##
         If Not size Is Nothing Then
-            Dim u As UInt64 = 0
-            u = size.as_uint64(overflow)
+            Dim u As UInt64 = size.as_uint64(overflow)
             If Not overflow Then
                 assert(object_compare(right_shift(u), Me) = 0)
             End If
@@ -129,14 +125,12 @@ Partial Public NotInheritable Class ##CLASS_NAME##
     End Function
 
     Public Shared Operator >>(ByVal this As ##CLASS_NAME##, ByVal that As Int32) As ##CLASS_NAME##
-        Dim r As ##CLASS_NAME## = Nothing
-        r = New ##CLASS_NAME##(this)
+        Dim r As New ##CLASS_NAME##(this)
         Return r.right_shift(that)
     End Operator
 
     Public Shared Operator <<(ByVal this As ##CLASS_NAME##, ByVal that As Int32) As ##CLASS_NAME##
-        Dim r As ##CLASS_NAME## = Nothing
-        r = New ##CLASS_NAME##(this)
+        Dim r As New ##CLASS_NAME##(this)
         Return r.left_shift(that)
     End Operator
 End Class

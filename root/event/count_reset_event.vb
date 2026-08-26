@@ -50,8 +50,7 @@ Public Class count_reset_event(Of _MAX_COUNT As _int64)
     End Sub
 
     Private Function acquire() As Boolean
-        Dim r As Boolean = False
-        r = True
+        Dim r As Boolean = True
         l.wait()
         If p = 1 Then
             p = 0

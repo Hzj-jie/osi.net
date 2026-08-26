@@ -30,8 +30,7 @@ Public NotInheritable Class big_uint_gcd_test
         Do
             r = big_uint.random()
         Loop While r.is_zero()
-        Dim c As big_uint = Nothing
-        c = big_uint.gcd(l, r)
+        Dim c As big_uint = big_uint.gcd(l, r)
         assertion.is_false(c.is_zero())
         Dim remainder As big_uint = Nothing
         l.assert_divide(c, remainder)

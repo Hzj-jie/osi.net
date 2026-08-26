@@ -24,8 +24,7 @@ Partial Public Class type_attribute
         Public Shared Function [set](ByVal i As Object,
                                      ByVal v As Object,
                                      ByVal forward_mode As forward_mode) As Boolean
-            Dim fs As forward_signal = Nothing
-            fs = TryCast(i, forward_signal)
+            Dim fs As forward_signal = TryCast(i, forward_signal)
             If fs Is Nothing Then
                 Return False
             Else
@@ -38,8 +37,7 @@ Partial Public Class type_attribute
         Public Shared Function [get](ByVal i As Object,
                                      ByRef o As Object,
                                      ByVal forward_mode As forward_mode) As Boolean
-            Dim fs As forward_signal = Nothing
-            fs = TryCast(i, forward_signal)
+            Dim fs As forward_signal = TryCast(i, forward_signal)
             If fs Is Nothing Then
                 Return False
             Else

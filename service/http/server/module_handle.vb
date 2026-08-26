@@ -47,8 +47,7 @@ Partial Public NotInheritable Class module_handle
         If i >= v.size() Then
             Return Nothing
         Else
-            Dim r As counter.snapshot = Nothing
-            r = counter.snapshot.[New](v(i).counter_index)
+            Dim r As counter.snapshot = counter.snapshot.[New](v(i).counter_index)
             assert(Not r Is Nothing)
             Return r
         End If

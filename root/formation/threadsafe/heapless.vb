@@ -38,8 +38,7 @@ Public NotInheritable Class heapless(Of T)
     <MethodImpl(method_impl_options.aggressive_inlining)>
     Public Function size() As UInt32
         '< 0 is in partial of pop operation
-        Dim v As Int32 = 0
-        v = _size
+        Dim v As Int32 = _size
         Return If(v < 0, uint32_0, CUInt(v))
     End Function
 

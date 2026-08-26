@@ -48,8 +48,7 @@ Namespace logic
             input = make_disposer(New StringReader(text))
             out = make_disposer(New StringWriter())
             err = make_disposer(New StringWriter())
-            Dim io As console_io = Nothing
-            io = New console_io()
+            Dim io As New console_io()
             io.redirect_input(+input)
             io.redirect_output(+out)
             io.redirect_error(+err)

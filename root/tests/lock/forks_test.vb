@@ -26,8 +26,7 @@ Public Class forks_test
         Public Overrides Function run() As Boolean
             Const min As Int32 = 1
             Const max As Int32 = 17
-            Dim i As Int32 = 0
-            i = rnd_int(min, max)
+            Dim i As Int32 = rnd_int(min, max)
             assert(i > 0)
             If f.mark_as(i) Then
                 assertion.equal(c, 0)

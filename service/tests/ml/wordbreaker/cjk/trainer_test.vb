@@ -13,8 +13,7 @@ Namespace wordbreaker.cjk
         <test>
         <command_line_specified>
         Private Shared Sub from_training_file()
-            Dim m As model = Nothing
-            m = trainer.train(IO.File.ReadLines("cjk.training.txt"))
+            Dim m As model = trainer.train(IO.File.ReadLines("cjk.training.txt"))
             m.dump("cjk.model.bin")
         End Sub
 

@@ -86,11 +86,9 @@ Public Class finalizer_test
     Private Sub run_case(Of T)(ByVal ctor As _do(Of atomic_int, T), ByVal validate As void(Of atomic_int))
         assert(Not ctor Is Nothing)
         assert(Not validate Is Nothing)
-        Dim f As atomic_int = Nothing
-        f = New atomic_int(0)
+        Dim f As New atomic_int(0)
         For i As Int32 = 0 To test_size - 1
-            Dim o As T = Nothing
-            o = ctor(f)
+            Dim o As T = ctor(f)
         Next
         validate(f)
     End Sub

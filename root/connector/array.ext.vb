@@ -214,8 +214,7 @@ Public Module _array_ext
         assert(array_size(j) >= count)
 
         For k As Int32 = 0 To CInt(count) - 1
-            Dim c As Int32 = 0
-            c = compare(i(k), j(k))
+            Dim c As Int32 = compare(i(k), j(k))
             If c <> 0 Then
                 Return c
             End If
@@ -270,10 +269,8 @@ Public Module _array_ext
                                     ByVal len As UInt32) As Boolean
         assert(array_size(first) >= first_start + len)
         assert(array_size(second) >= second_start + len)
-        Dim fs As Int32 = 0
-        fs = CInt(first_start)
-        Dim ss As Int32 = 0
-        ss = CInt(second_start)
+        Dim fs As Int32 = CInt(first_start)
+        Dim ss As Int32 = CInt(second_start)
         For i As Int32 = 0 To CInt(len) - 1
             If Not equal(first(i + fs), second(i + ss)) Then
                 Return False

@@ -24,8 +24,7 @@ Public Class bytes_transformer_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Dim t As bytes_transformer = Nothing
-        t = New bytes_transformer_wrapper(AddressOf transform)
+        Dim t As bytes_transformer = New bytes_transformer_wrapper(AddressOf transform)
         Dim i() As Byte = Nothing
         Dim o() As Byte = Nothing
         Dim o2() As Byte = Nothing

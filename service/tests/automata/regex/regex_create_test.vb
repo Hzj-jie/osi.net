@@ -18,8 +18,7 @@ Namespace rlexer
         Private Shared Function case1() As Boolean
             Dim c As regex = Nothing
             assertion.is_true(regex.create("[a,b,c]def[g,h,i]", c))
-            Dim v As vector(Of matching_group) = Nothing
-            v = (+c)
+            Dim v As vector(Of matching_group) = (+c)
             If assertion.is_not_null(v) AndAlso
                assertion.equal(v.size(), CUInt(3)) Then
                 Dim g As string_matching_group = Nothing
@@ -39,8 +38,7 @@ Namespace rlexer
         Private Shared Function case2() As Boolean
             Dim c As regex = Nothing
             assertion.is_true(regex.create("abcde", c))
-            Dim v As vector(Of matching_group) = Nothing
-            v = (+c)
+            Dim v As vector(Of matching_group) = (+c)
             If assertion.is_not_null(v) AndAlso
                assertion.equal(v.size(), uint32_1) Then
                 Dim g As string_matching_group = Nothing
@@ -54,8 +52,7 @@ Namespace rlexer
         Private Shared Function case3() As Boolean
             Dim c As regex = Nothing
             assertion.is_true(regex.create("[a]", c))
-            Dim v As vector(Of matching_group) = Nothing
-            v = (+c)
+            Dim v As vector(Of matching_group) = (+c)
             If assertion.is_not_null(v) AndAlso
                assertion.equal(v.size(), uint32_1) Then
                 Dim g As string_matching_group = Nothing
@@ -69,8 +66,7 @@ Namespace rlexer
         Private Shared Function case4() As Boolean
             Dim c As regex = Nothing
             assertion.is_true(regex.create("[\x5C]", c))
-            Dim v As vector(Of matching_group) = Nothing
-            v = (+c)
+            Dim v As vector(Of matching_group) = (+c)
             If assertion.is_not_null(v) AndAlso
                assertion.equal(v.size(), uint32_1) Then
                 Dim g As string_matching_group = Nothing
@@ -84,8 +80,7 @@ Namespace rlexer
         Private Shared Function case5() As Boolean
             Dim c As regex = Nothing
             assertion.is_true(regex.create("[a,b,c]*def", c))
-            Dim v As vector(Of matching_group) = Nothing
-            v = (+c)
+            Dim v As vector(Of matching_group) = (+c)
             If assertion.is_not_null(v) AndAlso
                assertion.equal(v.size(), CUInt(2)) Then
                 Dim g As any_matching_group = Nothing
@@ -105,8 +100,7 @@ Namespace rlexer
         Private Shared Function case6() As Boolean
             Dim c As regex = Nothing
             assertion.is_true(regex.create("[a,b,c]!", c))
-            Dim v As vector(Of matching_group) = Nothing
-            v = (+c)
+            Dim v As vector(Of matching_group) = (+c)
             If assertion.is_not_null(v) AndAlso
                assertion.equal(v.size(), uint32_1) Then
                 Dim g As reverse_matching_group = Nothing
@@ -123,8 +117,7 @@ Namespace rlexer
         Private Shared Function case7() As Boolean
             Dim c As regex = Nothing
             assertion.is_true(regex.create("[*]!!", c))
-            Dim v As vector(Of matching_group) = Nothing
-            v = (+c)
+            Dim v As vector(Of matching_group) = (+c)
             If assertion.is_not_null(v) AndAlso
                assertion.equal(v.size(), uint32_1) Then
                 Dim g As reverse_matching_group = Nothing
@@ -139,8 +132,7 @@ Namespace rlexer
         Private Shared Function case8() As Boolean
             Dim c As regex = Nothing
             assertion.is_true(regex.create("[abc]-def", c))
-            Dim v As vector(Of matching_group) = Nothing
-            v = (+c)
+            Dim v As vector(Of matching_group) = (+c)
             If assertion.is_not_null(v) AndAlso
                assertion.equal(v.size(), CUInt(2)) Then
                 Dim g As unmatched_matching_group = Nothing
@@ -159,8 +151,7 @@ Namespace rlexer
         Private Shared Function case9() As Boolean
             Dim c As regex = Nothing
             assertion.is_true(regex.create("[a,b,c]+def", c))
-            Dim v As vector(Of matching_group) = Nothing
-            v = (+c)
+            Dim v As vector(Of matching_group) = (+c)
             If assertion.is_not_null(v) AndAlso
                assertion.equal(v.size(), CUInt(2)) Then
                 Dim g As multi_matching_group = Nothing

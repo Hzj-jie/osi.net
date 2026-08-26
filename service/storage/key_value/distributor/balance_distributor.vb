@@ -168,8 +168,7 @@ Public Class balance_distributor
     Private Function select_by_capacity(ByRef o As istrkeyvt) As Boolean
         assert(capacities.size() = container.size())
         Dim max As Int64 = 0
-        Dim max_id As Int32 = 0
-        max_id = npos
+        Dim max_id As Int32 = npos
         Dim i As UInt32 = 0
         While i < capacities.size()
             If capacities(CUInt(i)) > max Then

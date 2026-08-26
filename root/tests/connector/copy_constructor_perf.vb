@@ -42,8 +42,7 @@ Public Class copy_constructor_perf
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim o As test_class = Nothing
-            o = copy_constructor(Of test_class).invoke(rnd_utf8_chars(100), rnd_uint(), New Object())
+            Dim o As test_class = copy_constructor(Of test_class).invoke(rnd_utf8_chars(100), rnd_uint(), New Object())
             Return True
         End Function
     End Class
@@ -52,8 +51,7 @@ Public Class copy_constructor_perf
         Inherits [case]
 
         Public Overrides Function run() As Boolean
-            Dim o As test_class = Nothing
-            o = New test_class(rnd_utf8_chars(100), rnd_uint(), New Object(), True)
+            Dim o As New test_class(rnd_utf8_chars(100), rnd_uint(), New Object(), True)
             Return True
         End Function
     End Class

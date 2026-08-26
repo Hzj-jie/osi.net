@@ -55,8 +55,7 @@ Partial Public Class listener
             assert(Not c Is Nothing)
             Me.c = c
             Me.s = as_sensor(Function(ByRef pending As Boolean) As Boolean
-                                 Dim b As Int32 = 0
-                                 b = c.buffered_bytes()
+                                 Dim b As Int32 = c.buffered_bytes()
                                  pending = (b > 0)
                                  Return (b >= 0)
                              End Function)

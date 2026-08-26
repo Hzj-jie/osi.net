@@ -42,10 +42,8 @@ Public NotInheritable Class bit_array_test
                 v.clear()
                 v.resize(size)
             End If
-            Dim i As UInt32 = 0
-            i = rnd_uint(0, size)
-            Dim t As Boolean = False
-            t = rnd_bool()
+            Dim i As UInt32 = rnd_uint(0, size)
+            Dim t As Boolean = rnd_bool()
             assertion.equal(b(i), v(i))
             b(i) = t
             v(i) = t

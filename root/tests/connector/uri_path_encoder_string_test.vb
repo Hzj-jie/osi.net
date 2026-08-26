@@ -16,18 +16,15 @@ Public Class uri_path_encoder_string_test
         For i As Int32 = 0 To 128 - 1
             s = strcat(s, If(rnd_bool(), "H", character.sbc0))
         Next
-        Dim s2 As String = Nothing
-        s2 = uri.path_encoder.encode(s)
+        Dim s2 As String = uri.path_encoder.encode(s)
         s2 = uri.path_encoder.decode(s2)
         assertion.equal(s, s2)
         Return True
     End Function
 
     Private Shared Function invalid_hex() As Boolean
-        Dim s As String = Nothing
-        s = "abc%FG%FG%FGabc"
-        Dim s2 As String = Nothing
-        s2 = uri.path_encoder.decode(s)
+        Dim s As String = "abc%FG%FG%FGabc"
+        Dim s2 As String = uri.path_encoder.decode(s)
         assertion.equal(s, s2)
         Return True
     End Function
@@ -38,17 +35,14 @@ Public Class uri_path_encoder_string_test
             strcat(s, If(rnd_bool(), "H", character.sbc0))
         Next
         s = uri.path_encoder.encode(s, Text.Encoding.Unicode())
-        Dim s2 As String = Nothing
-        s2 = uri.path_encoder.decode(s, New Text.UTF8Encoding(False, True))
+        Dim s2 As String = uri.path_encoder.decode(s, New Text.UTF8Encoding(False, True))
         assertion.equal(s, s2)
         Return True
     End Function
 
     Private Shared Function not_ended() As Boolean
-        Dim s As String = Nothing
-        s = "abc%D"
-        Dim s2 As String = Nothing
-        s2 = uri.path_encoder.decode(s)
+        Dim s As String = "abc%D"
+        Dim s2 As String = uri.path_encoder.decode(s)
         assertion.equal(s, s2)
 
         s = "abc%%"
@@ -62,8 +56,7 @@ Public Class uri_path_encoder_string_test
         For i As Int32 = 0 To 128 - 1
             s = strcat(s, If(rnd_bool(), character.sbc0, character.sbcblank))
         Next
-        Dim s2 As String = Nothing
-        s2 = uri.path_encoder.encode(s)
+        Dim s2 As String = uri.path_encoder.encode(s)
         s2 = uri.path_encoder.decode(s2)
         assertion.equal(s, s2)
         Return True

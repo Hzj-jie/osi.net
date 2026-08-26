@@ -14,8 +14,7 @@ Public NotInheritable Class character_test
     Private Shared Sub run()
         assert(min_uint16 >= character.ascii_lower_bound)
         For i As UInt32 = min_uint16 To max_uint16
-            Dim c As Char = Nothing
-            c = Convert.ToChar(CUShort(i))
+            Dim c As Char = Convert.ToChar(CUShort(i))
             If i <= character.ascii_upper_bound Then
                 assertion.is_true(c.ascii())
                 assertion.is_true(c.extended_ascii())

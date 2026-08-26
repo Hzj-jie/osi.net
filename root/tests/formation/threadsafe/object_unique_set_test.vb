@@ -33,8 +33,7 @@ Public Class object_unique_set_test
         End Function
 
         Public Overrides Function run() As Boolean
-            Dim x As Int32 = 0
-            x = rnd_int(0, 3)
+            Dim x As Int32 = rnd_int(0, 3)
             If x = 0 Then
                 m.insert(o(rnd_uint(0, array_size(o))))
             ElseIf x = 1 Then

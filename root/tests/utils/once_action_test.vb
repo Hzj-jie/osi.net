@@ -38,8 +38,7 @@ Public NotInheritable Class once_action_test
     <multi_threading(thread_count)>
     <repeat(repeat_size)>
     Private Sub run()
-        Dim i As UInt32 = 0
-        i = rnd_uint(0, vs.size() - uint32_1)
+        Dim i As UInt32 = rnd_uint(0, vs.size() - uint32_1)
         If Not vs(i) Then
             assertion.is_false(vs(i).run())
         End If

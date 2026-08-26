@@ -55,8 +55,7 @@ Friend Class event_comb_perf_case
     End Function
 
     Public Overrides Function run() As Boolean
-        Dim ec As event_comb = Nothing
-        ec = New event_comb(Function() As Boolean
+        Dim ec As event_comb = New event_comb(Function() As Boolean
                                 For i As Int32 = 0 To size - 1
                                     If Not waitfor(create_event_comb()) Then
                                         Return False

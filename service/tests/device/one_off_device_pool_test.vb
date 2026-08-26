@@ -13,8 +13,7 @@ Public Class one_off_device_pool_test
     Public Overrides Function run() As Boolean
         Const max_count As UInt32 = 128
         Const max_round As Int32 = 2
-        Dim p As one_off_device_pool(Of mock_dev(Of one_off_device_pool_test)) = Nothing
-        p = one_off_device_pool.[New](New mock_device_creator(Of one_off_device_pool_test)(), max_count)
+        Dim p As one_off_device_pool(Of mock_dev(Of one_off_device_pool_test)) = one_off_device_pool.[New](New mock_device_creator(Of one_off_device_pool_test)(), max_count)
         assertion.equal(p.limited_max_count(), True)
         assertion.equal(p.total_count(), uint32_0)
         assertion.equal(p.free_count(), uint32_0)

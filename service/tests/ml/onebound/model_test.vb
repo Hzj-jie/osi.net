@@ -26,17 +26,13 @@ Namespace onebound
         <repeat(100)>
         Private Shared Sub load_and_dump()
             Using ms As MemoryStream = New MemoryStream()
-                Dim t As trainer = Nothing
-                t = New trainer()
+                Dim t As New trainer()
                 For i As Int32 = 0 To 100
-                    Dim a As String = Nothing
-                    a = guid_str()
-                    Dim b As String = Nothing
-                    b = guid_str()
+                    Dim a As String = guid_str()
+                    Dim b As String = guid_str()
                     t.accumulate(a, b, thread_random.of_double.larger_than_0_and_less_or_equal_than_1())
                 Next
-                Dim m As model = Nothing
-                m = t.dump()
+                Dim m As model = t.dump()
                 assertion.is_true(m.dump(ms))
                 ms.Position() = 0
                 Dim m2 As model = Nothing

@@ -108,8 +108,7 @@ Public NotInheritable Class async_operation
                                       ByVal after_set_result As void(Of Boolean),
                                       ByVal result As ref(Of T),
                                       Optional ByVal callstack As String = Nothing) As async_operation
-        Dim rtn As async_operation = Nothing
-        rtn = New async_operation()
+        Dim rtn As New async_operation()
         rtn._new(begin, [end], after_set_result, result, callstack)
         Return rtn
     End Function

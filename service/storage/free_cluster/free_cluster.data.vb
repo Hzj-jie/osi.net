@@ -17,8 +17,7 @@ Partial Public NotInheritable Class free_cluster
         Return New event_comb(Function() As Boolean
                                   Dim h As cluster = Nothing
                                   If head_cluster(id, h) Then
-                                      Dim cs As vector(Of cluster) = Nothing
-                                      cs = New vector(Of cluster)()
+                                      Dim cs As New vector(Of cluster)()
                                       chained_clusters(h, cs)
                                       assert(Not cs.empty())
                                       Dim offset As UInt64 = 0
@@ -93,8 +92,7 @@ Partial Public NotInheritable Class free_cluster
                                       assert(cs.size() = offsets.size())
                                       assert(Not h Is Nothing)
                                       ecs.resize(cs.size() + uint32_1)
-                                      Dim bs As UInt32 = 0
-                                      bs = array_size(buff)
+                                      Dim bs As UInt32 = array_size(buff)
                                       If cs.empty() Then
                                           assert(hr >= bs)
                                           ecs(0) = h.append(buff, 0, bs)
@@ -102,8 +100,7 @@ Partial Public NotInheritable Class free_cluster
                                           assert(hr < bs)
                                           ecs(0) = h.append(buff, 0, CUInt(hr))
                                           For i As UInt32 = 0 To cs.size() - uint32_1
-                                              Dim current_offset As UInt64 = 0
-                                              current_offset = offsets(i) + hr
+                                              Dim current_offset As UInt64 = offsets(i) + hr
                                               assert(current_offset <= max_uint32)
                                               If i < cs.size() - 1 Then
                                                   assert(cs(i).remain_bytes() < bs - offsets(i) - hr)
@@ -163,8 +160,7 @@ Partial Public NotInheritable Class free_cluster
                               End Function,
                               Function() As Boolean
                                   assert(Not isemptyarray(ecs))
-                                  Dim r As Boolean = False
-                                  r = True
+                                  Dim r As Boolean = True
                                   For i As UInt32 = 0 To array_size(ecs) - uint32_1
                                       If ecs(CInt(i)).end_result() Then
                                           assert(fcs.push(cs(i)))

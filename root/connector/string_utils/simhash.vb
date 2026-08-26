@@ -17,8 +17,7 @@ Public Module _simhash
             ReDim v(hash_size - 1)
             arrays.clear(v)
             For j As Int32 = 0 To array_size_i(i) - 1
-                Dim h As UInt32 = 0
-                h = signing(i(j))
+                Dim h As UInt32 = signing(i(j))
                 For k As Int32 = 0 To hash_size - 1
                     If ((h And (1 << k)) = 1) Then
                         v(k) += 1
@@ -43,8 +42,7 @@ Public Module _simhash
     End Function
 
     <Extension()> Public Function hamming_dist(ByVal i As UInt32, ByVal j As UInt32) As Int32
-        Dim b As UInt32 = 0
-        b = (i Xor j)
+        Dim b As UInt32 = (i Xor j)
         Dim o As Int32 = 0
         For k As Int32 = 0 To hash_size - 1
             If ((b And (1 << k)) = 1) Then

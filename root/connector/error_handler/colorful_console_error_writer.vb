@@ -22,8 +22,7 @@ Public NotInheritable Class colorful_console_error_writer
     End Sub
 
     Private Shared Sub colorful_write(ByVal errtype As error_type, ByVal s As String)
-        Dim oldcolor As ConsoleColor = Nothing
-        oldcolor = Console.ForegroundColor()
+        Dim oldcolor As ConsoleColor = Console.ForegroundColor()
         Try
             If errtype = error_type.application Then
                 Console.ForegroundColor() = ConsoleColor.Blue

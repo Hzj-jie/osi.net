@@ -24,8 +24,7 @@ Partial Public NotInheritable Class wrapper_test
         End Sub
 
         Public Sub assert_wrap(ByVal count As Int32)
-            Dim this As test_class(Of PROTECTOR) = Nothing
-            this = Me
+            Dim this As test_class(Of PROTECTOR) = Me
             While count > 0
                 assertion.is_not_null(this.t)
                 this = this.t

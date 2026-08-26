@@ -16,8 +16,7 @@ Public Module _kick
         If content.null_or_empty() Then
             Return content
         Else
-            Dim l As UInt32 = 0
-            l = strlen(content)
+            Dim l As UInt32 = strlen(content)
             assert(l > 0)
             If left.null_or_empty() Then
                 left = content(0)

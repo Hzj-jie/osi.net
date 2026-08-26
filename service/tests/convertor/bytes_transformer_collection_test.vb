@@ -53,8 +53,7 @@ Public Class bytes_transformer_collection_test
     End Function
 
     Public Overrides Function run() As Boolean
-        Dim bt As bytes_transformer_collection = Nothing
-        bt = New bytes_transformer_collection()
+        Dim bt As New bytes_transformer_collection()
         assertion.is_true(bt.chain(New bytes_transformer_wrapper(AddressOf trans0),
                              New bytes_transformer_wrapper(AddressOf trans1),
                              New bytes_transformer_wrapper(AddressOf trans2),

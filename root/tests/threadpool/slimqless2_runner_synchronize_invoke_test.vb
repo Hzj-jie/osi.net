@@ -16,10 +16,8 @@ Public Class slimqless2_runner_synchronize_invoke_test
     Inherits [case]
 
     Private Shared Function invoke_asynchronously_case() As Boolean
-        Dim t As slimqless2_runner = Nothing
-        t = New slimqless2_runner()
-        Dim s As slimqless2_runner_synchronize_invoke = Nothing
-        s = New slimqless2_runner_synchronize_invoke(t)
+        Dim t As New slimqless2_runner()
+        Dim s As New slimqless2_runner_synchronize_invoke(t)
         For i As Int32 = 0 To 100
             Dim result As Object = Nothing
             Dim args() As Object = Nothing
@@ -28,16 +26,14 @@ Public Class slimqless2_runner_synchronize_invoke_test
             For j As Int32 = 0 To array_size_i(args) - 1
                 args(j) = New Object()
             Next
-            Dim exec As Func(Of Object, Object, Object, Object) = Nothing
-            exec = Function(ByVal a As Object, ByVal b As Object, ByVal c As Object) As Object
+            Dim exec As Func(Of Object, Object, Object, Object) = Function(ByVal a As Object, ByVal b As Object, ByVal c As Object) As Object
                        assertion.reference_equal(a, args(0))
                        assertion.reference_equal(b, args(1))
                        assertion.reference_equal(c, args(2))
                        Return result
                    End Function
             assertion.reference_equal(s.Invoke(exec, args), result)
-            Dim ar As IAsyncResult = Nothing
-            ar = s.BeginInvoke(exec, args)
+            Dim ar As IAsyncResult = s.BeginInvoke(exec, args)
             If assertion.is_not_null(ar) Then
                 assertion.is_false(ar.CompletedSynchronously())
                 assertion.reference_equal(s.EndInvoke(ar), result)
@@ -48,10 +44,8 @@ Public Class slimqless2_runner_synchronize_invoke_test
     End Function
 
     Private Shared Function invoke_synchronously_case() As Boolean
-        Dim t As slimqless2_runner = Nothing
-        t = New slimqless2_runner()
-        Dim s As slimqless2_runner_synchronize_invoke = Nothing
-        s = New slimqless2_runner_synchronize_invoke(t)
+        Dim t As New slimqless2_runner()
+        Dim s As New slimqless2_runner_synchronize_invoke(t)
         assert(t.push(Sub()
                           For i As Int32 = 0 To 100
                               Dim result As Object = Nothing
@@ -61,16 +55,14 @@ Public Class slimqless2_runner_synchronize_invoke_test
                               For j As Int32 = 0 To array_size_i(args) - 1
                                   args(j) = New Object()
                               Next
-                              Dim exec As Func(Of Object, Object, Object, Object) = Nothing
-                              exec = Function(ByVal a As Object, ByVal b As Object, ByVal c As Object) As Object
+                              Dim exec As Func(Of Object, Object, Object, Object) = Function(ByVal a As Object, ByVal b As Object, ByVal c As Object) As Object
                                          assertion.reference_equal(a, args(0))
                                          assertion.reference_equal(b, args(1))
                                          assertion.reference_equal(c, args(2))
                                          Return result
                                      End Function
                               assertion.reference_equal(s.Invoke(exec, args), result)
-                              Dim ar As IAsyncResult = Nothing
-                              ar = s.BeginInvoke(exec, args)
+                              Dim ar As IAsyncResult = s.BeginInvoke(exec, args)
                               If assertion.is_not_null(ar) Then
                                   assertion.is_true(ar.CompletedSynchronously())
                                   assertion.reference_equal(s.EndInvoke(ar), result)

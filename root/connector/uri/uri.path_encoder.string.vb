@@ -83,8 +83,7 @@ Namespace uri
                                    End Sub
                 For i As Int32 = 0 To strlen_i(s) - 1
                     If s(i) = constants.uri.escape Then
-                        Dim t As String = Nothing
-                        t = strmid(s, CUInt(i + 1), expected_hex_byte_length)
+                        Dim t As String = strmid(s, CUInt(i + 1), expected_hex_byte_length)
                         Dim b As Byte = 0
                         If hex_byte(t, b) Then
                             buff(last) = b

@@ -46,16 +46,12 @@ Friend Class trie_case
     End Function
 
     Private Sub find()
-        Dim s As String = Nothing
-        s = random_key()
-        Dim it As stringtrie(Of Int32).iterator = Nothing
-        it = t.find(s)
+        Dim s As String = random_key()
+        Dim it As stringtrie(Of Int32).iterator = t.find(s)
         If validate() Then
-            Dim mr As Boolean = False
-            mr = (m.find(s) <> m.end())
+            Dim mr As Boolean = (m.find(s) <> m.end())
             If mr Then
-                Dim b As Boolean = False
-                b = assertion.is_true(it <> t.end(),
+                Dim b As Boolean = assertion.is_true(it <> t.end(),
                                "finding results of {",
                                s,
                                "} are inconsistant") AndAlso
@@ -83,8 +79,7 @@ Friend Class trie_case
         Dim i As Int32 = 0
         s = random_key()
         i = random_value()
-        Dim r As pair(Of stringtrie(Of Int32).iterator, Boolean) = Nothing
-        r = t.emplace(s, i)
+        Dim r As pair(Of stringtrie(Of Int32).iterator, Boolean) = t.emplace(s, i)
         assertion.is_not_null(r)
         assertion.is_not_null(r.first)
         assertion.not_equal(r.first, t.end())
@@ -98,10 +93,8 @@ Friend Class trie_case
     End Sub
 
     Private Sub [erase]()
-        Dim s As String = Nothing
-        s = random_key()
-        Dim r As Boolean = False
-        r = t.erase(s)
+        Dim s As String = random_key()
+        Dim r As Boolean = t.erase(s)
         If validate() Then
             assertion.equal(r, m.erase(s), "erase results of {", s, "} are inconsistant")
         End If

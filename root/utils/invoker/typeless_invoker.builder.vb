@@ -34,8 +34,7 @@ Partial Public NotInheritable Class typeless_invoker
             If name.null_or_whitespace() Then
                 Return Me
             End If
-            Dim i As Int32 = 0
-            i = name.LastIndexOf(character.colon)
+            Dim i As Int32 = name.LastIndexOf(character.colon)
             If i = npos OrElse i = name.Length() - 1 Then
                 Return with_type_name(name)
             End If

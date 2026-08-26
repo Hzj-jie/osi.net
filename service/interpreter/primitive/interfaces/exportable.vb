@@ -32,8 +32,7 @@ Namespace primitive
         Private ReadOnly surround_strs() As String
 
         Sub New()
-            Dim v As vector(Of String) = Nothing
-            v = New vector(Of String)()
+            Dim v As New vector(Of String)()
             For i As Int32 = 0 To CInt(strlen(space_chars)) - 1
                 v.emplace_back(space_chars(i))
             Next

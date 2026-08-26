@@ -140,8 +140,7 @@ Friend Module _text_case
     End Function
 
     Public Function text_case(ByVal action As action, ByVal meta() As Byte) As [case]
-        Dim r As [case] = Nothing
-        r = New [case](mode.text, action, meta)
+        Dim r As New [case](mode.text, action, meta)
         assert(valid_text_case(r))
         Return r
     End Function

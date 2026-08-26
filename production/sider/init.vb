@@ -69,19 +69,16 @@ Public Module _init
     End Function
 
     Private Sub load_istrkeyvt()
-        Dim ss As vector(Of section) = Nothing
-        ss = config.sections("istrkeyvt")
+        Dim ss As vector(Of section) = config.sections("istrkeyvt")
         assert(Not ss Is Nothing)
         If Not ss.empty() Then
-            Dim loaded As atomic_int = Nothing
-            loaded = New atomic_int()
+            Dim loaded As New atomic_int()
             Using New scoped_environments({{"data", osi.root.envs.deploys.data_folder},
                                              {"service", osi.root.envs.deploys.service_name},
                                              {"service_data", osi.root.envs.deploys.service_data_folder}})
                 For i As UInt32 = 0 To ss.size() - uint32_1
                     Dim ec As event_comb = Nothing
-                    Dim s As section = Nothing
-                    s = ss(i)
+                    Dim s As section = ss(i)
                     assert_begin(New event_comb(Function() As Boolean
                                                     ec = load_istrkeyvt(s)
                                                     Return waitfor(ec) AndAlso
@@ -120,15 +117,12 @@ Public Module _init
     End Function
 
     Private Sub load_server()
-        Dim ss As vector(Of section) = Nothing
-        ss = config.sections("server")
+        Dim ss As vector(Of section) = config.sections("server")
         assert(Not ss Is Nothing)
         If Not ss.empty() Then
-            Dim loaded As atomic_int = Nothing
-            loaded = New atomic_int()
+            Dim loaded As New atomic_int()
             For i As UInt32 = 0 To ss.size() - uint32_1
-                Dim s As section = Nothing
-                s = ss(i)
+                Dim s As section = ss(i)
                 Dim ec As event_comb = Nothing
                 assert_begin(New event_comb(Function() As Boolean
                                                 ec = load_server(s)

@@ -29,10 +29,8 @@ Friend Class segment_tree_case2
 
     Private Shared Function rnd_segment(ByRef min As Int64,
                                         ByRef max As Int64) As pair(Of Int64, Int64)
-        Dim i As Int64 = 0
-        i = rnd_position()
-        Dim j As Int64 = 0
-        j = rnd_position()
+        Dim i As Int64 = rnd_position()
+        Dim j As Int64 = rnd_position()
         If i > j Then
             swap(i, j)
         End If
@@ -46,8 +44,7 @@ Friend Class segment_tree_case2
     End Function
 
     Private Shared Function rnd_small_segment() As pair(Of Int64, Int64)
-        Dim i As Int64 = 0
-        i = rnd_position()
+        Dim i As Int64 = rnd_position()
         Return pair.emplace_of(i, i + rnd_uint8())
     End Function
 
@@ -55,8 +52,7 @@ Friend Class segment_tree_case2
                                         ByRef max As Int64) As vector(Of pair(Of Int64, pair(Of Int64, Int64)))
         min = max_int64
         max = min_int64
-        Dim r As vector(Of pair(Of Int64, pair(Of Int64, Int64))) = Nothing
-        r = New vector(Of pair(Of Int64, pair(Of Int64, Int64)))()
+        Dim r As New vector(Of pair(Of Int64, pair(Of Int64, Int64)))()
         For i As Int32 = 0 To rnd_int(10 * If(isreleasebuild(), 200, 1),
                                       20 * If(isreleasebuild(), 200, 1)) - 1
             r.emplace_back(pair.emplace_of(If(isreleasebuild(),
@@ -92,13 +88,11 @@ Friend Class segment_tree_case2
                                       ByVal segments As vector(Of pair(Of Int64, pair(Of Int64, Int64)))) As Boolean
         assert(Not t Is Nothing)
         For i As Int32 = 0 To 1024 * If(isreleasebuild(), 10, 1) - 1
-            Dim p As Int64 = 0
-            p = rnd_position()
+            Dim p As Int64 = rnd_position()
             Dim has_value As Boolean = False
             Dim value As Int64 = 0
             stupid_find(segments, p, has_value, value)
-            Dim it As segment_tree(Of Int64).iterator = Nothing
-            it = t.find(p)
+            Dim it As segment_tree(Of Int64).iterator = t.find(p)
             If has_value Then
                 If assertion.is_not_null(it) Then
                     assertion.is_true((+it).has_value())
@@ -115,10 +109,8 @@ Friend Class segment_tree_case2
                                      ByVal segments As vector(Of pair(Of Int64, pair(Of Int64, Int64)))) As Boolean
         assert(Not t Is Nothing)
         For i As Int32 = 0 To 16 * If(isreleasebuild(), 8, 1) - 1
-            Dim r As pair(Of Int64, Int64) = Nothing
-            r = rnd_small_segment()
-            Dim its As vector(Of pair(Of segment_tree(Of Int64).iterator, pair(Of Int64, Int64))) = Nothing
-            its = t.find(r.first, r.second)
+            Dim r As pair(Of Int64, Int64) = rnd_small_segment()
+            Dim its As vector(Of pair(Of segment_tree(Of Int64).iterator, pair(Of Int64, Int64))) = t.find(r.first, r.second)
             If assertion.is_not_null(its) Then
                 Dim v1() As pair(Of Boolean, Int64) = Nothing
                 ReDim v1(CInt(r.second - r.first))
@@ -160,10 +152,8 @@ Friend Class segment_tree_case2
     Public Overrides Function run() As Boolean
         Dim min As Int64 = 0
         Dim max As Int64 = 0
-        Dim s As vector(Of pair(Of Int64, pair(Of Int64, Int64))) = Nothing
-        s = prepare_segments(min, max)
-        Dim t As segment_tree(Of Int64) = Nothing
-        t = New segment_tree(Of Int64)(min, max)
+        Dim s As vector(Of pair(Of Int64, pair(Of Int64, Int64))) = prepare_segments(min, max)
+        Dim t As New segment_tree(Of Int64)(min, max)
         assert(Not s.empty())
         For i As UInt32 = 0 To s.size() - uint32_1
             assertion.is_true(t.emplace(s(i).second.first, s(i).second.second, s(i).first))

@@ -44,8 +44,7 @@ Public NotInheritable Class static_constructor
 
     ' This function won't guarantee the TypeInitializer will be executed only once.
     Public Shared Sub execute(ByVal t As Type)
-        Dim a As Action = Nothing
-        a = as_action(t)
+        Dim a As Action = as_action(t)
         If Not a Is Nothing Then
             a()
         End If

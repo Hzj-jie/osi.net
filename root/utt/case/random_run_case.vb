@@ -61,8 +61,7 @@ Public Class random_run(Of RT)
 
     Public Function [select]() As RT
         assert(Not calls.empty())
-        Dim j As Double = 0
-        j = rnd_double(0, 1)
+        Dim j As Double = rnd_double(0, 1)
         For i As UInt32 = 0 To calls.size() - uint32_1
             If j < calls(i).first Then
                 Return calls(i).second()

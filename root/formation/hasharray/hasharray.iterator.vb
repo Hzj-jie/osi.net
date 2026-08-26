@@ -181,8 +181,7 @@ Partial Public Class hasharray(Of T,
     Partial Public Structure iterator
         Private Function move_next(ByVal i As UInt32) As iterator
             assert(i > uint32_0)
-            Dim n As iterator = Nothing
-            n = Me
+            Dim n As iterator = Me
             While Not n.is_end() AndAlso i > uint32_0
                 n = n.move_next()
                 i -= uint32_1
@@ -192,8 +191,7 @@ Partial Public Class hasharray(Of T,
 
         Private Function move_prev(ByVal i As UInt32) As iterator
             assert(i > uint32_0)
-            Dim n As iterator = Nothing
-            n = Me
+            Dim n As iterator = Me
             While Not n.is_end() AndAlso i > uint32_0
                 n = n.move_prev()
                 i -= uint32_1
@@ -217,8 +215,7 @@ Partial Public Class hasharray(Of T,
             j = p.row + uint32_1
             While i < p.column_count()
                 While j < p.row_count(i)
-                    Dim r As ref = Nothing
-                    r = p.ref_at(i, j)
+                    Dim r As ref = p.ref_at(i, j)
                     If Not r.empty() Then
                         Return New iterator(r)
                     End If
@@ -238,8 +235,7 @@ Partial Public Class hasharray(Of T,
             While True
                 While j > uint32_0
                     j -= uint32_1
-                    Dim r As ref = Nothing
-                    r = p.ref_at(i, j)
+                    Dim r As ref = p.ref_at(i, j)
                     If Not r.empty() Then
                         Return New iterator(r)
                     End If

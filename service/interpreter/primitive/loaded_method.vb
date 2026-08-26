@@ -18,10 +18,8 @@ Namespace primitive
         End Sub
 
         Public Sub load(ByVal i() As Byte)
-            Dim n As const_array(Of Byte) = Nothing
-            n = const_array.of(i)
-            Dim it As map(Of const_array(Of Byte), Func(Of Byte(), Byte())).iterator = Nothing
-            it = m.find(n)
+            Dim n As const_array(Of Byte) = const_array.of(i)
+            Dim it As map(Of const_array(Of Byte), Func(Of Byte(), Byte())).iterator = m.find(n)
             If it = m.end() Then
                 last = load_method(i)
                 assert(m.emplace(n, last).second)
@@ -35,8 +33,7 @@ Namespace primitive
                 raise_error(error_type.user, "Empty method name to load.")
                 executor_stop_error.throw(executor.error_type.interrupt_failure)
             End If
-            Dim s As String = Nothing
-            s = bytes_str(i)
+            Dim s As String = bytes_str(i)
             If s.null_or_whitespace() Then
                 raise_error(error_type.user, "Cannot parse method name.")
                 executor_stop_error.throw(executor.error_type.interrupt_failure)

@@ -97,8 +97,7 @@ Public Class xml_tagparser_test
             Dim attrs As vector(Of pair(Of String, String)) = Nothing
             Dim self_close As Boolean = False
             Dim s As String = Nothing
-            Dim close_tag As Boolean = False
-            close_tag = rnd_bool()
+            Dim close_tag As Boolean = rnd_bool()
             If close_tag Then
                 s = rnd_end_tag(tag)
             Else

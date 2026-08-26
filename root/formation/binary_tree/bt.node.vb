@@ -363,8 +363,7 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function revise_or_clear_left_subtree_height() As Boolean
-            Dim n As UInt32 = 0
-            n = If(has_left_child(), left_child().boxed_subtree_height(), uint32_0)
+            Dim n As UInt32 = If(has_left_child(), left_child().boxed_subtree_height(), uint32_0)
             If boxed_left_subtree_height() = n Then
                 Return False
             End If
@@ -374,8 +373,7 @@ Partial Public Class bt(Of T)
 
         <MethodImpl(method_impl_options.aggressive_inlining)>
         Public Function revise_or_clear_right_subtree_height() As Boolean
-            Dim n As UInt32 = 0
-            n = If(has_right_child(), right_child().boxed_subtree_height(), uint32_0)
+            Dim n As UInt32 = If(has_right_child(), right_child().boxed_subtree_height(), uint32_0)
             If boxed_right_subtree_height() = n Then
                 Return False
             End If

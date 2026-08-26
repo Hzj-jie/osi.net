@@ -28,8 +28,7 @@ Public NotInheritable Class thread_random
 
     Public NotInheritable Class of_double
         Public Shared Function larger_than_0_and_less_or_equal_than_1() As Double
-            Dim r As Double = Nothing
-            r = ref().NextDouble()
+            Dim r As Double = ref().NextDouble()
             If r = 0 Then
                 Return 1
             End If

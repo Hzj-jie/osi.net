@@ -24,8 +24,7 @@ Public Class client_checker
         If Not c.alive() Then
             Return False
         Else
-            Dim nms As Int64 = 0
-            nms = nowadays.milliseconds()
+            Dim nms As Int64 = nowadays.milliseconds()
             If nms - last_poll_alive_ms >= ms Then
                 If Not free_poll_alive(c, p) Then
                     Return False

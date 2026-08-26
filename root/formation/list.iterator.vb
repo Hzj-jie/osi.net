@@ -171,8 +171,7 @@ Partial Public Class list(Of T)
     Partial Public Structure iterator
         Private Function move_prev(ByVal s As UInt32) As iterator
             assert(s > uint32_0)
-            Dim n As node = Nothing
-            n = p
+            Dim n As node = p
             While s > 0
                 n = n.last()
                 If n Is Nothing Then
@@ -185,8 +184,7 @@ Partial Public Class list(Of T)
 
         Private Function move_next(ByVal s As UInt32) As iterator
             assert(s > uint32_0)
-            Dim n As node = Nothing
-            n = p
+            Dim n As node = p
             While s > 0
                 n = n.next()
                 If n Is Nothing Then

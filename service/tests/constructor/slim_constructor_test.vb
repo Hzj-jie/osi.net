@@ -12,8 +12,7 @@ Imports osi.service.constructor
 Public NotInheritable Class slim_constructor_test
     <test>
     Private Shared Sub select_first_succeeded_constructor()
-        Dim c As slim_constructor(Of Int32, Int32, UInt32) = Nothing
-        c = New slim_constructor(Of Int32, Int32, UInt32)()
+        Dim c As New slim_constructor(Of Int32, Int32, UInt32)()
         c.register(1,
                    Function(ByVal i As Int32, ByRef o As UInt32) As Boolean
                        If (i And 1) = 1 Then
@@ -32,10 +31,8 @@ Public NotInheritable Class slim_constructor_test
                    End Function)
 
         For x As Int32 = 0 To 100
-            Dim key As Int32 = 0
-            key = If(rnd_bool(), 1, 2)
-            Dim i As Int32 = 0
-            i = rnd_int()
+            Dim key As Int32 = If(rnd_bool(), 1, 2)
+            Dim i As Int32 = rnd_int()
             Dim o As UInt32 = 0
             assertion.is_true(c.[New](key, i, o))
             If key = 1 Then
@@ -52,8 +49,7 @@ Public NotInheritable Class slim_constructor_test
 
     <test>
     Private Shared Sub not_key_registered()
-        Dim c As slim_constructor(Of Int32, Int32, UInt32) = Nothing
-        c = New slim_constructor(Of Int32, Int32, UInt32)()
+        Dim c As New slim_constructor(Of Int32, Int32, UInt32)()
         c.register(1, Function(ByVal i As Int32) As UInt32
                           Return int32_uint32(i)
                       End Function)
@@ -68,8 +64,7 @@ Public NotInheritable Class slim_constructor_test
 
     <test>
     Private Shared Sub no_constructors_succeeded()
-        Dim c As slim_constructor(Of Int32, Int32, UInt32) = Nothing
-        c = New slim_constructor(Of Int32, Int32, UInt32)()
+        Dim c As New slim_constructor(Of Int32, Int32, UInt32)()
         c.register(1,
                    Function(ByVal i As Int32, ByRef r As UInt32) As Boolean
                        Return False
@@ -80,8 +75,7 @@ Public NotInheritable Class slim_constructor_test
 
     <test>
     Private Shared Sub keyless_first_succeeded()
-        Dim c As keyless_slim_constructor(Of Int32, UInt32) = Nothing
-        c = New keyless_slim_constructor(Of Int32, UInt32)()
+        Dim c As New keyless_slim_constructor(Of Int32, UInt32)()
         c.register(Function(ByVal i As Int32, ByRef o As UInt32) As Boolean
                        If (i And 1) = 1 Then
                            o = int32_uint32(i)
@@ -93,8 +87,7 @@ Public NotInheritable Class slim_constructor_test
                        Return int32_uint32(unchecked_dec(i))
                    End Function)
         For x As Int32 = 0 To 100
-            Dim i As Int32 = 0
-            i = rnd_int()
+            Dim i As Int32 = rnd_int()
             Dim o As UInt32 = 0
             assertion.is_true(c.[New](i, o))
             If (i And 1) = 1 Then
@@ -107,8 +100,7 @@ Public NotInheritable Class slim_constructor_test
 
     <test>
     Private Shared Sub keyless_no_constructors_succeeded()
-        Dim c As keyless_slim_constructor(Of Int32, UInt32) = Nothing
-        c = New keyless_slim_constructor(Of Int32, UInt32)()
+        Dim c As New keyless_slim_constructor(Of Int32, UInt32)()
         c.register(Function(ByVal i As Int32, ByRef x As UInt32) As Boolean
                        Return False
                    End Function)

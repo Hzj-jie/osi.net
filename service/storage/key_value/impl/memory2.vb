@@ -45,8 +45,7 @@ Public NotInheritable Class memory2
         If Not enough_storage(array_size(value)) Then
             Return False
         End If
-        Dim original_size As UInt32 = 0
-        original_size = array_size((+it).second)
+        Dim original_size As UInt32 = array_size((+it).second)
         ReDim Preserve (+it).second(CInt(original_size) + array_size_i(value) - 1)
         arrays.copy((+it).second, original_size, value)
         result = True
@@ -93,8 +92,7 @@ Public NotInheritable Class memory2
         Else
             result.clear()
         End If
-        Dim it As store_t.iterator = Nothing
-        it = m.begin()
+        Dim it As store_t.iterator = m.begin()
         While it <> m.end()
             result.push_back(+((+it).first))
             it += 1

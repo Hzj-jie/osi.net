@@ -54,8 +54,7 @@ Public NotInheritable Class section_to_var_test
         Dim ss As vector(Of section) = c.sections("section")
         If assertion.is_not_null(ss) AndAlso
            assertion.equal(ss.size(), CUInt(3)) Then
-            Dim v As var = Nothing
-            v = New var(ss(0).values())
+            Dim v As New var(ss(0).values())
             assertion.is_true(v.other_values() Is Nothing OrElse v.other_values().empty())
             assertion.equal(v("key0"), "value0")
             assertion.equal(v("key1"), " value1")

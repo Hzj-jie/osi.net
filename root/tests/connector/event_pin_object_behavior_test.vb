@@ -18,15 +18,13 @@ Public Class event_pin_object_behavior_test
 
     Public Overrides Function run() As Boolean
         For i As Int32 = 0 To 1000
-            Dim a As c = Nothing
-            a = New c()
+            Dim a As New c()
             AddHandler a.e, AddressOf handler
             garbage_collector.repeat_collect()
         Next
         assertion.more(c.destructed(), uint32_0)
         For i As Int32 = 0 To 1000
-            Dim a As c = Nothing
-            a = New c()
+            Dim a As New c()
             AddHandler a.e, Sub()
                             End Sub
             garbage_collector.repeat_collect()
