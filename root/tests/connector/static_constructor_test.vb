@@ -94,7 +94,7 @@ Public NotInheritable Class static_constructor_test
         static_constructor(Of E).execute()
         static_constructor(Of E).execute()
 
-#If NETFRAMEWORK Then
+#If Not NET8_0_OR_GREATER Then
         ' Types with beforefieldinit (like F and G) may be initialized earlier in modern .NET
         ' during test discovery / reflection, so F_holder.v and G_holder.v are not guaranteed
         ' to be False before explicit execution.
@@ -103,7 +103,7 @@ Public NotInheritable Class static_constructor_test
         static_constructor(Of F).execute()
         assertion.is_true(F_holder.v)
 
-#If NETFRAMEWORK Then
+#If Not NET8_0_OR_GREATER Then
         assertion.is_false(G_holder.v)
 #End If
         static_constructor(Of G).execute()

@@ -58,7 +58,7 @@ Public Class valuer_test
                fail_case(Of String)("z", binding_flags.all)
     End Function
 
-#If Not NETFRAMEWORK Then
+#If NET8_0_OR_GREATER Then
     ' In .NET Framework, FieldInfo.SetValue permitted modifying static initonly (Shared ReadOnly) fields
     ' via reflection. In modern .NET (.NET Core / .NET 8+), CoreCLR disallows setting static initonly fields
     ' after type initialization for JIT optimization and immutability guarantees, throwing FieldAccessException.
@@ -80,7 +80,7 @@ Public Class valuer_test
 #End If
 
     Private Shared Function net_dependent_cases() As Boolean
-#If NETFRAMEWORK Then
+#If Not NET8_0_OR_GREATER Then
         ' h and i are Shared ReadOnly (static initonly) fields, which can be modified via reflection in .NET Framework.
         Return run_case(Of Int32)("h", rnd_int(), binding_flags.static_public) AndAlso
                run_case(Of Int32)("i", rnd_int(), binding_flags.static_private)

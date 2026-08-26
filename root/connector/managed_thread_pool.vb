@@ -24,7 +24,7 @@ Public NotInheritable Class managed_thread_pool
             push(d)
             Return
         End If
-#If NETFRAMEWORK Then
+#If Not NET8_0_OR_GREATER Then
         Using are As AutoResetEvent = New AutoResetEvent(False)
             Dim t As Thread = Nothing
             push(Sub()

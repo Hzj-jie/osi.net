@@ -18,7 +18,7 @@ Public Class ImaginaryNumberException
         MyBase.New(message, inner_exception)
     End Sub
 
-#If NETFRAMEWORK Then
+#If Not NET8_0_OR_GREATER Then
     Public Sub New(ByVal info As Runtime.Serialization.SerializationInfo,
                    ByVal context As Runtime.Serialization.StreamingContext)
         MyBase.New(info, context)

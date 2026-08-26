@@ -40,7 +40,7 @@ Public NotInheritable Class connectivity
                                             "www.wikipedia.org")
 
         ServicePointManager.Expect100Continue() = True
-#If NETFRAMEWORK Then
+#If Not NET8_0_OR_GREATER Then
         Dim ssl3_val As SecurityProtocolType = SecurityProtocolType.Ssl3
 #Else
         Dim ssl3_val As SecurityProtocolType = direct_cast(Of SecurityProtocolType)(48)

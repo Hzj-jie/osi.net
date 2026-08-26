@@ -18,7 +18,7 @@ Public NotInheritable Class async_result_destructor
     Private Shared ReadOnly q As slimqless2(Of Action) = New slimqless2(Of Action)()
 
     Shared Sub New()
-#If NETFRAMEWORK Then
+#If Not NET8_0_OR_GREATER Then
         Dim ready_to_abort As singleentry
         ready_to_abort.mark_in_use()
 #End If
@@ -29,11 +29,11 @@ Public NotInheritable Class async_result_destructor
                                                   Dim n As Int64 = 0
                                                   n = Now().milliseconds()
                                                   Try
-#If NETFRAMEWORK Then
+#If Not NET8_0_OR_GREATER Then
                                                       ready_to_abort.mark_not_in_use()
 #End If
                                                       v()
-#If NETFRAMEWORK Then
+#If Not NET8_0_OR_GREATER Then
                                                   Catch ex As ThreadAbortException
                                                       If application_lifetime.running() Then
                                                           Thread.ResetAbort()
@@ -50,7 +50,7 @@ Public NotInheritable Class async_result_destructor
         th.IsBackground() = True
         th.Name() = "ASYNC_RESULT_DESTRUCTOR_THREAD"
         th.Start()
-#If NETFRAMEWORK Then
+#If Not NET8_0_OR_GREATER Then
         application_lifetime_binder.instance.insert(New disposer(Of Thread)(th, disposer:=Sub(x) x.Abort()))
 
         stopwatch.repeat(timeslice_length_ms,
