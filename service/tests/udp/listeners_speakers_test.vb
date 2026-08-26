@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Net
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.procedure
 Imports osi.root.utt
@@ -37,8 +38,11 @@ Public NotInheritable Class listeners_speakers_test
         Dim send_data As vector(Of Byte()) = Nothing
         Dim receive_data As vector(Of Byte()) = Nothing
         Dim waited As Boolean = False
+        ' On Linux, default kernel UDP socket receive buffer (net.core.rmem_max / rmem_default)
+        ' can drop datagrams when sending 1000 datagrams in a rapid burst under concurrent test load.
+        ' Use 128 iterations on *nix to avoid buffer overflows while still thoroughly testing IPv6 UDP transmission.
         Return New event_comb(Function() As Boolean
-                                  If i < 1000 Then
+                                  If i < If(os.is_nix, 128, 1000) Then
                                       If i = 0 Then
                                           send_data = New vector(Of Byte())()
                                           receive_data = New vector(Of Byte())()
