@@ -70,13 +70,15 @@ Public NotInheritable Class ref_test
             For i As Int32 = 0 To released - 1
                 ps(i) = Nothing
             Next
-            garbage_collector.repeat_collect()
+            assertion.is_true(garbage_collector.waitfor_collect_until(
+                Function() test_class.finalized_count() = released))
             assertion.equal(test_class.finalized_count(), released)
 
             For i As Int32 = 0 To count - 1
                 ps(i) = Nothing
             Next
-            garbage_collector.repeat_collect()
+            assertion.is_true(garbage_collector.waitfor_collect_until(
+                Function() test_class.finalized_count() = count))
             assertion.equal(test_class.finalized_count(), count)
 
             Return True
