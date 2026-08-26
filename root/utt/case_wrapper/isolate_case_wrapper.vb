@@ -82,9 +82,9 @@ Public Class isolate_case_wrapper
     End Sub
 
     Protected NotOverridable Overrides Function init_process(ByVal p As shell_less_process) As Boolean
-        p.start_info().EnvironmentVariables().Add("no_file_log", "1")
-        p.start_info().EnvironmentVariables().Add("utt_report_case_name", "1")
-        p.start_info().EnvironmentVariables().Add("strong_assert", "1")
+        p.start_info().EnvironmentVariables()("no_file_log") = "1"
+        p.start_info().EnvironmentVariables()("utt_report_case_name") = "1"
+        p.start_info().EnvironmentVariables()("strong_assert") = "1"
         AddHandler receive_output, AddressOf received
         AddHandler receive_error, AddressOf received
         Return MyBase.init_process(p)
