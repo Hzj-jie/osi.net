@@ -182,7 +182,9 @@ Partial Friend NotInheritable Class host
         If envs.virtual_machine Then
             base_ms *= 4
         End If
-        Return CLng(base_ms)
+        ' Some tests are long-running and cannot be parallelly executed, so high core count
+        ' can make the concurrency-divided timeout too small. Enforce a minimum floor of 4 hours.
+        Return max(CLng(base_ms), minutes_to_milliseconds(4 * 60))
     End Function
 
     Public Shared Sub run()
