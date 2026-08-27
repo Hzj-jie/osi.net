@@ -118,6 +118,12 @@ Public NotInheritable Class isolate_case_wrapper_test
         End Sub
 
         Protected Overrides Function expected_return() As Int32
+#If NET8_0_OR_GREATER Then
+            If Not OperatingSystem.IsWindows() Then
+                ' Environment.FailFast raises SIGABRT (signal 6) on Linux, resulting in exit code 128 + 6 = 134.
+                Return 134
+            End If
+#End If
             Return constants.exit_code.assertion_failure
         End Function
 
