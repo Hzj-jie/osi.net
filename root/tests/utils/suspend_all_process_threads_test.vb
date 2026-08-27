@@ -41,6 +41,7 @@ Public Class suspend_all_process_threads_test
             End Sub
 
             Public Overrides Function run() As Boolean
+                assertion.disable_not_on_windows("thread suspension uses Win32 kernel32 APIs")
                 Dim p As New ref(Of UInt32)()
                 Dim stopping As New ref(Of Boolean)()
                 managed_thread_pool.push(Sub()
