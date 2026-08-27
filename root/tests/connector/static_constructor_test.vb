@@ -15,9 +15,9 @@ Public NotInheritable Class static_constructor_test
 
     Shared Sub New()
         def = rnd_int()
-        While exp = def
+        Do
             exp = rnd_int()
-        End While
+        Loop While exp = def
         v = def
     End Sub
 
@@ -80,12 +80,22 @@ Public NotInheritable Class static_constructor_test
 
         assertion.is_not_null(static_constructor(Of C).retrieve())
         static_constructor(Of C).as_action()()
+#If NET8_0_OR_GREATER Then
+        ' In modern .NET (CoreCLR), ConstructorInfo.Invoke on a .cctor that has already executed
+        ' is a no-op and will not re-execute the static constructor.
+        assertion.equal(v, exp)
+#Else
         assertion.equal(v, def)
+#End If
         assertion.is_not_null(static_constructor.retrieve(GetType(C)))
         static_constructor.as_action(GetType(C))()
         assertion.equal(v, exp)
         static_constructor.execute(GetType(C))
+#If NET8_0_OR_GREATER Then
+        assertion.equal(v, exp)
+#Else
         assertion.equal(v, def)
+#End If
 
         assertion.is_null(static_constructor(Of D).retrieve())
         assertion.is_null(static_constructor(Of D).as_action())
