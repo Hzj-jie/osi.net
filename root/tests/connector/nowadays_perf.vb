@@ -47,11 +47,16 @@ Public Class nowadays_perf
             now_perf(nms, npms)
             nowadays_perf(ams, apms)
         End Using
+#If NET8_0_OR_GREATER Then
+        assertion.less_or_equal(ams * 4, nms)
+        assertion.less_or_equal(apms * 4, npms)
+#Else
         'the performance of nowadays is 15 times faster than Now() on some machines,
         'but just 1.2 times on some others, which is wired.
         'the OS version or .net version are the same.
         assertion.less_or_equal(ams * 8, nms)
         assertion.less_or_equal(apms * 8, npms)
+#End If
         Return True
     End Function
 
