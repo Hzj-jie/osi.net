@@ -65,6 +65,13 @@ Public Module _assert
             attach_debugger()
         Else
             error_event.a()
+#If NET8_0_OR_GREATER Then
+            ' On Linux / non-Windows, Environment.Exit() can hang indefinitely waiting for background
+            ' worker threads during runtime shutdown.
+            If Not OperatingSystem.IsWindows() Then
+                Environment.FailFast(Convert.ToString(exit_code.assertion_failure))
+            End If
+#End If
             Environment.Exit(exit_code.assertion_failure)
         End If
     End Sub

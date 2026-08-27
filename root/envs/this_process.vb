@@ -19,13 +19,7 @@ Public NotInheritable Class this_process
     End Sub
 
     Public Shared Sub [exit](Optional ByVal ext_code As Int32 = 0)
-        ' On Linux / Unix, Environment.Exit() can hang indefinitely waiting for background
-        ' worker threads during runtime shutdown.
-        If os.is_nix Then
-            suicide(ext_code)
-        Else
-            Environment.Exit(ext_code)
-        End If
+        Environment.Exit(ext_code)
     End Sub
 
     Private Sub New()
