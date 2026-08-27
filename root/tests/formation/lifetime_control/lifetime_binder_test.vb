@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports osi.root.utt
 Imports osi.root.formation
@@ -31,6 +32,10 @@ Public Class lifetime_binder_test
                 Return atomic.read(finalized)
             End Function
 
+            Public Shared Sub clear_finalized()
+                atomic.eva(finalized, 0)
+            End Sub
+
             Protected Overrides Sub Finalize()
                 raise_error("finalized test_class with ", s)
                 Interlocked.Increment(finalized)
@@ -49,7 +54,8 @@ Public Class lifetime_binder_test
             lifetime_binder(Of test_class).instance.insert(tc)
         End Sub
 
-        Public Overrides Function run() As Boolean
+        Private Shared Function natural_lifetime_binder_case() As Boolean
+            test_class.clear_finalized()
             Const refer_only As String = "refer-only"
             Const bind As String = "bind"
             Dim tc1 As test_class = Nothing
@@ -70,17 +76,71 @@ Public Class lifetime_binder_test
             GC.KeepAlive(tc1)
             tc1 = Nothing
             garbage_collector.repeat_collect()
+#If NET8_0_OR_GREATER Then
+            ' In modern .NET (RyuJIT), temporary stack/register references to tc1/tc2 evaluated in the method
+            ' remain rooted until the method returns.
+            assertion.less_or_equal(test_class.finalized_count(), 2)
+#Else
             assertion.equal(test_class.finalized_count(), 1)
             assertion.is_false(wr1.IsAlive())
             assertion.is_true(wr2.IsAlive())
             assertion.equal(cast(Of test_class)(wr2.Target()).s, bind)
+#End If
 
             lifetime_binder(Of test_class).instance.erase(direct_cast(Of test_class)(wr2.Target()))
             garbage_collector.repeat_collect()
+#If NET8_0_OR_GREATER Then
+            assertion.less_or_equal(test_class.finalized_count(), 2)
+#Else
             assertion.equal(test_class.finalized_count(), 2)
+            assertion.is_false(wr2.IsAlive())
+#End If
+            Return True
+        End Function
+
+        Public Overrides Function run() As Boolean
+#If NET8_0_OR_GREATER Then
+            If Not lifetime_binder_with_allocate_test_objects_case() Then
+                Return False
+            End If
+#End If
+            Return natural_lifetime_binder_case()
+        End Function
+
+#If NET8_0_OR_GREATER Then
+        <MethodImpl(MethodImplOptions.NoInlining)>
+        Private Shared Sub allocate_and_drop_refer_only(ByRef wr As WeakReference, ByVal s As String)
+            Dim tc As test_class = Nothing
+            create(wr, tc, s)
+            assertion.is_true(wr.IsAlive())
+            assertion.equal(cast(Of test_class)(wr.Target()).s, s)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.NoInlining)>
+        Private Shared Sub assert_bind_target_and_erase(ByVal wr As WeakReference, ByVal exp As String)
+            assertion.is_true(wr.IsAlive())
+            assertion.equal(cast(Of test_class)(wr.Target()).s, exp)
+            lifetime_binder(Of test_class).instance.erase(direct_cast(Of test_class)(wr.Target()))
+        End Sub
+
+        Private Shared Function lifetime_binder_with_allocate_test_objects_case() As Boolean
+            test_class.clear_finalized()
+            Const refer_only As String = "refer-only"
+            Const bind As String = "bind"
+            Dim wr1 As WeakReference = Nothing
+            Dim wr2 As WeakReference = Nothing
+            allocate_and_drop_refer_only(wr1, refer_only)
+            create_bind(wr2, bind)
+
+            garbage_collector.repeat_collect()
+            assertion.is_false(wr1.IsAlive())
+            assert_bind_target_and_erase(wr2, bind)
+
+            garbage_collector.repeat_collect()
             assertion.is_false(wr2.IsAlive())
 
             Return True
         End Function
+#End If
     End Class
 End Class

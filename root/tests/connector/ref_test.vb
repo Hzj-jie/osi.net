@@ -3,6 +3,7 @@ Option Explicit On
 Option Infer Off
 Option Strict On
 
+Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports osi.root.connector
 Imports osi.root.constants
@@ -68,6 +69,57 @@ Public NotInheritable Class ref_test
             For i As Int32 = 0 To released - 1
                 ps(i) = Nothing
             Next
+#If NET8_0_OR_GREATER Then
+            assertion.is_true(garbage_collector.waitfor_collect_until(
+                Function() test_class.finalized_count() >= released - 1))
+            assertion.more_or_equal(test_class.finalized_count(), CLng(released - 1))
+#Else
+            assertion.is_true(garbage_collector.waitfor_collect_until(
+                Function() test_class.finalized_count() = released))
+            assertion.equal(test_class.finalized_count(), released)
+#End If
+
+            For i As Int32 = 0 To count - 1
+                ps(i) = Nothing
+            Next
+#If NET8_0_OR_GREATER Then
+            ' In modern .NET (RyuJIT), a temporary expression register / stack spill slot from the allocation
+            ' loop may keep the last instantiated test_class rooted until hosting_and_release() returns.
+            assertion.is_true(garbage_collector.waitfor_collect_until(
+                Function() test_class.finalized_count() >= count - 1))
+            assertion.more_or_equal(test_class.finalized_count(), CLng(count - 1))
+#Else
+            assertion.is_true(garbage_collector.waitfor_collect_until(
+                Function() test_class.finalized_count() = count))
+            assertion.equal(test_class.finalized_count(), count)
+#End If
+
+            Return True
+        End Function
+
+#If NET8_0_OR_GREATER Then
+        <MethodImpl(MethodImplOptions.NoInlining)>
+        Private Shared Function allocate_test_objects(ByVal count As Int32) As ref(Of test_class)()
+            Dim ps(count - 1) As ref(Of test_class)
+            For i As Int32 = 0 To count - 1
+                ps(i) = New ref(Of test_class)(New test_class())
+            Next
+            Return ps
+        End Function
+
+        Private Shared Function hosting_and_release_with_allocate_test_objects() As Boolean
+            test_class.clear_finalized()
+
+            Dim count As Int32 = rnd_int(100, 1000)
+            Dim ps() As ref(Of test_class) = allocate_test_objects(count)
+            assertion.equal(test_class.finalized_count(), 0)
+            garbage_collector.repeat_collect()
+            assertion.equal(test_class.finalized_count(), 0)
+
+            Dim released As Int32 = rnd_int(0, count)
+            For i As Int32 = 0 To released - 1
+                ps(i) = Nothing
+            Next
             assertion.is_true(garbage_collector.waitfor_collect_until(
                 Function() test_class.finalized_count() = released))
             assertion.equal(test_class.finalized_count(), released)
@@ -81,6 +133,7 @@ Public NotInheritable Class ref_test
 
             Return True
         End Function
+#End If
 
         Private Shared Function large_memory() As Boolean
             Using garbage_collector.force_aggressive_collecting()
@@ -227,6 +280,11 @@ Public NotInheritable Class ref_test
         End Function
 
         Public Overrides Function run() As Boolean
+#If NET8_0_OR_GREATER Then
+            If Not hosting_and_release_with_allocate_test_objects() Then
+                Return False
+            End If
+#End If
             Return hosting_and_release() AndAlso
                    large_memory() AndAlso
                    compares() AndAlso

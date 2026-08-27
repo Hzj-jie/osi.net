@@ -1,4 +1,9 @@
 
+Option Explicit On
+Option Infer Off
+Option Strict On
+
+Imports System.Runtime.CompilerServices
 Imports osi.root.connector
 Imports osi.root.formation
 Imports osi.root.utt
@@ -22,8 +27,34 @@ Public Class delegate_pinning_test
         End Function
     End Class
 
+#If NET8_0_OR_GREATER Then
+    <MethodImpl(MethodImplOptions.NoInlining)>
+    Private Shared Sub allocate_and_bind_delegate(ByRef p As weak_ref(Of test_class), ByRef d As Action)
+        Dim c As New test_class()
+        p = weak_ref.of(c)
+        d = AddressOf c.run
+    End Sub
+
+    Private Shared Function pinning_with_allocate_test_objects_case() As Boolean
+        Dim p As weak_ref(Of test_class) = Nothing
+        Dim d As Action = Nothing
+        allocate_and_bind_delegate(p, d)
+
+        garbage_collector.repeat_collect()
+        assertion.is_true(p.alive())
+        d()
+
+        d = Nothing
+        garbage_collector.repeat_collect()
+        assertion.is_false(p.alive())
+        Return True
+    End Function
+#End If
+
     Public Overrides Function run() As Boolean
-        assertion.disable_on_nix("GC root retention in stack frame under Linux System V ABI")
+#If NET8_0_OR_GREATER Then
+        Return pinning_with_allocate_test_objects_case()
+#Else
         Dim c As New test_class()
         Dim p As weak_ref(Of test_class) = weak_ref.of(c)
 
@@ -52,5 +83,6 @@ Public Class delegate_pinning_test
 
         assertion.is_false(p.alive())
         Return True
+#End If
     End Function
 End Class
