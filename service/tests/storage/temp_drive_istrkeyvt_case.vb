@@ -22,7 +22,7 @@ Public MustInherit Class temp_drive_istrkeyvt_case
 
     Shared Sub New()
         If Not data_dir_base Is Nothing AndAlso Directory.Exists(data_dir_base) Then
-            temp_dir = Path.Combine(data_dir_base, "temp")
+            temp_dir = Path.Combine(data_dir_base, "temp", guid_str())
             void_(Sub()
                       If Directory.Exists(temp_dir) Then
                           Directory.Delete(temp_dir, True)
