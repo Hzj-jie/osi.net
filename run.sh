@@ -6,6 +6,8 @@ source "$SCRIPT_DIR/setenv.sh"
 SRC_ROOT="$SCRIPT_DIR"
 DEPLOY_DIR="${DEPLOY_DIR:-$HOME/deploys/apps/osi.root.utt}"
 
+export utt_concurrency="${utt_concurrency:-4}"
+
 rm -f "$SRC_ROOT/build.log" "$SRC_ROOT/run.log"
 
 while true; do
