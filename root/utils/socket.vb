@@ -175,6 +175,9 @@ Public Module _socket
         End Try
     End Function
 
+    Private Interface set_iocontrol_warning
+    End Interface
+
     Private Function set_iocontrol(ByVal this As Socket,
                                    ByVal control_code As Int64,
                                    ByVal control_code_str As Func(Of String),
@@ -184,11 +187,14 @@ Public Module _socket
             Return npos
         End If
         If Not os.is_windows Then
-            raise_error(error_type.warning,
-                        "set_iocontrol [",
-                        control_code_str(),
-                        "] is ignored on non-Windows platforms on client ",
-                        this.identity())
+            typed_once_action(Of set_iocontrol_warning).do(
+                Sub()
+                    raise_error(error_type.warning,
+                                "set_iocontrol [",
+                                control_code_str(),
+                                "] is ignored on non-Windows platforms on client ",
+                                this.identity())
+                End Sub)
             Return 0
         End If
         Dim r As Int32 = 0
