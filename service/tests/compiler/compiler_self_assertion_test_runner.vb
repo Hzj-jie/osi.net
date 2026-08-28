@@ -29,6 +29,13 @@ Public MustInherit Class compiler_self_assertion_test_runner
         e.assert_execute_without_errors(name)
         Dim v As vector(Of String) = streams.of(io.output().Trim().Split(character.newline)).
                                              collect_to(Of vector(Of String))()
+#If NET8_0_OR_GREATER Then
+        ' In .NET 8 or greater, RyuJIT inlines io.output() and aggressively optimizes away
+        ' unreferenced fields (like io.err). If io is not kept alive, GC collects io and its
+        ' disposer(Of StringWriter) fields while worker threads in assert_execute_without_errors
+        ' are still executing, causing the finalizer to close the TextWriter prematurely.
+        GC.KeepAlive(io)
+#End If
         If Not assertions.of(v).not_empty(name) Then
             Return
         End If
