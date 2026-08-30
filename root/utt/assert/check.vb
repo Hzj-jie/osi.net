@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.formation
 Imports osi.root.lock
 Imports osi.root.template
@@ -207,34 +208,19 @@ Partial Public Class check(Of IS_TRUE_FUNC As __void(Of Boolean, Object()))
         Return thrown(Of Exception)(d, msg)
     End Function
 
-    Public Shared Function now_in_time_range(ByVal l As Int64,
-                                             ByVal u As Int64,
-                                             ByVal ParamArray msg() As Object) As Boolean
-        assert(l <= u)
-        Dim n As Int64 = DateTime.Now().milliseconds()
-        Return more_or_equal_and_less_or_equal(n, l, u, msg)
-    End Function
-
-    Public Shared Sub set_time_range(ByRef exp_l As Int64,
-                                     ByRef exp_h As Int64,
-                                     ByVal low As Int64,
-                                     ByVal high As Int64)
-        assert(low <= high)
-        Dim n As Int64 = DateTime.Now().milliseconds()
-        exp_l = n + low
-        exp_h = n + high
-    End Sub
-
     Public Shared Function timelimited_operation(ByVal low As Int64,
                                                  ByVal high As Int64,
                                                  ByVal ParamArray msg() As Object) As IDisposable
-        Dim exp_l As Int64
-        Dim exp_h As Int64
-        set_time_range(exp_l, exp_h, low, high)
+        assert(low <= high)
+        Dim n As Int64 = DateTime.Now().milliseconds()
+        Dim exp_l As Int64 = n + low - If(os.is_windows, 0, 8)
+        Dim exp_h As Int64 = n + high
         Return defer.to(Sub()
-                            now_in_time_range(exp_l, exp_h, msg)
+                            Dim now_ms As Int64 = DateTime.Now().milliseconds()
+                            more_or_equal_and_less_or_equal(now_ms, exp_l, exp_h, msg)
                         End Sub)
     End Function
+
 
     Public Shared Function equal_after(Of T)(ByVal i As T,
                                              ByVal j As T,

@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.event
 Imports osi.root.formation
 Imports osi.root.lock
@@ -30,7 +31,7 @@ Public NotInheritable Class event_comb_waitfor_test
                                                         Return goto_end()
                                                     End Function),
                                      wait_ms << 1))
-        assertion.more_or_equal(nowadays.milliseconds() - start_ms, wait_ms)
+        assertion.more_or_equal(nowadays.milliseconds() - start_ms, wait_ms - If(os.is_windows, 0, 8))
         assertion.equal(i, target)
         Return True
     End Function

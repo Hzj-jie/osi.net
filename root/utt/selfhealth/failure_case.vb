@@ -57,21 +57,19 @@ Public NotInheritable Class failure_case
             report_self_health_failure(15, "assertion.is_int(0.1)")
             assertion.is_not_int(1.0)
             report_self_health_failure(16, "assertion.is_not_int(1.0)")
-            assertion.now_in_time_range(Now().milliseconds() + 1000, Now().milliseconds() + 1001)
-            report_self_health_failure(
-                17,
-                "assertion.now_in_time_range(Now().milliseconds() + 1000, Now().milliseconds() + 1001)")
-            assertion.now_in_time_range(Now().milliseconds() - 1001, Now().milliseconds() - 1000)
-            report_self_health_failure(
-                18,
-                "assertion.now_in_time_range(Now().milliseconds() - 1001, Now().milliseconds() - 1000)")
+            Using assertion.timelimited_operation(1000, 2000)
+                Dim ma As IDisposable = assertion.timelimited_operation(1000, 2000)
+                ma.Dispose()
+                report_self_health_failure(17, "manually assertion.timelimited_operation.Dispose() (lower bound)")
+            End Using
+            report_self_health_failure(18, "automatically assertion.timelimited_operation.Dispose() (lower bound)")
             Using assertion.timelimited_operation(0, 1)
                 Dim ma As IDisposable = assertion.timelimited_operation(0, 1)
                 measure_sleep(CInt(2 * timeslice_length_ms))
                 ma.Dispose()
-                report_self_health_failure(19, "manually assertion.timelimited_operation.Dispose()")
+                report_self_health_failure(19, "manually assertion.timelimited_operation.Dispose() (upper bound)")
             End Using
-            report_self_health_failure(20, "automatically assertion.timelimited_operation.Dispose()")
+            report_self_health_failure(20, "automatically assertion.timelimited_operation.Dispose() (upper bound)")
 
             ' tirgger 2 failures, one from exec_case, one from assertion.is_true
             assertion.is_true(host.execute_case(New exec_failure_case_1.exec_failure_case()))
@@ -109,8 +107,10 @@ Public NotInheritable Class failure_case
         assertion.more_or_equal(1, 0)
         assertion.is_int(1.0)
         assertion.is_not_int(0.1)
-        assertion.now_in_time_range(Now().milliseconds(), Now().milliseconds() + 1000)
-        assertion.now_in_time_range(Now().milliseconds() - 1000, Now().milliseconds() + 2 * timeslice_length_ms)
+        Using assertion.timelimited_operation(0, 1000)
+        End Using
+        Using assertion.timelimited_operation(-1000, 2 * timeslice_length_ms)
+        End Using
         Using assertion.timelimited_operation(0, 2 * timeslice_length_ms)
             Dim ma As IDisposable = assertion.timelimited_operation(0, 2 * timeslice_length_ms)
             ma.Dispose()
