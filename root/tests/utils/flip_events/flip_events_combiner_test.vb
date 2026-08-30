@@ -16,8 +16,8 @@ Public NotInheritable Class flip_events_combiner_test
         Dim to_high As UInt32 = 0
         Dim to_low As UInt32 = 0
         Dim f As flip_events.combiner_flip_event = flip_events.combiner()(flip_event.events.of(Sub()
-                                                            to_high += uint32_1
-                                                        End Sub,
+                                                                                                   to_high += uint32_1
+                                                                                               End Sub,
                                                         Sub()
                                                             to_low += uint32_1
                                                         End Sub))

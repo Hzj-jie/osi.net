@@ -14,10 +14,10 @@ Public NotInheritable Class reference_count_runner_test2
     Public Overrides Function run() As Boolean
         Dim are As New AutoResetEvent(False)
         Dim r As reference_count_runner = New reference_count_runner(Sub(ByVal this As reference_count_runner)
-                                           assert(are.force_set())
-                                           this.mark_started()
-                                           sleep(10)
-                                       End Sub)
+                                                                         assert(are.force_set())
+                                                                         this.mark_started()
+                                                                         sleep(10)
+                                                                     End Sub)
 #If NET8_0_OR_GREATER Then
         ' Thread.Abort() is not supported on .NET 8+ / CoreCLR and unconditionally throws
         ' PlatformNotSupportedException. Terminate the background thread cooperatively.
@@ -31,12 +31,12 @@ Public NotInheritable Class reference_count_runner_test2
                                End If
                            End While
 #Else
-                           While True
-                               assert(are.wait())
-                               r.mark_stopped()
-                           End While
+                                         While True
+                                             assert(are.wait())
+                                             r.mark_stopped()
+                                         End While
 #End If
-                       End Sub)
+                                     End Sub)
         t.Start()
         For i As Int32 = 0 To 1000
             assertion.is_true(r.bind())

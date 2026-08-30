@@ -18,9 +18,9 @@ Public Class event_handler_test
         Const trigger_size As Int32 = 100
         Dim v As New with_event()
         Dim h As with_event.some_eventEventHandler = Sub(arg1 As with_event, ByRef arg2 As Int32)
-                assertion.reference_equal(arg1, v)
-                arg2 += 1
-            End Sub
+                                                         assertion.reference_equal(arg1, v)
+                                                         arg2 += 1
+                                                     End Sub
         AddHandler v.some_event, h
         assertion.equal(attached_event_count(Of with_event)(v, with_event.event_name), 1)
         Dim c As Int32 = 0

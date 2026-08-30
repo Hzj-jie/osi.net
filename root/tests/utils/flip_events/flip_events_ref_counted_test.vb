@@ -16,8 +16,8 @@ Public NotInheritable Class flip_events_ref_counted_test
         Dim to_high As UInt32 = 0
         Dim to_low As UInt32 = 0
         Dim f As flip_events.ref_counted_flip_event = flip_events.ref_counted()(flip_event.events.of(Sub()
-                                                               to_high += uint32_1
-                                                           End Sub,
+                                                                                                         to_high += uint32_1
+                                                                                                     End Sub,
                                                            Sub()
                                                                to_low += uint32_1
                                                            End Sub))
@@ -46,8 +46,8 @@ Public NotInheritable Class flip_events_ref_counted_test
         Dim to_high As UInt32 = 0
         Dim to_low As UInt32 = 0
         Dim f As flip_events.ref_counted_flip_event = flip_events.ref_counted(1)(flip_event.events.of(Sub()
-                                                                to_high += uint32_1
-                                                            End Sub,
+                                                                                                          to_high += uint32_1
+                                                                                                      End Sub,
                                                             Sub()
                                                                 to_low += uint32_1
                                                             End Sub))

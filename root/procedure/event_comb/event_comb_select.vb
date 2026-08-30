@@ -48,9 +48,9 @@ Public Class event_comb_select(Of T)
                               rcec.bind()
                               Dim v As Action = event_comb.wait()
                               Dim v2 As Action = Sub()
-                                       v()
-                                       rcec.release()
-                                   End Sub
+                                                     v()
+                                                     rcec.release()
+                                                 End Sub
                               q.emplace(pair.emplace_of(copy_no_error(i), v2))
                           End Sub)
     End Function

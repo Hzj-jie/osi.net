@@ -87,9 +87,9 @@ Public NotInheritable Class event_comb_timeout_test
         Private Function waitfor_test() As Boolean
             Dim this As Int32 = +counter
             Dim ec As event_comb = New event_comb(Function() As Boolean
-                                    Return waitfor(create_event_comb(), timeout_ms) AndAlso
-                                           goto_next()
-                                End Function,
+                                                      Return waitfor(create_event_comb(), timeout_ms) AndAlso
+                                                             goto_next()
+                                                  End Function,
                                 Function() As Boolean
                                     resumed.increment()
                                     Return goto_end()

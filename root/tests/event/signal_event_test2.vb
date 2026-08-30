@@ -75,17 +75,17 @@ Public Class signal_event_test2
 
         Private Function callee() As Boolean
             Dim a As signal_event_test_action = New signal_event_test_action(Sub()
-                                                 assertion.is_true(se.marked())
-                                                 assertion.is_true(v.in_use())
-                                                 If Not se.attached() Then
-                                                     'the last in the event queue
-                                                     se.unmark()
-                                                     If assertion.is_true(v.in_use()) Then
-                                                         'avoid assert
-                                                         v.release()
-                                                     End If
-                                                 End If
-                                             End Sub)
+                                                                                 assertion.is_true(se.marked())
+                                                                                 assertion.is_true(v.in_use())
+                                                                                 If Not se.attached() Then
+                                                                                     'the last in the event queue
+                                                                                     se.unmark()
+                                                                                     If assertion.is_true(v.in_use()) Then
+                                                                                         'avoid assert
+                                                                                         v.release()
+                                                                                     End If
+                                                                                 End If
+                                                                             End Sub)
             SyncLock e
                 e.emplace_back(a)
             End SyncLock

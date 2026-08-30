@@ -41,12 +41,12 @@ Friend NotInheritable Class callback_case
         Dim i As Int32 = rnd_int(0, 2)
         Dim start_ms As Int64 = 0
         Dim rtn As callback_action = New callback_action(Function() As Boolean
-                                      If i = 0 Then
-                                          wait()
-                                      End If
-                                      start_ms = nowadays.milliseconds()
-                                      Return True
-                                  End Function,
+                                                             If i = 0 Then
+                                                                 wait()
+                                                             End If
+                                                             start_ms = nowadays.milliseconds()
+                                                             Return True
+                                                         End Function,
                                   Function() As Boolean
                                       Return callback_action.true_to_pass(
                                                  nowadays.milliseconds() - start_ms >= check_pass_ms)

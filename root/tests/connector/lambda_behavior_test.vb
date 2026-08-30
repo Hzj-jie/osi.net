@@ -12,11 +12,11 @@ Public NotInheritable Class lambda_behavior_test
     Private Shared Sub should_capture_latest_value()
         Dim c As Object = Nothing
         Dim f As Action = Sub()
-                c = New Object()
-            End Sub
+                              c = New Object()
+                          End Sub
         Dim g As Action = Sub()
-                assertion.is_not_null(c)
-            End Sub
+                              assertion.is_not_null(c)
+                          End Sub
 
         f()
         g()

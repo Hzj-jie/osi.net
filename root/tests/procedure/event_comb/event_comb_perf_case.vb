@@ -56,13 +56,13 @@ Friend Class event_comb_perf_case
 
     Public Overrides Function run() As Boolean
         Dim ec As event_comb = New event_comb(Function() As Boolean
-                                For i As Int32 = 0 To size - 1
-                                    If Not waitfor(create_event_comb()) Then
-                                        Return False
-                                    End If
-                                Next
-                                Return goto_end()
-                            End Function)
+                                                  For i As Int32 = 0 To size - 1
+                                                      If Not waitfor(create_event_comb()) Then
+                                                          Return False
+                                                      End If
+                                                  Next
+                                                  Return goto_end()
+                                              End Function)
         Using New thread_lazy()
             assertion.is_true(async_sync(ec))
         End Using

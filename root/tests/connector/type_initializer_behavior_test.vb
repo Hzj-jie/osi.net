@@ -105,8 +105,8 @@ Public Class type_initializer_behavior_test
     Private Shared Function delegate_case2() As Boolean
         assertion.is_false(delegate_case2_classes.holder.triggered())
         Dim v As Action = Sub()
-                delegate_case2_classes.caller.trigger()
-            End Sub
+                              delegate_case2_classes.caller.trigger()
+                          End Sub
         assertion.is_false(delegate_case2_classes.holder.triggered())
         Return True
     End Function

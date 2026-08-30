@@ -171,10 +171,10 @@ Public NotInheritable Class pather_test
 
     Private Shared Function relative_path_cases() As Boolean
         Dim r As Action(Of String, String, String) = Sub(ByVal root As String, ByVal path As String, ByVal exp As String)
-                Dim o As String = Nothing
-                assertion.is_true(p.relative_path(root, path, o))
-                assertion.equal(o, exp)
-            End Sub
+                                                         Dim o As String = Nothing
+                                                         assertion.is_true(p.relative_path(root, path, o))
+                                                         assertion.equal(o, exp)
+                                                     End Sub
 
         r("c:", "c:\a\b/c.txt", "a/b/c.txt")
         r("c:/a\", "c:\a\b/c.txt", "b/c.txt")

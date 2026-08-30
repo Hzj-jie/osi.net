@@ -68,8 +68,8 @@ Public Class out_generic_behavior_test
 
     Private Shared Function case3() As Boolean
         Dim f As F(Of I) = Function() As C
-                Return New C()
-            End Function
+                               Return New C()
+                           End Function
         assertion.is_true(TypeOf f Is F(Of I))
         assertion.is_false(TypeOf f Is F(Of C))
         assertion.is_true(TypeOf f() Is I)
@@ -98,8 +98,8 @@ Public Class out_generic_behavior_test
 
     Private Shared Function case4() As Boolean
         Dim f As F(Of TI(Of I)) = Function() As T(Of C)
-                Return New T(Of C)()
-            End Function
+                                      Return New T(Of C)()
+                                  End Function
         assertion.is_true(TypeOf f Is F(Of TI(Of I)))
         assertion.is_false(TypeOf f Is F(Of TI(Of C)))
         assertion.is_false(TypeOf f Is F(Of T(Of I)))
@@ -126,9 +126,9 @@ Public Class out_generic_behavior_test
 
     Private Shared Function case5() As Boolean
         Dim f As G(Of TI(Of I)) = Function(ByRef r As TI(Of I)) As Boolean
-                r = New T(Of C)()
-                Return True
-            End Function
+                                      r = New T(Of C)()
+                                      Return True
+                                  End Function
         Dim o As TI(Of I) = Nothing
         assertion.is_true(f(o))
         assertion.is_true(TypeOf o Is T(Of C))

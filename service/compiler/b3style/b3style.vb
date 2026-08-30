@@ -101,17 +101,17 @@ Partial Public NotInheritable Class b3style
                 with(code_gen.of_children(Of logic_writer)("else-condition", 1)).
                 with(code_gen.of_children(Of logic_writer)("value-with-bracket", 1)).
                 with(code_gen.of_only_descendant_str(Of logic_writer)("reference")).
- _
+                                                                                    _
                 with(Of bstyle.logic)().
                 with(Of bstyle.typedef_type_name)().
                 with(Of bstyle.typedef_type_str)().
- _
+                                                   _
                 with(Of include_with_file)().
                 with(Of include_with_string)().
                 with(scope.define_t.code_gens.ifdef_wrapped(AddressOf code_gen_of)).
                 with(scope.define_t.code_gens.ifndef_wrapped(AddressOf code_gen_of)).
                 with(scope.define_t.code_gens.define()).
- _
+                                                        _
                 with(Of biguint)().
                 with(Of bool)().
                 with(Of _integer)().
@@ -209,7 +209,7 @@ Partial Public NotInheritable Class b3style
                                          (builders.of_undefine(name).to(o) AndAlso
                                           scope.current().variables().undefine(name))
                               End Function).
- _
+                                            _
                 with(Of name)().
                 with(Of _namespace)().
                 with(Of binary_operation_value)().
@@ -218,7 +218,7 @@ Partial Public NotInheritable Class b3style
                 with_delegate("self-value-clause", AddressOf binary_operation_value.without_return).
                 with(Of _class)().
                 with(Of class_initializer)().
- _
+                                             _
                 with_delegate("template",
                               Function(ByVal n As typed_node, ByVal o As logic_writer) As Boolean
                                   Dim name As String = Nothing

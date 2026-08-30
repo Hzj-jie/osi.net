@@ -85,8 +85,8 @@ Public NotInheritable Class reference_count_event_comb_test
 
         Public Overrides Function run() As Boolean
             Dim r As reference_count_event_comb_1 = reference_count_event_comb_1.ctor(Function() As event_comb
-                                                      Return Nothing
-                                                  End Function)
+                                                                                          Return Nothing
+                                                                                      End Function)
             For i As Int32 = 0 To 1000
                 assert(r.bind())
                 sleep(10)

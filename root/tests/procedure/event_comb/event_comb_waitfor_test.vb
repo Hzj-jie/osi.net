@@ -118,10 +118,10 @@ Public NotInheritable Class event_comb_waitfor_test
         Dim se3 As New signal_event()
         Dim [step] As Int32 = 0
         Dim ec As event_comb = New event_comb(Function() As Boolean
-                                [step] = 0
-                                Return waitfor(se) AndAlso
-                                       goto_next()
-                            End Function,
+                                                  [step] = 0
+                                                  Return waitfor(se) AndAlso
+                                                         goto_next()
+                                              End Function,
                             Function() As Boolean
                                 [step] = 1
                                 Return waitfor(se2, 1) AndAlso

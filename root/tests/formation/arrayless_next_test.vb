@@ -14,20 +14,20 @@ Public Class arrayless_next_test
         Using code_block
             Dim current As Object = Nothing
             Dim a As arrayless(Of Object) = arrayless.[New](Function() As Object
-                                    Return current
-                                End Function,
+                                                                Return current
+                                                            End Function,
                                 size)
             current = Nothing
             assertion.is_false(a.next(p, v))
         End Using
         Using code_block
             Dim a As arrayless(Of Object) = arrayless.[New](Function(ByVal i As UInt32) As Object
-                                    If (i And 1) = 0 Then
-                                        Return Nothing
-                                    Else
-                                        Return New Object()
-                                    End If
-                                End Function,
+                                                                If (i And 1) = 0 Then
+                                                                    Return Nothing
+                                                                Else
+                                                                    Return New Object()
+                                                                End If
+                                                            End Function,
                                 size)
             For i As UInt32 = 0 To (size >> 1) - 1
                 assertion.is_true(a.next(p, v))
@@ -42,8 +42,8 @@ Public Class arrayless_next_test
     Private Shared Function value_type_never_fail_case(Of T)() As Boolean
         Const size As UInt32 = 100
         Dim a As arrayless(Of T) = arrayless.[New](Function() As T
-                                Return Nothing
-                            End Function,
+                                                       Return Nothing
+                                                   End Function,
                             size)
         Dim v As T = Nothing
         Dim p As UInt32 = 0

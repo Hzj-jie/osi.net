@@ -45,8 +45,8 @@ Public NotInheritable Class cancellation_controller_test
         Dim c1 As UInt32 = 0
         Dim c2 As UInt32 = 0
         Dim m As flip_events.manual_flip_event = c.manual(Sub()
-                         c1 += uint32_1
-                     End Sub)
+                                                              c1 += uint32_1
+                                                          End Sub)
         c.manual(Sub()
                      c2 += uint32_1
                  End Sub)

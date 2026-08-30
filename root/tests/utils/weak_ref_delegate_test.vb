@@ -25,10 +25,10 @@ Public NotInheritable Class weak_ref_delegate_test
         Dim r As Boolean = False
         Dim o As New Object()
         Dim j As Object = weak_ref_delegate.bind(o, Function(ByVal i As Object) As Object
-                                          assertion.reference_equal(i, o)
-                                          r = True
-                                          Return i
-                                      End Function)()
+                                                        assertion.reference_equal(i, o)
+                                                        r = True
+                                                        Return i
+                                                    End Function)()
         assertion.is_true(r)
         assertion.reference_equal(o, j)
     End Sub

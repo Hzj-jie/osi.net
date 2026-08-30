@@ -33,11 +33,11 @@ Public Class qless_runner_synchronize_invoke_test
                 args(j) = New Object()
             Next
             Dim exec As Func(Of Object, Object, Object, Object) = Function(ByVal a As Object, ByVal b As Object, ByVal c As Object) As Object
-                       assertion.reference_equal(a, args(0))
-                       assertion.reference_equal(b, args(1))
-                       assertion.reference_equal(c, args(2))
-                       Return result
-                   End Function
+                                                                      assertion.reference_equal(a, args(0))
+                                                                      assertion.reference_equal(b, args(1))
+                                                                      assertion.reference_equal(c, args(2))
+                                                                      Return result
+                                                                  End Function
             assertion.reference_equal(s.Invoke(exec, args), result)
             Dim ar As IAsyncResult = s.BeginInvoke(exec, args)
             If assertion.is_not_null(ar) Then
@@ -62,11 +62,11 @@ Public Class qless_runner_synchronize_invoke_test
                                   args(j) = New Object()
                               Next
                               Dim exec As Func(Of Object, Object, Object, Object) = Function(ByVal a As Object, ByVal b As Object, ByVal c As Object) As Object
-                                         assertion.reference_equal(a, args(0))
-                                         assertion.reference_equal(b, args(1))
-                                         assertion.reference_equal(c, args(2))
-                                         Return result
-                                     End Function
+                                                                                        assertion.reference_equal(a, args(0))
+                                                                                        assertion.reference_equal(b, args(1))
+                                                                                        assertion.reference_equal(c, args(2))
+                                                                                        Return result
+                                                                                    End Function
                               assertion.reference_equal(s.Invoke(exec, args), result)
                               Dim ar As IAsyncResult = s.BeginInvoke(exec, args)
                               If assertion.is_not_null(ar) Then

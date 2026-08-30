@@ -16,8 +16,8 @@ Public NotInheritable Class flip_event_test
         Dim to_high As UInt32 = 0
         Dim to_low As UInt32 = 0
         Dim f As flip_events.manual_flip_event = flip_events.manual()(flip_event.events.of(Sub()
-                                                          to_high += uint32_1
-                                                      End Sub,
+                                                                                               to_high += uint32_1
+                                                                                           End Sub,
                                                       Sub()
                                                           to_low += uint32_1
                                                       End Sub))

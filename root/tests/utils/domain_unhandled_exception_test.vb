@@ -38,10 +38,10 @@ Public NotInheritable Class domain_unhandled_exception_test
                        End Sub
             'make sure the following logic is running in another not delegate wrapped thread
             Dim th As Thread = New Thread(Sub()
-                                thrown = True
-                                throw_id = current_thread_id()
-                                Throw New an_exception()
-                            End Sub)
+                                              thrown = True
+                                              throw_id = current_thread_id()
+                                              Throw New an_exception()
+                                          End Sub)
             th.Start()
             assertion.is_true(timeslice_sleep_wait_until(Function() thrown, seconds_to_milliseconds(1)))
             assertion.is_true(timeslice_sleep_wait_until(Function() called, seconds_to_milliseconds(1)))

@@ -16,9 +16,9 @@ Public NotInheritable Class event_comb_flip_event_test
     Private Shared Sub repeat_when_high_with_stoppable_event_comb()
         Dim c As UInt32 = 0
         Dim e As event_comb = New event_comb(Function() As Boolean
-                               c += uint32_1
-                               Return goto_end()
-                           End Function)
+                                                 c += uint32_1
+                                                 Return goto_end()
+                                             End Function)
         Dim f As flip_events.manual_flip_event = e.repeat_when_high(flip_events.manual())
         assertion.is_false(lazy_sleep_wait_until(Function() As Boolean
                                                      Return c > uint32_0
@@ -41,9 +41,9 @@ Public NotInheritable Class event_comb_flip_event_test
     Private Shared Sub repeat_when_high_with_non_stoppable_event_comb()
         Dim c As UInt32 = 0
         Dim e As event_comb = New event_comb(Function() As Boolean
-                               c += uint32_1
-                               Return waitfor_yield()
-                           End Function)
+                                                 c += uint32_1
+                                                 Return waitfor_yield()
+                                             End Function)
         Dim f As flip_events.manual_flip_event = e.repeat_when_high(flip_events.manual())
         assertion.is_false(lazy_sleep_wait_until(Function() As Boolean
                                                      Return c > uint32_0
