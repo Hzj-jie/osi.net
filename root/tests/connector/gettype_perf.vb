@@ -49,7 +49,11 @@ Public NotInheritable Class gettype_perf
         Inherits performance_comparison_case_wrapper
 
         Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+            Return loosen_bound({8715, 8715, 7298}, i, j)
+#Else
             Return loosen_bound({8715, 20469, 7298}, i, j)
+#End If
         End Function
 
         Public Sub New()
@@ -61,7 +65,11 @@ Public NotInheritable Class gettype_perf
         Inherits performance_comparison_case_wrapper
 
         Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+            Return loosen_bound({8715, 8715, 7616, 8715}, i, j)
+#Else
             Return loosen_bound({8715, 20791, 7616, 20085}, i, j)
+#End If
         End Function
 
         Public Sub New()
@@ -73,7 +81,11 @@ Public NotInheritable Class gettype_perf
         Inherits performance_comparison_case_wrapper
 
         Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+            Return loosen_bound({8649, 8649, 7298, 8649}, i, j)
+#Else
             Return loosen_bound({8649, 20147, 7298, 19824}, i, j)
+#End If
         End Function
 
         Public Sub New()
@@ -85,7 +97,11 @@ Public NotInheritable Class gettype_perf
         Inherits performance_comparison_case_wrapper
 
         Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+            Return loosen_bound({8393, 8393, 7554}, i, j)
+#Else
             Return loosen_bound({8393, 20275, 7554}, i, j)
+#End If
         End Function
 
         Public Sub New()
@@ -107,7 +123,11 @@ Public NotInheritable Class gettype_perf
         Inherits performance_comparison_case_wrapper
 
         Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+            Return loosen_bound({8587, 10000}, i, j)
+#Else
             Return loosen_bound({8587, 34033}, i, j)
+#End If
         End Function
 
         Public Sub New()

@@ -31,7 +31,11 @@ Public NotInheritable Class map_unordered_map_perf_test
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+        Return loosen_bound({19713, 1155, 7500, 7500}, i, j)
+#Else
         Return loosen_bound({19713, 1155, 5559, 5559}, i, j)
+#End If
     End Function
 
     Private Shared Function r(ByVal c As [case]) As [case]

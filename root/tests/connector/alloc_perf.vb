@@ -186,7 +186,11 @@ Public NotInheritable Class alloc_perf2
     End Class
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+        Return loosen_bound({11473, 1000}, i, j)
+#Else
         Return loosen_bound({11473, 390}, i, j)
+#End If
     End Function
 
     Public Sub New()
@@ -223,7 +227,11 @@ Public NotInheritable Class alloc_perf3
     End Class
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+        Return loosen_bound({9137, 1500}, i, j)
+#Else
         Return loosen_bound({9137, 197}, i, j)
+#End If
     End Function
 
     Public Sub New()

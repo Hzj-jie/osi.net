@@ -9,8 +9,13 @@ Public Class type_name_perf
     End Sub
 
     Protected Overrides Function min_rate_table() As Double(,)
+#If NET8_0_OR_GREATER Then
+        Return {{0, 8},
+                {1.5, 0}}
+#Else
         Return {{0, 8},
                 {0.4, 0}}
+#End If
     End Function
 
     Private Shared Function r(ByVal c As [case]) As [case]

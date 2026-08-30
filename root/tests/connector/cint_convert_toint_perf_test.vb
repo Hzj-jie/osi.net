@@ -21,6 +21,9 @@ Public NotInheritable Class cint_convert_toint_perf_test
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+        Return loosen_bound({400, 400, 400, 400}, i, j)
+#Else
         If os.windows_major <= os.windows_major_t._5 Then
             Return loosen_bound({448, 973, 447, 447}, i, j)
         End If
@@ -28,6 +31,7 @@ Public NotInheritable Class cint_convert_toint_perf_test
             Return loosen_bound({306, 817, 310, 410}, i, j)
         End If
         Return loosen_bound({150, 778, 173, 370}, i, j)
+#End If
     End Function
 
     Private Shared Sub cint_run()

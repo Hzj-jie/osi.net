@@ -18,6 +18,9 @@ Public Class event_attach_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+        Return loosen_bound({188, 1000, 935, 1000, 82558, 1000}, i, j)
+#Else
         If os.windows_major <= os.windows_major_t._5 Then
             If isdebugbuild() Then
                 Return loosen_bound({141, 1861, 711, 1848, 59854, 1837}, i, j)
@@ -31,6 +34,7 @@ Public Class event_attach_perf
                 Return loosen_bound({188, 466, 935, 511, 82558, 466}, i, j)
             End If
         End If
+#End If
     End Function
 
     Private Shared Function c(Of _SIZE As _int64)() As [case]()

@@ -19,7 +19,11 @@ Public NotInheritable Class shared_ctor_access_shared_perf
     End Sub
 
     Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+        Return loosen_bound({600, 600}, i, j)
+#Else
         Return loosen_bound({605, 1099}, i, j)
+#End If
     End Function
 
     Private NotInheritable Class no_cctor

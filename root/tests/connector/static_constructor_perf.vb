@@ -19,7 +19,11 @@ Public NotInheritable Class static_constructor_perf
     End Sub
 
     Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+        Return loosen_bound({35, 120}, i, j)
+#Else
         Return loosen_bound({35, 497}, i, j)
+#End If
     End Function
 
     Private NotInheritable Class cctor

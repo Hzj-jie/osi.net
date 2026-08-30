@@ -5,6 +5,7 @@ Option Strict On
 
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.envs
 Imports osi.root.utt
 
 Friend Class nowadays_case
@@ -156,6 +157,10 @@ Public Class high_res_normal_res_low_res_ticks_perf_test
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
-        Return loosen_bound({2428, 13106, 1146}, i, j)
+        If os.is_nix Then
+            Return loosen_bound({2428, 4800, 1146}, i, j)
+        Else
+            Return loosen_bound({2428, 13106, 1146}, i, j)
+        End If
     End Function
 End Class

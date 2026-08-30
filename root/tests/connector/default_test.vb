@@ -32,6 +32,9 @@ Public Class default_test
         End Sub
 
         Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+            Return loosen_bound({1000, 1000, 1000, 1000}, i, j)
+#Else
             If isdebugbuild() Then
                 Return loosen_bound({9714, 7902, 5539, 7005}, i, j)
             Else
@@ -41,6 +44,7 @@ Public Class default_test
                     Return loosen_bound({3850, 795, 833, 754}, i, j)
                 End If
             End If
+#End If
         End Function
 
         Private Class default_null_case

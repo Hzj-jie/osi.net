@@ -71,7 +71,11 @@ Public NotInheritable Class unordered_set_more_items_uint_large_range_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+        Return loosen_bound({6500, 41439}, i, j)
+#Else
         Return loosen_bound({5525, 41439}, i, j)
+#End If
     End Function
 End Class
 

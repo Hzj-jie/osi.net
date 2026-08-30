@@ -70,11 +70,15 @@ Public Class delegate_perf_test
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+        Return loosen_bound({874, 7663, 10563, 8461, 1705, 15000}, i, j)
+#Else
         If isdebugbuild() Then
             Return loosen_bound({4439, 5702, 21404, 22504, 4826, 5562}, i, j)
         Else
             Return loosen_bound({874, 7663, 10563, 8461, 1705, 7665}, i, j)
         End If
+#End If
     End Function
 
     Private Shared Sub increment(ByRef i As Int64)

@@ -17,7 +17,11 @@ Public NotInheritable Class type_info_equal_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+        Return loosen_bound({34, 34}, i, j)
+#Else
         Return loosen_bound({34, 1286}, i, j)
+#End If
     End Function
 
     Private NotInheritable Class type_info_equal

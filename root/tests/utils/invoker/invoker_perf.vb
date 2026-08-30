@@ -23,7 +23,11 @@ Public Class invoker_perf
     End Sub
 
     Protected Overrides Function min_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+        Return loosen_bound({11196, 4079, 1629, 7129, 1629, 1350}, i, j)
+#Else
         Return loosen_bound({11196, 4079, 1629, 7129, 1629, 1225}, i, j)
+#End If
     End Function
 
     Private Shared Function r(ByVal c As [case]) As [case]

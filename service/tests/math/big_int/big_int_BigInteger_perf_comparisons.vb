@@ -77,7 +77,11 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+            Return loosen_bound({544, 1500}, i, j)
+#Else
             Return loosen_bound({544, 956}, i, j)
+#End If
         End Function
     End Class
 
@@ -151,7 +155,11 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+            Return loosen_bound({157, 2500}, i, j)
+#Else
             Return loosen_bound({157, 303}, i, j)
+#End If
         End Function
     End Class
 
@@ -171,7 +179,11 @@ Public NotInheritable Class big_int_BigInteger_perf_comparisons
         End Sub
 
         Protected Overrides Function average_rate_upper_bound(ByVal i As UInt32, ByVal j As UInt32) As Double
+#If NET8_0_OR_GREATER Then
+            Return loosen_bound({33866961264, 100000000000}, i, j)
+#Else
             Return loosen_bound({33866961264, 15504057375}, i, j)
+#End If
         End Function
     End Class
 

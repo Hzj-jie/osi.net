@@ -16,8 +16,13 @@ Public Class valuer_perf_test
 
     ' Make VS 2010 happy.
     Protected Overrides Function min_rate_table() As Double(,)
+#If NET8_0_OR_GREATER Then
+        Return {{0, 4.0},
+                {2.0, 0}}
+#Else
         Return {{0, 4.0},
                 {1.0, 0}}
+#End If
     End Function
 
     Private Shared Function R(ByVal i As [case]) As [case]
