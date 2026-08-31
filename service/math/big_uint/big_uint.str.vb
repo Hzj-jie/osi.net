@@ -72,16 +72,16 @@ Partial Public NotInheritable Class big_uint
         Dim chunks As New vector(Of UInt32)()
         Dim t As New big_uint(Me)
         While Not t.is_zero()
-            Dim rem As UInt32 = 0
-            t.assert_divide(chunk_base, rem)
-            chunks.push_back(rem)
+            Dim rem_val As UInt32 = 0
+            t.assert_divide(chunk_base, rem_val)
+            chunks.push_back(rem_val)
         End While
         assert(Not chunks.empty())
         Dim r As New StringBuilder()
         If base = default_str_base Then
             r.Append(Convert.ToString(chunks.back()))
             For i As Int32 = CInt(chunks.size()) - 2 To 0 Step -1
-                Dim s As String = Convert.ToString(chunks.get(CUInt(i)))
+                Dim s As String = Convert.ToString(chunks(CUInt(i)))
                 If s.Length < 9 Then
                     r.Append("0"c, 9 - s.Length)
                 End If
@@ -95,14 +95,14 @@ Partial Public NotInheritable Class big_uint
                 top \= base
             End While
             For i As Int32 = CInt(top_chars.size()) - 1 To 0 Step -1
-                r.Append(top_chars.get(CUInt(i)))
+                r.Append(top_chars(CUInt(i)))
             Next
             Dim buf(dc - 1) As Char
             For i As Int32 = CInt(chunks.size()) - 2 To 0 Step -1
-                Dim rem As UInt32 = chunks.get(CUInt(i))
+                Dim rem_val As UInt32 = chunks(CUInt(i))
                 For j As Int32 = dc - 1 To 0 Step -1
-                    buf(j) = number_to_char(CByte(rem Mod base))
-                    rem \= base
+                    buf(j) = number_to_char(CByte(rem_val Mod base))
+                    rem_val \= base
                 Next
                 r.Append(buf)
             Next
