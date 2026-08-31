@@ -6,6 +6,7 @@ Option Strict On
 Imports System.Text
 Imports osi.root.connector
 Imports osi.root.constants
+Imports osi.root.formation
 
 Partial Public NotInheritable Class big_uint
     Public Shared Function support_str_char(ByVal c As Char, ByVal base As Byte) As Boolean
@@ -66,29 +67,47 @@ Partial Public NotInheritable Class big_uint
         If is_one() Then
             Return number_to_char(1)
         End If
-        Dim r As New StringBuilder()
+        Dim chunk_base As UInt32 = chunk_base_per_base(base)
+        Dim dc As Byte = chunk_dc_per_base(base)
+        Dim chunks As New vector(Of UInt32)()
         Dim t As New big_uint(Me)
-        Dim dc As Byte = digit_count_per_parse(base)
-        assert(dc > 0)
-        Dim bu As big_uint = assert_which.of(base ^ dc).can_cast_to_uint64()
-        assert(bu.less_or_equal(CULng(max_uint32_plus_1)))
         While Not t.is_zero()
-            Dim rmb As big_uint = Nothing
-            t.assert_divide(bu, rmb)
-            Dim rm As UInt32 = rmb.as_uint32()
-            For i As UInt32 = 0 To dc - uint32_1
-                Dim c As UInt32 = 0
-                rm = rm.div_rem(base, c)
-                r.Append(number_to_char(assert_which.of(c).can_cast_to_byte()))
-                If rm = 0 Then
-                    If Not t.is_zero() Then
-                        r.Append(digit_0, CInt(dc - i - uint32_1))
-                    End If
-                    Exit For
-                End If
-            Next
+            Dim rem As UInt32 = 0
+            t.assert_divide(chunk_base, rem)
+            chunks.push_back(rem)
         End While
-        Return Convert.ToString(r.reverse())
+        assert(Not chunks.empty())
+        Dim r As New StringBuilder()
+        If base = default_str_base Then
+            r.Append(Convert.ToString(chunks.back()))
+            For i As Int32 = CInt(chunks.size()) - 2 To 0 Step -1
+                Dim s As String = Convert.ToString(chunks.get(CUInt(i)))
+                If s.Length < 9 Then
+                    r.Append("0"c, 9 - s.Length)
+                End If
+                r.Append(s)
+            Next
+        Else
+            Dim top As UInt32 = chunks.back()
+            Dim top_chars As New vector(Of Char)()
+            While top > 0
+                top_chars.push_back(number_to_char(CByte(top Mod base)))
+                top \= base
+            End While
+            For i As Int32 = CInt(top_chars.size()) - 1 To 0 Step -1
+                r.Append(top_chars.get(CUInt(i)))
+            Next
+            Dim buf(dc - 1) As Char
+            For i As Int32 = CInt(chunks.size()) - 2 To 0 Step -1
+                Dim rem As UInt32 = chunks.get(CUInt(i))
+                For j As Int32 = dc - 1 To 0 Step -1
+                    buf(j) = number_to_char(CByte(rem Mod base))
+                    rem \= base
+                Next
+                r.Append(buf)
+            Next
+        End If
+        Return Convert.ToString(r)
     End Function
 
     Public Shared Function parse(ByVal s As String,

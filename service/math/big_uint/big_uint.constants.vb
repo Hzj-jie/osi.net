@@ -24,6 +24,8 @@ Partial Public NotInheritable Class big_uint
     Private Shared ReadOnly digit_0 As Char
     Private Shared ReadOnly chars() As Int16
     Private Shared ReadOnly digit_count_per_parse() As Byte
+    Private Shared ReadOnly chunk_base_per_base() As UInt32
+    Private Shared ReadOnly chunk_dc_per_base() As Byte
 
     Shared Sub New()
         byte_count_in_uint32 = CByte(sizeof_uint32 \ sizeof_int8)
@@ -41,11 +43,21 @@ Partial Public NotInheritable Class big_uint
         digits = (dbc_digits + upper_english_characters + lower_english_characters).c_str()
         support_str_base = CByte(array_size(digits))
         ReDim digit_count_per_parse(support_str_base)
+        ReDim chunk_base_per_base(support_str_base)
+        ReDim chunk_dc_per_base(support_str_base)
         For i As Byte = 0 To support_str_base
             If support_base(i) Then
                 assert(i > 0)
                 digit_count_per_parse(i) = CByte(System.Math.Floor(bit_count_in_uint32 /
                                                                    (System.Math.Log(i) / System.Math.Log(2))))
+                Dim b As UInt32 = 1
+                Dim dc As Byte = 0
+                While CULng(b) * i <= max_uint32
+                    b *= i
+                    dc += CByte(1)
+                End While
+                chunk_base_per_base(i) = b
+                chunk_dc_per_base(i) = dc
             End If
         Next
         digit_0 = digits(0)
