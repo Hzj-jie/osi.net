@@ -180,6 +180,103 @@ Partial Public NotInheritable Class big_uint
         remove_last_blank()
     End Sub
 
+    Private Shared Function multiply_schoolbook(ByVal this As big_uint, ByVal that As big_uint) As big_uint
+        If this Is Nothing OrElse that Is Nothing OrElse this.is_zero() OrElse that.is_zero() Then
+            Return New big_uint()
+        End If
+        If this.is_one() Then
+            Return that.CloneT()
+        End If
+        If that.is_one() Then
+            Return this.CloneT()
+        End If
+        Dim res As New big_uint()
+        res.multiply_uint(this, that)
+        Return res
+    End Function
+
+    Private Shared Function multiply_karatsuba(ByVal a As big_uint, ByVal b As big_uint) As big_uint
+        If a Is Nothing OrElse b Is Nothing OrElse a.is_zero() OrElse b.is_zero() Then
+            Return New big_uint()
+        End If
+        If a.is_one() Then
+            Return b.CloneT()
+        End If
+        If b.is_one() Then
+            Return a.CloneT()
+        End If
+        If a.power_of_2() Then
+            Return b.CloneT().left_shift(a.trailing_binary_zero_count())
+        End If
+        If b.power_of_2() Then
+            Return a.CloneT().left_shift(b.trailing_binary_zero_count())
+        End If
+
+        Dim a_size As UInt32 = a.v.size()
+        Dim b_size As UInt32 = b.v.size()
+        Dim n As UInt32 = max(a_size, b_size)
+        If n <= 32 OrElse a_size <= 4 OrElse b_size <= 4 Then
+            Return multiply_schoolbook(a, b)
+        End If
+
+        Dim m As UInt32 = (n + uint32_1) >> 1
+
+        Dim a0 As big_uint = Nothing
+        Dim a1 As big_uint = Nothing
+        If a_size <= m Then
+            a0 = a
+            a1 = New big_uint()
+        Else
+            a0 = New big_uint()
+            a0.v.resize(m)
+            arrays.copy(a0.v.data(), 0, a.v.data(), 0, m)
+            a0.remove_extra_blank()
+
+            Dim a1_size As UInt32 = a_size - m
+            a1 = New big_uint()
+            a1.v.resize(a1_size)
+            arrays.copy(a1.v.data(), 0, a.v.data(), m, a1_size)
+            a1.remove_extra_blank()
+        End If
+
+        Dim b0 As big_uint = Nothing
+        Dim b1 As big_uint = Nothing
+        If b_size <= m Then
+            b0 = b
+            b1 = New big_uint()
+        Else
+            b0 = New big_uint()
+            b0.v.resize(m)
+            arrays.copy(b0.v.data(), 0, b.v.data(), 0, m)
+            b0.remove_extra_blank()
+
+            Dim b1_size As UInt32 = b_size - m
+            b1 = New big_uint()
+            b1.v.resize(b1_size)
+            arrays.copy(b1.v.data(), 0, b.v.data(), m, b1_size)
+            b1.remove_extra_blank()
+        End If
+
+        Dim z0 As big_uint = multiply_karatsuba(a0, b0)
+        Dim z2 As big_uint = If(a1.is_zero() OrElse b1.is_zero(), New big_uint(), multiply_karatsuba(a1, b1))
+
+        Dim sum_a As big_uint = a0 + a1
+        Dim sum_b As big_uint = b0 + b1
+        Dim z1 As big_uint = multiply_karatsuba(sum_a, sum_b)
+
+        Dim mid As big_uint = z1
+        mid.assert_sub(z2)
+        mid.assert_sub(z0)
+
+        z2.left_shift(CULng(2) * m * bit_count_in_uint32)
+        mid.left_shift(CULng(m) * bit_count_in_uint32)
+
+        Dim res As big_uint = z0
+        res.add(mid)
+        res.add(z2)
+        Return res
+    End Function
+
     'store the result of this * that in me
     <MethodImpl(math_debug.aggressive_inlining)>
     Private Sub multiply(ByVal this As big_uint, ByVal that As big_uint)
@@ -210,12 +307,16 @@ Partial Public NotInheritable Class big_uint
 #If USE_MULTIPLY_BIT Then
         If that._1count() <= (that.uint32_size() << 1) Then
             multiply_bit(this, that)
-        Else
-            multiply_uint(this, that)
+            Return
         End If
-#Else
-        multiply_uint(this, that)
 #End If
+        Dim n As UInt32 = max(this.v.size(), that.v.size())
+        If n <= 32 OrElse this.v.size() <= 4 OrElse that.v.size() <= 4 Then
+            multiply_uint(this, that)
+        Else
+            Dim r As big_uint = multiply_karatsuba(this, that)
+            adaptive_array_uint32.swap(v, r.v)
+        End If
     End Sub
 
     'store the result of yroot(me, that) in me, and the remainder will be the me - (me ^ (yroot(me, that)))
