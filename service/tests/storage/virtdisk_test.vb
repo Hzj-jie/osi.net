@@ -13,6 +13,11 @@ Public Class virtdisk_test
         MyBase.New(New virtdisk_case(), If(isdebugbuild(), 1, 2) * 65536)
     End Sub
 
+    ' Reserve multiple processors to limit concurrency since in-memory virtual disk allocations consume high RAM.
+    Public Overrides Function reserved_processors() As Int16
+        Return 4
+    End Function
+
     Private Class virtdisk_case
         Inherits event_comb_case
 

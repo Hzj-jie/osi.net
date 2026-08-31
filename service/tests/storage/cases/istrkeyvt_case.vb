@@ -566,8 +566,9 @@ Public Class istrkeyvt_case(Of _KEY_LENGTH_LOW As _int64,
                               End Function)
     End Function
 
+    ' Reserve multiple processors to limit concurrency and avoid memory exhaustion/GC thrashing from running multiple heavy storage tests in parallel.
     Public Function reserved_processors() As Int16 Implements iistrkeyvt_case.reserved_processors
-        Return 1
+        Return 4
     End Function
 
     Public Function create(ByVal keyvt As istrkeyvt) As event_comb Implements iistrkeyvt_case.create
