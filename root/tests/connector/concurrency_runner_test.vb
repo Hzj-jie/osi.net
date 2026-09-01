@@ -11,22 +11,27 @@ Public Class concurrency_runner_test
         If Environment.ProcessorCount() > 2 Then
             Const size As Int32 = 10240
             Dim r As New atomic_int()
-            Dim max As Int32 = 0
+            Dim max As New atomic_int()
             Dim a() As Action = Nothing
             ReDim a(size - 1)
             For i As Int32 = 0 To size - 1
                 a(i) = Sub()
                            Dim v As Int32 = r.increment()
-                           If v > max Then
-                               max = v
-                           End If
+                           Dim cur As Int32 = max.get()
+                           While v > cur
+                               Dim prev As Int32 = max.compare_exchange(v, cur)
+                               If prev = cur Then
+                                   Exit While
+                               End If
+                               cur = prev
+                           End While
                            fake_processor_work(10)
                            assert(r.decrement() >= 0)
                        End Sub
             Next
             concurrency_runner.execute(a)
             ' One thread may be stuck at the for loop in concurrency_runner.
-            assertion.more_or_equal(max, Environment.ProcessorCount() - 1)
+            assertion.more_or_equal(+max, Environment.ProcessorCount() - 1)
         End If
         Return True
     End Function
