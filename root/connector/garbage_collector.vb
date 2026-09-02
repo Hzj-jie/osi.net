@@ -6,7 +6,22 @@ Option Strict On
 Imports osi.root.constants
 
 Public NotInheritable Class garbage_collector
+    Public Shared Sub compact_loh()
+#If NET8_0_OR_GREATER Then
+        Runtime.GCSettings.LargeObjectHeapCompactionMode = Runtime.GCLargeObjectHeapCompactionMode.CompactOnce
+#Else
+        Try
+            Dim p As Reflection.PropertyInfo = GetType(Runtime.GCSettings).GetProperty("LargeObjectHeapCompactionMode")
+            If Not p Is Nothing AndAlso p.CanWrite Then
+                p.SetValue(Nothing, [Enum].ToObject(p.PropertyType, 2), Nothing)
+            End If
+        Catch
+        End Try
+#End If
+    End Sub
+
     Public Shared Sub waitfor_collect()
+        compact_loh()
         GC.Collect()
         GC.WaitForPendingFinalizers()
     End Sub

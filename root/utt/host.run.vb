@@ -68,6 +68,9 @@ Partial Friend NotInheritable Class host
         Dim proc_ms As Int64 = envs.total_processor_time_ms()
         execute_case(c)
         Interlocked.Add(using_threads, -c.case.reserved_processors())
+        If c.case.reserved_processors() > 1 OrElse utt_concurrency() = 0 Then
+            garbage_collector.waitfor_collect()
+        End If
 
         If Not selfhealth.in_stage() Then
             If env_vars.utt_report_background_worker_status Then
@@ -79,10 +82,6 @@ Partial Friend NotInheritable Class host
                             queue_runner.size())
             End If
             If env_vars.utt_report_memory_status Then
-                ' utt_concurrency == 0 means no two cases will run together, so it's safe to force GC to collect.
-                If utt_concurrency() = 0 Then
-                    garbage_collector.repeat_collect()
-                End If
                 raise_error("memory status after case ",
                             c.full_name(),
                             ": private bytes ",
