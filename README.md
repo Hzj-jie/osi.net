@@ -1,69 +1,111 @@
 # osi.net
 
-(Moved from https://geminibranch.codeplex.com/SourceControl/latest#osi/ @ https://geminibranch.codeplex.com/SourceControl/changeset/117615)
+**osi.net** (Operating System Interface) is a comprehensive, modular, cross-platform framework written in VB.NET.
 
-the branch for all Hzj_jie's code
+The core design philosophy of `osi.net` is to **decouple business logic from I/O and underlying runtime environments**, allowing developers to write high-performance logic once and run it across diverse platforms—from local desktops and servers to distributed services and cross-platform runtimes.
 
-I will write some discussions about the design or implementation details in discussions https://geminibranch.codeplex.com/discussions
+---
 
-most of the code are actively re-organizing and re-fectoring under /osi
-/osi/root contains useful stuffs for .net development
-say
-/osi/root/connector, some wrapper to .net functions
-/osi/root/envs, hardware & software information, include environment variables, system performance
-/osi/root/formation, some data structures
-/osi/root/lock, a set of locks for different purpose
-/osi/root/procedure, provide two different procedure based programming modules, by using lambda expression, they can save the time for working on lock / multi-threading / async-io, etc.
-/osi/root/threadpool, a simple threadpool, which shares a same interface as managed threadpool, which can be switched by one line code change
-/osi/root/utils, logging, counter, unhandled exception, stopwatch, resolver, etc
-/osi/root/utt, a simple UniTTest framework
-/osi/root/tests/, test cases for /osi/root stuffs
+## Target Frameworks & Platforms
 
-osi is shorting for Operation System Interface, which is targeting a cross platform, cross environment basic interfaces to save the programmers from duplicated work for different devices / module / online service.
-the basic design is to split the logic from IO. and the target is, writing a single logic, and running on mobile / pc / browser / tv / distributing system, etc.
-but diff from a virtual machine, i am not planning to create a virtual layer between device and logic, instead the logic is running in the real device <or .net runtime, since i am trying to implement it based on .net>, while osi is more like a set of plug-ins, by accessing the osi interfaces, you can get users input, render screen, read / write files as usual.
+`osi.net` is dual-targeted to support both modern cross-platform .NET environments and legacy runtimes:
 
+- **Modern .NET**: .NET 8.0 / .NET 10.0 on Linux and Windows.
+- **Legacy .NET Framework**: .NET Framework 4.0 on Windows.
 
+---
 
-you will find lots of things in this code enlistment, from a piece of code to an entire solution.
-including but not only
-create an object without knowing its type
-self-adapting compare without need an IComparable restriction
-serialize / deserialize object for network transport or filesystem storage
-different locks
-how to generate build info to code
-template design
-hi perf counter
-character escape
-network / html / http utilities
-pool
-string utilities / lazyStrCat / lazyString
-console application control break handling
-catch unhandled exception in domain / thread
-webBrowserDrawer
-pinvoke
-callbackManager / callbackAction
-eventComb / eventDriver, both are to write async program as sync
-configuration
-hi perf threadpool
-cacheManager
-DoS protection
-elpmis, scripting language engine
-free cluster, storing structured data into linear stream
-hi perf tcp / http server
-remotecall engine
-storoom
-frontdoor
-runrroom
-... ... ... ...
+## Repository Architecture
 
-i am actively working on these projects, so no release can be found in downloads. you need to refer to source code http://geminibranch.codeplex.com/SourceControl/list/changesets.
+The codebase is organized into three primary layers:
 
-enjoy, my pleasure if any can help you.
+### 1. `root/` — Core Foundation Layer
+The foundation library providing essential runtime utilities, primitives, and testing infrastructure:
+- **`connector/`**: Core system wrappers, reflection helpers, memory manipulation, LOH (Large Object Heap) compaction, and functor registries.
+- **`constants/`**: System-wide constants, limits, and type definitions.
+- **`delegates/`**: Fast delegate wrappers, argument parsers, and function bindings.
+- **`envs/`**: Hardware, OS, processor detection, environment variables, and system performance metrics.
+- **`event/`**: Lightweight event mechanisms, signals, and synchronizers.
+- **`formation/`**: High-performance data structures including lock-free queues, ring buffers, balanced trees, and thread-safe unique maps.
+- **`lock/`**: Extensive concurrency primitives (atomic variables, spinlocks, reader-writer locks, lazy locks).
+- **`procedure/`**: Procedure-based asynchronous programming modules (`event_comb`), coroutines, and callback managers.
+- **`template/`**: Type templates, conversions, and type traits.
+- **`threadpool/`**: High-performance custom thread pools (`slimqless`, `qless`, `heapless`) interchangeable with the standard managed thread pool.
+- **`utils/`**: Diagnostics, counters, structured loggers, stopwatches, and unhandled exception handlers.
+- **`utt/`**: The built-in Unit Test Tool (`osi.root.utt`) framework with support for concurrency scheduling, processor reservation, and isolated process execution.
+- **`tests/`**: Comprehensive unit tests covering all `root` modules.
 
-/*******************************
-non-commercial use only, or please contact me if you need to use the code for commercial purpose
-except for the companies i am now working or was working at.
-*******************************/
+### 2. `service/` — Infrastructure & Service Layer
+High-level services and building blocks built on top of the root layer:
+- **Networking & Transmitters**: High-throughput TCP (`service/tcp`), UDP (`service/udp`), HTTP server and client (`service/http`), and shared transmitter multiplexing (`service/sharedtransmitter`).
+- **Data & Streaming**: Streamers and pipelines (`service/streamer`), data providers with caching and file monitoring (`service/dataprovider`), and virtual storage engines (`service/storage`, `service/webstorage`).
+- **Computing & Language**: Scripting/interpreter engine (`service/interpreter`, `service/compiler`), dynamic logic evaluation (`service/dynamiclogic`), and arbitrary precision math (`service/math`).
+- **Resource Management**: Object pools, device pools, caching managers, and DoS protectors (`service/devicepool`, `service/cache`, `service/protector`).
+- **`service/tests/`**: Exhaustive test suites for all services.
 
-any questions, feel free to drop me a msg to hzj_jie@hotmail.com
+### 3. `production/` — Utilities & Applications
+Standalone applications, diagnostic utilities, and server bridges:
+- `test_http_server`, `tcp_bridge`, `tcp_pair`, `http_proxy`, `remote_console`, `big_int_calculator`, `big_uint_calculator`, `sider`, `b2style`, and `utt_diff`.
+
+---
+
+## Key Concepts & Highlights
+
+- **`event_comb` Asynchronous Model**: Write complex, non-blocking asynchronous workflows, multi-step state machines, and I/O operations in a sequential, structured manner without callback hell.
+- **Memory & LOH Optimization**: Proactive Large Object Heap (LOH) compaction and processor-aware resource scheduling to keep memory fragmentation and RAM footprint bounded across thousands of concurrent executions.
+- **High-Performance Thread Pooling**: Lightweight, minimal-overhead thread pools designed for low-latency task dispatching.
+- **Flexible Type & Serialization System**: Self-adapting comparers without rigid `IComparable` requirements, dynamic object construction, and high-performance binary/string serializers.
+
+---
+
+## Building
+
+### Prerequisites
+- [.NET SDK](https://dotnet.microsoft.com/) 8.0 or later (tested with .NET SDK 10.0).
+- Bash shell (Linux, macOS, or WSL / Git Bash on Windows).
+
+### Build Instructions
+To build all projects across `root`, `service`, and `production`:
+
+```bash
+# Source environment variables (sets up local dotnet paths if needed)
+source setenv.sh
+
+# Build all .NET projects
+./build.sh
+```
+
+---
+
+## Running Tests
+
+`osi.net` includes an extensive test suite consisting of over 1,600 test cases executed via `osi.root.utt`.
+
+### Run the Complete Test Suite
+```bash
+./run-utt.sh
+```
+
+### Run Specific Test Cases
+You can filter tests by case name:
+
+```bash
+./run-utt.sh --case=<case_name>
+
+# Example:
+./run-utt.sh --case=gc_behavior_test
+```
+
+---
+
+## License & Notice
+
+```text
+***************************************************************
+Non-commercial use only.
+Please contact the author for commercial licensing,
+except for companies the author is currently or was previously working at.
+***************************************************************
+```
+
+For questions or inquiries, contact: **hzj_jie@hotmail.com**
