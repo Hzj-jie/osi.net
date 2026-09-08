@@ -246,16 +246,31 @@ Public NotInheritable Class big_udec_pi_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_pi_arctangent()
-        Dim s As big_udec = big_udec.fraction(2, 1)
-        Dim c As big_udec = big_udec.fraction(2, 3)
+        ' Optimization: Instead of general fraction arithmetic s.add(c) where denominators
+        ' cross-multiply exponentially and require massive GCD reductions, we exploit the
+        ' exact common denominator of the partial sum S_k = \sum_{j=0}^k term_j = N_k / (2k+1)!!.
+        '
+        ' The recurrence is:
+        '   T_k = k * T_{k-1}              (T_1 = 2)
+        '   N_k = (2k+1) * N_{k-1} + T_k   (N_1 = 8)
+        '   D_k = (2k+1) * D_{k-1}         (D_1 = 3)
+        '
+        ' Every step is a single-pass O(limbs) scalar multiplication by a 32-bit integer,
+        ' avoiding O(L^2) BigInteger * BigInteger multiplication, division, and GCD in the loop.
+        Dim n As New big_uint(CUInt(8))
+        Dim t As New big_uint(CUInt(2))
+        Dim d As New big_uint(CUInt(3))
         For i As UInt32 = 2 To max_uint32 - uint32_1
-            s.add(c)
-            c.multiply(big_udec.fraction(New big_uint(i), New big_uint(i).left_shift(1).add(uint32_1)))
+            t.multiply(i)
+            Dim factor As UInt32 = (i << 1) + uint32_1
+            n.multiply(factor)
+            n.add(t)
+            d.multiply(factor)
 
             If (i Mod 100000) = 0 Then
-                c.reduce_fraction()
+                Dim s As big_udec = big_udec.fraction(n.CloneT(), d.CloneT())
                 s.reduce_fraction()
-                raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str(), " : c -> ", c.fractional_str())
+                raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
             End If
         Next
     End Sub

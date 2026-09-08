@@ -70,16 +70,27 @@ Public NotInheritable Class big_udec_e_test
     <command_line_specified>
     <test>
     Private Shared Sub calculate_e_factorial_max_uint32_progressively()
-        Dim s As big_udec = big_udec.one()
-        Dim c As big_udec = big_udec.one()
+        ' Optimization: Instead of general fraction arithmetic s.add(c) where denominators
+        ' cross-multiply exponentially and require massive GCD reductions, we exploit the
+        ' exact common denominator of the partial sum S_k = \sum_{j=0}^k 1/j! = N_k / k!.
+        '
+        ' The recurrence is:
+        '   N_{k+1} = (k+1) * N_k + 1
+        '   D_{k+1} = (k+1) * D_k
+        '
+        ' Every step is a single-pass O(limbs) scalar multiplication by a 32-bit integer,
+        ' avoiding O(L^2) BigInteger * BigInteger multiplication, division, and GCD in the loop.
+        Dim n As big_uint = big_uint.one()
+        Dim d As big_uint = big_uint.one()
         For i As UInt32 = 1 To max_uint32 - uint32_1
-            c.assert_divide(New big_udec(i))
-            s.add(c)
+            n.multiply(i)
+            n.add(big_uint.one())
+            d.multiply(i)
 
             If (i Mod 100000) = 0 Then
-                c.reduce_fraction()
+                Dim s As big_udec = big_udec.fraction(n.CloneT(), d.CloneT())
                 s.reduce_fraction()
-                raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str(), " : c -> ", c.fractional_str())
+                raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
             End If
         Next
     End Sub
