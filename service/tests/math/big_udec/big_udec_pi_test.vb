@@ -269,7 +269,6 @@ Public NotInheritable Class big_udec_pi_test
 
             If (i Mod 100000) = 0 Then
                 Dim s As big_udec = big_udec.fraction(n.CloneT(), d.CloneT())
-                s.reduce_fraction()
                 raise_error(error_type.warning, "@ ", i, " -> ", s.fractional_str())
             End If
         Next
