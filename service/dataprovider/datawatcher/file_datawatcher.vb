@@ -33,13 +33,13 @@ Public Class file_datawatcher
         Dim suc As Boolean = False
         Return New event_comb(Function() As Boolean
                                   Return waitfor(Sub()
-                                                     If File.Exists(filename) Then
-                                                         Dim fi As New FileInfo(filename)
+                                                     Dim fi As New FileInfo(filename)
+                                                     Try
                                                          suc = eva(sz, CULng(fi.Length())) AndAlso
                                                                eva(tm, CULng(fi.LastWriteTime().Ticks()))
-                                                     Else
+                                                     Catch
                                                          suc = False
-                                                     End If
+                                                     End Try
                                                  End Sub) AndAlso
                                          goto_next()
                               End Function,
