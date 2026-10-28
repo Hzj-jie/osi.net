@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 source "$SCRIPT_DIR/setenv.sh"
 
 CONFIGURATION="${CONFIGURATION:-Release}"
@@ -12,12 +12,12 @@ if [ -f "$SCRIPT_DIR/root/codegen/gitver/gitver.sh" ]; then
 fi
 
 echo "=== Building root.net8.sln ($CONFIGURATION) ==="
-dotnet build "$SCRIPT_DIR/root/root.net8.sln" -c "$CONFIGURATION" "$@"
+dotnet build "$SCRIPT_DIR/root/root.net8.sln" -c "$CONFIGURATION" -p:Configuration="$CONFIGURATION" "$@"
 
 echo "=== Building service.net8.sln ($CONFIGURATION) ==="
-dotnet build "$SCRIPT_DIR/service/service.net8.sln" -c "$CONFIGURATION" "$@"
+dotnet build "$SCRIPT_DIR/service/service.net8.sln" -c "$CONFIGURATION" -p:Configuration="$CONFIGURATION" "$@"
 
 echo "=== Building production.net8.sln ($CONFIGURATION) ==="
-dotnet build "$SCRIPT_DIR/production/production.net8.sln" -c "$CONFIGURATION" "$@"
+dotnet build "$SCRIPT_DIR/production/production.net8.sln" -c "$CONFIGURATION" -p:Configuration="$CONFIGURATION" "$@"
 
 echo "=== All builds completed successfully! ==="

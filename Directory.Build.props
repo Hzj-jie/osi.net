@@ -1,5 +1,6 @@
 <Project>
   <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
