@@ -92,7 +92,7 @@ Friend NotInheritable Class mapheap_case
         If it <> m.end() Then
             dec((+it).second)
         End If
-        assertion.is_true(m.insert(k, v) <> m.end())
+        m(k) = v
         c(v) += 1
     End Sub
 
