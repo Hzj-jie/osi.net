@@ -42,6 +42,7 @@ for proj in $(find "$SCRIPT_DIR/root" "$SCRIPT_DIR/service" -name "*.net8.vbproj
     fi
 done
 
+export utt_concurrency="${utt_concurrency:-4}"
 export utt_no_debug_mode=true
 export utt_report_case_name="${utt_report_case_name:-true}"
 
