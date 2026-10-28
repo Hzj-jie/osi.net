@@ -8,7 +8,9 @@ DEPLOY_DIR="${DEPLOY_DIR:-$HOME/deploys/apps/osi.root.utt}"
 
 export utt_concurrency="${utt_concurrency:-4}"
 
-rm -f "$SRC_ROOT/build.log" "$SRC_ROOT/run.log"
+if [ -z "$NO_CLEAN" ]; then
+    rm -f "$SRC_ROOT/build.log" "$SRC_ROOT/run.log"
+fi
 
 while true; do
     if [ -f "$SRC_ROOT/prepare.sh" ]; then
