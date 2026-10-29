@@ -33,7 +33,7 @@ Public Class dataprovider(Of T)
         Me.fetcher = fetcher
         Me.loader = loader
         Me.v = Nothing
-        Me.lr = 0
+        Me.lr = nowadays.ticks()
         Me.lu = 0
         Me.localfile = Path.Combine(deploys.temp_folder, guid_str())
         Me.exp = expiration_controller.settable.[New]()
