@@ -15,7 +15,7 @@ Imports osi.service.dataprovider
 Public NotInheritable Class dataprovider_collection_test
     Inherits [case]
 
-    Private Shared ReadOnly lifetime_ms As Int64 = seconds_to_milliseconds(1)
+    Private Shared ReadOnly lifetime_ms As Int64 = seconds_to_milliseconds(4)
 
     Private NotInheritable Class fake_datawatcher
         Inherits cd_object(Of fake_datawatcher)
